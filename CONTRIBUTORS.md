@@ -6,7 +6,8 @@
 
 - Copyright 2012-2019 U.S. Federal Government (in countries where recognized)
 -                     Michael A Neilson (michael.a.neilson@usace.army.mil)
--                     2021 Adam Korynta (adam@rmanet.com)
+- Copyright 2021 Resource Management Associates
+-                     Adam Korynta (adam@rmanet.com)
 - _Add the copyright date, your name, and email address here. (PLEASE KEEP THIS LINE)_
 
 ## Note for U.S. Federal Employees
