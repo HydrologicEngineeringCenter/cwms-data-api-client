@@ -1,0 +1,31 @@
+
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+
+    compileJava{
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url = uri('https://repo.maven.apache.org/maven2')
+        }
+        maven {
+            url = uri('https://www.hec.usace.army.mil/nexus/repository/maven-public')
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

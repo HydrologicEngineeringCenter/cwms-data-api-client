@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+group = "mil.army.usace.hec"
+version = "1.0-SNAPSHOT"
+dependencies {
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
+}
