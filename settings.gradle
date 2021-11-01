@@ -1,3 +1,4 @@
 rootProject.name = 'cwms-radar-client-parent'
 
 include ":cwms-http-client"
+include ":cwms-radar-client"

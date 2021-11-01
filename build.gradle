@@ -28,4 +28,8 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
+    checkstyle {
+        toolVersion '9.0.1'
+    }
 }
