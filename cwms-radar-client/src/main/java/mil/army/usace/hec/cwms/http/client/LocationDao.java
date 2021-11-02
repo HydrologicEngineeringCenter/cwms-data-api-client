@@ -21,9 +21,9 @@ public final class LocationDao {
     private final ObjectMapper objectMapper = new ObjectMapper()
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
 
-    public Locations retrieveLocations(String radarUrl, String locationQuery, String officeQuery, String units, String datum) throws IOException {
+    public Locations retrieveLocations(HttpUrlProvider radarUrlProvider, String locationQuery, String officeQuery, String units, String datum) throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
-        HttpUrl url = HttpUrl.parse(radarUrl + "/locations")
+        HttpUrl url = radarUrlProvider.buildHttpUrl("/locations")
             .newBuilder()
             .addQueryParameter("locations", locationQuery)
             .addQueryParameter("office", officeQuery)
