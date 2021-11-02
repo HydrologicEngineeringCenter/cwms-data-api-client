@@ -1,5 +1,7 @@
-apply plugin: 'java-library'
-apply plugin: 'jsonschema2pojo'
+plugins {
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+//    id "com.github.eirnym.js2p" version "1.0"
+}
 
 group = "mil.army.usace.hec"
 version = "1.0-SNAPSHOT"
@@ -14,37 +16,53 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
+//    swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.5'  // or Swagger Codegen V3
+//    swaggerCodegen 'org.openapitools:openapi-generator-cli:3.3.4'     // or OpenAPI Generator
+
+//    compileOnly('org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.1.1')
+//    compileOnly('io.swagger.codegen.v3:swagger-codegen-maven-plugin:3.0.16')
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//
+//    dependencies {
+//        classpath('org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.1.1')
+//        classpath('io.swagger.codegen.v3:swagger-codegen-maven-plugin:3.0.16')
+//    }
+//
+//}
+
+//jsonSchema2Pojo {
+//    targetPackage = 'mil.army.usace.hec.cwms.radar.client'
+//    source = files("${sourceSets.main.output.resourcesDir}/radar/json")
+//    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+//    sourceType = 'json'
+//    propertyWordDelimiters = '-_'
+//    targetVersion = "1.8"
+//
+//    annotationStyle = 'jackson'
+//    includeHashcodeAndEquals = false
+//    includeToString = false
+//    initializeCollections = true
+//    includeGetters = true
+//    includeSetters = false
+//    dateType = "java.time.LocalDate"
+//    dateTimeType = "java.time.LocalDateTime"
+//    timeType = "java.time.LocalTime"
+//    includeAdditionalProperties = false
+//
+//}
+
+swaggerSources {
+    cwmsRadar {
+        inputFile = file("/Users/adamkorynta/Documents/RMA/Git/adamkorynta/cwms-radar-client/cwms-radar-client/src/test/resources/radar/json/cwms-radar-swagger.yaml")
+        code {
+            language = 'spring'
+            components = ['models']
+//            configFile = file("/Users/adamkorynta/Documents/RMA/Git/adamkorynta/cwms-radar-client/cwms-radar-client/src/test/resources/radar/json/cwms-radar-swagger.yaml")
+        }
     }
-
-    dependencies {
-        // this plugin
-        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.1.1'
-    }
-}
-
-jsonSchema2Pojo {
-    targetPackage = 'mil.army.usace.hec.cwms.radar.client'
-    source = files("${sourceSets.main.output.resourcesDir}/radar/json")
-    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
-    sourceType = 'json'
-    propertyWordDelimiters = '-_'
-    targetVersion = "1.8"
-
-    annotationStyle = 'jackson'
-    includeGeneratedAnnotation = true
-    includeHashcodeAndEquals = false
-    includeToString = false
-    initializeCollections = true
-    includeGetters = true
-    includeSetters = false
-    dateType = "java.time.LocalDate"
-    dateTimeType = "java.time.LocalDateTime"
-    timeType = "java.time.LocalTime"
-    includeAdditionalProperties = false
-
 }

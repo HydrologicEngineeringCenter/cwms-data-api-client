@@ -10,7 +10,9 @@ package mil.army.usace.hec.cwms.http.client;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import mil.army.usace.hec.cwms.radar.client.Locations;
+import java.util.ArrayList;
+import java.util.List;
+import mil.army.usace.hec.cwms.http.client.model.Location;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,7 +23,7 @@ public final class LocationDao {
     private final ObjectMapper objectMapper = new ObjectMapper()
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
 
-    public Locations retrieveLocations(HttpUrlProvider radarUrlProvider, String locationQuery, String officeQuery, String units, String datum) throws IOException {
+    public List<Location> retrieveLocations(HttpUrlProvider radarUrlProvider, String locationQuery, String officeQuery, String units, String datum) throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
         HttpUrl url = radarUrlProvider.buildHttpUrl("/locations")
             .newBuilder()
@@ -36,6 +38,6 @@ public final class LocationDao {
             .build();
         Response execute = client.newCall(build).execute();
         String string = execute.body().string();
-        return objectMapper.readValue(string, Locations.class);
+        return new ArrayList<>();
     }
 }
