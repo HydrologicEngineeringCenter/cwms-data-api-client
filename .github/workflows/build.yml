@@ -2,11 +2,12 @@ name: Build cwms-radar-client
 on:
   push:
     branches:
-      - develop
+      - main
+      - 'develop/**'
       - 'release/**'
   pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
   build:
