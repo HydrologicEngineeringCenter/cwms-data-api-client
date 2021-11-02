@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2021
- * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
- * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
- * Source may not be released without written approval from HEC
- */
-
 package mil.army.usace.hec.cwms.http.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +9,7 @@ import java.util.Objects;
  * A representation of a TimeSeries category
  */
 @ApiModel(description = "A representation of a TimeSeries category")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:49:54.974-07:00[America/Los_Angeles]")
 public class TimeSeriesCategory {
     @JsonProperty("officeId")
     private String officeId = null;
@@ -89,7 +82,7 @@ public class TimeSeriesCategory {
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -123,7 +116,7 @@ public class TimeSeriesCategory {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

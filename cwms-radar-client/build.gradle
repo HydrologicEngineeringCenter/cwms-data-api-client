@@ -12,13 +12,15 @@ dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
-    testImplementation("com.squareup.okhttp3:mockwebserver")
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
-//    swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.5'  // or Swagger Codegen V3
-//    swaggerCodegen 'org.openapitools:openapi-generator-cli:3.3.4'     // or OpenAPI Generator
+    implementation("io.swagger:swagger-annotations:1.6.3")
+    implementation("javax.validation:validation-api:2.0.1.Final")
 
+    testImplementation("com.squareup.okhttp3:mockwebserver")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    swaggerCodegen("io.swagger.codegen.v3:swagger-codegen-cli:3.0.5")
 //    compileOnly('org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.1.1')
 //    compileOnly('io.swagger.codegen.v3:swagger-codegen-maven-plugin:3.0.16')
 }
@@ -61,7 +63,7 @@ swaggerSources {
         inputFile = file("/Users/adamkorynta/Documents/RMA/Git/adamkorynta/cwms-radar-client/cwms-radar-client/src/test/resources/radar/json/cwms-radar-swagger.yaml")
         code {
             language = 'spring'
-            components = ['models']
+//            components = ['models']
 //            configFile = file("/Users/adamkorynta/Documents/RMA/Git/adamkorynta/cwms-radar-client/cwms-radar-client/src/test/resources/radar/json/cwms-radar-swagger.yaml")
         }
     }

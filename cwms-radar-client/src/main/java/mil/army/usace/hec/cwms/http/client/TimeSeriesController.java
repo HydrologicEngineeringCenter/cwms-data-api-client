@@ -12,18 +12,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.model.Location;
+import mil.army.usace.hec.cwms.http.client.model.TimeSeries;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public final class LocationDao {
+public final class TimeSeriesController {
 
     private final ObjectMapper objectMapper = new ObjectMapper()
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
 
-    public List<Location> retrieveLocations(HttpUrlProvider radarUrlProvider, String locationQuery, String officeQuery, String units, String datum) throws IOException {
+    public List<TimeSeries> retrieveLocations(HttpUrlProvider radarUrlProvider, String locationQuery, String officeQuery, String units, String datum) throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
         HttpUrl url = radarUrlProvider.buildHttpUrl("/locations")
             .newBuilder()

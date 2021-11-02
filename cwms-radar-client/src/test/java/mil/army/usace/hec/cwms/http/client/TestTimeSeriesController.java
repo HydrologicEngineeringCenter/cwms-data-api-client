@@ -7,20 +7,18 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.model.Location;
+import mil.army.usace.hec.cwms.http.client.model.TimeSeries;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class TestLocationDao {
+class TestTimeSeriesController {
 
     private static final String BASE_URL = "http://localhost:11524";
     private static MockWebServer server;
@@ -37,7 +35,7 @@ class TestLocationDao {
         String collect = String.join("\n", Files.readAllLines(path));
         server.enqueue(new MockResponse().setBody(collect));
         server.start();
-        List<Location> locations = new LocationDao()
+        List<TimeSeries> locations = new TimeSeriesController()
             .retrieveLocations(s -> server.url(s), "*", "SWT", "SI", "NAVD88");
 //        assertEquals(1, locations.size());
     }
