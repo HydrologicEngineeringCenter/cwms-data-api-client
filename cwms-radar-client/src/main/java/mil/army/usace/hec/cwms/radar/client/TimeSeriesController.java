@@ -5,14 +5,15 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.radar.client;
 
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.time.Instant;
-import mil.army.usace.hec.cwms.http.client.model.TimeSeries;
+import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
