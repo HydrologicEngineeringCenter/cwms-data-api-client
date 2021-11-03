@@ -5,7 +5,7 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.http.radar.model;
+package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
