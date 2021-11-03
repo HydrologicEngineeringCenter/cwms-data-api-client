@@ -12,14 +12,16 @@ import java.util.Objects;
  */
 @ApiModel(description = "A representation of a time-series record")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:49:54.974-07:00[America/Los_Angeles]")
-@JsonFormat(shape=JsonFormat.Shape.ARRAY)
+@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 public class TimeSeriesValues {
     private Long dateTime = null;
     private Double value = null;
     private Integer qualityCode = null;
 
     @JsonCreator
-    public TimeSeriesValues(@JsonProperty("date-time") Long dateTime, @JsonProperty("value") Double value, @JsonProperty("quality-code") Integer qualityCode) {
+    public TimeSeriesValues(@JsonProperty("date-time") Long dateTime,
+                            @JsonProperty("value") Double value,
+                            @JsonProperty("quality-code") Integer qualityCode) {
         this.dateTime = dateTime;
         this.value = value;
         this.qualityCode = qualityCode;
