@@ -41,15 +41,6 @@ public class TimeSeriesColumn {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TimeSeriesColumn ordinal(Integer ordinal) {
-        this.ordinal = ordinal;
-        return this;
-    }
-
     /**
      * Get ordinal
      *
@@ -61,15 +52,6 @@ public class TimeSeriesColumn {
         return ordinal;
     }
 
-    public void setOrdinal(Integer ordinal) {
-        this.ordinal = ordinal;
-    }
-
-    public TimeSeriesColumn datatype(String datatype) {
-        this.datatype = datatype;
-        return this;
-    }
-
     /**
      * Get datatype
      *
@@ -79,10 +61,6 @@ public class TimeSeriesColumn {
 
     public String getDatatype() {
         return datatype;
-    }
-
-    public void setDatatype(String datatype) {
-        this.datatype = datatype;
     }
 
 

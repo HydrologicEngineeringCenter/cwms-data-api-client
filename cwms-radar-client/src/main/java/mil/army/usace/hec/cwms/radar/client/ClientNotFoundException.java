@@ -11,15 +11,8 @@ import java.io.IOException;
 
 public class ClientNotFoundException extends IOException {
 
-    public ClientNotFoundException(String message) {
-        super(message);
-    }
-
     public ClientNotFoundException(Throwable throwable) {
         super(throwable);
     }
 
-    public ClientNotFoundException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
 }

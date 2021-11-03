@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
@@ -58,11 +57,6 @@ public class TimeSeries {
     @JsonProperty("values")
     private List<TimeSeriesValues> values = null;
 
-    public TimeSeries begin(ZonedDateTime begin) {
-        this.begin = begin;
-        return this;
-    }
-
     /**
      * The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
      *
@@ -73,15 +67,6 @@ public class TimeSeries {
     @Valid
     public ZonedDateTime getBegin() {
         return begin;
-    }
-
-    public void setBegin(ZonedDateTime begin) {
-        this.begin = begin;
-    }
-
-    public TimeSeries end(ZonedDateTime end) {
-        this.end = end;
-        return this;
     }
 
     /**
@@ -96,15 +81,6 @@ public class TimeSeries {
         return end;
     }
 
-    public void setEnd(ZonedDateTime end) {
-        this.end = end;
-    }
-
-    public TimeSeries interval(Duration interval) {
-        this.interval = interval;
-        return this;
-    }
-
     /**
      * Get interval
      *
@@ -115,15 +91,6 @@ public class TimeSeries {
     @Valid
     public Duration getInterval() {
         return interval;
-    }
-
-    public void setInterval(Duration interval) {
-        this.interval = interval;
-    }
-
-    public TimeSeries name(String name) {
-        this.name = name;
-        return this;
     }
 
     /**
@@ -137,15 +104,6 @@ public class TimeSeries {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TimeSeries nextPage(String nextPage) {
-        this.nextPage = nextPage;
-        return this;
-    }
-
     /**
      * The cursor to the next page of data; null if there is no more data
      *
@@ -155,15 +113,6 @@ public class TimeSeries {
 
     public String getNextPage() {
         return nextPage;
-    }
-
-    public void setNextPage(String nextPage) {
-        this.nextPage = nextPage;
-    }
-
-    public TimeSeries officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
     }
 
     /**
@@ -177,15 +126,6 @@ public class TimeSeries {
         return officeId;
     }
 
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
-    }
-
-    public TimeSeries page(String page) {
-        this.page = page;
-        return this;
-    }
-
     /**
      * The cursor to the current page of data
      *
@@ -195,15 +135,6 @@ public class TimeSeries {
 
     public String getPage() {
         return page;
-    }
-
-    public void setPage(String page) {
-        this.page = page;
-    }
-
-    public TimeSeries pageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-        return this;
     }
 
     /**
@@ -217,15 +148,6 @@ public class TimeSeries {
         return pageSize;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public TimeSeries total(Integer total) {
-        this.total = total;
-        return this;
-    }
-
     /**
      * The total number of records retrieved; null or not present if not supported or unknown
      *
@@ -235,15 +157,6 @@ public class TimeSeries {
 
     public Integer getTotal() {
         return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public TimeSeries units(String units) {
-        this.units = units;
-        return this;
     }
 
     /**
@@ -257,23 +170,6 @@ public class TimeSeries {
         return units;
     }
 
-    public void setUnits(String units) {
-        this.units = units;
-    }
-
-    public TimeSeries valueColumns(List<TimeSeriesColumn> valueColumns) {
-        this.valueColumns = valueColumns;
-        return this;
-    }
-
-    public TimeSeries addValueColumnsItem(TimeSeriesColumn valueColumnsItem) {
-        if (this.valueColumns == null) {
-            this.valueColumns = new ArrayList<TimeSeriesColumn>();
-        }
-        this.valueColumns.add(valueColumnsItem);
-        return this;
-    }
-
     /**
      * Get valueColumns
      *
@@ -283,15 +179,6 @@ public class TimeSeries {
     @Valid
     public List<TimeSeriesColumn> getValueColumns() {
         return valueColumns;
-    }
-
-    public void setValueColumns(List<TimeSeriesColumn> valueColumns) {
-        this.valueColumns = valueColumns;
-    }
-
-    public TimeSeries values(List<TimeSeriesValues> values) {
-        this.values = values;
-        return this;
     }
 
     /**
@@ -305,11 +192,6 @@ public class TimeSeries {
     public List<TimeSeriesValues> getValues() {
         return values;
     }
-
-    public void setValues(List<TimeSeriesValues> values) {
-        this.values = values;
-    }
-
 
     @Override
     public boolean equals(Object o) {

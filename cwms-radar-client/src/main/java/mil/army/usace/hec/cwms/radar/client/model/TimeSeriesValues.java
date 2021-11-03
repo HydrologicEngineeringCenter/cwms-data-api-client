@@ -34,11 +34,6 @@ public class TimeSeriesValues {
         this.qualityCode = qualityCode;
     }
 
-    public TimeSeriesValues dateTime(Long dateTime) {
-        this.dateTime = dateTime;
-        return this;
-    }
-
     /**
      * Milliseconds since 1970-01-01 (Unix Epoch)
      *
@@ -48,15 +43,6 @@ public class TimeSeriesValues {
 
     public Long getDateTime() {
         return dateTime;
-    }
-
-    public void setDateTime(Long dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public TimeSeriesValues value(Double value) {
-        this.value = value;
-        return this;
     }
 
     /**
@@ -70,15 +56,6 @@ public class TimeSeriesValues {
         return value;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public TimeSeriesValues qualityCode(Integer qualityCode) {
-        this.qualityCode = qualityCode;
-        return this;
-    }
-
     /**
      * Get qualityCode
      *
@@ -88,10 +65,6 @@ public class TimeSeriesValues {
 
     public Integer getQualityCode() {
         return qualityCode;
-    }
-
-    public void setQualityCode(Integer qualityCode) {
-        this.qualityCode = qualityCode;
     }
 
 
@@ -104,9 +77,9 @@ public class TimeSeriesValues {
             return false;
         }
         TimeSeriesValues timeSeriesValues = (TimeSeriesValues) o;
-        return Objects.equals(this.dateTime, timeSeriesValues.dateTime) &&
-            Objects.equals(this.value, timeSeriesValues.value) &&
-            Objects.equals(this.qualityCode, timeSeriesValues.qualityCode);
+        return Objects.equals(this.dateTime, timeSeriesValues.dateTime)
+            && Objects.equals(this.value, timeSeriesValues.value)
+            && Objects.equals(this.qualityCode, timeSeriesValues.qualityCode);
     }
 
     @Override
