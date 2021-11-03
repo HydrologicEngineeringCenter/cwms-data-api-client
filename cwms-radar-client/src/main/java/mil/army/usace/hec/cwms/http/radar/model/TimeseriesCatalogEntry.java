@@ -1,4 +1,11 @@
-package mil.army.usace.hec.cwms.http.client.model;
+/*
+ * Copyright (c) 2021
+ * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
+ * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
+ * Source may not be released without written approval from HEC
+ */
+
+package mil.army.usace.hec.cwms.http.radar.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
