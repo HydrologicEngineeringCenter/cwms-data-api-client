@@ -24,3 +24,10 @@ jobs:
       - name: build and test
         id: thebuild
         run: ./gradlew build --info --init-script init.gradle
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2.3.0
+        with:
+          generate-branches-badge: true
+          jacoco-csv-file: >
+            cwms-http-client/build/reports/jacoco/test/jacocoTestReport.csv
+            cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.csv
