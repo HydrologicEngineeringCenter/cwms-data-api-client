@@ -5,7 +5,7 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.radar.client;
 
 import okhttp3.HttpUrl;
 
