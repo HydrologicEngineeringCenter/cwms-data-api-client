@@ -77,9 +77,9 @@ public class TimeSeriesValues {
             return false;
         }
         TimeSeriesValues timeSeriesValues = (TimeSeriesValues) o;
-        return Objects.equals(this.dateTime, timeSeriesValues.dateTime) &&
-            Objects.equals(this.value, timeSeriesValues.value) &&
-            Objects.equals(this.qualityCode, timeSeriesValues.qualityCode);
+        return Objects.equals(this.dateTime, timeSeriesValues.dateTime)
+            && Objects.equals(this.value, timeSeriesValues.value)
+            && Objects.equals(this.qualityCode, timeSeriesValues.qualityCode);
     }
 
     @Override

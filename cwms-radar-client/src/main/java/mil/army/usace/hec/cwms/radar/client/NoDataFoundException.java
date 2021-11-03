@@ -15,11 +15,4 @@ public class NoDataFoundException extends IOException {
         super(message);
     }
 
-    public NoDataFoundException(Throwable throwable) {
-        super(throwable);
-    }
-
-    public NoDataFoundException(String message, Throwable throwable) {
-        super(message, throwable);
-    }
 }
