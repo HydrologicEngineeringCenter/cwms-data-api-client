@@ -1,4 +1,4 @@
-name: Build cwms-radar-client
+name: JaCoCo coverage
 on:
   push:
     branches:
