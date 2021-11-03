@@ -35,7 +35,7 @@ jobs:
       - name: Commit and push Badges
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          cd badges
+          cd .github/badges
           if [[ `git status --porcelain *.svg` ]]; then
             git config --global user.name 'Adam Korynta'
             git config --global user.email 'adam@rmanet.com'
