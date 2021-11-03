@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.time.Instant;
 import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
@@ -18,6 +19,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public final class TimeSeriesController {
 
@@ -30,8 +32,8 @@ public final class TimeSeriesController {
                                          Instant start, Instant end, String page)
         throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
-        HttpUrl httpUrl = radarUrlProvider.buildHttpUrl("/timeseries");
-        HttpUrl.Builder builder = httpUrl.newBuilder()
+        HttpUrl httpUrl = radarUrlProvider.buildHttpUrl("/timeseries")
+            .newBuilder()
             .addQueryParameter("name", timeSeriesId)
             .addQueryParameter("office", officeId)
             .addQueryParameter("unit", units)
@@ -39,20 +41,38 @@ public final class TimeSeriesController {
             .addQueryParameter("begin", start.toString())
             .addQueryParameter("end", end.toString())
             .addQueryParameter("page", page)
-            .addQueryParameter("timezone", "UTC");
-        HttpUrl url = builder.build();
+            .addQueryParameter("timezone", "UTC")
+            .build();
         Request build = new Request.Builder()
-            .url(url)
+            .url(httpUrl)
             .addHeader("accept", "application/json;version=2")
             .build();
-        Response execute = client.newCall(build).execute();
-        int code = execute.code();
-        if (code != 200) {
-            throw new IOException(
-                "Error retrieving time series: " + timeSeriesId + " error was: \n" +
-                    execute.body().string());
+        return extractValueFromBody(timeSeriesId, client, build, TimeSeries.class);
+    }
+
+    private <T> T extractValueFromBody(String timeSeriesId, OkHttpClient client, Request build, Class<T> type) throws IOException {
+        try {
+            Response execute = client.newCall(build).execute();
+            execute.isSuccessful();
+            int code = execute.code();
+            if (code == 404) {
+                ResponseBody body = execute.body();
+                if (body == null) {
+                    throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId);
+                }
+                throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId + "\n" + body.string());
+            } else if (code != 200) {
+                throw new IOException(
+                    "Error retrieving time series: " + timeSeriesId + " error was: \n" + code + " " + execute.message());
+            }
+            ResponseBody body = execute.body();
+            if (body == null) {
+                throw new IOException("Error with request, body not returned: " + build);
+            }
+            String string = body.string();
+            return objectMapper.readValue(string, type);
+        } catch (ConnectException connectException) {
+            throw new ClientNotFoundException(connectException);
         }
-        String string = execute.body().string();
-        return objectMapper.readValue(string, TimeSeries.class);
     }
 }
