@@ -5,7 +5,7 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.File;
 import java.io.IOException;

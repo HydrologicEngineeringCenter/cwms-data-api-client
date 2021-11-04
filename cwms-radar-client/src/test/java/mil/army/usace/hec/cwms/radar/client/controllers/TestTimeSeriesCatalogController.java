@@ -5,7 +5,7 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.List;
+import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalogEntry;
 import okhttp3.HttpUrl;

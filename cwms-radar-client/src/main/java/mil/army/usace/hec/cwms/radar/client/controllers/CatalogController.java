@@ -5,10 +5,11 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
+import mil.army.usace.hec.cwms.radar.client.HttpUrlProvider;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;

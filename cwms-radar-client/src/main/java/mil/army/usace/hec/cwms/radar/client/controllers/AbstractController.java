@@ -5,13 +5,13 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.ConnectException;
+import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
+import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,28 +19,27 @@ import okhttp3.ResponseBody;
 
 abstract class AbstractController {
 
-    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
-        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-
     final <T> T extractValueFromBody(String context, OkHttpClient client, Request build, Class<T> type) throws IOException {
         try (Response response = client.newCall(build).execute()) {
             response.isSuccessful();
             int code = response.code();
             if (code == 404) {
-                ResponseBody body = response.body();
-                if (body == null) {
-                    throw new NoDataFoundException("No data found for requested ID: " + context);
+                try (ResponseBody body = response.body()) {
+                    if (body == null) {
+                        throw new NoDataFoundException("No data found for requested ID: " + context);
+                    }
+                    throw new NoDataFoundException("No data found for requested ID: " + context + "\n" + body.string());
                 }
-                throw new NoDataFoundException("No data found for requested ID: " + context + "\n" + body.string());
             } else if (code != 200) {
                 throw new IOException("Error from requested ID: " + context + " error was: \n" + code + " " + response.message());
             }
-            ResponseBody body = response.body();
-            if (body == null) {
-                throw new IOException("Error with request, body not returned: " + build);
+            try (ResponseBody body = response.body()) {
+                if (body == null) {
+                    throw new IOException("Error with request, body not returned: " + build);
+                }
+                String string = body.string();
+                return RadarObjectMapper.mapJsonToObject(string, type);
             }
-            String string = body.string();
-            return objectMapper.readValue(string, type);
         } catch (ConnectException connectException) {
             throw new ClientNotFoundException(connectException);
         }
