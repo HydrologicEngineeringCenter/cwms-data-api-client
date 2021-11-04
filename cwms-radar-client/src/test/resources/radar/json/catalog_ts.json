@@ -1,0 +1,3007 @@
+{
+  "next-page": "NjgyMzNTV1QvMTZGRkE2MzYuVk9MVC1CQVRURVJZIExPQUQuSU5TVC4xSE9VUi4wLkNDUC1SRVY7VU5JVFM9Vk9MVHx8fA==",
+  "total": 68233,
+  "page-size": 500,
+  "entries": [
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Ave.~1Day.0.abc",
+      "units": "%",
+      "full-name": "000512.%.Ave.~1Day.0.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.abc",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.abcd",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.abcd"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.abcde",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.abcde"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.abcdefg",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.abcdefg"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.bcde",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.bcde"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.j",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.j"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Day.0.tafsdf",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Day.0.tafsdf"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Hour.0.abc",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Hour.0.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Hour.0.awert",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Hour.0.awert"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Hour.0.wrte",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Hour.0.wrte"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.1Minute.0.abcdefg",
+      "units": "%",
+      "full-name": "000512.%.Inst.1Minute.0.abcdefg"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.4Hours.0.abc",
+      "units": "%",
+      "full-name": "000512.%.Inst.4Hours.0.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.8Hours.0.qyf",
+      "units": "%",
+      "full-name": "000512.%.Inst.8Hours.0.qyf"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.~1Day.0.LRTS",
+      "units": "%",
+      "full-name": "000512.%.Inst.~1Day.0.LRTS"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.~1Day.0.LRTS-1",
+      "units": "%",
+      "full-name": "000512.%.Inst.~1Day.0.LRTS-1"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.~1Day.0.abc",
+      "units": "%",
+      "full-name": "000512.%.Inst.~1Day.0.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.~1Day.0.showDez",
+      "units": "%",
+      "full-name": "000512.%.Inst.~1Day.0.showDez"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.%.Inst.~1Day.0.tree",
+      "units": "%",
+      "full-name": "000512.%.Inst.~1Day.0.tree"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.Dist.Ave.~1Day.1Day.abc",
+      "units": "km",
+      "full-name": "000512.Dist.Ave.~1Day.1Day.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.Flow.Ave.1Hour.1Hour.abc",
+      "units": "cms",
+      "full-name": "000512.Flow.Ave.1Hour.1Hour.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.Flow.Ave.~1Day.1Hour.abc",
+      "units": "cms",
+      "full-name": "000512.Flow.Ave.~1Day.1Hour.abc"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "000512.Temp.Max.~1Day.1Day.awrhaew",
+      "units": "C",
+      "full-name": "000512.Temp.Max.~1Day.1Day.awrhaew"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "061488.Flow.Inst.0.0.1620837064374",
+      "units": "cms",
+      "full-name": "061488.Flow.Inst.0.0.1620837064374"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "061488.Flow.Inst.~1Day.0.1620837064378",
+      "units": "cms",
+      "full-name": "061488.Flow.Inst.~1Day.0.1620837064378"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "07161450.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "07161450.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Precip-Cuml.Inst.1Hour.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "07161450.Precip-Cuml.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "07161450.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "07161450.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Stage.Inst.1Hour.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "07161450.Stage.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "07161450.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "07161450.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "07161450.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "15Minutes-%-Humidity",
+      "units": "%",
+      "full-name": "15Minutes-%-Humidity"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "15Minutes-%-Humidity",
+      "units": "%",
+      "full-name": "15Minutes-%-Humidity"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "15Minutes-Elev",
+      "units": "m",
+      "full-name": "15Minutes-Elev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "15Minutes-Speed-Wind",
+      "units": "kph",
+      "full-name": "15Minutes-Speed-Wind"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.%-Humidity.Inst.15Minutes.0.Ccp-Rev",
+      "units": "%",
+      "full-name": "1628C21E.%-Humidity.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.%-Humidity.Inst.15Minutes.0.Decodes-Raw",
+      "units": "%",
+      "full-name": "1628C21E.%-Humidity.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.%-Humidity.Inst.1Hour.0.Ccp-Rev",
+      "units": "%",
+      "full-name": "1628C21E.%-Humidity.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Dir-Wind.Inst.15Minutes.0.Ccp-Rev",
+      "units": "deg",
+      "full-name": "1628C21E.Dir-Wind.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Dir-Wind.Inst.15Minutes.0.Decodes-Raw",
+      "units": "deg",
+      "full-name": "1628C21E.Dir-Wind.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Dir-Wind.Inst.1Hour.0.Ccp-Rev",
+      "units": "deg",
+      "full-name": "1628C21E.Dir-Wind.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1628C21E.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1628C21E.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1628C21E.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1628C21E.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1628C21E.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Pres-Air.Inst.15Minutes.0.Ccp-Rev",
+      "units": "kPa",
+      "full-name": "1628C21E.Pres-Air.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Pres-Air.Inst.15Minutes.0.Decodes-Raw",
+      "units": "kPa",
+      "full-name": "1628C21E.Pres-Air.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Pres-Air.Inst.1Hour.0.Ccp-Rev",
+      "units": "kPa",
+      "full-name": "1628C21E.Pres-Air.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Speed-Wind.Inst.15Minutes.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "1628C21E.Speed-Wind.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Speed-Wind.Inst.15Minutes.0.Decodes-Raw",
+      "units": "kph",
+      "full-name": "1628C21E.Speed-Wind.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Speed-Wind.Inst.1Hour.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "1628C21E.Speed-Wind.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Temp-Air.Inst.15Minutes.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "1628C21E.Temp-Air.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Temp-Air.Inst.15Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "1628C21E.Temp-Air.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Temp-Air.Inst.1Hour.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "1628C21E.Temp-Air.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1628C21E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1628C21E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1628C21E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Conc-DO.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mg/l",
+      "full-name": "162C67DC.Conc-DO.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Conc-DO.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mg/l",
+      "full-name": "162C67DC.Conc-DO.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Cond-Water.Inst.15Minutes.0.Ccp-Rev",
+      "units": "umho/cm",
+      "full-name": "162C67DC.Cond-Water.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Cond-Water.Inst.15Minutes.0.Decodes-Raw",
+      "units": "umho/cm",
+      "full-name": "162C67DC.Cond-Water.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162C67DC.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162C67DC.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C67DC.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162C67DC.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C67DC.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Temp-Water.Inst.15Minutes.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "162C67DC.Temp-Water.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Temp-Water.Inst.15Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "162C67DC.Temp-Water.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162C67DC.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162C67DC.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.pH.Inst.15Minutes.0.Ccp-Rev",
+      "units": "su",
+      "full-name": "162C67DC.pH.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C67DC.pH.Inst.15Minutes.0.Decodes-Raw",
+      "units": "su",
+      "full-name": "162C67DC.pH.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162C842E.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162C842E.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C842E.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162C842E.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C842E.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C842E.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162C842E.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162C842E.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162C842E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162C842E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162C842E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162DF044.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Speed-Water Index.Inst.15Minutes.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "162DF044.Speed-Water Index.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Speed-Water Index.Inst.15Minutes.0.Decodes-Raw",
+      "units": "kph",
+      "full-name": "162DF044.Speed-Water Index.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Speed-Water Index.Inst.1Hour.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "162DF044.Speed-Water Index.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162DF044.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162DF044.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162DF044.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162DF044.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162DF044.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162DF044.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Temp-Water.Inst.15Minutes.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "162DF044.Temp-Water.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Temp-Water.Inst.15Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "162DF044.Temp-Water.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Temp-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "162DF044.Temp-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162DF044.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162DF044.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162DF044.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "162E6228.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "162E6228.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "162E6228.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "162E6228.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "162E6228.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162E6228.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E6228.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162E6228.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162E92AC.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162E92AC.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162E92AC.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162E92AC.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162E92AC.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162E92AC.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162E92AC.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162E92AC.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162EEAEE.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "162EEAEE.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162EEAEE.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage-Alt.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162EEAEE.Stage-Alt.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage-Alt.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162EEAEE.Stage-Alt.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162EEAEE.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "162EEAEE.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "162EEAEE.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "162EEAEE.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "162EEAEE.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "162EEAEE.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Conc-DO.Inst.1Hour.0.Ccp-Rev",
+      "units": "mg/l",
+      "full-name": "1639D40C.Conc-DO.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Conc-DO.Inst.1Hour.0.Decodes-Raw",
+      "units": "mg/l",
+      "full-name": "1639D40C.Conc-DO.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Cond-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "umho/cm",
+      "full-name": "1639D40C.Cond-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Cond-Water.Inst.1Hour.0.Decodes-Raw",
+      "units": "umho/cm",
+      "full-name": "1639D40C.Cond-Water.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1639D40C.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1639D40C.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639D40C.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage-Alt.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639D40C.Stage-Alt.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage-Alt.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1639D40C.Stage-Alt.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639D40C.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639D40C.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1639D40C.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Temp-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "1639D40C.Temp-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Temp-Water.Inst.1Hour.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "1639D40C.Temp-Water.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1639D40C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1639D40C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.pH.Inst.1Hour.0.Ccp-Rev",
+      "units": "su",
+      "full-name": "1639D40C.pH.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639D40C.pH.Inst.1Hour.0.Decodes-Raw",
+      "units": "su",
+      "full-name": "1639D40C.pH.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1639EF44.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1639EF44.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639EF44.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1639EF44.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639EF44.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639EF44.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1639EF44.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1639EF44.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1639EF44.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1639EF44.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1639EF44.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "163FD4C2.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "163FD4C2.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "163FD4C2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "163FD4C2.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "163FD4C2.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "163FD4C2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "163FD4C2.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "163FD4C2.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "163FD4C2.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "163FD4C2.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "163FD4C2.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "163FD4C2.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "163FD4C2.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "163FD4C2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "163FD4C2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "163FD4C2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165466D6.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165466D6.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165466D6.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165466D6.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "165466D6.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165466D6.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165466D6.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165466D6.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage-Alt.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165466D6.Stage-Alt.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage-Alt.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "165466D6.Stage-Alt.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165466D6.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165466D6.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "165466D6.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "165466D6.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165466D6.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "165466D6.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165F0098.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165F0098.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165F0098.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "165F0098.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165F0098.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165F0098.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "165F0098.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165F0098.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "165F0098.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165F0098.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "165F0098.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F0098.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "165F0098.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165F3502.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "165F3502.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165F3502.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "165F3502.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "165F3502.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "165F3502.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "165F3502.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "165F3502.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16616766.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16616766.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16616766.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16616766.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16616766.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16616766.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16616766.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16616766.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16616766.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16616766.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16616766.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16616766.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16616766.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1662A576.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1662A576.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1662A576.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1662A576.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1662A576.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage-Alt.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage-Alt.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage-Alt.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1662A576.Stage-Alt.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1662A576.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1662A576.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1662A576.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Temp-Water.Inst.15Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "1662A576.Temp-Water.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1662A576.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1662A576.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1662A576.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "166592D8.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "166592D8.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "166592D8.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "166592D8.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "166592D8.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "166592D8.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "166592D8.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Speed-Water Index.Inst.15Minutes.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "166592D8.Speed-Water Index.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Speed-Water Index.Inst.15Minutes.0.Decodes-Raw",
+      "units": "kph",
+      "full-name": "166592D8.Speed-Water Index.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Speed-Water Index.Inst.1Hour.0.Ccp-Rev",
+      "units": "kph",
+      "full-name": "166592D8.Speed-Water Index.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166592D8.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "166592D8.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166592D8.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166592D8.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "166592D8.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166592D8.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Temp-Water.Inst.15Minutes.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "166592D8.Temp-Water.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Temp-Water.Inst.15Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "166592D8.Temp-Water.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Temp-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "166592D8.Temp-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "166592D8.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166592D8.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "166592D8.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1665B434.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1665B434.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665B434.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665B434.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1665B434.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665B434.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665B434.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665B434.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665B434.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1665B434.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1665B434.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665B434.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1665B434.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1665F73E.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1665F73E.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665F73E.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1665F73E.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665F73E.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665F73E.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1665F73E.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665F73E.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1665F73E.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665F73E.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665F73E.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1665F73E.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1665F73E.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1665F73E.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1665F73E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1665F73E.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "166600B4.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "166600B4.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166600B4.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "166600B4.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166600B4.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166600B4.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "166600B4.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "166600B4.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "166600B4.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "166600B4.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "166600B4.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "168AE750.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "168AE750.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "168AE750.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Precip-Cuml.Inst.1Hour.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "168AE750.Precip-Cuml.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "168AE750.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "168AE750.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "168AE750.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "168AE750.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "168AE750.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "168AE750.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "168AE750.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Conc-DO.Inst.1Hour.0.Ccp-Rev",
+      "units": "mg/l",
+      "full-name": "1692A762.Conc-DO.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Conc-DO.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mg/l",
+      "full-name": "1692A762.Conc-DO.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Conc-DO.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mg/l",
+      "full-name": "1692A762.Conc-DO.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Cond-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "umho/cm",
+      "full-name": "1692A762.Cond-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Cond-Water.Inst.30Minutes.0.Ccp-Rev",
+      "units": "umho/cm",
+      "full-name": "1692A762.Cond-Water.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Cond-Water.Inst.30Minutes.0.Decodes-Raw",
+      "units": "umho/cm",
+      "full-name": "1692A762.Cond-Water.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1692A762.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1692A762.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1692A762.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1692A762.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1692A762.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1692A762.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1692A762.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1692A762.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1692A762.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1692A762.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Temp-Water.Inst.1Hour.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "1692A762.Temp-Water.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Temp-Water.Inst.30Minutes.0.Ccp-Rev",
+      "units": "C",
+      "full-name": "1692A762.Temp-Water.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Temp-Water.Inst.30Minutes.0.Decodes-Raw",
+      "units": "C",
+      "full-name": "1692A762.Temp-Water.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Turb.Inst.15Minutes.0.Ccp-Rev",
+      "units": "JTU",
+      "full-name": "1692A762.Turb.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Turb.Inst.15Minutes.0.Decodes-Raw",
+      "units": "JTU",
+      "full-name": "1692A762.Turb.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Turb.Inst.1Hour.0.Ccp-Rev",
+      "units": "JTU",
+      "full-name": "1692A762.Turb.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1692A762.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1692A762.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.pH.Inst.1Hour.0.Ccp-Rev",
+      "units": "su",
+      "full-name": "1692A762.pH.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.pH.Inst.30Minutes.0.Ccp-Rev",
+      "units": "su",
+      "full-name": "1692A762.pH.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1692A762.pH.Inst.30Minutes.0.Decodes-Raw",
+      "units": "su",
+      "full-name": "1692A762.pH.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693B6EE.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1693B6EE.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693B6EE.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "1693B6EE.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693B6EE.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1693B6EE.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693B6EE.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1693B6EE.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693B6EE.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "1693B6EE.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1693E692.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "1693E692.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1693E692.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "1693E692.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "1693E692.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "1693E692.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "1693E692.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "1693E692.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16C7F49C.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16C7F49C.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16C7F49C.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16C7F49C.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16C7F49C.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16C7F49C.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16C7F49C.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16C7F49C.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16C7F49C.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16C7F49C.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16C7F49C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16C7F49C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16C7F49C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16CD4892.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16CD4892.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16CD4892.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16CD4892.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16CD4892.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16CD4892.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16CD4892.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16CD4892.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16CD4892.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16CD4892.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D001B2.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D001B2.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D001B2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D001B2.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D001B2.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D001B2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D001B2.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D001B2.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D001B2.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D001B2.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D001B2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D001B2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D001B2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D10348.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D10348.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D10348.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D10348.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D10348.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D10348.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D10348.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Volt-Battery.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D10348.Volt-Battery.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Volt-Battery.Inst.30Minutes.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D10348.Volt-Battery.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D10348.Volt-Battery.Inst.30Minutes.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D10348.Volt-Battery.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D136D2.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D136D2.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D136D2.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D136D2.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D136D2.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D136D2.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D136D2.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D136D2.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D136D2.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D136D2.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D136D2.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D136D2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D136D2.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D166AE.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D166AE.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D166AE.Precip-Cuml.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D166AE.Precip-Cuml.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D166AE.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D166AE.Precip-Inc.Total.15Minutes.15Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D166AE.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D166AE.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D166AE.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D166AE.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D166AE.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D166AE.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D166AE.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D1962A.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D1962A.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Cuml.Inst.1Hour.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Cuml.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1962A.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D1962A.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D1962A.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D1962A.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Stage.Inst.1Hour.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D1962A.Stage.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Volt-Battery.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D1962A.Volt-Battery.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1962A.Volt-Battery.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D1962A.Volt-Battery.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D1B0C6.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16D1B0C6.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1B0C6.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1B0C6.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16D1B0C6.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1B0C6.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16D1B0C6.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D1B0C6.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16D1B0C6.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16D1B0C6.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16D1B0C6.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16D1B0C6.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16D1B0C6.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DAD688.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DAD688.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DAD688.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DAD688.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DAD688.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DAD688.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAD688.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DAD688.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DAE312.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DAE312.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DAE312.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DAE312.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16DAE312.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DAE312.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DAE312.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DAE312.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DAE312.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DAE312.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DAE312.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DAE312.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DAE312.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB3780.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB3780.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB3780.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB3780.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DB3780.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DB3780.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB3780.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DB3780.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB4110.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Flow.Inst.30Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB4110.Flow.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Precip-Cuml.Inst.1Hour.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DB4110.Precip-Cuml.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DB4110.Precip-Cuml.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw",
+      "units": "mm",
+      "full-name": "16DB4110.Precip-Cuml.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DB4110.Precip-Inc.Total.1Hour.1Hour.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev",
+      "units": "mm",
+      "full-name": "16DB4110.Precip-Inc.Total.30Minutes.30Minutes.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB4110.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Stage.Inst.30Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB4110.Stage.Inst.30Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Stage.Inst.30Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DB4110.Stage.Inst.30Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DB4110.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB4110.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DB4110.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB5266.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DB5266.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB5266.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DB5266.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DB5266.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DB5266.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DB5266.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DB5266.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DD02D4.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16DD02D4.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DD02D4.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16DD02D4.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16DD02D4.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16DD02D4.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16DD02D4.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16DD02D4.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16E8D50C.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16E8D50C.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16E8D50C.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16E8D50C.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16E8D50C.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16E8D50C.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16E8D50C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw",
+      "units": "volt",
+      "full-name": "16E8D50C.Volt-Battery Load.Inst.1Hour.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Flow.Inst.15Minutes.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16FFA636.Flow.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Flow.Inst.1Hour.0.Ccp-Rev",
+      "units": "cms",
+      "full-name": "16FFA636.Flow.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage-Alt.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16FFA636.Stage-Alt.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage-Alt.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16FFA636.Stage-Alt.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage-Alt.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16FFA636.Stage-Alt.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage.Inst.15Minutes.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16FFA636.Stage.Inst.15Minutes.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage.Inst.15Minutes.0.Decodes-Raw",
+      "units": "m",
+      "full-name": "16FFA636.Stage.Inst.15Minutes.0.Decodes-Raw"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Stage.Inst.1Hour.0.Ccp-Rev",
+      "units": "m",
+      "full-name": "16FFA636.Stage.Inst.1Hour.0.Ccp-Rev"
+    },
+    {
+      "office": "SWT",
+      "ts-name": "16FFA636.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev",
+      "units": "volt",
+      "full-name": "16FFA636.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev"
+    }
+  ]
+}
