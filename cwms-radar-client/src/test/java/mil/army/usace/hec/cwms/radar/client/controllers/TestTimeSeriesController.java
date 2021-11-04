@@ -5,7 +5,7 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,6 +19,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
+import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;

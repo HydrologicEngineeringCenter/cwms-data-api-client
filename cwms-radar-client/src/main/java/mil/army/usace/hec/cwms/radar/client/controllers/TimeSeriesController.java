@@ -5,15 +5,16 @@
  * Source may not be released without written approval from HEC
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.time.Instant;
 import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
+import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
+import mil.army.usace.hec.cwms.radar.client.HttpUrlProvider;
+import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -22,10 +23,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public final class TimeSeriesController {
-
-    private final ObjectMapper objectMapper = new ObjectMapper()
-        .registerModule(new JavaTimeModule())
-        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
 
     public TimeSeries retrieveTimeSeries(HttpUrlProvider radarUrlProvider, String timeSeriesId,
                                          String officeId, String units, String datum,
@@ -65,12 +62,13 @@ public final class TimeSeriesController {
                 throw new IOException(
                     "Error retrieving time series: " + timeSeriesId + " error was: \n" + code + " " + execute.message());
             }
-            ResponseBody body = execute.body();
-            if (body == null) {
-                throw new IOException("Error with request, body not returned: " + build);
+            try (ResponseBody body = execute.body()) {
+                if (body == null) {
+                    throw new IOException("Error with request, body not returned: " + build);
+                }
+                String string = body.string();
+                return RadarObjectMapper.mapJsonToObject(string, type);
             }
-            String string = body.string();
-            return objectMapper.readValue(string, type);
         } catch (ConnectException connectException) {
             throw new ClientNotFoundException(connectException);
         }

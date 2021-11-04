@@ -9,6 +9,6 @@ package mil.army.usace.hec.cwms.radar.client;
 
 import okhttp3.HttpUrl;
 
-interface HttpUrlProvider {
+public interface HttpUrlProvider {
     HttpUrl buildHttpUrl(String path);
 }

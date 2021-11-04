@@ -1,0 +1,23 @@
+plugins {
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+}
+
+group = "mil.army.usace.hec"
+version = "1.0-SNAPSHOT"
+
+
+dependencies {
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0")
+    implementation("io.swagger:swagger-annotations:1.6.3")
+    implementation("javax.validation:validation-api:2.0.1.Final")
+}
+
+swaggerSources {
+    cwmsRadar {
+        inputFile = file("cwms-radar-swagger.yaml")
+        code {
+            language = 'spring'
+        }
+    }
+}
