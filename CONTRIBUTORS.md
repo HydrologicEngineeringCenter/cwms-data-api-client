@@ -9,7 +9,7 @@
 - Copyright 2021 Resource Management Associates
 -                     Adam Korynta (adam@rmanet.com)
 - Copyright 2021 Resource Management Associates
--                     Peter Morris (psmorris@rmanet.com)
+-                     Peter S Morris (psmorris@rmanet.com)
 - _Add the copyright date, your name, and email address here. (PLEASE KEEP THIS LINE)_
 
 ## Note for U.S. Federal Employees
