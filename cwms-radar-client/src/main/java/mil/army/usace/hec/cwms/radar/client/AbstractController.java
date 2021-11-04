@@ -23,20 +23,19 @@ abstract class AbstractController {
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
 
     final <T> T extractValueFromBody(String context, OkHttpClient client, Request build, Class<T> type) throws IOException {
-        try {
-            Response execute = client.newCall(build).execute();
-            execute.isSuccessful();
-            int code = execute.code();
+        try (Response response = client.newCall(build).execute()) {
+            response.isSuccessful();
+            int code = response.code();
             if (code == 404) {
-                ResponseBody body = execute.body();
+                ResponseBody body = response.body();
                 if (body == null) {
                     throw new NoDataFoundException("No data found for requested ID: " + context);
                 }
                 throw new NoDataFoundException("No data found for requested ID: " + context + "\n" + body.string());
             } else if (code != 200) {
-                throw new IOException("Error from requested ID: " + context + " error was: \n" + code + " " + execute.message());
+                throw new IOException("Error from requested ID: " + context + " error was: \n" + code + " " + response.message());
             }
-            ResponseBody body = execute.body();
+            ResponseBody body = response.body();
             if (body == null) {
                 throw new IOException("Error with request, body not returned: " + build);
             }
