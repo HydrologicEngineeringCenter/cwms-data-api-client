@@ -41,10 +41,8 @@ import okhttp3.ResponseBody;
 
 public final class TimeSeriesController {
 
-    public TimeSeries retrieveTimeSeries(HttpUrlProvider radarUrlProvider, String timeSeriesId,
-                                         String officeId, String units, String datum,
-                                         Instant start, Instant end, String page)
-        throws IOException {
+    public TimeSeries retrieveTimeSeries(HttpUrlProvider radarUrlProvider, String officeId, String timeSeriesId, String units, String datum,
+                                         Instant start, Instant end, String page) throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
         HttpUrl httpUrl = radarUrlProvider.buildHttpUrl("/timeseries")
             .newBuilder()

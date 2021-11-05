@@ -59,7 +59,7 @@ class TestTimeSeriesController {
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT", "SI", "NAVD88",
+            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
             start, end, null);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
@@ -90,7 +90,7 @@ class TestTimeSeriesController {
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT", "SI", "NAVD88",
+            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
             start, end, null);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
@@ -106,7 +106,7 @@ class TestTimeSeriesController {
         assertTrue(end.isAfter(lastTime));
         assertEquals(start, firstTime);
         timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT", "SI", "NAVD88",
+            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
             start, end, timeSeries.getNextPage());
         assertEquals(245, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
@@ -135,7 +135,7 @@ class TestTimeSeriesController {
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(s -> HttpUrl.parse("http://localhost:11999" + s),
-            "arbu.Elev.Inst.1Hour.0.Bogus", "SWT", "SI", "NAVD88",
+            "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
             start, end, null));
     }
 
@@ -151,7 +151,7 @@ class TestTimeSeriesController {
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(server::url,
-            "arbu.Elev.Inst.1Hour.0.Bogus", "SWT", "SI", "NAVD88",
+            "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
             start, end, null));
     }
 }
