@@ -50,7 +50,7 @@ class TestTimeSeriesController {
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/json/timeseries.json")
+        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
         MockWebServer server = new MockWebServer();
@@ -60,7 +60,7 @@ class TestTimeSeriesController {
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
             "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, null);
+            start, end, null, null);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -76,10 +76,10 @@ class TestTimeSeriesController {
     @Test
     void testRetrieveTimeSeriesPagination() throws IOException {
         Path page1 =
-            new File(getClass().getClassLoader().getResource("radar/json/timeseries_page1.json")
+            new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_page1.json")
                 .getFile()).toPath();
         Path page2 =
-            new File(getClass().getClassLoader().getResource("radar/json/timeseries_page2.json")
+            new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_page2.json")
                 .getFile()).toPath();
         String page1Body = String.join("\n", Files.readAllLines(page1));
         String page2Body = String.join("\n", Files.readAllLines(page2));
@@ -91,7 +91,7 @@ class TestTimeSeriesController {
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
             "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, null);
+            start, end, null, 500);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -107,7 +107,7 @@ class TestTimeSeriesController {
         assertEquals(start, firstTime);
         timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
             "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, timeSeries.getNextPage());
+            start, end, timeSeries.getNextPage(), 500);
         assertEquals(245, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -125,7 +125,7 @@ class TestTimeSeriesController {
 
     @Test
     void testCwmsRadarDown() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/json/timeseries.json")
+        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
         MockWebServer server = new MockWebServer();
@@ -136,12 +136,12 @@ class TestTimeSeriesController {
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(s -> HttpUrl.parse("http://localhost:11999" + s),
             "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
-            start, end, null));
+            start, end, null, null));
     }
 
     @Test
     void testTimeSeriesNotFound() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/json/timeseries_notfound.json")
+        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_notfound.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
         MockWebServer server = new MockWebServer();
@@ -152,6 +152,6 @@ class TestTimeSeriesController {
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(server::url,
             "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
-            start, end, null));
+            start, end, null, null));
     }
 }

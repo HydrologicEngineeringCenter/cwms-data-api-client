@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.time.Instant;
+import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
 import mil.army.usace.hec.cwms.radar.client.HttpUrlProvider;
 import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
@@ -42,8 +43,9 @@ import okhttp3.ResponseBody;
 public final class TimeSeriesController {
 
     public TimeSeries retrieveTimeSeries(HttpUrlProvider radarUrlProvider, String officeId, String timeSeriesId, String units, String verticalDatum,
-                                         Instant start, Instant end, String page) throws IOException {
+                                         Instant start, Instant end, String page, Integer pageSize) throws IOException {
         OkHttpClient client = OkHttpUtil.getClient();
+        String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
         HttpUrl httpUrl = radarUrlProvider.buildHttpUrl("/timeseries")
             .newBuilder()
             .addQueryParameter("name", timeSeriesId)
@@ -52,8 +54,9 @@ public final class TimeSeriesController {
             .addQueryParameter("datum", verticalDatum)
             .addQueryParameter("begin", start.toString())
             .addQueryParameter("end", end.toString())
-            .addQueryParameter("page", page)
             .addQueryParameter("timezone", "UTC")
+            .addQueryParameter("page", page)
+            .addQueryParameter("pageSize", pageSizeString)
             .build();
         Request build = new Request.Builder()
             .url(httpUrl)
