@@ -65,24 +65,26 @@ public final class TimeSeriesController {
     private <T> T extractValueFromBody(String timeSeriesId, OkHttpClient client, Request build, Class<T> type) throws IOException {
         try {
             Response execute = client.newCall(build).execute();
-            execute.isSuccessful();
-            int code = execute.code();
-            if (code == 404) {
-                ResponseBody body = execute.body();
-                if (body == null) {
-                    throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId);
+            if (execute.isSuccessful()) {
+                try (ResponseBody body = execute.body()) {
+                    if (body == null) {
+                        throw new IOException("Error with request, body not returned: " + build);
+                    }
+                    String string = body.string();
+                    return RadarObjectMapper.mapJsonToObject(string, type);
                 }
-                throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId + "\n" + body.string());
-            } else if (code != 200) {
-                throw new IOException(
-                    "Error retrieving time series: " + timeSeriesId + " error was: \n" + code + " " + execute.message());
-            }
-            try (ResponseBody body = execute.body()) {
-                if (body == null) {
-                    throw new IOException("Error with request, body not returned: " + build);
+            } else {
+                int code = execute.code();
+                if (code == 404) {
+                    ResponseBody body = execute.body();
+                    if (body == null) {
+                        throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId);
+                    }
+                    throw new NoDataFoundException("No data found for requested ID: " + timeSeriesId + "\n" + body.string());
+                } else {
+                    throw new IOException(
+                        "Error retrieving time series: " + timeSeriesId + " error was: \n" + code + " " + execute.message());
                 }
-                String string = body.string();
-                return RadarObjectMapper.mapJsonToObject(string, type);
             }
         } catch (ConnectException connectException) {
             throw new ServerNotFoundException(connectException);
