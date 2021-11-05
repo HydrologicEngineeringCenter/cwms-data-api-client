@@ -36,8 +36,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.radar.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.MockResponse;
@@ -134,7 +134,7 @@ class TestTimeSeriesController {
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
-        assertThrows(ClientNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(s -> HttpUrl.parse("http://localhost:11999" + s),
+        assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(s -> HttpUrl.parse("http://localhost:11999" + s),
             "arbu.Elev.Inst.1Hour.0.Bogus", "SWT", "SI", "NAVD88",
             start, end, null));
     }

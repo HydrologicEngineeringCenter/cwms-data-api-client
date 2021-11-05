@@ -26,9 +26,9 @@ package mil.army.usace.hec.cwms.radar.client;
 
 import java.io.IOException;
 
-public class ClientNotFoundException extends IOException {
+public class ServerNotFoundException extends IOException {
 
-    public ClientNotFoundException(Throwable throwable) {
+    public ServerNotFoundException(Throwable throwable) {
         super(throwable);
     }
 

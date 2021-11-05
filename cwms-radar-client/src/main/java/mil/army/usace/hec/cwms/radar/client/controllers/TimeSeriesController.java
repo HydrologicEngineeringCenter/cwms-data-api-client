@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.time.Instant;
 import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
-import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.HttpUrlProvider;
 import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.radar.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import okhttp3.HttpUrl;
@@ -87,7 +87,7 @@ public final class TimeSeriesController {
                 return RadarObjectMapper.mapJsonToObject(string, type);
             }
         } catch (ConnectException connectException) {
-            throw new ClientNotFoundException(connectException);
+            throw new ServerNotFoundException(connectException);
         }
     }
 }
