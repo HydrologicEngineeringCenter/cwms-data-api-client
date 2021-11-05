@@ -1,8 +1,25 @@
 /*
- * Copyright (c) 2021
- * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
- * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
- * Source may not be released without written approval from HEC
+ * MIT License
+ *
+ * Copyright (c) 2021 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package mil.army.usace.hec.cwms.radar.client.model;
@@ -17,20 +34,20 @@ import javax.validation.Valid;
  * CatalogEntry
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
-public class LocationsCatalogEntry {
+public class LocationCatalogEntry {
     @JsonProperty("office")
     private final String office = null;
 
     @JsonProperty("name")
     private final String name = null;
 
-    @JsonProperty("nearestCity")
+    @JsonProperty("nearest-city")
     private final String nearestCity = null;
 
-    @JsonProperty("publicName")
+    @JsonProperty("public-name")
     private final String publicName = null;
 
-    @JsonProperty("longName")
+    @JsonProperty("long-name")
     private final String longName = null;
 
     @JsonProperty("description")
@@ -42,7 +59,7 @@ public class LocationsCatalogEntry {
     @JsonProperty("type")
     private final String type = null;
 
-    @JsonProperty("timeZone")
+    @JsonProperty("time-zone")
     private final String timeZone = null;
 
     @JsonProperty("latitude")
@@ -51,13 +68,13 @@ public class LocationsCatalogEntry {
     @JsonProperty("longitude")
     private final Double longitude = null;
 
-    @JsonProperty("publishedLatitude")
+    @JsonProperty("published-latitude")
     private final Double publishedLatitude = null;
 
-    @JsonProperty("publishedLongitude")
+    @JsonProperty("published-longitude")
     private final Double publishedLongitude = null;
 
-    @JsonProperty("horizontalDatum")
+    @JsonProperty("horizontal-datum")
     private final String horizontalDatum = null;
 
     @JsonProperty("elevation")
@@ -66,7 +83,7 @@ public class LocationsCatalogEntry {
     @JsonProperty("unit")
     private final String unit = null;
 
-    @JsonProperty("verticalDatum")
+    @JsonProperty("vertical-datum")
     private final String verticalDatum = null;
 
     @JsonProperty("nation")
@@ -78,10 +95,10 @@ public class LocationsCatalogEntry {
     @JsonProperty("county")
     private final String county = null;
 
-    @JsonProperty("boundingOffice")
+    @JsonProperty("bounding-office")
     private final String boundingOffice = null;
 
-    @JsonProperty("mapLabel")
+    @JsonProperty("map-label")
     private final String mapLabel = null;
 
     @JsonProperty("active")
@@ -90,9 +107,6 @@ public class LocationsCatalogEntry {
     @JsonProperty("aliases")
     @Valid
     private final List<LocationAlias> aliases = null;
-
-    @JsonProperty("fullName")
-    private final String fullName = null;
 
     /**
      * Get office
@@ -358,18 +372,6 @@ public class LocationsCatalogEntry {
         return aliases;
     }
 
-    /**
-     * Get fullName
-     *
-     * @return fullName
-     **/
-    @ApiModelProperty(value = "")
-
-    public String getFullName() {
-        return fullName;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -378,7 +380,7 @@ public class LocationsCatalogEntry {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LocationsCatalogEntry catalogEntry = (LocationsCatalogEntry) o;
+        LocationCatalogEntry catalogEntry = (LocationCatalogEntry) o;
         return Objects.equals(this.office, catalogEntry.office) &&
             Objects.equals(this.name, catalogEntry.name) &&
             Objects.equals(this.nearestCity, catalogEntry.nearestCity) &&
@@ -402,8 +404,7 @@ public class LocationsCatalogEntry {
             Objects.equals(this.boundingOffice, catalogEntry.boundingOffice) &&
             Objects.equals(this.mapLabel, catalogEntry.mapLabel) &&
             Objects.equals(this.active, catalogEntry.active) &&
-            Objects.equals(this.aliases, catalogEntry.aliases) &&
-            Objects.equals(this.fullName, catalogEntry.fullName);
+            Objects.equals(this.aliases, catalogEntry.aliases);
     }
 
     @Override
@@ -411,7 +412,7 @@ public class LocationsCatalogEntry {
         return Objects.hash(office, name, nearestCity, publicName, longName, description, kind,
             type, timeZone, latitude, longitude, publishedLatitude, publishedLongitude,
             horizontalDatum, elevation, unit, verticalDatum, nation, state, county, boundingOffice,
-            mapLabel, active, aliases, fullName);
+            mapLabel, active, aliases);
     }
 
     @Override
@@ -443,7 +444,6 @@ public class LocationsCatalogEntry {
         sb.append("    mapLabel: ").append(toIndentedString(mapLabel)).append("\n");
         sb.append("    active: ").append(toIndentedString(active)).append("\n");
         sb.append("    aliases: ").append(toIndentedString(aliases)).append("\n");
-        sb.append("    fullName: ").append(toIndentedString(fullName)).append("\n");
         sb.append("}");
         return sb.toString();
     }

@@ -1,8 +1,25 @@
 /*
- * Copyright (c) 2021
- * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
- * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
- * Source may not be released without written approval from HEC
+ * MIT License
+ *
+ * Copyright (c) 2021 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package mil.army.usace.hec.cwms.radar.client.model;
@@ -17,7 +34,7 @@ import javax.validation.Valid;
  * Catalog
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
-public class LocationsCatalog {
+public class LocationCatalog {
     @JsonProperty("page")
     private String page = null;
 
@@ -32,7 +49,7 @@ public class LocationsCatalog {
 
     @JsonProperty("entries")
     @Valid
-    private List<LocationsCatalogEntry> entries = null;
+    private List<LocationCatalogEntry> entries = null;
 
     /**
      * The cursor to the current page of data
@@ -85,7 +102,7 @@ public class LocationsCatalog {
      **/
     @ApiModelProperty(value = "")
     @Valid
-    public List<LocationsCatalogEntry> getEntries() {
+    public List<LocationCatalogEntry> getEntries() {
         return entries;
     }
 
@@ -97,7 +114,7 @@ public class LocationsCatalog {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LocationsCatalog catalog = (LocationsCatalog) o;
+        LocationCatalog catalog = (LocationCatalog) o;
         return Objects.equals(this.page, catalog.page) &&
             Objects.equals(this.nextPage, catalog.nextPage) &&
             Objects.equals(this.total, catalog.total) &&
