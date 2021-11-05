@@ -1,9 +1,6 @@
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.radar.client.model.Location;
-import mil.army.usace.hec.cwms.radar.client.model.UnitSystem;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 
-class LocationControllerTest {
+class TestLocationController extends TestController{
 
     @Test
     void testRetrieveLocation() throws IOException
@@ -27,11 +24,12 @@ class LocationControllerTest {
         }
         Path path = new File(resourceURL.getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody(collect));
-        server.start();
-        Location location = new LocationController().retrieveLocation(server::url,"LOC_TEST",
-                "SWT", UnitSystem.SI.toString());
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+                .officeId("SWT")
+                .unit("SI");
+        Location location = new LocationController().retrieveLocation(buildConnectionInfo(), input);
         assertEquals("LOC_TEST", location.getName());
         assertEquals("LOC_TEST", location.getPublicName());
         assertEquals("SWT", location.getOfficeId());
