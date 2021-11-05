@@ -103,7 +103,7 @@ public final class TimeSeriesEndpointInput extends EndpointInput {
             .addQueryParameter("datum", verticalDatum)
             .addQueryParameter("begin", beginString)
             .addQueryParameter("end", endString)
-            .addQueryParameter("timezone", "UTC")
+            .addQueryParameter("timezone", zoneId.getId())
             .addQueryParameter("page", page)
             .addQueryParameter("pageSize", pageSizeString);
     }
