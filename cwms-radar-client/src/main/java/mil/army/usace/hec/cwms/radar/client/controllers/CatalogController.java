@@ -8,28 +8,18 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.OkHttpUtil;
-import mil.army.usace.hec.cwms.radar.client.HttpUrlProvider;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
-public final class CatalogController extends AbstractController {
+public final class CatalogController {
 
-    public TimeSeriesCatalog retrieveTimeSeriesCatalog(HttpUrlProvider radarUrlProvider, String officeId, String unitSystem, String cursor)
-        throws IOException {
-        OkHttpClient client = OkHttpUtil.getClient();
-        HttpUrl httpUrl = radarUrlProvider.buildHttpUrl("/catalog/timeseries")
-            .newBuilder()
-            .addQueryParameter("office", officeId)
-            .addQueryParameter("unitSystem", unitSystem)
-            .addQueryParameter("cursor", cursor)
-            .build();
-        Request build = new Request.Builder()
-            .url(httpUrl)
-            .addHeader("accept", "application/json;version=2")
-            .build();
-        return extractValueFromBody(officeId, client, build, TimeSeriesCatalog.class);
+    public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
+        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "catalog/timeseries")
+            .addEndpointInput(input)
+            .execute();
+        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
     }
 }

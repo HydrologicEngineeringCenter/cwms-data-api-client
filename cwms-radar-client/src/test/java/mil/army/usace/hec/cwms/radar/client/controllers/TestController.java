@@ -12,10 +12,32 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import okhttp3.mockwebserver.MockWebServer;
+import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 abstract class TestController {
-    final String readJsonFile(MockWebServer mockWebServer, String jsonPath) throws IOException {
+
+    private static final String BASE_URL = "http://localhost:11524";
+    static MockHttpServer mockHttpServer;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        mockHttpServer = MockHttpServer.create();
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        mockHttpServer.shutdown();
+    }
+
+    ApiConnectionInfo buildConnectionInfo() {
+        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+        return new ApiConnectionInfo(baseUrl);
+    }
+
+    final String readJsonFile(String jsonPath) throws IOException {
         URL resource = getClass().getClassLoader().getResource(jsonPath);
         if (resource == null) {
             throw new IOException("Resource not found: " + jsonPath);

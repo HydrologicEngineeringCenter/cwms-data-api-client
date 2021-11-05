@@ -14,23 +14,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.List;
-import mil.army.usace.hec.cwms.radar.client.ClientNotFoundException;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalogEntry;
-import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testRetrieveTimeSeriesCatalog() throws IOException {
-        MockWebServer server = new MockWebServer();
-        String collect = readJsonFile(server, "radar/json/catalog_ts.json");
-        server.enqueue(new MockResponse().setBody(collect));
-        server.start();
-        TimeSeriesCatalog catalog = new CatalogController().retrieveTimeSeriesCatalog(server::url, "SWT", "SI", null);
+        String collect = readJsonFile("radar/json/catalog_ts.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesCatalogEndpointInput input = new TimeSeriesCatalogEndpointInput()
+            .officeId("SWT")
+            .unitSystem("SI");
+        TimeSeriesCatalog catalog = new CatalogController().retrieveTimeSeriesCatalog(buildConnectionInfo(), input);
         List<TimeSeriesCatalogEntry> entries = catalog.getEntries();
         assertEquals(500, entries.size());
         assertNotNull(catalog.getNextPage());
@@ -46,13 +46,15 @@ class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testRetrieveTimeSeriesCatalogPagination() throws IOException {
-        MockWebServer server = new MockWebServer();
-        String page1Body = readJsonFile(server, "radar/json/catalog_tspage1.json");
-        String page2Body = readJsonFile(server, "radar/json/catalog_tspage2.json");
-        server.enqueue(new MockResponse().setBody(page1Body));
-        server.enqueue(new MockResponse().setBody(page2Body));
-        server.start();
-        TimeSeriesCatalog catalog = new CatalogController().retrieveTimeSeriesCatalog(server::url, "SWT", "SI", null);
+        String page1Body = readJsonFile("radar/json/catalog_tspage1.json");
+        String page2Body = readJsonFile("radar/json/catalog_tspage2.json");
+        mockHttpServer.enqueue(page1Body);
+        mockHttpServer.enqueue(page2Body);
+        mockHttpServer.start();
+        TimeSeriesCatalogEndpointInput input = new TimeSeriesCatalogEndpointInput()
+            .officeId("SWT")
+            .unitSystem("SI");
+        TimeSeriesCatalog catalog = new CatalogController().retrieveTimeSeriesCatalog(buildConnectionInfo(), input);
         List<TimeSeriesCatalogEntry> entries = catalog.getEntries();
         assertEquals(500, entries.size());
         assertNotNull(catalog.getNextPage());
@@ -65,8 +67,8 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals("%", catalogEntry.getUnits());
         assertEquals("SWT", catalogEntry.getOffice());
 
-        catalog = new CatalogController().retrieveTimeSeriesCatalog(server::url,
-            "SWT", "SI", catalog.getNextPage());
+        input.cursor(catalog.getNextPage());
+        catalog = new CatalogController().retrieveTimeSeriesCatalog(buildConnectionInfo(), input);
         entries = catalog.getEntries();
         assertEquals(500, entries.size());
         assertNotNull(catalog.getNextPage());
@@ -82,13 +84,13 @@ class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testCwmsRadarDown() throws IOException {
-        MockWebServer server = new MockWebServer();
-        String collect = readJsonFile(server, "radar/json/catalog_ts.json");
-        server.enqueue(new MockResponse().setBody(collect));
-        server.start();
+        String collect = readJsonFile("radar/json/catalog_ts.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
         CatalogController timeSeriesController = new CatalogController();
-        assertThrows(ClientNotFoundException.class,
-            () -> timeSeriesController.retrieveTimeSeriesCatalog(s -> HttpUrl.parse("http://localhost:11999" + s), "SWT", "SI", null));
+        assertThrows(ServerNotFoundException.class,
+            () -> timeSeriesController.retrieveTimeSeriesCatalog(new ApiConnectionInfo("http://localhost:11999"),
+                new TimeSeriesCatalogEndpointInput()));
     }
 
 }

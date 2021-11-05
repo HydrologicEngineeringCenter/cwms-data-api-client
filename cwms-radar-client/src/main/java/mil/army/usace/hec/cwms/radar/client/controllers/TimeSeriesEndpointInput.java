@@ -105,6 +105,7 @@ public final class TimeSeriesEndpointInput extends EndpointInput {
             .addQueryParameter("end", endString)
             .addQueryParameter("timezone", zoneId.getId())
             .addQueryParameter("page", page)
-            .addQueryParameter("pageSize", pageSizeString);
+            .addQueryParameter("pageSize", pageSizeString)
+            .addQueryHeader("accept", "application/json;version=2");
     }
 }
