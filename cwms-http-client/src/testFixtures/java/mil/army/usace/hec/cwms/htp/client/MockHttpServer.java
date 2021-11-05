@@ -22,22 +22,42 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.controllers;
+package mil.army.usace.hec.cwms.htp.client;
 
 import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 
-public final class TimeSeriesController {
+public final class MockHttpServer {
 
-    public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "timeseries")
-            .addQueryHeader("accept", "application/json;version=2")
-            .addEndpointInput(timeSeriesEndpointInput)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+    private final MockWebServer mockWebServer;
+
+    private MockHttpServer(MockWebServer mockWebServer) {
+        this.mockWebServer = mockWebServer;
+    }
+
+    public static MockHttpServer create() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        return new MockHttpServer(mockWebServer);
+    }
+
+    public void enqueue(String body) {
+        mockWebServer.enqueue(new MockResponse().setBody(body));
+    }
+
+    public void enqueue(int responseCode, String body) {
+        mockWebServer.enqueue(new MockResponse().setResponseCode(responseCode).setBody(body));
+    }
+
+    public void shutdown() throws IOException {
+        mockWebServer.shutdown();
+    }
+
+    public int getPort() {
+        return mockWebServer.getPort();
+    }
+
+    public void start() throws IOException {
+        mockWebServer.start();
     }
 }

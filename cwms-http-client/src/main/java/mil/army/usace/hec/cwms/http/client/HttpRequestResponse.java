@@ -22,14 +22,17 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
+public final class HttpRequestResponse {
 
-public class ServerNotFoundException extends IOException {
+    private final String body;
 
-    public ServerNotFoundException(Throwable throwable) {
-        super(throwable);
+    HttpRequestResponse(String body) {
+        this.body = body;
     }
 
+    public String getBody() {
+        return body;
+    }
 }

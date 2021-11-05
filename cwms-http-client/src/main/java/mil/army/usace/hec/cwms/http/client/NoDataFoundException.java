@@ -22,22 +22,14 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.controllers;
+package mil.army.usace.hec.cwms.http.client;
 
 import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
-public final class TimeSeriesController {
+public class NoDataFoundException extends IOException {
 
-    public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "timeseries")
-            .addQueryHeader("accept", "application/json;version=2")
-            .addEndpointInput(timeSeriesEndpointInput)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+    public NoDataFoundException(String message) {
+        super(message);
     }
+
 }

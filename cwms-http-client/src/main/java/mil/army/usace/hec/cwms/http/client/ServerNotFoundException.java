@@ -22,10 +22,14 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.http.client;
 
-import okhttp3.HttpUrl;
+import java.io.IOException;
 
-public interface HttpUrlProvider {
-    HttpUrl buildHttpUrl(String path);
+public class ServerNotFoundException extends IOException {
+
+    public ServerNotFoundException(Throwable throwable) {
+        super(throwable);
+    }
+
 }

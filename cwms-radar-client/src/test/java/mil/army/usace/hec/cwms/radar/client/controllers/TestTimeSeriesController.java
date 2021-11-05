@@ -36,31 +36,52 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import mil.army.usace.hec.cwms.radar.client.NoDataFoundException;
-import mil.army.usace.hec.cwms.radar.client.ServerNotFoundException;
+import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
-import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesController {
 
     private static final String BASE_URL = "http://localhost:11524";
+    private static MockHttpServer mockHttpServer;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        mockHttpServer = MockHttpServer.create();
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        mockHttpServer.shutdown();
+    }
+
+    private ApiConnectionInfo buildConnectionInfo() {
+        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+        return new ApiConnectionInfo(baseUrl);
+    }
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
         Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody(collect));
-        server.start();
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, null, null);
+        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+            .officeId("SWT")
+            .unit("SI")
+            .verticalDatum("NAVD88")
+            .begin(start)
+            .end(end)
+            .page(null);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -83,15 +104,20 @@ class TestTimeSeriesController {
                 .getFile()).toPath();
         String page1Body = String.join("\n", Files.readAllLines(page1));
         String page2Body = String.join("\n", Files.readAllLines(page2));
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody(page1Body));
-        server.enqueue(new MockResponse().setBody(page2Body));
-        server.start();
+        mockHttpServer.enqueue(page1Body);
+        mockHttpServer.enqueue(page2Body);
+        mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, null, 500);
+        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+            .officeId("SWT")
+            .unit("SI")
+            .verticalDatum("NAVD88")
+            .begin(start)
+            .end(end)
+            .page(null)
+            .pageSize(500);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -99,15 +125,12 @@ class TestTimeSeriesController {
         assertEquals(Duration.ZERO, timeSeries.getInterval());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
         assertEquals(start, timeSeries.getBegin().toInstant());
-        Instant firstTime = Instant.ofEpochMilli(
-            timeSeries.getValues().get(0).getDateTime());
-        Instant lastTime = Instant.ofEpochMilli(
-            timeSeries.getValues().get(timeSeries.getValues().size() - 1).getDateTime());
+        Instant firstTime = Instant.ofEpochMilli(timeSeries.getValues().get(0).getDateTime());
+        Instant lastTime = Instant.ofEpochMilli(timeSeries.getValues().get(timeSeries.getValues().size() - 1).getDateTime());
         assertTrue(end.isAfter(lastTime));
         assertEquals(start, firstTime);
-        timeSeries = new TimeSeriesController().retrieveTimeSeries(server::url,
-            "SWT", "arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SI", "NAVD88",
-            start, end, timeSeries.getNextPage(), 500);
+        input.page(timeSeries.getNextPage());
+        timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(245, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -128,15 +151,11 @@ class TestTimeSeriesController {
         Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody(collect));
-        server.start();
-        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
-        assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(s -> HttpUrl.parse("http://localhost:11999" + s),
-            "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
-            start, end, null, null));
+        assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(new ApiConnectionInfo("http://localhost:11999"),
+            new TimeSeriesEndpointInput("")));
     }
 
     @Test
@@ -144,14 +163,12 @@ class TestTimeSeriesController {
         Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_notfound.json")
             .getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
-        MockWebServer server = new MockWebServer();
-        server.enqueue(new MockResponse().setResponseCode(404).setBody(collect));
-        server.start();
+        mockHttpServer.enqueue(404, collect);
+        mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
-        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(server::url,
-            "SWT", "arbu.Elev.Inst.1Hour.0.Bogus", "SI", "NAVD88",
-            start, end, null, null));
+        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.bogus");
+        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(), input));
     }
 }

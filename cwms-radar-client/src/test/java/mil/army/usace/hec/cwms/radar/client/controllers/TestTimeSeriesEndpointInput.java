@@ -24,20 +24,14 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TimeSeriesController {
+import org.junit.jupiter.api.Test;
 
-    public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "timeseries")
-            .addQueryHeader("accept", "application/json;version=2")
-            .addEndpointInput(timeSeriesEndpointInput)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+class TestTimeSeriesEndpointInput {
+
+    @Test
+    void testNullTimeSeriesId() {
+        assertThrows(NullPointerException.class, () -> new TimeSeriesEndpointInput(null));
     }
 }

@@ -22,14 +22,8 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client;
+package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-
-public class NoDataFoundException extends IOException {
-
-    public NoDataFoundException(String message) {
-        super(message);
-    }
-
+public abstract class EndpointInput {
+    protected abstract HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder);
 }
