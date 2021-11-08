@@ -23,26 +23,24 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.Location;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import mil.army.usace.hec.cwms.radar.client.model.Location;
+import org.junit.jupiter.api.Test;
 
 
 class TestLocationController extends TestController{
 
     @Test
-    void testRetrieveLocation() throws IOException
-    {
+    void testRetrieveLocation() throws IOException {
         String resource = "radar/json/location.json";
         URL resourceURL = getClass().getClassLoader().getResource(resource);
-        if(resourceURL == null)
-        {
+        if (resourceURL == null) {
             throw new IOException("Failed to get resource: " + resource);
         }
         Path path = new File(resourceURL.getFile()).toPath();
