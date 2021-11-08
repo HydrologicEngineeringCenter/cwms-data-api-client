@@ -21,16 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
+import java.io.IOException;
 
 public class LocationController {
 

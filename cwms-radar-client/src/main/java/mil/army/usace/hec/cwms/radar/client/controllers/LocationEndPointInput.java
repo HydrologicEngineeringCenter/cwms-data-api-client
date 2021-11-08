@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
+import java.util.Objects;
 
 public class LocationEndPointInput extends EndpointInput {
 
@@ -35,7 +34,7 @@ public class LocationEndPointInput extends EndpointInput {
     private String officeId;
     private String unit;
 
-    public LocationEndPointInput(String locationName) {
+    public LocationEndPointInput(String locationName){
         this.locationName = Objects.requireNonNull(locationName, "Cannot access the location endpoint without a location name");
     }
 

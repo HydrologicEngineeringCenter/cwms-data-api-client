@@ -21,36 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.Location;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import mil.army.usace.hec.cwms.radar.client.model.Location;
-import org.junit.jupiter.api.Test;
 
 
-class TestLocationController extends TestController {
+class TestLocationController extends TestController{
 
     @Test
-    void testRetrieveLocation() throws IOException {
+    void testRetrieveLocation() throws IOException
+    {
         String resource = "radar/json/location.json";
-        URL resourceUrl = getClass().getClassLoader().getResource(resource);
-        if (resourceUrl == null) {
+        URL resourceURL = getClass().getClassLoader().getResource(resource);
+        if(resourceURL == null)
+        {
             throw new IOException("Failed to get resource: " + resource);
         }
-        Path path = new File(resourceUrl.getFile()).toPath();
+        Path path = new File(resourceURL.getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
-            .officeId("SWT")
-            .unit("SI");
+                .officeId("SWT")
+                .unit("SI");
         Location location = new LocationController().retrieveLocation(buildConnectionInfo(), input);
         assertEquals("LOC_TEST", location.getName());
         assertEquals("LOC_TEST", location.getPublicName());
@@ -69,5 +70,4 @@ class TestLocationController extends TestController {
         assertEquals(10.0, location.getPublishedLongitude());
         assertEquals(50.0, location.getPublishedLatitude());
     }
-
 }
