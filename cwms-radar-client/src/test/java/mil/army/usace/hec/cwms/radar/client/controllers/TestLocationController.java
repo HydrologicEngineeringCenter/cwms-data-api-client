@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,22 +35,22 @@ import mil.army.usace.hec.cwms.radar.client.model.Location;
 import org.junit.jupiter.api.Test;
 
 
-class TestLocationController extends TestController{
+class TestLocationController extends TestController {
 
     @Test
     void testRetrieveLocation() throws IOException {
         String resource = "radar/json/location.json";
-        URL resourceURL = getClass().getClassLoader().getResource(resource);
-        if (resourceURL == null) {
+        URL resourceUrl = getClass().getClassLoader().getResource(resource);
+        if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
         }
-        Path path = new File(resourceURL.getFile()).toPath();
+        Path path = new File(resourceUrl.getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
-                .officeId("SWT")
-                .unit("SI");
+            .officeId("SWT")
+            .unit("SI");
         Location location = new LocationController().retrieveLocation(buildConnectionInfo(), input);
         assertEquals("LOC_TEST", location.getName());
         assertEquals("LOC_TEST", location.getPublicName());
@@ -68,4 +69,5 @@ class TestLocationController extends TestController{
         assertEquals(10.0, location.getPublishedLongitude());
         assertEquals(50.0, location.getPublishedLatitude());
     }
+
 }
