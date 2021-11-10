@@ -28,9 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class TestLocationGroupEndpointInput {
+class TestLocationCategoryEndpointInput {
+
     @Test
-    void testNullGroupId() {
-        assertThrows(NullPointerException.class, () -> new LocationGroupEndpointInput(null));
+    void testNullCategoryId() {
+        assertThrows(NullPointerException.class, () -> new LocationCategoryEndpointInput(null));
     }
 }
