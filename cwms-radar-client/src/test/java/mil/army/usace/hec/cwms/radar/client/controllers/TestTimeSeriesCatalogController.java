@@ -1,8 +1,25 @@
 /*
- * Copyright (c) 2021
- * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
- * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
- * Source may not be released without written approval from HEC
+ * MIT License
+ *
+ * Copyright (c) 2021 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
@@ -24,7 +41,7 @@ class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testRetrieveTimeSeriesCatalog() throws IOException {
-        String collect = readJsonFile("radar/json/catalog_ts.json");
+        String collect = readJsonFile("radar/v2/json/catalog_ts.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesCatalogEndpointInput input = new TimeSeriesCatalogEndpointInput()
@@ -46,8 +63,8 @@ class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testRetrieveTimeSeriesCatalogPagination() throws IOException {
-        String page1Body = readJsonFile("radar/json/catalog_tspage1.json");
-        String page2Body = readJsonFile("radar/json/catalog_tspage2.json");
+        String page1Body = readJsonFile("radar/v2/json/catalog_tspage1.json");
+        String page2Body = readJsonFile("radar/v2/json/catalog_tspage2.json");
         mockHttpServer.enqueue(page1Body);
         mockHttpServer.enqueue(page2Body);
         mockHttpServer.start();
@@ -84,7 +101,7 @@ class TestTimeSeriesCatalogController extends TestController {
 
     @Test
     void testCwmsRadarDown() throws IOException {
-        String collect = readJsonFile("radar/json/catalog_ts.json");
+        String collect = readJsonFile("radar/v2/json/catalog_ts.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         CatalogController timeSeriesController = new CatalogController();
