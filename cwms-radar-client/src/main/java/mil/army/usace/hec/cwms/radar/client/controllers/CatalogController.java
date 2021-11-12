@@ -35,6 +35,7 @@ import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 public final class CatalogController {
 
     private static final String CATALOG_TIMESERIES_ENDPOINT = "catalog/timeseries";
+    private static final String CATALOG_LOCATIONS_ENDPOINT = "catalog/locations";
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
         HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
@@ -44,7 +45,7 @@ public final class CatalogController {
     }
 
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "catalog/locations")
+        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
