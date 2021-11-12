@@ -43,28 +43,9 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesController extends TestController {
-
-    private static MockHttpServer mockHttpServer;
-
-    @BeforeEach
-    void setUp() throws IOException {
-        mockHttpServer = MockHttpServer.create();
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        mockHttpServer.shutdown();
-    }
-
-    private ApiConnectionInfo buildConnectionInfo(MockHttpServer mockHttpServer) {
-        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-        return new ApiConnectionInfo(baseUrl);
-    }
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
@@ -80,7 +61,7 @@ class TestTimeSeriesController extends TestController {
             .begin(start)
             .end(end)
             .page(null);
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -110,7 +91,7 @@ class TestTimeSeriesController extends TestController {
             .page(null)
             .pageSize(500);
         mockHttpServer.enqueue(page2Body);
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -123,7 +104,7 @@ class TestTimeSeriesController extends TestController {
         assertTrue(end.isAfter(lastTime));
         assertEquals(start, firstTime);
         input.page(timeSeries.getNextPage());
-        timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(245, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -156,7 +137,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.bogus");
-        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input));
+        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(), input));
     }
 
     @Test
@@ -182,7 +163,9 @@ class TestTimeSeriesController extends TestController {
                             .begin(start)
                             .end(end)
                             .page(null);
-                        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+                        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+                        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+                        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(apiConnectionInfo, input);
                         assertEquals(500, timeSeries.getValues().size());
                         assertEquals(745, timeSeries.getTotal());
                         assertEquals("SWT", timeSeries.getOfficeId());
