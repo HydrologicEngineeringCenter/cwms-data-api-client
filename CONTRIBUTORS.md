@@ -9,6 +9,8 @@
 - Copyright 2021 Resource Management Associates
 -                     Adam Korynta (adam@rmanet.com)
 - Copyright 2021 Resource Management Associates
+-                     Bryson Spilman (bryson@rmanet.com)
+- Copyright 2021 Resource Management Associates
 -                     Peter S Morris (psmorris@rmanet.com)
 - _Add the copyright date, your name, and email address here. (PLEASE KEEP THIS LINE)_
 

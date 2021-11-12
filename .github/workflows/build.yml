@@ -1,0 +1,27 @@
+name: Build cwms-radar-client
+on:
+  push:
+    branches:
+      - main
+      - 'develop/**'
+      - 'devops/**'
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk
+      - name: build and test
+        id: thebuild
+        run: ./gradlew build --info --init-script init.gradle
