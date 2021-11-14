@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 abstract class TestController {
 
-    private static final String BASE_URL = "http://localhost:11524";
+    private static final String BASE_URL = "http://localhost:11524/cwms-data/";
     static MockHttpServer mockHttpServer;
 
     @BeforeEach

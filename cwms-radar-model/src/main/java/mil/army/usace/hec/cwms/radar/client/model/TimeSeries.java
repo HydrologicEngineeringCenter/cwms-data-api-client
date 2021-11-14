@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Duration;
@@ -35,6 +36,7 @@ import javax.validation.Valid;
 /**
  * TimeSeries
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:49:54.974-07:00[America/Los_Angeles]")
 public class TimeSeries {
     @JsonProperty("begin")

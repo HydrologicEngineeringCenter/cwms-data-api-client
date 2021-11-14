@@ -30,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
@@ -53,12 +55,42 @@ class TestTimeSeriesCatalogController extends TestController {
         assertNotNull(catalog.getNextPage());
         assertEquals(500, catalog.getPageSize());
         assertNull(catalog.getPage());
-        assertEquals(68233, catalog.getTotal());
+        assertEquals(74813, catalog.getTotal());
         TimeSeriesCatalogEntry catalogEntry = entries.get(0);
-        assertEquals("000512.%.Ave.~1Day.0.abc", catalogEntry.getTsName());
-        assertEquals("000512.%.Ave.~1Day.0.abc", catalogEntry.getFullName());
-        assertEquals("%", catalogEntry.getUnits());
+        assertEquals("363154.Flow.Inst.~1Hour.0.1622227367498", catalogEntry.getTimeSeriesId());
+        assertEquals("cms", catalogEntry.getUnits());
         assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("UTC", catalogEntry.getLocationTimeZone());
+        assertEquals(-2147483648, catalogEntry.getIntervalOffsetMinutes());
+        assertNull(catalogEntry.getEarliestTime());
+        assertNull(catalogEntry.getLatestTime());
+    }
+
+    @Test
+    void testRetrieveTimeSeriesCatalogTsidFilter() throws IOException {
+        String collect = readJsonFile("radar/v2/json/catalog_ts_idfilter.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesCatalogEndpointInput input = new TimeSeriesCatalogEndpointInput()
+            .officeId("SWT")
+            .unitSystem("SI")
+            .timeSeriesIdFilter("ACSO2.Irrad.Ave.1Hour.1Hour.Raw-Mesonet")
+            .pageSize(1);
+        TimeSeriesCatalog catalog = new CatalogController().retrieveTimeSeriesCatalog(buildConnectionInfo(), input);
+        List<TimeSeriesCatalogEntry> entries = catalog.getEntries();
+        assertEquals(1, entries.size());
+        assertNull(catalog.getNextPage());
+        assertEquals(1, catalog.getPageSize());
+        assertNull(catalog.getPage());
+        assertEquals(1, catalog.getTotal());
+        TimeSeriesCatalogEntry catalogEntry = entries.get(0);
+        assertEquals("ACSO2.Irrad.Ave.1Hour.1Hour.Raw-Mesonet", catalogEntry.getTimeSeriesId());
+        assertEquals("W/m2", catalogEntry.getUnits());
+        assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("US/Central", catalogEntry.getLocationTimeZone());
+        assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
+        assertEquals(ZonedDateTime.of(2016, 6, 1, 1, 0, 0, 0, ZoneId.of("UTC")), catalogEntry.getEarliestTime());
+        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")), catalogEntry.getLatestTime());
     }
 
     @Test
@@ -77,12 +109,15 @@ class TestTimeSeriesCatalogController extends TestController {
         assertNotNull(catalog.getNextPage());
         assertEquals(500, catalog.getPageSize());
         assertNull(catalog.getPage());
-        assertEquals(68233, catalog.getTotal());
+        assertEquals(74813, catalog.getTotal());
         TimeSeriesCatalogEntry catalogEntry = entries.get(0);
-        assertEquals("000512.%.Ave.~1Day.0.abc", catalogEntry.getTsName());
-        assertEquals("000512.%.Ave.~1Day.0.abc", catalogEntry.getFullName());
-        assertEquals("%", catalogEntry.getUnits());
+        assertEquals("363154.Flow.Inst.~1Hour.0.1622227367498", catalogEntry.getTimeSeriesId());
+        assertEquals("cms", catalogEntry.getUnits());
         assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("UTC", catalogEntry.getLocationTimeZone());
+        assertEquals(-2147483648, catalogEntry.getIntervalOffsetMinutes());
+        assertNull(catalogEntry.getEarliestTime());
+        assertNull(catalogEntry.getLatestTime());
 
         input.cursor(catalog.getNextPage());
         catalog = new CatalogController().retrieveTimeSeriesCatalog(buildConnectionInfo(), input);
@@ -90,13 +125,16 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals(500, entries.size());
         assertNotNull(catalog.getNextPage());
         assertEquals(500, catalog.getPageSize());
-        assertNull(catalog.getPage());
-        assertEquals(68233, catalog.getTotal());
+        assertNotNull(catalog.getPage());
+        assertEquals(74813, catalog.getTotal());
         catalogEntry = entries.get(0);
-        assertEquals("16FFA636.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev", catalogEntry.getTsName());
-        assertEquals("16FFA636.Volt-Battery Load.Inst.1Hour.0.Ccp-Rev", catalogEntry.getFullName());
-        assertEquals("volt", catalogEntry.getUnits());
+        assertEquals("ACSO2.Irrad.Ave.1Hour.1Hour.Raw-Mesonet", catalogEntry.getTimeSeriesId());
+        assertEquals("W/m2", catalogEntry.getUnits());
         assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("US/Central", catalogEntry.getLocationTimeZone());
+        assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
+        assertEquals(ZonedDateTime.of(2016, 6, 1, 1, 0, 0, 0, ZoneId.of("UTC")), catalogEntry.getEarliestTime());
+        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")), catalogEntry.getLatestTime());
     }
 
     @Test

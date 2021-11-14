@@ -34,6 +34,9 @@ public class TimeSeriesCatalogEndpointInput extends EndpointInput {
     private Integer pageSize;
     private String unitSystem = "SI";
     private String officeId;
+    private String timeSeriesIdFilter;
+    private String categoryIdFilter;
+    private String groupIdFilter;
 
     public TimeSeriesCatalogEndpointInput cursor(String cursor) {
         this.cursor = cursor;
@@ -55,6 +58,21 @@ public class TimeSeriesCatalogEndpointInput extends EndpointInput {
         return this;
     }
 
+    public TimeSeriesCatalogEndpointInput timeSeriesIdFilter(String timeSeriesIdFilter) {
+        this.timeSeriesIdFilter = timeSeriesIdFilter;
+        return this;
+    }
+
+    public TimeSeriesCatalogEndpointInput categoryIdFilter(String categoryIdFilter) {
+        this.categoryIdFilter = categoryIdFilter;
+        return this;
+    }
+
+    public TimeSeriesCatalogEndpointInput groupIdFilter(String groupIdFilter) {
+        this.groupIdFilter = groupIdFilter;
+        return this;
+    }
+
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
@@ -62,6 +80,9 @@ public class TimeSeriesCatalogEndpointInput extends EndpointInput {
             .addQueryParameter("unitSystem", unitSystem)
             .addQueryParameter("cursor", cursor)
             .addQueryParameter("pageSize", pageSizeString)
+            .addQueryParameter("like", timeSeriesIdFilter)
+            .addQueryParameter("categoryLike", categoryIdFilter)
+            .addQueryParameter("groupLike", groupIdFilter)
             .addQueryHeader("accept", "application/json;version=2");
     }
 }

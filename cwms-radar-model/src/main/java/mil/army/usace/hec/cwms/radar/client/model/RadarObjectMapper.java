@@ -28,6 +28,8 @@ import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -36,7 +38,12 @@ public final class RadarObjectMapper {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
         .registerModule(new JavaTimeModule())
-        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
+        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+
+    private RadarObjectMapper(){
+        throw new AssertionError("Utility class");
+    }
 
     public static <T> T mapJsonToObject(String json, Class<T> classObject) throws IOException {
         return OBJECT_MAPPER.readValue(json, classObject);
