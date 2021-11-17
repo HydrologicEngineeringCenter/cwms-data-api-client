@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
+import mil.army.usace.hec.cwms.radar.client.model.LocationAlias;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalogEntry;
 import org.junit.jupiter.api.Test;
@@ -40,7 +42,7 @@ import org.junit.jupiter.api.Test;
 class TestLocationsCatalogController extends TestController {
 
     @Test
-    void testRetrieveTimeSeriesCatalog() throws IOException {
+    void testRetrieveLocationCatalog() throws IOException {
         String collect = readJsonFile("radar/v2/json/catalog_loc.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -84,7 +86,97 @@ class TestLocationsCatalogController extends TestController {
     }
 
     @Test
-    void testRetrieveTimeSeriesCatalogPagination() throws IOException {
+    void testRetrieveLocationCatalogLocationIdFilter() throws IOException {
+        String collect = readJsonFile("radar/v2/json/catalog_loc_locationid.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationCatalogEndpointInput input = new LocationCatalogEndpointInput()
+            .officeId("SWT")
+            .unitSystem("SI")
+            .pageSize(1)
+            .locationIdFilter("AARK");
+        LocationCatalog catalog = new CatalogController().retrieveLocationCatalog(buildConnectionInfo(), input);
+        List<LocationCatalogEntry> entries = catalog.getEntries();
+        assertEquals(1, entries.size());
+        assertEquals(1, catalog.getPageSize());
+        assertNull(catalog.getPage());
+        LocationCatalogEntry catalogEntry = entries.get(0);
+        assertEquals("AARK", catalogEntry.getName());
+        assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("Arkansas City, KS", catalogEntry.getNearestCity());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getPublicName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getLongName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getDescription());
+        assertEquals("STREAM_LOCATION", catalogEntry.getKind());
+        assertNull(catalogEntry.getType());
+        assertEquals("CST6CDT", catalogEntry.getTimeZone());
+        assertEquals(37.056418, catalogEntry.getLatitude());
+        assertEquals(-97.0580939, catalogEntry.getLongitude());
+        assertNull(catalogEntry.getPublishedLatitude());
+        assertNull(catalogEntry.getPublishedLongitude());
+        assertEquals("NAD83", catalogEntry.getHorizontalDatum());
+        assertEquals(320.04, catalogEntry.getElevation());
+        assertEquals("m", catalogEntry.getUnit());
+        assertEquals("NGVD29", catalogEntry.getVerticalDatum());
+        assertEquals("UNITED STATES", catalogEntry.getNation());
+        assertEquals("KS", catalogEntry.getState());
+        assertEquals("Unknown County or County N/A", catalogEntry.getCounty());
+        assertEquals("SWT", catalogEntry.getBoundingOffice());
+        assertNull(catalogEntry.getMapLabel());
+        assertTrue(catalogEntry.isActive());
+        assertEquals(5, catalogEntry.getAliases().size());
+        LocationAlias alias = catalogEntry.getAliases().get(0);
+        assertEquals("Agency Aliases-DCP Platform ID", alias.getLocationGroupId());
+        assertEquals("CE5BAB12", alias.getAliasId());
+    }
+
+    @Test
+    void testRetrieveLocationCatalogCategoryAndGroup() throws IOException {
+        String collect = readJsonFile("radar/v2/json/catalog_loc_categoryandgroup.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationCatalogEndpointInput input = new LocationCatalogEndpointInput()
+            .officeId("SWT")
+            .unitSystem("SI")
+            .pageSize(1)
+            .locationIdFilter("AARK");
+        LocationCatalog catalog = new CatalogController().retrieveLocationCatalog(buildConnectionInfo(), input);
+        List<LocationCatalogEntry> entries = catalog.getEntries();
+        assertEquals(1, entries.size());
+        assertEquals(1, catalog.getPageSize());
+        assertNull(catalog.getPage());
+        LocationCatalogEntry catalogEntry = entries.get(0);
+        assertEquals("AARK", catalogEntry.getName());
+        assertEquals("SWT", catalogEntry.getOffice());
+        assertEquals("Arkansas City, KS", catalogEntry.getNearestCity());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getPublicName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getLongName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", catalogEntry.getDescription());
+        assertEquals("STREAM_LOCATION", catalogEntry.getKind());
+        assertNull(catalogEntry.getType());
+        assertEquals("CST6CDT", catalogEntry.getTimeZone());
+        assertEquals(37.056418, catalogEntry.getLatitude());
+        assertEquals(-97.0580939, catalogEntry.getLongitude());
+        assertNull(catalogEntry.getPublishedLatitude());
+        assertNull(catalogEntry.getPublishedLongitude());
+        assertEquals("NAD83", catalogEntry.getHorizontalDatum());
+        assertEquals(320.04, catalogEntry.getElevation());
+        assertEquals("m", catalogEntry.getUnit());
+        assertEquals("NGVD29", catalogEntry.getVerticalDatum());
+        assertEquals("UNITED STATES", catalogEntry.getNation());
+        assertEquals("KS", catalogEntry.getState());
+        assertEquals("Unknown County or County N/A", catalogEntry.getCounty());
+        assertEquals("SWT", catalogEntry.getBoundingOffice());
+        assertNull(catalogEntry.getMapLabel());
+        assertTrue(catalogEntry.isActive());
+        assertEquals(1, catalogEntry.getAliases().size());
+        LocationAlias alias = catalogEntry.getAliases().get(0);
+        assertEquals("Agency Aliases-DCP Platform ID", alias.getLocationGroupId());
+        assertEquals("CE5BAB12", alias.getAliasId());
+    }
+
+    @Test
+    void testRetrieveLocationCatalogPagination() throws IOException {
         String page1Body = readJsonFile("radar/v2/json/catalog_locpage1.json");
         String page2Body = readJsonFile("radar/v2/json/catalog_locpage2.json");
         mockHttpServer.enqueue(page1Body);

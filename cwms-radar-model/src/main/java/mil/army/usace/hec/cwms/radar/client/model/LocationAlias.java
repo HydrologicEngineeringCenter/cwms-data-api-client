@@ -8,7 +8,6 @@
 package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
@@ -17,20 +16,18 @@ import java.util.Objects;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
 public class LocationAlias {
     @JsonProperty("name")
-    private final String name = null;
+    private final String locationGroupId = null;
 
     @JsonProperty("value")
-    private final String value = null;
+    private final String aliasId = null;
 
     /**
      * Get name
      *
      * @return name
      **/
-    @ApiModelProperty(value = "")
-
-    public String getName() {
-        return name;
+    public String getLocationGroupId() {
+        return locationGroupId;
     }
 
     /**
@@ -38,10 +35,8 @@ public class LocationAlias {
      *
      * @return value
      **/
-    @ApiModelProperty(value = "")
-
-    public String getValue() {
-        return value;
+    public String getAliasId() {
+        return aliasId;
     }
 
     @Override
@@ -53,13 +48,13 @@ public class LocationAlias {
             return false;
         }
         LocationAlias locationAlias = (LocationAlias) o;
-        return Objects.equals(this.name, locationAlias.name) &&
-            Objects.equals(this.value, locationAlias.value);
+        return Objects.equals(this.locationGroupId, locationAlias.locationGroupId) &&
+            Objects.equals(this.aliasId, locationAlias.aliasId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value);
+        return Objects.hash(locationGroupId, aliasId);
     }
 
     @Override
@@ -67,8 +62,8 @@ public class LocationAlias {
         StringBuilder sb = new StringBuilder();
         sb.append("class LocationAlias {\n");
 
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb.append("    locationGroupId: ").append(toIndentedString(locationGroupId)).append("\n");
+        sb.append("    aliasId: ").append(toIndentedString(aliasId)).append("\n");
         sb.append("}");
         return sb.toString();
     }

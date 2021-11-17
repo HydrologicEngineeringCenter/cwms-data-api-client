@@ -34,6 +34,9 @@ public class LocationCatalogEndpointInput extends EndpointInput {
     private Integer pageSize;
     private String unitSystem = "SI";
     private String officeId;
+    private String locationIdFilter;
+    private String categoryIdFilter;
+    private String groupIdFilter;
 
     public LocationCatalogEndpointInput cursor(String cursor) {
         this.cursor = cursor;
@@ -55,13 +58,31 @@ public class LocationCatalogEndpointInput extends EndpointInput {
         return this;
     }
 
+    public LocationCatalogEndpointInput locationIdFilter(String locationIdFilter) {
+        this.locationIdFilter = locationIdFilter;
+        return this;
+    }
+
+    public LocationCatalogEndpointInput categoryIdFilter(String categoryIdFilter) {
+        this.categoryIdFilter = categoryIdFilter;
+        return this;
+    }
+
+    public LocationCatalogEndpointInput groupIdFilter(String groupIdFilter) {
+        this.groupIdFilter = groupIdFilter;
+        return this;
+    }
+
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
         return httpRequestBuilder.addQueryParameter("office", officeId)
-            .addQueryParameter("unitSystem", unitSystem)
-            .addQueryParameter("cursor", cursor)
-            .addQueryParameter("pageSize", pageSizeString)
-            .addQueryHeader("accept", "application/json;version=2");
+                                 .addQueryParameter("unitSystem", unitSystem)
+                                 .addQueryParameter("cursor", cursor)
+                                 .addQueryParameter("pageSize", pageSizeString)
+                                 .addQueryParameter("like", locationIdFilter)
+                                 .addQueryParameter("categoryLike", categoryIdFilter)
+                                 .addQueryParameter("groupLike", groupIdFilter)
+                                 .addQueryHeader("accept", "application/json;version=2");
     }
 }
