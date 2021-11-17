@@ -39,7 +39,7 @@ class TestLocationController extends TestController {
 
     @Test
     void testRetrieveLocation() throws IOException {
-        String resource = "radar/json/location.json";
+        String resource = "radar/v2/json/location.json";
         URL resourceUrl = getClass().getClassLoader().getResource(resource);
         if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
