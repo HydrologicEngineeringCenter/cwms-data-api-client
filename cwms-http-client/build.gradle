@@ -17,15 +17,6 @@ dependencies {
 }
 
 publishing {
-    repositories {
-        maven {
-            url = version.endsWith("SNAPSHOT") ? System.getenv("DEPLOY_URL") + "/github-snapshots" : System.getenv("DEPLOY_URL") + "/github-releases"
-            credentials {
-                username System.getenv("DEPLOY_USER")
-                password System.getenv("DEPLOY_PASSWORD")
-            }
-        }
-    }
     publications {
         maven(MavenPublication) {
             artifactId = "cwms-http-client"

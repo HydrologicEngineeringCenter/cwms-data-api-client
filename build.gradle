@@ -48,4 +48,17 @@ subprojects {
     build {
         finalizedBy publishToMavenLocal
     }
+
+    publishing {
+        repositories {
+            maven {
+                def repositoryUrl = System.getenv("DEPLOY_URL")
+                url = version.endsWith("SNAPSHOT") ? repositoryUrl + "/github-snapshots" : repositoryUrl + "/github-releases"
+                credentials {
+                    username System.getenv("DEPLOY_USER")
+                    password System.getenv("DEPLOY_PASSWORD")
+                }
+            }
+        }
+    }
 }

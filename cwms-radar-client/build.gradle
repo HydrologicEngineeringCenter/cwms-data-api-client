@@ -13,21 +13,6 @@ dependencies {
 
 
 publishing {
-    repositories {
-        maven {
-            def repositoryUrl
-            if(version.endsWith("SNAPSHOT")) {
-                repositoryUrl = System.getenv("DEPLOY_URL") + "/github-snapshots"
-            } else {
-                repositoryUrl = System.getenv("DEPLOY_URL") + "/github-releases"
-            }
-            url = repositoryUrl
-            credentials {
-                username System.getenv("DEPLOY_USER")
-                password System.getenv("DEPLOY_PASSWORD")
-            }
-        }
-    }
     publications {
         maven(MavenPublication) {
             artifactId = "cwms-radar-client"
