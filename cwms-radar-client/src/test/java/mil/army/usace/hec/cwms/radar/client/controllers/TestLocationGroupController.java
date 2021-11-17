@@ -39,7 +39,7 @@ class TestLocationGroupController extends TestController {
 
     @Test
     void testRetrieveLocationGroup() throws IOException {
-        String resource = "radar/json/locationgroup.json";
+        String resource = "radar/json/location_group.json";
         URL resourceUrl = getClass().getClassLoader().getResource(resource);
         if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
