@@ -65,7 +65,7 @@ class TestLocationController extends TestController {
         assertEquals("CA", location.getStateInitial());
         assertEquals("Sacramento", location.getCountyName());
         assertEquals("Sacramento", location.getNearestCity());
-        assertEquals(0.0, location.getElevation(), 0.0);
+        assertEquals(1.0, location.getElevation(), 0.0);
         assertEquals(10.0, location.getPublishedLongitude());
         assertEquals(50.0, location.getPublishedLatitude());
     }

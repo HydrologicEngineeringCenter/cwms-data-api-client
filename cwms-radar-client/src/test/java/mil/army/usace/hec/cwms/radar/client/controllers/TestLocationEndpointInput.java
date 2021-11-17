@@ -24,14 +24,35 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.NAME_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.UNIT_QUERY_PARAMETER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 
 class TestLocationEndpointInput {
+
+    @Test
+    void testQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+            .officeId("SWT")
+            .unit("SI");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
+        assertEquals("LOC_TEST", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals("application/json;version=2", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
     @Test
     void testNullLocationName() {
         assertThrows(NullPointerException.class, () -> new LocationEndPointInput(null));
     }
+
+
 }

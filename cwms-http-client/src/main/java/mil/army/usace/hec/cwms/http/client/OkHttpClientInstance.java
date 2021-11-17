@@ -35,7 +35,7 @@ import okhttp3.OkHttpClient;
  */
 final class OkHttpClientInstance {
 
-    private static final Logger LOGGER = Logger.getLogger(HttpRequestBuilder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HttpRequestBuilderImpl.class.getName());
     private static final String CALL_TIMEOUT_PROPERTY_KEY = "cwms.http.client.calltimeout.seconds";
     private static final Duration CALL_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
     private static final String CONNECT_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";

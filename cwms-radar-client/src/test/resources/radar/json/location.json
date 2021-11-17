@@ -14,7 +14,7 @@
   "horizontal-datum": "NGVD-29",
   "published-longitude": 10.0,
   "published-latitude": 50.0,
-  "elevation": 0.0,
+  "elevation": 1.0,
   "map-label": "label",
   "bounding-office-id": "SWT",
   "office-id": "SWT"
