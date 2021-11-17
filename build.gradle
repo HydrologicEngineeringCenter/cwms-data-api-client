@@ -4,6 +4,10 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
 
+
+    version = "1.0-SNAPSHOT"
+    group = "mil.army.usace.hec"
+
     compileJava {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
