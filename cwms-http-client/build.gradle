@@ -15,3 +15,21 @@ dependencies {
     testFixturesImplementation('com.squareup.okhttp3:okhttp:4.9.2')
     testFixturesImplementation('com.squareup.okhttp3:mockwebserver:4.9.2')
 }
+
+publishing {
+    repositories {
+        maven {
+            url = version.endsWith("SNAPSHOT") ? System.getenv("DEPLOY_URL") + "/github-snapshots" : System.getenv("DEPLOY_URL") + "/github-releases"
+            credentials {
+                username System.getenv("DEPLOY_USER")
+                password System.getenv("DEPLOY_PASSWORD")
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            artifactId = "cwms-http-client"
+            from components.java
+        }
+    }
+}

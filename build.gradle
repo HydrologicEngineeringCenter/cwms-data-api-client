@@ -2,6 +2,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
+    apply plugin: 'maven-publish'
 
     compileJava {
         sourceCompatibility = "1.8"
@@ -42,5 +43,9 @@ subprojects {
             csv.required = true
             html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
+    }
+
+    build {
+        finalizedBy publishToMavenLocal
     }
 }

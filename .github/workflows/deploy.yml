@@ -1,0 +1,25 @@
+name: Deploy cwms-radar-client
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk
+      - name: Publish Artifacts
+        id: thedeploy
+        run: ./gradlew publish --info --init-script init.gradle
+        env:
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
