@@ -1,0 +1,34 @@
+{
+  "next-page": "U1dUL0FBUks7TkVBUkVTVENJVFk9QVJLQU5TQVMgQ0lUWSwgS1M7QUxJQVM9eyBOQU1FPSdBR0VOQ1kgQUxJQVNFUy1EQ1AgUExBVEZPUk0gSUQnLCBWQUxVRT0nQ0U1QkFCMTInfXx8fDE=",
+  "total": 1,
+  "page-size": 1,
+  "entries": [
+    {
+      "office": "SWT",
+      "name": "AARK",
+      "nearest-city": "Arkansas City, KS",
+      "public-name": "ARKANSAS R AT ARKANSAS CITY, KS",
+      "long-name": "ARKANSAS R AT ARKANSAS CITY, KS",
+      "description": "ARKANSAS R AT ARKANSAS CITY, KS",
+      "kind": "STREAM_LOCATION",
+      "time-zone": "CST6CDT",
+      "latitude": 37.056418,
+      "longitude": -97.0580939,
+      "horizontal-datum": "NAD83",
+      "elevation": 320.04,
+      "unit": "m",
+      "vertical-datum": "NGVD29",
+      "nation": "UNITED STATES",
+      "state": "KS",
+      "county": "Unknown County or County N/A",
+      "bounding-office": "SWT",
+      "active": true,
+      "aliases": [
+        {
+          "name": "Agency Aliases-DCP Platform ID",
+          "value": "CE5BAB12"
+        }
+      ]
+    }
+  ]
+}
