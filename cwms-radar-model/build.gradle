@@ -13,6 +13,15 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = "cwms-radar-model"
+            from components.java
+        }
+    }
+}
+
 swaggerSources {
     cwmsRadar {
         inputFile = file("cwms-radar-swagger.yaml")
@@ -21,3 +30,4 @@ swaggerSources {
         }
     }
 }
+

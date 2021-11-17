@@ -2,6 +2,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
+    apply plugin: 'maven-publish'
 
     compileJava {
         sourceCompatibility = "1.8"
@@ -41,6 +42,23 @@ subprojects {
         reports {
             csv.required = true
             html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
+    }
+
+    build {
+        finalizedBy publishToMavenLocal
+    }
+
+    publishing {
+        repositories {
+            maven {
+                def repositoryUrl = System.getenv("DEPLOY_URL")
+                url = version.endsWith("SNAPSHOT") ? repositoryUrl + "/github-snapshots" : repositoryUrl + "/github-releases"
+                credentials {
+                    username System.getenv("DEPLOY_USER")
+                    password System.getenv("DEPLOY_PASSWORD")
+                }
+            }
         }
     }
 }
