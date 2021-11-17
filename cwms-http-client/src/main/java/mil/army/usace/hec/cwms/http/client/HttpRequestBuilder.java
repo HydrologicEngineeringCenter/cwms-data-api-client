@@ -50,12 +50,20 @@ public final class HttpRequestBuilder {
     }
 
     public HttpRequestBuilder addQueryParameter(String key, String value) {
-        queryParameters.put(key, value);
+        if (value == null) {
+            queryParameters.remove(key);
+        } else {
+            queryParameters.put(key, value);
+        }
         return this;
     }
 
     public HttpRequestBuilder addQueryHeader(String key, String value) {
-        queryHeaders.put(key, value);
+        if (value == null) {
+            queryParameters.remove(key);
+        } else {
+            queryHeaders.put(key, value);
+        }
         return this;
     }
 

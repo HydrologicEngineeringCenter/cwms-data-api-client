@@ -29,10 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -46,35 +43,13 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestTimeSeriesController {
-
-    private static final String BASE_URL = "http://localhost:11524";
-    private static MockHttpServer mockHttpServer;
-
-    @BeforeEach
-    void setUp() throws IOException {
-        mockHttpServer = MockHttpServer.create();
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        mockHttpServer.shutdown();
-    }
-
-    private ApiConnectionInfo buildConnectionInfo(MockHttpServer mockHttpServer) {
-        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-        return new ApiConnectionInfo(baseUrl);
-    }
+class TestTimeSeriesController extends TestController {
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
-                                       .getFile()).toPath();
-        String collect = String.join("\n", Files.readAllLines(path));
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
@@ -86,7 +61,7 @@ class TestTimeSeriesController {
             .begin(start)
             .end(end)
             .page(null);
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -101,14 +76,8 @@ class TestTimeSeriesController {
 
     @Test
     void testRetrieveTimeSeriesPagination() throws IOException {
-        Path page1 =
-            new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_page1.json")
-                               .getFile()).toPath();
-        Path page2 =
-            new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_page2.json")
-                               .getFile()).toPath();
-        String page1Body = String.join("\n", Files.readAllLines(page1));
-        String page2Body = String.join("\n", Files.readAllLines(page2));
+        String page1Body = readJsonFile("radar/v2/json/timeseries_page1.json");
+        String page2Body = readJsonFile("radar/v2/json/timeseries_page2.json");
         mockHttpServer.enqueue(page1Body);
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
@@ -122,7 +91,7 @@ class TestTimeSeriesController {
             .page(null)
             .pageSize(500);
         mockHttpServer.enqueue(page2Body);
-        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(500, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -135,7 +104,7 @@ class TestTimeSeriesController {
         assertTrue(end.isAfter(lastTime));
         assertEquals(start, firstTime);
         input.page(timeSeries.getNextPage());
-        timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+        timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals(245, timeSeries.getValues().size());
         assertEquals(745, timeSeries.getTotal());
         assertEquals("SWT", timeSeries.getOfficeId());
@@ -153,9 +122,7 @@ class TestTimeSeriesController {
 
     @Test
     void testCwmsRadarDown() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries.json")
-                                       .getFile()).toPath();
-        String collect = String.join("\n", Files.readAllLines(path));
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
@@ -165,16 +132,12 @@ class TestTimeSeriesController {
 
     @Test
     void testTimeSeriesNotFound() throws IOException {
-        Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries_notfound.json")
-                                       .getFile()).toPath();
-        String collect = String.join("\n", Files.readAllLines(path));
+        String collect = readJsonFile("radar/v2/json/timeseries_notfound.json");
         mockHttpServer.enqueue(404, collect);
         mockHttpServer.start();
-        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.bogus");
-        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input));
+        assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(), input));
     }
 
     @Test
@@ -185,10 +148,7 @@ class TestTimeSeriesController {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() ->
             {
                 try {
-
-                    Path path = new File(getClass().getClassLoader().getResource("radar/v2/json/timeseries" + fileNumber + ".json")
-                                                   .getFile()).toPath();
-                    String collect = String.join("\n", Files.readAllLines(path));
+                    String collect = readJsonFile("radar/v2/json/timeseries" + fileNumber + ".json");
                     MockHttpServer mockHttpServer = null;
                     try {
                         mockHttpServer = MockHttpServer.create();
@@ -203,7 +163,9 @@ class TestTimeSeriesController {
                             .begin(start)
                             .end(end)
                             .page(null);
-                        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(mockHttpServer), input);
+                        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+                        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+                        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(apiConnectionInfo, input);
                         assertEquals(500, timeSeries.getValues().size());
                         assertEquals(745, timeSeries.getTotal());
                         assertEquals("SWT", timeSeries.getOfficeId());

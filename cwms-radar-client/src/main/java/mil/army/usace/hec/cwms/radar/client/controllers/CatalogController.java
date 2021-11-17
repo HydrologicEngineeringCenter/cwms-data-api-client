@@ -22,30 +22,23 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.model;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 
-/**
- *
- */
-public final class RadarObjectMapper {
+public final class CatalogController {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-        .registerModule(new JavaTimeModule())
-        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+    private static final String CATALOG_TIMESERIES_ENDPOINT = "catalog/timeseries";
 
-    private RadarObjectMapper(){
-        throw new AssertionError("Utility class");
-    }
-
-    public static <T> T mapJsonToObject(String json, Class<T> classObject) throws IOException {
-        return OBJECT_MAPPER.readValue(json, classObject);
+    public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
+        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
+            .addEndpointInput(input)
+            .execute();
+        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
     }
 }
