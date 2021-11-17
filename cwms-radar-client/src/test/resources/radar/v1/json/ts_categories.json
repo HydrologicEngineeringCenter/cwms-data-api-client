@@ -1,0 +1,20 @@
+[
+  {
+    "office-id": "SWT",
+    "id": "Lakes"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Aliases",
+    "description": "RDL_Aliases"
+  },
+  {
+    "office-id": "SWT",
+    "id": "QA Category",
+    "description": "Creating this category for testing on December 16, 2020"
+  },
+  {
+    "office-id": "SWT",
+    "id": "ZZZ"
+  }
+]
