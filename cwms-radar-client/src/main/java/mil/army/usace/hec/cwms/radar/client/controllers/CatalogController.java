@@ -37,6 +37,7 @@ public final class CatalogController {
     private static final String CATALOG_TIMESERIES_ENDPOINT = "catalog/timeseries";
     private static final String CATALOG_LOCATIONS_ENDPOINT = "catalog/locations";
 
+
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
             .addEndpointInput(input)
