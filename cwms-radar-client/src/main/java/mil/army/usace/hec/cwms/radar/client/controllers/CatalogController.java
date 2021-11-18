@@ -46,7 +46,7 @@ public final class CatalogController {
     }
 
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
