@@ -1,0 +1,9 @@
+{
+  "id": "Reservoir Operations",
+  "time-series-category": {
+    "office-id": "SWT",
+    "id": "QA Category",
+    "description": "Creating this category for testing on December 16, 2020"
+  },
+  "description": "Organizing timeseries for maintaining reservoir operations"
+}
