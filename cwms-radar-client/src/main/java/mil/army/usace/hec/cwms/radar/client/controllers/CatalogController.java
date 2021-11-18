@@ -26,7 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
@@ -37,15 +37,16 @@ public final class CatalogController {
     private static final String CATALOG_TIMESERIES_ENDPOINT = "catalog/timeseries";
     private static final String CATALOG_LOCATIONS_ENDPOINT = "catalog/locations";
 
+
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
             .addEndpointInput(input)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
     }
 
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);

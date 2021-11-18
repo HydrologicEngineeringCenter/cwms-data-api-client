@@ -25,5 +25,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
 public abstract class EndpointInput {
+    public static final String ACCEPT_QUERY_HEADER = "accept";
+
     protected abstract HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder);
 }
