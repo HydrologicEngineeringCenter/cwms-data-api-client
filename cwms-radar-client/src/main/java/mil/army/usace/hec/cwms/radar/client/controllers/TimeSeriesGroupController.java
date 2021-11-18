@@ -47,7 +47,7 @@ public final class TimeSeriesGroupController {
         return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
     }
 
-    List<TimeSeriesGroup> retrieveTimeSeriesCategories(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput input)
+    public List<TimeSeriesGroup> retrieveTimeSeriesCategories(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput input)
         throws IOException {
         HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
             .addEndpointInput(input)

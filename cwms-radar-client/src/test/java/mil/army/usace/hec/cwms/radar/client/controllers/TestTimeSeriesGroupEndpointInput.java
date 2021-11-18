@@ -24,39 +24,22 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.EndpointInput;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public final class TimeSeriesGroupEndpointInput extends EndpointInput {
+import org.junit.jupiter.api.Test;
 
-    private final String categoryId;
-    private final String groupId;
-    private String officeId;
+class TestTimeSeriesGroupEndpointInput {
 
-    public TimeSeriesGroupEndpointInput() {
-        this.groupId = null;
-        this.categoryId = null;
+    @Test
+    void testTimeSeriesGroupEndpointInputGetAll() {
+        TimeSeriesGroupEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesGroupEndpointInput();
+        assertFalse(timeSeriesCategoryEndpointInput.getGroupId().isPresent());
     }
 
-    public TimeSeriesGroupEndpointInput(String categoryId, String groupId) {
-        this.categoryId = categoryId;
-        this.groupId = groupId;
-    }
-
-    public TimeSeriesGroupEndpointInput officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
-    }
-
-    Optional<String> getGroupId() {
-        return Optional.ofNullable(groupId);
-    }
-
-    @Override
-    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter("office", officeId)
-                                 .addQueryParameter("category-id", categoryId)
-                                 .addQueryHeader("accept", "application/json");
+    @Test
+    void testTimeSeriesGroupEndpointInputCategoryId() {
+        TimeSeriesGroupEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesGroupEndpointInput("category-id", "group-id");
+        assertEquals("group-id", timeSeriesCategoryEndpointInput.getGroupId().get());
     }
 }
