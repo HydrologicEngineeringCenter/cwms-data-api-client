@@ -1,0 +1,34 @@
+{
+  "page": "fHw1MDA=",
+  "next-page": "NjkwMlNXVC81ODcwNjQ7TkVBUkVTVENJVFk9REFWSVN8fHw=",
+  "total": 6902,
+  "page-size": 500,
+  "entries": [
+    {
+      "office": "SWT",
+      "name": "782139",
+      "nearest-city": "Davis",
+      "public-name": "Resource Management Associates",
+      "long-name": "Resource Management Associates - Water Resources Engineering",
+      "description": "At RMA, our team of engineers and software developers create and apply advanced numerical models and software systems that support water resource management and environmental stewardship.",
+      "kind": "SITE",
+      "type": "Contractor",
+      "time-zone": "America/Los_Angeles",
+      "latitude": 38.563258,
+      "longitude": -121.730321,
+      "published-latitude": 38.56,
+      "published-longitude": -121.73,
+      "horizontal-datum": "NAD83",
+      "elevation": 41.3,
+      "unit": "m",
+      "vertical-datum": "NGVD29",
+      "nation": "UNITED STATES",
+      "state": "CA",
+      "county": "Yolo",
+      "bounding-office": "SPD",
+      "map-label": "RMA",
+      "active": true,
+      "aliases": []
+    }
+  ]
+}

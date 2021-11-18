@@ -22,31 +22,27 @@
  * SOFTWARE.
  */
 
-plugins {
-    id 'java-library'
-    id 'java-test-fixtures'
-}
+package mil.army.usace.hec.cwms.http.client;
 
-dependencies {
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    implementation('com.squareup.okhttp3:okhttp:4.9.2')
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
-    testImplementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    testImplementation('com.squareup.okhttp3:okhttp:4.9.2')
-    testImplementation('com.squareup.okhttp3:mockwebserver:4.9.2')
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
+import org.junit.jupiter.api.Test;
 
-    testFixturesImplementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    testFixturesImplementation('com.squareup.okhttp3:okhttp:4.9.2')
-    testFixturesImplementation('com.squareup.okhttp3:mockwebserver:4.9.2')
-}
+class TestApiConnectionInfo {
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId = "cwms-http-client"
-            from components.java
-        }
+    @Test
+    void testApiConnectionInfo() {
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        assertEquals(root, apiConnectionInfo.getApiRoot());
     }
+
+    @Test
+    void testApiConnectionInfoNulls() {
+        String root = null;
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        assertNull(apiConnectionInfo.getApiRoot());
+    }
+
 }
