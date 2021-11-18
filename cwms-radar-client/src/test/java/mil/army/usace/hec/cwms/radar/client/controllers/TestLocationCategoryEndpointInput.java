@@ -24,11 +24,26 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCategoryEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCategoryEndpointInput.OFFICE_QUERY_PARAMETER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 class TestLocationCategoryEndpointInput {
+
+    @Test
+    void testQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        LocationCategoryEndpointInput input = new LocationCategoryEndpointInput("CWMS Mobile Location Listings")
+            .officeId("SWT");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
+        assertEquals("application/json", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
 
     @Test
     void testNullCategoryId() {

@@ -24,11 +24,30 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.OFFICE_QUERY_PARAMETER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 class TestLocationGroupEndpointInput {
+
+    @Test
+    void testQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        LocationGroupEndpointInput input = new LocationGroupEndpointInput("Lakes")
+            .officeId("SWT")
+            .categoryId("CWMS Mobile Location Listings");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
+        assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
+        assertEquals("application/json", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
     @Test
     void testNullGroupId() {
         assertThrows(NullPointerException.class, () -> new LocationGroupEndpointInput(null));

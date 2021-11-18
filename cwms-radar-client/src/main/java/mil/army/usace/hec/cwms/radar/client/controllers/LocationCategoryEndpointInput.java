@@ -30,6 +30,9 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public class LocationCategoryEndpointInput extends EndpointInput {
 
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
+
     private final String categoryId;
     private String officeId;
 
@@ -44,8 +47,8 @@ public class LocationCategoryEndpointInput extends EndpointInput {
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter("category-id", categoryId)
-            .addQueryParameter("office", officeId)
-            .addQueryHeader("accept", "application/json");
+        return httpRequestBuilder.addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }

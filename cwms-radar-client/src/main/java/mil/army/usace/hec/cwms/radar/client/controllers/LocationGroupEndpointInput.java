@@ -30,6 +30,10 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public class LocationGroupEndpointInput extends EndpointInput {
 
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String GROUP_ID_QUERY_PARAMETER = "group-id";
+    static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
+
     private final String groupId;
     private String officeId;
     private String categoryId;
@@ -50,9 +54,9 @@ public class LocationGroupEndpointInput extends EndpointInput {
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter("group-id", groupId)
-            .addQueryParameter("office", officeId)
-            .addQueryParameter("category-id", categoryId)
-            .addQueryHeader("accept", "application/json");
+        return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
+            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }

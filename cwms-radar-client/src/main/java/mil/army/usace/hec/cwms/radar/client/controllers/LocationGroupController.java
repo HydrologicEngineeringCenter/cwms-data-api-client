@@ -26,12 +26,14 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 public class LocationGroupController {
+
+    private static final String LOCATION_GROUP = "location/group";
 
     /**
      * @param apiConnectionInfo          - connection info
@@ -41,7 +43,7 @@ public class LocationGroupController {
      */
     public LocationGroup retrieveLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, "location/group")
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
             .addEndpointInput(locationGroupEndpointInput)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
