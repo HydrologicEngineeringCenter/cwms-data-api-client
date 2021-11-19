@@ -1,11 +1,24 @@
 [
   {
+    "id": "Radar Test",
+    "time-series-category": {
+      "office-id": "SWT",
+      "id": "QA Category",
+      "description": "Creating this category for testing on December 16, 2020"
+    },
+    "office-id": "SWT",
+    "description": "description123",
+    "shared-alias-id": "TestAlias",
+    "shared-ref-ts-id": "ADDI.Flow.Inst.1Hour.0.Ccp-Rev"
+  },
+  {
     "id": "Reservoir Operations",
     "time-series-category": {
       "office-id": "SWT",
       "id": "QA Category",
       "description": "Creating this category for testing on December 16, 2020"
     },
+    "office-id": "SWT",
     "description": "Organizing timeseries for maintaining reservoir operations"
   },
   {
@@ -13,7 +26,8 @@
     "time-series-category": {
       "office-id": "SWT",
       "id": "Lakes"
-    }
+    },
+    "office-id": "SWT"
   },
   {
     "id": "Reporting",
@@ -22,6 +36,7 @@
       "id": "RDL_Aliases",
       "description": "RDL_Aliases"
     },
+    "office-id": "SWT",
     "description": "Reporting"
   },
   {
@@ -29,6 +44,7 @@
     "time-series-category": {
       "office-id": "SWT",
       "id": "Lakes"
-    }
+    },
+    "office-id": "SWT"
   }
 ]
