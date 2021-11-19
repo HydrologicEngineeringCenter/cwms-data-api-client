@@ -35,7 +35,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       - name: Commit and push Badges
-        if: github.event_name != 'pull_request' && github.head_ref != 'main'
+        if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
         run: |
           cd .github/badges
           if [[ `git status --porcelain *.svg` ]]; then
