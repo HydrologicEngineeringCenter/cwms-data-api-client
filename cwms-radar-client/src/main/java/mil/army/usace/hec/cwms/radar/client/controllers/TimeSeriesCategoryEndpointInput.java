@@ -33,6 +33,8 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
  */
 public final class TimeSeriesCategoryEndpointInput extends EndpointInput {
 
+    static final String OFFICE_QUERY_PARAMETER = "office";
+
     private final String categoryId;
     private String officeId;
 
@@ -55,7 +57,7 @@ public final class TimeSeriesCategoryEndpointInput extends EndpointInput {
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter("office", officeId)
-                                 .addQueryHeader("accept", "application/json");
+        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }

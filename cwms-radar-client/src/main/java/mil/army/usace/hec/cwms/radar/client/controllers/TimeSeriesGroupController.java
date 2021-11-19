@@ -27,7 +27,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import java.io.IOException;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesGroup;
@@ -41,7 +41,7 @@ public final class TimeSeriesGroupController {
         String endpoint = timeSeriesEndpointInput.getGroupId()
                                                  .map(c -> TIME_SERIES_GROUP_ENDPOINT + "/" + c)
                                                  .orElse(TIME_SERIES_GROUP_ENDPOINT + "/null");
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(timeSeriesEndpointInput)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
@@ -49,7 +49,7 @@ public final class TimeSeriesGroupController {
 
     public List<TimeSeriesGroup> retrieveTimeSeriesCategories(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput input)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilder(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
             .addEndpointInput(input)
             .execute();
         return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);

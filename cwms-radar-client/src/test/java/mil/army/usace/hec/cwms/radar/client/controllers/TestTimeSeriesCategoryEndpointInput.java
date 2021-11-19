@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.OFFICE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -41,5 +43,15 @@ class TestTimeSeriesCategoryEndpointInput {
     void testTimeSeriesCategoryEndpointInputCategoryId() {
         TimeSeriesCategoryEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesCategoryEndpointInput("category-id");
         assertEquals("category-id", timeSeriesCategoryEndpointInput.getCategoryId().get());
+    }
+
+    @Test
+    void testQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        TimeSeriesCategoryEndpointInput input = new TimeSeriesCategoryEndpointInput("category-id")
+            .officeId("SWT");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("application/json", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
