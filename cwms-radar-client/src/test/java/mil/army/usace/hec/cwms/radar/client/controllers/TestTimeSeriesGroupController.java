@@ -41,11 +41,14 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput("QA Category", "Reservoir Operations")
+        TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput("QA Category", "Radar Test")
             .officeId("SWT");
         TimeSeriesGroup timeSeriesGroup = new TimeSeriesGroupController().retrieveTimeSeriesGroup(buildConnectionInfo(), input);
-        assertEquals("Reservoir Operations", timeSeriesGroup.getId());
-        assertEquals("Organizing timeseries for maintaining reservoir operations", timeSeriesGroup.getDescription());
+        assertEquals("Radar Test", timeSeriesGroup.getId());
+        assertEquals("description123", timeSeriesGroup.getDescription());
+        assertEquals("SWT", timeSeriesGroup.getOfficeId());
+        assertEquals("TestAlias", timeSeriesGroup.getSharedAliasId());
+        assertEquals("ADDI.Flow.Inst.1Hour.0.Ccp-Rev", timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
         String description = timeSeriesCategory.getDescription();
         String id = timeSeriesCategory.getId();
@@ -73,10 +76,13 @@ class TestTimeSeriesGroupController extends TestController {
         TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput()
             .officeId("SWT");
         List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesCategories(buildConnectionInfo(), input);
-        assertEquals(4, timeSeriesCategories.size());
+        assertEquals(5, timeSeriesCategories.size());
         TimeSeriesGroup timeSeriesGroup = timeSeriesCategories.get(0);
-        assertEquals("Reservoir Operations", timeSeriesGroup.getId());
-        assertEquals("Organizing timeseries for maintaining reservoir operations", timeSeriesGroup.getDescription());
+        assertEquals("Radar Test", timeSeriesGroup.getId());
+        assertEquals("description123", timeSeriesGroup.getDescription());
+        assertEquals("SWT", timeSeriesGroup.getOfficeId());
+        assertEquals("TestAlias", timeSeriesGroup.getSharedAliasId());
+        assertEquals("ADDI.Flow.Inst.1Hour.0.Ccp-Rev", timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
         String description = timeSeriesCategory.getDescription();
         String id = timeSeriesCategory.getId();

@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import java.util.Objects;
@@ -32,6 +33,7 @@ import javax.validation.Valid;
 /**
  * A representation of a timeseries group
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(description = "A representation of a timeseries group")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
 public class TimeSeriesGroup {
@@ -43,6 +45,42 @@ public class TimeSeriesGroup {
 
     @JsonProperty("description")
     private String description = null;
+
+    @JsonProperty("office-id")
+    private String officeId = null;
+
+    @JsonProperty("shared-alias-id")
+    private String sharedAliasId = null;
+
+    @JsonProperty("shared-ref-ts-id")
+    private String sharedRefTsId = null;
+
+    /**
+     * Get officeId
+     *
+     * @return officeId
+     **/
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    /**
+     * Get sharedAliasId
+     *
+     * @return sharedAliasId
+     **/
+    public String getSharedAliasId() {
+        return sharedAliasId;
+    }
+
+    /**
+     * Get sharedRefTsId
+     *
+     * @return sharedRefTsId
+     **/
+    public String getSharedRefTsId() {
+        return sharedRefTsId;
+    }
 
     /**
      * Get id
@@ -81,14 +119,17 @@ public class TimeSeriesGroup {
             return false;
         }
         TimeSeriesGroup timeSeriesGroup = (TimeSeriesGroup) o;
-        return Objects.equals(this.id, timeSeriesGroup.id) &&
-            Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory) &&
-            Objects.equals(this.description, timeSeriesGroup.description);
+        return Objects.equals(this.id, timeSeriesGroup.id)
+            && Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory)
+            && Objects.equals(this.description, timeSeriesGroup.description)
+            && Objects.equals(this.officeId, timeSeriesGroup.officeId)
+            && Objects.equals(this.sharedAliasId, timeSeriesGroup.sharedAliasId)
+            && Objects.equals(this.sharedRefTsId, timeSeriesGroup.sharedRefTsId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timeSeriesCategory, description);
+        return Objects.hash(id, timeSeriesCategory, description, officeId, sharedAliasId, sharedRefTsId);
     }
 
     @Override
@@ -97,9 +138,11 @@ public class TimeSeriesGroup {
         sb.append("class TimeSeriesGroup {\n");
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    timeSeriesCategory: ").append(toIndentedString(timeSeriesCategory))
-          .append("\n");
+        sb.append("    timeSeriesCategory: ").append(toIndentedString(timeSeriesCategory)).append("\n");
         sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
+        sb.append("    sharedAliasId: ").append(toIndentedString(sharedAliasId)).append("\n");
+        sb.append("    sharedRefTsId: ").append(toIndentedString(sharedRefTsId)).append("\n");
         sb.append("}");
         return sb.toString();
     }
