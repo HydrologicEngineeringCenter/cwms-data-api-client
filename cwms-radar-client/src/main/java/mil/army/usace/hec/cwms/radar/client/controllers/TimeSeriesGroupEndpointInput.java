@@ -28,36 +28,38 @@ import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-/**
- *
- */
-public final class TimeSeriesCategoryEndpointInput extends EndpointInput {
+public final class TimeSeriesGroupEndpointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
 
     private final String categoryId;
+    private final String groupId;
     private String officeId;
 
-    public TimeSeriesCategoryEndpointInput() {
+    public TimeSeriesGroupEndpointInput() {
+        this.groupId = null;
         this.categoryId = null;
     }
 
-    public TimeSeriesCategoryEndpointInput(String categoryId) {
+    public TimeSeriesGroupEndpointInput(String categoryId, String groupId) {
         this.categoryId = categoryId;
+        this.groupId = groupId;
     }
 
-    TimeSeriesCategoryEndpointInput officeId(String officeId) {
+    public TimeSeriesGroupEndpointInput officeId(String officeId) {
         this.officeId = officeId;
         return this;
     }
 
-    Optional<String> getCategoryId() {
-        return Optional.ofNullable(categoryId);
+    Optional<String> getGroupId() {
+        return Optional.ofNullable(groupId);
     }
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                                  .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }

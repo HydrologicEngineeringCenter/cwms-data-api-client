@@ -25,32 +25,34 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.OFFICE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-class TestTimeSeriesCategoryEndpointInput {
+class TestTimeSeriesGroupEndpointInput {
 
     @Test
-    void testTimeSeriesCategoryEndpointInputGetAll() {
-        TimeSeriesCategoryEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesCategoryEndpointInput();
-        assertFalse(timeSeriesCategoryEndpointInput.getCategoryId().isPresent());
+    void testTimeSeriesGroupEndpointInputGetAll() {
+        TimeSeriesGroupEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesGroupEndpointInput();
+        assertFalse(timeSeriesCategoryEndpointInput.getGroupId().isPresent());
     }
 
     @Test
-    void testTimeSeriesCategoryEndpointInputCategoryId() {
-        TimeSeriesCategoryEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesCategoryEndpointInput("category-id");
-        assertEquals("category-id", timeSeriesCategoryEndpointInput.getCategoryId().get());
+    void testTimeSeriesGroupEndpointInputCategoryId() {
+        TimeSeriesGroupEndpointInput timeSeriesCategoryEndpointInput = new TimeSeriesGroupEndpointInput("category-id", "group-id");
+        assertEquals("group-id", timeSeriesCategoryEndpointInput.getGroupId().get());
     }
 
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesCategoryEndpointInput input = new TimeSeriesCategoryEndpointInput("category-id")
+        TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput("category-id", "group-id")
             .officeId("SWT");
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("application/json", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
