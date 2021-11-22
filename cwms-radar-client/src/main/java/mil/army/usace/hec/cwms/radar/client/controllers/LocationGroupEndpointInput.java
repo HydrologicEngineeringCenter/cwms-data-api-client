@@ -55,8 +55,8 @@ public class LocationGroupEndpointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
-            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
+                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }

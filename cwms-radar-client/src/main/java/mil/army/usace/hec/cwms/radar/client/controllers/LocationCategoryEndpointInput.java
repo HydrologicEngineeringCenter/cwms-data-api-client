@@ -48,7 +48,7 @@ public class LocationCategoryEndpointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
+                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
     }
 }
