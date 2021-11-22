@@ -46,7 +46,7 @@ public final class TimeSeriesCategoryEndpointInput extends EndpointInput {
         this.categoryId = categoryId;
     }
 
-    TimeSeriesCategoryEndpointInput officeId(String officeId) {
+    public TimeSeriesCategoryEndpointInput officeId(String officeId) {
         this.officeId = officeId;
         return this;
     }
