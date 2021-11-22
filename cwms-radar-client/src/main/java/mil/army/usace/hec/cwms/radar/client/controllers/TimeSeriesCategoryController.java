@@ -39,8 +39,8 @@ public final class TimeSeriesCategoryController {
     public TimeSeriesCategory retrieveTimeSeriesCategory(ApiConnectionInfo apiConnectionInfo, TimeSeriesCategoryEndpointInput timeSeriesEndpointInput)
         throws IOException {
         String endpoint = timeSeriesEndpointInput.getCategoryId()
-            .map(c -> TIME_SERIES_CATEGORY_ENDPOINT + "/" + c)
-            .orElse(TIME_SERIES_CATEGORY_ENDPOINT + "/null");
+                                                 .map(c -> TIME_SERIES_CATEGORY_ENDPOINT + "/" + c)
+                                                 .orElse(TIME_SERIES_CATEGORY_ENDPOINT + "/null");
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(timeSeriesEndpointInput)
             .execute();

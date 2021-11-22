@@ -77,12 +77,12 @@ public class TimeSeriesCatalogEndpointInput extends EndpointInput {
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
         return httpRequestBuilder.addQueryParameter("office", officeId)
-            .addQueryParameter("unitSystem", unitSystem)
-            .addQueryParameter("cursor", cursor)
-            .addQueryParameter("pageSize", pageSizeString)
-            .addQueryParameter("like", timeSeriesIdFilter)
-            .addQueryParameter("categoryLike", categoryIdFilter)
-            .addQueryParameter("groupLike", groupIdFilter)
-            .addQueryHeader("accept", "application/json;version=2");
+                                 .addQueryParameter("unitSystem", unitSystem)
+                                 .addQueryParameter("cursor", cursor)
+                                 .addQueryParameter("pageSize", pageSizeString)
+                                 .addQueryParameter("like", timeSeriesIdFilter)
+                                 .addQueryParameter("categoryLike", categoryIdFilter)
+                                 .addQueryParameter("groupLike", groupIdFilter)
+                                 .addQueryHeader("accept", "application/json;version=2");
     }
 }

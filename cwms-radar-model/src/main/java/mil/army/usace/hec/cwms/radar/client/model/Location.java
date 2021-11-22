@@ -1,8 +1,31 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2021 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-
 import java.util.Objects;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
@@ -291,34 +314,34 @@ public class Location {
         }
         Location location = (Location) o;
         return Objects.equals(this.name, location.name) &&
-                Objects.equals(this.latitude, location.latitude) &&
-                Objects.equals(this.longitude, location.longitude) &&
-                Objects.equals(this.publicName, location.publicName) &&
-                Objects.equals(this.longName, location.longName) &&
-                Objects.equals(this.description, location.description) &&
-                Objects.equals(this.timezoneName, location.timezoneName) &&
-                Objects.equals(this.locationType, location.locationType) &&
-                Objects.equals(this.locationKind, location.locationKind) &&
-                Objects.equals(this.nation, location.nation) &&
-                Objects.equals(this.stateInitial, location.stateInitial) &&
-                Objects.equals(this.countyName, location.countyName) &&
-                Objects.equals(this.nearestCity, location.nearestCity) &&
-                Objects.equals(this.horizontalDatum, location.horizontalDatum) &&
-                Objects.equals(this.publishedLongitude, location.publishedLongitude) &&
-                Objects.equals(this.publishedLatitude, location.publishedLatitude) &&
-                Objects.equals(this.verticalDatum, location.verticalDatum) &&
-                Objects.equals(this.elevation, location.elevation) &&
-                Objects.equals(this.mapLabel, location.mapLabel) &&
-                Objects.equals(this.boundingOfficeId, location.boundingOfficeId) &&
-                Objects.equals(this.officeId, location.officeId);
+            Objects.equals(this.latitude, location.latitude) &&
+            Objects.equals(this.longitude, location.longitude) &&
+            Objects.equals(this.publicName, location.publicName) &&
+            Objects.equals(this.longName, location.longName) &&
+            Objects.equals(this.description, location.description) &&
+            Objects.equals(this.timezoneName, location.timezoneName) &&
+            Objects.equals(this.locationType, location.locationType) &&
+            Objects.equals(this.locationKind, location.locationKind) &&
+            Objects.equals(this.nation, location.nation) &&
+            Objects.equals(this.stateInitial, location.stateInitial) &&
+            Objects.equals(this.countyName, location.countyName) &&
+            Objects.equals(this.nearestCity, location.nearestCity) &&
+            Objects.equals(this.horizontalDatum, location.horizontalDatum) &&
+            Objects.equals(this.publishedLongitude, location.publishedLongitude) &&
+            Objects.equals(this.publishedLatitude, location.publishedLatitude) &&
+            Objects.equals(this.verticalDatum, location.verticalDatum) &&
+            Objects.equals(this.elevation, location.elevation) &&
+            Objects.equals(this.mapLabel, location.mapLabel) &&
+            Objects.equals(this.boundingOfficeId, location.boundingOfficeId) &&
+            Objects.equals(this.officeId, location.officeId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name, latitude, longitude, publicName, longName, description,
-                timezoneName, locationType, locationKind, nation, stateInitial, countyName, nearestCity,
-                horizontalDatum, publishedLongitude, publishedLatitude, verticalDatum, elevation,
-                mapLabel, boundingOfficeId, officeId);
+            timezoneName, locationType, locationKind, nation, stateInitial, countyName, nearestCity,
+            horizontalDatum, publishedLongitude, publishedLatitude, verticalDatum, elevation,
+            mapLabel, boundingOfficeId, officeId);
     }
 
     @Override
@@ -341,9 +364,9 @@ public class Location {
         sb.append("    nearestCity: ").append(toIndentedString(nearestCity)).append("\n");
         sb.append("    horizontalDatum: ").append(toIndentedString(horizontalDatum)).append("\n");
         sb.append("    publishedLongitude: ").append(toIndentedString(publishedLongitude))
-                .append("\n");
+          .append("\n");
         sb.append("    publishedLatitude: ").append(toIndentedString(publishedLatitude))
-                .append("\n");
+          .append("\n");
         sb.append("    verticalDatum: ").append(toIndentedString(verticalDatum)).append("\n");
         sb.append("    elevation: ").append(toIndentedString(elevation)).append("\n");
         sb.append("    mapLabel: ").append(toIndentedString(mapLabel)).append("\n");

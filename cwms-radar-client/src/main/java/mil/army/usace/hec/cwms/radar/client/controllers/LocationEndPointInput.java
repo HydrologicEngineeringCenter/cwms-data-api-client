@@ -56,8 +56,8 @@ public class LocationEndPointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, locationName)
-            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json;version=2");
+                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json;version=2");
     }
 }
