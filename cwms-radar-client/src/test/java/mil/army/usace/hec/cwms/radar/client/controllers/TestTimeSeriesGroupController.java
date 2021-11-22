@@ -75,7 +75,7 @@ class TestTimeSeriesGroupController extends TestController {
         mockHttpServer.start();
         TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput()
             .officeId("SWT");
-        List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesCategories(buildConnectionInfo(), input);
+        List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesGroups(buildConnectionInfo(), input);
         assertEquals(5, timeSeriesCategories.size());
         TimeSeriesGroup timeSeriesGroup = timeSeriesCategories.get(0);
         assertEquals("Radar Test", timeSeriesGroup.getId());
