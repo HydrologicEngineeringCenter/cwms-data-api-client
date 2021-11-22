@@ -53,6 +53,14 @@ class TestHttpRequestBuilder {
     }
 
     @Test
+    void testHttpRequestBuilderCreateRequestInvalidUrl() throws IOException {
+        String root = "//http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        assertThrows(ServerNotFoundException.class, () -> new HttpRequestBuilder(apiConnectionInfo, endpoint));
+    }
+
+    @Test
     void testHttpRequestBuilderCreateRequestNullRoot() throws IOException {
         String root = null;
         String endpoint = "timeseries";

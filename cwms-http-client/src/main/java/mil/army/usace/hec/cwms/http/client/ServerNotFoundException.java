@@ -32,4 +32,8 @@ public class ServerNotFoundException extends IOException {
         super(throwable);
     }
 
+    public ServerNotFoundException(String message) {
+        super(message);
+    }
+
 }
