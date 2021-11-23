@@ -24,36 +24,40 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.NAME_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.UNIT_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.CATEGORY_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.CURSOR_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.GROUP_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.PAGE_SIZE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.UNIT_SYSTEM_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-
-class TestLocationEndpointInput {
+class TestLocationCatalogEndpointInput {
 
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+        LocationCatalogEndpointInput input = new LocationCatalogEndpointInput()
             .officeId("SWT")
-            .unit("SI");
+            .unitSystem("SI")
+            .cursor("test")
+            .pageSize(5)
+            .locationIdFilter("BASE-SUB")
+            .categoryIdFilter("CAT")
+            .groupIdFilter("GROUP");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
-        assertEquals("LOC_TEST", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER));
+        assertEquals("test", mockHttpRequestBuilder.getQueryParameter(CURSOR_QUERY_PARAMETER));
+        assertEquals("5", mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertEquals("BASE-SUB", mockHttpRequestBuilder.getQueryParameter(LIKE_QUERY_PARAMETER));
+        assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER));
+        assertEquals("GROUP", mockHttpRequestBuilder.getQueryParameter(GROUP_LIKE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
-
-    @Test
-    void testNullLocationName() {
-        assertThrows(NullPointerException.class, () -> new LocationEndPointInput(null));
-    }
-
-
 }

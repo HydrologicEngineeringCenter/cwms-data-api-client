@@ -39,7 +39,7 @@ import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalogEntry;
 import org.junit.jupiter.api.Test;
 
-class TestLocationsCatalogController extends TestController {
+class TestLocationCatalogController extends TestController {
 
     @Test
     void testRetrieveLocationCatalog() throws IOException {

@@ -24,6 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
@@ -58,6 +61,6 @@ public class LocationEndPointInput extends EndpointInput {
         return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, locationName)
                                  .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                                  .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json;version=2");
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }
