@@ -53,6 +53,16 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpReq7hgb4uestBuilderIpV6() throws IOException {
+        String root = "http://[1080:0:0:0:8:800:200C:417A]/index/";
+        String endpoint = "timeseries";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+        Request request = httpRequestBuilder.createRequest();
+        assertEquals("http://[1080::8:800:200c:417a]/index/timeseries", request.url().toString());
+    }
+
+    @Test
     void testHttpRequestBuilderCreateRequestInvalidUrl() throws IOException {
         String root = "//http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
