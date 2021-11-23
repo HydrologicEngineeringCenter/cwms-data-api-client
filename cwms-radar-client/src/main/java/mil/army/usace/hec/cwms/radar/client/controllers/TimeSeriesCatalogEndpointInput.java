@@ -24,11 +24,22 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public class TimeSeriesCatalogEndpointInput extends EndpointInput {
+
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String UNIT_SYSTEM_QUERY_PARAMETER = "unitSystem";
+    static final String CURSOR_QUERY_PARAMETER = "cursor";
+    static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
+    static final String LIKE_QUERY_PARAMETER = "like";
+    static final String CATEGORY_LIKE_QUERY_PARAMETER = "categoryLike";
+    static final String GROUP_LIKE_QUERY_PARAMETER = "groupLike";
 
     private String cursor;
     private Integer pageSize;
@@ -76,13 +87,13 @@ public class TimeSeriesCatalogEndpointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
-        return httpRequestBuilder.addQueryParameter("office", officeId)
-                                 .addQueryParameter("unitSystem", unitSystem)
-                                 .addQueryParameter("cursor", cursor)
-                                 .addQueryParameter("pageSize", pageSizeString)
-                                 .addQueryParameter("like", timeSeriesIdFilter)
-                                 .addQueryParameter("categoryLike", categoryIdFilter)
-                                 .addQueryParameter("groupLike", groupIdFilter)
-                                 .addQueryHeader("accept", "application/json;version=2");
+        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER, unitSystem)
+                                 .addQueryParameter(CURSOR_QUERY_PARAMETER, cursor)
+                                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                                 .addQueryParameter(LIKE_QUERY_PARAMETER, timeSeriesIdFilter)
+                                 .addQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER, categoryIdFilter)
+                                 .addQueryParameter(GROUP_LIKE_QUERY_PARAMETER, groupIdFilter)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }

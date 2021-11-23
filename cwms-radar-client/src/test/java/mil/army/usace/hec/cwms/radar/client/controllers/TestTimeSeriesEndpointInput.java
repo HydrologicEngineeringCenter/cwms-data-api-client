@@ -24,7 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.http.client.EndpointInput.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.BEGIN_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.DATUM_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.END_QUERY_PARAMETER;
@@ -68,7 +69,7 @@ class TestTimeSeriesEndpointInput {
         assertEquals(Integer.toString(10), mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
         assertEquals("page", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
         assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
-        assertEquals("application/json;version=2", mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
