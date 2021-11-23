@@ -40,14 +40,14 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
 
-class TestHttpRequestBuilder {
+class TestHttpRequestBuilderImpl {
 
     @Test
     void testHttpRequestBuilderCreateRequest() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint);
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         Request request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
     }
@@ -57,7 +57,7 @@ class TestHttpRequestBuilder {
         String root = "//http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        assertThrows(ServerNotFoundException.class, () -> new HttpRequestBuilder(apiConnectionInfo, endpoint));
+        assertThrows(ServerNotFoundException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
     @Test
@@ -65,7 +65,7 @@ class TestHttpRequestBuilder {
         String root = null;
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        assertThrows(NullPointerException.class, () -> new HttpRequestBuilder(apiConnectionInfo, endpoint));
+        assertThrows(NullPointerException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
     @Test
@@ -73,7 +73,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = null;
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        assertThrows(NullPointerException.class, () -> new HttpRequestBuilder(apiConnectionInfo, endpoint));
+        assertThrows(NullPointerException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
     @Test
@@ -81,7 +81,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", "world")
             .addQueryParameter("green-eggs", "and ham");
         Request request = httpRequestBuilder.createRequest();
@@ -95,7 +95,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", null);
         Request request = httpRequestBuilder.createRequest();
         assertFalse(request.url().toString().contains("hello="));
@@ -106,7 +106,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", "world")
             .addQueryHeader("green-eggs", "and ham");
         Request request = httpRequestBuilder.createRequest();
@@ -119,7 +119,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", null);
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").isEmpty());
@@ -130,7 +130,7 @@ class TestHttpRequestBuilder {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+        HttpRequestBuilderImpl httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(new EndpointInput() {
                 @Override
                 protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
@@ -158,11 +158,10 @@ class TestHttpRequestBuilder {
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-            HttpRequestResponse execute = new HttpRequestBuilder(apiConnectionInfo, endpoint)
+            HttpRequestResponse execute = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .execute();
             assertNotNull(execute.getBody());
-        }
-        finally {
+        } finally {
             mockWebServer.shutdown();
         }
     }
@@ -177,10 +176,9 @@ class TestHttpRequestBuilder {
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-            HttpRequestBuilder builder = new HttpRequestBuilder(apiConnectionInfo, endpoint);
+            HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             assertThrows(IOException.class, builder::execute);
-        }
-        finally {
+        } finally {
             mockWebServer.shutdown();
         }
     }
@@ -195,10 +193,9 @@ class TestHttpRequestBuilder {
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-            HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint);
+            HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             assertThrows(NoDataFoundException.class, httpRequestBuilder::execute);
-        }
-        finally {
+        } finally {
             mockWebServer.shutdown();
         }
     }
@@ -208,7 +205,7 @@ class TestHttpRequestBuilder {
         String endpoint = "unknownhost";
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint);
+        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         assertThrows(ServerNotFoundException.class, httpRequestBuilder::execute);
     }
 
@@ -217,7 +214,7 @@ class TestHttpRequestBuilder {
         String endpoint = "unknownport";
         String baseUrl = "https://www.hec.usace.army.mil:1000";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilder(apiConnectionInfo, endpoint);
+        HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         assertThrows(ServerNotFoundException.class, httpRequestBuilder::execute);
     }
 

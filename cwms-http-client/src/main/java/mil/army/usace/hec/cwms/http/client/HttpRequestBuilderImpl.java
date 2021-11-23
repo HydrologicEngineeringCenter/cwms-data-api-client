@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.http.client;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -42,10 +43,14 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     private final Map<String, String> queryParameters = new HashMap<>();
     private final Map<String, String> queryHeaders = new HashMap<>();
 
-    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) {
+    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws ServerNotFoundException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
         Objects.requireNonNull(apiConnectionInfo.getApiRoot(), "API root must be defined");
-        this.httpUrl = HttpUrl.parse(apiConnectionInfo.getApiRoot());
+        HttpUrl url = HttpUrl.parse(apiConnectionInfo.getApiRoot());
+        if (url == null) {
+            throw new ServerNotFoundException("Invalid HTTP URL: " + apiConnectionInfo.getApiRoot());
+        }
+        this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
     }
 
@@ -75,7 +80,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return this;
     }
 
-    private Request createRequest() throws IOException {
+    Request createRequest() throws IOException {
         HttpUrl resolve = httpUrl.resolve(endpoint);
         if (resolve == null) {
             throw new IOException("Endpoint to API is malformed: " + endpoint);
@@ -118,7 +123,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
                         "Unknown error occurred for request: " + request + "\n Error code: " + code + " " + execute.message() + "\n" + body.string());
                 }
             }
-        } catch (ConnectException connectException) {
+        } catch (ConnectException | UnknownHostException connectException) {
             throw new ServerNotFoundException(connectException);
         } finally {
             if (body != null) {
