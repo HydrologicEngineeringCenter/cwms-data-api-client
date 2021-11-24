@@ -37,11 +37,11 @@ final class OkHttpClientInstance {
 
     private static final Logger LOGGER = Logger.getLogger(OkHttpClientInstance.class.getName());
     static final String CALL_TIMEOUT_PROPERTY_KEY = "cwms.http.client.calltimeout.seconds";
-    static final Duration CALL_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
+    static final Duration CALL_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(0);
     static final String CONNECT_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";
-    static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
+    static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
     static final String READ_TIMEOUT_PROPERTY_KEY = "cwms.http.client.readtimeout.seconds";
-    static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
+    static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
 
     private static final OkHttpClient INSTANCE = createClient();
 
