@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.http.client;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
@@ -123,7 +124,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
                         "Unknown error occurred for request: " + request + "\n Error code: " + code + " " + execute.message() + "\n" + body.string());
                 }
             }
-        } catch (ConnectException | UnknownHostException connectException) {
+        } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
             throw new ServerNotFoundException(connectException);
         } finally {
             if (body != null) {
