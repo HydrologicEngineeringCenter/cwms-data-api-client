@@ -24,16 +24,25 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ServerNotFoundException extends IOException {
+import org.junit.jupiter.api.Test;
 
-    public ServerNotFoundException(Throwable throwable) {
-        super(throwable);
+class TestHttpRequestResponse {
+
+    @Test
+    void testHttpRequestResponse() {
+        String body = "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
+        assertEquals(body, httpRequestResponse.getBody());
     }
 
-    public ServerNotFoundException(String message) {
-        super(message);
+    @Test
+    void testHttpRequestResponseNulls() {
+        String body = null;
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
+        assertNull(httpRequestResponse.getBody());
     }
 
 }

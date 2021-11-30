@@ -6,6 +6,7 @@ on:
       - 'develop/**'
       - 'devops/**'
       - 'release/**'
+      - 'feature/**'
   pull_request:
     branches:
       - main
@@ -29,7 +30,9 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2.3.0
         with:
           generate-branches-badge: true
-          jacoco-csv-file: cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.csv
+          jacoco-csv-file: >
+            cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.csv
+            cwms-http-client/build/reports/jacoco/test/jacocoTestReport.csv
       - name: Commit and push Badges
         if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
         run: |

@@ -24,16 +24,25 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ServerNotFoundException extends IOException {
+import org.junit.jupiter.api.Test;
 
-    public ServerNotFoundException(Throwable throwable) {
-        super(throwable);
+class TestApiConnectionInfo {
+
+    @Test
+    void testApiConnectionInfo() {
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        assertEquals(root, apiConnectionInfo.getApiRoot());
     }
 
-    public ServerNotFoundException(String message) {
-        super(message);
+    @Test
+    void testApiConnectionInfoNulls() {
+        String root = null;
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        assertNull(apiConnectionInfo.getApiRoot());
     }
 
 }

@@ -36,27 +36,31 @@ import okhttp3.OkHttpClient;
 final class OkHttpClientInstance {
 
     private static final Logger LOGGER = Logger.getLogger(OkHttpClientInstance.class.getName());
-    private static final String CALL_TIMEOUT_PROPERTY_KEY = "cwms.http.client.calltimeout.seconds";
-    private static final Duration CALL_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
-    private static final String CONNECT_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";
-    private static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
-    private static final String READ_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";
-    private static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
+    static final String CALL_TIMEOUT_PROPERTY_KEY = "cwms.http.client.calltimeout.seconds";
+    static final Duration CALL_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(0);
+    static final String CONNECT_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";
+    static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
+    static final String READ_TIMEOUT_PROPERTY_KEY = "cwms.http.client.readtimeout.seconds";
+    static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
 
-    private static final OkHttpClient INSTANCE = new OkHttpClient.Builder()
-        .callTimeout(getCallTimeout())
-        .connectTimeout(getConnectTimeout())
-        .readTimeout(getReadTimeout())
-        .build();
+    private static final OkHttpClient INSTANCE = createClient();
 
 
     private OkHttpClientInstance() {
         throw new AssertionError("Singleton utility class, cannot instantiate");
     }
 
+    static OkHttpClient createClient() {
+        return new OkHttpClient.Builder()
+            .callTimeout(getCallTimeout())
+            .connectTimeout(getConnectTimeout())
+            .readTimeout(getReadTimeout())
+            .build();
+    }
+
     private static Duration getReadTimeout() {
-        String readTimeoutPropertyValue = System.getProperty(CONNECT_TIMEOUT_PROPERTY_KEY);
-        Duration readTimeout = CALL_TIMEOUT_PROPERTY_DEFAULT;
+        String readTimeoutPropertyValue = System.getProperty(READ_TIMEOUT_PROPERTY_KEY);
+        Duration readTimeout = READ_TIMEOUT_PROPERTY_DEFAULT;
         if (readTimeoutPropertyValue == null) {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + READ_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " + READ_TIMEOUT_PROPERTY_DEFAULT);
