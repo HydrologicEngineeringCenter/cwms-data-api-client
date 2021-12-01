@@ -4,13 +4,219 @@ info:
   description: CWMS REST API for Data Retrieval
   version: '2.0'
 paths:
-  /locations:
+  /cwms-data:
+    get:
+      summary: Get cwmsData
+      operationId: getCwmsData
+      responses:
+        '200':
+          description: Default response
+  /cwms-data/location/category/{category-id}:
+    get:
+      tags:
+        - Location Categories-Beta
+      summary: Get cwmsData location category with categoryId
+      description: Retrieves requested Location Category
+      operationId: getCwmsDataLocationCategoryWithCategoryId
+      parameters:
+        - name: category-id
+          in: path
+          description: Specifies the Category whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Location Category whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationCategory'
+  /cwms-data/location/category:
+    get:
+      tags:
+        - Location Categories-Beta
+      summary: Get cwmsData location category
+      description: Returns CWMS Location Category Data
+      operationId: getCwmsDataLocationCategory
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the location category(ies) whose data is to be included in the response. If this field is not specified, matching location category information from all offices shall be returned.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationCategory'
+  /cwms-data/location/group/{group-id}:
+    get:
+      tags:
+        - Location Groups-Beta
+      summary: Get cwmsData location group with groupId
+      description: Retrieves requested Location Group
+      operationId: getCwmsDataLocationGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          description: Specifies the location_group whose data is to be included in the response
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location group whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the category containing the location group whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationGroup'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/CsvV1LocationGroup'
+            application/geo+json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+  /cwms-data/location/group:
+    get:
+      tags:
+        - Location Groups-Beta
+      summary: Get cwmsData location group
+      description: Returns CWMS Location Groups Data
+      operationId: getCwmsDataLocationGroup
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the location group(s) whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationGroup'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CsvV1LocationGroup'
+  /cwms-data/locations/{location_code}:
     get:
       tags:
         - Locations
-      summary: Get locations
+      summary: Get cwmsData locations with location_code
       description: Returns CWMS Location Data
-      operationId: getLocations
+      operationId: getCwmsDataLocationsWithLocation_code
+      parameters:
+        - name: location_code
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location level(s) whose data is to be included in the response. If this field is not specified, matching location level information from all offices shall be returned.
+          required: true
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/Location'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/Location'
+    delete:
+      tags:
+        - Locations
+      summary: Delete cwmsData locations with location_code
+      description: Delete CWMS Location
+      operationId: deleteCwmsDataLocationsWithLocation_code
+      parameters:
+        - name: location_code
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location whose data is to be deleted. If this field is not specified, matching location information will be deleted from all offices.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default response
+    patch:
+      tags:
+        - Locations
+      summary: Patch cwmsData locations with location_code
+      description: Update CWMS Location
+      operationId: patchCwmsDataLocationsWithLocation_code
+      parameters:
+        - name: location_code
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the office in which Location will be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      responses:
+        '200':
+          description: Default response
+  /cwms-data/locations:
+    get:
+      tags:
+        - Locations
+      summary: Get cwmsData locations
+      description: Returns CWMS Location Data
+      operationId: getCwmsDataLocations
       parameters:
         - name: names
           in: query
@@ -59,36 +265,12 @@ paths:
             application/geo+json:
               schema:
                 $ref: '#/components/schemas/Unit'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
     post:
       tags:
         - Locations
-      summary: Post locations
+      summary: Post cwmsData locations
       description: Create new CWMS Location
-      operationId: postLocations
+      operationId: postCwmsDataLocations
       parameters:
         - name: office
           in: query
@@ -106,342 +288,14 @@ paths:
               $ref: '#/components/schemas/Location'
         required: true
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /locations/{location_id}:
-    delete:
-      tags:
-        - Locations
-      summary: Delete locations with location_id
-      description: Delete CWMS Location
-      operationId: deleteLocationsWithLocation_id
-      parameters:
-        - name: location_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the location whose data is to be deleted. If this field is not specified, matching location information will be deleted from all offices.
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-    patch:
-      tags:
-        - Locations
-      summary: Patch locations with location_id
-      description: Update CWMS Location
-      operationId: patchLocationsWithLocation_id
-      parameters:
-        - name: location_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the office in which Location will be updated
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Location'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Location'
-        required: true
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /location/category/{category-id}:
-    get:
-      tags:
-        - Location Categories
-      summary: Get location category with categoryId
-      description: Retrieves requested Location Category
-      operationId: getLocationCategoryWithCategoryId
-      parameters:
-        - name: category-id
-          in: path
-          description: Specifies the Category whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the Location Category whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LocationCategory'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /location/category:
-    get:
-      tags:
-        - Location Categories
-      summary: Get location category
-      description: Returns CWMS Location Category Data
-      operationId: getLocationCategory
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the owning office of the location category(ies) whose data is to be included in the response. If this field is not specified, matching location category information from all offices shall be returned.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LocationCategory'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /location/group/{group-id}:
-    get:
-      tags:
-        - Location Groups
-      summary: Get location group with groupId
-      description: Retrieves requested Location Group
-      operationId: getLocationGroupWithGroupId
-      parameters:
-        - name: group-id
-          in: path
-          description: Specifies the location_group whose data is to be included in the response
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the location group whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-        - name: category-id
-          in: query
-          description: Specifies the category containing the location group whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LocationGroup'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/CsvV1LocationGroup'
-            application/geo+json:
-              schema:
-                $ref: '#/components/schemas/Unit'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /location/group:
-    get:
-      tags:
-        - Location Groups
-      summary: Get location group
-      description: Returns CWMS Location Groups Data
-      operationId: getLocationGroup
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the owning office of the location group(s) whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LocationGroup'
-            text/csv:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CsvV1LocationGroup'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /offices/{office}:
+          description: Default response
+  /cwms-data/offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get offices with office
-      operationId: getOfficesWithOffice
+      summary: Get cwmsData offices with office
+      operationId: getCwmsDataOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -479,36 +333,12 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/CsvV1Office'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /offices:
+  /cwms-data/offices:
     get:
       tags:
         - Offices
-      summary: Get offices
-      operationId: getOffices
+      summary: Get cwmsData offices
+      operationId: getCwmsDataOffices
       parameters:
         - name: format
           in: query
@@ -540,36 +370,12 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/CsvV1Office'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /units:
+  /cwms-data/units:
     get:
       tags:
         - Units
-      summary: Get units
-      operationId: getUnits
+      summary: Get cwmsData units
+      operationId: getCwmsDataUnits
       parameters:
         - name: format
           in: query
@@ -579,36 +385,14 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /parameters:
+  /cwms-data/parameters:
     get:
       tags:
         - Parameters
-      summary: Get parameters
-      operationId: getParameters
+      summary: Get cwmsData parameters
+      operationId: getCwmsDataParameters
       parameters:
         - name: format
           in: query
@@ -618,36 +402,12 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timezones:
+  /cwms-data/timezones:
     get:
       tags:
         - TimeZones
-      summary: Get timezones
-      operationId: getTimezones
+      summary: Get cwmsData timezones
+      operationId: getCwmsDataTimezones
       parameters:
         - name: format
           in: query
@@ -657,36 +417,14 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /levels:
+  /cwms-data/levels:
     get:
       tags:
         - Levels
-      summary: Get levels
-      operationId: getLevels
+      summary: Get cwmsData levels
+      operationId: getCwmsDataLevels
       parameters:
         - name: name
           in: query
@@ -731,36 +469,12 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
     post:
       tags:
         - Levels
-      summary: Post levels
+      summary: Post cwmsData levels
       description: Create new CWMS Location Level
-      operationId: postLevels
+      operationId: postCwmsDataLevels
       parameters:
         - name: office
           in: query
@@ -778,37 +492,15 @@ paths:
               $ref: '#/components/schemas/LocationLevel'
         required: true
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /levels/{location}:
+        '200':
+          description: Default response
+  /cwms-data/levels/{location}:
     delete:
       tags:
         - Levels
-      summary: Delete levels with location
+      summary: Delete cwmsData levels with location
       description: Delete CWMS Location Level
-      operationId: deleteLevelsWithLocation
+      operationId: deleteCwmsDataLevelsWithLocation
       parameters:
         - name: location
           in: path
@@ -830,36 +522,14 @@ paths:
           schema:
             type: string
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
+        '200':
+          description: Default response
     patch:
       tags:
         - Levels
-      summary: Patch levels with location
+      summary: Patch cwmsData levels with location
       description: Update CWMS Location Level
-      operationId: patchLevelsWithLocation
+      operationId: patchCwmsDataLevelsWithLocation
       parameters:
         - name: location
           in: path
@@ -888,36 +558,143 @@ paths:
               $ref: '#/components/schemas/LocationLevel'
         required: true
       responses:
-        '400':
-          description: Bad Request
+        '200':
+          description: Default response
+  /cwms-data/timeseries/recent/{group-id}:
+    get:
+      summary: Get cwmsData timeseries recent with groupId
+      operationId: getCwmsDataTimeseriesRecentWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default response
+  /cwms-data/timeseries/category/{category-id}:
+    get:
+      tags:
+        - TimeSeries Categories-Beta
+      summary: Get cwmsData timeseries category with categoryId
+      description: Retrieves requested timeseries category
+      operationId: getCwmsDataTimeseriesCategoryWithCategoryId
+      parameters:
+        - name: category-id
+          in: path
+          description: Specifies the Category whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries category whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/TimeSeriesCategory'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
+          description: Based on the combination of inputs provided the timeseries category was not found.
         '501':
-          description: Not Implemented
+          description: request format is not implemented
+  /cwms-data/timeseries/category:
+    get:
+      tags:
+        - TimeSeries Categories-Beta
+      summary: Get cwmsData timeseries category
+      description: Returns CWMS timeseries category Data
+      operationId: getCwmsDataTimeseriesCategory
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries category(ies) whose data is to be included in the response. If this field is not specified, matching timeseries category information from all offices shall be returned.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeSeriesCategory'
+        '404':
+          description: Based on the combination of inputs provided the categories were not found.
+        '501':
+          description: request format is not implemented
+  /cwms-data/timeseries/group/{group-id}:
+    get:
+      tags:
+        - Timeseries Groups
+      summary: Get cwmsData timeseries group with groupId
+      description: Retrieves requested timeseries group
+      operationId: getCwmsDataTimeseriesGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          description: Specifies the timeseries group whose data is to be included in the response
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries group whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the category containing the timeseries group whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesGroup'
+  /cwms-data/timeseries/group:
+    get:
+      tags:
+        - Timeseries Groups-Beta
+      summary: Get cwmsData timeseries group
+      description: Returns CWMS Timeseries Groups Data
+      operationId: getCwmsDataTimeseriesGroup
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeSeriesGroup'
+        '404':
+          description: Based on the combination of inputs provided the timeseries group(s) were not found.
+        '501':
+          description: request format is not implemented
+  /cwms-data/timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get timeseries
-      operationId: getTimeseries
+      summary: Get cwmsData timeseries
+      operationId: getCwmsDataTimeseries
       parameters:
         - name: name
           in: query
@@ -983,34 +760,16 @@ paths:
                 $ref: '#/components/schemas/TimeSeries'
         '400':
           description: Invalid parameter combination
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a timeseries.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
     post:
       tags:
         - TimeSeries
-      summary: Post timeseries
+      summary: Post cwmsData timeseries
       description: Create new TimeSeries
-      operationId: postTimeseries
+      operationId: postCwmsDataTimeseries
       requestBody:
         content:
           application/json:
@@ -1021,36 +780,14 @@ paths:
               $ref: '#/components/schemas/TimeSeries'
         required: true
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/{timeseries}:
+        '200':
+          description: Default response
+  /cwms-data/timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete timeseries with timeseries
-      operationId: deleteTimeseriesWithTimeseries
+      summary: Delete cwmsData timeseries with timeseries
+      operationId: deleteCwmsDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -1064,36 +801,14 @@ paths:
           schema:
             type: string
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
+        '200':
+          description: Default response
     patch:
       tags:
         - TimeSeries
-      summary: Patch timeseries with timeseries
+      summary: Patch cwmsData timeseries with timeseries
       description: Update a TimeSeries
-      operationId: patchTimeseriesWithTimeseries
+      operationId: patchCwmsDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -1110,290 +825,106 @@ paths:
               $ref: '#/components/schemas/TimeSeries'
         required: true
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/recent/{group-id}:
-    get:
-      summary: Get timeseries recent with groupId
-      operationId: getTimeseriesRecentWithGroupId
-      parameters:
-        - name: group-id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/category/{category-id}:
-    get:
-      tags:
-        - TimeSeries Categories
-      summary: Get timeseries category with categoryId
-      description: Retrieves requested timeseries category
-      operationId: getTimeseriesCategoryWithCategoryId
-      parameters:
-        - name: category-id
-          in: path
-          description: Specifies the Category whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the timeseries category whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesCategory'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Based on the combination of inputs provided the timeseries category was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: request format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/category:
-    get:
-      tags:
-        - TimeSeries Categories
-      summary: Get timeseries category
-      description: Returns CWMS timeseries category Data
-      operationId: getTimeseriesCategory
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the owning office of the timeseries category(ies) whose data is to be included in the response. If this field is not specified, matching timeseries category information from all offices shall be returned.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TimeSeriesCategory'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Based on the combination of inputs provided the categories were not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: request format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/group/{group-id}:
-    get:
-      tags:
-        - Timeseries Groups
-      summary: Get timeseries group with groupId
-      description: Retrieves requested timeseries group
-      operationId: getTimeseriesGroupWithGroupId
-      parameters:
-        - name: group-id
-          in: path
-          description: Specifies the timeseries group whose data is to be included in the response
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the timeseries group whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-        - name: category-id
-          in: query
-          description: Specifies the category containing the timeseries group whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesGroup'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /timeseries/group:
-    get:
-      tags:
-        - Timeseries Groups
-      summary: Get timeseries group
-      description: Returns CWMS Timeseries Groups Data
-      operationId: getTimeseriesGroup
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TimeSeriesGroup'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Based on the combination of inputs provided the timeseries group(s) were not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: request format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /ratings:
+          description: Default response
+  /cwms-data/ratings/{rating}:
     get:
       tags:
         - Ratings
-      summary: Get ratings
-      operationId: getRatings
+      summary: Get cwmsData ratings with rating
+      description: Returns CWMS Rating Data
+      operationId: getCwmsDataRatingsWithRating
       parameters:
-        - name: name
-          in: query
-          description: Specifies the name(s) of the time series whose data is to be included in the response. A case insensitive comparison is used to match names.
+        - name: rating
+          in: path
+          required: true
           schema:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the location level(s) whose data is to be included in the response. If this field is not specified, matching location level information from all offices shall be returned.
+          description: Specifies the owning office of the ratingset to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/Unit'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/Unit'
+    delete:
+      tags:
+        - Ratings
+      summary: Delete cwmsData ratings with rating
+      operationId: deleteCwmsDataRatingsWithRating
+      parameters:
+        - name: rating
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the rating to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default response
+    patch:
+      tags:
+        - Ratings
+      summary: Patch cwmsData ratings with rating
+      description: Update a RatingSet
+      operationId: patchCwmsDataRatingsWithRating
+      parameters:
+        - name: rating
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Unit'
+        required: true
+      responses:
+        '200':
+          description: Default response
+  /cwms-data/ratings:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings
+      operationId: getCwmsDataRatings
+      parameters:
+        - name: name
+          in: query
+          description: Specifies the name(s) of the rating whose data is to be included in the response. A case insensitive comparison is used to match names.
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating(s) whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
           schema:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Rating values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
           schema:
             type: string
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          description: "Specifies the elevation datum of the response. This field affects only elevation Ratings. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
           schema:
             type: string
         - name: at
@@ -1419,36 +950,34 @@ paths:
       responses:
         '200':
           description: OK
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a rating table.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /catalog/{dataSet}:
+    post:
+      tags:
+        - Ratings
+      summary: Post cwmsData ratings
+      description: Create new RatingSet
+      operationId: postCwmsDataRatings
+      requestBody:
+        content:
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Unit'
+        required: true
+      responses:
+        '200':
+          description: Default response
+  /cwms-data/catalog/{dataSet}:
     get:
       tags:
-        - Catalog
-      summary: Get catalog with dataset
-      operationId: getCatalogWithDataset
+        - Catalog-Beta
+      summary: Get cwmsData catalog with dataset
+      operationId: getCwmsDataCatalogWithDataset
       parameters:
         - name: dataSet
           in: path
@@ -1456,7 +985,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/CatalogableEndpoint'
-        - name: cursor
+        - name: page
           in: query
           description: This end point can return a lot of data, this identifies where in the request you are.
           schema:
@@ -1477,6 +1006,21 @@ paths:
           description: 3-4 letter office name representing the district you want to isolate data to.
           schema:
             type: string
+        - name: like
+          in: query
+          description: Posix regular expression matching against the id
+          schema:
+            type: string
+        - name: categoryLike
+          in: query
+          description: Posix regular expression matching against the category id
+          schema:
+            type: string
+        - name: groupLike
+          in: query
+          description: Posix regular expression matching against the group id
+          schema:
+            type: string
       responses:
         '200':
           description: A list of elements the data set you've selected.
@@ -1487,36 +1031,75 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Catalog'
-        '400':
-          description: Bad Request
+  /cwms-data/basins/{basin-id}:
+    get:
+      tags:
+        - Basins-Beta
+      summary: Get cwmsData basins with basinId
+      description: Returns CWMS Basin Data
+      operationId: getCwmsDataBasinsWithBasinId
+      parameters:
+        - name: basin-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
           content:
-            application/json:
+            application/vnd.named+pg+json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/Basin'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
+          description: The provided combination of parameters did not find a basin.
         '501':
-          description: Not Implemented
+          description: Requested format is not implemented
+  /cwms-data/basins:
+    get:
+      tags:
+        - Basins-Beta
+      summary: Get cwmsData basins
+      description: Returns CWMS Basin Data
+      operationId: getCwmsDataBasins
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
           content:
-            application/json:
+            application/vnd.named+pg+json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /blobs/{blob-id}:
+                $ref: '#/components/schemas/Basin'
+        '404':
+          description: The provided combination of parameters did not find a basin.
+        '501':
+          description: Requested format is not implemented
+  /cwms-data/blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get blobs with blobId
-      operationId: getBlobsWithBlobId
+      summary: Get cwmsData blobs with blobId
+      operationId: getCwmsDataBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -1529,36 +1112,14 @@ paths:
           schema:
             type: string
       responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /blobs:
+        '200':
+          description: Default response
+  /cwms-data/blobs:
     get:
       tags:
         - Blob
-      summary: Get blobs
-      operationId: getBlobs
+      summary: Get cwmsData blobs
+      operationId: getCwmsDataBlobs
       parameters:
         - name: office
           in: query
@@ -1591,139 +1152,12 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Blobs'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /basins/{basin-id}:
-    get:
-      tags:
-        - Basins
-      summary: Get basins with basinId
-      description: Returns CWMS Basin Data
-      operationId: getBasinsWithBasinId
-      parameters:
-        - name: basin-id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
-          schema:
-            type: string
-        - name: unit
-          in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/vnd.named+pg+json:
-              schema:
-                $ref: '#/components/schemas/Basin'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: The provided combination of parameters did not find a basin.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Requested format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /basins:
-    get:
-      tags:
-        - Basins-Beta
-      summary: Get basins
-      description: Returns CWMS Basin Data
-      operationId: getBasins
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
-          schema:
-            type: string
-        - name: unit
-          in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/vnd.named+pg+json:
-              schema:
-                $ref: '#/components/schemas/Basin'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: The provided combination of parameters did not find a basin.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Requested format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /clobs/{clob-id}:
+  /cwms-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get clobs with clobId
-      operationId: getClobsWithClobId
+      summary: Get cwmsData clobs with clobId
+      operationId: getCwmsDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -1742,36 +1176,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Clob'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /clobs:
+  /cwms-data/clobs:
     get:
       tags:
         - Clob
-      summary: Get clobs
-      operationId: getClobs
+      summary: Get cwmsData clobs
+      operationId: getCwmsDataClobs
       parameters:
         - name: office
           in: query
@@ -1796,7 +1206,7 @@ paths:
             type: boolean
         - name: like
           in: query
-          description: Posix regular expression describing the clob id's you want
+          description: Posix regular expression matching against the id
           schema:
             type: string
       responses:
@@ -1809,37 +1219,13 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Clobs'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '501':
-          description: Not Implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /pools/{pool-id}:
+  /cwms-data/pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get pools with poolId
+      summary: Get cwmsData pools with poolId
       description: Retrieves requested Pool
-      operationId: getPoolsWithPoolId
+      operationId: getCwmsDataPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -1886,37 +1272,17 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Pool'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the Location Category was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /pools:
+  /cwms-data/pools:
     get:
       tags:
         - Pools
-      summary: Get pools
+      summary: Get cwmsData pools
       description: Returns Pools Data
-      operationId: getPools
+      operationId: getCwmsDataPools
       parameters:
         - name: office
           in: query
@@ -1971,100 +1337,12 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Pools'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the pools were not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
 components:
   schemas:
-    RadarError:
-      type: object
-      properties:
-        message:
-          type: string
-        incidentIdentifier:
-          type: string
-          description: A randomly generated number to help identify your request in the logs for analysis..
-        details:
-          type: object
-          additionalProperties:
-            type: string
-    Unit:
-      type: object
-    Location:
-      type: object
-      properties:
-        name:
-          type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
-        public-name:
-          type: string
-        long-name:
-          type: string
-        description:
-          type: string
-        timezone-name:
-          type: string
-        location-type:
-          type: string
-        location-kind:
-          type: string
-        nation:
-          type: string
-          enum:
-            - US
-            - CANADA
-            - MEXICO
-        state-initial:
-          type: string
-        county-name:
-          type: string
-        nearest-city:
-          type: string
-        horizontal-datum:
-          type: string
-        published-longitude:
-          type: number
-          format: double
-        published-latitude:
-          type: number
-          format: double
-        vertical-datum:
-          type: string
-        elevation:
-          type: number
-          format: double
-        map-label:
-          type: string
-        bounding-office-id:
-          type: string
-        office-id:
-          type: string
     LocationCategory:
       type: object
       properties:
@@ -2126,6 +1404,62 @@ components:
       type: object
       description: Single LocationGroup or List of LocationGroups in comma separated format
       example: "#LocationGroup Id, OfficeId, Description, CategoryId, CategoryOfficeId, SharedLocAliasId, SharedRefLocationId, LocGroupAttribute\r\nCERL,Construction Engineering Research Laboratory,Field Operating Activity\tERD\r\nCHL,Coastal and Hydraulics Laboratory,Field Operating Activity\tERD\r\nNAB,Baltimore District,District,NAD\r\nNAD,North Atlantic Division,Division Headquarters,HQ"
+    Unit:
+      type: object
+    Location:
+      type: object
+      properties:
+        name:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        public-name:
+          type: string
+        long-name:
+          type: string
+        description:
+          type: string
+        timezone-name:
+          type: string
+        location-type:
+          type: string
+        location-kind:
+          type: string
+        nation:
+          type: string
+          enum:
+            - US
+            - CANADA
+            - MEXICO
+        state-initial:
+          type: string
+        county-name:
+          type: string
+        nearest-city:
+          type: string
+        horizontal-datum:
+          type: string
+        published-longitude:
+          type: number
+          format: double
+        published-latitude:
+          type: number
+          format: double
+        vertical-datum:
+          type: string
+        elevation:
+          type: number
+          format: double
+        map-label:
+          type: string
+        bounding-office-id:
+          type: string
+        office-id:
+          type: string
     Office:
       type: object
       properties:
@@ -2281,6 +1615,50 @@ components:
           format: int32
         offset-minutes:
           type: integer
+    TimeSeriesCategory:
+      type: object
+      properties:
+        officeId:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+      description: A representation of a TimeSeries category
+      xml:
+        name: timeseries-category
+    TimeSeriesGroup:
+      type: object
+      properties:
+        id:
+          type: string
+        timeSeriesCategory:
+          $ref: '#/components/schemas/TimeSeriesCategory'
+        officeId:
+          type: string
+        description:
+          type: string
+        sharedAliasId:
+          type: string
+        sharedRefTsId:
+          type: string
+      description: A representation of a timeseries group
+      xml:
+        name: timeseries-group
+    Offset:
+      type: object
+      properties:
+        estimate:
+          type: boolean
+          xml:
+            attribute: true
+        toDatum:
+          type: string
+          xml:
+            name: to-datum
+        value:
+          type: number
+          format: double
     TimeSeries:
       type: object
       properties:
@@ -2303,12 +1681,6 @@ components:
               items:
                 type: object
                 properties:
-                  dateBased:
-                    type: boolean
-                  durationEstimated:
-                    type: boolean
-                  timeBased:
-                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -2322,6 +1694,12 @@ components:
                         type: boolean
                       negative:
                         type: boolean
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
             nano:
               type: integer
               format: int32
@@ -2336,9 +1714,13 @@ components:
         nextPage:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
         officeId:
           type: string
           description: Office ID that owns the time-series
+          xml:
+            name: office-id
         page:
           type: string
           description: The cursor to the current page of data
@@ -2346,6 +1728,8 @@ components:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          xml:
+            name: page-size
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
@@ -2353,7 +1737,7 @@ components:
         units:
           type: string
           description: The units of the time series data
-        valueColumns:
+        value-columns:
           type: array
           readOnly: true
           items:
@@ -2375,6 +1759,8 @@ components:
           description: A representation of a time-series record
           xml:
             wrapped: true
+        verticalDatumInfo:
+          $ref: '#/components/schemas/VerticalDatumInfo'
       xml:
         name: timeseries
     TimeSeries.Column:
@@ -2403,30 +1789,28 @@ components:
           type: integer
           format: int32
       description: A representation of a time-series record
-    TimeSeriesCategory:
+    VerticalDatumInfo:
       type: object
       properties:
-        officeId:
+        office:
           type: string
-        id:
+          xml:
+            attribute: true
+        unit:
           type: string
-        description:
+          xml:
+            attribute: true
+        location:
           type: string
-      description: A representation of a TimeSeries category
+        native-datum:
+          type: string
+        elevation:
+          type: number
+          format: double
+        offset:
+          $ref: '#/components/schemas/Offset'
       xml:
-        name: timeseries-category
-    TimeSeriesGroup:
-      type: object
-      properties:
-        id:
-          type: string
-        timeSeriesCategory:
-          $ref: '#/components/schemas/TimeSeriesCategory'
-        description:
-          type: string
-      description: A representation of a timeseries group
-      xml:
-        name: timeseries-group
+        name: vertical-datum-info
     CatalogableEndpoint:
       type: string
       description: Set of data for which a larger catalog can be built.
@@ -2448,6 +1832,8 @@ components:
         nextPage:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
@@ -2456,6 +1842,8 @@ components:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          xml:
+            name: page-size
         entries:
           type: array
           xml:
@@ -2558,73 +1946,37 @@ components:
           type: string
           xml:
             attribute: true
-        tsName:
+        name:
           type: string
           xml:
             attribute: true
-        longName:
-          type: string
         units:
           type: string
-        fullName:
+        interval:
           type: string
+        intervalOffset:
+          type: integer
+          description: Offset from top of interval
+          format: int64
+          xml:
+            name: interval-offset
+        timeZone:
+          type: string
+          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
+          xml:
+            name: time-zone
+        earliestTime:
+          type: string
+          format: date-time
+          xml:
+            name: earliest-time
+        latestTime:
+          type: string
+          format: date-time
+          xml:
+            name: latest-time
       xml:
         name: entry
-    Blob:
-      type: object
-      properties:
-        office:
-          type: string
-        id:
-          type: string
-        description:
-          type: string
-        mediaTypeId:
-          type: string
-        value:
-          type: array
-          items:
-            type: string
-            format: byte
-      description: List of retrieved blobs
-    Blobs:
-      type: object
-      properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-        blobs:
-          type: object
-          properties:
-            office:
-              type: string
-            id:
-              type: string
-            description:
-              type: string
-            mediaTypeId:
-              type: string
-            value:
-              type: array
-              items:
-                type: string
-                format: byte
-          description: List of retrieved blobs
-          xml:
-            wrapped: true
-      xml:
-        name: blobs
     Basin:
       type: object
       properties:
@@ -2732,6 +2084,65 @@ components:
           type: string
         configuration:
           type: string
+    Blob:
+      type: object
+      properties:
+        office:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+        mediaTypeId:
+          type: string
+        value:
+          type: array
+          items:
+            type: string
+            format: byte
+      description: List of retrieved blobs
+    Blobs:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+        nextPage:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+        pageSize:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          xml:
+            name: page-size
+        blobs:
+          type: object
+          properties:
+            office:
+              type: string
+            id:
+              type: string
+            description:
+              type: string
+            mediaTypeId:
+              type: string
+            value:
+              type: array
+              items:
+                type: string
+                format: byte
+          description: List of retrieved blobs
+          xml:
+            wrapped: true
+      xml:
+        name: blobs
     Clob:
       type: object
       properties:
@@ -2755,6 +2166,8 @@ components:
         nextPage:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
@@ -2763,6 +2176,8 @@ components:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          xml:
+            name: page-size
         clobs:
           type: object
           properties:
@@ -2789,14 +2204,14 @@ components:
           type: string
         clobText:
           type: string
-        projectId:
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
+        topLevelId:
           type: string
         bottomLevelId:
           type: string
-        topLevelId:
+        projectId:
           type: string
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
         implicit:
           type: boolean
       description: List of retrieved pools
@@ -2816,6 +2231,8 @@ components:
         nextPage:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
@@ -2824,6 +2241,8 @@ components:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          xml:
+            name: page-size
         pools:
           type: object
           properties:
@@ -2833,14 +2252,14 @@ components:
               type: string
             clobText:
               type: string
-            projectId:
+            poolName:
+              $ref: '#/components/schemas/PoolNameType'
+            topLevelId:
               type: string
             bottomLevelId:
               type: string
-            topLevelId:
+            projectId:
               type: string
-            poolName:
-              $ref: '#/components/schemas/PoolNameType'
             implicit:
               type: boolean
           description: List of retrieved pools
