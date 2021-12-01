@@ -24,16 +24,18 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 
 /**
- * Catalog
+ * LocationCatalog
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class LocationCatalog {
     @JsonProperty("page")
     private String page = null;
@@ -51,15 +53,28 @@ public class LocationCatalog {
     @Valid
     private List<LocationCatalogEntry> entries = null;
 
+    public LocationCatalog page(String page) {
+        this.page = page;
+        return this;
+    }
+
     /**
      * The cursor to the current page of data
      *
      * @return page
      **/
-    @ApiModelProperty(value = "The cursor to the current page of data")
 
     public String getPage() {
         return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+    public LocationCatalog nextPage(String nextPage) {
+        this.nextPage = nextPage;
+        return this;
     }
 
     /**
@@ -67,10 +82,18 @@ public class LocationCatalog {
      *
      * @return nextPage
      **/
-    @ApiModelProperty(value = "The cursor to the next page of data; null if there is no more data")
 
     public String getNextPage() {
         return nextPage;
+    }
+
+    public void setNextPage(String nextPage) {
+        this.nextPage = nextPage;
+    }
+
+    public LocationCatalog total(Integer total) {
+        this.total = total;
+        return this;
     }
 
     /**
@@ -78,10 +101,18 @@ public class LocationCatalog {
      *
      * @return total
      **/
-    @ApiModelProperty(value = "The total number of records retrieved; null or not present if not supported or unknown")
 
     public Integer getTotal() {
         return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public LocationCatalog pageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+        return this;
     }
 
     /**
@@ -89,10 +120,26 @@ public class LocationCatalog {
      *
      * @return pageSize
      **/
-    @ApiModelProperty(value = "The number of records fetched per-page; this may be larger than the number of records actually retrieved")
 
     public Integer getPageSize() {
         return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public LocationCatalog entries(List<LocationCatalogEntry> entries) {
+        this.entries = entries;
+        return this;
+    }
+
+    public LocationCatalog addEntriesItem(LocationCatalogEntry entriesItem) {
+        if (this.entries == null) {
+            this.entries = new ArrayList<LocationCatalogEntry>();
+        }
+        this.entries.add(entriesItem);
+        return this;
     }
 
     /**
@@ -100,14 +147,18 @@ public class LocationCatalog {
      *
      * @return entries
      **/
-    @ApiModelProperty(value = "")
     @Valid
     public List<LocationCatalogEntry> getEntries() {
         return entries;
     }
 
+    public void setEntries(List<LocationCatalogEntry> entries) {
+        this.entries = entries;
+    }
+
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -115,22 +166,24 @@ public class LocationCatalog {
             return false;
         }
         LocationCatalog catalog = (LocationCatalog) o;
-        return Objects.equals(this.page, catalog.page) &&
-            Objects.equals(this.nextPage, catalog.nextPage) &&
-            Objects.equals(this.total, catalog.total) &&
-            Objects.equals(this.pageSize, catalog.pageSize) &&
-            Objects.equals(this.entries, catalog.entries);
+        return this.page == null || catalog.page == null ? Objects.equals(this.page, catalog.page) : this.page.equalsIgnoreCase(catalog.page)
+            && this.nextPage == null || catalog.nextPage == null ? Objects.equals(this.nextPage, catalog.nextPage) :
+            this.nextPage.equalsIgnoreCase(catalog.nextPage)
+                && Objects.equals(this.total, catalog.total)
+                && Objects.equals(this.pageSize, catalog.pageSize)
+                && Objects.equals(this.entries, catalog.entries)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(page, nextPage, total, pageSize, entries);
+        return Objects.hash(page == null ? 0 : page.toLowerCase(), nextPage == null ? 0 : nextPage.toLowerCase(), total, pageSize, entries);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class Catalog {\n");
+        sb.append("class LocationCatalog {\n");
 
         sb.append("    page: ").append(toIndentedString(page)).append("\n");
         sb.append("    nextPage: ").append(toIndentedString(nextPage)).append("\n");
@@ -145,7 +198,7 @@ public class LocationCatalog {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

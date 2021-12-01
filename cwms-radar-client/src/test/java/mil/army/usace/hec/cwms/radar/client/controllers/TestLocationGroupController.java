@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,16 +61,16 @@ class TestLocationGroupController extends TestController {
         assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getLocationId());
         assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getBaseLocationId());
         assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getAliasId());
-        assertEquals(540009, locationGroup.getAssignedLocations().get(0).getLocationCode());
+        assertEquals(BigDecimal.valueOf(540009), locationGroup.getAssignedLocations().get(0).getLocationCode());
 
         assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getLocationId());
         assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getBaseLocationId());
         assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getAliasId());
-        assertEquals(542009, locationGroup.getAssignedLocations().get(1).getLocationCode());
+        assertEquals(BigDecimal.valueOf(542009), locationGroup.getAssignedLocations().get(1).getLocationCode());
 
         assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getLocationId());
         assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getBaseLocationId());
         assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getAliasId());
-        assertEquals(541009, locationGroup.getAssignedLocations().get(2).getLocationCode());
+        assertEquals(BigDecimal.valueOf(541009), locationGroup.getAssignedLocations().get(2).getLocationCode());
     }
 }

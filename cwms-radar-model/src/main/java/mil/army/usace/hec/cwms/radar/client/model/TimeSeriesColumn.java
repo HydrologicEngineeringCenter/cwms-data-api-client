@@ -26,14 +26,13 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
  * TimeSeriesColumn
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:49:54.974-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class TimeSeriesColumn {
     @JsonProperty("name")
     private String name = null;
@@ -54,10 +53,18 @@ public class TimeSeriesColumn {
      *
      * @return name
      **/
-    @ApiModelProperty(value = "")
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public TimeSeriesColumn ordinal(Integer ordinal) {
+        this.ordinal = ordinal;
+        return this;
     }
 
     /**
@@ -65,10 +72,18 @@ public class TimeSeriesColumn {
      *
      * @return ordinal
      **/
-    @ApiModelProperty(value = "")
 
     public Integer getOrdinal() {
         return ordinal;
+    }
+
+    public void setOrdinal(Integer ordinal) {
+        this.ordinal = ordinal;
+    }
+
+    public TimeSeriesColumn datatype(String datatype) {
+        this.datatype = datatype;
+        return this;
     }
 
     /**
@@ -76,10 +91,13 @@ public class TimeSeriesColumn {
      *
      * @return datatype
      **/
-    @ApiModelProperty(value = "")
 
     public String getDatatype() {
         return datatype;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
     }
 
 
@@ -92,14 +110,17 @@ public class TimeSeriesColumn {
             return false;
         }
         TimeSeriesColumn timeSeriesColumn = (TimeSeriesColumn) o;
-        return Objects.equals(this.name, timeSeriesColumn.name) &&
-            Objects.equals(this.ordinal, timeSeriesColumn.ordinal) &&
-            Objects.equals(this.datatype, timeSeriesColumn.datatype);
+        return this.name == null || timeSeriesColumn.name == null ? Objects.equals(this.name, timeSeriesColumn.name) :
+            this.name.equalsIgnoreCase(timeSeriesColumn.name)
+                && Objects.equals(this.ordinal, timeSeriesColumn.ordinal)
+                && this.datatype == null || timeSeriesColumn.datatype == null ? Objects.equals(this.datatype, timeSeriesColumn.datatype) :
+                this.datatype.equalsIgnoreCase(timeSeriesColumn.datatype)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, ordinal, datatype);
+        return Objects.hash(name == null ? 0 : name.toLowerCase(), ordinal, datatype == null ? 0 : datatype.toLowerCase());
     }
 
     @Override
