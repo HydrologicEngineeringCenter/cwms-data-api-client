@@ -24,58 +24,70 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
- * A representation of a time-series record
+ * Offset
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
-@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-public class TimeSeriesValues {
-    private Long dateTime = null;
+public class Offset {
+    @JsonProperty("estimate")
+    private Boolean estimate = null;
+
+    @JsonProperty("to-datum")
+    private String toDatum = null;
+
+    @JsonProperty("value")
     private Double value = null;
-    private Integer qualityCode = null;
 
-    @JsonCreator
-    public TimeSeriesValues(@JsonProperty("date-time") Long dateTime,
-                            @JsonProperty("value") Double value,
-                            @JsonProperty("quality-code") Integer qualityCode) {
-        this.dateTime = dateTime;
-        this.value = value;
-        this.qualityCode = qualityCode;
-    }
-
-    public TimeSeriesValues dateTime(Long dateTime) {
-        this.dateTime = dateTime;
+    public Offset estimate(Boolean estimate) {
+        this.estimate = estimate;
         return this;
     }
 
     /**
-     * Milliseconds since 1970-01-01 (Unix Epoch)
+     * Get estimate
      *
-     * @return dateTime
+     * @return estimate
      **/
 
-    public Long getDateTime() {
-        return dateTime;
+    public Boolean isisEstimate() {
+        return estimate;
     }
 
-    public void setDateTime(Long dateTime) {
-        this.dateTime = dateTime;
+    public void setEstimate(Boolean estimate) {
+        this.estimate = estimate;
     }
 
-    public TimeSeriesValues value(Double value) {
+    public Offset toDatum(String toDatum) {
+        this.toDatum = toDatum;
+        return this;
+    }
+
+    /**
+     * Get toDatum
+     *
+     * @return toDatum
+     **/
+
+    public String getToDatum() {
+        return toDatum;
+    }
+
+    public void setToDatum(String toDatum) {
+        this.toDatum = toDatum;
+    }
+
+    public Offset value(Double value) {
         this.value = value;
         return this;
     }
 
     /**
-     * Requested time-series data value
+     * Get value
      *
      * @return value
      **/
@@ -88,25 +100,6 @@ public class TimeSeriesValues {
         this.value = value;
     }
 
-    public TimeSeriesValues qualityCode(Integer qualityCode) {
-        this.qualityCode = qualityCode;
-        return this;
-    }
-
-    /**
-     * Get qualityCode
-     *
-     * @return qualityCode
-     **/
-
-    public Integer getQualityCode() {
-        return qualityCode;
-    }
-
-    public void setQualityCode(Integer qualityCode) {
-        this.qualityCode = qualityCode;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -116,26 +109,27 @@ public class TimeSeriesValues {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TimeSeriesValues timeSeriesValues = (TimeSeriesValues) o;
-        return Objects.equals(this.dateTime, timeSeriesValues.dateTime)
-            && Objects.equals(this.value, timeSeriesValues.value)
-            && Objects.equals(this.qualityCode, timeSeriesValues.qualityCode)
+        Offset offset = (Offset) o;
+        return Objects.equals(this.estimate, offset.estimate)
+            && this.toDatum == null || offset.toDatum == null ? Objects.equals(this.toDatum, offset.toDatum) :
+            this.toDatum.equalsIgnoreCase(offset.toDatum)
+                && Objects.equals(this.value, offset.value)
             ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateTime, value, qualityCode);
+        return Objects.hash(estimate, toDatum == null ? 0 : toDatum.toLowerCase(), value);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class TimeSeriesValues {\n");
+        sb.append("class Offset {\n");
 
-        sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");
+        sb.append("    estimate: ").append(toIndentedString(estimate)).append("\n");
+        sb.append("    toDatum: ").append(toIndentedString(toDatum)).append("\n");
         sb.append("    value: ").append(toIndentedString(value)).append("\n");
-        sb.append("    qualityCode: ").append(toIndentedString(qualityCode)).append("\n");
         sb.append("}");
         return sb.toString();
     }
