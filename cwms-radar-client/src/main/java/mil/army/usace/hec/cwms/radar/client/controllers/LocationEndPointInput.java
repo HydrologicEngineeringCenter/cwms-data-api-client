@@ -35,7 +35,6 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 public final class LocationEndPointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
-    static final String NAME_QUERY_PARAMETER = "name";
     static final String UNIT_QUERY_PARAMETER = "unit";
 
     private final String locationId;
@@ -62,8 +61,7 @@ public final class LocationEndPointInput extends EndpointInput {
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, locationId)
-                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                                  .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
                                  .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
