@@ -32,18 +32,22 @@ import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 
-public class LocationEndPointInput extends EndpointInput {
+public final class LocationEndPointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String NAME_QUERY_PARAMETER = "name";
     static final String UNIT_QUERY_PARAMETER = "unit";
 
-    private final String locationName;
+    private final String locationId;
     private String officeId;
     private String unit;
 
-    public LocationEndPointInput(String locationName) {
-        this.locationName = Objects.requireNonNull(locationName, "Cannot access the location endpoint without a location name");
+    public LocationEndPointInput(String locationId) {
+        this.locationId = Objects.requireNonNull(locationId, "Cannot access the location endpoint without a location name");
+    }
+
+    String getLocationId() {
+        return this.locationId;
     }
 
     public LocationEndPointInput officeId(String officeId) {
@@ -58,7 +62,7 @@ public class LocationEndPointInput extends EndpointInput {
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, locationName)
+        return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, locationId)
                                  .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                                  .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
                                  .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);

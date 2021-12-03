@@ -51,6 +51,12 @@ class TestLocationEndpointInput {
     }
 
     @Test
+    void testLocationName() {
+        LocationEndPointInput input = new LocationEndPointInput("TEST");
+        assertEquals("TEST", input.getLocationId());
+    }
+
+    @Test
     void testNullLocationName() {
         assertThrows(NullPointerException.class, () -> new LocationEndPointInput(null));
     }
