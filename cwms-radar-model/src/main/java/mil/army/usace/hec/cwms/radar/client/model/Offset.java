@@ -54,7 +54,7 @@ public class Offset {
      * @return estimate
      **/
 
-    public Boolean isisEstimate() {
+    public Boolean isEstimate() {
         return estimate;
     }
 

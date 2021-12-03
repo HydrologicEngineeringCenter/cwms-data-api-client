@@ -2527,5 +2527,17 @@
       265.489944,
       0
     ]
-  ]
+  ],
+  "vertical-datum-info": {
+    "office": "SWT",
+    "unit": "m",
+    "location": "ARBU",
+    "native-datum": "NGVD-29",
+    "elevation": 243.8,
+    "offset": {
+      "estimate": true,
+      "to-datum": "NAVD-88",
+      "value": 0.0632
+    }
+  }
 }
