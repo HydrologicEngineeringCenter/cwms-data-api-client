@@ -39,7 +39,7 @@ public final class LocationEndPointInput extends EndpointInput {
 
     private final String locationId;
     private String officeId;
-    private String unit;
+    private String unit = "SI";
 
     public LocationEndPointInput(String locationId) {
         this.locationId = Objects.requireNonNull(locationId, "Cannot access the location endpoint without a location name");
