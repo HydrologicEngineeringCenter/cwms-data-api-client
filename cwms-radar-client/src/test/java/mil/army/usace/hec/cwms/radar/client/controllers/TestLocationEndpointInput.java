@@ -24,7 +24,6 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.NAME_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.OFFICE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.UNIT_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
@@ -46,7 +45,6 @@ class TestLocationEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
-        assertEquals("LOC_TEST", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
