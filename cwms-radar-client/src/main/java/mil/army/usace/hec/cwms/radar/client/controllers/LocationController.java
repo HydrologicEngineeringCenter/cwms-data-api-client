@@ -31,8 +31,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-
-public class LocationController {
+public final class LocationController {
 
     private static final String LOCATION_ENDPOINT = "locations";
 

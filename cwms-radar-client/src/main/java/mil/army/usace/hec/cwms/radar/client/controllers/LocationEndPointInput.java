@@ -31,7 +31,6 @@ import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-
 public final class LocationEndPointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";

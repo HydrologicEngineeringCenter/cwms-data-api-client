@@ -31,7 +31,7 @@ import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-public class LocationCategoryEndpointInput extends EndpointInput {
+public final class LocationCategoryEndpointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
