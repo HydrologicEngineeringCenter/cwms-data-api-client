@@ -30,7 +30,6 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndp
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,10 +46,5 @@ class TestLocationGroupEndpointInput {
         assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
         assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-    }
-
-    @Test
-    void testNullGroupId() {
-        assertThrows(NullPointerException.class, () -> new LocationGroupEndpointInput(null));
     }
 }

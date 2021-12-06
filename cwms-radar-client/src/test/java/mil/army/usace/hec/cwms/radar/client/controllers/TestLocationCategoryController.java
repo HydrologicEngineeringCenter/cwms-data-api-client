@@ -32,14 +32,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCategory;
 import org.junit.jupiter.api.Test;
 
 class TestLocationCategoryController extends TestController {
 
     @Test
-    void testRetrieveLocation() throws IOException {
-        String resource = "radar/json/location_category.json";
+    void testRetrieveLocationCategory() throws IOException {
+        String resource = "radar/v1/json/location_category.json";
         URL resourceUrl = getClass().getClassLoader().getResource(resource);
         if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
@@ -55,5 +56,25 @@ class TestLocationCategoryController extends TestController {
         assertEquals("CWMS Mobile Location Listings", locationCategory.getId());
         assertEquals("SWT", locationCategory.getOfficeId());
         assertEquals("For Testing", locationCategory.getDescription());
+    }
+
+    @Test
+    void testRetrieveLocationCategories() throws IOException {
+        String resource = "radar/v1/json/location_categories.json";
+        URL resourceUrl = getClass().getClassLoader().getResource(resource);
+        if (resourceUrl == null) {
+            throw new IOException("Failed to get resource: " + resource);
+        }
+        Path path = new File(resourceUrl.getFile()).toPath();
+        String collect = String.join("\n", Files.readAllLines(path));
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationCategoryEndpointInput input = new LocationCategoryEndpointInput()
+            .officeId("SWT");
+        List<LocationCategory> locationCategories = new LocationCategoryController().retrieveLocationCategories(buildConnectionInfo(), input);
+        LocationCategory locationCategory = locationCategories.get(0);
+        assertEquals("RDL_Basins", locationCategory.getId());
+        assertEquals("SWT", locationCategory.getOfficeId());
+        assertEquals("Collection of Basins", locationCategory.getDescription());
     }
 }

@@ -1,0 +1,101 @@
+[
+  {
+    "office-id": "SWT",
+    "id": "RDL_Basins",
+    "description": "Collection of Basins"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat544477"
+  },
+  {
+    "office-id": "SWT",
+    "id": "Flow"
+  },
+  {
+    "office-id": "SWT",
+    "id": "Rating"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCatName605982"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat429004"
+  },
+  {
+    "office-id": "SWT",
+    "id": "REGI-Streamgages"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat474546"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Project_Sort",
+    "description": "Project and Location sort order"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat328761"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Project_Sort_by_Basin"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat337182"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat214351"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Project_Types",
+    "description": "List of stations for various Project types"
+  },
+  {
+    "office-id": "SWT",
+    "id": "cat865205"
+  },
+  {
+    "office-id": "SWT",
+    "id": "Corps_Projects",
+    "description": "Project owned by the Corps"
+  },
+  {
+    "office-id": "SWT",
+    "id": "CWMS Mobile Location Listings"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Location_Types",
+    "description": "Category for different types of locations"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_Project_Stations",
+    "description": "Associate stations with particular Projects"
+  },
+  {
+    "office-id": "SWT",
+    "id": "RDL_SubBasins",
+    "description": "Collection of SubBasins"
+  },
+  {
+    "office-id": "SWT",
+    "id": "cat905711"
+  },
+  {
+    "office-id": "SWT",
+    "id": "Basin"
+  },
+  {
+    "office-id": "SWT",
+    "id": "locCat939769"
+  }
+]
