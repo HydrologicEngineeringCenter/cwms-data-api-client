@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -43,9 +44,23 @@ public final class LocationGroupController {
      */
     public LocationGroup retrieveLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + locationGroupEndpointInput.getGroupId())
             .addEndpointInput(locationGroupEndpointInput)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
+    }
+
+    /**
+     * @param apiConnectionInfo          - connection info
+     * @param locationGroupEndpointInput - office id
+     * @return LocationGroup list for input office
+     * @throws IOException - thrown if retrieval failed
+     */
+    public List<LocationGroup> retrieveLocationGroups(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
+        throws IOException {
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
+            .addEndpointInput(locationGroupEndpointInput)
+            .execute();
+        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
     }
 }

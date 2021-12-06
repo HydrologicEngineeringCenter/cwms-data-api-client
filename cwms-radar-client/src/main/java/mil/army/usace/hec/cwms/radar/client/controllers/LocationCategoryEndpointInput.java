@@ -43,6 +43,14 @@ public final class LocationCategoryEndpointInput extends EndpointInput {
         this.categoryId = Objects.requireNonNull(categoryId, "Cannot access the location category endpoint without a category id");
     }
 
+    public LocationCategoryEndpointInput() {
+        this.categoryId = null;
+    }
+
+    String getCategoryId() {
+        return categoryId;
+    }
+
     public LocationCategoryEndpointInput officeId(String officeId) {
         this.officeId = officeId;
         return this;
