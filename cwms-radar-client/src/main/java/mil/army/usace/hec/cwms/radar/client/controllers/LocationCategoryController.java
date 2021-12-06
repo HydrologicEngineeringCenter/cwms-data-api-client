@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -45,9 +46,27 @@ public final class LocationCategoryController {
      */
     public LocationCategory retrieveLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput locationCategoryEndpointInput)
         throws IOException {
+        HttpRequestResponse response =
+            new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY + "/" + locationCategoryEndpointInput.getCategoryId())
+                .addEndpointInput(locationCategoryEndpointInput)
+                .execute();
+        return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
+    }
+
+    /**
+     * Retrieve Location Category.
+     *
+     * @param apiConnectionInfo             - connection info
+     * @param locationCategoryEndpointInput - office
+     * @return LocationCategories for office id
+     * @throws IOException - thrown if retrieve failed
+     */
+    public List<LocationCategory> retrieveLocationCategories(ApiConnectionInfo apiConnectionInfo,
+                                                             LocationCategoryEndpointInput locationCategoryEndpointInput)
+        throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
             .addEndpointInput(locationCategoryEndpointInput)
             .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
+        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationCategory.class);
     }
 }

@@ -27,7 +27,6 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
@@ -42,7 +41,15 @@ public final class LocationGroupEndpointInput extends EndpointInput {
     private String categoryId;
 
     public LocationGroupEndpointInput(String groupId) {
-        this.groupId = Objects.requireNonNull(groupId, "Cannot access the location group endpoint without a location group id");
+        this.groupId = groupId;
+    }
+
+    public LocationGroupEndpointInput() {
+        this.groupId = null;
+    }
+
+    String getGroupId() {
+        return groupId;
     }
 
     public LocationGroupEndpointInput officeId(String officeId) {
