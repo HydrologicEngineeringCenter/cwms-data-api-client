@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 
@@ -50,8 +51,8 @@ public class VerticalDatumInfo {
     @JsonProperty("elevation")
     private Double elevation = null;
 
-    @JsonProperty("offset")
-    private Offset offset = null;
+    @JsonProperty("offsets")
+    private List<Offset> offsets = null;
 
     public VerticalDatumInfo office(String office) {
         this.office = office;
@@ -148,8 +149,8 @@ public class VerticalDatumInfo {
         this.elevation = elevation;
     }
 
-    public VerticalDatumInfo offset(Offset offset) {
-        this.offset = offset;
+    public VerticalDatumInfo offsets(List<Offset> offsets) {
+        this.offsets = offsets;
         return this;
     }
 
@@ -160,12 +161,12 @@ public class VerticalDatumInfo {
      **/
 
     @Valid
-    public Offset getOffset() {
-        return offset;
+    public List<Offset> getOffsets() {
+        return offsets;
     }
 
-    public void setOffset(Offset offset) {
-        this.offset = offset;
+    public void setOffsets(List<Offset> offsets) {
+        this.offsets = offsets;
     }
 
 
@@ -188,14 +189,14 @@ public class VerticalDatumInfo {
                         Objects.equals(this.nativeDatum, verticalDatumInfo.nativeDatum) :
                         this.nativeDatum.equalsIgnoreCase(verticalDatumInfo.nativeDatum)
                             && Objects.equals(this.elevation, verticalDatumInfo.elevation)
-                            && Objects.equals(this.offset, verticalDatumInfo.offset)
+                            && Objects.equals(this.offsets, verticalDatumInfo.offsets)
             ;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(office == null ? 0 : office.toLowerCase(), unit == null ? 0 : unit.toLowerCase(),
-            location == null ? 0 : location.toLowerCase(), nativeDatum == null ? 0 : nativeDatum.toLowerCase(), elevation, offset);
+            location == null ? 0 : location.toLowerCase(), nativeDatum == null ? 0 : nativeDatum.toLowerCase(), elevation, offsets);
     }
 
     @Override
@@ -208,7 +209,7 @@ public class VerticalDatumInfo {
         sb.append("    location: ").append(toIndentedString(location)).append("\n");
         sb.append("    nativeDatum: ").append(toIndentedString(nativeDatum)).append("\n");
         sb.append("    elevation: ").append(toIndentedString(elevation)).append("\n");
-        sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
+        sb.append("    offset: ").append(toIndentedString(offsets)).append("\n");
         sb.append("}");
         return sb.toString();
     }
