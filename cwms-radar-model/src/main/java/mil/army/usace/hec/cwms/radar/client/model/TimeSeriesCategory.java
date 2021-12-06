@@ -26,15 +26,13 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
 import java.util.Objects;
 
 /**
  * A representation of a TimeSeries category
  */
-@ApiModel(description = "A representation of a TimeSeries category")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class TimeSeriesCategory {
     @JsonProperty("office-id")
     private String officeId = null;
@@ -45,13 +43,28 @@ public class TimeSeriesCategory {
     @JsonProperty("description")
     private String description = null;
 
+    public TimeSeriesCategory officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
+    }
+
     /**
      * Get officeId
      *
      * @return officeId
      **/
+
     public String getOfficeId() {
         return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
+
+    public TimeSeriesCategory id(String id) {
+        this.id = id;
+        return this;
     }
 
     /**
@@ -59,8 +72,18 @@ public class TimeSeriesCategory {
      *
      * @return id
      **/
+
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public TimeSeriesCategory description(String description) {
+        this.description = description;
+        return this;
     }
 
     /**
@@ -68,13 +91,18 @@ public class TimeSeriesCategory {
      *
      * @return description
      **/
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -82,14 +110,20 @@ public class TimeSeriesCategory {
             return false;
         }
         TimeSeriesCategory timeSeriesCategory = (TimeSeriesCategory) o;
-        return Objects.equals(this.officeId, timeSeriesCategory.officeId) &&
-            Objects.equals(this.id, timeSeriesCategory.id) &&
-            Objects.equals(this.description, timeSeriesCategory.description);
+        return this.officeId == null || timeSeriesCategory.officeId == null ? Objects.equals(this.officeId, timeSeriesCategory.officeId) :
+            this.officeId.equalsIgnoreCase(timeSeriesCategory.officeId)
+                && this.id == null || timeSeriesCategory.id == null ? Objects.equals(this.id, timeSeriesCategory.id) :
+                this.id.equalsIgnoreCase(timeSeriesCategory.id)
+                    && this.description == null || timeSeriesCategory.description == null ?
+                    Objects.equals(this.description, timeSeriesCategory.description) :
+                    this.description.equalsIgnoreCase(timeSeriesCategory.description)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeId, id, description);
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), id == null ? 0 : id.toLowerCase(),
+            description == null ? 0 : description.toLowerCase());
     }
 
     @Override
@@ -108,7 +142,7 @@ public class TimeSeriesCategory {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

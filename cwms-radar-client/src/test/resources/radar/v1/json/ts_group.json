@@ -1,9 +1,12 @@
 {
-  "id": "Reservoir Operations",
+  "id": "Radar Test",
   "time-series-category": {
     "office-id": "SWT",
     "id": "QA Category",
     "description": "Creating this category for testing on December 16, 2020"
   },
-  "description": "Organizing timeseries for maintaining reservoir operations"
+  "office-id": "SWT",
+  "description": "description123",
+  "shared-alias-id": "TestAlias",
+  "shared-ref-ts-id": "ADDI.Flow.Inst.1Hour.0.Ccp-Rev"
 }

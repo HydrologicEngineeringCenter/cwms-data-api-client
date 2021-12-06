@@ -24,6 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
@@ -33,16 +36,16 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public final class TimeSeriesEndpointInput extends EndpointInput {
 
-    public static final String OFFICE_QUERY_PARAMETER = "office";
-    public static final String UNIT_QUERY_PARAMETER = "unit";
-    public static final String DATUM_QUERY_PARAMETER = "datum";
-    public static final String BEGIN_QUERY_PARAMETER = "begin";
-    public static final String END_QUERY_PARAMETER = "end";
-    public static final String TIMEZONE_QUERY_PARAMETER = "timezone";
-    public static final String PAGE_QUERY_PARAMETER = "page";
-    public static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
-    public static final String ACCEPT_QUERY_HEADER = "accept";
-    public static final String NAME_QUERY_PARAMETER = "name";
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String UNIT_QUERY_PARAMETER = "unit";
+    static final String DATUM_QUERY_PARAMETER = "datum";
+    static final String BEGIN_QUERY_PARAMETER = "begin";
+    static final String END_QUERY_PARAMETER = "end";
+    static final String TIMEZONE_QUERY_PARAMETER = "timezone";
+    static final String PAGE_QUERY_PARAMETER = "page";
+    static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
+    static final String NAME_QUERY_PARAMETER = "name";
+
     private final String timeSeriesId;
     private String officeId;
     private String unit = "SI";
@@ -108,14 +111,14 @@ public final class TimeSeriesEndpointInput extends EndpointInput {
         String beginString = Optional.ofNullable(begin).map(Object::toString).orElse(null);
         String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
         return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, timeSeriesId)
-            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
-            .addQueryParameter(DATUM_QUERY_PARAMETER, verticalDatum)
-            .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
-            .addQueryParameter(END_QUERY_PARAMETER, endString)
-            .addQueryParameter(TIMEZONE_QUERY_PARAMETER, zoneId.getId())
-            .addQueryParameter(PAGE_QUERY_PARAMETER, page)
-            .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json;version=2");
+                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                                 .addQueryParameter(DATUM_QUERY_PARAMETER, verticalDatum)
+                                 .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
+                                 .addQueryParameter(END_QUERY_PARAMETER, endString)
+                                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, zoneId.getId())
+                                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+                                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }

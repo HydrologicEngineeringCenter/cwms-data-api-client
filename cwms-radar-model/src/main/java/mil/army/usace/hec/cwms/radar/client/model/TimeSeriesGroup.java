@@ -24,16 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
 import java.util.Objects;
 import javax.validation.Valid;
 
 /**
  * A representation of a timeseries group
  */
-@ApiModel(description = "A representation of a timeseries group")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class TimeSeriesGroup {
     @JsonProperty("id")
     private String id = null;
@@ -44,13 +44,37 @@ public class TimeSeriesGroup {
     @JsonProperty("description")
     private String description = null;
 
+    @JsonProperty("office-id")
+    private String officeId = null;
+
+    @JsonProperty("shared-alias-id")
+    private String sharedAliasId = null;
+
+    @JsonProperty("shared-ref-ts-id")
+    private String sharedRefTsId = null;
+
+    public TimeSeriesGroup id(String id) {
+        this.id = id;
+        return this;
+    }
+
     /**
      * Get id
      *
      * @return id
      **/
+
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public TimeSeriesGroup timeSeriesCategory(TimeSeriesCategory timeSeriesCategory) {
+        this.timeSeriesCategory = timeSeriesCategory;
+        return this;
     }
 
     /**
@@ -58,9 +82,38 @@ public class TimeSeriesGroup {
      *
      * @return timeSeriesCategory
      **/
+
     @Valid
     public TimeSeriesCategory getTimeSeriesCategory() {
         return timeSeriesCategory;
+    }
+
+    public void setTimeSeriesCategory(TimeSeriesCategory timeSeriesCategory) {
+        this.timeSeriesCategory = timeSeriesCategory;
+    }
+
+    public TimeSeriesGroup officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
+    }
+
+    /**
+     * Get officeId
+     *
+     * @return officeId
+     **/
+
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
+
+    public TimeSeriesGroup description(String description) {
+        this.description = description;
+        return this;
     }
 
     /**
@@ -68,12 +121,56 @@ public class TimeSeriesGroup {
      *
      * @return description
      **/
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public TimeSeriesGroup sharedAliasId(String sharedAliasId) {
+        this.sharedAliasId = sharedAliasId;
+        return this;
+    }
+
+    /**
+     * Get sharedAliasId
+     *
+     * @return sharedAliasId
+     **/
+
+    public String getSharedAliasId() {
+        return sharedAliasId;
+    }
+
+    public void setSharedAliasId(String sharedAliasId) {
+        this.sharedAliasId = sharedAliasId;
+    }
+
+    public TimeSeriesGroup sharedRefTsId(String sharedRefTsId) {
+        this.sharedRefTsId = sharedRefTsId;
+        return this;
+    }
+
+    /**
+     * Get sharedRefTsId
+     *
+     * @return sharedRefTsId
+     **/
+
+    public String getSharedRefTsId() {
+        return sharedRefTsId;
+    }
+
+    public void setSharedRefTsId(String sharedRefTsId) {
+        this.sharedRefTsId = sharedRefTsId;
+    }
+
+
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -81,14 +178,27 @@ public class TimeSeriesGroup {
             return false;
         }
         TimeSeriesGroup timeSeriesGroup = (TimeSeriesGroup) o;
-        return Objects.equals(this.id, timeSeriesGroup.id) &&
-            Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory) &&
-            Objects.equals(this.description, timeSeriesGroup.description);
+        return this.id == null || timeSeriesGroup.id == null ? Objects.equals(this.id, timeSeriesGroup.id) :
+            this.id.equalsIgnoreCase(timeSeriesGroup.id)
+                && Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory)
+                && this.officeId == null || timeSeriesGroup.officeId == null ? Objects.equals(this.officeId, timeSeriesGroup.officeId) :
+                this.officeId.equalsIgnoreCase(timeSeriesGroup.officeId)
+                    && this.description == null || timeSeriesGroup.description == null ?
+                    Objects.equals(this.description, timeSeriesGroup.description) : this.description.equalsIgnoreCase(timeSeriesGroup.description)
+                    && this.sharedAliasId == null || timeSeriesGroup.sharedAliasId == null ?
+                    Objects.equals(this.sharedAliasId, timeSeriesGroup.sharedAliasId) :
+                    this.sharedAliasId.equalsIgnoreCase(timeSeriesGroup.sharedAliasId)
+                        && this.sharedRefTsId == null || timeSeriesGroup.sharedRefTsId == null ?
+                        Objects.equals(this.sharedRefTsId, timeSeriesGroup.sharedRefTsId) :
+                        this.sharedRefTsId.equalsIgnoreCase(timeSeriesGroup.sharedRefTsId)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timeSeriesCategory, description);
+        return Objects.hash(id == null ? 0 : id.toLowerCase(), timeSeriesCategory, officeId == null ? 0 : officeId.toLowerCase(),
+            description == null ? 0 : description.toLowerCase(), sharedAliasId == null ? 0 : sharedAliasId.toLowerCase(),
+            sharedRefTsId == null ? 0 : sharedRefTsId.toLowerCase());
     }
 
     @Override
@@ -97,9 +207,11 @@ public class TimeSeriesGroup {
         sb.append("class TimeSeriesGroup {\n");
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    timeSeriesCategory: ").append(toIndentedString(timeSeriesCategory))
-          .append("\n");
+        sb.append("    timeSeriesCategory: ").append(toIndentedString(timeSeriesCategory)).append("\n");
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    sharedAliasId: ").append(toIndentedString(sharedAliasId)).append("\n");
+        sb.append("    sharedRefTsId: ").append(toIndentedString(sharedRefTsId)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -108,7 +220,7 @@ public class TimeSeriesGroup {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

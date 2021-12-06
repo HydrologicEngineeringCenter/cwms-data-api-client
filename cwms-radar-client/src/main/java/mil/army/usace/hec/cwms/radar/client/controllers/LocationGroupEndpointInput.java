@@ -24,11 +24,14 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-public class LocationGroupEndpointInput extends EndpointInput {
+public final class LocationGroupEndpointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
@@ -55,8 +58,8 @@ public class LocationGroupEndpointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
-            .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
+                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
     }
 }

@@ -31,13 +31,13 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-
-public class LocationController {
+public final class LocationController {
 
     private static final String LOCATION_ENDPOINT = "locations";
 
     public Location retrieveLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput locationEndpointInput) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT)
+        String locationId = locationEndpointInput.getLocationId();
+        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
             .addEndpointInput(locationEndpointInput)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);

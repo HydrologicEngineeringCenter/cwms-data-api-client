@@ -1,32 +1,69 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2021 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
-
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-11-02T12:25:34.578-07:00[America/Los_Angeles]")
+/**
+ * Location
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class Location {
     @JsonProperty("name")
     private String name = null;
+
     @JsonProperty("latitude")
     private Double latitude = null;
+
     @JsonProperty("longitude")
     private Double longitude = null;
+
     @JsonProperty("public-name")
     private String publicName = null;
+
     @JsonProperty("long-name")
     private String longName = null;
+
     @JsonProperty("description")
     private String description = null;
+
     @JsonProperty("timezone-name")
     private String timezoneName = null;
+
     @JsonProperty("location-type")
     private String locationType = null;
+
     @JsonProperty("location-kind")
     private String locationKind = null;
     @JsonProperty("nation")
-    private Nation nation = null;
+    private NationEnum nation = null;
     @JsonProperty("state-initial")
     private String stateInitial = null;
     @JsonProperty("county-name")
@@ -50,15 +87,28 @@ public class Location {
     @JsonProperty("office-id")
     private String officeId = null;
 
+    public Location name(String name) {
+        this.name = name;
+        return this;
+    }
+
     /**
      * Get name
      *
      * @return name
      **/
-    @ApiModelProperty(value = "Location's name")
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Location latitude(Double latitude) {
+        this.latitude = latitude;
+        return this;
     }
 
     /**
@@ -66,10 +116,18 @@ public class Location {
      *
      * @return latitude
      **/
-    @ApiModelProperty(value = "Location's latitude")
 
     public Double getLatitude() {
         return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Location longitude(Double longitude) {
+        this.longitude = longitude;
+        return this;
     }
 
     /**
@@ -77,10 +135,18 @@ public class Location {
      *
      * @return longitude
      **/
-    @ApiModelProperty(value = "Location's longitude")
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Location publicName(String publicName) {
+        this.publicName = publicName;
+        return this;
     }
 
     /**
@@ -88,10 +154,18 @@ public class Location {
      *
      * @return publicName
      **/
-    @ApiModelProperty(value = "Location's public name")
 
     public String getPublicName() {
         return publicName;
+    }
+
+    public void setPublicName(String publicName) {
+        this.publicName = publicName;
+    }
+
+    public Location longName(String longName) {
+        this.longName = longName;
+        return this;
     }
 
     /**
@@ -99,10 +173,18 @@ public class Location {
      *
      * @return longName
      **/
-    @ApiModelProperty(value = "Location's long name")
 
     public String getLongName() {
         return longName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
+    public Location description(String description) {
+        this.description = description;
+        return this;
     }
 
     /**
@@ -110,10 +192,18 @@ public class Location {
      *
      * @return description
      **/
-    @ApiModelProperty(value = "Description of Location")
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Location timezoneName(String timezoneName) {
+        this.timezoneName = timezoneName;
+        return this;
     }
 
     /**
@@ -121,10 +211,18 @@ public class Location {
      *
      * @return timezoneName
      **/
-    @ApiModelProperty(value = "Location's time-zone")
 
     public String getTimezoneName() {
         return timezoneName;
+    }
+
+    public void setTimezoneName(String timezoneName) {
+        this.timezoneName = timezoneName;
+    }
+
+    public Location locationType(String locationType) {
+        this.locationType = locationType;
+        return this;
     }
 
     /**
@@ -132,10 +230,18 @@ public class Location {
      *
      * @return locationType
      **/
-    @ApiModelProperty(value = "Location's type")
 
     public String getLocationType() {
         return locationType;
+    }
+
+    public void setLocationType(String locationType) {
+        this.locationType = locationType;
+    }
+
+    public Location locationKind(String locationKind) {
+        this.locationKind = locationKind;
+        return this;
     }
 
     /**
@@ -143,10 +249,18 @@ public class Location {
      *
      * @return locationKind
      **/
-    @ApiModelProperty(value = "Location's kind")
 
     public String getLocationKind() {
         return locationKind;
+    }
+
+    public void setLocationKind(String locationKind) {
+        this.locationKind = locationKind;
+    }
+
+    public Location nation(NationEnum nation) {
+        this.nation = nation;
+        return this;
     }
 
     /**
@@ -154,10 +268,18 @@ public class Location {
      *
      * @return nation
      **/
-    @ApiModelProperty(value = "Nation that location belongs to")
 
-    public Nation getNation() {
+    public NationEnum getNation() {
         return nation;
+    }
+
+    public void setNation(NationEnum nation) {
+        this.nation = nation;
+    }
+
+    public Location stateInitial(String stateInitial) {
+        this.stateInitial = stateInitial;
+        return this;
     }
 
     /**
@@ -165,10 +287,18 @@ public class Location {
      *
      * @return stateInitial
      **/
-    @ApiModelProperty(value = "State that location belongs to")
 
     public String getStateInitial() {
         return stateInitial;
+    }
+
+    public void setStateInitial(String stateInitial) {
+        this.stateInitial = stateInitial;
+    }
+
+    public Location countyName(String countyName) {
+        this.countyName = countyName;
+        return this;
     }
 
     /**
@@ -176,10 +306,18 @@ public class Location {
      *
      * @return countyName
      **/
-    @ApiModelProperty(value = "County that location belongs to")
 
     public String getCountyName() {
         return countyName;
+    }
+
+    public void setCountyName(String countyName) {
+        this.countyName = countyName;
+    }
+
+    public Location nearestCity(String nearestCity) {
+        this.nearestCity = nearestCity;
+        return this;
     }
 
     /**
@@ -187,10 +325,18 @@ public class Location {
      *
      * @return nearestCity
      **/
-    @ApiModelProperty(value = "Nearest city to location")
 
     public String getNearestCity() {
         return nearestCity;
+    }
+
+    public void setNearestCity(String nearestCity) {
+        this.nearestCity = nearestCity;
+    }
+
+    public Location horizontalDatum(String horizontalDatum) {
+        this.horizontalDatum = horizontalDatum;
+        return this;
     }
 
     /**
@@ -198,10 +344,18 @@ public class Location {
      *
      * @return horizontalDatum
      **/
-    @ApiModelProperty(value = "Location's horizontal datum")
 
     public String getHorizontalDatum() {
         return horizontalDatum;
+    }
+
+    public void setHorizontalDatum(String horizontalDatum) {
+        this.horizontalDatum = horizontalDatum;
+    }
+
+    public Location publishedLongitude(Double publishedLongitude) {
+        this.publishedLongitude = publishedLongitude;
+        return this;
     }
 
     /**
@@ -209,10 +363,18 @@ public class Location {
      *
      * @return publishedLongitude
      **/
-    @ApiModelProperty(value = "Location's published longitude")
 
     public Double getPublishedLongitude() {
         return publishedLongitude;
+    }
+
+    public void setPublishedLongitude(Double publishedLongitude) {
+        this.publishedLongitude = publishedLongitude;
+    }
+
+    public Location publishedLatitude(Double publishedLatitude) {
+        this.publishedLatitude = publishedLatitude;
+        return this;
     }
 
     /**
@@ -220,10 +382,18 @@ public class Location {
      *
      * @return publishedLatitude
      **/
-    @ApiModelProperty(value = "Location's published latitude")
 
     public Double getPublishedLatitude() {
         return publishedLatitude;
+    }
+
+    public void setPublishedLatitude(Double publishedLatitude) {
+        this.publishedLatitude = publishedLatitude;
+    }
+
+    public Location verticalDatum(String verticalDatum) {
+        this.verticalDatum = verticalDatum;
+        return this;
     }
 
     /**
@@ -231,10 +401,18 @@ public class Location {
      *
      * @return verticalDatum
      **/
-    @ApiModelProperty(value = "Location's veritical datum")
 
     public String getVerticalDatum() {
         return verticalDatum;
+    }
+
+    public void setVerticalDatum(String verticalDatum) {
+        this.verticalDatum = verticalDatum;
+    }
+
+    public Location elevation(Double elevation) {
+        this.elevation = elevation;
+        return this;
     }
 
     /**
@@ -242,10 +420,18 @@ public class Location {
      *
      * @return elevation
      **/
-    @ApiModelProperty(value = "Location's elevation")
 
     public Double getElevation() {
         return elevation;
+    }
+
+    public void setElevation(Double elevation) {
+        this.elevation = elevation;
+    }
+
+    public Location mapLabel(String mapLabel) {
+        this.mapLabel = mapLabel;
+        return this;
     }
 
     /**
@@ -253,10 +439,18 @@ public class Location {
      *
      * @return mapLabel
      **/
-    @ApiModelProperty(value = "Location's map label")
 
     public String getMapLabel() {
         return mapLabel;
+    }
+
+    public void setMapLabel(String mapLabel) {
+        this.mapLabel = mapLabel;
+    }
+
+    public Location boundingOfficeId(String boundingOfficeId) {
+        this.boundingOfficeId = boundingOfficeId;
+        return this;
     }
 
     /**
@@ -264,10 +458,18 @@ public class Location {
      *
      * @return boundingOfficeId
      **/
-    @ApiModelProperty(value = "Bounding office ID of Location")
 
     public String getBoundingOfficeId() {
         return boundingOfficeId;
+    }
+
+    public void setBoundingOfficeId(String boundingOfficeId) {
+        this.boundingOfficeId = boundingOfficeId;
+    }
+
+    public Location officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
     }
 
     /**
@@ -275,10 +477,13 @@ public class Location {
      *
      * @return officeId
      **/
-    @ApiModelProperty(value = "Office ID of Location")
 
     public String getOfficeId() {
         return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
     }
 
     @Override
@@ -290,35 +495,61 @@ public class Location {
             return false;
         }
         Location location = (Location) o;
-        return Objects.equals(this.name, location.name) &&
-                Objects.equals(this.latitude, location.latitude) &&
-                Objects.equals(this.longitude, location.longitude) &&
-                Objects.equals(this.publicName, location.publicName) &&
-                Objects.equals(this.longName, location.longName) &&
-                Objects.equals(this.description, location.description) &&
-                Objects.equals(this.timezoneName, location.timezoneName) &&
-                Objects.equals(this.locationType, location.locationType) &&
-                Objects.equals(this.locationKind, location.locationKind) &&
-                Objects.equals(this.nation, location.nation) &&
-                Objects.equals(this.stateInitial, location.stateInitial) &&
-                Objects.equals(this.countyName, location.countyName) &&
-                Objects.equals(this.nearestCity, location.nearestCity) &&
-                Objects.equals(this.horizontalDatum, location.horizontalDatum) &&
-                Objects.equals(this.publishedLongitude, location.publishedLongitude) &&
-                Objects.equals(this.publishedLatitude, location.publishedLatitude) &&
-                Objects.equals(this.verticalDatum, location.verticalDatum) &&
-                Objects.equals(this.elevation, location.elevation) &&
-                Objects.equals(this.mapLabel, location.mapLabel) &&
-                Objects.equals(this.boundingOfficeId, location.boundingOfficeId) &&
-                Objects.equals(this.officeId, location.officeId);
+        return this.name == null || location.name == null ? Objects.equals(this.name, location.name) : this.name.equalsIgnoreCase(location.name)
+            && Objects.equals(this.latitude, location.latitude)
+            && Objects.equals(this.longitude, location.longitude)
+            && this.publicName == null || location.publicName == null ? Objects.equals(this.publicName, location.publicName) :
+            this.publicName.equalsIgnoreCase(location.publicName)
+                && this.longName == null || location.longName == null ? Objects.equals(this.longName, location.longName) :
+                this.longName.equalsIgnoreCase(location.longName)
+                    && this.description == null || location.description == null ? Objects.equals(this.description, location.description) :
+                    this.description.equalsIgnoreCase(location.description)
+                        && this.timezoneName == null || location.timezoneName == null ? Objects.equals(this.timezoneName, location.timezoneName) :
+                        this.timezoneName.equalsIgnoreCase(location.timezoneName)
+                            && this.locationType == null || location.locationType == null ? Objects.equals(this.locationType, location.locationType) :
+                            this.locationType.equalsIgnoreCase(location.locationType)
+                                && this.locationKind == null || location.locationKind == null ?
+                                Objects.equals(this.locationKind, location.locationKind) : this.locationKind.equalsIgnoreCase(location.locationKind)
+                                && Objects.equals(this.nation, location.nation)
+                                && this.stateInitial == null || location.stateInitial == null ?
+                                Objects.equals(this.stateInitial, location.stateInitial) :
+                                this.stateInitial.equalsIgnoreCase(location.stateInitial)
+                                    && this.countyName == null || location.countyName == null ?
+                                    Objects.equals(this.countyName, location.countyName) : this.countyName.equalsIgnoreCase(location.countyName)
+                                    && this.nearestCity == null || location.nearestCity == null ?
+                                    Objects.equals(this.nearestCity, location.nearestCity) :
+                                    this.nearestCity.equalsIgnoreCase(location.nearestCity)
+                                        && this.horizontalDatum == null || location.horizontalDatum == null ?
+                                        Objects.equals(this.horizontalDatum, location.horizontalDatum) :
+                                        this.horizontalDatum.equalsIgnoreCase(location.horizontalDatum)
+                                            && Objects.equals(this.publishedLongitude, location.publishedLongitude)
+                                            && Objects.equals(this.publishedLatitude, location.publishedLatitude)
+                                            && this.verticalDatum == null || location.verticalDatum == null ?
+                                            Objects.equals(this.verticalDatum, location.verticalDatum) :
+                                            this.verticalDatum.equalsIgnoreCase(location.verticalDatum)
+                                                && Objects.equals(this.elevation, location.elevation)
+                                                && this.mapLabel == null || location.mapLabel == null ?
+                                                Objects.equals(this.mapLabel, location.mapLabel) :
+                                                this.mapLabel.equalsIgnoreCase(location.mapLabel)
+                                                    && this.boundingOfficeId == null || location.boundingOfficeId == null ?
+                                                    Objects.equals(this.boundingOfficeId, location.boundingOfficeId) :
+                                                    this.boundingOfficeId.equalsIgnoreCase(location.boundingOfficeId)
+                                                        && this.officeId == null || location.officeId == null ?
+                                                        Objects.equals(this.officeId, location.officeId) :
+                                                        this.officeId.equalsIgnoreCase(location.officeId)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, latitude, longitude, publicName, longName, description,
-                timezoneName, locationType, locationKind, nation, stateInitial, countyName, nearestCity,
-                horizontalDatum, publishedLongitude, publishedLatitude, verticalDatum, elevation,
-                mapLabel, boundingOfficeId, officeId);
+        return Objects.hash(name == null ? 0 : name.toLowerCase(), latitude, longitude, publicName == null ? 0 : publicName.toLowerCase(),
+            longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
+            timezoneName == null ? 0 : timezoneName.toLowerCase(), locationType == null ? 0 : locationType.toLowerCase(),
+            locationKind == null ? 0 : locationKind.toLowerCase(), nation,
+            stateInitial == null ? 0 : stateInitial.toLowerCase(), countyName == null ? 0 : countyName.toLowerCase(),
+            nearestCity == null ? 0 : nearestCity.toLowerCase(), horizontalDatum == null ? 0 : horizontalDatum.toLowerCase(), publishedLongitude,
+            publishedLatitude, verticalDatum == null ? 0 : verticalDatum.toLowerCase(), elevation, mapLabel == null ? 0 : mapLabel.toLowerCase(),
+            boundingOfficeId == null ? 0 : boundingOfficeId.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase());
     }
 
     @Override
@@ -340,10 +571,8 @@ public class Location {
         sb.append("    countyName: ").append(toIndentedString(countyName)).append("\n");
         sb.append("    nearestCity: ").append(toIndentedString(nearestCity)).append("\n");
         sb.append("    horizontalDatum: ").append(toIndentedString(horizontalDatum)).append("\n");
-        sb.append("    publishedLongitude: ").append(toIndentedString(publishedLongitude))
-                .append("\n");
-        sb.append("    publishedLatitude: ").append(toIndentedString(publishedLatitude))
-                .append("\n");
+        sb.append("    publishedLongitude: ").append(toIndentedString(publishedLongitude)).append("\n");
+        sb.append("    publishedLatitude: ").append(toIndentedString(publishedLatitude)).append("\n");
         sb.append("    verticalDatum: ").append(toIndentedString(verticalDatum)).append("\n");
         sb.append("    elevation: ").append(toIndentedString(elevation)).append("\n");
         sb.append("    mapLabel: ").append(toIndentedString(mapLabel)).append("\n");
@@ -362,5 +591,38 @@ public class Location {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
+
+    /**
+     * Gets or Sets nation
+     */
+    public enum NationEnum {
+        US("US"),
+
+        CANADA("CANADA"),
+
+        MEXICO("MEXICO");
+
+        private String value;
+
+        NationEnum(String value) {
+            this.value = value;
+        }
+
+        @JsonCreator
+        public static NationEnum fromValue(String text) {
+            for (NationEnum b : NationEnum.values()) {
+                if (String.valueOf(b.value).equals(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 }

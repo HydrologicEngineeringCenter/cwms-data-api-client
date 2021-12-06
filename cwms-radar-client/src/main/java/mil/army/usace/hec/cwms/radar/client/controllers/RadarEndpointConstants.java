@@ -22,9 +22,15 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.radar.client.controllers;
 
-public abstract class EndpointInput {
+final class RadarEndpointConstants {
 
-    protected abstract HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder);
+    static final String ACCEPT_QUERY_HEADER = "accept";
+    static final String ACCEPT_HEADER_V1 = "application/json";
+    static final String ACCEPT_HEADER_V2 = "application/json;version=2";
+
+    private RadarEndpointConstants() {
+        throw new AssertionError("Utility class");
+    }
 }

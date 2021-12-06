@@ -42,7 +42,10 @@ import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
+import mil.army.usace.hec.cwms.radar.client.model.Offset;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesValues;
+import mil.army.usace.hec.cwms.radar.client.model.VerticalDatumInfo;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesController extends TestController {
@@ -72,6 +75,20 @@ class TestTimeSeriesController extends TestController {
         Instant lastTime = Instant.ofEpochMilli(
             timeSeries.getValues().get(timeSeries.getValues().size() - 1).getDateTime());
         assertTrue(end.isAfter(lastTime));
+        TimeSeriesValues v1 = timeSeries.getValues().get(0);
+        assertEquals(start.toEpochMilli(), v1.getDateTime());
+        assertEquals(265.54786, v1.getValue(), .001);
+        assertEquals(0, v1.getQualityCode());
+        VerticalDatumInfo verticalDatumInfo = timeSeries.getVerticalDatumInfo();
+        assertEquals(243.8, verticalDatumInfo.getElevation(), .001);
+        assertEquals("SWT", verticalDatumInfo.getOffice());
+        assertEquals("m", verticalDatumInfo.getUnit());
+        assertEquals("NGVD-29", verticalDatumInfo.getNativeDatum());
+        assertEquals("ARBU", verticalDatumInfo.getLocation());
+        Offset offset = verticalDatumInfo.getOffset();
+        assertEquals(0.0632, offset.getValue(), .001);
+        assertEquals("NAVD-88", offset.getToDatum());
+        assertTrue(offset.isEstimate());
     }
 
     @Test

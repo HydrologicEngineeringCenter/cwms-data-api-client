@@ -24,51 +24,40 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationEndPointInput.UNIT_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CATEGORY_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CURSOR_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.GROUP_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.PAGE_SIZE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.UNIT_SYSTEM_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-
-class TestLocationEndpointInput {
+class TestTimeSeriesCatalogEndpointInput {
 
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+        TimeSeriesCatalogEndpointInput input = new TimeSeriesCatalogEndpointInput()
             .officeId("SWT")
-            .unit("SI");
+            .unitSystem("SI")
+            .cursor("test")
+            .pageSize(5)
+            .timeSeriesIdFilter("BASE-SUB.Flow-Out.Ave.~1Day.1Day.Test")
+            .categoryIdFilter("CAT")
+            .groupIdFilter("GROUP");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
+        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER));
+        assertEquals("test", mockHttpRequestBuilder.getQueryParameter(CURSOR_QUERY_PARAMETER));
+        assertEquals("5", mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertEquals("BASE-SUB.Flow-Out.Ave.~1Day.1Day.Test", mockHttpRequestBuilder.getQueryParameter(LIKE_QUERY_PARAMETER));
+        assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER));
+        assertEquals("GROUP", mockHttpRequestBuilder.getQueryParameter(GROUP_LIKE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
-
-    @Test
-    void testQueryRequestDefaults() {
-        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST");
-        input.addInputParameters(mockHttpRequestBuilder);
-        assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-    }
-
-    @Test
-    void testLocationName() {
-        LocationEndPointInput input = new LocationEndPointInput("TEST");
-        assertEquals("TEST", input.getLocationId());
-    }
-
-    @Test
-    void testNullLocationName() {
-        assertThrows(NullPointerException.class, () -> new LocationEndPointInput(null));
-    }
-
-
 }

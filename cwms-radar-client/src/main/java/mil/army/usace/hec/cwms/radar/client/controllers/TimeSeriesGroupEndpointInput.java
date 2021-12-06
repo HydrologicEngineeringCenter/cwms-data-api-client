@@ -24,6 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
@@ -60,6 +63,6 @@ public final class TimeSeriesGroupEndpointInput extends EndpointInput {
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                                  .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, "application/json");
+                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
     }
 }
