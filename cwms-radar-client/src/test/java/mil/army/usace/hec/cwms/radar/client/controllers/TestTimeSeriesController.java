@@ -85,7 +85,8 @@ class TestTimeSeriesController extends TestController {
         assertEquals("m", verticalDatumInfo.getUnit());
         assertEquals("NGVD-29", verticalDatumInfo.getNativeDatum());
         assertEquals("ARBU", verticalDatumInfo.getLocation());
-        Offset offset = verticalDatumInfo.getOffset();
+        List<Offset> offsets = verticalDatumInfo.getOffsets();
+        Offset offset = offsets.get(0);
         assertEquals(0.0632, offset.getValue(), .001);
         assertEquals("NAVD-88", offset.getToDatum());
         assertTrue(offset.isEstimate());
@@ -193,15 +194,13 @@ class TestTimeSeriesController extends TestController {
                         Instant lastTime = Instant.ofEpochMilli(
                             timeSeries.getValues().get(timeSeries.getValues().size() - 1).getDateTime());
                         assertTrue(end.isAfter(lastTime));
-                    }
-                    finally {
+                    } finally {
                         if (mockHttpServer != null) {
                             mockHttpServer.shutdown();
                         }
                     }
 
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     fail(e);
                 }
             });
