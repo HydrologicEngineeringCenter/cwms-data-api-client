@@ -24,7 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-class RadarEndpointConstants {
+final class RadarEndpointConstants {
 
     static final String ACCEPT_QUERY_HEADER = "accept";
     static final String ACCEPT_HEADER_V1 = "application/json";

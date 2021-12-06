@@ -31,7 +31,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-public class LocationGroupController {
+public final class LocationGroupController {
 
     private static final String LOCATION_GROUP = "location/group";
 

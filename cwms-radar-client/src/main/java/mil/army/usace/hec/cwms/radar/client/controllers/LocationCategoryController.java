@@ -31,7 +31,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCategory;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-public class LocationCategoryController {
+public final class LocationCategoryController {
 
     private static final String LOCATION_CATEGORY = "location/category";
 

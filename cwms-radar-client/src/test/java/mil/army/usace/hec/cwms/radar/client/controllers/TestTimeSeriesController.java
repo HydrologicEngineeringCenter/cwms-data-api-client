@@ -80,13 +80,13 @@ class TestTimeSeriesController extends TestController {
         assertEquals(265.54786, v1.getValue(), .001);
         assertEquals(0, v1.getQualityCode());
         VerticalDatumInfo verticalDatumInfo = timeSeries.getVerticalDatumInfo();
-        assertEquals(243.8, verticalDatumInfo.getElevation());
+        assertEquals(243.8, verticalDatumInfo.getElevation(), .001);
         assertEquals("SWT", verticalDatumInfo.getOffice());
         assertEquals("m", verticalDatumInfo.getUnit());
         assertEquals("NGVD-29", verticalDatumInfo.getNativeDatum());
         assertEquals("ARBU", verticalDatumInfo.getLocation());
         Offset offset = verticalDatumInfo.getOffset();
-        assertEquals(0.0632, offset.getValue());
+        assertEquals(0.0632, offset.getValue(), .001);
         assertEquals("NAVD-88", offset.getToDatum());
         assertTrue(offset.isEstimate());
     }

@@ -31,9 +31,6 @@ import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-/**
- *
- */
 public final class TimeSeriesCategoryEndpointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
