@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
@@ -108,6 +109,7 @@ class TestLocationGroupController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         LocationGroupEndpointInput input = new LocationGroupEndpointInput()
+            .includeAssigned(true)
             .officeId("CWMS");
         List<LocationGroup> locationGroups = new LocationGroupController().retrieveLocationGroups(buildConnectionInfo(), input);
 
@@ -127,5 +129,35 @@ class TestLocationGroupController extends TestController {
         assertEquals("Deleted TS ID", assignedLocation.getBaseLocationId());
         assertEquals("Deleted TS ID", assignedLocation.getAliasId());
         assertEquals(BigDecimal.ZERO, assignedLocation.getLocationCode());
+    }
+
+    @Test
+    void testRetrieveLocationGroupsNoAssignedLocations() throws IOException {
+        String resource = "radar/v1/json/location_groups_noassignedlocs.json";
+        URL resourceUrl = getClass().getClassLoader().getResource(resource);
+        if (resourceUrl == null) {
+            throw new IOException("Failed to get resource: " + resource);
+        }
+        Path path = new File(resourceUrl.getFile()).toPath();
+        String collect = String.join("\n", Files.readAllLines(path));
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationGroupEndpointInput input = new LocationGroupEndpointInput()
+            .includeAssigned(false)
+            .officeId("CWMS");
+        List<LocationGroup> locationGroups = new LocationGroupController().retrieveLocationGroups(buildConnectionInfo(), input);
+
+        assertEquals(823, locationGroups.size());
+        LocationGroup locationGroup = locationGroups.get(1);
+        assertEquals("SWT", locationGroup.getOfficeId());
+        assertEquals("CWMS Standard Naming", locationGroup.getId());
+        assertEquals("Alias group for location IDs that conform to CWMS Standard Naming Convention", locationGroup.getDescription());
+        LocationCategory locationCategory = locationGroup.getLocationCategory();
+        assertEquals("Agency Aliases", locationCategory.getId());
+        assertEquals("CWMS", locationCategory.getOfficeId());
+        assertEquals("Location aliases for other agencies", locationCategory.getDescription());
+
+        List<AssignedLocation> assignedLocations = locationGroup.getAssignedLocations();
+        assertNull(assignedLocations);
     }
 }
