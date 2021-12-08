@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,19 +64,16 @@ class TestLocationGroupController extends TestController {
         assertEquals("CWMS Mobile Location Listings", locationGroup.getLocationCategory().getId());
 
         assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getLocationId());
-        assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getBaseLocationId());
+        assertEquals("SWT", locationGroup.getAssignedLocations().get(0).getOfficeId());
         assertEquals("FakeLake", locationGroup.getAssignedLocations().get(0).getAliasId());
-        assertEquals(BigDecimal.valueOf(540009), locationGroup.getAssignedLocations().get(0).getLocationCode());
 
         assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getLocationId());
-        assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getBaseLocationId());
+        assertEquals("SWT", locationGroup.getAssignedLocations().get(1).getOfficeId());
         assertEquals("Testing", locationGroup.getAssignedLocations().get(1).getAliasId());
-        assertEquals(BigDecimal.valueOf(542009), locationGroup.getAssignedLocations().get(1).getLocationCode());
 
         assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getLocationId());
-        assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getBaseLocationId());
+        assertEquals("SWT", locationGroup.getAssignedLocations().get(2).getOfficeId());
         assertEquals("NotThere", locationGroup.getAssignedLocations().get(2).getAliasId());
-        assertEquals(BigDecimal.valueOf(541009), locationGroup.getAssignedLocations().get(2).getLocationCode());
     }
 
     @Test
@@ -126,9 +122,8 @@ class TestLocationGroupController extends TestController {
         List<AssignedLocation> assignedLocations = locationGroup.getAssignedLocations();
         AssignedLocation assignedLocation = assignedLocations.get(0);
         assertEquals("Deleted TS ID", assignedLocation.getLocationId());
-        assertEquals("Deleted TS ID", assignedLocation.getBaseLocationId());
+        assertEquals("CWMS", assignedLocation.getOfficeId());
         assertEquals("Deleted TS ID", assignedLocation.getAliasId());
-        assertEquals(BigDecimal.ZERO, assignedLocation.getLocationCode());
     }
 
     @Test

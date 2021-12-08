@@ -36,14 +36,12 @@ import javax.validation.Valid;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
 public class AssignedLocation {
+
+    @JsonProperty("office-id")
+    private String officeId = null;
+
     @JsonProperty("location-id")
     private String locationId = null;
-
-    @JsonProperty("base-location-id")
-    private String baseLocationId = null;
-
-    @JsonProperty("sub-location-id")
-    private String subLocationId = null;
 
     @JsonProperty("alias-id")
     private String aliasId = null;
@@ -51,11 +49,26 @@ public class AssignedLocation {
     @JsonProperty("attribute")
     private BigDecimal attribute = null;
 
-    @JsonProperty("location-code")
-    private BigDecimal locationCode = null;
-
     @JsonProperty("ref-location-id")
     private String refLocationId = null;
+
+    public AssignedLocation officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
+    }
+
+    /**
+     * Get officeId
+     *
+     * @return officeId
+     **/
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
 
     public AssignedLocation locationId(String locationId) {
         this.locationId = locationId;
@@ -74,44 +87,6 @@ public class AssignedLocation {
 
     public void setLocationId(String locationId) {
         this.locationId = locationId;
-    }
-
-    public AssignedLocation baseLocationId(String baseLocationId) {
-        this.baseLocationId = baseLocationId;
-        return this;
-    }
-
-    /**
-     * Get baseLocationId
-     *
-     * @return baseLocationId
-     **/
-
-    public String getBaseLocationId() {
-        return baseLocationId;
-    }
-
-    public void setBaseLocationId(String baseLocationId) {
-        this.baseLocationId = baseLocationId;
-    }
-
-    public AssignedLocation subLocationId(String subLocationId) {
-        this.subLocationId = subLocationId;
-        return this;
-    }
-
-    /**
-     * Get subLocationId
-     *
-     * @return subLocationId
-     **/
-
-    public String getSubLocationId() {
-        return subLocationId;
-    }
-
-    public void setSubLocationId(String subLocationId) {
-        this.subLocationId = subLocationId;
     }
 
     public AssignedLocation aliasId(String aliasId) {
@@ -153,26 +128,6 @@ public class AssignedLocation {
         this.attribute = attribute;
     }
 
-    public AssignedLocation locationCode(BigDecimal locationCode) {
-        this.locationCode = locationCode;
-        return this;
-    }
-
-    /**
-     * Get locationCode
-     *
-     * @return locationCode
-     **/
-
-    @Valid
-    public BigDecimal getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(BigDecimal locationCode) {
-        this.locationCode = locationCode;
-    }
-
     public AssignedLocation refLocationId(String refLocationId) {
         this.refLocationId = refLocationId;
         return this;
@@ -204,27 +159,22 @@ public class AssignedLocation {
         AssignedLocation assignedLocation = (AssignedLocation) o;
         return this.locationId == null || assignedLocation.locationId == null ? Objects.equals(this.locationId, assignedLocation.locationId) :
             this.locationId.equalsIgnoreCase(assignedLocation.locationId)
-                && this.baseLocationId == null || assignedLocation.baseLocationId == null ?
-                Objects.equals(this.baseLocationId, assignedLocation.baseLocationId) :
-                this.baseLocationId.equalsIgnoreCase(assignedLocation.baseLocationId)
-                    && this.subLocationId == null || assignedLocation.subLocationId == null ?
-                    Objects.equals(this.subLocationId, assignedLocation.subLocationId) :
-                    this.subLocationId.equalsIgnoreCase(assignedLocation.subLocationId)
-                        && this.aliasId == null || assignedLocation.aliasId == null ? Objects.equals(this.aliasId, assignedLocation.aliasId) :
-                        this.aliasId.equalsIgnoreCase(assignedLocation.aliasId)
-                            && Objects.equals(this.attribute, assignedLocation.attribute)
-                            && Objects.equals(this.locationCode, assignedLocation.locationCode)
-                            && this.refLocationId == null || assignedLocation.refLocationId == null ?
-                            Objects.equals(this.refLocationId, assignedLocation.refLocationId) :
-                            this.refLocationId.equalsIgnoreCase(assignedLocation.refLocationId)
+                && this.officeId == null || assignedLocation.officeId == null ?
+                Objects.equals(this.officeId, assignedLocation.officeId) :
+                this.officeId.equalsIgnoreCase(assignedLocation.officeId)
+                    && this.aliasId == null || assignedLocation.aliasId == null ? Objects.equals(this.aliasId, assignedLocation.aliasId) :
+                    this.aliasId.equalsIgnoreCase(assignedLocation.aliasId)
+                        && Objects.equals(this.attribute, assignedLocation.attribute)
+                        && this.refLocationId == null || assignedLocation.refLocationId == null ?
+                        Objects.equals(this.refLocationId, assignedLocation.refLocationId) :
+                        this.refLocationId.equalsIgnoreCase(assignedLocation.refLocationId)
             ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locationId == null ? 0 : locationId.toLowerCase(), baseLocationId == null ? 0 : baseLocationId.toLowerCase(),
-            subLocationId == null ? 0 : subLocationId.toLowerCase(), aliasId == null ? 0 : aliasId.toLowerCase(), attribute, locationCode,
-            refLocationId == null ? 0 : refLocationId.toLowerCase());
+        return Objects.hash(locationId == null ? 0 : locationId.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(),
+            aliasId == null ? 0 : aliasId.toLowerCase(), attribute, refLocationId == null ? 0 : refLocationId.toLowerCase());
     }
 
     @Override
@@ -232,12 +182,10 @@ public class AssignedLocation {
         StringBuilder sb = new StringBuilder();
         sb.append("class AssignedLocation {\n");
 
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    locationId: ").append(toIndentedString(locationId)).append("\n");
-        sb.append("    baseLocationId: ").append(toIndentedString(baseLocationId)).append("\n");
-        sb.append("    subLocationId: ").append(toIndentedString(subLocationId)).append("\n");
         sb.append("    aliasId: ").append(toIndentedString(aliasId)).append("\n");
         sb.append("    attribute: ").append(toIndentedString(attribute)).append("\n");
-        sb.append("    locationCode: ").append(toIndentedString(locationCode)).append("\n");
         sb.append("    refLocationId: ").append(toIndentedString(refLocationId)).append("\n");
         sb.append("}");
         return sb.toString();
