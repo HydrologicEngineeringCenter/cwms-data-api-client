@@ -11,8 +11,7 @@
     "assigned-locations": [
       {
         "location-id": "Deleted TS ID",
-        "base-location-id": "Deleted TS ID",
-        "location-code": 0
+        "office-id": "CWMS"
       }
     ]
   },
@@ -28,9 +27,8 @@
     "assigned-locations": [
       {
         "location-id": "Deleted TS ID",
-        "base-location-id": "Deleted TS ID",
-        "alias-id": "Deleted TS ID",
-        "location-code": 0
+        "office-id": "CWMS",
+        "alias-id": "Deleted TS ID"
       }
     ]
   },
@@ -46,9 +44,8 @@
     "assigned-locations": [
       {
         "location-id": "Deleted TS ID",
-        "base-location-id": "Deleted TS ID",
-        "alias-id": "Deleted TS ID",
-        "location-code": 0
+        "office-id": "CWMS",
+        "alias-id": "Deleted TS ID"
       }
     ]
   }
