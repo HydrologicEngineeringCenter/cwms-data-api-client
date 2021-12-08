@@ -31,11 +31,15 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import usace.metrics.noop.NoOpTimer;
+import usace.metrics.services.Metrics;
+import usace.metrics.services.Timer;
 
 public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -98,7 +102,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     public HttpRequestResponse execute() throws IOException {
         Request request = createRequest();
         ResponseBody body = null;
-        try {
+        try (Timer.Context timer = createTimer().start()) {
             OkHttpClient client = OkHttpClientInstance.getInstance();
             Response execute = client.newCall(request).execute();
             if (execute.isSuccessful()) {
@@ -131,5 +135,18 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
                 body.close();
             }
         }
+    }
+
+    private Timer createTimer() {
+        if (!CwmsHttpClientMetrics.isMetricsEnabled()) {
+            return new NoOpTimer();
+        }
+        Metrics metrics = CwmsHttpClientMetrics.createMetrics(Objects.toString(httpUrl.resolve(endpoint)));
+        Timer timer = metrics.createTimer();
+        Properties metricsProperties = new Properties();
+        metricsProperties.putAll(queryParameters);
+        metricsProperties.putAll(queryHeaders);
+        timer.setMetricProperties(metricsProperties);
+        return timer;
     }
 }
