@@ -1,0 +1,7771 @@
+[
+  {
+    "id": "CWMS Legacy Naming",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "SWT",
+    "description": "Alias group for legacy location IDs"
+  },
+  {
+    "id": "CWMS Standard Naming",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "SWT",
+    "description": "Alias group for location IDs that conform to CWMS Standard Naming Convention"
+  },
+  {
+    "id": "LRD",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Agency Aliases"
+  },
+  {
+    "id": "Mesonet ID",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "TCOE",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "SWT",
+    "description": "Tulsa District",
+    "shared-loc-alias-id": "Agency Aliases"
+  },
+  {
+    "id": "Ark Basin",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Basin Pie projects"
+  },
+  {
+    "id": "Canadian",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Canadian River Basin"
+  },
+  {
+    "id": "Grand-Neosho",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Grand-Neosho Basin"
+  },
+  {
+    "id": "LRTS Testing",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Lake Info Recording",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Lower Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Lower Red",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Middle Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Mid Ark for testing purposes"
+  },
+  {
+    "id": "NAV + TENK",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "SWT-All",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Section 7 Lakes",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Taper",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Upper Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Upper Red",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Upper Red River Basin"
+  },
+  {
+    "id": "Verdigris",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Basin"
+    },
+    "office-id": "SWT",
+    "description": "Verdigris River Basin"
+  },
+  {
+    "id": "Lakes",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "CWMS Mobile Location Listings"
+    },
+    "office-id": "SWT",
+    "description": "Lakes"
+  },
+  {
+    "id": "SG-",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "CWMS Mobile Location Listings"
+    },
+    "office-id": "SWT",
+    "description": "Stream Gages"
+  },
+  {
+    "id": "Flow.ALTU.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Test",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ALTU.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "Flow.ARBU.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARBU.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "Flow.ARCA.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.ARCA.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "Flow.BEAR.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BEAR.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BEAR"
+  },
+  {
+    "id": "Flow.BIGH.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIGH.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "Flow.BIRC.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BIRC.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "Flow.BROK.BROK Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.BROK.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "Flow.CANT.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CANT.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "Flow.CHEN.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHEN.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "Flow.CHOU.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.CHOU.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "Flow.COPA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COPA.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "Flow.COUN.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.COUN.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "Flow.DENI.35-MW Turbines_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.House Service Unit_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.HouseUnits",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.DENI.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "Flow.ELDR.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELDR.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "Flow.ELKC.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.ELKC.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "Flow.EUFA.Controlled",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.EUFA Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.EUFA.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "Flow.FALL.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FALL.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "Flow.FCOB.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FCOB.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "Flow.FGIB.FGIB Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FGIB.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "Flow.FOSS.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FOSS.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "Flow.FSUP.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.FSUP.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "Flow.GSAL.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.GSAL.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "Flow.HAWK.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HAWK.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HAWK"
+  },
+  {
+    "id": "Flow.HEYB.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HEYB.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "Flow.HUDS.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.HUDS Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.HUDS-SALI Pumped-back Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUDS.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "Flow.HUGO.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HUGO.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "Flow.HULA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.HULA.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "Flow.JOHN.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.JOHN.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "Flow.KAWL.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.KAWL Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KAWL.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "Flow.KEMP.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEMP.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "Flow.KEYS.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.KEYS Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.KEYS.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "Flow.MARI.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MARI.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "Flow.MCGE.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MCGE.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "Flow.MERE.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.MERE.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "Flow.NEWT.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.NEWT.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "Flow.OOLO.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.OOLO.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "Flow.PATM.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PATM.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "Flow.PENS.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PENS.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "Flow.PINE.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Low Flow Auxiliary_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.PINE.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "Flow.ROBE.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.ROBE Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.ROBE.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "Flow.SARD.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SARD.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "Flow.SKIA.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Peter_FG",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.SKIA.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "Flow.TENK.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.AuxiliaryTainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.TENK Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.TENK.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "Flow.THUN.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.THUN.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "Flow.TOMS.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TOMS.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "Flow.TORO.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "Flow.TORO.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "Flow.TORO.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "Flow.TORO.SluiceGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "Flow.TORO.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "Flow.TRUS.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TRUS"
+  },
+  {
+    "id": "Flow.TRUS.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TRUS"
+  },
+  {
+    "id": "Flow.TRUS.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "TRUS"
+  },
+  {
+    "id": "Flow.WAUR.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WAUR.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "Flow.WDMA.Auxiliary Uncontrolled Spillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WDMA.TainterGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "Flow.WEBB.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WEBB.WEBB Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "Flow.WIST.ConduitGate_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Gated_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.LOW Flow_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Lock_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Project_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Pump_In_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Pump_Out_Below_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Pump_Out_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Turbine_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.UncontrolledSpillway_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "Flow.WIST.Uncontrolled_Total",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "YUKO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Flow"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Basins",
+      "description": "Collection of Basins"
+    },
+    "office-id": "SWT",
+    "description": "Arkansas Basin",
+    "shared-loc-alias-id": "Basin:1"
+  },
+  {
+    "id": "Little River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Basins",
+      "description": "Collection of Basins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Basin:2"
+  },
+  {
+    "id": "Red River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Basins",
+      "description": "Collection of Basins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Basin:3"
+  },
+  {
+    "id": "Control_Points",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT",
+    "description": "Control Point Gages"
+  },
+  {
+    "id": "Dam",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Gate Group",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Hydropower",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Inflow",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT",
+    "description": "Inflow gages"
+  },
+  {
+    "id": "Outflow",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT",
+    "description": "Outflow gages"
+  },
+  {
+    "id": "River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Tributary",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Weather",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Location_Types",
+      "description": "Category for different types of locations"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "ALTU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Altus Lake"
+  },
+  {
+    "id": "ARBU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Arbuckle Lake"
+  },
+  {
+    "id": "ARCA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Arcadia Lake",
+    "shared-loc-alias-id": "33"
+  },
+  {
+    "id": "BIGH",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Big Hill Lake",
+    "shared-loc-alias-id": "21"
+  },
+  {
+    "id": "BIRC",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Birch Lake",
+    "shared-loc-alias-id": "8"
+  },
+  {
+    "id": "BROK",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Broken Bow Lake"
+  },
+  {
+    "id": "CANT",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Canton Lake",
+    "shared-loc-alias-id": "31"
+  },
+  {
+    "id": "CHEN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Cheney Lake",
+    "shared-loc-alias-id": "1"
+  },
+  {
+    "id": "CHOU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Chouteau LD17",
+    "shared-loc-alias-id": "12"
+  },
+  {
+    "id": "COPA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Copan Lake",
+    "shared-loc-alias-id": "10"
+  },
+  {
+    "id": "COUN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Council Grove Lake",
+    "shared-loc-alias-id": "24"
+  },
+  {
+    "id": "DENI",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Lake Texoma"
+  },
+  {
+    "id": "ELDR",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "El Dorado Lake",
+    "shared-loc-alias-id": "2"
+  },
+  {
+    "id": "ELKC",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Elk City Lake",
+    "shared-loc-alias-id": "20"
+  },
+  {
+    "id": "EUFA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Eufaula Lake",
+    "shared-loc-alias-id": "34"
+  },
+  {
+    "id": "FALL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Fall River Lake",
+    "shared-loc-alias-id": "19"
+  },
+  {
+    "id": "FCOB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Ft. Cobb Lake"
+  },
+  {
+    "id": "FGIB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Ft. Gibson Lake",
+    "shared-loc-alias-id": "28"
+  },
+  {
+    "id": "FOSS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Foss Lake"
+  },
+  {
+    "id": "FSUP",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Ft. Supply Lake",
+    "shared-loc-alias-id": "30"
+  },
+  {
+    "id": "GSAL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Great Salt Plains Lake",
+    "shared-loc-alias-id": "4"
+  },
+  {
+    "id": "HEYB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Heyburn Lake",
+    "shared-loc-alias-id": "6"
+  },
+  {
+    "id": "HUDS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Lake Hudson",
+    "shared-loc-alias-id": "27"
+  },
+  {
+    "id": "HUGO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Hugo Lake"
+  },
+  {
+    "id": "HULA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Hulah Lake",
+    "shared-loc-alias-id": "9"
+  },
+  {
+    "id": "JOHN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "John Redmond Lake",
+    "shared-loc-alias-id": "25"
+  },
+  {
+    "id": "KAWL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Kaw Lake",
+    "shared-loc-alias-id": "3"
+  },
+  {
+    "id": "KEMP",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Lake Kemp"
+  },
+  {
+    "id": "KEYS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Keystone Lake",
+    "shared-loc-alias-id": "5"
+  },
+  {
+    "id": "MARI",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Marion Lake",
+    "shared-loc-alias-id": "23"
+  },
+  {
+    "id": "MCGE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "McGee Creek Reservoir"
+  },
+  {
+    "id": "MERE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Lake Meredith",
+    "shared-loc-alias-id": "29"
+  },
+  {
+    "id": "NEWT",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Newt Graham LD18",
+    "shared-loc-alias-id": "11"
+  },
+  {
+    "id": "OOLO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Oologah Lake",
+    "shared-loc-alias-id": "22"
+  },
+  {
+    "id": "PATM",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Pat Mayse Lake"
+  },
+  {
+    "id": "PENS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Pensacola (Grand Lake)",
+    "shared-loc-alias-id": "26"
+  },
+  {
+    "id": "PINE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Pine Creek Lake"
+  },
+  {
+    "id": "ROBE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "RS Kerr LD15",
+    "shared-loc-alias-id": "15"
+  },
+  {
+    "id": "SARD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Sardis Lake"
+  },
+  {
+    "id": "SKIA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Skiatook Lake",
+    "shared-loc-alias-id": "7"
+  },
+  {
+    "id": "TENK",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Tenkiller Lake",
+    "shared-loc-alias-id": "14"
+  },
+  {
+    "id": "THUN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Lake Thunderbird",
+    "shared-loc-alias-id": "32"
+  },
+  {
+    "id": "TOMS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Tom Steed Lake"
+  },
+  {
+    "id": "TORO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Toronto Lake",
+    "shared-loc-alias-id": "18"
+  },
+  {
+    "id": "WAUR",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Waurika Lake"
+  },
+  {
+    "id": "WDMA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "W.D. Mayo LD14",
+    "shared-loc-alias-id": "16"
+  },
+  {
+    "id": "WEBB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Webbers Falls LD16",
+    "shared-loc-alias-id": "13"
+  },
+  {
+    "id": "WIST",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort",
+      "description": "Project and Location sort order"
+    },
+    "office-id": "SWT",
+    "description": "Wister Lake",
+    "shared-loc-alias-id": "17"
+  },
+  {
+    "id": "Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort_by_Basin"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Arkansas:1"
+  },
+  {
+    "id": "Little River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort_by_Basin"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Little River:3"
+  },
+  {
+    "id": "Red River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Sort_by_Basin"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Red River:2"
+  },
+  {
+    "id": "ALTU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ALTU Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "ARBU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ARBU Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "ARCA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ARCA Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "BIGH",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "BIGH Project",
+    "shared-loc-alias-id": "Arkansas:Verdigris"
+  },
+  {
+    "id": "BIRC",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "BIRC Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "BROK",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "BROK Project",
+    "shared-loc-alias-id": "Little River:Mountain Fork"
+  },
+  {
+    "id": "CANT",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "CANT Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "CHEN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "CHEN Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "CHOU",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "CHOU Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "COPA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "COPA Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "COUN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "COUN Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "DENI",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "DENI Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "ELDR",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ELDR Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "ELKC",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ELKC Project",
+    "shared-loc-alias-id": "Arkansas:Verdigris"
+  },
+  {
+    "id": "EUFA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "EUFA Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "FALL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "FALL Project",
+    "shared-loc-alias-id": "Arkansas:Verdigris"
+  },
+  {
+    "id": "FCOB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "FCOB Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "FGIB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "FGIB Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "FOSS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "FOSS Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "FSUP",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "FSUP Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "GSAL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "GSAL Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "HEYB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "HEYB Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "HUDS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "HUDS Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "HUGO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "HUGO Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "HULA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "HULA Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "JOHN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "JOHN Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "KAWL",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "KAWL Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "KEMP",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "KEMP Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "KEYS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "KEYS Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "MARI",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "MARI Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "MCGE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "MCGE Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "MERE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "MERE Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "NEWT",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "NEWT Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "OOLO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "OOLO Project",
+    "shared-loc-alias-id": "Arkansas:Verdigris"
+  },
+  {
+    "id": "PATM",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "PATM Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "PENS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "PENS Project",
+    "shared-loc-alias-id": "Arkansas:Grand-Neosho"
+  },
+  {
+    "id": "PINE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "PINE Project",
+    "shared-loc-alias-id": "Little River:Little River"
+  },
+  {
+    "id": "ROBE",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "ROBE Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "SARD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "SARD Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "SKIA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "SKIA Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "TENK",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "TENK Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "THUN",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "THUN Project",
+    "shared-loc-alias-id": "Arkansas:Canadian"
+  },
+  {
+    "id": "TOMS",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "TOMS Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "TORO",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "TORO Project",
+    "shared-loc-alias-id": "Arkansas:Verdigris"
+  },
+  {
+    "id": "WAUR",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "WAUR Project",
+    "shared-loc-alias-id": "Red River:Red River"
+  },
+  {
+    "id": "WDMA",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "WDMA Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "WEBB",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "WEBB Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "WIST",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Stations",
+      "description": "Associate stations with particular Projects"
+    },
+    "office-id": "SWT",
+    "description": "WIST Project",
+    "shared-loc-alias-id": "Arkansas:Arkansas"
+  },
+  {
+    "id": "Corps_Projects",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Types",
+      "description": "List of stations for various Project types"
+    },
+    "office-id": "SWT",
+    "description": "Project owned by the Corps"
+  },
+  {
+    "id": "Non-Power",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Types",
+      "description": "List of stations for various Project types"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Power",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Types",
+      "description": "List of stations for various Project types"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Section_7",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_Project_Types",
+      "description": "List of stations for various Project types"
+    },
+    "office-id": "SWT"
+  },
+  {
+    "id": "Arkansas",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "description": "Arkansas",
+    "shared-loc-alias-id": "Arkansas:1"
+  },
+  {
+    "id": "Canadian",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Arkansas:4"
+  },
+  {
+    "id": "Grand-Neosho",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "description": "Grand-Neosho",
+    "shared-loc-alias-id": "Arkansas:3"
+  },
+  {
+    "id": "Little River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Little River:2"
+  },
+  {
+    "id": "Mountain Fork",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Little River:1"
+  },
+  {
+    "id": "Red River",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Red River:1"
+  },
+  {
+    "id": "Verdigris",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "RDL_SubBasins",
+      "description": "Collection of SubBasins"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "Arkansas:2"
+  },
+  {
+    "id": "LRTS Testing-Streamgages",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "REGI-Streamgages"
+    },
+    "office-id": "SWT",
+    "description": "LRTS Testing"
+  },
+  {
+    "id": "Verdigris-Streamgages",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "REGI-Streamgages"
+    },
+    "office-id": "SWT",
+    "description": "Verdigris"
+  },
+  {
+    "id": "ALTU-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ALTU.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "ALTU-TainterGates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ALTU.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "ALTU-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "ALTU.Elev;Flow.Linear.Production",
+    "shared-ref-location-id": "ALTU"
+  },
+  {
+    "id": "ARBU-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ARBU.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "ARBU-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ARBU.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "ARBU-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "ARBU.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "ARBU"
+  },
+  {
+    "id": "ARCA-ConduitGates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "ARCA.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "ARCA-Low Flow",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "ARCA.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "ARCA-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "ARCA.Elev;Flow.Linear.Production",
+    "shared-ref-location-id": "ARCA"
+  },
+  {
+    "id": "BIGH-AuxiliaryUncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BIGH.Elev;Flow-Auxiliary_Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "BIGH-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BIGH.Count-Low_Flow_Gates,Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "BIGH-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BIGH.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "BIGH"
+  },
+  {
+    "id": "BIRC-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "BIRC.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "BIRC-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BIRC.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "BIRC-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BIRC.Elev;Flow.Linear.Production",
+    "shared-ref-location-id": "BIRC"
+  },
+  {
+    "id": "BROK-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BROK.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "BROK-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BROK.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "BROK-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "BROK.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "BROK"
+  },
+  {
+    "id": "CANT-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "CANT.Count-Low_Flow_Gates,%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "CANT-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "CANT.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "CANT-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "CANT.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "CANT"
+  },
+  {
+    "id": "CHEN-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "CHEN.Count-Sluice_Gates,Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "CHEN-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "CHEN.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "CHEN"
+  },
+  {
+    "id": "CHOU-TainterGatesOld",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "CHOU.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "CHOU"
+  },
+  {
+    "id": "COPA-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "COPA.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "COPA-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "COPA.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "COPA"
+  },
+  {
+    "id": "COUN-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "COUN.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "COUN-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "COUN.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "COUN-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "COUN.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "COUN"
+  },
+  {
+    "id": "DENI-ConduitGates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "DENI.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "DENI-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "High level Uncontrolled Spillway in right abutement of Main Dam.",
+    "shared-loc-alias-id": "DENI.Elev;Flow.Linear.Production",
+    "shared-ref-location-id": "DENI"
+  },
+  {
+    "id": "ELDR-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ELDR.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "ELDR-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ELDR.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "ELDR-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ELDR.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "ELDR"
+  },
+  {
+    "id": "ELKC-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "ELKC.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "ELKC-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ELKC.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "ELKC-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "ELKC.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "ELKC"
+  },
+  {
+    "id": "EUFA-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "EUFA.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "EUFA-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "EUFA.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "EUFA"
+  },
+  {
+    "id": "FALL-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FALL.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "FALL-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FALL.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "FALL-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FALL.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "FALL-TainterGates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FALL.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "FALL"
+  },
+  {
+    "id": "FCOB-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FCOB.%-Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "FCOB-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FCOB.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "FCOB-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FCOB.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "FCOB"
+  },
+  {
+    "id": "FGIB-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FGIB.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "FGIB-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FGIB.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "FGIB"
+  },
+  {
+    "id": "FOSS-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FOSS.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "FOSS-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FOSS.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "FOSS-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FOSS.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "FOSS"
+  },
+  {
+    "id": "FSUP-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "FSUP.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "FSUP-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FSUP.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "FSUP-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "FSUP.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "FSUP"
+  },
+  {
+    "id": "GSAL-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "GSAL.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "GSAL-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "GSAL.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "GSAL"
+  },
+  {
+    "id": "HEYB-Auxiliary Uncontrolled Spillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "HEYB.Elev;Flow-Auxiliary_Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "HEYB-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "HEYB.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "HEYB-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "HEYB.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "HEYB"
+  },
+  {
+    "id": "HUDS-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HUDS.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "HUDS"
+  },
+  {
+    "id": "HUGO-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HUGO.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "HUGO-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HUGO.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "HUGO"
+  },
+  {
+    "id": "HULA-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HULA.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "HULA-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HULA.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "HULA-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "HULA.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "HULA"
+  },
+  {
+    "id": "JOHN-AuxiliaryLowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "JOHN.%-Opening-Auxiliary_Low_Flow_Gates,Elev;Flow-Auxiliary_Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "JOHN-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "JOHN.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "JOHN-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "JOHN.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "JOHN"
+  },
+  {
+    "id": "KAWL-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KAWL.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "KAWL-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KAWL.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "KAWL"
+  },
+  {
+    "id": "KEMP-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "KEMP.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "KEMP-ConduitGateOLD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "KEMP.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "KEMP-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KEMP.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "KEMP-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KEMP.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "KEMP"
+  },
+  {
+    "id": "KEYS-LOW flow pipes",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KEYS.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "KEYS-Sluice Gates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KEYS.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "KEYS-Tainter Gates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "KEYS.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "KEYS"
+  },
+  {
+    "id": "MARI-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MARI.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "MARI-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MARI.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "MARI"
+  },
+  {
+    "id": "MCGE-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MCGE.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "MCGE-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MCGE.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "MCGE-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "GateSettings_elevation_pool;;;;;",
+    "shared-loc-alias-id": "MCGE.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "MCGE"
+  },
+  {
+    "id": "MERE-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MERE.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "MERE-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MERE.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "MERE-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "MERE.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "MERE"
+  },
+  {
+    "id": "NEWT-TainterGates",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "NEWT.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "NEWT"
+  },
+  {
+    "id": "OOLO-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "OOLO.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "OOLO-ConduitGateOLD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "OOLO.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "OOLO-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "OOLO.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "OOLO-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "OOLO.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "OOLO"
+  },
+  {
+    "id": "PATM-AuxiliaryUncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PATM.Elev;Flow-Auxiliary_Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "PATM-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "PATM.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "PATM-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PATM.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "PATM"
+  },
+  {
+    "id": "PENS-AuxillaryTainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PENS.Opening-Auxiliary_Spillway_Gates,Elev;Flow-Auxiliary_Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "PENS-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PENS.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "PENS"
+  },
+  {
+    "id": "PINE-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PINE.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "PINE-CountConduit",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "PINE.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow.Standard.Production",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "PINE-LowFlowAux",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "PINE.%-Opening-Auxiliary_Low_Flow_Gates,Elev;Flow-Auxiliary_Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "PINE-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PINE.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "PINE-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "PINE.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "PINE"
+  },
+  {
+    "id": "ROBE-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "ROBE.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "ROBE-TainterGateOld",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "ROBE.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "ROBE"
+  },
+  {
+    "id": "SARD-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "SARD.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "SARD-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "SARD.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "SARD-LowFlowGateOLD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "SARD.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "SARD-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "SARD.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "SARD"
+  },
+  {
+    "id": "SKIA-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "SKIA.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "SKIA-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "SKIA.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "SKIA-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "SKIA.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "SKIA"
+  },
+  {
+    "id": "TENK-AuxiliaryTainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TENK.Opening-Auxiliary_Spillway_Gates,Elev;Flow-Auxiliary_Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "TENK-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TENK.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "TENK-LowFlow",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "TENK.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "TENK-TGA1",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TENK.Opening-Auxiliary_Spillway_Gates,Elev;Flow-Auxiliary_Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "TENK-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TENK.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "TENK"
+  },
+  {
+    "id": "THUN-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "THUN.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "THUN-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "THUN.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "THUN"
+  },
+  {
+    "id": "TOMS-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TOMS.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "TOMS-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "TOMS.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "TOMS-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TOMS.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "TOMS"
+  },
+  {
+    "id": "TORO-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TORO.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "TORO-SluiceGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TORO.Opening-Sluice_Gates,Elev;Flow-Sluice_Gates.Standard.Production",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "TORO-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "TORO.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "TORO"
+  },
+  {
+    "id": "WAUR-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "WAUR.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "WAUR-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "WAUR.Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "WAUR-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "WAUR.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "WAUR"
+  },
+  {
+    "id": "WDMA-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;GateSettings_elevation_tailwater;;;",
+    "shared-loc-alias-id": "WDMA.Opening-Spillway_Gates,Elev,Elev-Tailwater;Flow.Standard.Production",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "WDMA-TainterGateOld",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "WDMA.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "WDMA"
+  },
+  {
+    "id": "WEBB-TainterGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "WEBB.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "WEBB-TainterGateOld",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "WEBB.Opening-Spillway_Gates,Elev;Flow-Spillway_Gates.Standard.Production",
+    "shared-ref-location-id": "WEBB"
+  },
+  {
+    "id": "WIST-ConduitGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Count;Opening;GateSettings_elevation_pool;;;",
+    "shared-loc-alias-id": "WIST.Count-Conduit_Gates,Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "WIST-ConduitGateOLD",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "description": "Opening;GateSettings_elevation_pool;;;;",
+    "shared-loc-alias-id": "WIST.Opening-Conduit_Gates,Elev;Flow-Conduit_Gates.Standard.Production",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "WIST-LowFlowGate",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "WIST.%-Opening-Low_Flow_Gates,Elev;Flow-Low_Flow_Gates.Standard.Production",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "WIST-UncontrolledSpillway",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "Rating"
+    },
+    "office-id": "SWT",
+    "shared-loc-alias-id": "WIST.Elev;Flow-Uncontrolled_Spillway.Linear.Production",
+    "shared-ref-location-id": "WIST"
+  },
+  {
+    "id": "grpLoc388399",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "cat865205"
+    },
+    "office-id": "SWT",
+    "description": "testDesc"
+  },
+  {
+    "id": "grpLoc487268",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "cat905711"
+    },
+    "office-id": "SWT",
+    "description": "testDesc"
+  },
+  {
+    "id": "locGroup2750406",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat012479"
+    },
+    "office-id": "SWT",
+    "description": "desc654040"
+  },
+  {
+    "id": "locGroup330097",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat012479"
+    },
+    "office-id": "SWT",
+    "description": "desc669604"
+  },
+  {
+    "id": "locGroup079017",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat081237"
+    },
+    "office-id": "SWT",
+    "description": "desc117601"
+  },
+  {
+    "id": "locGroup2231623",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat081237"
+    },
+    "office-id": "SWT",
+    "description": "desc994906"
+  },
+  {
+    "id": "locGroup2202981",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat260178"
+    },
+    "office-id": "SWT",
+    "description": "desc516007"
+  },
+  {
+    "id": "locGroup434462",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat260178"
+    },
+    "office-id": "SWT",
+    "description": "desc060015"
+  },
+  {
+    "id": "locGroup2607967",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat324827"
+    },
+    "office-id": "SWT",
+    "description": "desc438446"
+  },
+  {
+    "id": "locGroup404414",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat324827"
+    },
+    "office-id": "SWT",
+    "description": "desc778227"
+  },
+  {
+    "id": "locGrp644193",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat328761"
+    },
+    "office-id": "SWT",
+    "description": "TestDesc"
+  },
+  {
+    "id": "locGrp812962",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat429004"
+    },
+    "office-id": "SWT",
+    "description": "TestDesc"
+  },
+  {
+    "id": "locGrp934315",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat544477"
+    },
+    "office-id": "SWT",
+    "description": "TestDesc"
+  },
+  {
+    "id": "locGroup2999775",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat561341"
+    },
+    "office-id": "SWT",
+    "description": "desc317390"
+  },
+  {
+    "id": "locGroup708777",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat561341"
+    },
+    "office-id": "SWT",
+    "description": "desc512580"
+  },
+  {
+    "id": "locGroup2365199",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat591748"
+    },
+    "office-id": "SWT",
+    "description": "desc907391"
+  },
+  {
+    "id": "locGroup539915",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat591748"
+    },
+    "office-id": "SWT",
+    "description": "desc089729"
+  },
+  {
+    "id": "locGroup2955850",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat914296"
+    },
+    "office-id": "SWT",
+    "description": "desc414946"
+  },
+  {
+    "id": "locGroup755538",
+    "location-category": {
+      "office-id": "SWT",
+      "id": "locCat914296"
+    },
+    "office-id": "SWT",
+    "description": "desc095545"
+  }
+]
