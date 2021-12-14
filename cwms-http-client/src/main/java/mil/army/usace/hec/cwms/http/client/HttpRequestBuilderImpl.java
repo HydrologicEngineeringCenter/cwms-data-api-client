@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -102,9 +103,10 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     public HttpRequestResponse execute() throws IOException {
         Request request = createRequest();
         ResponseBody body = null;
+        OkHttpClient client = OkHttpClientInstance.getInstance();
         try (Timer.Context timer = createTimer().start()) {
-            OkHttpClient client = OkHttpClientInstance.getInstance();
-            Response execute = client.newCall(request).execute();
+            Call call = client.newCall(request);
+            Response execute = call.execute();
             if (execute.isSuccessful()) {
                 body = execute.body();
                 if (body == null) {
