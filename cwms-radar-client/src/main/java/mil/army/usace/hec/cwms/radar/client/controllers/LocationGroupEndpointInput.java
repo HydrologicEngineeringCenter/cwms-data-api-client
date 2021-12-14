@@ -27,7 +27,6 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
@@ -36,13 +35,23 @@ public final class LocationGroupEndpointInput extends EndpointInput {
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
+    static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "includeAssigned";
 
     private final String groupId;
     private String officeId;
     private String categoryId;
+    private boolean includeAssigned = false;
 
     public LocationGroupEndpointInput(String groupId) {
-        this.groupId = Objects.requireNonNull(groupId, "Cannot access the location group endpoint without a location group id");
+        this.groupId = groupId;
+    }
+
+    public LocationGroupEndpointInput() {
+        this.groupId = null;
+    }
+
+    String getGroupId() {
+        return groupId;
     }
 
     public LocationGroupEndpointInput officeId(String officeId) {
@@ -55,11 +64,17 @@ public final class LocationGroupEndpointInput extends EndpointInput {
         return this;
     }
 
+    public LocationGroupEndpointInput includeAssigned(boolean includeAssigned) {
+        this.includeAssigned = includeAssigned;
+        return this;
+    }
+
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
                                  .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                                  .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                                 .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
                                  .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
     }
 }

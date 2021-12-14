@@ -1,0 +1,24 @@
+{
+  "id": "Lakes",
+  "location-category": {
+    "id": "CWMS Mobile Location Listings"
+  },
+  "office-id": "SWT",
+  "assigned-locations": [
+    {
+      "location-id": "FakeLake",
+      "office-id": "SWT",
+      "alias-id": "FakeLake"
+    },
+    {
+      "location-id": "Testing",
+      "office-id": "SWT",
+      "alias-id": "Testing"
+    },
+    {
+      "location-id": "NotThere",
+      "office-id": "SWT",
+      "alias-id": "NotThere"
+    }
+  ]
+}

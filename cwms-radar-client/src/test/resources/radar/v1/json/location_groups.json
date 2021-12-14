@@ -1,0 +1,52 @@
+[
+  {
+    "id": "Default",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Default",
+      "description": "Default"
+    },
+    "office-id": "CWMS",
+    "description": "All Locations",
+    "assigned-locations": [
+      {
+        "location-id": "Deleted TS ID",
+        "office-id": "CWMS"
+      }
+    ]
+  },
+  {
+    "id": "CWMS Legacy Naming",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "CWMS",
+    "description": "Alias group for legacy location IDs",
+    "assigned-locations": [
+      {
+        "location-id": "Deleted TS ID",
+        "office-id": "CWMS",
+        "alias-id": "Deleted TS ID"
+      }
+    ]
+  },
+  {
+    "id": "CWMS Standard Naming",
+    "location-category": {
+      "office-id": "CWMS",
+      "id": "Agency Aliases",
+      "description": "Location aliases for other agencies"
+    },
+    "office-id": "CWMS",
+    "description": "Alias group for location IDs that conform to CWMS Standard Naming Convention",
+    "assigned-locations": [
+      {
+        "location-id": "Deleted TS ID",
+        "office-id": "CWMS",
+        "alias-id": "Deleted TS ID"
+      }
+    ]
+  }
+]

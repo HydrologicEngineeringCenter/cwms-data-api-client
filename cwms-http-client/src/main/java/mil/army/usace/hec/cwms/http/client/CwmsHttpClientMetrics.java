@@ -22,34 +22,35 @@
  * SOFTWARE.
  */
 
-plugins {
-    id 'org.hidetake.swagger.generator' version '2.18.2'
-}
+package mil.army.usace.hec.cwms.http.client;
 
-dependencies {
-    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0')
-    implementation('io.swagger:swagger-annotations:1.6.3')
-    implementation('javax.validation:validation-api:2.0.1.Final')
-    implementation('javax.annotation:javax.annotation-api:1.3.2')
-    swaggerCodegen('io.swagger.codegen.v3:swagger-codegen-cli:3.0.30')
-}
+import rma.util.lookup.Lookup;
+import rma.util.lookup.Lookups;
+import usace.metrics.services.Metrics;
+import usace.metrics.services.MetricsService;
+import usace.metrics.services.MetricsServiceProvider;
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId = "cwms-radar-model"
-            from components.java
-        }
+final class CwmsHttpClientMetrics {
+
+    private static final Lookup _lookup = Lookups.forPath(CwmsHttpMetricsServiceProvider.SERVICE_PATH);
+
+    private CwmsHttpClientMetrics() {
+        throw new AssertionError("Instantiated a utility class.");
+    }
+
+    private static MetricsService getMetricsService() {
+        return getMetricsServiceProvider().getMetricsService();
+    }
+
+    private static MetricsServiceProvider getMetricsServiceProvider() {
+        return _lookup.lookup(MetricsServiceProvider.class);
+    }
+
+    public static boolean isMetricsEnabled() {
+        return getMetricsService().getConfig().isMetricsEnabled();
+    }
+
+    public static Metrics createMetrics(String... paths) {
+        return getMetricsService().createMetrics(paths);
     }
 }
-
-swaggerSources {
-    cwmsRadar {
-        inputFile = file("cwms-radar-swagger.yaml")
-        code {
-            language = 'spring'
-            templateDir = file('templates')
-        }
-    }
-}
-

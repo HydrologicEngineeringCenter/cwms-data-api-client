@@ -2534,10 +2534,12 @@
     "location": "ARBU",
     "native-datum": "NGVD-29",
     "elevation": 243.8,
-    "offset": {
-      "estimate": true,
-      "to-datum": "NAVD-88",
-      "value": 0.0632
-    }
+    "offsets": [
+      {
+        "estimate": true,
+        "to-datum": "NAVD-88",
+        "value": 0.0632
+      }
+    ]
   }
 }
