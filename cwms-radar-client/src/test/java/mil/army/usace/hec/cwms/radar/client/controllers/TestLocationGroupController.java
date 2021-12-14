@@ -56,6 +56,7 @@ class TestLocationGroupController extends TestController {
         mockHttpServer.start();
         LocationGroupEndpointInput input = new LocationGroupEndpointInput("Lakes")
             .officeId("SWT")
+            .includeAssigned(true)
             .categoryId("CWMS Mobile Location Listings");
         LocationGroup locationGroup = new LocationGroupController().retrieveLocationGroup(buildConnectionInfo(), input);
         assertNotNull(locationGroup);
