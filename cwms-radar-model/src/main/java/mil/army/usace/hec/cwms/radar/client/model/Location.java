@@ -86,6 +86,8 @@ public class Location {
     private String boundingOfficeId = null;
     @JsonProperty("office-id")
     private String officeId = null;
+    @JsonProperty("active")
+    private boolean active = true;
 
     public Location name(String name) {
         this.name = name;
@@ -486,6 +488,25 @@ public class Location {
         this.officeId = officeId;
     }
 
+    public Location active(boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    /**
+     * Get officeId
+     *
+     * @return officeId
+     **/
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -496,6 +517,7 @@ public class Location {
         }
         Location location = (Location) o;
         return this.name == null || location.name == null ? Objects.equals(this.name, location.name) : this.name.equalsIgnoreCase(location.name)
+            && this.active == location.active
             && Objects.equals(this.latitude, location.latitude)
             && Objects.equals(this.longitude, location.longitude)
             && this.publicName == null || location.publicName == null ? Objects.equals(this.publicName, location.publicName) :
@@ -542,7 +564,7 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name == null ? 0 : name.toLowerCase(), latitude, longitude, publicName == null ? 0 : publicName.toLowerCase(),
+        return Objects.hash(active, name == null ? 0 : name.toLowerCase(), latitude, longitude, publicName == null ? 0 : publicName.toLowerCase(),
             longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
             timezoneName == null ? 0 : timezoneName.toLowerCase(), locationType == null ? 0 : locationType.toLowerCase(),
             locationKind == null ? 0 : locationKind.toLowerCase(), nation,
@@ -578,6 +600,7 @@ public class Location {
         sb.append("    mapLabel: ").append(toIndentedString(mapLabel)).append("\n");
         sb.append("    boundingOfficeId: ").append(toIndentedString(boundingOfficeId)).append("\n");
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
+        sb.append("    active: ").append(toIndentedString(active)).append("\n");
         sb.append("}");
         return sb.toString();
     }
