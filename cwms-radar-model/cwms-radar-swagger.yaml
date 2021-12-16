@@ -112,6 +112,11 @@ paths:
           description: Specifies the owning office of the location group(s) whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
           schema:
             type: string
+        - name: includeAssigned
+          in: query
+          description: 'Include the assigned locations in the returned location groups. (default: false)'
+          schema:
+            type: boolean
       responses:
         '200':
           description: OK
@@ -1011,14 +1016,24 @@ paths:
           description: Posix regular expression matching against the id
           schema:
             type: string
-        - name: categoryLike
+        - name: timeseriesCategoryLike
           in: query
-          description: Posix regular expression matching against the category id
+          description: Posix regular expression matching against the timeseries category id
           schema:
             type: string
-        - name: groupLike
+        - name: timeseriesGroupLike
           in: query
-          description: Posix regular expression matching against the group id
+          description: Posix regular expression matching against the timeseries group id
+          schema:
+            type: string
+        - name: locationCategoryLike
+          in: query
+          description: Posix regular expression matching against the location category id
+          schema:
+            type: string
+        - name: locationGroupLike
+          in: query
+          description: Posix regular expression matching against the location group id
           schema:
             type: string
       responses:
@@ -1360,15 +1375,11 @@ components:
       properties:
         locationId:
           type: string
-        baseLocationId:
-          type: string
-        subLocationId:
+        officeId:
           type: string
         aliasId:
           type: string
         attribute:
-          type: number
-        locationCode:
           type: number
         refLocationId:
           type: string
@@ -1417,6 +1428,8 @@ components:
         longitude:
           type: number
           format: double
+        active:
+          type: boolean
         public-name:
           type: string
         long-name:
@@ -1627,6 +1640,20 @@ components:
       description: A representation of a TimeSeries category
       xml:
         name: timeseries-category
+    AssignedTimeSeries:
+      type: object
+      properties:
+        timeseriesId:
+          type: string
+        tsCode:
+          type: number
+        aliasId:
+          type: string
+        refTsId:
+          type: string
+        attribute:
+          type: integer
+          format: int32
     TimeSeriesGroup:
       type: object
       properties:
@@ -1642,6 +1669,10 @@ components:
           type: string
         sharedRefTsId:
           type: string
+        assignedTimeSeries:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTimeSeries'
       description: A representation of a timeseries group
       xml:
         name: timeseries-group
@@ -1676,6 +1707,10 @@ components:
             seconds:
               type: integer
               format: int64
+            zero:
+              type: boolean
+            negative:
+              type: boolean
             units:
               type: array
               items:
@@ -1687,13 +1722,13 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      nano:
-                        type: integer
-                        format: int32
                       zero:
                         type: boolean
                       negative:
                         type: boolean
+                      nano:
+                        type: integer
+                        format: int32
                   durationEstimated:
                     type: boolean
                   dateBased:
@@ -1703,10 +1738,6 @@ components:
             nano:
               type: integer
               format: int32
-            zero:
-              type: boolean
-            negative:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
         name:
           type: string
@@ -1807,8 +1838,12 @@ components:
         elevation:
           type: number
           format: double
-        offset:
-          $ref: '#/components/schemas/Offset'
+        offsets:
+          type: array
+          xml:
+            name: offset
+          items:
+            $ref: '#/components/schemas/Offset'
       xml:
         name: vertical-datum-info
     CatalogableEndpoint:
@@ -1939,6 +1974,28 @@ components:
             $ref: '#/components/schemas/LocationAlias'
       xml:
         name: entry
+    TimeSeriesExtents:
+      type: object
+      properties:
+        earliestTime:
+          type: string
+          description: Earliest value in the timeseries
+          format: date-time
+          xml:
+            name: earliest-time
+        latestTime:
+          type: string
+          description: Latest value in the timeseries
+          format: date-time
+          xml:
+            name: latest-time
+        versionTime:
+          type: string
+          description: TimeSeries version to which this extent information applies
+          format: date-time
+      description: TimeSeries extent information
+      xml:
+        name: extents
     TimeseriesCatalogEntry:
       type: object
       properties:
@@ -1965,16 +2022,12 @@ components:
           description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
           xml:
             name: time-zone
-        earliestTime:
-          type: string
-          format: date-time
+        extents:
+          type: array
           xml:
-            name: earliest-time
-        latestTime:
-          type: string
-          format: date-time
-          xml:
-            name: latest-time
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/TimeSeriesExtents'
       xml:
         name: entry
     Basin:
@@ -2204,23 +2257,23 @@ components:
           type: string
         clobText:
           type: string
+        implicit:
+          type: boolean
         poolName:
           $ref: '#/components/schemas/PoolNameType'
-        topLevelId:
+        projectId:
           type: string
         bottomLevelId:
           type: string
-        projectId:
+        topLevelId:
           type: string
-        implicit:
-          type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     Pools:
       type: object
@@ -2252,16 +2305,16 @@ components:
               type: string
             clobText:
               type: string
+            implicit:
+              type: boolean
             poolName:
               $ref: '#/components/schemas/PoolNameType'
-            topLevelId:
+            projectId:
               type: string
             bottomLevelId:
               type: string
-            projectId:
+            topLevelId:
               type: string
-            implicit:
-              type: boolean
           description: List of retrieved pools
           xml:
             wrapped: true

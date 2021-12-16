@@ -34,7 +34,7 @@ import java.util.Objects;
  * A representation of a time-series record
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 public class TimeSeriesValues {
     private Long dateTime = null;
