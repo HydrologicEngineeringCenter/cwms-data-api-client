@@ -1,15 +1,43 @@
 [
   {
-    "id": "Radar Test",
+    "id": "ACSO2",
     "time-series-category": {
       "office-id": "SWT",
-      "id": "QA Category",
-      "description": "Creating this category for testing on December 16, 2020"
+      "id": "Lakes"
     },
     "office-id": "SWT",
-    "description": "description123",
-    "shared-alias-id": "TestAlias",
-    "shared-ref-ts-id": "ADDI.Flow.Inst.1Hour.0.Ccp-Rev"
+    "assigned-time-series": [
+      {
+        "timeseries-id": "ACSO2.%-Humidity.Ave.15Minutes.15Minutes.Mesonet-raw",
+        "ts-code": 3768317551,
+        "alias-id": "15Minutes-%-Humidity",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ACSO2.%-Humidity.Ave.15Minutes.15Minutes.Raw-Mesonet",
+        "ts-code": 3810282551,
+        "alias-id": "15Minutes-%-Humidity",
+        "attribute": 10
+      },
+      {
+        "timeseries-id": "ACSO2.%-Humidity.Ave.1Hour.15Minutes.Rev-Mesonet",
+        "ts-code": 3819783551,
+        "alias-id": "1Hour-%-Humidity",
+        "attribute": 20
+      },
+      {
+        "timeseries-id": "ACSO2.Speed-Wind.Ave.15Minutes.15Minutes.Mesonet-raw",
+        "ts-code": 3768313551,
+        "alias-id": "15Minutes-Speed-Wind",
+        "attribute": 30
+      },
+      {
+        "timeseries-id": "ACSO2.Temp-Air.Inst.1Hour.0.Raw-Mesonet",
+        "ts-code": 8064293451,
+        "alias-id": "1Hour-Temp-Air",
+        "attribute": 40
+      }
+    ]
   },
   {
     "id": "Reservoir Operations",
@@ -19,15 +47,161 @@
       "description": "Creating this category for testing on December 16, 2020"
     },
     "office-id": "SWT",
-    "description": "Organizing timeseries for maintaining reservoir operations"
+    "description": "Organizing timeseries for maintaining reservoir operations",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "SKIA.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14869351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "COPA.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14149351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "FALL.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14151351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ELKC.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14150351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "BIGH.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 86639351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "BIGH.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14214351,
+        "alias-id": "Storage_2",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "EUFA.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 2139351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "COUN.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14218351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "DENI.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14219351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "BROK.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14216351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "CANT.Stor.Inst.1Hour.0.Regi-Rev",
+        "ts-code": 2217351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "CHEN.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 2126351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "THUN.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 15502351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "CHOU.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 86856351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "TORO.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 18876351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ALTU.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14213351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ARCA.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14146351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ELDR.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 2146351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "WDMA.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 15377351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "TENK.Elev.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 15409351,
+        "alias-id": "Elevation",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ARBU.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14145351,
+        "alias-id": "Storage",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "BIRC.Stor.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 14215351,
+        "alias-id": "Storage",
+        "attribute": 0
+      }
+    ]
   },
   {
-    "id": "ACSO2",
+    "id": "ALTU",
     "time-series-category": {
       "office-id": "SWT",
       "id": "Lakes"
     },
-    "office-id": "SWT"
+    "office-id": "SWT",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "ALTU.Elev.Inst.15Minutes.0.Ccp-Rev",
+        "ts-code": 9418264451,
+        "alias-id": "15Minutes-Elev",
+        "attribute": 0
+      },
+      {
+        "timeseries-id": "ALTU.Precip-Inc.Total.15Minutes.0.Ccp-Rev",
+        "ts-code": 9418262451
+      }
+    ]
   },
   {
     "id": "Reporting",
@@ -37,14 +211,63 @@
       "description": "RDL_Aliases"
     },
     "office-id": "SWT",
-    "description": "Reporting"
+    "description": "Reporting",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "TULA.Flow.Inst.1Hour.0.Ccp-Rev",
+        "ts-code": 91304351,
+        "alias-id": "TULA.Flow-Out.1Hour.Reporting"
+      },
+      {
+        "timeseries-id": "ARCA.Flow-Res Out.Ave.1Hour.1Hour.Regi-Rev-Flowgroup",
+        "ts-code": 92368351,
+        "alias-id": "ARCA.Flow-Out.1Hour.Reporting"
+      }
+    ]
   },
   {
-    "id": "ALTU",
+    "id": "tsGrp058365",
     "time-series-category": {
       "office-id": "SWT",
-      "id": "Lakes"
+      "id": "tsCat376624"
     },
-    "office-id": "SWT"
+    "office-id": "SWT",
+    "description": "TestDesc",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "RMA2126523.Flow.Inst.1Hour.0.-970921625",
+        "ts-code": 4406251
+      }
+    ]
+  },
+  {
+    "id": "tsGrp493582",
+    "time-series-category": {
+      "office-id": "SWT",
+      "id": "tsCat273360"
+    },
+    "office-id": "SWT",
+    "description": "TestDesc",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "RMA2991302.Flow.Inst.1Hour.0.2121835933",
+        "ts-code": 4665251
+      }
+    ]
+  },
+  {
+    "id": "tsGrp919375",
+    "time-series-category": {
+      "office-id": "SWT",
+      "id": "tsCat832679"
+    },
+    "office-id": "SWT",
+    "description": "TestDesc",
+    "assigned-time-series": [
+      {
+        "timeseries-id": "RMA2907672.Flow.Inst.1Hour.0.759157140",
+        "ts-code": 4388251
+      }
+    ]
   }
 ]

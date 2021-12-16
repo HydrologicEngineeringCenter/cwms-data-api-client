@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ import javax.validation.Valid;
  * VerticalDatumInfo
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class VerticalDatumInfo {
     @JsonProperty("office")
     private String office = null;
@@ -52,6 +53,7 @@ public class VerticalDatumInfo {
     private Double elevation = null;
 
     @JsonProperty("offsets")
+    @Valid
     private List<Offset> offsets = null;
 
     public VerticalDatumInfo office(String office) {
@@ -154,12 +156,19 @@ public class VerticalDatumInfo {
         return this;
     }
 
-    /**
-     * Get offset
-     *
-     * @return offset
-     **/
+    public VerticalDatumInfo addOffsetsItem(Offset offsetsItem) {
+        if (this.offsets == null) {
+            this.offsets = new ArrayList<Offset>();
+        }
+        this.offsets.add(offsetsItem);
+        return this;
+    }
 
+    /**
+     * Get offsets
+     *
+     * @return offsets
+     **/
     @Valid
     public List<Offset> getOffsets() {
         return offsets;
@@ -209,7 +218,7 @@ public class VerticalDatumInfo {
         sb.append("    location: ").append(toIndentedString(location)).append("\n");
         sb.append("    nativeDatum: ").append(toIndentedString(nativeDatum)).append("\n");
         sb.append("    elevation: ").append(toIndentedString(elevation)).append("\n");
-        sb.append("    offset: ").append(toIndentedString(offsets)).append("\n");
+        sb.append("    offsets: ").append(toIndentedString(offsets)).append("\n");
         sb.append("}");
         return sb.toString();
     }

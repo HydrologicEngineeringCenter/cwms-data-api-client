@@ -26,7 +26,8 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 
@@ -34,7 +35,7 @@ import javax.validation.Valid;
  * TimeSeriesCatalogEntry
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class TimeSeriesCatalogEntry {
     @JsonProperty("office")
     private String office = null;
@@ -54,11 +55,9 @@ public class TimeSeriesCatalogEntry {
     @JsonProperty("time-zone")
     private String locationTimeZone = null;
 
-    @JsonProperty("earliest-time")
-    private ZonedDateTime earliestTime = null;
-
-    @JsonProperty("latest-time")
-    private ZonedDateTime latestTime = null;
+    @JsonProperty("extents")
+    @Valid
+    private List<TimeSeriesExtents> extents = null;
 
     public TimeSeriesCatalogEntry office(String office) {
         this.office = office;
@@ -174,44 +173,31 @@ public class TimeSeriesCatalogEntry {
         this.locationTimeZone = locationTimeZone;
     }
 
-    public TimeSeriesCatalogEntry earliestTime(ZonedDateTime earliestTime) {
-        this.earliestTime = earliestTime;
+    public TimeSeriesCatalogEntry extents(List<TimeSeriesExtents> extents) {
+        this.extents = extents;
+        return this;
+    }
+
+    public TimeSeriesCatalogEntry addExtentsItem(TimeSeriesExtents extentsItem) {
+        if (this.extents == null) {
+            this.extents = new ArrayList<TimeSeriesExtents>();
+        }
+        this.extents.add(extentsItem);
         return this;
     }
 
     /**
-     * Get earliestTime
+     * Get extents
      *
-     * @return earliestTime
+     * @return extents
      **/
-
     @Valid
-    public ZonedDateTime getEarliestTime() {
-        return earliestTime;
+    public List<TimeSeriesExtents> getExtents() {
+        return extents;
     }
 
-    public void setEarliestTime(ZonedDateTime earliestTime) {
-        this.earliestTime = earliestTime;
-    }
-
-    public TimeSeriesCatalogEntry latestTime(ZonedDateTime latestTime) {
-        this.latestTime = latestTime;
-        return this;
-    }
-
-    /**
-     * Get latestTime
-     *
-     * @return latestTime
-     **/
-
-    @Valid
-    public ZonedDateTime getLatestTime() {
-        return latestTime;
-    }
-
-    public void setLatestTime(ZonedDateTime latestTime) {
-        this.latestTime = latestTime;
+    public void setExtents(List<TimeSeriesExtents> extents) {
+        this.extents = extents;
     }
 
 
@@ -238,17 +224,15 @@ public class TimeSeriesCatalogEntry {
                             && this.locationTimeZone == null || timeseriesCatalogEntry.locationTimeZone == null ?
                             Objects.equals(this.locationTimeZone, timeseriesCatalogEntry.locationTimeZone) :
                             this.locationTimeZone.equalsIgnoreCase(timeseriesCatalogEntry.locationTimeZone)
-                                && Objects.equals(this.earliestTime, timeseriesCatalogEntry.earliestTime)
-                                && Objects.equals(this.latestTime, timeseriesCatalogEntry.latestTime)
+                                && Objects.equals(this.extents, timeseriesCatalogEntry.extents)
             ;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(office == null ? 0 : office.toLowerCase(), timeSeriesId == null ? 0 : timeSeriesId.toLowerCase(),
-            units == null ? 0 : units.toLowerCase(),
-            interval == null ? 0 : interval.toLowerCase(), intervalOffsetMinutes, locationTimeZone == null ? 0 : locationTimeZone.toLowerCase(),
-            earliestTime, latestTime);
+            units == null ? 0 : units.toLowerCase(), interval == null ? 0 : interval.toLowerCase(), intervalOffsetMinutes,
+            locationTimeZone == null ? 0 : locationTimeZone.toLowerCase(), extents);
     }
 
     @Override
@@ -262,8 +246,7 @@ public class TimeSeriesCatalogEntry {
         sb.append("    interval: ").append(toIndentedString(interval)).append("\n");
         sb.append("    intervalOffset: ").append(toIndentedString(intervalOffsetMinutes)).append("\n");
         sb.append("    timeZone: ").append(toIndentedString(locationTimeZone)).append("\n");
-        sb.append("    earliestTime: ").append(toIndentedString(earliestTime)).append("\n");
-        sb.append("    latestTime: ").append(toIndentedString(latestTime)).append("\n");
+        sb.append("    extents: ").append(toIndentedString(extents)).append("\n");
         sb.append("}");
         return sb.toString();
     }

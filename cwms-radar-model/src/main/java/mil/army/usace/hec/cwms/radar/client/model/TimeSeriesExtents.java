@@ -26,78 +26,83 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.validation.Valid;
 
 /**
- * TimeSeriesColumn
+ * TimeSeries extent information
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
-public class TimeSeriesColumn {
-    @JsonProperty("name")
-    private String name = null;
+public class TimeSeriesExtents {
+    @JsonProperty("earliest-time")
+    private ZonedDateTime earliestTime = null;
 
-    @JsonProperty("ordinal")
-    private Integer ordinal = null;
+    @JsonProperty("latest-time")
+    private ZonedDateTime latestTime = null;
 
-    @JsonProperty("datatype")
-    private String datatype = null;
+    @JsonProperty("version-time")
+    private ZonedDateTime versionTime = null;
 
-    public TimeSeriesColumn name(String name) {
-        this.name = name;
+    public TimeSeriesExtents earliestTime(ZonedDateTime earliestTime) {
+        this.earliestTime = earliestTime;
         return this;
     }
 
     /**
-     * Get name
+     * Earliest value in the timeseries
      *
-     * @return name
+     * @return earliestTime
      **/
 
-    public String getName() {
-        return name;
+    @Valid
+    public ZonedDateTime getEarliestTime() {
+        return earliestTime;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEarliestTime(ZonedDateTime earliestTime) {
+        this.earliestTime = earliestTime;
     }
 
-    public TimeSeriesColumn ordinal(Integer ordinal) {
-        this.ordinal = ordinal;
+    public TimeSeriesExtents latestTime(ZonedDateTime latestTime) {
+        this.latestTime = latestTime;
         return this;
     }
 
     /**
-     * Get ordinal
+     * Latest value in the timeseries
      *
-     * @return ordinal
+     * @return latestTime
      **/
 
-    public Integer getOrdinal() {
-        return ordinal;
+    @Valid
+    public ZonedDateTime getLatestTime() {
+        return latestTime;
     }
 
-    public void setOrdinal(Integer ordinal) {
-        this.ordinal = ordinal;
+    public void setLatestTime(ZonedDateTime latestTime) {
+        this.latestTime = latestTime;
     }
 
-    public TimeSeriesColumn datatype(String datatype) {
-        this.datatype = datatype;
+    public TimeSeriesExtents versionTime(ZonedDateTime versionTime) {
+        this.versionTime = versionTime;
         return this;
     }
 
     /**
-     * Get datatype
+     * TimeSeries version to which this extent information applies
      *
-     * @return datatype
+     * @return versionTime
      **/
 
-    public String getDatatype() {
-        return datatype;
+    @Valid
+    public ZonedDateTime getVersionTime() {
+        return versionTime;
     }
 
-    public void setDatatype(String datatype) {
-        this.datatype = datatype;
+    public void setVersionTime(ZonedDateTime versionTime) {
+        this.versionTime = versionTime;
     }
 
 
@@ -109,28 +114,26 @@ public class TimeSeriesColumn {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TimeSeriesColumn timeSeriesColumn = (TimeSeriesColumn) o;
-        return this.name == null || timeSeriesColumn.name == null ? Objects.equals(this.name, timeSeriesColumn.name) :
-            this.name.equalsIgnoreCase(timeSeriesColumn.name)
-                && Objects.equals(this.ordinal, timeSeriesColumn.ordinal)
-                && this.datatype == null || timeSeriesColumn.datatype == null ? Objects.equals(this.datatype, timeSeriesColumn.datatype) :
-                this.datatype.equalsIgnoreCase(timeSeriesColumn.datatype)
+        TimeSeriesExtents timeSeriesExtents = (TimeSeriesExtents) o;
+        return Objects.equals(this.earliestTime, timeSeriesExtents.earliestTime)
+            && Objects.equals(this.latestTime, timeSeriesExtents.latestTime)
+            && Objects.equals(this.versionTime, timeSeriesExtents.versionTime)
             ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name == null ? 0 : name.toLowerCase(), ordinal, datatype == null ? 0 : datatype.toLowerCase());
+        return Objects.hash(earliestTime, latestTime, versionTime);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class TimeSeriesColumn {\n");
+        sb.append("class TimeSeriesExtents {\n");
 
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    ordinal: ").append(toIndentedString(ordinal)).append("\n");
-        sb.append("    datatype: ").append(toIndentedString(datatype)).append("\n");
+        sb.append("    earliestTime: ").append(toIndentedString(earliestTime)).append("\n");
+        sb.append("    latestTime: ").append(toIndentedString(latestTime)).append("\n");
+        sb.append("    versionTime: ").append(toIndentedString(versionTime)).append("\n");
         sb.append("}");
         return sb.toString();
     }

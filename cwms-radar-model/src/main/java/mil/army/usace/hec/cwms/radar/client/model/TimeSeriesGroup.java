@@ -26,6 +26,8 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 
@@ -33,7 +35,7 @@ import javax.validation.Valid;
  * A representation of a timeseries group
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class TimeSeriesGroup {
     @JsonProperty("id")
     private String id = null;
@@ -41,17 +43,21 @@ public class TimeSeriesGroup {
     @JsonProperty("time-series-category")
     private TimeSeriesCategory timeSeriesCategory = null;
 
-    @JsonProperty("description")
-    private String description = null;
-
     @JsonProperty("office-id")
     private String officeId = null;
+
+    @JsonProperty("description")
+    private String description = null;
 
     @JsonProperty("shared-alias-id")
     private String sharedAliasId = null;
 
     @JsonProperty("shared-ref-ts-id")
     private String sharedRefTsId = null;
+
+    @JsonProperty("assigned-time-series")
+    @Valid
+    private List<AssignedTimeSeries> assignedTimeSeries = null;
 
     public TimeSeriesGroup id(String id) {
         this.id = id;
@@ -168,6 +174,33 @@ public class TimeSeriesGroup {
         this.sharedRefTsId = sharedRefTsId;
     }
 
+    public TimeSeriesGroup assignedTimeSeries(List<AssignedTimeSeries> assignedTimeSeries) {
+        this.assignedTimeSeries = assignedTimeSeries;
+        return this;
+    }
+
+    public TimeSeriesGroup addAssignedTimeSeriesItem(AssignedTimeSeries assignedTimeSeriesItem) {
+        if (this.assignedTimeSeries == null) {
+            this.assignedTimeSeries = new ArrayList<AssignedTimeSeries>();
+        }
+        this.assignedTimeSeries.add(assignedTimeSeriesItem);
+        return this;
+    }
+
+    /**
+     * Get assignedTimeSeries
+     *
+     * @return assignedTimeSeries
+     **/
+    @Valid
+    public List<AssignedTimeSeries> getAssignedTimeSeries() {
+        return assignedTimeSeries;
+    }
+
+    public void setAssignedTimeSeries(List<AssignedTimeSeries> assignedTimeSeries) {
+        this.assignedTimeSeries = assignedTimeSeries;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -191,6 +224,7 @@ public class TimeSeriesGroup {
                         && this.sharedRefTsId == null || timeSeriesGroup.sharedRefTsId == null ?
                         Objects.equals(this.sharedRefTsId, timeSeriesGroup.sharedRefTsId) :
                         this.sharedRefTsId.equalsIgnoreCase(timeSeriesGroup.sharedRefTsId)
+                            && Objects.equals(this.assignedTimeSeries, timeSeriesGroup.assignedTimeSeries)
             ;
     }
 
@@ -198,7 +232,7 @@ public class TimeSeriesGroup {
     public int hashCode() {
         return Objects.hash(id == null ? 0 : id.toLowerCase(), timeSeriesCategory, officeId == null ? 0 : officeId.toLowerCase(),
             description == null ? 0 : description.toLowerCase(), sharedAliasId == null ? 0 : sharedAliasId.toLowerCase(),
-            sharedRefTsId == null ? 0 : sharedRefTsId.toLowerCase());
+            sharedRefTsId == null ? 0 : sharedRefTsId.toLowerCase(), assignedTimeSeries);
     }
 
     @Override
@@ -212,6 +246,7 @@ public class TimeSeriesGroup {
         sb.append("    description: ").append(toIndentedString(description)).append("\n");
         sb.append("    sharedAliasId: ").append(toIndentedString(sharedAliasId)).append("\n");
         sb.append("    sharedRefTsId: ").append(toIndentedString(sharedRefTsId)).append("\n");
+        sb.append("    assignedTimeSeries: ").append(toIndentedString(assignedTimeSeries)).append("\n");
         sb.append("}");
         return sb.toString();
     }

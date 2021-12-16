@@ -25,11 +25,13 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
+import mil.army.usace.hec.cwms.radar.client.model.AssignedTimeSeries;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCategory;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesGroup;
 import org.junit.jupiter.api.Test;
@@ -55,6 +57,7 @@ class TestTimeSeriesGroupController extends TestController {
         assertEquals("QA Category", id);
         assertEquals("Creating this category for testing on December 16, 2020", description);
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
+        assertNull(timeSeriesGroup.getAssignedTimeSeries());
     }
 
     @Test
@@ -76,18 +79,25 @@ class TestTimeSeriesGroupController extends TestController {
         TimeSeriesGroupEndpointInput input = new TimeSeriesGroupEndpointInput()
             .officeId("SWT");
         List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesGroups(buildConnectionInfo(), input);
-        assertEquals(5, timeSeriesCategories.size());
+        assertEquals(7, timeSeriesCategories.size());
         TimeSeriesGroup timeSeriesGroup = timeSeriesCategories.get(0);
-        assertEquals("Radar Test", timeSeriesGroup.getId());
-        assertEquals("description123", timeSeriesGroup.getDescription());
+        assertEquals("ACSO2", timeSeriesGroup.getId());
+        assertNull(timeSeriesGroup.getDescription());
         assertEquals("SWT", timeSeriesGroup.getOfficeId());
-        assertEquals("TestAlias", timeSeriesGroup.getSharedAliasId());
-        assertEquals("ADDI.Flow.Inst.1Hour.0.Ccp-Rev", timeSeriesGroup.getSharedRefTsId());
+        assertNull(timeSeriesGroup.getSharedAliasId());
+        assertNull(timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
         String description = timeSeriesCategory.getDescription();
         String id = timeSeriesCategory.getId();
-        assertEquals("QA Category", id);
-        assertEquals("Creating this category for testing on December 16, 2020", description);
+        assertEquals("Lakes", id);
+        assertNull(description);
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
+        List<AssignedTimeSeries> assignedTimeSeries = timeSeriesGroup.getAssignedTimeSeries();
+        AssignedTimeSeries timeseries = assignedTimeSeries.get(0);
+        assertEquals("ACSO2.%-Humidity.Ave.15Minutes.15Minutes.Mesonet-raw", timeseries.getTimeseriesId());
+        assertEquals(3768317551L, timeseries.getTsCode().longValueExact());
+        assertEquals("15Minutes-%-Humidity", timeseries.getAliasId());
+        assertEquals(0, timeseries.getAttribute().intValue());
+        assertEquals(5, assignedTimeSeries.size());
     }
 }
