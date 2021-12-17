@@ -34,14 +34,13 @@ import javax.validation.Valid;
  * AssignedLocation
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class AssignedLocation {
+    @JsonProperty("location-id")
+    private String locationId = null;
 
     @JsonProperty("office-id")
     private String officeId = null;
-
-    @JsonProperty("location-id")
-    private String locationId = null;
 
     @JsonProperty("alias-id")
     private String aliasId = null;
@@ -51,24 +50,6 @@ public class AssignedLocation {
 
     @JsonProperty("ref-location-id")
     private String refLocationId = null;
-
-    public AssignedLocation officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
-    }
-
-    /**
-     * Get officeId
-     *
-     * @return officeId
-     **/
-    public String getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
-    }
 
     public AssignedLocation locationId(String locationId) {
         this.locationId = locationId;
@@ -87,6 +68,25 @@ public class AssignedLocation {
 
     public void setLocationId(String locationId) {
         this.locationId = locationId;
+    }
+
+    public AssignedLocation officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
+    }
+
+    /**
+     * Get officeId
+     *
+     * @return officeId
+     **/
+
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
     }
 
     public AssignedLocation aliasId(String aliasId) {
@@ -159,8 +159,7 @@ public class AssignedLocation {
         AssignedLocation assignedLocation = (AssignedLocation) o;
         return this.locationId == null || assignedLocation.locationId == null ? Objects.equals(this.locationId, assignedLocation.locationId) :
             this.locationId.equalsIgnoreCase(assignedLocation.locationId)
-                && this.officeId == null || assignedLocation.officeId == null ?
-                Objects.equals(this.officeId, assignedLocation.officeId) :
+                && this.officeId == null || assignedLocation.officeId == null ? Objects.equals(this.officeId, assignedLocation.officeId) :
                 this.officeId.equalsIgnoreCase(assignedLocation.officeId)
                     && this.aliasId == null || assignedLocation.aliasId == null ? Objects.equals(this.aliasId, assignedLocation.aliasId) :
                     this.aliasId.equalsIgnoreCase(assignedLocation.aliasId)
@@ -182,8 +181,8 @@ public class AssignedLocation {
         StringBuilder sb = new StringBuilder();
         sb.append("class AssignedLocation {\n");
 
-        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    locationId: ").append(toIndentedString(locationId)).append("\n");
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    aliasId: ").append(toIndentedString(aliasId)).append("\n");
         sb.append("    attribute: ").append(toIndentedString(attribute)).append("\n");
         sb.append("    refLocationId: ").append(toIndentedString(refLocationId)).append("\n");

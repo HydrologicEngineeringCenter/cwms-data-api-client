@@ -34,7 +34,7 @@ import java.util.Objects;
  * Location
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class Location {
     @JsonProperty("name")
     private String name = null;
@@ -44,6 +44,9 @@ public class Location {
 
     @JsonProperty("longitude")
     private Double longitude = null;
+
+    @JsonProperty("active")
+    private Boolean active = null;
 
     @JsonProperty("public-name")
     private String publicName = null;
@@ -142,6 +145,25 @@ public class Location {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public Location active(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return active
+     **/
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Location publicName(String publicName) {
@@ -498,6 +520,7 @@ public class Location {
         return this.name == null || location.name == null ? Objects.equals(this.name, location.name) : this.name.equalsIgnoreCase(location.name)
             && Objects.equals(this.latitude, location.latitude)
             && Objects.equals(this.longitude, location.longitude)
+            && Objects.equals(this.active, location.active)
             && this.publicName == null || location.publicName == null ? Objects.equals(this.publicName, location.publicName) :
             this.publicName.equalsIgnoreCase(location.publicName)
                 && this.longName == null || location.longName == null ? Objects.equals(this.longName, location.longName) :
@@ -542,7 +565,7 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name == null ? 0 : name.toLowerCase(), latitude, longitude, publicName == null ? 0 : publicName.toLowerCase(),
+        return Objects.hash(name == null ? 0 : name.toLowerCase(), latitude, longitude, active, publicName == null ? 0 : publicName.toLowerCase(),
             longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
             timezoneName == null ? 0 : timezoneName.toLowerCase(), locationType == null ? 0 : locationType.toLowerCase(),
             locationKind == null ? 0 : locationKind.toLowerCase(), nation,
@@ -560,6 +583,7 @@ public class Location {
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    latitude: ").append(toIndentedString(latitude)).append("\n");
         sb.append("    longitude: ").append(toIndentedString(longitude)).append("\n");
+        sb.append("    active: ").append(toIndentedString(active)).append("\n");
         sb.append("    publicName: ").append(toIndentedString(publicName)).append("\n");
         sb.append("    longName: ").append(toIndentedString(longName)).append("\n");
         sb.append("    description: ").append(toIndentedString(description)).append("\n");

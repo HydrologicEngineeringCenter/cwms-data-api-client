@@ -25,6 +25,8 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,26 +50,29 @@ class TestLocationController extends TestController {
         String collect = String.join("\n", Files.readAllLines(path));
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+        LocationEndPointInput input = new LocationEndPointInput("AARK")
             .officeId("SWT")
             .unit("SI");
         Location location = new LocationController().retrieveLocation(buildConnectionInfo(), input);
-        assertEquals("LOC_TEST", location.getName());
-        assertEquals("LOC_TEST", location.getPublicName());
+        assertEquals("AARK", location.getName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", location.getPublicName());
         assertEquals("SWT", location.getOfficeId());
-        assertEquals(10.0, location.getLatitude().doubleValue());
-        assertEquals(50.0, location.getLongitude().doubleValue());
-        assertEquals("NGVD-29", location.getHorizontalDatum());
-        assertEquals("UTC", location.getTimezoneName());
+        assertEquals(37.056418, location.getLatitude().doubleValue());
+        assertEquals(-97.0580939, location.getLongitude().doubleValue());
+        assertTrue(location.isActive());
+        assertEquals("NAD83", location.getHorizontalDatum());
+        assertEquals("NGVD29", location.getVerticalDatum());
+        assertEquals("CST6CDT", location.getTimezoneName());
         assertEquals("US", location.getNation().toString());
-        assertEquals("LOCATION_TEST", location.getLongName());
-        assertEquals("For Testing", location.getDescription());
-        assertEquals("CA", location.getStateInitial());
-        assertEquals("Sacramento", location.getCountyName());
-        assertEquals("Sacramento", location.getNearestCity());
-        assertEquals(1.0, location.getElevation(), 0.0);
-        assertEquals(10.0, location.getPublishedLongitude());
-        assertEquals(50.0, location.getPublishedLatitude());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", location.getLongName());
+        assertEquals("ARKANSAS R AT ARKANSAS CITY, KS", location.getDescription());
+        assertEquals("STREAM_LOCATION", location.getLocationKind());
+        assertEquals("KS", location.getStateInitial());
+        assertEquals("Unknown County or County N/A", location.getCountyName());
+        assertEquals("Arkansas City, KS", location.getNearestCity());
+        assertEquals(320.04, location.getElevation(), 0.0);
+        assertNull(location.getPublishedLongitude());
+        assertNull(location.getPublishedLatitude());
     }
 
 }
