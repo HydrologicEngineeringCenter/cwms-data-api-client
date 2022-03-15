@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
 
-public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
+public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     private final String endpoint;
     private final HttpUrl httpUrl;
@@ -60,7 +60,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilderImpl addQueryParameter(String key, String value) {
+    public final HttpRequestBuilderImpl addQueryParameter(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -70,7 +70,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilderImpl addQueryHeader(String key, String value) {
+    public final HttpRequestBuilderImpl addQueryHeader(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -80,11 +80,12 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
+    public final HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
         endpointInput.addInputParameters(this);
         return this;
     }
 
+    //Package scoped for testing
     Request createRequest() throws IOException {
         HttpUrl resolve = httpUrl.resolve(endpoint);
         if (resolve == null) {
@@ -99,11 +100,11 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestResponse execute() throws IOException {
+    public final HttpRequestResponse execute() throws IOException {
         Request request = createRequest();
         ResponseBody body = null;
         try (Timer.Context timer = createTimer().start()) {
-            OkHttpClient client = OkHttpClientInstance.getInstance();
+            OkHttpClient client = getOkHttpClient();
             Response execute = client.newCall(request).execute();
             if (execute.isSuccessful()) {
                 body = execute.body();
@@ -135,6 +136,16 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
                 body.close();
             }
         }
+    }
+
+    /**
+     * protected scope to allow separate reuse of the OkHttpClient configuration for different API's
+     * An example would be this default instance for CWMS RADAR and a separate OkHttpClient for Cumulus
+     *
+     * @return singleton OkHttpClient reused across API endpoints
+     */
+    protected OkHttpClient getOkHttpClient() {
+        return OkHttpClientInstance.getInstance();
     }
 
     private Timer createTimer() {
