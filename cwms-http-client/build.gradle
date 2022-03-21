@@ -35,7 +35,7 @@ dependencies {
     runtimeOnly('mil.army.usace.hec:metrics-codahale:2.0')
     runtimeOnly('io.dropwizard.metrics:metrics-core:')
 
-    annotationProcessor('mil.army.usace.hec:service-annotations:1.2')
+    annotationProcessor('mil.army.usace.hec:service-annotations:1.2.1')
 
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
     testImplementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
@@ -55,4 +55,9 @@ publishing {
             from components.java
         }
     }
+}
+
+compileTestFixturesJava {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
 }
