@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
@@ -41,6 +43,8 @@ public final class CatalogController {
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
             .addEndpointInput(input)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V2)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
     }
@@ -48,6 +52,8 @@ public final class CatalogController {
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V2)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
     }

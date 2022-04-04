@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
@@ -39,6 +41,8 @@ public final class TimeSeriesController {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
             .addQueryHeader("accept", "application/json;version=2")
             .addEndpointInput(timeSeriesEndpointInput)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V2)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
     }

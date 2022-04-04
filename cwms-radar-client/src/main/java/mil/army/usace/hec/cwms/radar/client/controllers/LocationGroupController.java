@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+
 import java.io.IOException;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -46,6 +48,8 @@ public final class LocationGroupController {
         throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + locationGroupEndpointInput.getGroupId())
             .addEndpointInput(locationGroupEndpointInput)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1)
             .execute();
         return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
     }
@@ -60,6 +64,8 @@ public final class LocationGroupController {
         throws IOException {
         HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
             .addEndpointInput(locationGroupEndpointInput)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1)
             .execute();
         return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
     }
