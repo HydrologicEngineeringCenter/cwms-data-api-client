@@ -32,21 +32,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
 
-public class HttpRequestBuilderImpl implements HttpRequestBuilder {
+public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     private final String endpoint;
     private final HttpUrl httpUrl;
     private final Map<String, String> queryParameters = new HashMap<>();
     private final Map<String, String> queryHeaders = new HashMap<>();
+    private HttpRequestMethod method;
+    private String body;
+    private String mediaType;
 
     public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws ServerNotFoundException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
@@ -57,10 +66,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         }
         this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
+        method = HttpRequestMethod.GET; //default method
     }
 
     @Override
-    public final HttpRequestBuilderImpl addQueryParameter(String key, String value) {
+    public HttpRequestBuilderImpl addQueryParameter(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -70,7 +80,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public final HttpRequestBuilderImpl addQueryHeader(String key, String value) {
+    public HttpRequestBuilderImpl addQueryHeader(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -80,84 +90,130 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public final HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
+    public HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
         endpointInput.addInputParameters(this);
         return this;
     }
 
-    //Package scoped for testing
+    @Override
+    public HttpPostRequest post() {
+        this.method = HttpRequestMethod.POST;
+        return new HttpPostRequestImpl();
+    }
+
+    @Override
+    public HttpRequestMediaType get() throws IOException {
+        this.method = HttpRequestMethod.GET;
+        return new HttpRequiredMediaTypeImpl();
+    }
+
+    //Packaged scope for testing
     Request createRequest() throws IOException {
         HttpUrl resolve = httpUrl.resolve(endpoint);
         if (resolve == null) {
             throw new IOException("Endpoint to API is malformed: " + endpoint);
         }
+        MediaType type = MediaType.parse(mediaType);
+        if (type == null) {
+            throw new IOException("Invalid Media Type: " + mediaType);
+        }
         HttpUrl.Builder urlBuilder = resolve.newBuilder();
         queryParameters.forEach(urlBuilder::addQueryParameter);
         Request.Builder requestBuilder = new Request.Builder();
+        RequestBody requestBody = null;
+        if (body != null) {
+            requestBody = RequestBody.create(body, type);
+        }
         requestBuilder.url(urlBuilder.build());
+        requestBuilder.method(method.getName(), requestBody);
         queryHeaders.forEach(requestBuilder::addHeader);
         return requestBuilder.build();
     }
 
-    @Override
-    public final HttpRequestResponse execute() throws IOException {
-        Request request = createRequest();
-        ResponseBody body = null;
-        try (Timer.Context timer = createTimer().start()) {
-            OkHttpClient client = getOkHttpClient();
-            Response execute = client.newCall(request).execute();
-            if (execute.isSuccessful()) {
-                body = execute.body();
-                if (body == null) {
-                    throw new IOException("Error with request, body not returned for request: " + request);
-                }
-                return new HttpRequestResponse(body.string());
-            } else {
-                int code = execute.code();
-                body = execute.body();
-                if (code == 404) {
-                    if (body == null) {
-                        throw new NoDataFoundException("No data found for request: " + request);
+    //Packaged scope for testing
+    HttpRequestBuilderImpl getCurrentInstance() {
+        return this;
+    }
+
+    private class HttpPostRequestImpl implements HttpPostRequest {
+
+        @Override
+        public HttpRequestMediaType withBody(String postBody) {
+            body = postBody;
+            return new HttpRequiredMediaTypeImpl();
+        }
+    }
+
+    private class HttpRequiredMediaTypeImpl implements HttpRequestMediaType {
+
+        @Override
+        public HttpRequestExecutor withMediaType(String type) {
+            mediaType = type;
+            return new HttpRequestExecutorImpl();
+        }
+    }
+
+    class HttpRequestExecutorImpl implements HttpRequestExecutor {
+
+        @Override
+        public final HttpRequestResponse execute() throws IOException {
+            Request request = createRequest();
+            ResponseBody responseBody = null;
+            try (Timer.Context timer = createTimer().start()) {
+                OkHttpClient client = OkHttpClientInstance.getInstance();
+                Response execute = client.newCall(request).execute();
+                if (execute.isSuccessful()) {
+                    responseBody = execute.body();
+                    if (responseBody == null) {
+                        throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    throw new NoDataFoundException("No data found for request: " + request + "\n" + body.string());
+                    return new HttpRequestResponse(responseBody.string());
                 } else {
-                    if (body == null) {
+                    int code = execute.code();
+                    responseBody = execute.body();
+                    if (code == 404) {
+                        if (responseBody == null) {
+                            throw new NoDataFoundException("No data found for request: " + request);
+                        }
+                        throw new NoDataFoundException("No data found for request: " + request + "\n" + responseBody.string());
+                    } else {
+                        if (responseBody == null) {
+                            throw new IOException(
+                                "Unknown error occurred for request: " + request + "\n Error code: " + code
+                                    + " " + execute.message());
+                        }
                         throw new IOException(
-                            "Unknown error occurred for request: " + request + "\n Error code: " + code + " " + execute.message());
+                            "Unknown error occurred for request: " + request + "\n Error code: " + code + " "
+                                + execute.message() + "\n" + responseBody.string());
                     }
-                    throw new IOException(
-                        "Unknown error occurred for request: " + request + "\n Error code: " + code + " " + execute.message() + "\n" + body.string());
+                }
+            } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
+                throw new ServerNotFoundException(connectException);
+            } finally {
+                if (responseBody != null) {
+                    responseBody.close();
                 }
             }
-        } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
-            throw new ServerNotFoundException(connectException);
-        } finally {
-            if (body != null) {
-                body.close();
+        }
+
+        private Timer createTimer() {
+            if (!CwmsHttpClientMetrics.isMetricsEnabled()) {
+                return new NoOpTimer();
             }
+            Metrics metrics = CwmsHttpClientMetrics.createMetrics(Objects.toString(httpUrl.resolve(endpoint)));
+            Timer timer = metrics.createTimer();
+            Properties metricsProperties = new Properties();
+            metricsProperties.putAll(queryParameters);
+            metricsProperties.putAll(queryHeaders);
+            timer.setMetricProperties(metricsProperties);
+            return timer;
+        }
+
+        HttpRequestBuilderImpl getInstance() {
+            return getCurrentInstance();
         }
     }
 
-    /**
-     * protected scope to allow separate reuse of the OkHttpClient configuration for different API's
-     * An example would be this default instance for CWMS RADAR and a separate OkHttpClient for Cumulus
-     *
-     * @return singleton OkHttpClient reused across API endpoints
-     */
-    protected OkHttpClient getOkHttpClient() {
-        return OkHttpClientInstance.getInstance();
-    }
-
-    private Timer createTimer() {
-        if (!CwmsHttpClientMetrics.isMetricsEnabled()) {
-            return new NoOpTimer();
-        }
-        Metrics metrics = CwmsHttpClientMetrics.createMetrics(Objects.toString(httpUrl.resolve(endpoint)));
-        Timer timer = metrics.createTimer();
-        Properties metricsProperties = new Properties();
-        metricsProperties.putAll(queryParameters);
-        metricsProperties.putAll(queryHeaders);
-        timer.setMetricProperties(metricsProperties);
-        return timer;
-    }
 }
+
+
