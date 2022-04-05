@@ -47,7 +47,7 @@ import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
 
-public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
+public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     private final String endpoint;
     private final HttpUrl httpUrl;
@@ -66,11 +66,10 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
         }
         this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
-        method = HttpRequestMethod.GET; //default method
     }
 
     @Override
-    public HttpRequestBuilderImpl addQueryParameter(String key, String value) {
+    public final HttpRequestBuilderImpl addQueryParameter(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -80,7 +79,7 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilderImpl addQueryHeader(String key, String value) {
+    public final HttpRequestBuilderImpl addQueryHeader(String key, String value) {
         if (value == null) {
             queryParameters.remove(key);
         } else {
@@ -90,19 +89,19 @@ public final class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
+    public final HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
         endpointInput.addInputParameters(this);
         return this;
     }
 
     @Override
-    public HttpPostRequest post() {
+    public final HttpPostRequest post() {
         this.method = HttpRequestMethod.POST;
         return new HttpPostRequestImpl();
     }
 
     @Override
-    public HttpRequestMediaType get() throws IOException {
+    public final HttpRequestMediaType get() throws IOException {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
     }
