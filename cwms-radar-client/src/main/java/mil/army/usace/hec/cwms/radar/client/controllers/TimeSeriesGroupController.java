@@ -41,23 +41,29 @@ public final class TimeSeriesGroupController {
     public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput timeSeriesEndpointInput)
         throws IOException {
         String endpoint = timeSeriesEndpointInput.getGroupId()
-                                                 .map(c -> TIME_SERIES_GROUP_ENDPOINT + "/" + c)
-                                                 .orElse(TIME_SERIES_GROUP_ENDPOINT + "/null");
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .map(c -> TIME_SERIES_GROUP_ENDPOINT + "/" + c)
+            .orElse(TIME_SERIES_GROUP_ENDPOINT + "/null");
+        TimeSeriesGroup retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
+        }
+        return retVal;
     }
 
     public List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput input)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        List<TimeSeriesGroup> retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
             .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
+        }
+        return retVal;
     }
 }

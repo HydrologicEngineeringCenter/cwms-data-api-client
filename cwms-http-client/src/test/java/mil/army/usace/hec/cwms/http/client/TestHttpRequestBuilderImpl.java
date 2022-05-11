@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.http.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -284,11 +285,12 @@ class TestHttpRequestBuilderImpl {
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-            HttpRequestResponse execute = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            try (HttpRequestResponse execute = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1)
-                .execute();
-            assertNotNull(execute.getBody());
+                .execute()) {
+                assertNotNull(execute.getBody());
+            }
         } finally {
             mockWebServer.shutdown();
         }
@@ -304,12 +306,13 @@ class TestHttpRequestBuilderImpl {
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
-            HttpRequestResponse execute = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            try (HttpRequestResponse execute = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .post()
                 .withBody("{test}")
                 .withMediaType(ACCEPT_HEADER_V1)
-                .execute();
-            assertNotNull(execute.getBody());
+                .execute()) {
+                assertNotNull(execute.getBody());
+            }
         } finally {
             mockWebServer.shutdown();
         }
@@ -326,7 +329,11 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            assertThrows(IOException.class, () -> builder.get().withMediaType(ACCEPT_HEADER_V1).execute());
+            assertThrows(IOException.class, () -> {
+                try (HttpRequestResponse response = builder.get().withMediaType(ACCEPT_HEADER_V1).execute()) {
+                    assertNull(response);
+                }
+            });
         } finally {
             mockWebServer.shutdown();
         }
@@ -343,7 +350,11 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            assertThrows(IOException.class, () -> builder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute());
+            assertThrows(IOException.class, () -> {
+                try (HttpRequestResponse response = builder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute()) {
+                    assertNull(response);
+                }
+            });
         } finally {
             mockWebServer.shutdown();
         }
@@ -360,7 +371,11 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            assertThrows(NoDataFoundException.class, () -> httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute());
+            assertThrows(NoDataFoundException.class, () -> {
+                try (HttpRequestResponse response = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute()) {
+                    assertNull(response);
+                }
+            });
         } finally {
             mockWebServer.shutdown();
         }
@@ -377,7 +392,11 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            assertThrows(NoDataFoundException.class, () -> httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute());
+            assertThrows(NoDataFoundException.class, () -> {
+                try (HttpRequestResponse response = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute()) {
+                    assertNull(response);
+                }
+            });
         } finally {
             mockWebServer.shutdown();
         }
@@ -389,7 +408,11 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        assertThrows(ServerNotFoundException.class, () -> httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute());
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     @Test
@@ -398,7 +421,11 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        assertThrows(ServerNotFoundException.class, () -> httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute());
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     @Test
@@ -407,7 +434,11 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://www.hec.usace.army.mil:1000";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        assertThrows(ServerNotFoundException.class, () -> httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute());
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1).execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     @Test
@@ -416,7 +447,11 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://www.hec.usace.army.mil:1000";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        assertThrows(ServerNotFoundException.class, () -> httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute());
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1).execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     private String readJsonFile(String jsonPath) throws IOException {

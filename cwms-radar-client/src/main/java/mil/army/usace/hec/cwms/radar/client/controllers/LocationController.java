@@ -39,11 +39,14 @@ public final class LocationController {
 
     public Location retrieveLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput locationEndpointInput) throws IOException {
         String locationId = locationEndpointInput.getLocationId();
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
+        Location retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
             .addEndpointInput(locationEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V2)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);
+        }
+        return retVal;
     }
 }

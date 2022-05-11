@@ -38,12 +38,15 @@ public final class TimeSeriesController {
     private static final String TIME_SERIES_ENDPOINT = "timeseries";
 
     public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
+        TimeSeries retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
             .addQueryHeader("accept", "application/json;version=2")
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V2)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+        }
+        return retVal;
     }
 }

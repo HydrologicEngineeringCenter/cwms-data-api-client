@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.ResponseBody;
 
-public final class HttpRequestResponse {
+public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
 
@@ -42,5 +42,10 @@ public final class HttpRequestResponse {
 
     public InputStream getStream() {
         return body.byteStream();
+    }
+
+    @Override
+    public void close() {
+        body.close();
     }
 }
