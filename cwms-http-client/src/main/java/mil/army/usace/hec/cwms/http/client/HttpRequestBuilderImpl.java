@@ -166,7 +166,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     if (responseBody == null) {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    return new HttpRequestResponse(responseBody.string());
+                    return new HttpRequestResponse(responseBody);
                 } else {
                     int code = execute.code();
                     responseBody = execute.body();
