@@ -24,15 +24,23 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.io.IOException;
+import java.io.InputStream;
+import okhttp3.ResponseBody;
+
 public final class HttpRequestResponse {
 
-    private final String body;
+    private final ResponseBody body;
 
-    HttpRequestResponse(String body) {
+    HttpRequestResponse(ResponseBody body) {
         this.body = body;
     }
 
-    public String getBody() {
-        return body;
+    public String getBody() throws IOException {
+        return body.string();
+    }
+
+    public InputStream getStream() {
+        return body.byteStream();
     }
 }
