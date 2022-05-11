@@ -41,20 +41,26 @@ public final class CatalogController {
 
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
+        TimeSeriesCatalog retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
             .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V2)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
+        }
+        return retVal;
     }
 
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
+        LocationCatalog retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V2)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
+        }
+        return retVal;
     }
 }

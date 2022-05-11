@@ -41,21 +41,22 @@ class TestHttpRequestResponse {
     void testHttpRequestResponse() throws IOException {
         String bodyStr =
             "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
-        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
+        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("text/plain"));
         HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
         assertEquals(bodyStr, httpRequestResponse.getBody());
     }
 
     @Test
-    void testHttpRequestResponseStream() {
+    void testHttpRequestResponseStream() throws IOException {
         String bodyStr =
             "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
-        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
+        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("text/plain"));
         HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
-        InputStream inputStream = httpRequestResponse.getStream();
-        String result = new BufferedReader(new InputStreamReader(inputStream))
-            .lines().collect(Collectors.joining("\n"));
-        assertEquals(bodyStr, result);
+        try (InputStream inputStream = httpRequestResponse.getStream()) {
+            String result = new BufferedReader(new InputStreamReader(inputStream))
+                .lines().collect(Collectors.joining("\n"));
+            assertEquals(bodyStr, result);
+        }
     }
 
 }

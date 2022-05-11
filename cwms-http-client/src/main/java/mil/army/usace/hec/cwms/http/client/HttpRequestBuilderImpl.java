@@ -157,7 +157,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         @Override
         public final HttpRequestResponse execute() throws IOException {
             Request request = createRequest();
-            ResponseBody responseBody = null;
+            ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
                 OkHttpClient client = OkHttpClientInstance.getInstance();
                 Response execute = client.newCall(request).execute();
@@ -188,10 +188,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException);
-            } finally {
-                if (responseBody != null) {
-                    responseBody.close();
-                }
             }
         }
 

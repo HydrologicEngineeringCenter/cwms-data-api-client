@@ -46,12 +46,16 @@ public final class LocationGroupController {
      */
     public LocationGroup retrieveLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + locationGroupEndpointInput.getGroupId())
+        LocationGroup retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo,
+            LOCATION_GROUP + "/" + locationGroupEndpointInput.getGroupId())
             .addEndpointInput(locationGroupEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
+        }
+        return retVal;
     }
 
     /**
@@ -62,11 +66,14 @@ public final class LocationGroupController {
      */
     public List<LocationGroup> retrieveLocationGroups(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
+        List<LocationGroup> retVal;
+        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
             .addEndpointInput(locationGroupEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
+            .execute()) {
+            retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
+        }
+        return retVal;
     }
 }
