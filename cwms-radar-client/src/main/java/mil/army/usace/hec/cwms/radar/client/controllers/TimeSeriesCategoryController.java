@@ -31,6 +31,7 @@ import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCategory;
 
@@ -44,11 +45,11 @@ public final class TimeSeriesCategoryController {
             .map(c -> TIME_SERIES_CATEGORY_ENDPOINT + "/" + c)
             .orElse(TIME_SERIES_CATEGORY_ENDPOINT + "/null");
         TimeSeriesCategory retVal;
-        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute()) {
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCategory.class);
         }
         return retVal;
@@ -57,11 +58,11 @@ public final class TimeSeriesCategoryController {
     public List<TimeSeriesCategory> retrieveTimeSeriesCategories(ApiConnectionInfo apiConnectionInfo, TimeSeriesCategoryEndpointInput input)
         throws IOException {
         List<TimeSeriesCategory> retVal;
-        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_CATEGORY_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_CATEGORY_ENDPOINT)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute()) {
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesCategory.class);
         }
         return retVal;

@@ -30,6 +30,7 @@ import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
@@ -39,12 +40,12 @@ public final class TimeSeriesController {
 
     public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
         TimeSeries retVal;
-        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
             .addQueryHeader("accept", "application/json;version=2")
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2)
-            .execute()) {
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
         }
         return retVal;

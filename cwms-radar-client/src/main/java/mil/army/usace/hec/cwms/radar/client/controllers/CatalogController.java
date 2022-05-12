@@ -30,6 +30,7 @@ import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
@@ -42,11 +43,11 @@ public final class CatalogController {
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
         TimeSeriesCatalog retVal;
-        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2)
-            .execute()) {
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
         }
         return retVal;
@@ -54,11 +55,11 @@ public final class CatalogController {
 
     public LocationCatalog retrieveLocationCatalog(ApiConnectionInfo apiConnectionInfo, LocationCatalogEndpointInput input) throws IOException {
         LocationCatalog retVal;
-        try (HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_LOCATIONS_ENDPOINT)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2)
-            .execute()) {
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCatalog.class);
         }
         return retVal;
