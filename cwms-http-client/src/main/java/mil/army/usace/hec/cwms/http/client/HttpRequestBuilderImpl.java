@@ -156,6 +156,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
         @Override
         public final HttpRequestResponse execute() throws IOException {
+            HttpRequestResponse retVal = null;
             Request request = createRequest();
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
@@ -166,28 +167,38 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     if (responseBody == null) {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    return new HttpRequestResponse(responseBody);
+                    retVal = new HttpRequestResponse(responseBody);
                 } else {
-                    int code = execute.code();
-                    responseBody = execute.body();
-                    if (code == 404) {
-                        if (responseBody == null) {
-                            throw new NoDataFoundException("No data found for request: " + request);
-                        }
-                        throw new NoDataFoundException("No data found for request: " + request + "\n" + responseBody.string());
-                    } else {
-                        if (responseBody == null) {
-                            throw new IOException(
-                                "Unknown error occurred for request: " + request + "\n Error code: " + code
-                                    + " " + execute.message());
-                        }
-                        throw new IOException(
-                            "Unknown error occurred for request: " + request + "\n Error code: " + code + " "
-                                + execute.message() + "\n" + responseBody.string());
-                    }
+                    executionFailed(execute, request);
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException);
+            }
+            return retVal;
+        }
+
+        private void executionFailed(Response execute, Request request) throws IOException {
+            try (ResponseBody responseBody = execute.body()) {
+                checkError(execute, request, responseBody);
+            }
+        }
+
+        private void checkError(Response execute, Request request, ResponseBody responseBody) throws IOException {
+            int code = execute.code();
+            if (code == 404) {
+                if (responseBody == null) {
+                    throw new NoDataFoundException("No data found for request: " + request);
+                }
+                throw new NoDataFoundException("No data found for request: " + request + "\n" + responseBody.string());
+            } else {
+                if (responseBody == null) {
+                    throw new IOException(
+                        "Unknown error occurred for request: " + request + "\n Error code: " + code
+                            + " " + execute.message());
+                }
+                throw new IOException(
+                    "Unknown error occurred for request: " + request + "\n Error code: " + code + " "
+                        + execute.message() + "\n" + responseBody.string());
             }
         }
 
