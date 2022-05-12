@@ -169,7 +169,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     }
                     retVal = new HttpRequestResponse(responseBody);
                 } else {
-                    executionFailed(execute, request);
+                    handleExecutionError(execute, request);
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException);
@@ -177,7 +177,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             return retVal;
         }
 
-        private void executionFailed(Response execute, Request request) throws IOException {
+        private void handleExecutionError(Response execute, Request request) throws IOException {
             try (ResponseBody responseBody = execute.body()) {
                 checkError(execute, request, responseBody);
             }
