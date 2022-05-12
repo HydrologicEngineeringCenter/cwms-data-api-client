@@ -24,15 +24,28 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-public final class HttpRequestResponse {
+import java.io.IOException;
+import java.io.InputStream;
+import okhttp3.ResponseBody;
 
-    private final String body;
+public final class HttpRequestResponse implements AutoCloseable {
 
-    HttpRequestResponse(String body) {
+    private final ResponseBody body;
+
+    HttpRequestResponse(ResponseBody body) {
         this.body = body;
     }
 
-    public String getBody() {
-        return body;
+    public String getBody() throws IOException {
+        return body.string();
+    }
+
+    public InputStream getStream() {
+        return body.byteStream();
+    }
+
+    @Override
+    public void close() {
+        body.close();
     }
 }

@@ -25,24 +25,38 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Test;
 
 class TestHttpRequestResponse {
 
     @Test
-    void testHttpRequestResponse() {
-        String body = "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
+    void testHttpRequestResponse() throws IOException {
+        String bodyStr =
+            "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
+        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
         HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
-        assertEquals(body, httpRequestResponse.getBody());
+        assertEquals(bodyStr, httpRequestResponse.getBody());
     }
 
     @Test
-    void testHttpRequestResponseNulls() {
-        String body = null;
+    void testHttpRequestResponseStream() throws IOException {
+        String bodyStr = "Hello World";
+        byte[] bytes = bodyStr.getBytes();
+        ResponseBody body = ResponseBody.create(bytes, MediaType.parse("text/plain"));
         HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body);
-        assertNull(httpRequestResponse.getBody());
+        try (InputStream inputStream = httpRequestResponse.getStream()) {
+            String result = new BufferedReader(new InputStreamReader(inputStream))
+                .lines().collect(Collectors.joining("\n"));
+            assertEquals(bodyStr, result);
+        }
     }
 
 }

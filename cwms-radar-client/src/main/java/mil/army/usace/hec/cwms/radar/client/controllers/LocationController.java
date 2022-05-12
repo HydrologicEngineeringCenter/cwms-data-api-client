@@ -30,6 +30,7 @@ import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
@@ -39,11 +40,14 @@ public final class LocationController {
 
     public Location retrieveLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput locationEndpointInput) throws IOException {
         String locationId = locationEndpointInput.getLocationId();
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
+        Location retVal;
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
             .addEndpointInput(locationEndpointInput)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);
+        }
+        return retVal;
     }
 }

@@ -31,6 +31,7 @@ import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCategory;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
@@ -48,13 +49,16 @@ public final class LocationCategoryController {
      */
     public LocationCategory retrieveLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput locationCategoryEndpointInput)
         throws IOException {
-        HttpRequestResponse response =
-            new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY + "/" + locationCategoryEndpointInput.getCategoryId())
-                .addEndpointInput(locationCategoryEndpointInput)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V1)
-                .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
+        LocationCategory retVal;
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
+            LOCATION_CATEGORY + "/" + locationCategoryEndpointInput.getCategoryId())
+            .addEndpointInput(locationCategoryEndpointInput)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
+        }
+        return retVal;
     }
 
     /**
@@ -68,11 +72,14 @@ public final class LocationCategoryController {
     public List<LocationCategory> retrieveLocationCategories(ApiConnectionInfo apiConnectionInfo,
                                                              LocationCategoryEndpointInput locationCategoryEndpointInput)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
+        List<LocationCategory> retVal;
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
             .addEndpointInput(locationCategoryEndpointInput)
             .get()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationCategory.class);
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationCategory.class);
+        }
+        return retVal;
     }
 }

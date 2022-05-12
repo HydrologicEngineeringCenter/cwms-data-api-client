@@ -31,6 +31,7 @@ import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesGroup;
 
@@ -41,23 +42,29 @@ public final class TimeSeriesGroupController {
     public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput timeSeriesEndpointInput)
         throws IOException {
         String endpoint = timeSeriesEndpointInput.getGroupId()
-                                                 .map(c -> TIME_SERIES_GROUP_ENDPOINT + "/" + c)
-                                                 .orElse(TIME_SERIES_GROUP_ENDPOINT + "/null");
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .map(c -> TIME_SERIES_GROUP_ENDPOINT + "/" + c)
+            .orElse(TIME_SERIES_GROUP_ENDPOINT + "/null");
+        TimeSeriesGroup retVal;
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
+        }
+        return retVal;
     }
 
     public List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput input)
         throws IOException {
-        HttpRequestResponse response = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        List<TimeSeriesGroup> retVal;
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute();
-        return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
+        }
+        return retVal;
     }
 }
