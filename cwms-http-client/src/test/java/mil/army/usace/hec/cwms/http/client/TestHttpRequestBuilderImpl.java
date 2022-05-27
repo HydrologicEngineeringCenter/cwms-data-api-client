@@ -36,11 +36,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.Provider;
+import java.security.Security;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import org.junit.jupiter.api.Test;
 
 class TestHttpRequestBuilderImpl {
@@ -408,6 +412,40 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testEnableHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .enableHttp2();
+            Provider[] providers = Security.getProviders();
+            if (isBeforeJava8_251()) {
+                assertTrue(containsBouncyCastleProvider(providers));
+            } else {
+                assertFalse(containsBouncyCastleProvider(providers));
+            }
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    private boolean containsBouncyCastleProvider(Provider[] providers) {
+        boolean retVal = false;
+        for (Provider provider : providers) {
+            if (provider instanceof BouncyCastleProvider || provider instanceof BouncyCastleJsseProvider) {
+                retVal = true;
+                break;
+            }
+        }
+        return retVal;
+    }
+
+    @Test
     void testHttpGetRequestBuilderServerNotFoundUnknownHost() throws IOException {
         String endpoint = "unknownhost";
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
@@ -470,5 +508,26 @@ class TestHttpRequestBuilderImpl {
         }
         Path path = new File(resource.getFile()).toPath();
         return String.join("\n", Files.readAllLines(path));
+    }
+
+    private boolean isBeforeJava8_251() {
+        boolean retVal = true;
+        String version = System.getProperty("java.version");
+        if (version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else { //if Java 9 or higher
+            int dot = version.indexOf(".");
+            if (dot != -1) {
+                version = version.substring(0, dot);
+            }
+        }
+        int majorVersion = Integer.parseInt(version);
+        if (majorVersion == 8) {
+            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
+            retVal = Integer.parseInt(minorVersionStr) < 251;
+        } else if (majorVersion > 8) {
+            retVal = false;
+        }
+        return retVal;
     }
 }

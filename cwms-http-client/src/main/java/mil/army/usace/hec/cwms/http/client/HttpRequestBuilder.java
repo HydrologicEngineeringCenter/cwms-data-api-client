@@ -11,6 +11,8 @@ public interface HttpRequestBuilder {
 
     HttpRequestBuilder addEndpointInput(EndpointInput endpointInput);
 
+    HttpRequestBuilder enableHttp2();
+
     HttpPostRequest post() throws IOException;
 
     HttpRequestMediaType get() throws IOException;
