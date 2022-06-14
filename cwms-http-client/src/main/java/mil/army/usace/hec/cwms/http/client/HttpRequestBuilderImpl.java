@@ -68,6 +68,10 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
     }
 
+    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo) throws ServerNotFoundException {
+        this(apiConnectionInfo, "");
+    }
+
     @Override
     public final HttpRequestBuilderImpl addQueryParameter(String key, String value) {
         if (value == null) {
@@ -104,6 +108,10 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     public final HttpRequestMediaType get() throws IOException {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
+    }
+
+    protected OkHttpClient buildOkHttpClient() {
+        return OkHttpClientInstance.getInstance();
     }
 
     //Packaged scope for testing
@@ -160,7 +168,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             Request request = createRequest();
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
-                OkHttpClient client = OkHttpClientInstance.getInstance();
+                OkHttpClient client = buildOkHttpClient();
                 Response execute = client.newCall(request).execute();
                 if (execute.isSuccessful()) {
                     responseBody = execute.body();
