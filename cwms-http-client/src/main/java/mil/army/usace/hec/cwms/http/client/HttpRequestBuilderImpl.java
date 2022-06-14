@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.security.Security;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -44,8 +43,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
@@ -101,21 +98,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return this;
     }
 
-    /**
-     * Enables HTTP/2 protocol if running a Java 8 version before 251.
-     *
-     * @return HttpRequestBuilder
-     */
-    @Override
-    public HttpRequestBuilder enableHttp2() {
-        //if Java 8 less than minor version 251, then use BouncyCastle to allow for HTTP/2 requests
-        if (!isHttp2NativelySupported()) {
-            Security.insertProviderAt(new BouncyCastleProvider(), 1);
-            Security.insertProviderAt(new BouncyCastleJsseProvider(), 2);
-        }
-        return this;
-    }
-
     @Override
     public final HttpPostRequest post() {
         this.method = HttpRequestMethod.POST;
@@ -126,10 +108,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     public final HttpRequestMediaType get() throws IOException {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
-    }
-
-    protected OkHttpClient buildOkHttpClient() {
-        return OkHttpClientInstance.getInstance();
     }
 
     //Packaged scope for testing
@@ -153,28 +131,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         requestBuilder.method(method.getName(), requestBody);
         queryHeaders.forEach(requestBuilder::addHeader);
         return requestBuilder.build();
-    }
-
-
-    private boolean isHttp2NativelySupported() {
-        boolean retVal = false;
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else { //if Java 9 or higher
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        int majorVersion = Integer.parseInt(version);
-        if (majorVersion == 8) {
-            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
-            retVal = Integer.parseInt(minorVersionStr) >= 251;
-        } else if (majorVersion > 8) {
-            retVal = true;
-        }
-        return retVal;
     }
 
     //Packaged scope for testing
@@ -208,7 +164,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             Request request = createRequest();
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
-                OkHttpClient client = buildOkHttpClient();
+                OkHttpClient client = OkHttpClientInstance.getInstance();
                 Response execute = client.newCall(request).execute();
                 if (execute.isSuccessful()) {
                     responseBody = execute.body();

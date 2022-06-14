@@ -31,11 +31,6 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpRequestBuilder enableHttp2() {
-        return this;
-    }
-
-    @Override
     public HttpPostRequest post() throws IOException {
         return null;
     }
