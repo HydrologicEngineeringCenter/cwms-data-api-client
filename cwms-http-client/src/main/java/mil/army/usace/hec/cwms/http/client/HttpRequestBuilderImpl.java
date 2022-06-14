@@ -110,6 +110,10 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return new HttpRequiredMediaTypeImpl();
     }
 
+    protected OkHttpClient buildOkHttpClient() {
+        return OkHttpClientInstance.getInstance();
+    }
+
     //Packaged scope for testing
     Request createRequest() throws IOException {
         HttpUrl resolve = httpUrl.resolve(endpoint);
@@ -164,7 +168,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             Request request = createRequest();
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
-                OkHttpClient client = OkHttpClientInstance.getInstance();
+                OkHttpClient client = buildOkHttpClient();
                 Response execute = client.newCall(request).execute();
                 if (execute.isSuccessful()) {
                     responseBody = execute.body();
