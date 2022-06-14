@@ -61,6 +61,26 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpRequestBuilderEndpointLessConstructor() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        String combinedRootEndpoint = root + endpoint;
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        HttpRequestBuilderImpl httpRequestBuilder2 = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(
+            new ApiConnectionInfo(combinedRootEndpoint))
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
+        Request request2 = httpRequestBuilder2.createRequest();
+        assertEquals(request.url().toString(), request2.url().toString());
+    }
+
+    @Test
     void testHttpRequestBuilderCreatePostRequest() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";

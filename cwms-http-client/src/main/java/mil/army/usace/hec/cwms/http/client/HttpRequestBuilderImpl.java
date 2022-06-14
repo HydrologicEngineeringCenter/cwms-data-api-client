@@ -68,6 +68,10 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
     }
 
+    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo) throws ServerNotFoundException {
+        this(apiConnectionInfo, "");
+    }
+
     @Override
     public final HttpRequestBuilderImpl addQueryParameter(String key, String value) {
         if (value == null) {
