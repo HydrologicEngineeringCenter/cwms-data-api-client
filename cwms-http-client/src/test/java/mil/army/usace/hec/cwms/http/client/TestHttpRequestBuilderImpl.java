@@ -36,11 +36,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.Provider;
+import java.security.Security;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import org.junit.jupiter.api.Test;
 
 class TestHttpRequestBuilderImpl {
@@ -57,6 +61,14 @@ class TestHttpRequestBuilderImpl {
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
+        assertEquals(root + endpoint, request.url().toString());
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
     }
 
@@ -105,6 +117,14 @@ class TestHttpRequestBuilderImpl {
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertEquals("http://[1080::8:800:200c:417a]/index/timeseries", request.url().toString());
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertEquals("http://[1080::8:800:200c:417a]/index/timeseries", request.url().toString());
     }
 
     @Test
@@ -146,6 +166,18 @@ class TestHttpRequestBuilderImpl {
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
         assertTrue(request.url().toString().contains("hello=world"));
         assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryParameter("hello", "world")
+            .addQueryParameter("green-eggs", "and ham")
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
+        assertTrue(request.url().toString().contains("hello=world"));
+        assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
     }
 
     @Test
@@ -161,6 +193,19 @@ class TestHttpRequestBuilderImpl {
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
+        assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
+        assertTrue(request.url().toString().contains("hello=world"));
+        assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryParameter("hello", "world")
+            .addQueryParameter("green-eggs", "and ham")
+            .enableHttp2()
+            .post()
+            .withBody("{test}")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
         assertTrue(request.url().toString().contains("hello=world"));
         assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
@@ -186,6 +231,24 @@ class TestHttpRequestBuilderImpl {
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertFalse(request.url().toString().contains("hello="));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryParameter("hello", null)
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertFalse(request.url().toString().contains("hello="));
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryParameter("hello", null)
+            .enableHttp2()
+            .post()
+            .withBody("{test}")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertFalse(request.url().toString().contains("hello="));
     }
 
     @Test
@@ -200,6 +263,17 @@ class TestHttpRequestBuilderImpl {
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
+        assertTrue(request.headers("hello").contains("world"));
+        assertTrue(request.headers("green-eggs").contains("and ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryHeader("hello", "world")
+            .addQueryHeader("green-eggs", "and ham")
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").contains("world"));
         assertTrue(request.headers("green-eggs").contains("and ham"));
     }
@@ -219,6 +293,18 @@ class TestHttpRequestBuilderImpl {
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").contains("world"));
         assertTrue(request.headers("green-eggs").contains("and ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryHeader("hello", "world")
+            .addQueryHeader("green-eggs", "and ham")
+            .enableHttp2()
+            .post()
+            .withBody("{test}")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertTrue(request.headers("hello").contains("world"));
+        assertTrue(request.headers("green-eggs").contains("and ham"));
     }
 
     @Test
@@ -235,6 +321,24 @@ class TestHttpRequestBuilderImpl {
         assertTrue(request.headers("hello").isEmpty());
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", null)
+            .post()
+            .withBody("{test}")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertTrue(request.headers("hello").isEmpty());
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryHeader("hello", null)
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertTrue(request.headers("hello").isEmpty());
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryHeader("hello", null)
+            .enableHttp2()
             .post()
             .withBody("{test}")
             .withMediaType(ACCEPT_HEADER_V1))
@@ -267,6 +371,27 @@ class TestHttpRequestBuilderImpl {
         assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
         assertTrue(request.headers("hello").contains("world"));
         assertTrue(request.headers("green-eggs").contains("and ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addEndpointInput(new EndpointInput() {
+                @Override
+                protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+                    return httpRequestBuilder.addQueryHeader("hello", "world")
+                        .addQueryHeader("green-eggs", "and ham")
+                        .addQueryParameter("hello", "world")
+                        .addQueryParameter("green-eggs", "and ham");
+                }
+            })
+            .enableHttp2()
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
+        assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
+        assertTrue(request.url().toString().contains("hello=world"));
+        assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
+        assertTrue(request.headers("hello").contains("world"));
+        assertTrue(request.headers("green-eggs").contains("and ham"));
     }
 
     @Test
@@ -289,6 +414,28 @@ class TestHttpRequestBuilderImpl {
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
+        assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
+        assertTrue(request.url().toString().contains("hello=world"));
+        assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
+        assertTrue(request.headers("hello").contains("world"));
+        assertTrue(request.headers("green-eggs").contains("and ham"));
+
+        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addEndpointInput(new EndpointInput() {
+                @Override
+                protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+                    return httpRequestBuilder.addQueryHeader("hello", "world")
+                        .addQueryHeader("green-eggs", "and ham")
+                        .addQueryParameter("hello", "world")
+                        .addQueryParameter("green-eggs", "and ham");
+                }
+            })
+            .enableHttp2()
+            .post()
+            .withBody("{test}")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
         assertTrue(request.url().toString().contains("hello=world"));
         assertTrue(request.url().toString().contains("green-eggs=and%20ham"));
@@ -318,6 +465,28 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpRequestBuilderExecuteGetSuccessHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .enableHttp2()
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
     void testHttpRequestBuilderExecutePostSuccess() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         try {
@@ -334,6 +503,31 @@ class TestHttpRequestBuilderImpl {
             try (HttpRequestResponse response = executor.execute()) {
                 assertNotNull(response.getBody());
             }
+
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testHttpRequestBuilderExecutePostSuccessHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .enableHttp2()
+                .post()
+                .withBody("{test}")
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executor.execute()) {
+                assertNotNull(response.getBody());
+            }
+
         } finally {
             mockWebServer.shutdown();
         }
@@ -356,6 +550,30 @@ class TestHttpRequestBuilderImpl {
                     assertNull(response);
                 }
             });
+
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testHttpRequestBuilderExecuteGetServerErrorHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("servererror.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(500));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+            HttpRequestExecutor executor = builder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
+            assertThrows(IOException.class, () -> {
+                try (HttpRequestResponse response = executor.execute()) {
+                    assertNull(response);
+                }
+            });
+
         } finally {
             mockWebServer.shutdown();
         }
@@ -378,6 +596,30 @@ class TestHttpRequestBuilderImpl {
                     assertNull(response);
                 }
             });
+
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testHttpRequestBuilderExecutePostServerErrorHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("servererror.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(500));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+            HttpRequestExecutor executor = builder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
+            assertThrows(IOException.class, () -> {
+                try (HttpRequestResponse response = executor.execute()) {
+                    assertNull(response);
+                }
+            });
+
         } finally {
             mockWebServer.shutdown();
         }
@@ -395,6 +637,28 @@ class TestHttpRequestBuilderImpl {
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+            assertThrows(NoDataFoundException.class, () -> {
+                try (HttpRequestResponse response = executor.execute()) {
+                    assertNull(response);
+                }
+            });
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testHttpRequestBuilderExecuteGetNoDataFoundHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("nodatafound.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(404));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+            HttpRequestExecutor executor = httpRequestBuilder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
             assertThrows(NoDataFoundException.class, () -> {
                 try (HttpRequestResponse response = executor.execute()) {
                     assertNull(response);
@@ -428,6 +692,62 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpRequestBuilderExecutePostNoDataFoundHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("nodatafound.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(404));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+            HttpRequestExecutor executor = httpRequestBuilder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
+            assertThrows(NoDataFoundException.class, () -> {
+                try (HttpRequestResponse response = executor.execute()) {
+                    assertNull(response);
+                }
+            });
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testEnableHttp2() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .enableHttp2();
+            Provider[] providers = Security.getProviders();
+            if (isBeforeJava8_251()) {
+                assertTrue(containsBouncyCastleProvider(providers));
+            } else {
+                assertFalse(containsBouncyCastleProvider(providers));
+            }
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    private boolean containsBouncyCastleProvider(Provider[] providers) {
+        boolean retVal = false;
+        for (Provider provider : providers) {
+            if (provider instanceof BouncyCastleProvider || provider instanceof BouncyCastleJsseProvider) {
+                retVal = true;
+                break;
+            }
+        }
+        return retVal;
+    }
+
+    @Test
     void testHttpGetRequestBuilderServerNotFoundUnknownHost() throws IOException {
         String endpoint = "unknownhost";
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
@@ -436,6 +756,13 @@ class TestHttpRequestBuilderImpl {
         HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor.execute()) {
+                assertNull(response);
+            }
+        });
+
+        HttpRequestExecutor executor2 = httpRequestBuilder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = executor2.execute()) {
                 assertNull(response);
             }
         });
@@ -453,6 +780,13 @@ class TestHttpRequestBuilderImpl {
                 assertNull(response);
             }
         });
+
+        HttpRequestExecutor executor2 = httpRequestBuilder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = executor2.execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     @Test
@@ -464,6 +798,13 @@ class TestHttpRequestBuilderImpl {
         HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor.execute()) {
+                assertNull(response);
+            }
+        });
+
+        HttpRequestExecutor executor2 = httpRequestBuilder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = executor2.execute()) {
                 assertNull(response);
             }
         });
@@ -481,6 +822,13 @@ class TestHttpRequestBuilderImpl {
                 assertNull(response);
             }
         });
+
+        HttpRequestExecutor executor2 = httpRequestBuilder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
+        assertThrows(ServerNotFoundException.class, () -> {
+            try (HttpRequestResponse response = executor2.execute()) {
+                assertNull(response);
+            }
+        });
     }
 
     private String readJsonFile(String jsonPath) throws IOException {
@@ -490,5 +838,26 @@ class TestHttpRequestBuilderImpl {
         }
         Path path = new File(resource.getFile()).toPath();
         return String.join("\n", Files.readAllLines(path));
+    }
+
+    private boolean isBeforeJava8_251() {
+        boolean retVal = true;
+        String version = System.getProperty("java.version");
+        if (version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else { //if Java 9 or higher
+            int dot = version.indexOf(".");
+            if (dot != -1) {
+                version = version.substring(0, dot);
+            }
+        }
+        int majorVersion = Integer.parseInt(version);
+        if (majorVersion == 8) {
+            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
+            retVal = Integer.parseInt(minorVersionStr) < 251;
+        } else if (majorVersion > 8) {
+            retVal = false;
+        }
+        return retVal;
     }
 }
