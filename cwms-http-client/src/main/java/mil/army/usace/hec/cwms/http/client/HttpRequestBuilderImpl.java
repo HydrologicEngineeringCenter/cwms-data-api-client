@@ -32,7 +32,11 @@ import java.security.Security;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
+import mil.army.usace.hec.cwms.http.client.auth.DefaultOAuth2TokenValidator;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenValidator;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
@@ -52,6 +56,7 @@ import usace.metrics.services.Timer;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private final String endpoint;
     private final HttpUrl httpUrl;
     private final Map<String, String> queryParameters = new HashMap<>();
@@ -60,7 +65,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     private String body;
     private String mediaType;
 
-    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws ServerNotFoundException {
+    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws IOException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
         Objects.requireNonNull(apiConnectionInfo.getApiRoot(), "API root must be defined");
         HttpUrl url = HttpUrl.parse(apiConnectionInfo.getApiRoot());
@@ -69,9 +74,13 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         }
         this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
+        Optional<OAuth2Token> oauth2Token = apiConnectionInfo.getOAuth2Token();
+        if (oauth2Token.isPresent()) {
+            addTokenHeader(oauth2Token.get());
+        }
     }
 
-    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo) throws ServerNotFoundException {
+    public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo) throws IOException {
         this(apiConnectionInfo, "");
     }
 
@@ -126,6 +135,17 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     public final HttpRequestMediaType get() throws IOException {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
+    }
+
+    protected OAuth2TokenValidator createOAuth2TokenValidator() {
+        return new DefaultOAuth2TokenValidator();
+    }
+
+    private void addTokenHeader(OAuth2Token oauth2Token) throws IOException {
+        createOAuth2TokenValidator().validateToken(oauth2Token);
+        String type = oauth2Token.getTokenType();
+        String accessToken = oauth2Token.getAccessToken();
+        addQueryHeader(AUTHORIZATION_HEADER, type + " " + accessToken);
     }
 
     protected OkHttpClient buildOkHttpClient() {
