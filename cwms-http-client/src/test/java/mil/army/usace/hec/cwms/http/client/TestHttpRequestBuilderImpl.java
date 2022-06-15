@@ -39,6 +39,8 @@ import java.nio.file.Path;
 import java.security.Provider;
 import java.security.Security;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenException;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
@@ -711,6 +713,42 @@ class TestHttpRequestBuilderImpl {
         } finally {
             mockWebServer.shutdown();
         }
+    }
+
+    @Test
+    void testOAuth2TokenMissingAccessToken() throws IOException {
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("");
+        token.setTokenType("Bearer");
+        token.setExpiresIn(100);
+        String baseUrl = "https://www.doesnotmatter.com";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
+        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
+        token.setAccessToken(null);
+        ApiConnectionInfo apiConnectionInfo2 = new ApiConnectionInfo(baseUrl, token);
+        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo2, ""));
+    }
+
+    @Test
+    void testOAuth2TokenMissingType() throws IOException {
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("asfksdfjh1k2j3h123124234123kjnnskak");
+        token.setTokenType(null);
+        token.setExpiresIn(100);
+        String baseUrl = "https://www.doesnotmatter.com";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
+        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
+    }
+
+    @Test
+    void testOAuth2TokenExpired() throws IOException {
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("asfksdfjh1k2j3h123124234123kjnnskak");
+        token.setTokenType("Bearer");
+        token.setExpiresIn(0);
+        String baseUrl = "https://www.doesnotmatter.com";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
+        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
     }
 
     @Test
