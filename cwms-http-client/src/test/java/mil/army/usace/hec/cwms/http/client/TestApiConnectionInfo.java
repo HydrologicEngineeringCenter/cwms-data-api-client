@@ -26,7 +26,9 @@ package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import org.junit.jupiter.api.Test;
 
 class TestApiConnectionInfo {
@@ -36,6 +38,19 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data/";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
         assertEquals(root, apiConnectionInfo.getApiRoot());
+    }
+
+    @Test
+    void testApiConnectionInfoWithOAuth2Token() {
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
+        token.setTokenType("Bearer");
+        token.setExpiresIn(3600);
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root, token);
+        assertEquals(root, apiConnectionInfo.getApiRoot());
+        assertTrue(apiConnectionInfo.getOAuth2Token().isPresent());
+        assertEquals(token, apiConnectionInfo.getOAuth2Token().get());
     }
 
     @Test

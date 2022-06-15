@@ -24,15 +24,28 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.Optional;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
+    private final OAuth2Token oauth2Token;
 
     public ApiConnectionInfo(String apiRoot) {
+        this(apiRoot, null);
+    }
+
+    public ApiConnectionInfo(String apiRoot, OAuth2Token oauth2Token) {
         this.apiRoot = apiRoot;
+        this.oauth2Token = oauth2Token;
     }
 
     public String getApiRoot() {
         return apiRoot;
+    }
+
+    public Optional<OAuth2Token> getOAuth2Token() {
+        return Optional.ofNullable(oauth2Token);
     }
 }
