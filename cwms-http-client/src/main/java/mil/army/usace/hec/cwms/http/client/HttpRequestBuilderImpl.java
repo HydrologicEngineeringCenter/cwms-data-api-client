@@ -32,11 +32,7 @@ import java.security.Security;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
-import mil.army.usace.hec.cwms.http.client.auth.DefaultOAuth2TokenValidator;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenValidator;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
@@ -56,11 +52,11 @@ import usace.metrics.services.Timer;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
-    private static final String AUTHORIZATION_HEADER = "Authorization";
     private final String endpoint;
     private final HttpUrl httpUrl;
     private final Map<String, String> queryParameters = new HashMap<>();
     private final Map<String, String> queryHeaders = new HashMap<>();
+    private final ApiConnectionInfo apiConnectionInfo;
     private HttpRequestMethod method;
     private String body;
     private String mediaType;
@@ -74,10 +70,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         }
         this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
-        Optional<OAuth2Token> oauth2Token = apiConnectionInfo.getOAuth2Token();
-        if (oauth2Token.isPresent()) {
-            addTokenHeader(oauth2Token.get());
-        }
+        this.apiConnectionInfo = apiConnectionInfo;
     }
 
     public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo) throws IOException {
@@ -137,19 +130,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return new HttpRequiredMediaTypeImpl();
     }
 
-    protected OAuth2TokenValidator createOAuth2TokenValidator() {
-        return new DefaultOAuth2TokenValidator();
-    }
-
-    private void addTokenHeader(OAuth2Token oauth2Token) throws IOException {
-        createOAuth2TokenValidator().validateToken(oauth2Token);
-        String type = oauth2Token.getTokenType();
-        String accessToken = oauth2Token.getAccessToken();
-        addQueryHeader(AUTHORIZATION_HEADER, type + " " + accessToken);
-    }
-
     protected OkHttpClient buildOkHttpClient() {
-        return OkHttpClientInstance.getInstance();
+        return OkHttpClientFactory.buildOkHttpClient(apiConnectionInfo);
     }
 
     //Packaged scope for testing

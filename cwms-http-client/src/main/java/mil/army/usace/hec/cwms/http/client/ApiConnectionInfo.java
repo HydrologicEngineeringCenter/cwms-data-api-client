@@ -25,27 +25,48 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private final OAuth2Token oauth2Token;
+    private final OAuth2TokenProvider tokenProvider;
+    private final SslSocketData sslSocketData;
 
     public ApiConnectionInfo(String apiRoot) {
-        this(apiRoot, null);
+        this(apiRoot, null, null);
     }
 
-    public ApiConnectionInfo(String apiRoot, OAuth2Token oauth2Token) {
+    public ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData) {
+        this(apiRoot, sslSocketData, null);
+    }
+
+    public ApiConnectionInfo(String apiRoot, OAuth2TokenProvider tokenProvider) {
+        this(apiRoot, null, tokenProvider);
+    }
+
+    /**
+     * ApiConnectionInfo.
+     *
+     * @param apiRoot       - root URL
+     * @param sslSocketData - SSLSocketFactory and X509TrustManager
+     * @param tokenProvider - TokenProvider for authentication
+     */
+    public ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
         this.apiRoot = apiRoot;
-        this.oauth2Token = oauth2Token;
+        this.sslSocketData = sslSocketData;
+        this.tokenProvider = tokenProvider;
     }
 
     public String getApiRoot() {
         return apiRoot;
     }
 
-    public Optional<OAuth2Token> getOAuth2Token() {
-        return Optional.ofNullable(oauth2Token);
+    public Optional<OAuth2TokenProvider> getOAuth2TokenProvider() {
+        return Optional.ofNullable(tokenProvider);
+    }
+
+    public Optional<SslSocketData> getSslSocketData() {
+        return Optional.ofNullable(sslSocketData);
     }
 }
