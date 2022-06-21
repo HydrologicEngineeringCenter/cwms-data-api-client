@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -51,7 +52,7 @@ abstract class TestController {
 
     ApiConnectionInfo buildConnectionInfo() {
         String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-        return new ApiConnectionInfo(baseUrl);
+        return new ApiConnectionInfoBuilder(baseUrl).build();
     }
 
     final String readJsonFile(String jsonPath) throws IOException {

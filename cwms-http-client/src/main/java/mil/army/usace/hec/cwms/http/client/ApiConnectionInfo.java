@@ -30,29 +30,10 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private final OAuth2TokenProvider tokenProvider;
-    private final SslSocketData sslSocketData;
+    private OAuth2TokenProvider tokenProvider;
+    private SslSocketData sslSocketData;
 
-    public ApiConnectionInfo(String apiRoot) {
-        this(apiRoot, null, null);
-    }
-
-    public ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData) {
-        this(apiRoot, sslSocketData, null);
-    }
-
-    public ApiConnectionInfo(String apiRoot, OAuth2TokenProvider tokenProvider) {
-        this(apiRoot, null, tokenProvider);
-    }
-
-    /**
-     * ApiConnectionInfo.
-     *
-     * @param apiRoot       - root URL
-     * @param sslSocketData - SSLSocketFactory and X509TrustManager
-     * @param tokenProvider - TokenProvider for authentication
-     */
-    public ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.tokenProvider = tokenProvider;
@@ -69,4 +50,5 @@ public final class ApiConnectionInfo {
     public Optional<SslSocketData> getSslSocketData() {
         return Optional.ofNullable(sslSocketData);
     }
+
 }

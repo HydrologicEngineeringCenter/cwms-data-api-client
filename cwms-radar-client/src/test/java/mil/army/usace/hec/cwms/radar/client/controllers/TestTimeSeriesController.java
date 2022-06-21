@@ -40,6 +40,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.Offset;
@@ -144,8 +145,8 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
-        assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(new ApiConnectionInfo("http://localhost:11999"),
-            new TimeSeriesEndpointInput("")));
+        assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(
+            new ApiConnectionInfoBuilder("http://localhost:11999").build(), new TimeSeriesEndpointInput("")));
     }
 
     @Test
@@ -182,7 +183,7 @@ class TestTimeSeriesController extends TestController {
                             .end(end)
                             .page(null);
                         String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-                        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+                        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
                         TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(apiConnectionInfo, input);
                         assertEquals(500, timeSeries.getValues().size());
                         assertEquals(745, timeSeries.getTotal());
