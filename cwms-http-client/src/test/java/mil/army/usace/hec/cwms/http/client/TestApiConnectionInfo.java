@@ -43,7 +43,7 @@ class TestApiConnectionInfo {
     @Test
     void testApiConnectionInfo() {
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
     }
 
@@ -109,7 +109,9 @@ class TestApiConnectionInfo {
     void testApiConnectionInfoWithOAuth2Token() {
         OAuth2TokenProvider tokenProvider = getTestTokenProvider();
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root, tokenProvider);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withTokenProvider(tokenProvider)
+            .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
         assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
         assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
@@ -119,7 +121,9 @@ class TestApiConnectionInfo {
     void testApiConnectionInfoWithSslSocketData() {
         SslSocketData sslSocketData = getTestSslSocketData();
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root, sslSocketData);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withSslSocketData(sslSocketData)
+            .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
         assertTrue(apiConnectionInfo.getSslSocketData().isPresent());
         assertEquals(sslSocketData, apiConnectionInfo.getSslSocketData().get());
@@ -130,7 +134,10 @@ class TestApiConnectionInfo {
         OAuth2TokenProvider tokenProvider = getTestTokenProvider();
         SslSocketData sslSocketData = getTestSslSocketData();
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root, sslSocketData, tokenProvider);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withSslSocketData(sslSocketData)
+            .withTokenProvider(tokenProvider)
+            .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
         assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
         assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
@@ -140,7 +147,7 @@ class TestApiConnectionInfo {
 
     @Test
     void testApiConnectionInfoNulls() {
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(null);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(null).build();
         assertNull(apiConnectionInfo.getApiRoot());
         assertFalse(apiConnectionInfo.getSslSocketData().isPresent());
         assertFalse(apiConnectionInfo.getOAuth2TokenProvider().isPresent());

@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalogEntry;
@@ -156,7 +156,7 @@ class TestTimeSeriesCatalogController extends TestController {
         mockHttpServer.start();
         CatalogController timeSeriesController = new CatalogController();
         assertThrows(ServerNotFoundException.class,
-            () -> timeSeriesController.retrieveTimeSeriesCatalog(new ApiConnectionInfo("http://localhost:11999"),
+            () -> timeSeriesController.retrieveTimeSeriesCatalog(new ApiConnectionInfoBuilder("http://localhost:11999").build(),
                 new TimeSeriesCatalogEndpointInput()));
     }
 
