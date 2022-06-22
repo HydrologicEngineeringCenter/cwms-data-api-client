@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.LocationAlias;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
@@ -262,7 +262,8 @@ class TestLocationCatalogController extends TestController {
         mockHttpServer.start();
         CatalogController timeSeriesController = new CatalogController();
         assertThrows(ServerNotFoundException.class,
-            () -> timeSeriesController.retrieveLocationCatalog(new ApiConnectionInfo("http://localhost:11999"), new LocationCatalogEndpointInput()));
+            () -> timeSeriesController.retrieveLocationCatalog(new ApiConnectionInfoBuilder("http://localhost:11999").build(),
+                new LocationCatalogEndpointInput()));
     }
 
 }

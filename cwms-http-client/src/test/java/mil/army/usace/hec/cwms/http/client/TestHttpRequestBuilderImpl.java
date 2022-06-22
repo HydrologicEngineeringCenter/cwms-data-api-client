@@ -39,8 +39,6 @@ import java.nio.file.Path;
 import java.security.Provider;
 import java.security.Security;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenException;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
@@ -57,7 +55,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateGetRequest() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
@@ -79,13 +77,13 @@ class TestHttpRequestBuilderImpl {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
         String combinedRootEndpoint = root + endpoint;
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         HttpRequestBuilderImpl httpRequestBuilder2 = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(
-            new ApiConnectionInfo(combinedRootEndpoint))
+            new ApiConnectionInfoBuilder(combinedRootEndpoint).build())
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
@@ -98,7 +96,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreatePostRequest() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .post()
             .withBody("{test}")
@@ -112,7 +110,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpReq7hgb4uestBuilderIpV6() throws IOException {
         String root = "http://[1080:0:0:0:8:800:200C:417A]/index/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
@@ -133,7 +131,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateRequestInvalidUrl() throws IOException {
         String root = "//http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertThrows(ServerNotFoundException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
@@ -141,7 +139,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateRequestNullRoot() throws IOException {
         String root = null;
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertThrows(NullPointerException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
@@ -149,7 +147,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateRequestNullEndpoint() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = null;
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertThrows(NullPointerException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, endpoint));
     }
 
@@ -157,7 +155,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateGetRequestWithParameters() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", "world")
             .addQueryParameter("green-eggs", "and ham")
@@ -186,7 +184,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreatePostRequestWithParameters() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", "world")
             .addQueryParameter("green-eggs", "and ham")
@@ -217,7 +215,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateRequestWithNullParameter() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", null)
             .get()
@@ -257,7 +255,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateGetRequestWithHeaders() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", "world")
             .addQueryHeader("green-eggs", "and ham")
@@ -284,7 +282,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreatePostRequestWithHeaders() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", "world")
             .addQueryHeader("green-eggs", "and ham")
@@ -313,7 +311,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateRequestWithNullHeader() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", null)
             .get()
@@ -353,7 +351,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreateGetRequestWithEndpointInput() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(new EndpointInput() {
                 @Override
@@ -400,7 +398,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpRequestBuilderCreatePostRequestWithEndpointInput() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(new EndpointInput() {
                 @Override
@@ -454,7 +452,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -475,7 +473,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .enableHttp2()
                 .get()
@@ -497,7 +495,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .post()
                 .withBody("{test}")
@@ -520,7 +518,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .enableHttp2()
                 .post()
@@ -544,7 +542,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = builder.get().withMediaType(ACCEPT_HEADER_V1);
             assertThrows(IOException.class, () -> {
@@ -567,7 +565,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = builder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
             assertThrows(IOException.class, () -> {
@@ -590,7 +588,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = builder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
             assertThrows(IOException.class, () -> {
@@ -613,7 +611,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = builder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
             assertThrows(IOException.class, () -> {
@@ -636,7 +634,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
             assertThrows(NoDataFoundException.class, () -> {
@@ -658,7 +656,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = httpRequestBuilder.enableHttp2().get().withMediaType(ACCEPT_HEADER_V1);
             assertThrows(NoDataFoundException.class, () -> {
@@ -680,7 +678,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
             assertThrows(NoDataFoundException.class, () -> {
@@ -702,7 +700,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = httpRequestBuilder.enableHttp2().post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
             assertThrows(NoDataFoundException.class, () -> {
@@ -716,42 +714,6 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
-    void testOAuth2TokenMissingAccessToken() throws IOException {
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(100);
-        String baseUrl = "https://www.doesnotmatter.com";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
-        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
-        token.setAccessToken(null);
-        ApiConnectionInfo apiConnectionInfo2 = new ApiConnectionInfo(baseUrl, token);
-        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo2, ""));
-    }
-
-    @Test
-    void testOAuth2TokenMissingType() throws IOException {
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("asfksdfjh1k2j3h123124234123kjnnskak");
-        token.setTokenType(null);
-        token.setExpiresIn(100);
-        String baseUrl = "https://www.doesnotmatter.com";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
-        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
-    }
-
-    @Test
-    void testOAuth2TokenExpired() throws IOException {
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("asfksdfjh1k2j3h123124234123kjnnskak");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(0);
-        String baseUrl = "https://www.doesnotmatter.com";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl, token);
-        assertThrows(OAuth2TokenException.class, () -> new HttpRequestBuilderImpl(apiConnectionInfo, ""));
-    }
-
-    @Test
     void testEnableHttp2() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         try {
@@ -760,7 +722,7 @@ class TestHttpRequestBuilderImpl {
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .enableHttp2();
             Provider[] providers = Security.getProviders();
@@ -789,7 +751,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpGetRequestBuilderServerNotFoundUnknownHost() throws IOException {
         String endpoint = "unknownhost";
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {
@@ -810,7 +772,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpPostRequestBuilderServerNotFoundUnknownHost() throws IOException {
         String endpoint = "unknownhost";
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         HttpRequestExecutor executor = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {
@@ -831,7 +793,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpGetRequestBuilderServerNotFoundUnknownPort() throws IOException {
         String endpoint = "unknownport";
         String baseUrl = "https://www.hec.usace.army.mil:1000";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {
@@ -852,7 +814,7 @@ class TestHttpRequestBuilderImpl {
     void testHttpPostRequestBuilderServerNotFoundUnknownPort() throws IOException {
         String endpoint = "unknownport";
         String baseUrl = "https://www.hec.usace.army.mil:1000";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(baseUrl);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
         HttpRequestExecutor executor = httpRequestBuilder.post().withBody("{test}").withMediaType(ACCEPT_HEADER_V1);
         assertThrows(ServerNotFoundException.class, () -> {

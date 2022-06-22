@@ -25,27 +25,30 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private final OAuth2Token oauth2Token;
+    private OAuth2TokenProvider tokenProvider;
+    private SslSocketData sslSocketData;
 
-    public ApiConnectionInfo(String apiRoot) {
-        this(apiRoot, null);
-    }
-
-    public ApiConnectionInfo(String apiRoot, OAuth2Token oauth2Token) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
         this.apiRoot = apiRoot;
-        this.oauth2Token = oauth2Token;
+        this.sslSocketData = sslSocketData;
+        this.tokenProvider = tokenProvider;
     }
 
     public String getApiRoot() {
         return apiRoot;
     }
 
-    public Optional<OAuth2Token> getOAuth2Token() {
-        return Optional.ofNullable(oauth2Token);
+    public Optional<OAuth2TokenProvider> getOAuth2TokenProvider() {
+        return Optional.ofNullable(tokenProvider);
     }
+
+    public Optional<SslSocketData> getSslSocketData() {
+        return Optional.ofNullable(sslSocketData);
+    }
+
 }

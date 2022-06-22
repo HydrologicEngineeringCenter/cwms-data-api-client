@@ -25,10 +25,17 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.net.InetAddress;
+import java.net.Socket;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import org.junit.jupiter.api.Test;
 
 class TestApiConnectionInfo {
@@ -36,28 +43,137 @@ class TestApiConnectionInfo {
     @Test
     void testApiConnectionInfo() {
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
+    }
+
+    static SSLSocketFactory getTestSslSocketFactory() {
+        return new SSLSocketFactory() {
+            @Override
+            public String[] getDefaultCipherSuites() {
+                return new String[0];
+            }
+
+            @Override
+            public String[] getSupportedCipherSuites() {
+                return new String[0];
+            }
+
+            @Override
+            public Socket createSocket(Socket socket, String s, int i, boolean b) {
+                return null;
+            }
+
+            @Override
+            public Socket createSocket(String s, int i) {
+                return null;
+            }
+
+            @Override
+            public Socket createSocket(String s, int i, InetAddress inetAddress, int i1) {
+                return null;
+            }
+
+            @Override
+            public Socket createSocket(InetAddress inetAddress, int i) {
+                return null;
+            }
+
+            @Override
+            public Socket createSocket(InetAddress inetAddress, int i, InetAddress inetAddress1, int i1) {
+                return null;
+            }
+        };
+    }
+
+    static X509TrustManager getTestX509TrustManager() {
+        return new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
+
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        };
     }
 
     @Test
     void testApiConnectionInfoWithOAuth2Token() {
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(3600);
+        OAuth2TokenProvider tokenProvider = getTestTokenProvider();
         String root = "http://localhost:11524/cwms-data/";
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root, token);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withTokenProvider(tokenProvider)
+            .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
-        assertTrue(apiConnectionInfo.getOAuth2Token().isPresent());
-        assertEquals(token, apiConnectionInfo.getOAuth2Token().get());
+        assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
+        assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
+    }
+
+    @Test
+    void testApiConnectionInfoWithSslSocketData() {
+        SslSocketData sslSocketData = getTestSslSocketData();
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withSslSocketData(sslSocketData)
+            .build();
+        assertEquals(root, apiConnectionInfo.getApiRoot());
+        assertTrue(apiConnectionInfo.getSslSocketData().isPresent());
+        assertEquals(sslSocketData, apiConnectionInfo.getSslSocketData().get());
+    }
+
+    @Test
+    void testApiConnectionInfoWithOAuth2TokenAndSslSocketData() {
+        OAuth2TokenProvider tokenProvider = getTestTokenProvider();
+        SslSocketData sslSocketData = getTestSslSocketData();
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root)
+            .withSslSocketData(sslSocketData)
+            .withTokenProvider(tokenProvider)
+            .build();
+        assertEquals(root, apiConnectionInfo.getApiRoot());
+        assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
+        assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
+        assertTrue(apiConnectionInfo.getSslSocketData().isPresent());
+        assertEquals(sslSocketData, apiConnectionInfo.getSslSocketData().get());
     }
 
     @Test
     void testApiConnectionInfoNulls() {
-        String root = null;
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo(root);
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(null).build();
         assertNull(apiConnectionInfo.getApiRoot());
+        assertFalse(apiConnectionInfo.getSslSocketData().isPresent());
+        assertFalse(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
+    }
+
+    private OAuth2TokenProvider getTestTokenProvider() {
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
+        token.setTokenType("Bearer");
+        token.setExpiresIn(3600);
+        return new OAuth2TokenProvider() {
+            @Override
+            public OAuth2Token getToken() {
+                return token;
+            }
+
+            @Override
+            public OAuth2Token refreshToken() {
+                return token;
+            }
+        };
+    }
+
+    private SslSocketData getTestSslSocketData() {
+
+        return new SslSocketData(getTestSslSocketFactory(), getTestX509TrustManager());
     }
 
 }
