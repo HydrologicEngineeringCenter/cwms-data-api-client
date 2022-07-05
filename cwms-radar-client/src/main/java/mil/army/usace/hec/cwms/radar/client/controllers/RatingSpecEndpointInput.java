@@ -66,7 +66,7 @@ public final class RatingSpecEndpointInput extends EndpointInput {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
 
         return httpRequestBuilder
-				.addQueryParameter(RATING_ID_MASK_QUERY_PARAMETER, ratingIdMask)
+                .addQueryParameter(RATING_ID_MASK_QUERY_PARAMETER, ratingIdMask)
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
