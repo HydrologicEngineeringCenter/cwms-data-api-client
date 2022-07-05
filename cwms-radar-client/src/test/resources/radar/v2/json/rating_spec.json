@@ -1,0 +1,23 @@
+{
+  "office-id": "SWT",
+  "rating-id": "BUFF.Stage;Flow.WCDS.Production",
+  "template-id": "Stage;Flow.WCDS",
+  "location-id": "BUFF",
+  "version": "Production",
+  "in-range-method": "NEAREST",
+  "out-range-low-method": "LINEAR",
+  "out-range-high-method": "NEAREST",
+  "active": true,
+  "auto-update": true,
+  "auto-activate": true,
+  "auto-migrate-extension": true,
+  "independent-rounding-specs": [
+    {
+      "value": "4444444444"
+    }
+  ],
+  "dependent-rounding-spec": "4444444444",
+  "effective-dates": [
+    "1970-01-01T00:00:00Z"
+  ]
+}
