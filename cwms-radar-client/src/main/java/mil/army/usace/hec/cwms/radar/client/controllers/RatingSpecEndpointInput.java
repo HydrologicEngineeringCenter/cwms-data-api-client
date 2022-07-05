@@ -12,7 +12,6 @@ public class RatingSpecEndpointInput extends EndpointInput
 {
 
 	static final String OFFICE_QUERY_PARAMETER = "office";
-	static final String RATING_ID_QUERY_PARAMETER = "rating-id";
 	static final String RATING_ID_MASK_QUERY_PARAMETER = "rating-id-mask";
 	static final String PAGE_QUERY_PARAMETER = "page";
 	static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
@@ -77,7 +76,6 @@ public class RatingSpecEndpointInput extends EndpointInput
 
 		return httpRequestBuilder
 				.addQueryParameter(RATING_ID_MASK_QUERY_PARAMETER, ratingIdMask)
-				.addQueryParameter(RATING_ID_QUERY_PARAMETER, ratingId)
 				.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
 				.addQueryParameter(PAGE_QUERY_PARAMETER, page)
 				.addQueryParameter(	PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
