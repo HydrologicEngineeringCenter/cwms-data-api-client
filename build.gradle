@@ -1,3 +1,14 @@
+plugins {
+    id "com.palantir.git-version" version "0.13.0"
+}
+
+def versionLabel(gitInfo) {
+    def branch = gitInfo.branchName // all branches are snapshots, only tags get released
+    def tag = gitInfo.lastTag
+    // tag is returned as is. Branch may need cleanup
+    return branch == null ? tag : branch.replace("/","-") + "-SNAPSHOT"
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
@@ -5,7 +16,7 @@ subprojects {
     apply plugin: 'maven-publish'
 
 
-    version = "3.1.1"
+    version = versionLabel(versionDetails())
     group = "mil.army.usace.hec"
 
     compileJava {
