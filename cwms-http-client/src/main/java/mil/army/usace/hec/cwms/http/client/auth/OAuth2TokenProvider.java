@@ -7,4 +7,10 @@ public interface OAuth2TokenProvider {
     OAuth2Token getToken() throws IOException;
 
     OAuth2Token refreshToken() throws IOException;
+
+    String getKeyForTokenIfParameter();
+
+    default boolean useAuthorizationHeader() {
+        return getKeyForTokenIfParameter() != null;
+    }
 }

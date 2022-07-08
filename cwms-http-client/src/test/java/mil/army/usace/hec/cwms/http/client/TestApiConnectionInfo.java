@@ -169,6 +169,11 @@ class TestApiConnectionInfo {
             public OAuth2Token refreshToken() {
                 return token;
             }
+
+            @Override
+            public String getKeyForTokenIfParameter() {
+                return null;
+            }
         };
     }
 

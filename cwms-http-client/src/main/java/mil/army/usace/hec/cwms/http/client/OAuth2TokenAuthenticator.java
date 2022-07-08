@@ -39,10 +39,15 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         }
         LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         // Retry the request with the new token.
+        return newRequestWithAccessTokenAsHeader(response, updatedToken);
+    }
+
+    //package scoped for testing
+    Request newRequestWithAccessTokenAsHeader(Response response, OAuth2Token oauth2Token) {
         return response.request()
             .newBuilder()
             .removeHeader(AUTHORIZATION_HEADER)
-            .addHeader(AUTHORIZATION_HEADER, "Bearer " + updatedToken.getAccessToken())
+            .addHeader(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
     }
 }

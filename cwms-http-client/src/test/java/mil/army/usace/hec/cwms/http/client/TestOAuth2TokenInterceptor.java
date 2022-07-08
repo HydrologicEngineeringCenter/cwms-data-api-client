@@ -13,12 +13,15 @@ import org.junit.jupiter.api.Test;
 class TestOAuth2TokenInterceptor {
 
     @Test
-    void testNewRequest() throws IOException {
+    void testNewRequestWithAuthorizationHeader() throws IOException {
         OAuth2TokenProvider tokenProvider = getTestTokenProvider();
         OAuth2TokenInterceptor interceptor = new OAuth2TokenInterceptor(tokenProvider);
         Request request = getMockRequest();
         String accessToken = tokenProvider.getToken().getAccessToken();
-        Request newRequest = interceptor.newRequestWithAccessToken(request, accessToken);
+        OAuth2Token oauth2Token = new OAuth2Token();
+        oauth2Token.setTokenType("Bearer");
+        oauth2Token.setAccessToken(accessToken);
+        Request newRequest = interceptor.newRequestWithAccessTokenAsHeader(request, oauth2Token);
         assertNotNull(newRequest);
         assertEquals("Bearer " + accessToken, newRequest.headers(AUTHORIZATION_HEADER).get(0));
     }
@@ -51,6 +54,11 @@ class TestOAuth2TokenInterceptor {
                 token.setExpiresIn(3600);
                 token.setRefreshToken("456xyz");
                 return token;
+            }
+
+            @Override
+            public String getKeyForTokenIfParameter() {
+                return null;
             }
         };
     }
