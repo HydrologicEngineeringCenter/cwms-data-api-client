@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
 public class OAuth2Token {
 
     @JsonProperty("access_token")
@@ -74,17 +73,15 @@ public class OAuth2Token {
         this.scope = scope;
     }
 
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class OAuth2Token {\n");
-
-        sb.append("    access_token: ").append(toIndentedString(accessToken)).append("\n");
-        sb.append("    token_type: ").append(toIndentedString(tokenType)).append("\n");
-        sb.append("    expires_in: ").append(toIndentedString(expiresIn)).append("\n");
-        sb.append("    refresh_token: ").append(toIndentedString(refreshToken)).append("\n");
-        sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
-        sb.append("}");
-        return sb.toString();
+        return "class OAuth2Token {\n"
+            + "    access_token: " + toIndentedString(accessToken) + "\n"
+            + "    token_type: " + toIndentedString(tokenType) + "\n"
+            + "    expires_in: " + toIndentedString(expiresIn) + "\n"
+            + "    refresh_token: " + toIndentedString(refreshToken) + "\n"
+            + "    scope: " + toIndentedString(scope) + "\n"
+            + "}";
     }
 
     @Override
@@ -96,8 +93,8 @@ public class OAuth2Token {
             return false;
         }
         OAuth2Token that = (OAuth2Token) o;
-        return getExpiresIn() == that.getExpiresIn() && Objects.equals(getAccessToken(), that.getAccessToken()) &&
-            Objects.equals(getTokenType(), that.getTokenType());
+        return getExpiresIn() == that.getExpiresIn() && Objects.equals(getAccessToken(), that.getAccessToken())
+            && Objects.equals(getTokenType(), that.getTokenType());
     }
 
     @Override
