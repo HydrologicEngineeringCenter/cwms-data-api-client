@@ -66,10 +66,6 @@ class TestOAuth2TokenAuthenticator {
                 return token;
             }
 
-            @Override
-            public String getKeyForTokenIfParameter() {
-                return null;
-            }
         };
     }
 }
