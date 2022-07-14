@@ -31,14 +31,16 @@ final class OAuth2TokenInterceptor implements Interceptor {
             throw new IOException("Authentication failed: No access token present");
         }
         LOGGER.log(Level.FINEST, "Authenticating request with OAuth2 Token");
-        Request request = newRequestWithAccessToken(chain.request(), accessToken);
+        //if need to support tokens as parameters, add logic checking if token provider is using header/param,
+        //then call appropriate method.
+        Request request = newRequestWithAccessTokenAsHeader(chain.request(), oauth2Token);
         return chain.proceed(request);
     }
 
     //package scoped for testing
-    Request newRequestWithAccessToken(Request request, String accessToken) {
+    Request newRequestWithAccessTokenAsHeader(Request request, OAuth2Token oauth2Token) {
         return request.newBuilder()
-            .header(AUTHORIZATION_HEADER, "Bearer " + accessToken)
+            .header(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
     }
 }

@@ -158,6 +158,7 @@ class TestApiConnectionInfo {
         token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
         token.setTokenType("Bearer");
         token.setExpiresIn(3600);
+        token.setScope("create");
         return new OAuth2TokenProvider() {
             @Override
             public OAuth2Token getToken() {
@@ -168,6 +169,7 @@ class TestApiConnectionInfo {
             public OAuth2Token refreshToken() {
                 return token;
             }
+
         };
     }
 

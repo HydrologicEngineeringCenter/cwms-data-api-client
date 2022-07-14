@@ -65,6 +65,7 @@ class TestOAuth2TokenAuthenticator {
                 token.setRefreshToken("456xyz");
                 return token;
             }
+
         };
     }
 }

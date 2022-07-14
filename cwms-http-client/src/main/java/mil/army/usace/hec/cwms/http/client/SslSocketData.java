@@ -21,22 +21,4 @@ public final class SslSocketData {
     X509TrustManager getX509TrustManager() {
         return x509TrustManager;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SslSocketData that = (SslSocketData) o;
-        return Objects.equals(getSslSocketFactory(), that.getSslSocketFactory())
-            && Objects.equals(getX509TrustManager(), that.getX509TrustManager());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getSslSocketFactory(), getX509TrustManager());
-    }
 }
