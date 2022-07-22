@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * LocationCatalog
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-01T13:20:30.413-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
 public class LocationCatalog {
     @JsonProperty("page")
     private String page = null;
@@ -51,7 +51,7 @@ public class LocationCatalog {
 
     @JsonProperty("entries")
     @Valid
-    private List<LocationCatalogEntry> entries = null;
+    private List<LocationCatalogEntry> entries = new ArrayList<>();
 
     public LocationCatalog page(String page) {
         this.page = page;

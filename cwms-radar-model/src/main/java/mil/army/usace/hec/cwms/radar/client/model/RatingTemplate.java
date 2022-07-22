@@ -34,13 +34,13 @@ public class RatingTemplate
 	@JsonProperty("dependent-parameter")
 	private String dependentParameter = null;
 
-	@JsonProperty("independent-parameter-specs")
-	@Valid
-	private List<ParameterSpec> independentParameterSpecs = null;
+    @JsonProperty("independent-parameter-specs")
+    @Valid
+    private List<ParameterSpec> independentParameterSpecs = new ArrayList<>();
 
-	@JsonProperty("rating-ids")
-	@Valid
-	private List<String> ratingIds = null;
+    @JsonProperty("rating-ids")
+    @Valid
+    private List<String> ratingIds = new ArrayList<>();
 
 	public RatingTemplate officeId(String officeId)
 	{

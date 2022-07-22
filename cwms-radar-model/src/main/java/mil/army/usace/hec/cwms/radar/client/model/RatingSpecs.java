@@ -32,7 +32,7 @@ public class RatingSpecs
 
 	@JsonProperty("specs")
 	@Valid
-	private List<RatingSpec> specs = null;
+	private List<RatingSpec> specs = new ArrayList<>();
 
 	public RatingSpecs page(String page)
 	{

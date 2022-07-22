@@ -34,7 +34,15 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
     {{/gson}}
     {{#isContainer}}
         {{#useBeanValidation}}@Valid{{/useBeanValidation}}
+        {{#isListContainer}}
+        private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new ArrayList<>(){{/required}};
+        {{/isListContainer}}
+        {{#isMap}}
+        private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new HashMap<>(){{/required}};
+        {{/isMap}}
+        {{^isListContainer}}{{^isMap}}
         private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};
+        {{/isMap}}{{/isListContainer}}
     {{/isContainer}}
     {{^isContainer}}
         private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
