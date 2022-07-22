@@ -1,0 +1,43 @@
+{
+  "begin": "2022-07-21T16:11:44+0000[UTC]",
+  "end": "2022-07-22T16:11:44+0000[UTC]",
+  "interval": "PT0S",
+  "interval-offset": 360,
+  "name": "CHCR-Cherry_Creek_Dam-Cherry.Elev.Inst.1Day.0.0168",
+  "office-id": "NWD",
+  "page": "MTY1ODQ2OTYwMDAwMHx8MXx8NTAw",
+  "page-size": 500,
+  "time-zone": "UTC",
+  "total": 1,
+  "units": "ft",
+  "value-columns": [
+    {
+      "name": "date-time",
+      "ordinal": 1,
+      "datatype": "java.sql.Timestamp"
+    },
+    {
+      "name": "value",
+      "ordinal": 2,
+      "datatype": "java.lang.Double"
+    },
+    {
+      "name": "quality-code",
+      "ordinal": 3,
+      "datatype": "int"
+    }
+  ],
+  "values": [
+    [
+      1658469600000,
+      null,
+      0
+    ]
+  ],
+  "vertical-datum-info": {
+    "office": "NWD",
+    "unit": "ft",
+    "location": "CHCR-Cherry_Creek_Dam-Cherry",
+    "native-datum": "UNKNOWN"
+  }
+}
