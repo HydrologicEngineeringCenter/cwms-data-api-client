@@ -37,7 +37,7 @@ import javax.validation.Valid;
  * TimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
 public class TimeSeries {
     @JsonProperty("begin")
     private ZonedDateTime begin = null;
@@ -71,10 +71,10 @@ public class TimeSeries {
 
     @JsonProperty("value-columns")
     @Valid
-    private List<TimeSeriesColumn> valueColumns = null;
+    private List<TimeSeriesColumn> valueColumns = new ArrayList<>();
 
     @JsonProperty("values")
-    private List<TimeSeriesValues> values = null;
+    private List<TimeSeriesValues> values = new ArrayList<>();
 
     @JsonProperty("vertical-datum-info")
     private VerticalDatumInfo verticalDatumInfo = null;

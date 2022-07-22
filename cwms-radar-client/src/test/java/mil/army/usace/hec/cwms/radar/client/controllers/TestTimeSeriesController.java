@@ -25,6 +25,8 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -91,6 +93,29 @@ class TestTimeSeriesController extends TestController {
         assertEquals(0.0632, offset.getValue(), .001);
         assertEquals("NAVD-88", offset.getToDatum());
         assertTrue(offset.isEstimate());
+    }
+    @Test
+    void testRetrieveTimeSeriesWithoutVerticalDatumOffsets() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseries_no_vert_offsets.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Instant start = ZonedDateTime.of(2022, 7, 21, 16, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2022, 7, 22, 16, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("CHCR-Cherry_Creek_Dam-Cherry.Elev.Inst.1Day.0.0168")
+            .officeId("NWD")
+            .unit("EN")
+            .begin(start)
+            .end(end)
+            .page(null);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        VerticalDatumInfo verticalDatumInfo = timeSeries.getVerticalDatumInfo();
+        assertNull(verticalDatumInfo.getElevation());
+        assertEquals("NWD", verticalDatumInfo.getOffice());
+        assertEquals("ft", verticalDatumInfo.getUnit());
+        assertEquals("UNKNOWN", verticalDatumInfo.getNativeDatum());
+        assertEquals("CHCR-Cherry_Creek_Dam-Cherry", verticalDatumInfo.getLocation());
+        List<Offset> offsets = verticalDatumInfo.getOffsets();
+        assertNotNull(offsets);
     }
 
     @Test

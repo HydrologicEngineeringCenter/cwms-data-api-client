@@ -51,7 +51,7 @@ public class TimeSeriesCatalog {
 
     @JsonProperty("entries")
     @Valid
-    private List<TimeSeriesCatalogEntry> entries = null;
+    private List<TimeSeriesCatalogEntry> entries = new ArrayList<>();
 
     public TimeSeriesCatalog page(String page) {
         this.page = page;
