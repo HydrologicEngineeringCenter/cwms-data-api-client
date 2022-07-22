@@ -59,7 +59,7 @@ public class RatingSpec
 
 	@JsonProperty("independent-rounding-specs")
 	@Valid
-	private List<IndependentRoundingSpec> independentRoundingSpecs = null;
+	private List<IndependentRoundingSpec> independentRoundingSpecs = new ArrayList<>();
 
 	@JsonProperty("dependent-rounding-spec")
 	private String dependentRoundingSpec = null;
@@ -69,7 +69,7 @@ public class RatingSpec
 
 	@JsonProperty("effective-dates")
 	@Valid
-	private List<OffsetDateTime> effectiveDates = null;
+	private List<OffsetDateTime> effectiveDates = new ArrayList<>();
 
 	public RatingSpec officeId(String officeId)
 	{

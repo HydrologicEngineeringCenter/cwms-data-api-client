@@ -29,9 +29,9 @@ public class RatingTemplates
 	@JsonProperty("pageSize")
 	private Integer pageSize = null;
 
-	@JsonProperty("templates")
-	@Valid
-	private List<RatingTemplate> templates = null;
+    @JsonProperty("templates")
+    @Valid
+    private List<RatingTemplate> templates = new ArrayList<>();
 
 	public RatingTemplates page(String page)
 	{

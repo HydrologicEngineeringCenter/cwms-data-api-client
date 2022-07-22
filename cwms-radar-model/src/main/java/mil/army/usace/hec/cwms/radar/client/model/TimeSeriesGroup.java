@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * A representation of a timeseries group
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
 public class TimeSeriesGroup {
     @JsonProperty("id")
     private String id = null;
@@ -57,7 +57,7 @@ public class TimeSeriesGroup {
 
     @JsonProperty("assigned-time-series")
     @Valid
-    private List<AssignedTimeSeries> assignedTimeSeries = null;
+    private List<AssignedTimeSeries> assignedTimeSeries = new ArrayList<>();
 
     public TimeSeriesGroup id(String id) {
         this.id = id;
