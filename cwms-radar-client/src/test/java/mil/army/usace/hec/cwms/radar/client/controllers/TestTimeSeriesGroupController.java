@@ -25,8 +25,10 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,7 +59,8 @@ class TestTimeSeriesGroupController extends TestController {
         assertEquals("QA Category", id);
         assertEquals("Creating this category for testing on December 16, 2020", description);
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
-        assertNull(timeSeriesGroup.getAssignedTimeSeries());
+        assertNotNull(timeSeriesGroup.getAssignedTimeSeries());
+        assertTrue(timeSeriesGroup.getAssignedTimeSeries().isEmpty());
     }
 
     @Test

@@ -26,8 +26,8 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -153,6 +153,7 @@ class TestLocationGroupController extends TestController {
         assertEquals("Location aliases for other agencies", locationCategory.getDescription());
 
         List<AssignedLocation> assignedLocations = locationGroup.getAssignedLocations();
-        assertNull(assignedLocations);
+        assertNotNull(assignedLocations);
+        assertTrue(assignedLocations.isEmpty());
     }
 }
