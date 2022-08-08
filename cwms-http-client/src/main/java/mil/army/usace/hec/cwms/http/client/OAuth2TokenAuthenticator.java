@@ -37,6 +37,10 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         if (accessToken == null || accessToken.isEmpty()) {
             throw new IOException("No access token present in refreshed authentication token");
         }
+        if (AccessTokenValidator.isTokenExpired(updatedToken)) {
+            updatedToken = tokenProvider.newToken();
+            validateNewToken(updatedToken);
+        }
         LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         // Retry the request with the new token.
         return newRequestWithAccessTokenAsHeader(response, updatedToken);
@@ -50,4 +54,15 @@ final class OAuth2TokenAuthenticator implements Authenticator {
             .addHeader(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
     }
+
+    private void validateNewToken(OAuth2Token updatedToken) throws IOException {
+        if (updatedToken == null) {
+            throw new IOException("Authentication failed: No token retrieved from " + OAuth2TokenProvider.class.getName());
+        }
+        String accessToken = updatedToken.getAccessToken();
+        if (accessToken == null || accessToken.isEmpty()) {
+            throw new IOException("Authentication failed: No access token present");
+        }
+    }
+
 }

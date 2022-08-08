@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.cert.X509Certificate;
@@ -167,6 +168,11 @@ class TestApiConnectionInfo {
 
             @Override
             public OAuth2Token refreshToken() {
+                return token;
+            }
+
+            @Override
+            public OAuth2Token newToken() throws IOException {
                 return token;
             }
 

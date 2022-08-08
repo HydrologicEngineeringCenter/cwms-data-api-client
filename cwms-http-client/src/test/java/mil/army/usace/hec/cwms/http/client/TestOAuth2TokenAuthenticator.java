@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 
 class TestOAuth2TokenAuthenticator {
 
+    private static final String ACCESS_TOKEN =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2NTk5NzcyNjgsImV4cCI6MTY3NDQyMDc2NjgsImF1ZCI6Ind3dy5leGFtcGxlLmNvbSIsInN1YiI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJHaXZlbk5hbWUiOiJKb2hubnkiLCJTdXJuYW1lIjoiUm9ja2V0IiwiRW1haWwiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiUm9sZSI6WyJNYW5hZ2VyIiwiUHJvamVjdCBBZG1pbmlzdHJhdG9yIl19.fuNn21aXq0ljupzvngo5_KHPwI4WYHP2UhSuSwP4NY8";
+
     @Test
     void testAuthenticate() throws IOException {
         OAuth2TokenProvider tokenProvider = getTestTokenProvider();
@@ -30,7 +33,7 @@ class TestOAuth2TokenAuthenticator {
     private Response getMockResponse() {
         Request mockRequest = new Request.Builder()
             .url("https://some-url.com")
-            .addHeader(AUTHORIZATION_HEADER, "Bearer abc123")
+            .addHeader(AUTHORIZATION_HEADER, "Bearer " + ACCESS_TOKEN)
             .build();
         return new Response.Builder()
             .request(mockRequest)
@@ -50,9 +53,9 @@ class TestOAuth2TokenAuthenticator {
             public OAuth2Token getToken() {
                 OAuth2Token token = new OAuth2Token();
                 token.setTokenType("Bearer");
-                token.setAccessToken("abc123");
+                token.setAccessToken(ACCESS_TOKEN);
                 token.setExpiresIn(3600);
-                token.setRefreshToken("123abc");
+                token.setRefreshToken(ACCESS_TOKEN);
                 return token;
             }
 
@@ -60,9 +63,19 @@ class TestOAuth2TokenAuthenticator {
             public OAuth2Token refreshToken() {
                 OAuth2Token token = new OAuth2Token();
                 token.setTokenType("Bearer");
-                token.setAccessToken("xyz456");
+                token.setAccessToken(ACCESS_TOKEN);
                 token.setExpiresIn(3600);
-                token.setRefreshToken("456xyz");
+                token.setRefreshToken(ACCESS_TOKEN);
+                return token;
+            }
+
+            @Override
+            public OAuth2Token newToken() throws IOException {
+                OAuth2Token token = new OAuth2Token();
+                token.setTokenType("Bearer");
+                token.setAccessToken(ACCESS_TOKEN);
+                token.setExpiresIn(3600);
+                token.setRefreshToken(ACCESS_TOKEN);
                 return token;
             }
 
