@@ -60,7 +60,7 @@ class TestOAuth2TokenInterceptor {
             }
 
             @Override
-            public OAuth2Token getDirectX509Token() throws IOException {
+            public OAuth2Token newToken() throws IOException {
                 OAuth2Token token = new OAuth2Token();
                 token.setTokenType("Bearer");
                 token.setAccessToken(ACCESS_TOKEN);

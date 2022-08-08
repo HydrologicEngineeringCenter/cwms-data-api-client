@@ -8,6 +8,6 @@ public interface OAuth2TokenProvider {
 
     OAuth2Token refreshToken() throws IOException;
 
-    OAuth2Token getDirectX509Token() throws IOException;
+    OAuth2Token newToken() throws IOException;
 
 }

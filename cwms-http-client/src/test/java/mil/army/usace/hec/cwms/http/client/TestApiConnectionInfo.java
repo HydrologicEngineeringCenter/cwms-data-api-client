@@ -172,7 +172,7 @@ class TestApiConnectionInfo {
             }
 
             @Override
-            public OAuth2Token getDirectX509Token() throws IOException {
+            public OAuth2Token newToken() throws IOException {
                 return token;
             }
 

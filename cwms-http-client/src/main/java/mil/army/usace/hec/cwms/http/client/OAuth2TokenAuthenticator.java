@@ -38,8 +38,8 @@ final class OAuth2TokenAuthenticator implements Authenticator {
             throw new IOException("No access token present in refreshed authentication token");
         }
         if (AccessTokenValidator.isTokenExpired(updatedToken)) {
-            updatedToken = tokenProvider.getDirectX509Token();
-            validateX509Token(updatedToken);
+            updatedToken = tokenProvider.newToken();
+            validateNewToken(updatedToken);
         }
         LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         // Retry the request with the new token.
@@ -55,7 +55,7 @@ final class OAuth2TokenAuthenticator implements Authenticator {
             .build();
     }
 
-    private void validateX509Token(OAuth2Token updatedToken) throws IOException {
+    private void validateNewToken(OAuth2Token updatedToken) throws IOException {
         if (updatedToken == null) {
             throw new IOException("Authentication failed: No token retrieved from " + OAuth2TokenProvider.class.getName());
         }
