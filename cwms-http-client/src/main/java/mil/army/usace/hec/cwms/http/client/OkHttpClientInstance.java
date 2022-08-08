@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  *
@@ -42,6 +43,7 @@ final class OkHttpClientInstance {
     static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
     static final String READ_TIMEOUT_PROPERTY_KEY = "cwms.http.client.readtimeout.seconds";
     static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
+    private static final HttpLoggingInterceptor LOGGING_INTERCEPTOR = new HttpLoggingInterceptor();
 
     private static final OkHttpClient INSTANCE = createClient();
 
@@ -52,10 +54,15 @@ final class OkHttpClientInstance {
 
     // package scoped for testing only
     static OkHttpClient createClient() {
+        if(LOGGER.isLoggable(Level.FINE))
+        {
+            LOGGING_INTERCEPTOR.level(HttpLoggingInterceptor.Level.BASIC);
+        }
         return new OkHttpClient.Builder()
             .callTimeout(getCallTimeout())
             .connectTimeout(getConnectTimeout())
             .readTimeout(getReadTimeout())
+            .addInterceptor(LOGGING_INTERCEPTOR)
             .build();
     }
 
