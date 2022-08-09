@@ -9,8 +9,36 @@ paths:
       summary: Get cwmsData
       operationId: getCwmsData
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/location/category/{category-id}:
     get:
       tags:
@@ -38,6 +66,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LocationCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/location/category:
     get:
       tags:
@@ -60,6 +118,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LocationCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/location/group/{group-id}:
     get:
       tags:
@@ -99,6 +187,36 @@ paths:
             application/geo+json:
               schema:
                 $ref: '#/components/schemas/Unit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/location/group:
     get:
       tags:
@@ -112,9 +230,15 @@ paths:
           description: Specifies the owning office of the location group(s) whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
           schema:
             type: string
-        - name: includeAssigned
+        - name: include-assigned
           in: query
           description: 'Include the assigned locations in the returned location groups. (default: false)'
+          schema:
+            type: boolean
+        - name: includeAssigned
+          in: query
+          description: Deprecated. Use include-assigned instead.
+          deprecated: true
           schema:
             type: boolean
       responses:
@@ -131,15 +255,45 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CsvV1LocationGroup'
-  /cwms-data/locations/{location_code}:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations with location_code
+      summary: Get cwmsData locations with locationId
       description: Returns CWMS Location Data
-      operationId: getCwmsDataLocationsWithLocation_code
+      operationId: getCwmsDataLocationsWithLocationId
       parameters:
-        - name: location_code
+        - name: location-id
           in: path
           required: true
           schema:
@@ -165,14 +319,44 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     delete:
       tags:
         - Locations
-      summary: Delete cwmsData locations with location_code
+      summary: Delete cwmsData locations with locationId
       description: Delete CWMS Location
-      operationId: deleteCwmsDataLocationsWithLocation_code
+      operationId: deleteCwmsDataLocationsWithLocationId
       parameters:
-        - name: location_code
+        - name: location-id
           in: path
           required: true
           schema:
@@ -183,16 +367,44 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     patch:
       tags:
         - Locations
-      summary: Patch cwmsData locations with location_code
+      summary: Patch cwmsData locations with locationId
       description: Update CWMS Location
-      operationId: patchCwmsDataLocationsWithLocation_code
+      operationId: patchCwmsDataLocationsWithLocationId
       parameters:
-        - name: location_code
+        - name: location-id
           in: path
           required: true
           schema:
@@ -213,8 +425,36 @@ paths:
               $ref: '#/components/schemas/Location'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/locations:
     get:
       tags:
@@ -270,6 +510,36 @@ paths:
             application/geo+json:
               schema:
                 $ref: '#/components/schemas/Unit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     post:
       tags:
         - Locations
@@ -293,8 +563,36 @@ paths:
               $ref: '#/components/schemas/Location'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/offices/{office}:
     get:
       tags:
@@ -338,6 +636,36 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/CsvV1Office'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/offices:
     get:
       tags:
@@ -375,6 +703,36 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/CsvV1Office'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/units:
     get:
       tags:
@@ -390,6 +748,36 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
   /cwms-data/parameters:
@@ -407,6 +795,36 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timezones:
     get:
       tags:
@@ -422,6 +840,36 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
   /cwms-data/levels:
@@ -474,6 +922,36 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     post:
       tags:
         - Levels
@@ -497,8 +975,36 @@ paths:
               $ref: '#/components/schemas/LocationLevel'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/levels/{location}:
     delete:
       tags:
@@ -523,12 +1029,40 @@ paths:
             type: string
         - name: date
           in: query
-          description: Specifies the effective date of the level to be deleted
+          description: Specifies the effective date of the level to be deleted. If not provided will delete all data and reference to the location level.
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     patch:
       tags:
         - Levels
@@ -563,8 +1097,36 @@ paths:
               $ref: '#/components/schemas/LocationLevel'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timeseries/recent/{group-id}:
     get:
       summary: Get cwmsData timeseries recent with groupId
@@ -576,8 +1138,36 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timeseries/category/{category-id}:
     get:
       tags:
@@ -605,8 +1195,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the timeseries category was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
   /cwms-data/timeseries/category:
@@ -631,8 +1249,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TimeSeriesCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the categories were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
   /cwms-data/timeseries/group/{group-id}:
@@ -668,6 +1314,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesGroup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timeseries/group:
     get:
       tags:
@@ -690,8 +1366,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TimeSeriesGroup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the timeseries group(s) were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
   /cwms-data/timeseries:
@@ -747,9 +1451,22 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: pageSize
+        - name: cursor
+          in: query
+          description: Deprecated. Use 'page' instead.
+          deprecated: true
+          schema:
+            type: string
+        - name: page-size
           in: query
           description: How many entries per page returned. Default 500.
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Deprecated. Please use page-size instead.
+          deprecated: true
           schema:
             type: integer
             format: int32
@@ -765,8 +1482,34 @@ paths:
                 $ref: '#/components/schemas/TimeSeries'
         '400':
           description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a timeseries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
     post:
@@ -785,8 +1528,36 @@ paths:
               $ref: '#/components/schemas/TimeSeries'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timeseries/{timeseries}:
     delete:
       tags:
@@ -806,8 +1577,36 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     patch:
       tags:
         - TimeSeries
@@ -830,8 +1629,282 @@ paths:
               $ref: '#/components/schemas/TimeSeries'
         required: true
       responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/ratings/template/{template-id}:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings template with templateId
+      operationId: getCwmsDataRatingsTemplateWithTemplateId
+      parameters:
+        - name: template-id
+          in: path
+          description: Specifies the template whose data is to be included in the response
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating Templates whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          required: true
+          schema:
+            type: string
+      responses:
         '200':
-          description: Default response
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatingTemplate'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/ratings/template:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings template
+      operationId: getCwmsDataRatingsTemplate
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating Templates whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          schema:
+            type: string
+        - name: template-id-mask
+          in: query
+          description: RegExp that specifies the rating template IDs to be included in the response. If this field is not specified, all rating templates shall be returned.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/RatingTemplates'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/ratings/spec/{rating-id}:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings spec with ratingId
+      operationId: getCwmsDataRatingsSpecWithRatingId
+      parameters:
+        - name: rating-id
+          in: path
+          description: Specifies the rating-id of the Rating Spec to be included in the response
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating Specs whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatingSpec'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/ratings/spec:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings spec
+      operationId: getCwmsDataRatingsSpec
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating Specs whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          schema:
+            type: string
+        - name: rating-id-mask
+          in: query
+          description: RegExp that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/RatingSpecs'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/ratings/{rating}:
     get:
       tags:
@@ -861,6 +1934,36 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Unit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     delete:
       tags:
         - Ratings
@@ -879,8 +1982,36 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
     patch:
       tags:
         - Ratings
@@ -903,8 +2034,36 @@ paths:
               $ref: '#/components/schemas/Unit'
         required: true
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/ratings:
     get:
       tags:
@@ -924,7 +2083,7 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Rating values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n1. EN.   Specifies English unit system.  Rating values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
           schema:
             type: string
         - name: datum
@@ -955,8 +2114,36 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a rating table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
     post:
@@ -975,16 +2162,44 @@ paths:
               $ref: '#/components/schemas/Unit'
         required: true
       responses:
-        '200':
-          description: Default response
-  /cwms-data/catalog/{dataSet}:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/catalog/{dataset}:
     get:
       tags:
         - Catalog-Beta
       summary: Get cwmsData catalog with dataset
       operationId: getCwmsDataCatalogWithDataset
       parameters:
-        - name: dataSet
+        - name: dataset
           in: path
           description: A list of what data? E.g. Timeseries, Locations, Ratings, etc
           required: true
@@ -995,13 +2210,32 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are.
           schema:
             type: string
-        - name: pageSize
+        - name: cursor
+          in: query
+          description: Deprecated. Use 'page' instead.
+          deprecated: true
+          schema:
+            type: string
+        - name: page-size
           in: query
           description: How many entires per page returned. Default 500.
           schema:
             type: integer
             format: int32
+        - name: pageSize
+          in: query
+          description: Deprecated. Use page-size.
+          deprecated: true
+          schema:
+            type: integer
+            format: int32
         - name: unitSystem
+          in: query
+          description: Deprecated. Use unit-system.
+          deprecated: true
+          schema:
+            $ref: '#/components/schemas/UnitSystem'
+        - name: unit-system
           in: query
           description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
           schema:
@@ -1016,24 +2250,48 @@ paths:
           description: Posix regular expression matching against the id
           schema:
             type: string
-        - name: timeseriesCategoryLike
+        - name: timeseries-category-like
           in: query
           description: Posix regular expression matching against the timeseries category id
           schema:
             type: string
-        - name: timeseriesGroupLike
+        - name: timeseriesCategoryLike
+          in: query
+          description: Deprecated. Use timeseries-category-like.
+          deprecated: true
+          schema:
+            type: string
+        - name: timeseries-group-like
           in: query
           description: Posix regular expression matching against the timeseries group id
           schema:
             type: string
-        - name: locationCategoryLike
+        - name: timeseriesGroupLike
+          in: query
+          description: Deprecated. Use timeseries-group-like.
+          deprecated: true
+          schema:
+            type: string
+        - name: location-category-like
           in: query
           description: Posix regular expression matching against the location category id
           schema:
             type: string
-        - name: locationGroupLike
+        - name: locationCategoryLike
+          in: query
+          description: Deprecated. Use location-category-like.
+          deprecated: true
+          schema:
+            type: string
+        - name: location-group-like
           in: query
           description: Posix regular expression matching against the location group id
+          schema:
+            type: string
+        - name: locationGroupLike
+          in: query
+          description: Deprecated. Use location-group-like.
+          deprecated: true
           schema:
             type: string
       responses:
@@ -1046,6 +2304,36 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Catalog'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/basins/{basin-id}:
     get:
       tags:
@@ -1076,8 +2364,36 @@ paths:
             application/vnd.named+pg+json:
               schema:
                 $ref: '#/components/schemas/Basin'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a basin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
   /cwms-data/basins:
@@ -1105,8 +2421,36 @@ paths:
             application/vnd.named+pg+json:
               schema:
                 $ref: '#/components/schemas/Basin'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: The provided combination of parameters did not find a basin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
   /cwms-data/blobs/{blob-id}:
@@ -1127,8 +2471,36 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Default response
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/blobs:
     get:
       tags:
@@ -1146,7 +2518,20 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
+        - name: cursor
+          in: query
+          description: Deprecated. Use 'page' instead.
+          deprecated: true
+          schema:
+            type: string
         - name: pageSize
+          in: query
+          description: Deprecated.  Use page-size instead.
+          deprecated: true
+          schema:
+            type: integer
+            format: int32
+        - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
           schema:
@@ -1167,6 +2552,36 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Blobs'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/clobs/{clob-id}:
     get:
       tags:
@@ -1191,6 +2606,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Clob'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/clobs:
     get:
       tags:
@@ -1208,15 +2653,34 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: pageSize
+        - name: cursor
+          in: query
+          description: Deprecated. Use 'page' instead.
+          deprecated: true
+          schema:
+            type: string
+        - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
           schema:
             type: integer
             format: int32
-        - name: includeValues
+        - name: pageSize
+          in: query
+          description: Deprecated, use 'page-size' instead.
+          deprecated: true
+          schema:
+            type: integer
+            format: int32
+        - name: include-values
           in: query
           description: 'Do you want the value associated with this particular clob (default: false)'
+          schema:
+            type: boolean
+        - name: includeValues
+          in: query
+          description: Deprecated, use 'include-values' instead.
+          deprecated: true
           schema:
             type: boolean
         - name: like
@@ -1234,6 +2698,36 @@ paths:
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Clobs'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/pools/{pool-id}:
     get:
       tags:
@@ -1287,8 +2781,36 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Pool'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the Location Category was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
   /cwms-data/pools:
@@ -1339,9 +2861,22 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: pageSize
+        - name: cursor
+          in: query
+          description: Deprecated. Use 'page' instead.
+          deprecated: true
+          schema:
+            type: string
+        - name: page-size
           in: query
           description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Deprecated. Use 'page-size' instead.
+          deprecated: true
           schema:
             type: integer
             format: int32
@@ -1352,12 +2887,106 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Pools'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '404':
           description: Based on the combination of inputs provided the pools were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+  /cwms-data/specified-levels:
+    get:
+      tags:
+        - Specified Levels
+      summary: Get cwmsData specifiedLevels
+      operationId: getCwmsDataSpecifiedLevels
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Specified Levels whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          schema:
+            type: string
+        - name: template-id-mask
+          in: query
+          description: Mask that specifies the IDs to be included in the response. If this field is not specified, all specified levels shall be returned.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/SpecifiedLevel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
 components:
   schemas:
+    RadarError:
+      type: object
+      properties:
+        message:
+          type: string
+        incidentIdentifier:
+          type: string
+          description: A randomly generated number to help identify your request in the logs for analysis..
+        details:
+          type: object
+          additionalProperties:
+            type: object
     LocationCategory:
       type: object
       properties:
@@ -1418,6 +3047,8 @@ components:
     Unit:
       type: object
     Location:
+      required:
+        - name
       type: object
       properties:
         name:
@@ -1564,32 +3195,56 @@ components:
       description: Single Office or List of Offices in comma separated format
       example: "#Office Name,Long Name,Office Type,Reports To Office\r\nCERL,Construction Engineering Research Laboratory,Field Operating Activity\tERD\r\nCHL,Coastal and Hydraulics Laboratory,Field Operating Activity\tERD\r\nNAB,Baltimore District,District,NAD\r\nNAD,North Atlantic Division,Division Headquarters,HQ"
     LocationLevel:
+      required:
+        - location-level-id
+        - office-id
       type: object
       properties:
+        location-level-id:
+          type: string
+          description: Name of the location level
+        office-id:
+          type: string
+          description: Owning office of the level
         seasonal-time-series-id:
           type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
         seasonal-values:
           type: array
+          description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
           items:
             $ref: '#/components/schemas/SeasonalValueBean'
         specified-level-id:
           type: string
+          description: Generic name of this location level. Common names are 'Top of Dam', 'Streambed', 'Bottom of Dam'.
         parameter-type-id:
           type: string
+          description: To indicate if single or aggregate value
+          enum:
+            - Inst
+            - Ave
+            - Min
+            - Max
+            - Total
         parameter-id:
           type: string
-        si-parameter-units-constant-value:
+          description: Data Type such as Stage, Elevation, or others.
+        constant-value:
           type: number
+          description: Single value for this location level. Mutually exclusive with seasonableTimeSeriesId and seasonValues.
           format: double
         level-units-id:
           type: string
+          description: Units thhe provided levels are in
         level-date:
           type: string
+          description: The date/time at which this location level configuration takes affect.
           format: date-time
         level-comment:
           type: string
         interval-origin:
           type: string
+          description: The start point of provided seasonal values
           format: date-time
         interval-months:
           type: integer
@@ -1599,8 +3254,13 @@ components:
           format: int32
         interpolate-string:
           type: string
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
         duration-id:
           type: string
+          description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
         attribute-value:
           type: number
         attribute-units-id:
@@ -1613,10 +3273,6 @@ components:
           type: string
         attribute-comment:
           type: string
-        location-id:
-          type: string
-        office-id:
-          type: string
     SeasonalValueBean:
       type: object
       properties:
@@ -1628,6 +3284,7 @@ components:
           format: int32
         offset-minutes:
           type: integer
+      description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
     TimeSeriesCategory:
       type: object
       properties:
@@ -1739,6 +3396,12 @@ components:
               type: integer
               format: int32
           description: The interval of the time-series, in ISO-8601 duration format
+        intervalOffset:
+          type: integer
+          description: Offset from top of interval
+          format: int64
+          xml:
+            name: interval-offset
         name:
           type: string
           description: Time-series name
@@ -1761,6 +3424,11 @@ components:
           format: int32
           xml:
             name: page-size
+        timeZone:
+          type: string
+          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
+          xml:
+            name: time-zone
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
@@ -1846,6 +3514,138 @@ components:
             $ref: '#/components/schemas/Offset'
       xml:
         name: vertical-datum-info
+    ParameterSpec:
+      type: object
+      properties:
+        parameter:
+          type: string
+        in-range-method:
+          type: string
+        out-range-low-method:
+          type: string
+        out-range-high-method:
+          type: string
+    RatingTemplate:
+      type: object
+      properties:
+        office-id:
+          type: string
+        id:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        dependent-parameter:
+          type: string
+        independent-parameter-specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterSpec'
+        rating-ids:
+          type: array
+          items:
+            type: string
+    RatingTemplates:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+        nextPage:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+        pageSize:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          xml:
+            name: page-size
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingTemplate'
+    IndependentRoundingSpec:
+      type: object
+      properties:
+        position:
+          type: integer
+          format: int32
+        value:
+          type: string
+    RatingSpec:
+      type: object
+      properties:
+        office-id:
+          type: string
+        rating-id:
+          type: string
+        template-id:
+          type: string
+        location-id:
+          type: string
+        version:
+          type: string
+        source-agency:
+          type: string
+        in-range-method:
+          type: string
+        out-range-low-method:
+          type: string
+        out-range-high-method:
+          type: string
+        active:
+          type: boolean
+        auto-update:
+          type: boolean
+        auto-activate:
+          type: boolean
+        auto-migrate-extension:
+          type: boolean
+        independent-rounding-specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndependentRoundingSpec'
+        dependent-rounding-spec:
+          type: string
+        description:
+          type: string
+        effective-dates:
+          type: array
+          items:
+            type: string
+            format: date-time
+    RatingSpecs:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+        nextPage:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+        pageSize:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          xml:
+            name: page-size
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingSpec'
     CatalogableEndpoint:
       type: string
       description: Set of data for which a larger catalog can be built.
@@ -2138,6 +3938,9 @@ components:
         configuration:
           type: string
     Blob:
+      required:
+        - id
+        - office
       type: object
       properties:
         office:
@@ -2176,6 +3979,9 @@ components:
           xml:
             name: page-size
         blobs:
+          required:
+            - id
+            - office
           type: object
           properties:
             office:
@@ -2197,6 +4003,9 @@ components:
       xml:
         name: blobs
     Clob:
+      required:
+        - id
+        - office
       type: object
       properties:
         office:
@@ -2232,6 +4041,9 @@ components:
           xml:
             name: page-size
         clobs:
+          required:
+            - id
+            - office
           type: object
           properties:
             office:
@@ -2257,23 +4069,23 @@ components:
           type: string
         clobText:
           type: string
-        implicit:
-          type: boolean
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
         projectId:
           type: string
         bottomLevelId:
           type: string
         topLevelId:
           type: string
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
+        implicit:
+          type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     Pools:
       type: object
@@ -2305,18 +4117,27 @@ components:
               type: string
             clobText:
               type: string
-            implicit:
-              type: boolean
-            poolName:
-              $ref: '#/components/schemas/PoolNameType'
             projectId:
               type: string
             bottomLevelId:
               type: string
             topLevelId:
               type: string
+            poolName:
+              $ref: '#/components/schemas/PoolNameType'
+            implicit:
+              type: boolean
           description: List of retrieved pools
           xml:
             wrapped: true
       xml:
         name: pools
+    SpecifiedLevel:
+      type: object
+      properties:
+        id:
+          type: string
+        officeId:
+          type: string
+        description:
+          type: string

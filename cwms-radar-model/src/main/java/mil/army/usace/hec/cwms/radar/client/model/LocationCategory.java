@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.Objects;
  * A representation of a location category
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class LocationCategory {
     @JsonProperty("office-id")
     private String officeId = null;
@@ -111,12 +111,10 @@ public class LocationCategory {
         }
         LocationCategory locationCategory = (LocationCategory) o;
         return this.officeId == null || locationCategory.officeId == null ? Objects.equals(this.officeId, locationCategory.officeId) :
-            this.officeId.equalsIgnoreCase(locationCategory.officeId)
-                && this.id == null || locationCategory.id == null ? Objects.equals(this.id, locationCategory.id) :
-                this.id.equalsIgnoreCase(locationCategory.id)
-                    && this.description == null || locationCategory.description == null ?
-                    Objects.equals(this.description, locationCategory.description) : this.description.equalsIgnoreCase(locationCategory.description)
-            ;
+            this.officeId.equalsIgnoreCase(locationCategory.officeId) && this.id == null || locationCategory.id == null ?
+                Objects.equals(this.id, locationCategory.id) :
+                this.id.equalsIgnoreCase(locationCategory.id) && this.description == null || locationCategory.description == null ?
+                    Objects.equals(this.description, locationCategory.description) : this.description.equalsIgnoreCase(locationCategory.description);
     }
 
     @Override

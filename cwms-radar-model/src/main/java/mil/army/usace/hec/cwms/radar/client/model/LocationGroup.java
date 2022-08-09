@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import javax.validation.Valid;
  * A representation of a location group
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class LocationGroup {
     @JsonProperty("id")
     private String id = null;
@@ -235,21 +235,18 @@ public class LocationGroup {
             return false;
         }
         LocationGroup locationGroup = (LocationGroup) o;
-        return this.id == null || locationGroup.id == null ? Objects.equals(this.id, locationGroup.id) : this.id.equalsIgnoreCase(locationGroup.id)
-            && Objects.equals(this.locationCategory, locationGroup.locationCategory)
-            && this.officeId == null || locationGroup.officeId == null ? Objects.equals(this.officeId, locationGroup.officeId) :
-            this.officeId.equalsIgnoreCase(locationGroup.officeId)
-                && this.description == null || locationGroup.description == null ? Objects.equals(this.description, locationGroup.description) :
-                this.description.equalsIgnoreCase(locationGroup.description)
-                    && this.sharedLocAliasId == null || locationGroup.sharedLocAliasId == null ?
-                    Objects.equals(this.sharedLocAliasId, locationGroup.sharedLocAliasId) :
-                    this.sharedLocAliasId.equalsIgnoreCase(locationGroup.sharedLocAliasId)
-                        && this.sharedRefLocationId == null || locationGroup.sharedRefLocationId == null ?
-                        Objects.equals(this.sharedRefLocationId, locationGroup.sharedRefLocationId) :
-                        this.sharedRefLocationId.equalsIgnoreCase(locationGroup.sharedRefLocationId)
-                            && Objects.equals(this.locGroupAttribute, locationGroup.locGroupAttribute)
-                            && Objects.equals(this.assignedLocations, locationGroup.assignedLocations)
-            ;
+        return this.id == null || locationGroup.id == null ? Objects.equals(this.id, locationGroup.id) :
+            this.id.equalsIgnoreCase(locationGroup.id) && Objects.equals(this.locationCategory, locationGroup.locationCategory) &&
+                this.officeId == null || locationGroup.officeId == null ? Objects.equals(this.officeId, locationGroup.officeId) :
+                this.officeId.equalsIgnoreCase(locationGroup.officeId) && this.description == null || locationGroup.description == null ?
+                    Objects.equals(this.description, locationGroup.description) :
+                    this.description.equalsIgnoreCase(locationGroup.description) && this.sharedLocAliasId == null ||
+                        locationGroup.sharedLocAliasId == null ? Objects.equals(this.sharedLocAliasId, locationGroup.sharedLocAliasId) :
+                        this.sharedLocAliasId.equalsIgnoreCase(locationGroup.sharedLocAliasId) && this.sharedRefLocationId == null ||
+                            locationGroup.sharedRefLocationId == null ? Objects.equals(this.sharedRefLocationId, locationGroup.sharedRefLocationId) :
+                            this.sharedRefLocationId.equalsIgnoreCase(locationGroup.sharedRefLocationId) &&
+                                Objects.equals(this.locGroupAttribute, locationGroup.locGroupAttribute) &&
+                                Objects.equals(this.assignedLocations, locationGroup.assignedLocations);
     }
 
     @Override

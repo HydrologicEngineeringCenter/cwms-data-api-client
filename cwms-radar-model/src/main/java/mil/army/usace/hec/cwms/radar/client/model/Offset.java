@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.Objects;
  * Offset
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class Offset {
     @JsonProperty("estimate")
     private Boolean estimate = null;
@@ -110,11 +110,8 @@ public class Offset {
             return false;
         }
         Offset offset = (Offset) o;
-        return Objects.equals(this.estimate, offset.estimate)
-            && this.toDatum == null || offset.toDatum == null ? Objects.equals(this.toDatum, offset.toDatum) :
-            this.toDatum.equalsIgnoreCase(offset.toDatum)
-                && Objects.equals(this.value, offset.value)
-            ;
+        return Objects.equals(this.estimate, offset.estimate) && this.toDatum == null || offset.toDatum == null ?
+            Objects.equals(this.toDatum, offset.toDatum) : this.toDatum.equalsIgnoreCase(offset.toDatum) && Objects.equals(this.value, offset.value);
     }
 
     @Override

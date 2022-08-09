@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import javax.validation.Valid;
  * AssignedLocation
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class AssignedLocation {
     @JsonProperty("location-id")
     private String locationId = null;
@@ -158,16 +158,14 @@ public class AssignedLocation {
         }
         AssignedLocation assignedLocation = (AssignedLocation) o;
         return this.locationId == null || assignedLocation.locationId == null ? Objects.equals(this.locationId, assignedLocation.locationId) :
-            this.locationId.equalsIgnoreCase(assignedLocation.locationId)
-                && this.officeId == null || assignedLocation.officeId == null ? Objects.equals(this.officeId, assignedLocation.officeId) :
-                this.officeId.equalsIgnoreCase(assignedLocation.officeId)
-                    && this.aliasId == null || assignedLocation.aliasId == null ? Objects.equals(this.aliasId, assignedLocation.aliasId) :
-                    this.aliasId.equalsIgnoreCase(assignedLocation.aliasId)
-                        && Objects.equals(this.attribute, assignedLocation.attribute)
-                        && this.refLocationId == null || assignedLocation.refLocationId == null ?
+            this.locationId.equalsIgnoreCase(assignedLocation.locationId) && this.officeId == null || assignedLocation.officeId == null ?
+                Objects.equals(this.officeId, assignedLocation.officeId) :
+                this.officeId.equalsIgnoreCase(assignedLocation.officeId) && this.aliasId == null || assignedLocation.aliasId == null ?
+                    Objects.equals(this.aliasId, assignedLocation.aliasId) :
+                    this.aliasId.equalsIgnoreCase(assignedLocation.aliasId) && Objects.equals(this.attribute, assignedLocation.attribute) &&
+                        this.refLocationId == null || assignedLocation.refLocationId == null ?
                         Objects.equals(this.refLocationId, assignedLocation.refLocationId) :
-                        this.refLocationId.equalsIgnoreCase(assignedLocation.refLocationId)
-            ;
+                        this.refLocationId.equalsIgnoreCase(assignedLocation.refLocationId);
     }
 
     @Override

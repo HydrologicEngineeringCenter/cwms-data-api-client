@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.Objects;
  * TimeSeriesColumn
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class TimeSeriesColumn {
     @JsonProperty("name")
     private String name = null;
@@ -111,11 +111,9 @@ public class TimeSeriesColumn {
         }
         TimeSeriesColumn timeSeriesColumn = (TimeSeriesColumn) o;
         return this.name == null || timeSeriesColumn.name == null ? Objects.equals(this.name, timeSeriesColumn.name) :
-            this.name.equalsIgnoreCase(timeSeriesColumn.name)
-                && Objects.equals(this.ordinal, timeSeriesColumn.ordinal)
-                && this.datatype == null || timeSeriesColumn.datatype == null ? Objects.equals(this.datatype, timeSeriesColumn.datatype) :
-                this.datatype.equalsIgnoreCase(timeSeriesColumn.datatype)
-            ;
+            this.name.equalsIgnoreCase(timeSeriesColumn.name) && Objects.equals(this.ordinal, timeSeriesColumn.ordinal) && this.datatype == null ||
+                timeSeriesColumn.datatype == null ? Objects.equals(this.datatype, timeSeriesColumn.datatype) :
+                this.datatype.equalsIgnoreCase(timeSeriesColumn.datatype);
     }
 
     @Override
