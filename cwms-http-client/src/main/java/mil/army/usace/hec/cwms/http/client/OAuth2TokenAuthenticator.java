@@ -30,18 +30,22 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         if (response.request().header(AUTHORIZATION_HEADER) == null) {
             throw new IOException("Cannot refresh authentication token due to missing " + AUTHORIZATION_HEADER + " header");
         }
-        //refresh the token
-        LOGGER.log(Level.FINE, "Refreshing OAuth2 Token");
-        OAuth2Token updatedToken = tokenProvider.refreshToken();
-        String accessToken = updatedToken.getAccessToken();
-        if (accessToken == null || accessToken.isEmpty()) {
-            throw new IOException("No access token present in refreshed authentication token");
-        }
-        if (AccessTokenValidator.isTokenExpired(updatedToken)) {
+        OAuth2Token updatedToken;
+        //check if refresh token on current token is still valid
+        if (AccessTokenValidator.isTokenExpired(token.getRefreshToken())) {
+            //if expired we need to get a new token
             updatedToken = tokenProvider.newToken();
             validateNewToken(updatedToken);
+        } else {
+            //if refresh token is still valid, refresh using refresh token
+            LOGGER.log(Level.FINE, "Refreshing OAuth2 Token");
+            updatedToken = tokenProvider.refreshToken();
+            String accessToken = updatedToken.getAccessToken();
+            if (accessToken == null || accessToken.isEmpty()) {
+                throw new IOException("No access token present in refreshed authentication token");
+            }
+            LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         }
-        LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         // Retry the request with the new token.
         return newRequestWithAccessTokenAsHeader(response, updatedToken);
     }
