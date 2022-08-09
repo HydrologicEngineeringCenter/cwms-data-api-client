@@ -1,5 +1,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +34,9 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         }
         OAuth2Token updatedToken;
         //check if refresh token on current token is still valid
-        if (AccessTokenValidator.isTokenExpired(token.getRefreshToken())) {
+        String refreshToken = token.getRefreshToken();
+        DecodedJWT jwt = JWT.decode(refreshToken);
+        if (AccessTokenValidator.isTokenExpired(jwt)) {
             //if expired we need to get a new token
             updatedToken = tokenProvider.newToken();
             validateNewToken(updatedToken);

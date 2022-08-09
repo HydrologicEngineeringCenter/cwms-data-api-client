@@ -1,6 +1,5 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import java.time.Instant;
 import java.util.Date;
@@ -17,11 +16,10 @@ final class AccessTokenValidator {
     /**
      * Checks if token's access token is expired.
      *
-     * @param token - OAuth2Token to check.
+     * @param jwt - JWT to check.
      * @return boolean TRUE if expired, else FALSE
      */
-    static boolean isTokenExpired(String token) {
-        DecodedJWT jwt = JWT.decode(token);
+    static boolean isTokenExpired(DecodedJWT jwt) {
         long bufferMillis = Instant.ofEpochSecond(DEFAULT_REFRESH_EXPIRED_BUFFER_SECONDS)
             .toEpochMilli(); //default 1 second buffer
         String bufferStr = System.getProperty(REFRESH_EXPIRED_BUFFER_PROPERTY_KEY);
