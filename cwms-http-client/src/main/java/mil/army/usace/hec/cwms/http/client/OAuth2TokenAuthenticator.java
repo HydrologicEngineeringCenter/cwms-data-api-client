@@ -38,6 +38,7 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         DecodedJWT jwt = JWT.decode(refreshToken);
         if (AccessTokenValidator.isTokenExpired(jwt)) {
             //if expired we need to get a new token
+            LOGGER.log(Level.INFO, () -> "Refresh token issued by " + jwt.getIssuer() + " is expired. Re-authenticating with new token");
             updatedToken = tokenProvider.newToken();
             validateNewToken(updatedToken);
         } else {
