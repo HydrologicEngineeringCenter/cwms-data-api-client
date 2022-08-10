@@ -1,0 +1,132 @@
+[
+  {
+    "id": "Bottom of Exclusive Flood Control",
+    "office-id": "CWMS",
+    "description": "Bottom of Exclusive Flood Control Level"
+  },
+  {
+    "id": "Bottom of Flood Control",
+    "office-id": "CWMS",
+    "description": "Bottom of Flood Control Level"
+  },
+  {
+    "id": "Bottom of Inlet",
+    "office-id": "CWMS",
+    "description": "Bottom of Inlet Level"
+  },
+  {
+    "id": "Bottom of Multi-Purpose",
+    "office-id": "CWMS",
+    "description": "Bottom of Multi-Purpose Level"
+  },
+  {
+    "id": "Bottom of Normal",
+    "office-id": "CWMS",
+    "description": "Bottom of Normal Level"
+  },
+  {
+    "id": "Bottom of Operating",
+    "office-id": "CWMS",
+    "description": "Bottom of Operating Level"
+  },
+  {
+    "id": "Bottom of Power",
+    "office-id": "CWMS",
+    "description": "Bottom of Power Level"
+  },
+  {
+    "id": "Design Capacity",
+    "office-id": "CWMS",
+    "description": "Design Capacity Level"
+  },
+  {
+    "id": "Flood",
+    "office-id": "CWMS",
+    "description": "Flood Level"
+  },
+  {
+    "id": "Max Non-Damaging",
+    "office-id": "CWMS",
+    "description": "Maximum Without Causing Damage Level"
+  },
+  {
+    "id": "Regulating",
+    "office-id": "CWMS",
+    "description": "Regulating Level"
+  },
+  {
+    "id": "Streambed",
+    "office-id": "CWMS",
+    "description": "Streambed Level"
+  },
+  {
+    "id": "Top of Conservation",
+    "office-id": "CWMS",
+    "description": "Top Conservation Level"
+  },
+  {
+    "id": "Top of Dam",
+    "office-id": "CWMS",
+    "description": "Top of Dam Level"
+  },
+  {
+    "id": "Top of Downstream",
+    "office-id": "CWMS",
+    "description": "Top of Downstream Level"
+  },
+  {
+    "id": "Top of Exclusive Flood Control",
+    "office-id": "CWMS",
+    "description": "Top of Exclusive Flood Control Level"
+  },
+  {
+    "id": "Top of Flood",
+    "office-id": "CWMS",
+    "description": "Top of Flood Level"
+  },
+  {
+    "id": "Top of Inactive",
+    "office-id": "CWMS",
+    "description": "Top of Inactive Level"
+  },
+  {
+    "id": "Top of Induced Surcharge",
+    "office-id": "CWMS",
+    "description": "Top of Induced Surcharge Level"
+  },
+  {
+    "id": "Top of Inlet",
+    "office-id": "CWMS",
+    "description": "Top of Inlet Level"
+  },
+  {
+    "id": "Top of Multi-Purpose",
+    "office-id": "CWMS",
+    "description": "Top of Multi-Purpose Level"
+  },
+  {
+    "id": "Top of Normal",
+    "office-id": "CWMS",
+    "description": "Top of Normal Level"
+  },
+  {
+    "id": "Top of Operating",
+    "office-id": "CWMS",
+    "description": "Top of Operational Level"
+  },
+  {
+    "id": "Top of Outlet",
+    "office-id": "CWMS",
+    "description": "Top of Outlet Level"
+  },
+  {
+    "id": "Top of Overflow",
+    "office-id": "CWMS",
+    "description": "Top of Overflow Level"
+  },
+  {
+    "id": "Top of Power",
+    "office-id": "CWMS",
+    "description": "Top of Power Level"
+  }
+]

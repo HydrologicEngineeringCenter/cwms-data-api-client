@@ -32,7 +32,7 @@ import java.util.Objects;
  * A representation of a CWMS office
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-05T15:24:29.085-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class Office {
     @JsonProperty("name")
     private String name = null;
@@ -132,19 +132,18 @@ public class Office {
             return false;
         }
         Office office = (Office) o;
-        return this.name == null || office.name == null ? Objects.equals(this.name, office.name) : this.name.equalsIgnoreCase(office.name)
-            && this.longName == null || office.longName == null ? Objects.equals(this.longName, office.longName) :
-            this.longName.equalsIgnoreCase(office.longName)
-                && this.type == null || office.type == null ? Objects.equals(this.type, office.type) : this.type.equals(office.type)
-                && this.reportsTo == null || office.reportsTo == null ? Objects.equals(this.reportsTo, office.reportsTo) :
-                this.reportsTo.equalsIgnoreCase(office.reportsTo)
-            ;
+        return this.name == null || office.name == null ? Objects.equals(this.name, office.name) :
+            this.name.equalsIgnoreCase(office.name) && this.longName == null || office.longName == null ?
+                Objects.equals(this.longName, office.longName) :
+                this.longName.equalsIgnoreCase(office.longName) && this.type == null || office.type == null ? Objects.equals(this.type, office.type) :
+                    this.type.equals(office.type) && this.reportsTo == null || office.reportsTo == null ?
+                        Objects.equals(this.reportsTo, office.reportsTo) : this.reportsTo.equalsIgnoreCase(office.reportsTo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name == null ? 0 : name.toLowerCase(), longName == null ? 0 : longName.toLowerCase(),
-            type == null ? 0 : type, reportsTo == null ? 0 : reportsTo.toLowerCase());
+        return Objects.hash(name == null ? 0 : name.toLowerCase(), longName == null ? 0 : longName.toLowerCase(), type == null ? 0 : type,
+            reportsTo == null ? 0 : reportsTo.toLowerCase());
     }
 
     @Override

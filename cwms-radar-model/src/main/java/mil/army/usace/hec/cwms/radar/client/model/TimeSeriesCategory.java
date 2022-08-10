@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.Objects;
  * A representation of a TimeSeries category
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class TimeSeriesCategory {
     @JsonProperty("office-id")
     private String officeId = null;
@@ -111,13 +111,11 @@ public class TimeSeriesCategory {
         }
         TimeSeriesCategory timeSeriesCategory = (TimeSeriesCategory) o;
         return this.officeId == null || timeSeriesCategory.officeId == null ? Objects.equals(this.officeId, timeSeriesCategory.officeId) :
-            this.officeId.equalsIgnoreCase(timeSeriesCategory.officeId)
-                && this.id == null || timeSeriesCategory.id == null ? Objects.equals(this.id, timeSeriesCategory.id) :
-                this.id.equalsIgnoreCase(timeSeriesCategory.id)
-                    && this.description == null || timeSeriesCategory.description == null ?
+            this.officeId.equalsIgnoreCase(timeSeriesCategory.officeId) && this.id == null || timeSeriesCategory.id == null ?
+                Objects.equals(this.id, timeSeriesCategory.id) :
+                this.id.equalsIgnoreCase(timeSeriesCategory.id) && this.description == null || timeSeriesCategory.description == null ?
                     Objects.equals(this.description, timeSeriesCategory.description) :
-                    this.description.equalsIgnoreCase(timeSeriesCategory.description)
-            ;
+                    this.description.equalsIgnoreCase(timeSeriesCategory.description);
     }
 
     @Override

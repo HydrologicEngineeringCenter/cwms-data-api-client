@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * A representation of a timeseries group
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class TimeSeriesGroup {
     @JsonProperty("id")
     private String id = null;
@@ -212,20 +212,16 @@ public class TimeSeriesGroup {
         }
         TimeSeriesGroup timeSeriesGroup = (TimeSeriesGroup) o;
         return this.id == null || timeSeriesGroup.id == null ? Objects.equals(this.id, timeSeriesGroup.id) :
-            this.id.equalsIgnoreCase(timeSeriesGroup.id)
-                && Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory)
-                && this.officeId == null || timeSeriesGroup.officeId == null ? Objects.equals(this.officeId, timeSeriesGroup.officeId) :
-                this.officeId.equalsIgnoreCase(timeSeriesGroup.officeId)
-                    && this.description == null || timeSeriesGroup.description == null ?
-                    Objects.equals(this.description, timeSeriesGroup.description) : this.description.equalsIgnoreCase(timeSeriesGroup.description)
-                    && this.sharedAliasId == null || timeSeriesGroup.sharedAliasId == null ?
-                    Objects.equals(this.sharedAliasId, timeSeriesGroup.sharedAliasId) :
-                    this.sharedAliasId.equalsIgnoreCase(timeSeriesGroup.sharedAliasId)
-                        && this.sharedRefTsId == null || timeSeriesGroup.sharedRefTsId == null ?
-                        Objects.equals(this.sharedRefTsId, timeSeriesGroup.sharedRefTsId) :
-                        this.sharedRefTsId.equalsIgnoreCase(timeSeriesGroup.sharedRefTsId)
-                            && Objects.equals(this.assignedTimeSeries, timeSeriesGroup.assignedTimeSeries)
-            ;
+            this.id.equalsIgnoreCase(timeSeriesGroup.id) && Objects.equals(this.timeSeriesCategory, timeSeriesGroup.timeSeriesCategory) &&
+                this.officeId == null || timeSeriesGroup.officeId == null ? Objects.equals(this.officeId, timeSeriesGroup.officeId) :
+                this.officeId.equalsIgnoreCase(timeSeriesGroup.officeId) && this.description == null || timeSeriesGroup.description == null ?
+                    Objects.equals(this.description, timeSeriesGroup.description) :
+                    this.description.equalsIgnoreCase(timeSeriesGroup.description) && this.sharedAliasId == null ||
+                        timeSeriesGroup.sharedAliasId == null ? Objects.equals(this.sharedAliasId, timeSeriesGroup.sharedAliasId) :
+                        this.sharedAliasId.equalsIgnoreCase(timeSeriesGroup.sharedAliasId) && this.sharedRefTsId == null ||
+                            timeSeriesGroup.sharedRefTsId == null ? Objects.equals(this.sharedRefTsId, timeSeriesGroup.sharedRefTsId) :
+                            this.sharedRefTsId.equalsIgnoreCase(timeSeriesGroup.sharedRefTsId) &&
+                                Objects.equals(this.assignedTimeSeries, timeSeriesGroup.assignedTimeSeries);
     }
 
     @Override

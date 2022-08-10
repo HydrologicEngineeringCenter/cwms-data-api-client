@@ -29,53 +29,75 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
- * IndependentRoundingSpec
+ * SpecifiedLevel
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
-public class IndependentRoundingSpec {
-    @JsonProperty("position")
-    private Integer position = null;
+public class SpecifiedLevel {
+    @JsonProperty("id")
+    private String id = null;
 
-    @JsonProperty("value")
-    private String value = null;
+    @JsonProperty("office-id")
+    private String officeId = null;
 
-    public IndependentRoundingSpec position(Integer position) {
-        this.position = position;
+    @JsonProperty("description")
+    private String description = null;
+
+    public SpecifiedLevel id(String id) {
+        this.id = id;
         return this;
     }
 
     /**
-     * Get position
+     * Get id
      *
-     * @return position
+     * @return id
      **/
 
-    public Integer getPosition() {
-        return position;
+    public String getId() {
+        return id;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public IndependentRoundingSpec value(String value) {
-        this.value = value;
+    public SpecifiedLevel officeId(String officeId) {
+        this.officeId = officeId;
         return this;
     }
 
     /**
-     * Get value
+     * Get officeId
      *
-     * @return value
+     * @return officeId
      **/
 
-    public String getValue() {
-        return value;
+    public String getOfficeId() {
+        return officeId;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
+
+    public SpecifiedLevel description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return description
+     **/
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
@@ -87,23 +109,28 @@ public class IndependentRoundingSpec {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        IndependentRoundingSpec independentRoundingSpec = (IndependentRoundingSpec) o;
-        return Objects.equals(this.position, independentRoundingSpec.position) && this.value == null || independentRoundingSpec.value == null ?
-            Objects.equals(this.value, independentRoundingSpec.value) : this.value.equalsIgnoreCase(independentRoundingSpec.value);
+        SpecifiedLevel specifiedLevel = (SpecifiedLevel) o;
+        return this.id == null || specifiedLevel.id == null ? Objects.equals(this.id, specifiedLevel.id) :
+            this.id.equalsIgnoreCase(specifiedLevel.id) && this.officeId == null || specifiedLevel.officeId == null ?
+                Objects.equals(this.officeId, specifiedLevel.officeId) :
+                this.officeId.equalsIgnoreCase(specifiedLevel.officeId) && this.description == null || specifiedLevel.description == null ?
+                    Objects.equals(this.description, specifiedLevel.description) : this.description.equalsIgnoreCase(specifiedLevel.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, value == null ? 0 : value.toLowerCase());
+        return Objects.hash(id == null ? 0 : id.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(),
+            description == null ? 0 : description.toLowerCase());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class IndependentRoundingSpec {\n");
+        sb.append("class SpecifiedLevel {\n");
 
-        sb.append("    position: ").append(toIndentedString(position)).append("\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
         sb.append("}");
         return sb.toString();
     }

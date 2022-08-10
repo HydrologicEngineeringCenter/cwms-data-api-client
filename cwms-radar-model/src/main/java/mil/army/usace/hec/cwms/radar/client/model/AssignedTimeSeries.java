@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import javax.validation.Valid;
  * AssignedTimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2021-12-16T09:13:30.631614-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class AssignedTimeSeries {
     @JsonProperty("timeseries-id")
     private String timeseriesId = null;
@@ -158,14 +158,12 @@ public class AssignedTimeSeries {
         }
         AssignedTimeSeries assignedTimeSeries = (AssignedTimeSeries) o;
         return this.timeseriesId == null || assignedTimeSeries.timeseriesId == null ?
-            Objects.equals(this.timeseriesId, assignedTimeSeries.timeseriesId) : this.timeseriesId.equalsIgnoreCase(assignedTimeSeries.timeseriesId)
-            && Objects.equals(this.tsCode, assignedTimeSeries.tsCode)
-            && this.aliasId == null || assignedTimeSeries.aliasId == null ? Objects.equals(this.aliasId, assignedTimeSeries.aliasId) :
-            this.aliasId.equalsIgnoreCase(assignedTimeSeries.aliasId)
-                && this.refTsId == null || assignedTimeSeries.refTsId == null ? Objects.equals(this.refTsId, assignedTimeSeries.refTsId) :
-                this.refTsId.equalsIgnoreCase(assignedTimeSeries.refTsId)
-                    && Objects.equals(this.attribute, assignedTimeSeries.attribute)
-            ;
+            Objects.equals(this.timeseriesId, assignedTimeSeries.timeseriesId) :
+            this.timeseriesId.equalsIgnoreCase(assignedTimeSeries.timeseriesId) && Objects.equals(this.tsCode, assignedTimeSeries.tsCode) &&
+                this.aliasId == null || assignedTimeSeries.aliasId == null ? Objects.equals(this.aliasId, assignedTimeSeries.aliasId) :
+                this.aliasId.equalsIgnoreCase(assignedTimeSeries.aliasId) && this.refTsId == null || assignedTimeSeries.refTsId == null ?
+                    Objects.equals(this.refTsId, assignedTimeSeries.refTsId) :
+                    this.refTsId.equalsIgnoreCase(assignedTimeSeries.refTsId) && Objects.equals(this.attribute, assignedTimeSeries.attribute);
     }
 
     @Override

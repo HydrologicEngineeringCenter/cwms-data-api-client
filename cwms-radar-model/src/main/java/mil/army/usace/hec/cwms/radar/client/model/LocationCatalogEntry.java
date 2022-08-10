@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * LocationCatalogEntry
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class LocationCatalogEntry {
     @JsonProperty("office")
     private String office = null;
@@ -585,60 +585,53 @@ public class LocationCatalogEntry {
         }
         LocationCatalogEntry locationCatalogEntry = (LocationCatalogEntry) o;
         return this.office == null || locationCatalogEntry.office == null ? Objects.equals(this.office, locationCatalogEntry.office) :
-            this.office.equalsIgnoreCase(locationCatalogEntry.office)
-                && this.name == null || locationCatalogEntry.name == null ? Objects.equals(this.name, locationCatalogEntry.name) :
-                this.name.equalsIgnoreCase(locationCatalogEntry.name)
-                    && this.nearestCity == null || locationCatalogEntry.nearestCity == null ?
+            this.office.equalsIgnoreCase(locationCatalogEntry.office) && this.name == null || locationCatalogEntry.name == null ?
+                Objects.equals(this.name, locationCatalogEntry.name) :
+                this.name.equalsIgnoreCase(locationCatalogEntry.name) && this.nearestCity == null || locationCatalogEntry.nearestCity == null ?
                     Objects.equals(this.nearestCity, locationCatalogEntry.nearestCity) :
-                    this.nearestCity.equalsIgnoreCase(locationCatalogEntry.nearestCity)
-                        && this.publicName == null || locationCatalogEntry.publicName == null ?
-                        Objects.equals(this.publicName, locationCatalogEntry.publicName) :
-                        this.publicName.equalsIgnoreCase(locationCatalogEntry.publicName)
-                            && this.longName == null || locationCatalogEntry.longName == null ?
-                            Objects.equals(this.longName, locationCatalogEntry.longName) :
-                            this.longName.equalsIgnoreCase(locationCatalogEntry.longName)
-                                && this.description == null || locationCatalogEntry.description == null ?
-                                Objects.equals(this.description, locationCatalogEntry.description) :
-                                this.description.equalsIgnoreCase(locationCatalogEntry.description)
-                                    && this.kind == null || locationCatalogEntry.kind == null ? Objects.equals(this.kind, locationCatalogEntry.kind) :
-                                    this.kind.equalsIgnoreCase(locationCatalogEntry.kind)
-                                        && this.type == null || locationCatalogEntry.type == null ?
-                                        Objects.equals(this.type, locationCatalogEntry.type) : this.type.equalsIgnoreCase(locationCatalogEntry.type)
-                                        && this.timeZone == null || locationCatalogEntry.timeZone == null ?
-                                        Objects.equals(this.timeZone, locationCatalogEntry.timeZone) :
-                                        this.timeZone.equalsIgnoreCase(locationCatalogEntry.timeZone)
-                                            && Objects.equals(this.latitude, locationCatalogEntry.latitude)
-                                            && Objects.equals(this.longitude, locationCatalogEntry.longitude)
-                                            && Objects.equals(this.publishedLatitude, locationCatalogEntry.publishedLatitude)
-                                            && Objects.equals(this.publishedLongitude, locationCatalogEntry.publishedLongitude)
-                                            && this.horizontalDatum == null || locationCatalogEntry.horizontalDatum == null ?
-                                            Objects.equals(this.horizontalDatum, locationCatalogEntry.horizontalDatum) :
-                                            this.horizontalDatum.equalsIgnoreCase(locationCatalogEntry.horizontalDatum)
-                                                && Objects.equals(this.elevation, locationCatalogEntry.elevation)
-                                                && this.unit == null || locationCatalogEntry.unit == null ?
-                                                Objects.equals(this.unit, locationCatalogEntry.unit) :
-                                                this.unit.equalsIgnoreCase(locationCatalogEntry.unit)
-                                                    && this.verticalDatum == null || locationCatalogEntry.verticalDatum == null ?
-                                                    Objects.equals(this.verticalDatum, locationCatalogEntry.verticalDatum) :
-                                                    this.verticalDatum.equalsIgnoreCase(locationCatalogEntry.verticalDatum)
-                                                        && this.nation == null || locationCatalogEntry.nation == null ?
-                                                        Objects.equals(this.nation, locationCatalogEntry.nation) :
-                                                        this.nation.equalsIgnoreCase(locationCatalogEntry.nation)
-                                                            && this.state == null || locationCatalogEntry.state == null ?
-                                                            Objects.equals(this.state, locationCatalogEntry.state) :
-                                                            this.state.equalsIgnoreCase(locationCatalogEntry.state)
-                                                                && this.county == null || locationCatalogEntry.county == null ?
-                                                                Objects.equals(this.county, locationCatalogEntry.county) :
-                                                                this.county.equalsIgnoreCase(locationCatalogEntry.county)
-                                                                    && this.boundingOffice == null || locationCatalogEntry.boundingOffice == null ?
-                                                                    Objects.equals(this.boundingOffice, locationCatalogEntry.boundingOffice) :
-                                                                    this.boundingOffice.equalsIgnoreCase(locationCatalogEntry.boundingOffice)
-                                                                        && this.mapLabel == null || locationCatalogEntry.mapLabel == null ?
-                                                                        Objects.equals(this.mapLabel, locationCatalogEntry.mapLabel) :
-                                                                        this.mapLabel.equalsIgnoreCase(locationCatalogEntry.mapLabel)
-                                                                            && Objects.equals(this.active, locationCatalogEntry.active)
-                                                                            && Objects.equals(this.aliases, locationCatalogEntry.aliases)
-            ;
+                    this.nearestCity.equalsIgnoreCase(locationCatalogEntry.nearestCity) && this.publicName == null ||
+                        locationCatalogEntry.publicName == null ? Objects.equals(this.publicName, locationCatalogEntry.publicName) :
+                        this.publicName.equalsIgnoreCase(locationCatalogEntry.publicName) && this.longName == null ||
+                            locationCatalogEntry.longName == null ? Objects.equals(this.longName, locationCatalogEntry.longName) :
+                            this.longName.equalsIgnoreCase(locationCatalogEntry.longName) && this.description == null ||
+                                locationCatalogEntry.description == null ? Objects.equals(this.description, locationCatalogEntry.description) :
+                                this.description.equalsIgnoreCase(locationCatalogEntry.description) && this.kind == null ||
+                                    locationCatalogEntry.kind == null ? Objects.equals(this.kind, locationCatalogEntry.kind) :
+                                    this.kind.equalsIgnoreCase(locationCatalogEntry.kind) && this.type == null || locationCatalogEntry.type == null ?
+                                        Objects.equals(this.type, locationCatalogEntry.type) :
+                                        this.type.equalsIgnoreCase(locationCatalogEntry.type) && this.timeZone == null ||
+                                            locationCatalogEntry.timeZone == null ? Objects.equals(this.timeZone, locationCatalogEntry.timeZone) :
+                                            this.timeZone.equalsIgnoreCase(locationCatalogEntry.timeZone) &&
+                                                Objects.equals(this.latitude, locationCatalogEntry.latitude) &&
+                                                Objects.equals(this.longitude, locationCatalogEntry.longitude) &&
+                                                Objects.equals(this.publishedLatitude, locationCatalogEntry.publishedLatitude) &&
+                                                Objects.equals(this.publishedLongitude, locationCatalogEntry.publishedLongitude) &&
+                                                this.horizontalDatum == null || locationCatalogEntry.horizontalDatum == null ?
+                                                Objects.equals(this.horizontalDatum, locationCatalogEntry.horizontalDatum) :
+                                                this.horizontalDatum.equalsIgnoreCase(locationCatalogEntry.horizontalDatum) &&
+                                                    Objects.equals(this.elevation, locationCatalogEntry.elevation) && this.unit == null ||
+                                                    locationCatalogEntry.unit == null ? Objects.equals(this.unit, locationCatalogEntry.unit) :
+                                                    this.unit.equalsIgnoreCase(locationCatalogEntry.unit) && this.verticalDatum == null ||
+                                                        locationCatalogEntry.verticalDatum == null ?
+                                                        Objects.equals(this.verticalDatum, locationCatalogEntry.verticalDatum) :
+                                                        this.verticalDatum.equalsIgnoreCase(locationCatalogEntry.verticalDatum) &&
+                                                            this.nation == null || locationCatalogEntry.nation == null ?
+                                                            Objects.equals(this.nation, locationCatalogEntry.nation) :
+                                                            this.nation.equalsIgnoreCase(locationCatalogEntry.nation) && this.state == null ||
+                                                                locationCatalogEntry.state == null ?
+                                                                Objects.equals(this.state, locationCatalogEntry.state) :
+                                                                this.state.equalsIgnoreCase(locationCatalogEntry.state) && this.county == null ||
+                                                                    locationCatalogEntry.county == null ?
+                                                                    Objects.equals(this.county, locationCatalogEntry.county) :
+                                                                    this.county.equalsIgnoreCase(locationCatalogEntry.county) &&
+                                                                        this.boundingOffice == null || locationCatalogEntry.boundingOffice == null ?
+                                                                        Objects.equals(this.boundingOffice, locationCatalogEntry.boundingOffice) :
+                                                                        this.boundingOffice.equalsIgnoreCase(locationCatalogEntry.boundingOffice) &&
+                                                                            this.mapLabel == null || locationCatalogEntry.mapLabel == null ?
+                                                                            Objects.equals(this.mapLabel, locationCatalogEntry.mapLabel) :
+                                                                            this.mapLabel.equalsIgnoreCase(locationCatalogEntry.mapLabel) &&
+                                                                                Objects.equals(this.active, locationCatalogEntry.active) &&
+                                                                                Objects.equals(this.aliases, locationCatalogEntry.aliases);
     }
 
     @Override

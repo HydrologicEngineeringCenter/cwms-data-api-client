@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  */
 public final class RadarObjectMapper {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-        .registerModule(new JavaTimeModule())
-        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+    private static final ObjectMapper OBJECT_MAPPER =
+        new ObjectMapper().registerModule(new JavaTimeModule()).configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+                          .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
     private RadarObjectMapper() {
         throw new AssertionError("Utility class");
@@ -50,5 +50,9 @@ public final class RadarObjectMapper {
 
     public static <T> List<T> mapJsonToListOfObjects(String json, Class<T> classObject) throws IOException {
         return OBJECT_MAPPER.readValue(json, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, classObject));
+    }
+
+    public static <T> Set<T> mapJsonToSetOfObjects(String json, Class<T> classObject) throws IOException {
+        return OBJECT_MAPPER.readValue(json, OBJECT_MAPPER.getTypeFactory().constructCollectionType(Set.class, classObject));
     }
 }

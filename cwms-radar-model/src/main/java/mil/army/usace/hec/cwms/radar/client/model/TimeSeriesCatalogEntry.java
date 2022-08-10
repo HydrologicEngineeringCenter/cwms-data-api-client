@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * TimeSeriesCatalogEntry
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class TimeSeriesCatalogEntry {
     @JsonProperty("office")
     private String office = null;
@@ -211,21 +211,18 @@ public class TimeSeriesCatalogEntry {
         }
         TimeSeriesCatalogEntry timeseriesCatalogEntry = (TimeSeriesCatalogEntry) o;
         return this.office == null || timeseriesCatalogEntry.office == null ? Objects.equals(this.office, timeseriesCatalogEntry.office) :
-            this.office.equalsIgnoreCase(timeseriesCatalogEntry.office)
-                && this.timeSeriesId == null || timeseriesCatalogEntry.timeSeriesId == null ?
+            this.office.equalsIgnoreCase(timeseriesCatalogEntry.office) && this.timeSeriesId == null || timeseriesCatalogEntry.timeSeriesId == null ?
                 Objects.equals(this.timeSeriesId, timeseriesCatalogEntry.timeSeriesId) :
-                this.timeSeriesId.equalsIgnoreCase(timeseriesCatalogEntry.timeSeriesId)
-                    && this.units == null || timeseriesCatalogEntry.units == null ? Objects.equals(this.units, timeseriesCatalogEntry.units) :
-                    this.units.equalsIgnoreCase(timeseriesCatalogEntry.units)
-                        && this.interval == null || timeseriesCatalogEntry.interval == null ?
+                this.timeSeriesId.equalsIgnoreCase(timeseriesCatalogEntry.timeSeriesId) && this.units == null ||
+                    timeseriesCatalogEntry.units == null ? Objects.equals(this.units, timeseriesCatalogEntry.units) :
+                    this.units.equalsIgnoreCase(timeseriesCatalogEntry.units) && this.interval == null || timeseriesCatalogEntry.interval == null ?
                         Objects.equals(this.interval, timeseriesCatalogEntry.interval) :
-                        this.interval.equalsIgnoreCase(timeseriesCatalogEntry.interval)
-                            && Objects.equals(this.intervalOffsetMinutes, timeseriesCatalogEntry.intervalOffsetMinutes)
-                            && this.locationTimeZone == null || timeseriesCatalogEntry.locationTimeZone == null ?
+                        this.interval.equalsIgnoreCase(timeseriesCatalogEntry.interval) &&
+                            Objects.equals(this.intervalOffsetMinutes, timeseriesCatalogEntry.intervalOffsetMinutes) &&
+                            this.locationTimeZone == null || timeseriesCatalogEntry.locationTimeZone == null ?
                             Objects.equals(this.locationTimeZone, timeseriesCatalogEntry.locationTimeZone) :
-                            this.locationTimeZone.equalsIgnoreCase(timeseriesCatalogEntry.locationTimeZone)
-                                && Objects.equals(this.extents, timeseriesCatalogEntry.extents)
-            ;
+                            this.locationTimeZone.equalsIgnoreCase(timeseriesCatalogEntry.locationTimeZone) &&
+                                Objects.equals(this.extents, timeseriesCatalogEntry.extents);
     }
 
     @Override

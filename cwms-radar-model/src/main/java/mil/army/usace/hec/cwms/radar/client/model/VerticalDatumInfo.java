@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import javax.validation.Valid;
  * VerticalDatumInfo
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class VerticalDatumInfo {
     @JsonProperty("office")
     private String office = null;
@@ -189,17 +189,14 @@ public class VerticalDatumInfo {
         }
         VerticalDatumInfo verticalDatumInfo = (VerticalDatumInfo) o;
         return this.office == null || verticalDatumInfo.office == null ? Objects.equals(this.office, verticalDatumInfo.office) :
-            this.office.equalsIgnoreCase(verticalDatumInfo.office)
-                && this.unit == null || verticalDatumInfo.unit == null ? Objects.equals(this.unit, verticalDatumInfo.unit) :
-                this.unit.equalsIgnoreCase(verticalDatumInfo.unit)
-                    && this.location == null || verticalDatumInfo.location == null ? Objects.equals(this.location, verticalDatumInfo.location) :
-                    this.location.equalsIgnoreCase(verticalDatumInfo.location)
-                        && this.nativeDatum == null || verticalDatumInfo.nativeDatum == null ?
+            this.office.equalsIgnoreCase(verticalDatumInfo.office) && this.unit == null || verticalDatumInfo.unit == null ?
+                Objects.equals(this.unit, verticalDatumInfo.unit) :
+                this.unit.equalsIgnoreCase(verticalDatumInfo.unit) && this.location == null || verticalDatumInfo.location == null ?
+                    Objects.equals(this.location, verticalDatumInfo.location) :
+                    this.location.equalsIgnoreCase(verticalDatumInfo.location) && this.nativeDatum == null || verticalDatumInfo.nativeDatum == null ?
                         Objects.equals(this.nativeDatum, verticalDatumInfo.nativeDatum) :
-                        this.nativeDatum.equalsIgnoreCase(verticalDatumInfo.nativeDatum)
-                            && Objects.equals(this.elevation, verticalDatumInfo.elevation)
-                            && Objects.equals(this.offsets, verticalDatumInfo.offsets)
-            ;
+                        this.nativeDatum.equalsIgnoreCase(verticalDatumInfo.nativeDatum) &&
+                            Objects.equals(this.elevation, verticalDatumInfo.elevation) && Objects.equals(this.offsets, verticalDatumInfo.offsets);
     }
 
     @Override

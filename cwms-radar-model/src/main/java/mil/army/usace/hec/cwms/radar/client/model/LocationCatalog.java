@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -166,13 +166,11 @@ public class LocationCatalog {
             return false;
         }
         LocationCatalog catalog = (LocationCatalog) o;
-        return this.page == null || catalog.page == null ? Objects.equals(this.page, catalog.page) : this.page.equalsIgnoreCase(catalog.page)
-            && this.nextPage == null || catalog.nextPage == null ? Objects.equals(this.nextPage, catalog.nextPage) :
-            this.nextPage.equalsIgnoreCase(catalog.nextPage)
-                && Objects.equals(this.total, catalog.total)
-                && Objects.equals(this.pageSize, catalog.pageSize)
-                && Objects.equals(this.entries, catalog.entries)
-            ;
+        return this.page == null || catalog.page == null ? Objects.equals(this.page, catalog.page) :
+            this.page.equalsIgnoreCase(catalog.page) && this.nextPage == null || catalog.nextPage == null ?
+                Objects.equals(this.nextPage, catalog.nextPage) :
+                this.nextPage.equalsIgnoreCase(catalog.nextPage) && Objects.equals(this.total, catalog.total) &&
+                    Objects.equals(this.pageSize, catalog.pageSize) && Objects.equals(this.entries, catalog.entries);
     }
 
     @Override

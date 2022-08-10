@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import javax.validation.Valid;
  * TimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 public class TimeSeries {
     @JsonProperty("begin")
     private ZonedDateTime begin = null;
@@ -349,24 +349,21 @@ public class TimeSeries {
             return false;
         }
         TimeSeries timeSeries = (TimeSeries) o;
-        return Objects.equals(this.begin, timeSeries.begin)
-            && Objects.equals(this.end, timeSeries.end)
-            && Objects.equals(this.interval, timeSeries.interval)
-            && this.name == null || timeSeries.name == null ? Objects.equals(this.name, timeSeries.name) : this.name.equalsIgnoreCase(timeSeries.name)
-            && this.nextPage == null || timeSeries.nextPage == null ? Objects.equals(this.nextPage, timeSeries.nextPage) :
-            this.nextPage.equalsIgnoreCase(timeSeries.nextPage)
-                && this.officeId == null || timeSeries.officeId == null ? Objects.equals(this.officeId, timeSeries.officeId) :
-                this.officeId.equalsIgnoreCase(timeSeries.officeId)
-                    && this.page == null || timeSeries.page == null ? Objects.equals(this.page, timeSeries.page) :
-                    this.page.equalsIgnoreCase(timeSeries.page)
-                        && Objects.equals(this.pageSize, timeSeries.pageSize)
-                        && Objects.equals(this.total, timeSeries.total)
-                        && this.units == null || timeSeries.units == null ? Objects.equals(this.units, timeSeries.units) :
-                        this.units.equalsIgnoreCase(timeSeries.units)
-                            && Objects.equals(this.valueColumns, timeSeries.valueColumns)
-                            && Objects.equals(this.values, timeSeries.values)
-                            && Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo)
-            ;
+        return Objects.equals(this.begin, timeSeries.begin) && Objects.equals(this.end, timeSeries.end) &&
+            Objects.equals(this.interval, timeSeries.interval) && this.name == null || timeSeries.name == null ?
+            Objects.equals(this.name, timeSeries.name) :
+            this.name.equalsIgnoreCase(timeSeries.name) && this.nextPage == null || timeSeries.nextPage == null ?
+                Objects.equals(this.nextPage, timeSeries.nextPage) :
+                this.nextPage.equalsIgnoreCase(timeSeries.nextPage) && this.officeId == null || timeSeries.officeId == null ?
+                    Objects.equals(this.officeId, timeSeries.officeId) :
+                    this.officeId.equalsIgnoreCase(timeSeries.officeId) && this.page == null || timeSeries.page == null ?
+                        Objects.equals(this.page, timeSeries.page) :
+                        this.page.equalsIgnoreCase(timeSeries.page) && Objects.equals(this.pageSize, timeSeries.pageSize) &&
+                            Objects.equals(this.total, timeSeries.total) && this.units == null || timeSeries.units == null ?
+                            Objects.equals(this.units, timeSeries.units) :
+                            this.units.equalsIgnoreCase(timeSeries.units) && Objects.equals(this.valueColumns, timeSeries.valueColumns) &&
+                                Objects.equals(this.values, timeSeries.values) &&
+                                Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo);
     }
 
     @Override
