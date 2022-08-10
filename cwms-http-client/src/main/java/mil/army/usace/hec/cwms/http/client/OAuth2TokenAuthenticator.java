@@ -1,5 +1,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,18 +32,25 @@ final class OAuth2TokenAuthenticator implements Authenticator {
         if (response.request().header(AUTHORIZATION_HEADER) == null) {
             throw new IOException("Cannot refresh authentication token due to missing " + AUTHORIZATION_HEADER + " header");
         }
-        //refresh the token
-        LOGGER.log(Level.FINE, "Refreshing OAuth2 Token");
-        OAuth2Token updatedToken = tokenProvider.refreshToken();
-        String accessToken = updatedToken.getAccessToken();
-        if (accessToken == null || accessToken.isEmpty()) {
-            throw new IOException("No access token present in refreshed authentication token");
-        }
-        if (AccessTokenValidator.isTokenExpired(updatedToken)) {
+        OAuth2Token updatedToken;
+        //check if refresh token on current token is still valid
+        String refreshToken = token.getRefreshToken();
+        DecodedJWT jwt = JWT.decode(refreshToken);
+        if (AccessTokenValidator.isTokenExpired(jwt)) {
+            //if expired we need to get a new token
+            LOGGER.log(Level.INFO, () -> "Refresh token issued by " + jwt.getIssuer() + " is expired. Re-authenticating with new token");
             updatedToken = tokenProvider.newToken();
             validateNewToken(updatedToken);
+        } else {
+            //if refresh token is still valid, refresh using refresh token
+            LOGGER.log(Level.FINE, "Refreshing OAuth2 Token");
+            updatedToken = tokenProvider.refreshToken();
+            String accessToken = updatedToken.getAccessToken();
+            if (accessToken == null || accessToken.isEmpty()) {
+                throw new IOException("No access token present in refreshed authentication token");
+            }
+            LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         }
-        LOGGER.log(Level.FINE, "OAuth2 Token refreshed");
         // Retry the request with the new token.
         return newRequestWithAccessTokenAsHeader(response, updatedToken);
     }
