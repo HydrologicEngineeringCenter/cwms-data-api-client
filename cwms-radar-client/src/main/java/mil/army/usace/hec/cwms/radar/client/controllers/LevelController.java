@@ -17,15 +17,13 @@ public final class LevelController {
 
     public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput endpointInput)
         throws IOException {
-        Set<SpecifiedLevel> retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
             .addEndpointInput(endpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
-            retVal = RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), SpecifiedLevel.class);
+            return RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), SpecifiedLevel.class);
         }
-        return retVal;
     }
 
 }
