@@ -8,12 +8,15 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
 
 public final class LevelController {
 
     private static final String SPECIFIED_LEVEL_ENDPOINT = "specified-levels";
+    private static final String LOCATION_LEVEL_ENDPOINT = "levels";
 
     public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput endpointInput)
         throws IOException {
@@ -23,6 +26,17 @@ public final class LevelController {
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), SpecifiedLevel.class);
+        }
+    }
+
+    public LocationLevels retrieveLocationLevels(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput endpointInput)
+        throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
+            .addEndpointInput(endpointInput)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevels.class);
         }
     }
 

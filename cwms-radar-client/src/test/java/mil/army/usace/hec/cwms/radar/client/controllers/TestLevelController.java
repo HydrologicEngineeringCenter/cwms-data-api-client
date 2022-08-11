@@ -25,12 +25,18 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
 import org.junit.jupiter.api.Test;
 
@@ -52,5 +58,34 @@ class TestLevelController extends TestController {
         assertTrue(specifiedLevel.isPresent());
         assertEquals("CWMS", specifiedLevel.get().getOfficeId());
         assertEquals("Bottom of Exclusive Flood Control Level", specifiedLevel.get().getDescription());
+    }
+
+    @Test
+    void testRetrieveLocationLevels() throws IOException {
+        String resource = "radar/v2/json/location_levels.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationLevelEndpointInput input = new LocationLevelEndpointInput()
+            .officeId("LRL");
+        LocationLevels locationLevels = new LevelController().retrieveLocationLevels(buildConnectionInfo(), input);
+        assertEquals(100, locationLevels.getPageSize());
+        assertNotNull(locationLevels.getPage());
+        assertNotNull(locationLevels.getNextPage());
+        List<LocationLevel> levels = locationLevels.getLevels();
+        assertFalse(levels.isEmpty());
+        Optional<LocationLevel> level = levels.stream()
+                                              .filter(s -> s.getLocationLevelId().equals("CarrCreek.Elev.Inst.0.Top of Flood"))
+                                              .findAny();
+        assertTrue(level.isPresent());
+        assertEquals("LRL", level.get().getOfficeId());
+        assertEquals("Top of Flood", level.get().getSpecifiedLevelId());
+        assertEquals(LocationLevel.ParameterTypeIdEnum.INST, level.get().getParameterTypeId());
+        assertEquals("Elev", level.get().getParameterId());
+        assertEquals(321.564, level.get().getConstantValue());
+        assertEquals("m", level.get().getLevelUnitsId());
+        ZonedDateTime effectiveDate = ZonedDateTime.of(1900, 1, 1, 5, 0, 0, 0, ZoneId.of("UTC"));
+        assertEquals(effectiveDate, level.get().getLevelDate());
+        assertEquals("0", level.get().getDurationId());
     }
 }
