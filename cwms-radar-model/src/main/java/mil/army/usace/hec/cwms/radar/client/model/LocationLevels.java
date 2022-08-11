@@ -11,22 +11,23 @@ import javax.validation.Valid;
  * LocationLevels
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-11T09:38:10.926-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-11T12:56:36.285-07:00[America/Los_Angeles]")
 public class LocationLevels {
     @JsonProperty("page")
     private String page = null;
 
-    @JsonProperty("next-page")
-    private String nextPage = null;
-
     @JsonProperty("total")
     private Integer total = null;
 
+    @JsonProperty("levels")
+    @Valid
+    private List<LocationLevel> levels = new ArrayList<>();
+
+    @JsonProperty("next-page")
+    private String nextPage = null;
+
     @JsonProperty("page-size")
     private Integer pageSize = null;
-
-    @JsonProperty("levels")
-    private List<LocationLevel> levels = new ArrayList<>();
 
     public LocationLevels page(String page) {
         this.page = page;
@@ -45,25 +46,6 @@ public class LocationLevels {
 
     public void setPage(String page) {
         this.page = page;
-    }
-
-    public LocationLevels nextPage(String nextPage) {
-        this.nextPage = nextPage;
-        return this;
-    }
-
-    /**
-     * The cursor to the next page of data; null if there is no more data
-     *
-     * @return nextPage
-     **/
-
-    public String getNextPage() {
-        return nextPage;
-    }
-
-    public void setNextPage(String nextPage) {
-        this.nextPage = nextPage;
     }
 
     public LocationLevels total(Integer total) {
@@ -85,6 +67,52 @@ public class LocationLevels {
         this.total = total;
     }
 
+    public LocationLevels levels(List<LocationLevel> levels) {
+        this.levels = levels;
+        return this;
+    }
+
+    public LocationLevels addLevelsItem(LocationLevel levelsItem) {
+        if (this.levels == null) {
+            this.levels = new ArrayList<LocationLevel>();
+        }
+        this.levels.add(levelsItem);
+        return this;
+    }
+
+    /**
+     * List of retrieved location levels
+     *
+     * @return levels
+     **/
+    @Valid
+    public List<LocationLevel> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<LocationLevel> levels) {
+        this.levels = levels;
+    }
+
+    public LocationLevels nextPage(String nextPage) {
+        this.nextPage = nextPage;
+        return this;
+    }
+
+    /**
+     * The cursor to the next page of data; null if there is no more data
+     *
+     * @return nextPage
+     **/
+
+    public String getNextPage() {
+        return nextPage;
+    }
+
+    public void setNextPage(String nextPage) {
+        this.nextPage = nextPage;
+    }
+
     public LocationLevels pageSize(Integer pageSize) {
         this.pageSize = pageSize;
         return this;
@@ -104,26 +132,6 @@ public class LocationLevels {
         this.pageSize = pageSize;
     }
 
-    public LocationLevels levels(List<LocationLevel> levels) {
-        this.levels = levels;
-        return this;
-    }
-
-    /**
-     * Get levels
-     *
-     * @return levels
-     **/
-
-    @Valid
-    public List<LocationLevel> getLevels() {
-        return levels;
-    }
-
-    public void setLevels(List<LocationLevel> levels) {
-        this.levels = levels;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -135,18 +143,15 @@ public class LocationLevels {
         }
         LocationLevels locationLevels = (LocationLevels) o;
         return this.page == null || locationLevels.page == null ? Objects.equals(this.page, locationLevels.page) :
-            this.page.equalsIgnoreCase(locationLevels.page)
-                && this.nextPage == null || locationLevels.nextPage == null ? Objects.equals(this.nextPage, locationLevels.nextPage) :
-                this.nextPage.equalsIgnoreCase(locationLevels.nextPage)
-                    && Objects.equals(this.total, locationLevels.total)
-                    && Objects.equals(this.pageSize, locationLevels.pageSize)
-                    && Objects.equals(this.levels, locationLevels.levels)
-            ;
+            this.page.equalsIgnoreCase(locationLevels.page) && Objects.equals(this.total, locationLevels.total) &&
+                Objects.equals(this.levels, locationLevels.levels) && this.nextPage == null || locationLevels.nextPage == null ?
+                Objects.equals(this.nextPage, locationLevels.nextPage) :
+                this.nextPage.equalsIgnoreCase(locationLevels.nextPage) && Objects.equals(this.pageSize, locationLevels.pageSize);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(page == null ? 0 : page.toLowerCase(), nextPage == null ? 0 : nextPage.toLowerCase(), total, pageSize, levels);
+        return Objects.hash(page == null ? 0 : page.toLowerCase(), total, levels, nextPage == null ? 0 : nextPage.toLowerCase(), pageSize);
     }
 
     @Override
@@ -155,10 +160,10 @@ public class LocationLevels {
         sb.append("class LocationLevels {\n");
 
         sb.append("    page: ").append(toIndentedString(page)).append("\n");
-        sb.append("    nextPage: ").append(toIndentedString(nextPage)).append("\n");
         sb.append("    total: ").append(toIndentedString(total)).append("\n");
-        sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
         sb.append("    levels: ").append(toIndentedString(levels)).append("\n");
+        sb.append("    nextPage: ").append(toIndentedString(nextPage)).append("\n");
+        sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
         sb.append("}");
         return sb.toString();
     }

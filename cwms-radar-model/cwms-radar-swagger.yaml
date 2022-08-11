@@ -872,20 +872,15 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
-  /cwms-data/levels/{location}:
+  /cwms-data/levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels with location
+      summary: Get cwmsData levels with levelId
       description: Retrieves requested Location Level
-      operationId: getCwmsDataLevelsWithLocation
+      operationId: getCwmsDataLevelsWithLevelId
       parameters:
-        - name: location
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: id
+        - name: level-id
           in: path
           description: Specifies the requested location level.
           required: true
@@ -949,12 +944,13 @@ paths:
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData levels with location
+      summary: Delete cwmsData levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteCwmsDataLevelsWithLocation
+      operationId: deleteCwmsDataLevelsWithLevelId
       parameters:
-        - name: location
+        - name: level-id
           in: path
+          description: Specifies the location level id of the Location Level to be deleted
           required: true
           schema:
             type: string
@@ -1012,12 +1008,13 @@ paths:
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData levels with location
+      summary: Patch cwmsData levels with levelId
       description: Update CWMS Location Level
-      operationId: patchCwmsDataLevelsWithLocation
+      operationId: patchCwmsDataLevelsWithLevelId
       parameters:
-        - name: location
+        - name: level-id
           in: path
+          description: Specifies the location level id of the Location Level to be updated
           required: true
           schema:
             type: string
@@ -1088,6 +1085,12 @@ paths:
       parameters:
         - name: name
           in: query
+          description: 'Deprecated, use level-id-mask. '
+          deprecated: true
+          schema:
+            type: string
+        - name: level-id-mask
+          in: query
           description: Specifies the name(s) of the location level(s) whose data is to be included in the response. Uses * for all.
           schema:
             type: string
@@ -1123,7 +1126,7 @@ paths:
             type: string
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.  wml2 (only if name field is specified)\r\n5.    json (default)"
+          description: "Specifies the encoding format of the response. Requests specifying an Accept header:application/json;version=2 must not include this field. Valid format field values for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.    wml2 (only if name field is specified)\r\n5.    json (default)\r\n"
           schema:
             type: string
         - name: page
@@ -1910,9 +1913,7 @@ paths:
           content:
             application/json;version=2:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RatingSpec'
+                $ref: '#/components/schemas/RatingSpec'
         '400':
           description: Bad Request
           content:
@@ -3394,103 +3395,24 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         levels:
-          required:
-            - location-level-id
-            - office-id
-          type: object
-          properties:
-            location-level-id:
-              type: string
-              description: Name of the location level
-            office-id:
-              type: string
-              description: Owning office of the level
-            seasonal-time-series-id:
-              type: string
-              description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
-            seasonal-values:
-              type: array
-              description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
-              items:
-                $ref: '#/components/schemas/SeasonalValueBean'
-            specified-level-id:
-              type: string
-              description: Generic name of this location level. Common names are 'Top of Dam', 'Streambed', 'Bottom of Dam'.
-            parameter-type-id:
-              type: string
-              description: To indicate if single or aggregate value
-              enum:
-                - Inst
-                - Ave
-                - Min
-                - Max
-                - Total
-            parameter-id:
-              type: string
-              description: Data Type such as Stage, Elevation, or others.
-            constant-value:
-              type: number
-              description: Single value for this location level. Mutually exclusive with seasonableTimeSeriesId and seasonValues.
-              format: double
-            level-units-id:
-              type: string
-              description: Units thhe provided levels are in
-            level-date:
-              type: string
-              description: The date/time at which this location level configuration takes effect.
-              format: date-time
-            level-comment:
-              type: string
-            interval-origin:
-              type: string
-              description: The start point of provided seasonal values
-              format: date-time
-            interval-months:
-              type: integer
-              format: int32
-            interval-minutes:
-              type: integer
-              format: int32
-            interpolate-string:
-              type: string
-              description: Indicating whether or not to interpolate between seasonal values.
-              enum:
-                - T
-                - F
-            duration-id:
-              type: string
-              description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
-            attribute-value:
-              type: number
-            attribute-units-id:
-              type: string
-            attribute-parameter-type-id:
-              type: string
-            attribute-parameter-id:
-              type: string
-            attribute-duration-id:
-              type: string
-            attribute-comment:
-              type: string
+          type: array
           description: List of retrieved location levels
           xml:
             wrapped: true
+          items:
+            $ref: '#/components/schemas/LocationLevel'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
       xml:
         name: location-levels
     TimeSeriesCategory:
@@ -3576,9 +3498,6 @@ components:
               type: boolean
             negative:
               type: boolean
-            nano:
-              type: integer
-              format: int32
             units:
               type: array
               items:
@@ -3603,6 +3522,9 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
+            nano:
+              type: integer
+              format: int32
           description: The interval of the time-series, in ISO-8601 duration format
         intervalOffset:
           type: integer
@@ -3613,11 +3535,9 @@ components:
         name:
           type: string
           description: Time-series name
-        nextPage:
+        next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         officeId:
           type: string
           description: Office ID that owns the time-series
@@ -3626,12 +3546,10 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        pageSize:
+        page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
-          xml:
-            name: page-size
         timeZone:
           type: string
           description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
@@ -3650,22 +3568,12 @@ components:
           items:
             $ref: '#/components/schemas/TimeSeries.Column'
         values:
-          type: object
-          properties:
-            date-time:
-              type: integer
-              description: Milliseconds since 1970-01-01 (Unix Epoch)
-              format: int64
-            value:
-              type: number
-              description: Requested time-series data value
-              format: double
-            quality-code:
-              type: integer
-              format: int32
-          description: A representation of a time-series record
+          type: array
+          description: List of retrieved time-series values
           xml:
             wrapped: true
+          items:
+            $ref: '#/components/schemas/TimeSeries.Record'
         verticalDatumInfo:
           $ref: '#/components/schemas/VerticalDatumInfo'
       xml:
@@ -3760,25 +3668,21 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         templates:
           type: array
           items:
             $ref: '#/components/schemas/RatingTemplate'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
     IndependentRoundingSpec:
       type: object
       properties:
@@ -3835,25 +3739,21 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         specs:
           type: array
           items:
             $ref: '#/components/schemas/RatingSpec'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
     CatalogableEndpoint:
       type: string
       description: Set of data for which a larger catalog can be built.
@@ -3872,27 +3772,23 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         entries:
           type: array
           xml:
             wrapped: true
           items:
             $ref: '#/components/schemas/CatalogEntry'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
       xml:
         name: catalog
     CatalogEntry:
@@ -4171,43 +4067,24 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         blobs:
-          required:
-            - id
-            - office
-          type: object
-          properties:
-            office:
-              type: string
-            id:
-              type: string
-            description:
-              type: string
-            mediaTypeId:
-              type: string
-            value:
-              type: array
-              items:
-                type: string
-                format: byte
+          type: array
           description: List of retrieved blobs
           xml:
             wrapped: true
+          items:
+            $ref: '#/components/schemas/Blob'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
       xml:
         name: blobs
     Clob:
@@ -4233,39 +4110,24 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
+        clobs:
+          type: array
+          description: List of retrieved clobs
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Clob'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
-          xml:
-            name: page-size
-        clobs:
-          required:
-            - id
-            - office
-          type: object
-          properties:
-            office:
-              type: string
-            id:
-              type: string
-            description:
-              type: string
-            value:
-              type: string
-          description: List of retrieved clobs
-          xml:
-            name: clob
-            wrapped: true
       xml:
         name: clobs
     Pool:
@@ -4301,43 +4163,24 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
-        nextPage:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          xml:
-            name: next-page
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
-        pageSize:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          xml:
-            name: page-size
         pools:
-          type: object
-          properties:
-            attribute:
-              type: number
-            description:
-              type: string
-            clobText:
-              type: string
-            projectId:
-              type: string
-            bottomLevelId:
-              type: string
-            topLevelId:
-              type: string
-            poolName:
-              $ref: '#/components/schemas/PoolNameType'
-            implicit:
-              type: boolean
+          type: array
           description: List of retrieved pools
           xml:
             wrapped: true
+          items:
+            $ref: '#/components/schemas/Pool'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
       xml:
         name: pools
     SpecifiedLevel:
