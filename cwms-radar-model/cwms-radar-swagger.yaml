@@ -872,56 +872,50 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
-  /cwms-data/levels:
+  /cwms-data/levels/{location}:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels
-      operationId: getCwmsDataLevels
+      summary: Get cwmsData levels with location
+      description: Retrieves requested Location Level
+      operationId: getCwmsDataLevelsWithLocation
       parameters:
-        - name: name
-          in: query
-          description: Specifies the name(s) of the location level(s) whose data is to be included in the response. Uses * for all.
+        - name: location
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Specifies the requested location level.
+          required: true
           schema:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the location level(s) whose data is to be included in the response. If this field is not specified, matching location level information from all offices shall be returned.
+          description: Specifies the office of the Location Level to be returned
+          required: true
           schema:
             type: string
-        - name: unit
+        - name: date
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: Deprecated, use effective-date
+          deprecated: true
           schema:
             type: string
-        - name: datum
+        - name: effective-date
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
-          schema:
-            type: string
-        - name: begin
-          in: query
-          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time.
-          schema:
-            type: string
-        - name: end
-          in: query
-          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time
-          schema:
-            type: string
-        - name: timezone
-          in: query
-          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
-          schema:
-            type: string
-        - name: format
-          in: query
-          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.  wml2 (only if name field is specified)\r\n5.    json (default)"
+          description: Specifies the effective date of Location Level to be returned
+          required: true
           schema:
             type: string
       responses:
         '200':
           description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/LocationLevel'
         '400':
           description: Bad Request
           content:
@@ -952,60 +946,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
-    post:
-      tags:
-        - Levels
-      summary: Post cwmsData levels
-      description: Create new CWMS Location Level
-      operationId: postCwmsDataLevels
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the office in which Location Level will be created
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LocationLevel'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/LocationLevel'
-        required: true
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/levels/{location}:
     delete:
       tags:
         - Levels
@@ -1028,6 +968,12 @@ paths:
           schema:
             type: string
         - name: date
+          in: query
+          description: Deprecated, use effective-date
+          deprecated: true
+          schema:
+            type: string
+        - name: effective-date
           in: query
           description: Specifies the effective date of the level to be deleted. If not provided will delete all data and reference to the location level.
           schema:
@@ -1083,7 +1029,164 @@ paths:
             type: string
         - name: date
           in: query
+          description: Deprecated, use effective-date
+          deprecated: true
+          schema:
+            type: string
+        - name: effective-date
+          in: query
           description: Specifies the effective date of Location Level that will be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationLevel'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LocationLevel'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/levels:
+    get:
+      tags:
+        - Levels
+      summary: Get cwmsData levels
+      operationId: getCwmsDataLevels
+      parameters:
+        - name: name
+          in: query
+          description: Specifies the name(s) of the location level(s) whose data is to be included in the response. Uses * for all.
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location level(s) whose data is to be included in the response. If this field is not specified, matching location level information from all offices shall be returned.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          schema:
+            type: string
+        - name: datum
+          in: query
+          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.  wml2 (only if name field is specified)\r\n5.    json (default)"
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/LocationLevels'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+    post:
+      tags:
+        - Levels
+      summary: Post cwmsData levels
+      description: Create new CWMS Location Level
+      operationId: postCwmsDataLevels
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the office in which Location Level will be created
           required: true
           schema:
             type: string
@@ -3238,7 +3341,7 @@ components:
           description: Units thhe provided levels are in
         level-date:
           type: string
-          description: The date/time at which this location level configuration takes affect.
+          description: The date/time at which this location level configuration takes effect.
           format: date-time
         level-comment:
           type: string
@@ -3285,6 +3388,111 @@ components:
         offset-minutes:
           type: integer
       description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+    LocationLevels:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+        nextPage:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          xml:
+            name: next-page
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+        pageSize:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          xml:
+            name: page-size
+        levels:
+          required:
+            - location-level-id
+            - office-id
+          type: object
+          properties:
+            location-level-id:
+              type: string
+              description: Name of the location level
+            office-id:
+              type: string
+              description: Owning office of the level
+            seasonal-time-series-id:
+              type: string
+              description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+            seasonal-values:
+              type: array
+              description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+              items:
+                $ref: '#/components/schemas/SeasonalValueBean'
+            specified-level-id:
+              type: string
+              description: Generic name of this location level. Common names are 'Top of Dam', 'Streambed', 'Bottom of Dam'.
+            parameter-type-id:
+              type: string
+              description: To indicate if single or aggregate value
+              enum:
+                - Inst
+                - Ave
+                - Min
+                - Max
+                - Total
+            parameter-id:
+              type: string
+              description: Data Type such as Stage, Elevation, or others.
+            constant-value:
+              type: number
+              description: Single value for this location level. Mutually exclusive with seasonableTimeSeriesId and seasonValues.
+              format: double
+            level-units-id:
+              type: string
+              description: Units thhe provided levels are in
+            level-date:
+              type: string
+              description: The date/time at which this location level configuration takes effect.
+              format: date-time
+            level-comment:
+              type: string
+            interval-origin:
+              type: string
+              description: The start point of provided seasonal values
+              format: date-time
+            interval-months:
+              type: integer
+              format: int32
+            interval-minutes:
+              type: integer
+              format: int32
+            interpolate-string:
+              type: string
+              description: Indicating whether or not to interpolate between seasonal values.
+              enum:
+                - T
+                - F
+            duration-id:
+              type: string
+              description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
+            attribute-value:
+              type: number
+            attribute-units-id:
+              type: string
+            attribute-parameter-type-id:
+              type: string
+            attribute-parameter-id:
+              type: string
+            attribute-duration-id:
+              type: string
+            attribute-comment:
+              type: string
+          description: List of retrieved location levels
+          xml:
+            wrapped: true
+      xml:
+        name: location-levels
     TimeSeriesCategory:
       type: object
       properties:
@@ -3368,6 +3576,9 @@ components:
               type: boolean
             negative:
               type: boolean
+            nano:
+              type: integer
+              format: int32
             units:
               type: array
               items:
@@ -3392,9 +3603,6 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
           description: The interval of the time-series, in ISO-8601 duration format
         intervalOffset:
           type: integer
