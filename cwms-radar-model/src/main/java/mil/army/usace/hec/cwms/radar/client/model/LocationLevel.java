@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull;
  * LocationLevel
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-11T09:38:10.926-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-11T12:56:36.285-07:00[America/Los_Angeles]")
 public class LocationLevel {
     @JsonProperty("location-level-id")
     private String locationLevelId = null;
@@ -619,65 +619,58 @@ public class LocationLevel {
         }
         LocationLevel locationLevel = (LocationLevel) o;
         return this.locationLevelId == null || locationLevel.locationLevelId == null ?
-            Objects.equals(this.locationLevelId, locationLevel.locationLevelId) : this.locationLevelId.equalsIgnoreCase(locationLevel.locationLevelId)
-            && this.officeId == null || locationLevel.officeId == null ? Objects.equals(this.officeId, locationLevel.officeId) :
-            this.officeId.equalsIgnoreCase(locationLevel.officeId)
-                && this.seasonalTimeSeriesId == null || locationLevel.seasonalTimeSeriesId == null ?
-                Objects.equals(this.seasonalTimeSeriesId, locationLevel.seasonalTimeSeriesId) :
-                this.seasonalTimeSeriesId.equalsIgnoreCase(locationLevel.seasonalTimeSeriesId)
-                    && Objects.equals(this.seasonalValues, locationLevel.seasonalValues)
-                    && this.specifiedLevelId == null || locationLevel.specifiedLevelId == null ?
-                    Objects.equals(this.specifiedLevelId, locationLevel.specifiedLevelId) :
-                    this.specifiedLevelId.equalsIgnoreCase(locationLevel.specifiedLevelId)
-                        && this.parameterTypeId == null || locationLevel.parameterTypeId == null ?
-                        Objects.equals(this.parameterTypeId, locationLevel.parameterTypeId) :
-                        this.parameterTypeId.equals(locationLevel.parameterTypeId)
-                            && this.parameterId == null || locationLevel.parameterId == null ?
-                            Objects.equals(this.parameterId, locationLevel.parameterId) : this.parameterId.equalsIgnoreCase(locationLevel.parameterId)
-                            && Objects.equals(this.constantValue, locationLevel.constantValue)
-                            && this.levelUnitsId == null || locationLevel.levelUnitsId == null ?
-                            Objects.equals(this.levelUnitsId, locationLevel.levelUnitsId) :
-                            this.levelUnitsId.equalsIgnoreCase(locationLevel.levelUnitsId)
-                                && Objects.equals(this.levelDate, locationLevel.levelDate)
-                                && this.levelComment == null || locationLevel.levelComment == null ?
-                                Objects.equals(this.levelComment, locationLevel.levelComment) :
-                                this.levelComment.equalsIgnoreCase(locationLevel.levelComment)
-                                    && Objects.equals(this.intervalOrigin, locationLevel.intervalOrigin)
-                                    && Objects.equals(this.intervalMonths, locationLevel.intervalMonths)
-                                    && Objects.equals(this.intervalMinutes, locationLevel.intervalMinutes)
-                                    && this.interpolateString == null || locationLevel.interpolateString == null ?
-                                    Objects.equals(this.interpolateString, locationLevel.interpolateString) :
-                                    this.interpolateString.equals(locationLevel.interpolateString)
-                                        && this.durationId == null || locationLevel.durationId == null ?
-                                        Objects.equals(this.durationId, locationLevel.durationId) :
-                                        this.durationId.equalsIgnoreCase(locationLevel.durationId)
-                                            && Objects.equals(this.attributeValue, locationLevel.attributeValue)
-                                            && this.attributeUnitsId == null || locationLevel.attributeUnitsId == null ?
-                                            Objects.equals(this.attributeUnitsId, locationLevel.attributeUnitsId) :
-                                            this.attributeUnitsId.equalsIgnoreCase(locationLevel.attributeUnitsId)
-                                                && this.attributeParameterTypeId == null || locationLevel.attributeParameterTypeId == null ?
-                                                Objects.equals(this.attributeParameterTypeId, locationLevel.attributeParameterTypeId) :
-                                                this.attributeParameterTypeId.equalsIgnoreCase(locationLevel.attributeParameterTypeId)
-                                                    && this.attributeParameterId == null || locationLevel.attributeParameterId == null ?
-                                                    Objects.equals(this.attributeParameterId, locationLevel.attributeParameterId) :
-                                                    this.attributeParameterId.equalsIgnoreCase(locationLevel.attributeParameterId)
-                                                        && this.attributeDurationId == null || locationLevel.attributeDurationId == null ?
-                                                        Objects.equals(this.attributeDurationId, locationLevel.attributeDurationId) :
-                                                        this.attributeDurationId.equalsIgnoreCase(locationLevel.attributeDurationId)
-                                                            && this.attributeComment == null || locationLevel.attributeComment == null ?
-                                                            Objects.equals(this.attributeComment, locationLevel.attributeComment) :
-                                                            this.attributeComment.equalsIgnoreCase(locationLevel.attributeComment)
-            ;
+            Objects.equals(this.locationLevelId, locationLevel.locationLevelId) :
+            this.locationLevelId.equalsIgnoreCase(locationLevel.locationLevelId) && this.officeId == null || locationLevel.officeId == null ?
+                Objects.equals(this.officeId, locationLevel.officeId) :
+                this.officeId.equalsIgnoreCase(locationLevel.officeId) && this.seasonalTimeSeriesId == null ||
+                    locationLevel.seasonalTimeSeriesId == null ? Objects.equals(this.seasonalTimeSeriesId, locationLevel.seasonalTimeSeriesId) :
+                    this.seasonalTimeSeriesId.equalsIgnoreCase(locationLevel.seasonalTimeSeriesId) &&
+                        Objects.equals(this.seasonalValues, locationLevel.seasonalValues) && this.specifiedLevelId == null ||
+                        locationLevel.specifiedLevelId == null ? Objects.equals(this.specifiedLevelId, locationLevel.specifiedLevelId) :
+                        this.specifiedLevelId.equalsIgnoreCase(locationLevel.specifiedLevelId) && this.parameterTypeId == null ||
+                            locationLevel.parameterTypeId == null ? Objects.equals(this.parameterTypeId, locationLevel.parameterTypeId) :
+                            this.parameterTypeId.equals(locationLevel.parameterTypeId) && this.parameterId == null ||
+                                locationLevel.parameterId == null ? Objects.equals(this.parameterId, locationLevel.parameterId) :
+                                this.parameterId.equalsIgnoreCase(locationLevel.parameterId) &&
+                                    Objects.equals(this.constantValue, locationLevel.constantValue) && this.levelUnitsId == null ||
+                                    locationLevel.levelUnitsId == null ? Objects.equals(this.levelUnitsId, locationLevel.levelUnitsId) :
+                                    this.levelUnitsId.equalsIgnoreCase(locationLevel.levelUnitsId) &&
+                                        Objects.equals(this.levelDate, locationLevel.levelDate) && this.levelComment == null ||
+                                        locationLevel.levelComment == null ? Objects.equals(this.levelComment, locationLevel.levelComment) :
+                                        this.levelComment.equalsIgnoreCase(locationLevel.levelComment) &&
+                                            Objects.equals(this.intervalOrigin, locationLevel.intervalOrigin) &&
+                                            Objects.equals(this.intervalMonths, locationLevel.intervalMonths) &&
+                                            Objects.equals(this.intervalMinutes, locationLevel.intervalMinutes) && this.interpolateString == null ||
+                                            locationLevel.interpolateString == null ?
+                                            Objects.equals(this.interpolateString, locationLevel.interpolateString) :
+                                            this.interpolateString.equals(locationLevel.interpolateString) && this.durationId == null ||
+                                                locationLevel.durationId == null ? Objects.equals(this.durationId, locationLevel.durationId) :
+                                                this.durationId.equalsIgnoreCase(locationLevel.durationId) &&
+                                                    Objects.equals(this.attributeValue, locationLevel.attributeValue) &&
+                                                    this.attributeUnitsId == null || locationLevel.attributeUnitsId == null ?
+                                                    Objects.equals(this.attributeUnitsId, locationLevel.attributeUnitsId) :
+                                                    this.attributeUnitsId.equalsIgnoreCase(locationLevel.attributeUnitsId) &&
+                                                        this.attributeParameterTypeId == null || locationLevel.attributeParameterTypeId == null ?
+                                                        Objects.equals(this.attributeParameterTypeId, locationLevel.attributeParameterTypeId) :
+                                                        this.attributeParameterTypeId.equalsIgnoreCase(locationLevel.attributeParameterTypeId) &&
+                                                            this.attributeParameterId == null || locationLevel.attributeParameterId == null ?
+                                                            Objects.equals(this.attributeParameterId, locationLevel.attributeParameterId) :
+                                                            this.attributeParameterId.equalsIgnoreCase(locationLevel.attributeParameterId) &&
+                                                                this.attributeDurationId == null || locationLevel.attributeDurationId == null ?
+                                                                Objects.equals(this.attributeDurationId, locationLevel.attributeDurationId) :
+                                                                this.attributeDurationId.equalsIgnoreCase(locationLevel.attributeDurationId) &&
+                                                                    this.attributeComment == null || locationLevel.attributeComment == null ?
+                                                                    Objects.equals(this.attributeComment, locationLevel.attributeComment) :
+                                                                    this.attributeComment.equalsIgnoreCase(locationLevel.attributeComment);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(locationLevelId == null ? 0 : locationLevelId.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(),
             seasonalTimeSeriesId == null ? 0 : seasonalTimeSeriesId.toLowerCase(), seasonalValues,
-            specifiedLevelId == null ? 0 : specifiedLevelId.toLowerCase(), parameterTypeId,
-            parameterId == null ? 0 : parameterId.toLowerCase(), constantValue, levelUnitsId == null ? 0 : levelUnitsId.toLowerCase(), levelDate,
-            levelComment == null ? 0 : levelComment.toLowerCase(), intervalOrigin, intervalMonths, intervalMinutes,
-            interpolateString, durationId == null ? 0 : durationId.toLowerCase(), attributeValue,
+            specifiedLevelId == null ? 0 : specifiedLevelId.toLowerCase(), parameterTypeId, parameterId == null ? 0 : parameterId.toLowerCase(),
+            constantValue, levelUnitsId == null ? 0 : levelUnitsId.toLowerCase(), levelDate, levelComment == null ? 0 : levelComment.toLowerCase(),
+            intervalOrigin, intervalMonths, intervalMinutes, interpolateString, durationId == null ? 0 : durationId.toLowerCase(), attributeValue,
             attributeUnitsId == null ? 0 : attributeUnitsId.toLowerCase(),
             attributeParameterTypeId == null ? 0 : attributeParameterTypeId.toLowerCase(),
             attributeParameterId == null ? 0 : attributeParameterId.toLowerCase(),
