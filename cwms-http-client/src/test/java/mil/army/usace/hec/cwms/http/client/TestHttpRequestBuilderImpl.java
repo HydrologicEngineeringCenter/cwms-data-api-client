@@ -357,9 +357,9 @@ class TestHttpRequestBuilderImpl {
                 @Override
                 protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
                     return httpRequestBuilder.addQueryHeader("hello", "world")
-                        .addQueryHeader("green-eggs", "and ham")
-                        .addQueryParameter("hello", "world")
-                        .addQueryParameter("green-eggs", "and ham");
+                                             .addQueryHeader("green-eggs", "and ham")
+                                             .addQueryParameter("hello", "world")
+                                             .addQueryParameter("green-eggs", "and ham");
                 }
             })
             .get()
@@ -377,9 +377,9 @@ class TestHttpRequestBuilderImpl {
                 @Override
                 protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
                     return httpRequestBuilder.addQueryHeader("hello", "world")
-                        .addQueryHeader("green-eggs", "and ham")
-                        .addQueryParameter("hello", "world")
-                        .addQueryParameter("green-eggs", "and ham");
+                                             .addQueryHeader("green-eggs", "and ham")
+                                             .addQueryParameter("hello", "world")
+                                             .addQueryParameter("green-eggs", "and ham");
                 }
             })
             .enableHttp2()
@@ -404,9 +404,9 @@ class TestHttpRequestBuilderImpl {
                 @Override
                 protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
                     return httpRequestBuilder.addQueryHeader("hello", "world")
-                        .addQueryHeader("green-eggs", "and ham")
-                        .addQueryParameter("hello", "world")
-                        .addQueryParameter("green-eggs", "and ham");
+                                             .addQueryHeader("green-eggs", "and ham")
+                                             .addQueryParameter("hello", "world")
+                                             .addQueryParameter("green-eggs", "and ham");
                 }
             })
             .post()
@@ -425,9 +425,9 @@ class TestHttpRequestBuilderImpl {
                 @Override
                 protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
                     return httpRequestBuilder.addQueryHeader("hello", "world")
-                        .addQueryHeader("green-eggs", "and ham")
-                        .addQueryParameter("hello", "world")
-                        .addQueryParameter("green-eggs", "and ham");
+                                             .addQueryHeader("green-eggs", "and ham")
+                                             .addQueryParameter("hello", "world")
+                                             .addQueryParameter("green-eggs", "and ham");
                 }
             })
             .enableHttp2()
@@ -539,18 +539,27 @@ class TestHttpRequestBuilderImpl {
         try {
             String body = readJsonFile("servererror.json");
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(500));
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(500));
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
             HttpRequestExecutor executor = builder.get().withMediaType(ACCEPT_HEADER_V1);
-            assertThrows(IOException.class, () -> {
+            assertThrows(CwmsHttpResponseException.class, () -> {
                 try (HttpRequestResponse response = executor.execute()) {
                     assertNull(response);
                 }
             });
-
+            try (HttpRequestResponse response = executor.execute()) {
+                assertNull(response);
+            } catch (CwmsHttpResponseException e) {
+                assertEquals(500, e.getErrorCode());
+                assertTrue(e.getMessage().toLowerCase().contains("unknown error occurred for request"));
+                assertTrue(e.getMessage().toLowerCase().contains(baseUrl));
+                assertEquals(baseUrl + "/" + endpoint, e.getUrl());
+                assertTrue(e.getResponseBody().isPresent());
+            }
         } finally {
             mockWebServer.shutdown();
         }
@@ -631,6 +640,7 @@ class TestHttpRequestBuilderImpl {
         try {
             String body = readJsonFile("nodatafound.json");
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(404));
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(404));
             mockWebServer.start();
             String endpoint = "success";
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
@@ -642,6 +652,15 @@ class TestHttpRequestBuilderImpl {
                     assertNull(response);
                 }
             });
+            try (HttpRequestResponse response = executor.execute()) {
+                assertNull(response);
+            } catch (NoDataFoundException e) {
+                assertEquals(404, e.getErrorCode());
+                assertTrue(e.getMessage().toLowerCase().contains("no data found"));
+                assertTrue(e.getMessage().toLowerCase().contains(baseUrl));
+                assertEquals(baseUrl + "/" + endpoint, e.getUrl());
+                assertTrue(e.getResponseBody().isPresent());
+            }
         } finally {
             mockWebServer.shutdown();
         }
