@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,49 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.io.IOException;
+import java.util.Optional;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class NoDataFoundException extends CwmsHttpResponseException {
-    private static final String ERROR_MESSAGE = "No data found for request: %s %s \nError code: %s %s %s";
+public class CwmsHttpResponseException extends IOException {
+    private static final String ERROR_MESSAGE = "Unknown error occurred for request: %s %s \nError code: %s %s %s";
+    private final String reasonPhrase;
+    private final String url;
+    private final int errorCode;
+    private final String responseBody;
+    private final String requestType;
 
-    NoDataFoundException(Response execute, Request request, ResponseBody responseBody) throws IOException {
-        super(execute, request, responseBody);
+    CwmsHttpResponseException(Response execute, Request request, ResponseBody responseBody) throws IOException {
+        this.reasonPhrase = execute.message();
+        this.url = request.url().toString();
+        this.errorCode = execute.code();
+        this.requestType = request.method();
+        if (responseBody == null) {
+            this.responseBody = null;
+        } else {
+            this.responseBody = responseBody.string();
+        }
+    }
+
+    public final String getReasonPhrase() {
+        return reasonPhrase;
+    }
+
+    public final String getUrl() {
+        return url;
+    }
+
+    public final int getErrorCode() {
+        return errorCode;
+    }
+
+    public final String getRequestType() {
+        return requestType;
+    }
+
+    public final Optional<String> getResponseBody() {
+        return Optional.ofNullable(responseBody);
     }
 
     @Override

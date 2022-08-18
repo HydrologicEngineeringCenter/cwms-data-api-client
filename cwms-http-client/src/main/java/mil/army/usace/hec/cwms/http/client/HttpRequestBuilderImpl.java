@@ -63,10 +63,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws IOException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
-        Objects.requireNonNull(apiConnectionInfo.getApiRoot(), "API root must be defined");
-        HttpUrl url = HttpUrl.parse(apiConnectionInfo.getApiRoot());
+        String apiRoot = apiConnectionInfo.getApiRoot();
+        Objects.requireNonNull(apiRoot, "API root must be defined");
+        HttpUrl url = HttpUrl.parse(apiRoot);
         if (url == null) {
-            throw new ServerNotFoundException("Invalid HTTP URL: " + apiConnectionInfo.getApiRoot());
+            throw new ServerNotFoundException("Invalid HTTP URL: " + apiRoot, apiRoot);
         }
         this.httpUrl = url;
         this.endpoint = Objects.requireNonNull(endpoint, "Cannot process request against the API root endpoint");
@@ -222,7 +223,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     handleExecutionError(execute, request);
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
-                throw new ServerNotFoundException(connectException);
+                throw new ServerNotFoundException(connectException, request.url().toString());
             }
             return retVal;
         }
@@ -236,19 +237,9 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         private void checkError(Response execute, Request request, ResponseBody responseBody) throws IOException {
             int code = execute.code();
             if (code == 404) {
-                if (responseBody == null) {
-                    throw new NoDataFoundException("No data found for request: " + request);
-                }
-                throw new NoDataFoundException("No data found for request: " + request + "\n" + responseBody.string());
+                throw new NoDataFoundException(execute, request, responseBody);
             } else {
-                if (responseBody == null) {
-                    throw new IOException(
-                        "Unknown error occurred for request: " + request + "\n Error code: " + code
-                            + " " + execute.message());
-                }
-                throw new IOException(
-                    "Unknown error occurred for request: " + request + "\n Error code: " + code + " "
-                        + execute.message() + "\n" + responseBody.string());
+                throw new CwmsHttpResponseException(execute, request, responseBody);
             }
         }
 
