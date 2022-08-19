@@ -15,9 +15,9 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
     private CwmsHttpLoggingInterceptor() {
         if (LOGGER.isLoggable(Level.FINE)) {
             DELEGATE.level(HttpLoggingInterceptor.Level.BASIC);
-        } //else if (LOGGER.isLoggable(Level.ALL)) {
-        DELEGATE.level(HttpLoggingInterceptor.Level.BODY);
-        //}
+        } else if (LOGGER.isLoggable(Level.ALL)) {
+            DELEGATE.level(HttpLoggingInterceptor.Level.BODY);
+        }
     }
 
     static CwmsHttpLoggingInterceptor getInstance() {
