@@ -1,7 +1,5 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import static mil.army.usace.hec.cwms.http.client.OAuth2TokenAuthenticator.AUTHORIZATION_HEADER;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +12,7 @@ import okhttp3.Response;
 final class OAuth2TokenInterceptor implements Interceptor {
 
     private static final Logger LOGGER = Logger.getLogger(OAuth2TokenInterceptor.class.getName());
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private final OAuth2TokenProvider tokenProvider;
 
     OAuth2TokenInterceptor(OAuth2TokenProvider tokenProvider) {
