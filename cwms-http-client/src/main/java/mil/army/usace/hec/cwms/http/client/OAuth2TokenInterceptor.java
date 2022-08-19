@@ -39,6 +39,7 @@ final class OAuth2TokenInterceptor implements Interceptor {
 
     //package scoped for testing
     Request newRequestWithAccessTokenAsHeader(Request request, OAuth2Token oauth2Token) {
+        CwmsHttpLoggingInterceptor.getInstance().redactHeader(AUTHORIZATION_HEADER);
         return request.newBuilder()
             .header(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
