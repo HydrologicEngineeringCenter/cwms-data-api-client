@@ -1,0 +1,18 @@
+{
+  "office-id": "LRL",
+  "id": "Stage;Stage.USGS-CORR",
+  "version": "USGS-CORR",
+  "description": "Stream Stage Correction Rating",
+  "dependent-parameter": "Stage",
+  "independent-parameter-specs": [
+    {
+      "parameter": "Stage",
+      "in-range-method": "ERROR",
+      "out-range-low-method": "LINEAR",
+      "out-range-high-method": "ERROR"
+    }
+  ],
+  "rating-ids": [
+    "Brookville.Stage;Stage.USGS-CORR.USGS-NWIS"
+  ]
+}
