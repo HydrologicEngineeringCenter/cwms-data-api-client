@@ -20,6 +20,7 @@ final class OAuth2TokenAuthenticator implements Authenticator {
 
     OAuth2TokenAuthenticator(OAuth2TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
+        CwmsHttpLoggingInterceptor.getInstance().redactHeader(AUTHORIZATION_HEADER);
     }
 
     @Override
@@ -57,7 +58,6 @@ final class OAuth2TokenAuthenticator implements Authenticator {
 
     //package scoped for testing
     Request newRequestWithAccessTokenAsHeader(Response response, OAuth2Token oauth2Token) {
-        CwmsHttpLoggingInterceptor.getInstance().redactHeader(AUTHORIZATION_HEADER);
         return response.request()
             .newBuilder()
             .removeHeader(AUTHORIZATION_HEADER)
