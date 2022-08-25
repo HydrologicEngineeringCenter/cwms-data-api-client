@@ -274,7 +274,7 @@ public class RatingSpec {
      * @return active
      **/
 
-    public Boolean isisActive() {
+    public Boolean isActive() {
         return active;
     }
 
@@ -293,7 +293,7 @@ public class RatingSpec {
      * @return autoUpdate
      **/
 
-    public Boolean isisAutoUpdate() {
+    public Boolean isAutoUpdate() {
         return autoUpdate;
     }
 
@@ -312,7 +312,7 @@ public class RatingSpec {
      * @return autoActivate
      **/
 
-    public Boolean isisAutoActivate() {
+    public Boolean isAutoActivate() {
         return autoActivate;
     }
 
@@ -331,7 +331,7 @@ public class RatingSpec {
      * @return autoMigrateExtension
      **/
 
-    public Boolean isisAutoMigrateExtension() {
+    public Boolean isAutoMigrateExtension() {
         return autoMigrateExtension;
     }
 

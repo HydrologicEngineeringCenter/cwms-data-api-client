@@ -28,12 +28,19 @@ import java.io.IOException;
 
 public class ServerNotFoundException extends IOException {
 
-    public ServerNotFoundException(Throwable throwable) {
-        super(throwable);
-    }
+    private final String url;
 
-    public ServerNotFoundException(String message) {
+    public ServerNotFoundException(String message, String url) {
         super(message);
+        this.url = url;
     }
 
+    public ServerNotFoundException(Throwable throwable, String url) {
+        super(throwable);
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

@@ -40,13 +40,13 @@ public class RatingTemplates {
     @JsonProperty("page")
     private String page = null;
 
-    @JsonProperty("nextPage")
+    @JsonProperty("next-page")
     private String nextPage = null;
 
     @JsonProperty("total")
     private Integer total = null;
 
-    @JsonProperty("pageSize")
+    @JsonProperty("page-size")
     private Integer pageSize = null;
 
     @JsonProperty("templates")

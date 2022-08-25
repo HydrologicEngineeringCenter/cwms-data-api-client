@@ -1,0 +1,62 @@
+{
+  "page": "MHx8bnVsbHx8Mg==",
+  "templates": [
+    {
+      "office-id": "LRL",
+      "id": "Stage;Stage.USGS-CORR",
+      "version": "USGS-CORR",
+      "description": "Stream Stage Correction Rating",
+      "dependent-parameter": "Stage",
+      "independent-parameter-specs": [
+        {
+          "parameter": "Stage",
+          "in-range-method": "ERROR",
+          "out-range-low-method": "LINEAR",
+          "out-range-high-method": "ERROR"
+        }
+      ],
+      "rating-ids": [
+        "Brookville.Stage;Stage.USGS-CORR.USGS-NWIS"
+      ]
+    },
+    {
+      "office-id": "LRL",
+      "id": "Stage;Flow.BASE",
+      "version": "BASE",
+      "description": "Stream Rating (Base + Shifts and Offsets)",
+      "dependent-parameter": "Flow",
+      "independent-parameter-specs": [
+        {
+          "parameter": "Stage",
+          "in-range-method": "ERROR",
+          "out-range-low-method": "LOGARITHMIC",
+          "out-range-high-method": "ERROR"
+        }
+      ],
+      "rating-ids": [
+        "Farmers.Stage;Flow.BASE.PRODUCTION",
+        "BlueLickSprings.Stage;Flow.BASE.PRODUCTION",
+        "Taylorsville-TAYO1.Stage;Flow.BASE.PRODUCTION",
+        "PleasantHill.Stage;Flow.BASE.PRODUCTION",
+        "Alpine.Stage;Flow.BASE.PRODUCTION",
+        "Milford.Stage;Flow.BASE.PRODUCTION",
+        "MtOlivet.Stage;Flow.BASE.PRODUCTION",
+        "Carlisle.Stage;Flow.BASE.PRODUCTION",
+        "DeGraff.Stage;Flow.BASE.PRODUCTION",
+        "McKinneysburg.Stage;Flow.BASE.PRODUCTION",
+        "Catawba.Stage;Flow.BASE.PRODUCTION",
+        "Lockington-LOCO1.Stage;Flow.BASE.PRODUCTION",
+        "Bradford-BRDO1.Stage;Flow.BASE.PRODUCTION",
+        "Apex.Stage;Flow.BASE.PRODUCTION",
+        "Perintown.Stage;Flow.BASE.PRODUCTION",
+        "Newport-NPTO1.Stage;Flow.BASE.PRODUCTION",
+        "Adamsboro.Stage;Flow.BASE.PRODUCTION",
+        "Alvaton.Stage;Flow.BASE.PRODUCTION",
+        "Salyersville.Stage;Flow.BASE.PRODUCTION",
+        "Bedford.Stage;Flow.BASE.PRODUCTION"
+      ]
+    }
+  ],
+  "next-page": "Mnx8bnVsbHx8Mg==",
+  "page-size": 2
+}
