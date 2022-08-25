@@ -15,11 +15,12 @@ import okhttp3.Route;
 final class OAuth2TokenAuthenticator implements Authenticator {
 
     private static final Logger LOGGER = Logger.getLogger(OAuth2TokenAuthenticator.class.getName());
-    static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private final OAuth2TokenProvider tokenProvider;
 
     OAuth2TokenAuthenticator(OAuth2TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
+        CwmsHttpLoggingInterceptor.getInstance().redactHeader(AUTHORIZATION_HEADER);
     }
 
     @Override
