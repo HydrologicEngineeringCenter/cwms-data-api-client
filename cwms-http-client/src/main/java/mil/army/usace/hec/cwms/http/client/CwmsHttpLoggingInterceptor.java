@@ -13,10 +13,10 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
 
     private CwmsHttpLoggingInterceptor() {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            DELEGATE.level(HttpLoggingInterceptor.Level.BASIC);
-        } else if (LOGGER.isLoggable(Level.ALL)) {
+        if (LOGGER.isLoggable(Level.ALL)) {
             DELEGATE.level(HttpLoggingInterceptor.Level.BODY);
+        } else if (LOGGER.isLoggable(Level.FINE)) {
+            DELEGATE.level(HttpLoggingInterceptor.Level.BASIC);
         }
     }
 
