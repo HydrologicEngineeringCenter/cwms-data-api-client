@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 final class CwmsHttpLoggingInterceptor implements Interceptor {
 
-    private static final HttpLoggingInterceptor DELEGATE = new HttpLoggingInterceptor();
+    private static final HttpLoggingInterceptor DELEGATE = new HttpLoggingInterceptor(new CwmsHttpLogger());
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
 
     private CwmsHttpLoggingInterceptor() {
