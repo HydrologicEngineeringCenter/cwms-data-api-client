@@ -34,10 +34,6 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
         return DELEGATE.intercept(chain);
     }
 
-    void level(HttpLoggingInterceptor.Level level) {
-        DELEGATE.level(level);
-    }
-
     void redactHeader(String header) {
         DELEGATE.redactHeader(header);
     }
