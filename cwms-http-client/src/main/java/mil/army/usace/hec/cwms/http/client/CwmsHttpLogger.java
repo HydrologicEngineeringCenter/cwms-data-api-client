@@ -9,12 +9,15 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 final class CwmsHttpLogger implements HttpLoggingInterceptor.Logger {
 
+    private static final String ACCESS_TOKEN = "access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLogger.class.getName());
     private static final HttpLoggingInterceptor.Logger DELEGATE = HttpLoggingInterceptor.Logger.DEFAULT;
 
     @Override
     public void log(String s) {
-        if (!s.contains("access_token") && !s.contains("refresh_token")) {
+        String lowerCaseS = s.toLowerCase();
+        if (!lowerCaseS.contains(ACCESS_TOKEN.toLowerCase()) && !lowerCaseS.contains(REFRESH_TOKEN.toLowerCase())) {
             DELEGATE.log(s);
         } else {
             try {
@@ -31,7 +34,7 @@ final class CwmsHttpLogger implements HttpLoggingInterceptor.Logger {
         Map<String, String> jsonMap = om.readValue(s, Map.class);
         for (Map.Entry<String, String> entry : jsonMap.entrySet()) {
             String key = entry.getKey();
-            if (key.equalsIgnoreCase("access_token") || key.equalsIgnoreCase("refresh_token")) {
+            if (key.equalsIgnoreCase(ACCESS_TOKEN) || key.equalsIgnoreCase(REFRESH_TOKEN)) {
                 entry.setValue("<REDACTED>");
             }
         }
