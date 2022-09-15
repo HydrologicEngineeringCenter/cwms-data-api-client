@@ -9,33 +9,37 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 final class CwmsHttpLoggingInterceptor implements Interceptor {
 
-    private static final CwmsHttpLogger CWMS_HTTP_LOGGER = new CwmsHttpLogger();
-    private static final HttpLoggingInterceptor DELEGATE = new HttpLoggingInterceptor(CWMS_HTTP_LOGGER);
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
+    private static CwmsHttpLoggingInterceptor instance;
+    private final CwmsHttpLogger cwmsHttpLogger = new CwmsHttpLogger();
+    private final HttpLoggingInterceptor delegate = new HttpLoggingInterceptor(cwmsHttpLogger);
 
     private CwmsHttpLoggingInterceptor() {
         applyLoggerLevelToDelegate();
     }
 
-    private void applyLoggerLevelToDelegate() {
-        if (LOGGER.isLoggable(Level.ALL)) {
-            DELEGATE.level(HttpLoggingInterceptor.Level.BODY);
-        } else if (LOGGER.isLoggable(Level.FINE)) {
-            DELEGATE.level(HttpLoggingInterceptor.Level.BASIC);
+    static CwmsHttpLoggingInterceptor getInstance() {
+        if (instance == null) {
+            instance = new CwmsHttpLoggingInterceptor();
         }
+        return instance;
     }
 
-    static CwmsHttpLoggingInterceptor getInstance() {
-        return InstanceHolder.INSTANCE;
+    private void applyLoggerLevelToDelegate() {
+        if (LOGGER.isLoggable(Level.ALL)) {
+            delegate.level(HttpLoggingInterceptor.Level.BODY);
+        } else if (LOGGER.isLoggable(Level.FINE)) {
+            delegate.level(HttpLoggingInterceptor.Level.BASIC);
+        }
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return DELEGATE.intercept(chain);
+        return delegate.intercept(chain);
     }
 
     void redactHeader(String header) {
-        DELEGATE.redactHeader(header);
+        delegate.redactHeader(header);
     }
 
     //for unit testing
@@ -46,10 +50,7 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
 
     //for unit testing
     void setLogCollector(StringBuilder collector) {
-        CWMS_HTTP_LOGGER.setCollector(collector);
+        cwmsHttpLogger.setCollector(collector);
     }
 
-    private static class InstanceHolder {
-        public static final CwmsHttpLoggingInterceptor INSTANCE = new CwmsHttpLoggingInterceptor();
-    }
 }
