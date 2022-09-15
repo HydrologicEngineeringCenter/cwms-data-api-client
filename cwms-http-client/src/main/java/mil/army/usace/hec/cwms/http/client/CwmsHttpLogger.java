@@ -14,7 +14,9 @@ final class CwmsHttpLogger implements HttpLoggingInterceptor.Logger {
         String lowerCaseS = s.toLowerCase();
         if (!lowerCaseS.contains(ACCESS_TOKEN.toLowerCase()) && !lowerCaseS.contains(REFRESH_TOKEN.toLowerCase())) {
             DELEGATE.log(s);
-            collector.append(s);
+            if (collector != null) {
+                collector.append(s);
+            }
         }
     }
 
