@@ -9,10 +9,15 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 final class CwmsHttpLoggingInterceptor implements Interceptor {
 
-    private static final HttpLoggingInterceptor DELEGATE = new HttpLoggingInterceptor(new CwmsHttpLogger());
+    private static final CwmsHttpLogger CWMS_HTTP_LOGGER = new CwmsHttpLogger();
+    private static final HttpLoggingInterceptor DELEGATE = new HttpLoggingInterceptor(CWMS_HTTP_LOGGER);
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
 
     private CwmsHttpLoggingInterceptor() {
+        setLevel();
+    }
+
+    private void setLevel() {
         if (LOGGER.isLoggable(Level.ALL)) {
             DELEGATE.level(HttpLoggingInterceptor.Level.BODY);
         } else if (LOGGER.isLoggable(Level.FINE)) {
@@ -35,6 +40,17 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
 
     void redactHeader(String header) {
         DELEGATE.redactHeader(header);
+    }
+
+    //for unit testing
+    void setLogLevel(Level level) {
+        LOGGER.setLevel(level);
+        setLevel();
+    }
+
+    //for unit testing
+    void setLogCollector(StringBuilder collector) {
+        CWMS_HTTP_LOGGER.setCollector(collector);
     }
 
     private static class InstanceHolder {
