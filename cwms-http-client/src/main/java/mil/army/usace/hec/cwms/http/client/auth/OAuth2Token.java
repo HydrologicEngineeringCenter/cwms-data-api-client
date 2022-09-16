@@ -76,10 +76,8 @@ public class OAuth2Token {
     @Override
     public String toString() {
         return "class OAuth2Token {\n"
-            + "    access_token: " + toIndentedString(accessToken) + "\n"
             + "    token_type: " + toIndentedString(tokenType) + "\n"
             + "    expires_in: " + toIndentedString(expiresIn) + "\n"
-            + "    refresh_token: " + toIndentedString(refreshToken) + "\n"
             + "    scope: " + toIndentedString(scope) + "\n"
             + "}";
     }
