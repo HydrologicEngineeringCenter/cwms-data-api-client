@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -23,11 +27,29 @@ final class TestCwmsHttpLogger {
     void testNothingRedacted() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
-        StringBuilder logOutput = new StringBuilder();
         loggingInterceptor.setLogLevel(Level.ALL);
-        loggingInterceptor.setLogCollector(logOutput);
         try {
             String body = readJsonFile("success.json");
+            AtomicBoolean foundMessage = new AtomicBoolean(false);
+            Logger.getLogger("okhttp3").addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    String message = record.getMessage();
+                    if (message.contains(body)) {
+                        foundMessage.set(true);
+                    }
+                }
+
+                @Override
+                public void flush() {
+
+                }
+
+                @Override
+                public void close() throws SecurityException {
+
+                }
+            });
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String endpoint = "success";
@@ -39,7 +61,7 @@ final class TestCwmsHttpLogger {
             try (HttpRequestResponse response = executer.execute()) {
                 assertNotNull(response.getBody());
             }
-            assertTrue(logOutput.toString().contains(body));
+            assertTrue(foundMessage.get());
         } finally {
             mockWebServer.shutdown();
         }
@@ -49,11 +71,29 @@ final class TestCwmsHttpLogger {
     void testRedacted() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
-        StringBuilder logOutput = new StringBuilder();
         loggingInterceptor.setLogLevel(Level.ALL);
-        loggingInterceptor.setLogCollector(logOutput);
         try {
             String body = readJsonFile("tokens.json");
+            AtomicBoolean foundMessage = new AtomicBoolean(false);
+            Logger.getLogger("okhttp3").addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    String message = record.getMessage();
+                    if (message.contains("access_token") || message.contains("refresh_token")) {
+                        foundMessage.set(true);
+                    }
+                }
+
+                @Override
+                public void flush() {
+
+                }
+
+                @Override
+                public void close() throws SecurityException {
+
+                }
+            });
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String endpoint = "tokens";
@@ -65,8 +105,7 @@ final class TestCwmsHttpLogger {
             try (HttpRequestResponse response = executer.execute()) {
                 assertNotNull(response.getBody());
             }
-            assertFalse(logOutput.toString().contains("access_token"));
-            assertFalse(logOutput.toString().contains("refresh_token"));
+            assertFalse(foundMessage.get());
         } finally {
             mockWebServer.shutdown();
         }

@@ -15,7 +15,7 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
     private final HttpLoggingInterceptor delegate = new HttpLoggingInterceptor(cwmsHttpLogger);
 
     private CwmsHttpLoggingInterceptor() {
-        applyLoggerLevelToDelegate();
+        updateInterceptorLogLevel();
     }
 
     static CwmsHttpLoggingInterceptor getInstance() {
@@ -25,7 +25,7 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
         return instance;
     }
 
-    private void applyLoggerLevelToDelegate() {
+    private void updateInterceptorLogLevel() {
         if (LOGGER.isLoggable(Level.ALL)) {
             delegate.level(HttpLoggingInterceptor.Level.BODY);
         } else if (LOGGER.isLoggable(Level.FINE)) {
@@ -45,12 +45,7 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
     //for unit testing
     void setLogLevel(Level level) {
         LOGGER.setLevel(level);
-        applyLoggerLevelToDelegate();
-    }
-
-    //for unit testing
-    void setLogCollector(StringBuilder collector) {
-        cwmsHttpLogger.setCollector(collector);
+        updateInterceptorLogLevel();
     }
 
 }
