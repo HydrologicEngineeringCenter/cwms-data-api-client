@@ -33,6 +33,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 public final class RatingEndpointInput extends EndpointInput {
 
     private static final String OFFICE_QUERY_PARAMETER = "office";
+    private static final String METHOD_QUERY_PARAMETER = "method";
 
     private String officeId;
     private String ratingId;
@@ -57,6 +58,7 @@ public final class RatingEndpointInput extends EndpointInput {
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            .addQueryParameter(METHOD_QUERY_PARAMETER, "EAGER")
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
     }
 }

@@ -38,7 +38,8 @@ public final class RadarObjectMapper {
 
     private static final ObjectMapper OBJECT_MAPPER =
         new ObjectMapper().registerModule(new JavaTimeModule()).configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-                          .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+//            .activateDefaultTyping(BasicPolymorphicTypeValidator.builder().allowIfBaseType(AbstractRatingMetadata.class).build())
+            .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
     private RadarObjectMapper() {
         throw new AssertionError("Utility class");

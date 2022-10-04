@@ -1,0 +1,665 @@
+{
+  "page": "TUE9PXx8NTA=",
+  "rating-metadata": [
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Milford.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Milford",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "Little Miami River at Milford OH Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Milford.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-10-24T00:00:00Z",
+          "create-date": "2013-11-01T20:45:00Z",
+          "description": "USGS RATING ID: 38.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Milford.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "Milford",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "Little Miami River at Milford OH USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Milford.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2014-08-01T04:00:00Z",
+          "create-date": "2015-11-18T14:22:00Z",
+          "description": "39.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Perintown.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Perintown",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "East Fork Little Miami River at Perintown OH Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Perintown.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2012-04-04T13:01:00Z",
+          "create-date": "2012-10-05T20:45:00Z",
+          "description": "USGS RATING ID: 39.1"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Perintown.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "Perintown",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "East Fork Little Miami River at Perintown OH USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Perintown.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2012-04-04T18:01:00Z",
+          "create-date": "2015-11-18T14:23:00Z",
+          "description": "39.1"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Salyersville.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Salyersville",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER BELOW MASON FORK NR SALYERSVILLE, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Salyersville.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-01-16T05:00:00Z",
+          "create-date": "2014-02-03T14:15:00Z",
+          "description": "USGS RATING ID:  6.3"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Salyersville.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "Salyersville",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER BELOW MASON FORK NR SALYERSVILLE, KY USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Salyersville.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2014-10-01T04:00:00Z",
+          "create-date": "2015-11-18T14:23:00Z",
+          "description": "6.3"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Farmers.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Farmers",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT HWY 60 AT FARMERS, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "table",
+          "office-id": "LRL",
+          "rating-spec-id": "Farmers.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-09-24T00:00:00Z",
+          "create-date": "2013-11-05T20:45:00Z",
+          "description": "USGS RATING ID:  2.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "BlueLickSprings.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "BlueLickSprings",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT BLUE LICK SPRINGS, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "BlueLickSprings.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-01-18T05:00:00Z",
+          "create-date": "2013-10-29T20:45:00Z",
+          "description": "USGS RATING ID: 12.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "MtOlivet.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "MtOlivet",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "NORTH FORK LICKING RIVER NEAR MT OLIVET, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "table",
+          "office-id": "LRL",
+          "rating-spec-id": "MtOlivet.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-01T00:00:00Z",
+          "create-date": "2012-08-29T20:45:00Z",
+          "description": "USGS RATING ID:  4.1"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "McKinneysburg.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "McKinneysburg",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT MCKINNEYSBURG, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "table",
+          "office-id": "LRL",
+          "rating-spec-id": "McKinneysburg.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-01T00:00:00Z",
+          "create-date": "2012-08-29T20:45:00Z",
+          "description": "USGS RATING ID:   24"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "McKinneysburg.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "McKinneysburg",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT MCKINNEYSBURG, KY USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "McKinneysburg.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-10-01T04:00:00Z",
+          "create-date": "2015-11-18T14:23:00Z",
+          "description": "24"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Carlisle.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Carlisle",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "HINKSTON CREEK NEAR CARLISLE, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Carlisle.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-01T00:00:00Z",
+          "create-date": "2012-08-29T20:45:00Z",
+          "description": "USGS RATING ID:    7"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Carlisle.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "Carlisle",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "HINKSTON CREEK NEAR CARLISLE, KY USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Carlisle.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-10-01T04:00:00Z",
+          "create-date": "2015-11-18T14:23:00Z",
+          "description": "7"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Catawba.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Catawba",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT CATAWBA, KY Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Catawba.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-01T00:00:00Z",
+          "create-date": "2012-08-29T20:45:00Z",
+          "description": "USGS RATING ID:   19"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Catawba.Stage;Flow.Logarithmic.USGS-NWIS",
+        "template-id": "Stage;Flow.Logarithmic",
+        "location-id": "Catawba",
+        "version": "USGS-NWIS",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "LICKING RIVER AT CATAWBA, KY USGS-NWIS Stream Rating (Base + Shifts and Offsets)"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Catawba.Stage;Flow.Logarithmic.USGS-NWIS",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2013-10-08T16:00:00Z",
+          "create-date": "2015-11-18T14:23:00Z",
+          "description": "20.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "DeGraff.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "DeGraff",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "Bokengehalas Creek at De Graff OH Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "DeGraff.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-01T00:00:00Z",
+          "create-date": "2012-07-30T10:57:00Z",
+          "description": "USGS RATING ID:  6.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Newport-NPTO1.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Newport-NPTO1",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "Loramie Creek near Newport OH Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Newport-NPTO1.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-19T21:00:00Z",
+          "create-date": "2012-10-30T20:45:00Z",
+          "description": "USGS RATING ID: 33.0"
+        }
+      ]
+    },
+    {
+      "rating-spec": {
+        "office-id": "LRL",
+        "rating-id": "Lockington-LOCO1.Stage;Flow.BASE.PRODUCTION",
+        "template-id": "Stage;Flow.BASE",
+        "location-id": "Lockington-LOCO1",
+        "version": "PRODUCTION",
+        "source-agency": "",
+        "in-range-method": "LINEAR",
+        "out-range-low-method": "NEAREST",
+        "out-range-high-method": "NEAREST",
+        "active": true,
+        "auto-update": true,
+        "auto-activate": true,
+        "auto-migrate-extension": true,
+        "independent-rounding-specs": [
+          {
+            "value": "2223456782"
+          }
+        ],
+        "dependent-rounding-spec": "2222233332",
+        "description": "Loramie Creek at Lockington OH Shift-Adjusted PRODUCTION Stream Rating"
+      },
+      "ratings": [
+        {
+          "rating-type": "usgs",
+          "office-id": "LRL",
+          "rating-spec-id": "Lockington-LOCO1.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2011-10-21T11:44:00Z",
+          "create-date": "2012-10-29T20:45:00Z",
+          "description": "USGS RATING ID: 25.0"
+        },
+        {
+          "rating-type": "table",
+          "office-id": "LRL",
+          "rating-spec-id": "Lockington-LOCO1.Stage;Flow.BASE.PRODUCTION",
+          "units-id": "ft;cfs",
+          "active": true,
+          "effective-date": "2014-05-16T17:26:00Z",
+          "create-date": "2014-05-16T17:27:00Z",
+          "description": "Loramie Creek at Lockington OH Shift-Adjusted PRODUCTION Stream Rating"
+        }
+      ]
+    }
+  ],
+  "next-page": "NTB8fDUw",
+  "page-size": 50
+}
