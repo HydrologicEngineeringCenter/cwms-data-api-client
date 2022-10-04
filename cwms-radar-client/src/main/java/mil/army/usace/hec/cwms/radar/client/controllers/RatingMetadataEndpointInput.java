@@ -34,13 +34,13 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public final class RatingMetadataEndpointInput extends EndpointInput {
 
-    private static final String OFFICE_QUERY_PARAMETER = "office";
-    private static final String RATING_ID_MASK_QUERY_PARAMETER = "rating-id-mask";
-    private static final String START_QUERY_PARAMETER = "start";
-    private static final String END_QUERY_PARAMETER = "end";
-    private static final String TIMEZONE_QUERY_PARAMETER = "timezone";
-    private static final String PAGE_QUERY_PARAMETER = "page";
-    private static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String RATING_ID_MASK_QUERY_PARAMETER = "rating-id-mask";
+    static final String START_QUERY_PARAMETER = "start";
+    static final String END_QUERY_PARAMETER = "end";
+    static final String TIMEZONE_QUERY_PARAMETER = "timezone";
+    static final String PAGE_QUERY_PARAMETER = "page";
+    static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
 
     private String office;
     private String ratingIdMask;
@@ -56,7 +56,7 @@ public final class RatingMetadataEndpointInput extends EndpointInput {
     }
 
     public RatingMetadataEndpointInput ratingIdMask(String ratingIdMask) {
-        this.ratingIdMask = office;
+        this.ratingIdMask = ratingIdMask;
         return this;
     }
 
@@ -90,13 +90,13 @@ public final class RatingMetadataEndpointInput extends EndpointInput {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
         String startString = Optional.ofNullable(start).map(Object::toString).orElse(null);
         String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
-        return httpRequestBuilder.addQueryHeader(OFFICE_QUERY_PARAMETER, office)
-            .addQueryHeader(RATING_ID_MASK_QUERY_PARAMETER, ratingIdMask)
-            .addQueryHeader(START_QUERY_PARAMETER, startString)
-            .addQueryHeader(END_QUERY_PARAMETER, endString)
-            .addQueryHeader(TIMEZONE_QUERY_PARAMETER, timezone)
-            .addQueryHeader(PAGE_QUERY_PARAMETER, page)
-            .addQueryHeader(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, office)
+            .addQueryParameter(RATING_ID_MASK_QUERY_PARAMETER, ratingIdMask)
+            .addQueryParameter(START_QUERY_PARAMETER, startString)
+            .addQueryParameter(END_QUERY_PARAMETER, endString)
+            .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
+            .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+            .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }
