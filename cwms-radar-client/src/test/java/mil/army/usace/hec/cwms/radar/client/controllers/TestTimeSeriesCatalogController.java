@@ -67,6 +67,7 @@ class TestTimeSeriesCatalogController extends TestController {
         TimeSeriesExtents timeSeriesExtents = extents.get(0);
         assertEquals(ZonedDateTime.of(2005, 1, 2, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getEarliestTime());
         assertEquals(ZonedDateTime.of(2005, 2, 1, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getLatestTime());
+        assertEquals(ZonedDateTime.of(2018, 7, 5, 20, 40, 59, 398000000, ZoneId.of("UTC")), timeSeriesExtents.getLastUpdate());
         assertNull(timeSeriesExtents.getVersionTime());
     }
 
