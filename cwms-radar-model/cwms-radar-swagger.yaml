@@ -3907,8 +3907,6 @@ components:
     AbstractRatingMetadata:
       type: object
       properties:
-        rating-type:
-          type: string
         office-id:
           type: string
         rating-spec-id:
@@ -3930,6 +3928,8 @@ components:
           type: string
         vertical-datum-info:
           $ref: '#/components/schemas/VerticalDatumInfo'
+        rating-type:
+          type: string
       description: Rating Metadata
       discriminator:
         propertyName: rating-type
@@ -3987,6 +3987,8 @@ components:
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
+    SourceRating:
+      type: object
     TableRating:
       type: object
       allOf:
@@ -4025,6 +4027,14 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/AbstractRatingMetadata'
+        - type: object
+          properties:
+            source-ratings:
+              type: array
+              items:
+                $ref: '#/components/schemas/SourceRating'
+            connections:
+              type: string
     DatabaseLoadMethod:
       type: string
       enum:
@@ -4168,6 +4178,12 @@ components:
           format: date-time
           xml:
             name: earliest-time
+        lastUpdate:
+          type: string
+          description: Last update in the timeseries
+          format: date-time
+          xml:
+            name: last-update
         latestTime:
           type: string
           description: Latest value in the timeseries
@@ -4428,11 +4444,11 @@ components:
           type: string
         clobText:
           type: string
-        projectId:
+        topLevelId:
           type: string
         bottomLevelId:
           type: string
-        topLevelId:
+        projectId:
           type: string
         poolName:
           $ref: '#/components/schemas/PoolNameType'
