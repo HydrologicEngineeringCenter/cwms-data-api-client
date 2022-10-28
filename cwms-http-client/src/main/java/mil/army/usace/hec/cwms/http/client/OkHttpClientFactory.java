@@ -1,7 +1,9 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
+import javax.net.ssl.HostnameVerifier;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 
 final class OkHttpClientFactory {
@@ -12,7 +14,6 @@ final class OkHttpClientFactory {
 
     static OkHttpClient buildOkHttpClient(ApiConnectionInfo apiConnectionInfo) {
         Optional<SslSocketData> optionalSslSocketData = apiConnectionInfo.getSslSocketData();
-        Optional<OAuth2TokenProvider> optionalTokenProvider = apiConnectionInfo.getOAuth2TokenProvider();
         OkHttpClient retVal = OkHttpClientInstance.getInstance();
         if (optionalSslSocketData.isPresent()) {
             SslSocketData sslSocketData = optionalSslSocketData.get();
@@ -20,10 +21,23 @@ final class OkHttpClientFactory {
                 .sslSocketFactory(sslSocketData.getSslSocketFactory(), sslSocketData.getX509TrustManager())
                 .build();
         }
+        Optional<OAuth2TokenProvider> optionalTokenProvider = apiConnectionInfo.getOAuth2TokenProvider();
         if (optionalTokenProvider.isPresent()) {
             retVal = retVal.newBuilder()
                 .authenticator(new OAuth2TokenAuthenticator(optionalTokenProvider.get()))
                 .addInterceptor(new OAuth2TokenInterceptor(optionalTokenProvider.get()))
+                .build();
+        }
+        Optional<HostnameVerifier> hostnameVerifier = apiConnectionInfo.getHostnameVerifier();
+        if (hostnameVerifier.isPresent()) {
+            retVal = retVal.newBuilder()
+                .hostnameVerifier(hostnameVerifier.get())
+                .build();
+        }
+        Optional<CookieJar> cookieJar = apiConnectionInfo.cookieJar();
+        if (cookieJar.isPresent()) {
+            retVal = retVal.newBuilder()
+                .cookieJar(cookieJar.get())
                 .build();
         }
         return retVal;

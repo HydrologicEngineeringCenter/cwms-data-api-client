@@ -24,40 +24,21 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import okhttp3.Cookie;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public final class HttpRequestResponse implements AutoCloseable {
+public class UnauthorizedException extends CwmsHttpResponseException {
+    private static final String ERROR_MESSAGE = "Unauthorized request to: %s %s \nError code: %s %s %s";
 
-    private final ResponseBody body;
-    private List<Cookie> cookies;
-
-    HttpRequestResponse(ResponseBody body, List<Cookie> cookies) {
-        this.body = body;
-        this.cookies = cookies;
-    }
-
-    public String getBody() throws IOException {
-        return body.string();
-    }
-
-    public InputStream getStream() {
-        return body.byteStream();
-    }
-
-    public Map<String, String> getCookies() {
-        return cookies.stream()
-            .collect(toMap(Cookie::name, Cookie::value));
+    UnauthorizedException(Response execute, Request request, ResponseBody responseBody) throws IOException {
+        super(execute, request, responseBody);
     }
 
     @Override
-    public void close() {
-        body.close();
+    public String getMessage() {
+        return String.format(ERROR_MESSAGE, getRequestType(), getUrl(), getErrorCode(), getReasonPhrase(),
+            getResponseBody().map(c -> "\n" + c).orElse(""));
     }
 }

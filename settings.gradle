@@ -3,3 +3,4 @@ rootProject.name = 'cwms-radar-client-parent'
 include ":cwms-http-client"
 include ":cwms-radar-client"
 include ":cwms-radar-model"
+include ":cwms-aaa-client"

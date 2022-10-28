@@ -24,40 +24,18 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import okhttp3.Cookie;
-import okhttp3.ResponseBody;
 
-public final class HttpRequestResponse implements AutoCloseable {
+public class SslCanceledException extends IOException {
 
-    private final ResponseBody body;
-    private List<Cookie> cookies;
+    private final String url;
 
-    HttpRequestResponse(ResponseBody body, List<Cookie> cookies) {
-        this.body = body;
-        this.cookies = cookies;
+    public SslCanceledException(Throwable throwable, String url) {
+        super(throwable);
+        this.url = url;
     }
 
-    public String getBody() throws IOException {
-        return body.string();
-    }
-
-    public InputStream getStream() {
-        return body.byteStream();
-    }
-
-    public Map<String, String> getCookies() {
-        return cookies.stream()
-            .collect(toMap(Cookie::name, Cookie::value));
-    }
-
-    @Override
-    public void close() {
-        body.close();
+    public String getUrl() {
+        return url;
     }
 }

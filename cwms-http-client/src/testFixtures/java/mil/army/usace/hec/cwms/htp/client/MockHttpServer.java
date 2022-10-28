@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.htp.client;
 
 import java.io.IOException;
+import okhttp3.Cookie;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
@@ -47,6 +48,11 @@ public final class MockHttpServer {
 
     public void enqueue(int responseCode, String body) {
         mockWebServer.enqueue(new MockResponse().setResponseCode(responseCode).setBody(body));
+    }
+
+    public void enqueue(String body, String cookie) {
+        MockResponse mockResponse = new MockResponse().setBody(body).addHeader("Set-Cookie", cookie);
+        mockWebServer.enqueue(mockResponse);
     }
 
     public void shutdown() throws IOException {

@@ -25,38 +25,30 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Test;
 
-class TestHttpRequestResponse {
+class TestHttpRequestResponseCookies {
 
     @Test
     void testHttpRequestResponse() throws IOException {
-        String bodyStr =
-            "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
-        ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptyList());
-        assertEquals(bodyStr, httpRequestResponse.getBody());
-    }
-
-    @Test
-    void testHttpRequestResponseStream() throws IOException {
-        String bodyStr = "Hello World";
-        byte[] bytes = bodyStr.getBytes();
-        ResponseBody body = ResponseBody.create(bytes, MediaType.parse("text/plain"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptyList());
-        try (InputStream inputStream = httpRequestResponse.getStream()) {
-            String result = new BufferedReader(new InputStreamReader(inputStream))
-                .lines().collect(Collectors.joining("\n"));
-            assertEquals(bodyStr, result);
+        try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
+            .build())
+            .get()
+            .withMediaType("application/json")
+            .execute()) {
+            Map<String, String> cookies = execute.getCookies();
+            assertFalse(cookies.isEmpty());
         }
     }
 

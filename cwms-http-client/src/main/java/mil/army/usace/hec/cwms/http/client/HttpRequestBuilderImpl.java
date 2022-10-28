@@ -29,14 +29,18 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.Security;
+import java.security.SignatureException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -218,12 +222,19 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     if (responseBody == null) {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    retVal = new HttpRequestResponse(responseBody);
+                    List<Cookie> cookies = client.cookieJar().loadForRequest(request.url());
+                    retVal = new HttpRequestResponse(responseBody, cookies);
                 } else {
                     handleExecutionError(execute, request);
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException, request.url().toString());
+            } catch (SSLHandshakeException ex) {
+                if(ex.getCause() != null && ex.getCause() instanceof SignatureException && ex.getCause().getMessage().contains("The action was cancelled by the user.")) {
+                    throw new SslCanceledException(ex, request.url().toString());
+                } else {
+                    throw ex;
+                }
             }
             return retVal;
         }
@@ -238,6 +249,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             int code = execute.code();
             if (code == 404) {
                 throw new NoDataFoundException(execute, request, responseBody);
+            } else if (code == 401) {
+                throw new UnauthorizedException(execute, request, responseBody);
             } else {
                 throw new CwmsHttpResponseException(execute, request, responseBody);
             }

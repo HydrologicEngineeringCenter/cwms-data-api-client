@@ -25,18 +25,25 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
+import javax.net.ssl.HostnameVerifier;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.CookieJar;
 
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private OAuth2TokenProvider tokenProvider;
-    private SslSocketData sslSocketData;
+    private final HostnameVerifier hostnameVerifier;
+    private final OAuth2TokenProvider tokenProvider;
+    private final SslSocketData sslSocketData;
+    private final CookieJar cookieJar;
 
-    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider, HostnameVerifier hostnameVerifier,
+                      CookieJar cookieJar) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.tokenProvider = tokenProvider;
+        this.hostnameVerifier = hostnameVerifier;
+        this.cookieJar = cookieJar;
     }
 
     public String getApiRoot() {
@@ -51,4 +58,11 @@ public final class ApiConnectionInfo {
         return Optional.ofNullable(sslSocketData);
     }
 
+    public Optional<HostnameVerifier> getHostnameVerifier() {
+        return Optional.ofNullable(hostnameVerifier);
+    }
+
+    Optional<CookieJar> cookieJar() {
+        return Optional.ofNullable(cookieJar);
+    }
 }
