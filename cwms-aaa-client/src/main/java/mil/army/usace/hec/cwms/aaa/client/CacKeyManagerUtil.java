@@ -26,6 +26,14 @@ public final class CacKeyManagerUtil {
     }
 
     private static KeyManager createKeyManager() throws CacCertificateException {
+        if (System.getProperty("os.name", "").toUpperCase().contains("WINDOWS")) {
+            return getWindowsKeyStore();
+        } else {
+            return getJreKeyStore();
+        }
+    }
+
+    private static CacKeyManager getWindowsKeyStore() throws CacCertificateException {
         try {
             KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
             keystore.load(null, null);
@@ -40,6 +48,25 @@ public final class CacKeyManagerUtil {
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS");
         } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS", e);
+        }
+    }
+
+    private static CacKeyManager getJreKeyStore() throws CacCertificateException {
+        String defaultType = KeyStore.getDefaultType();
+        try {
+            KeyStore keystore = KeyStore.getInstance(defaultType);
+            keystore.load(null, null);
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            kmf.init(keystore, null);
+            KeyManager[] kms = kmf.getKeyManagers();
+            for (KeyManager km : kms) {
+                if (km instanceof X509KeyManager) {
+                    return new CacKeyManager((X509KeyManager) km, keystore);
+                }
+            }
+            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType);
+        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
+            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType, e);
         }
     }
 
