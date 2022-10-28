@@ -22,11 +22,12 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
@@ -47,33 +48,32 @@ final class CwmsAAALoginTest {
 
     @Test
     public void testCwmsAAASessionId() throws Exception {
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init((KeyStore) null);
+        HostnameVerifier hostnameVerifier = (s, sslSession) -> true;
+        SSLContext sc = SSLContext.getInstance("TLS");
+        KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+        sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
+        SSLSocketFactory socketFactory = sc.getSocketFactory();
         ApiConnectionInfo apiConnectionInfo;
         boolean testMock = true;
-        if(testMock) {
+        if (testMock) {
             MockHttpServer mockHttpServer = MockHttpServer.create();
-            String resource = "cwms_aaa/cwms_aaa_banner_agreement.html";
-            String collect = readFile(resource);
-            String cookie = "JSESSIONID=53693739C7450D5D5261ED35E2093458; domain=localhost; path=/";
+            String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
+            String cookie = "JSESSIONID=53693739C7450D5D5261ED35E2093458";
             mockHttpServer.enqueue(collect, cookie);
-            resource = "cwms_aaa/cwms_aaa_login.json";
-            collect = readFile(resource);
+            collect = readFile("cwms_aaa/cwms_aaa_login.json");
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
+                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
+                .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
+                .withHostnameVerifier(hostnameVerifier)
                 .build();
         } else {
-            String baseUrl = "https://leary:8443";
-            HostnameVerifier hostnameVerifier = (s, sslSession) -> true;
-            SSLContext sc = SSLContext.getInstance("TLS");
-            KeyStore ts = KeyStore.getInstance("JKS");
-            ts.load(null, null);
-            TrustManager[] trustAllCerts = new TrustManager[] {new TrustAllManager()};
-            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
-            sc.init(new KeyManager[] {keyManager}, trustAllCerts, null);
-            SSLSocketFactory socketFactory = sc.getSocketFactory();
-            apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
-                .withSslSocketData(new SslSocketData(socketFactory, new TrustAllManager()))
+            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
+                .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .withHostnameVerifier(hostnameVerifier)
                 .build();
         }
@@ -83,20 +83,5 @@ final class CwmsAAALoginTest {
         assertNotNull(cwmsAAAAuthToken.lastLogin());
         assertNotNull(cwmsAAAAuthToken.jSessionId());
         assertFalse(cwmsAAAAuthToken.jSessionId().isEmpty());
-    }
-
-    static final class TrustAllManager implements X509TrustManager {
-        @Override
-        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-            return new java.security.cert.X509Certificate[] {};
-        }
     }
 }
