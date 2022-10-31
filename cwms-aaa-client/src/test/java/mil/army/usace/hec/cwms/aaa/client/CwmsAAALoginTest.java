@@ -18,7 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyStore;
 import java.util.Arrays;
-import javax.net.ssl.HostnameVerifier;
+import java.util.List;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -59,7 +59,7 @@ final class CwmsAAALoginTest {
         if (testMock) {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
-            String cookie = "JSESSIONID=53693739C7450D5D5261ED35E2093458";
+            List<String> cookie = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
             mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_login.json");
             mockHttpServer.enqueue(collect);
@@ -80,5 +80,8 @@ final class CwmsAAALoginTest {
         assertNotNull(cwmsAAAAuthToken.lastLogin());
         assertNotNull(cwmsAAAAuthToken.jSessionId());
         assertFalse(cwmsAAAAuthToken.jSessionId().isEmpty());
+        assertNotNull(cwmsAAAAuthToken.jSessionIdSso());
+        assertFalse(cwmsAAAAuthToken.jSessionIdSso().isEmpty());
+
     }
 }

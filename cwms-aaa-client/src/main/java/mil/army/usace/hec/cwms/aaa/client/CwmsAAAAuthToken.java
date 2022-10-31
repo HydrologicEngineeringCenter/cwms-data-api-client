@@ -26,6 +26,7 @@ public final class CwmsAAAAuthToken {
     private List<String> roles = new ArrayList<>();
 
     private String jSessionId;
+    private String jSessionIdSso;
 
     public String username() {
         return username;
@@ -39,11 +40,19 @@ public final class CwmsAAAAuthToken {
         return new ArrayList<>(roles);
     }
 
-    void setjSessionId(String jSessionId) {
+    void setJSessionId(String jSessionId) {
         this.jSessionId = jSessionId;
     }
 
     public String jSessionId() {
         return jSessionId;
+    }
+
+    public void setJSessionIdSso(String jSessionIdSso) {
+        this.jSessionIdSso = jSessionIdSso;
+    }
+
+    public String jSessionIdSso() {
+        return jSessionIdSso;
     }
 }

@@ -24,6 +24,7 @@ public final class CwmsLoginController {
     private static final String LOGOUT_ENDPOINT = "logout";
     private static final String DOD_AGREE_PARAMETER = "dod_agree";
     private static final String JSESSIONID = "JSESSIONID";
+    private static final String JSESSIONIDSSO = "JSESSIONIDSSO";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
         .registerModule(new JavaTimeModule())
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
@@ -63,9 +64,11 @@ public final class CwmsLoginController {
             .get()
             .withMediaType("application/json")
             .execute()) {
+            String jsessionIdSso = login.getCookies().get(JSESSIONIDSSO);
             String jsonBody = login.getBody();
             CwmsAAAAuthToken retval = OBJECT_MAPPER.readValue(jsonBody, CwmsAAAAuthToken.class);
-            retval.setjSessionId(jsessionId);
+            retval.setJSessionId(jsessionId);
+            retval.setJSessionIdSso(jsessionIdSso);
             return retval;
         }
     }

@@ -15,6 +15,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyStore;
+import java.util.Arrays;
+import java.util.List;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -60,7 +62,7 @@ final class CwmsAAALogoutTest {
         if(testMock) {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
-            String cookie = "JSESSIONID=53693739C7450D5D5261ED35E2093458";
+            List<String> cookie = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
             mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_login.json");
             mockHttpServer.enqueue(collect);
