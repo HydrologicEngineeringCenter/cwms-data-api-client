@@ -46,7 +46,6 @@ final class CwmsAAALogoutTest {
 
     @Test
     public void testCwmsAAASessionLogout() throws Exception {
-        HostnameVerifier hostnameVerifier = (s, sslSession) -> true;
         SSLContext sc = SSLContext.getInstance("TLS");
         KeyStore ts = KeyStore.getInstance("JKS");
         ts.load(null, null);
@@ -72,12 +71,10 @@ final class CwmsAAALogoutTest {
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
                 .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
-                .withHostnameVerifier(hostnameVerifier)
                 .build();
         } else {
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
-                .withHostnameVerifier(hostnameVerifier)
                 .build();
         }
         CwmsLoginController cwmsLoginController = new CwmsLoginController();

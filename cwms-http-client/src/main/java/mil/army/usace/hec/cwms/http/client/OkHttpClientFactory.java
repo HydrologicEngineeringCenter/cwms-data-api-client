@@ -28,12 +28,6 @@ final class OkHttpClientFactory {
                 .addInterceptor(new OAuth2TokenInterceptor(optionalTokenProvider.get()))
                 .build();
         }
-        Optional<HostnameVerifier> hostnameVerifier = apiConnectionInfo.getHostnameVerifier();
-        if (hostnameVerifier.isPresent()) {
-            retVal = retVal.newBuilder()
-                .hostnameVerifier(hostnameVerifier.get())
-                .build();
-        }
         Optional<CookieJar> cookieJar = apiConnectionInfo.cookieJar();
         if (cookieJar.isPresent()) {
             retVal = retVal.newBuilder()

@@ -50,7 +50,6 @@ final class CwmsAAALoginTest {
     public void testCwmsAAASessionId() throws Exception {
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init((KeyStore) null);
-        HostnameVerifier hostnameVerifier = (s, sslSession) -> true;
         SSLContext sc = SSLContext.getInstance("TLS");
         KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
         sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
@@ -69,12 +68,10 @@ final class CwmsAAALoginTest {
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
                 .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
-                .withHostnameVerifier(hostnameVerifier)
                 .build();
         } else {
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
-                .withHostnameVerifier(hostnameVerifier)
                 .build();
         }
         CwmsAAAAuthToken cwmsAAAAuthToken = new CwmsLoginController().login(apiConnectionInfo);

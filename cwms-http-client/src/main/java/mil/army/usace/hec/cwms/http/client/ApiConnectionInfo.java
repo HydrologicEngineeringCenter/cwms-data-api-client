@@ -32,17 +32,14 @@ import okhttp3.CookieJar;
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private final HostnameVerifier hostnameVerifier;
     private final OAuth2TokenProvider tokenProvider;
     private final SslSocketData sslSocketData;
     private final CookieJar cookieJar;
 
-    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider, HostnameVerifier hostnameVerifier,
-                      CookieJar cookieJar) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider, CookieJar cookieJar) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.tokenProvider = tokenProvider;
-        this.hostnameVerifier = hostnameVerifier;
         this.cookieJar = cookieJar;
     }
 
@@ -56,10 +53,6 @@ public final class ApiConnectionInfo {
 
     public Optional<SslSocketData> getSslSocketData() {
         return Optional.ofNullable(sslSocketData);
-    }
-
-    public Optional<HostnameVerifier> getHostnameVerifier() {
-        return Optional.ofNullable(hostnameVerifier);
     }
 
     Optional<CookieJar> cookieJar() {

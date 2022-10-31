@@ -1,6 +1,5 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import javax.net.ssl.HostnameVerifier;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import okhttp3.CookieJar;
 
@@ -9,7 +8,6 @@ public class ApiConnectionInfoBuilder {
     private final String apiRoot;
     private OAuth2TokenProvider tokenProvider;
     private SslSocketData sslSocketData;
-    private HostnameVerifier hostnameVerifier;
     private CookieJarFactory.CookieJarBuilder cookieJarBuilder;
 
     public ApiConnectionInfoBuilder(String apiRoot) {
@@ -26,11 +24,6 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
-    public ApiConnectionInfoBuilder withHostnameVerifier(HostnameVerifier hostnameVerifier) {
-        this.hostnameVerifier = hostnameVerifier;
-        return this;
-    }
-
     public ApiConnectionInfoBuilder withCookieJarBuilder(CookieJarFactory.CookieJarBuilder cookieJarBuilder) {
         this.cookieJarBuilder = cookieJarBuilder;
         return this;
@@ -38,9 +31,9 @@ public class ApiConnectionInfoBuilder {
 
     public ApiConnectionInfo build() {
         CookieJar cookieJar = null;
-        if(cookieJarBuilder != null) {
+        if (cookieJarBuilder != null) {
             cookieJar = cookieJarBuilder.buildCookieJar();
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, tokenProvider, hostnameVerifier, cookieJar);
+        return new ApiConnectionInfo(apiRoot, sslSocketData, tokenProvider, cookieJar);
     }
 }
