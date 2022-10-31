@@ -17,12 +17,18 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.List;
 import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509KeyManager;
 import javax.net.ssl.X509TrustManager;
 import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -51,9 +57,6 @@ final class CwmsAAALoginTest {
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init((KeyStore) null);
         SSLContext sc = SSLContext.getInstance("TLS");
-        KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
-        sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
-        SSLSocketFactory socketFactory = sc.getSocketFactory();
         ApiConnectionInfo apiConnectionInfo;
         boolean testMock = true;
         if (testMock) {
@@ -65,11 +68,17 @@ final class CwmsAAALoginTest {
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+            KeyManager keyManager = getKeyManagerFromJreKeyStore();
+            sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
+            SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
                 .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         } else {
+            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
+            SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
@@ -83,5 +92,24 @@ final class CwmsAAALoginTest {
         assertNotNull(cwmsAAAAuthToken.jSessionIdSso());
         assertFalse(cwmsAAAAuthToken.jSessionIdSso().isEmpty());
 
+    }
+
+    static CacKeyManager getKeyManagerFromJreKeyStore() throws CacCertificateException {
+        String defaultType = KeyStore.getDefaultType();
+        try {
+            KeyStore keystore = KeyStore.getInstance(defaultType);
+            keystore.load(null, null);
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            kmf.init(keystore, null);
+            KeyManager[] kms = kmf.getKeyManagers();
+            for (KeyManager km : kms) {
+                if (km instanceof X509KeyManager) {
+                    return new CacKeyManager((X509KeyManager) km, keystore);
+                }
+            }
+            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType);
+        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
+            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType, e);
+        }
     }
 }

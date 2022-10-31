@@ -7,6 +7,7 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
+import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.File;
@@ -17,7 +18,6 @@ import java.nio.file.Path;
 import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.List;
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -53,10 +53,6 @@ final class CwmsAAALogoutTest {
         ts.load(null, null);
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init((KeyStore) null);
-        KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
-        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-        sc.init(new KeyManager[] {keyManager}, trustManagers, null);
-        SSLSocketFactory socketFactory = sc.getSocketFactory();
         ApiConnectionInfo apiConnectionInfo;
         boolean testMock = true;
         if(testMock) {
@@ -70,11 +66,19 @@ final class CwmsAAALogoutTest {
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+            KeyManager keyManager = getKeyManagerFromJreKeyStore();
+            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+            sc.init(new KeyManager[] {keyManager}, trustManagers, null);
+            SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
                 .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         } else {
+            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+            sc.init(new KeyManager[] {keyManager}, trustManagers, null);
+            SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
