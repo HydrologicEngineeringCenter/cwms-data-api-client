@@ -9,6 +9,13 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'mil/army/usace/hec/cwms/aaa/client/Cac*')
+        }))
+    }
+}
 
 publishing {
     publications {
