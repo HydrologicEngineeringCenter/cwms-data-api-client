@@ -57,7 +57,7 @@ public final class CwmsAAAAuthToken {
         return new ArrayList<>(roles);
     }
 
-    public void setJSessionId(String jSessionId) {
+    void setJSessionId(String jSessionId) {
         this.jSessionId = jSessionId;
     }
 
@@ -65,7 +65,7 @@ public final class CwmsAAAAuthToken {
         return jSessionId;
     }
 
-    public void setJSessionIdSso(String jSessionIdSso) {
+    void setJSessionIdSso(String jSessionIdSso) {
         this.jSessionIdSso = jSessionIdSso;
     }
 
