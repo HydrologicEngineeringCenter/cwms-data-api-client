@@ -38,4 +38,9 @@ public class SslCanceledException extends IOException {
     public String getUrl() {
         return url;
     }
+
+    @Override
+    public String getMessage() {
+        return "SSL Authentication canceled for URL: " + url;
+    }
 }
