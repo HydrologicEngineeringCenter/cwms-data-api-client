@@ -25,7 +25,6 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
-import javax.net.ssl.HostnameVerifier;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
@@ -52,12 +51,10 @@ final class OkHttpClientFactory {
                 .addInterceptor(new OAuth2TokenInterceptor(optionalTokenProvider.get()))
                 .build();
         }
-        Optional<CookieJar> cookieJar = apiConnectionInfo.cookieJar();
-        if (cookieJar.isPresent()) {
-            retVal = retVal.newBuilder()
-                .cookieJar(cookieJar.get())
-                .build();
-        }
+        CookieJar cookieJar = apiConnectionInfo.getCookieJar().orElse(CookieJar.NO_COOKIES);
+        retVal = retVal.newBuilder()
+            .cookieJar(cookieJar)
+            .build();
         return retVal;
     }
 }

@@ -25,7 +25,6 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
-import javax.net.ssl.HostnameVerifier;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import okhttp3.CookieJar;
 
@@ -55,7 +54,7 @@ public final class ApiConnectionInfo {
         return Optional.ofNullable(sslSocketData);
     }
 
-    Optional<CookieJar> cookieJar() {
+    Optional<CookieJar> getCookieJar() {
         return Optional.ofNullable(cookieJar);
     }
 }

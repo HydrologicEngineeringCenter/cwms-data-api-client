@@ -28,7 +28,6 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 
 /**
@@ -54,13 +53,11 @@ final class OkHttpClientInstance {
 
     // package scoped for testing only
     static OkHttpClient createClient() {
-        CookieJar cookieJar = CookieJarFactory.inMemoryCookieJar().buildCookieJar();
         return new OkHttpClient.Builder()
             .callTimeout(getCallTimeout())
             .connectTimeout(getConnectTimeout())
             .readTimeout(getReadTimeout())
             .addInterceptor(LOGGING_INTERCEPTOR)
-            .cookieJar(cookieJar)
             .build();
     }
 
