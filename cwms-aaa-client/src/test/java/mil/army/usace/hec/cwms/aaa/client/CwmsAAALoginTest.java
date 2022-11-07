@@ -55,10 +55,6 @@ import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
 final class CwmsAAALoginTest {
-    static {
-        System.setProperty("cwms.aaa.trust.hostname", "leary");
-        System.setProperty("cwms.aaa.trust.port", "8443");
-    }
 
     String readFile(String jsonPath) throws IOException {
         URL resource = getClass().getClassLoader().getResource(jsonPath);
@@ -75,7 +71,7 @@ final class CwmsAAALoginTest {
         trustManagerFactory.init((KeyStore) null);
         SSLContext sc = SSLContext.getInstance("TLS");
         ApiConnectionInfo apiConnectionInfo;
-        boolean testMock = true;
+        boolean testMock = false;
         if (testMock) {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
@@ -96,7 +92,8 @@ final class CwmsAAALoginTest {
             KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
-            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
+            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary.rmanet.com:8443/CWMSLogin/")
+                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         }

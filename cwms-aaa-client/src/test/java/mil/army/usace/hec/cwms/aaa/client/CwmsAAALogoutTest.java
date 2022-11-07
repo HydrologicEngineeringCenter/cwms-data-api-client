@@ -49,10 +49,6 @@ import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
 final class CwmsAAALogoutTest {
-    static {
-        System.setProperty("cwms.aaa.trust.hostname", "leary");
-        System.setProperty("cwms.aaa.trust.port", "8443");
-    }
 
     String readFile(String jsonPath) throws IOException {
         URL resource = getClass().getClassLoader().getResource(jsonPath);
@@ -97,6 +93,7 @@ final class CwmsAAALogoutTest {
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
+                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         }

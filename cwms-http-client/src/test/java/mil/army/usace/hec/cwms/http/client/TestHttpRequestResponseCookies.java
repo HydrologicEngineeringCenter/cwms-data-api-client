@@ -43,6 +43,7 @@ class TestHttpRequestResponseCookies {
     @Test
     void testHttpRequestResponse() throws IOException {
         try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
+            .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
             .build())
             .get()
             .withMediaType("application/json")
