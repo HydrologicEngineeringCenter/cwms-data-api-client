@@ -71,7 +71,7 @@ final class CwmsAAALoginTest {
         trustManagerFactory.init((KeyStore) null);
         SSLContext sc = SSLContext.getInstance("TLS");
         ApiConnectionInfo apiConnectionInfo;
-        boolean testMock = false;
+        boolean testMock = true;
         if (testMock) {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
