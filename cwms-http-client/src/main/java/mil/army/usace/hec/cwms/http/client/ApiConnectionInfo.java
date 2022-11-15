@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,20 @@ package mil.army.usace.hec.cwms.http.client;
 
 import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.CookieJar;
 
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private OAuth2TokenProvider tokenProvider;
-    private SslSocketData sslSocketData;
+    private final OAuth2TokenProvider tokenProvider;
+    private final SslSocketData sslSocketData;
+    private final CookieJar cookieJar;
 
-    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider, CookieJar cookieJar) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.tokenProvider = tokenProvider;
+        this.cookieJar = cookieJar;
     }
 
     public String getApiRoot() {
@@ -51,4 +54,7 @@ public final class ApiConnectionInfo {
         return Optional.ofNullable(sslSocketData);
     }
 
+    Optional<CookieJar> getCookieJar() {
+        return Optional.ofNullable(cookieJar);
+    }
 }

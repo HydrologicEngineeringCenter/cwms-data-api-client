@@ -67,8 +67,7 @@ final class OkHttpClientInstance {
         if (readTimeoutPropertyValue == null) {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + READ_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " + READ_TIMEOUT_PROPERTY_DEFAULT);
-        }
-        else {
+        } else {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + READ_TIMEOUT_PROPERTY_KEY + " read from system properties as " + readTimeoutPropertyValue);
             readTimeout = Duration.parse(readTimeoutPropertyValue);
@@ -83,8 +82,7 @@ final class OkHttpClientInstance {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + CONNECT_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " +
                     CONNECT_TIMEOUT_PROPERTY_DEFAULT);
-        }
-        else {
+        } else {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + CONNECT_TIMEOUT_PROPERTY_KEY + " read from system properties as " + connectTimeoutPropertyValue);
             connectTimeout = Duration.parse(connectTimeoutPropertyValue);
@@ -98,8 +96,7 @@ final class OkHttpClientInstance {
         if (callTimeoutPropertyValue == null) {
             LOGGER.log(Level.FINE,
                 () -> "Setting " + CALL_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " + CALL_TIMEOUT_PROPERTY_DEFAULT);
-        }
-        else {
+        } else {
             LOGGER.log(Level.FINER,
                 () -> "Setting " + CALL_TIMEOUT_PROPERTY_KEY + " read from system properties as " + callTimeoutPropertyValue);
             callTimeout = Duration.parse(callTimeoutPropertyValue);
