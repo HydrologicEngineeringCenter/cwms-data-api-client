@@ -26,7 +26,8 @@ package mil.army.usace.hec.cwms.http.client.request;
 
 public enum HttpRequestMethod {
     POST("POST"),
-    GET("GET");
+    GET("GET"),
+    DELETE("DELETE");
 
     private final String name;
 

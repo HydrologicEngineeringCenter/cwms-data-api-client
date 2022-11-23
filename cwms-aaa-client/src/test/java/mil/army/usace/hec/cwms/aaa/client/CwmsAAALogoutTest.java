@@ -84,7 +84,7 @@ final class CwmsAAALogoutTest {
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
-                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
+                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         } else {
@@ -93,7 +93,7 @@ final class CwmsAAALogoutTest {
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
-                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
+                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         }

@@ -22,42 +22,54 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.aaa.client;
 
-import static java.util.stream.Collectors.toMap;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import okhttp3.Cookie;
-import okhttp3.ResponseBody;
 
-public final class HttpRequestResponse implements AutoCloseable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class CwmsAuthToken {
 
-    private final ResponseBody body;
-    private final List<Cookie> cookies;
+    @JsonProperty("username")
+    private String username = null;
 
-    HttpRequestResponse(ResponseBody body, List<Cookie> cookies) {
-        this.body = body;
-        this.cookies = cookies;
+    @JsonProperty("last-login")
+    private ZonedDateTime lastLogin = null;
+
+    @JsonProperty("roles")
+    private List<String> roles = new ArrayList<>();
+
+    private String jSessionId;
+    private String jSessionIdSso;
+
+    public String username() {
+        return username;
     }
 
-    public String getBody() throws IOException {
-        return body.string();
+    public ZonedDateTime lastLogin() {
+        return lastLogin;
     }
 
-    public InputStream getStream() {
-        return body.byteStream();
+    public List<String> roles() {
+        return new ArrayList<>(roles);
     }
 
-    public Map<String, String> getCookies() {
-        return cookies.stream()
-            .collect(toMap(Cookie::name, Cookie::value, (o1, o2) -> o1));
+    void setJSessionId(String jSessionId) {
+        this.jSessionId = jSessionId;
     }
 
-    @Override
-    public void close() {
-        body.close();
+    public String jSessionId() {
+        return jSessionId;
+    }
+
+    void setJSessionIdSso(String jSessionIdSso) {
+        this.jSessionIdSso = jSessionIdSso;
+    }
+
+    public String jSessionIdSso() {
+        return jSessionIdSso;
     }
 }

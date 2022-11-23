@@ -39,6 +39,8 @@ public interface HttpRequestBuilder {
 
     HttpPostRequest post() throws IOException;
 
+    HttpRequestMediaType delete();
+
     HttpRequestMediaType get() throws IOException;
 
 }

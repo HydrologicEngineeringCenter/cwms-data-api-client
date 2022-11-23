@@ -65,6 +65,11 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
     }
 
     @Override
+    public HttpRequestMediaType delete() {
+        return null;
+    }
+
+    @Override
     public HttpRequestMediaType get() throws IOException {
         return null;
     }

@@ -25,7 +25,13 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.util.List;
+import java.util.Optional;
+import okhttp3.Cookie;
 import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.JavaNetCookieJar;
 
 public final class CookieJarFactory {
@@ -34,21 +40,59 @@ public final class CookieJarFactory {
         throw new AssertionError("Utility class");
     }
 
-    public static CookieJarBuilder inMemoryCookieJar() {
-        return new InMemoryCookieJarBuilder();
+    public static CookieJarSupplier inMemoryCookieJar() {
+        return new InMemoryCookieJarSupplier();
     }
 
-    public abstract static class CookieJarBuilder {
-
-        abstract CookieJar buildCookieJar();
+    public static CookieJarSupplier preferenceBackedCookieJar(PreferencesBackedCookieStore cookieStore) {
+        return new InMemoryCookieJarSupplier(cookieStore);
     }
 
-    private static class InMemoryCookieJarBuilder extends CookieJarBuilder {
+    public abstract static class CookieJarSupplier {
+        abstract CookieJar getCookieJar();
 
-        @Override
-        CookieJar buildCookieJar() {
-            CookieManager cookieManager = new CookieManager();
-            return new JavaNetCookieJar(cookieManager);
+        public boolean isCookieExpired(String cwmsAAABaseUrl, String jSessionIdSso) {
+            CookieJar cookieJar = getCookieJar();
+            List<Cookie> cookies = cookieJar.loadForRequest(HttpUrl.get(cwmsAAABaseUrl));
+            if (cookies.isEmpty()) {
+                return true;
+            } else {
+                return cookies.stream()
+                    .filter(c -> c.name().equalsIgnoreCase(jSessionIdSso))
+                    .anyMatch(c -> c.expiresAt() < System.currentTimeMillis());
+            }
+        }
+
+        public Optional<String> getCookie(String url, String cookieName) {
+            CookieJar cookieJar = getCookieJar();
+            return cookieJar.loadForRequest(HttpUrl.get(url))
+                .stream()
+                .filter(c -> c.name().equalsIgnoreCase(cookieName))
+                .map(Cookie::toString)
+                .findFirst();
         }
     }
+
+    private static final class InMemoryCookieJarSupplier extends CookieJarSupplier {
+
+        private final JavaNetCookieJar cookieJar;
+
+        private InMemoryCookieJarSupplier() {
+            //null cookie store defaults to java.net.InMemoryCookieStore by default
+            CookieManager cookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+            this.cookieJar = new JavaNetCookieJar(cookieManager);
+        }
+
+        private InMemoryCookieJarSupplier(CookieStore store) {
+            //null cookie store defaults to java.net.InMemoryCookieStore by default
+            CookieManager cookieManager = new CookieManager(store, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+            this.cookieJar = new JavaNetCookieJar(cookieManager);
+        }
+
+        @Override
+        CookieJar getCookieJar() {
+            return cookieJar;
+        }
+    }
+
 }

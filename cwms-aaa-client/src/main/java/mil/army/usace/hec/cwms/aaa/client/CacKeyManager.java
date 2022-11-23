@@ -32,11 +32,12 @@ import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.X509KeyManager;
 import org.bouncycastle.asn1.BERTags;
@@ -72,7 +73,6 @@ final class CacKeyManager implements X509KeyManager {
                     break;
                 }
             }
-
         }
         return retVal;
     }
@@ -113,38 +113,25 @@ final class CacKeyManager implements X509KeyManager {
         return retVal;
     }
 
+    @SuppressWarnings("unchecked")
     private boolean isPivCertificate(X509Certificate cr) throws CacCertificateException {
         try {
-            Collection<List<?>> anc = JcaX509ExtensionUtils.getSubjectAlternativeNames(cr);
-            for (List<?> li : anc) {
-                for (Object le : li) {
-                    if (le instanceof DLSequence) {
-                        DLSequence ds = (DLSequence) le;
-                        if (dlSequenceContainsPiv(ds)) {
-                            return true;
-                        }
-                    }
-                }
-            }
+            return JcaX509ExtensionUtils.getSubjectAlternativeNames(cr)
+                .stream()
+                .flatMap(s -> ((List<?>) s).stream())
+                .filter(DLSequence.class::isInstance)
+                .map(l -> ((DLSequence) l).getObjects())
+                .flatMap(e -> Collections.list((Enumeration<?>) e).stream())
+                .filter(DLTaggedObject.class::isInstance)
+                .filter(dt -> ((DLTaggedObject) dt).getTagClass() == BERTags.CONTEXT_SPECIFIC
+                    && ((DLTaggedObject) dt).getBaseObject() instanceof DERUTF8String)
+                .map(dt -> ((DLTaggedObject) dt).getBaseObject())
+                .map(o -> ((DERUTF8String) o).getString())
+                .map(s -> EDIPI_PATTERN.matcher(s.toString()))
+                .anyMatch(m -> ((Matcher) m).matches());
         } catch (CertificateParsingException e) {
             throw new CacCertificateException("Unable to parse X509 Certificate", e);
         }
-        return false;
     }
 
-    private static boolean dlSequenceContainsPiv(DLSequence ds) {
-        for (Enumeration<?> en = ds.getObjects(); en.hasMoreElements(); ) {
-            Object obj = en.nextElement();
-            if (obj instanceof DLTaggedObject) {
-                DLTaggedObject dt = (DLTaggedObject) obj;
-                if (dt.getTagClass() == BERTags.CONTEXT_SPECIFIC && dt.getBaseObject() instanceof DERUTF8String) {
-                    DERUTF8String dstr = (DERUTF8String) dt.getBaseObject();
-                    if (EDIPI_PATTERN.matcher(dstr.getString()).matches()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
 }

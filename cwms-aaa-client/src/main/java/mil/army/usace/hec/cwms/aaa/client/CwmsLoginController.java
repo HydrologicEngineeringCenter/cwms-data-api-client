@@ -37,11 +37,12 @@ import mil.army.usace.hec.cwms.http.client.SslCanceledException;
 
 public final class CwmsLoginController {
 
+    static final String JSESSIONID = "JSESSIONID";
+    static final String JSESSIONIDSSO = "JSESSIONIDSSO";
     private static final String LOGIN_ENDPOINT = "login";
     private static final String LOGOUT_ENDPOINT = "logout";
     private static final String DOD_AGREE_PARAMETER = "dod_agree";
-    private static final String JSESSIONID = "JSESSIONID";
-    private static final String JSESSIONIDSSO = "JSESSIONIDSSO";
+    private static final String APPLICATION_JSON = "application/json";
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
         .registerModule(new JavaTimeModule())
         .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
@@ -57,7 +58,7 @@ public final class CwmsLoginController {
      * @throws SslCanceledException if the user canceled the CAC pin prompt
      * @throws IOException          thrown if any errors occur in the server request
      */
-    public CwmsAAAAuthToken login(ApiConnectionInfo apiConnectionInfo) throws IOException {
+    public CwmsAuthToken login(ApiConnectionInfo apiConnectionInfo) throws IOException {
         /*
             Need to first get the jSessionId from the /login endpoint, this brings up the
             DoD agreement banner, which is designed for a browser redirect.
@@ -67,7 +68,7 @@ public final class CwmsLoginController {
         String jsessionId;
         try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGIN_ENDPOINT)
             .get()
-            .withMediaType("application/json")
+            .withMediaType(APPLICATION_JSON)
             .execute()) {
             jsessionId = login.getCookies().get(JSESSIONID);
         }
@@ -79,11 +80,11 @@ public final class CwmsLoginController {
                 }
             })
             .get()
-            .withMediaType("application/json")
+            .withMediaType(APPLICATION_JSON)
             .execute()) {
             String jsessionIdSso = login.getCookies().get(JSESSIONIDSSO);
             String jsonBody = login.getBody();
-            CwmsAAAAuthToken retval = OBJECT_MAPPER.readValue(jsonBody, CwmsAAAAuthToken.class);
+            CwmsAuthToken retval = OBJECT_MAPPER.readValue(jsonBody, CwmsAuthToken.class);
             retval.setJSessionId(jsessionId);
             retval.setJSessionIdSso(jsessionIdSso);
             return retval;
@@ -104,7 +105,7 @@ public final class CwmsLoginController {
     public void logout(ApiConnectionInfo apiConnectionInfo) throws IOException {
         try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGOUT_ENDPOINT)
             .get()
-            .withMediaType("application/json")
+            .withMediaType(APPLICATION_JSON)
             .execute()) {
             login.getBody();
         }

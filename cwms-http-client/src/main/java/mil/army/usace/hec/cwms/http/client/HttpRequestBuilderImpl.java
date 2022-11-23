@@ -130,6 +130,12 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
+    public final HttpRequestMediaType delete() {
+        this.method = HttpRequestMethod.DELETE;
+        return new HttpRequiredMediaTypeImpl();
+    }
+
+    @Override
     public final HttpRequestMediaType get() throws IOException {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
@@ -154,8 +160,9 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         Request.Builder requestBuilder = new Request.Builder();
         RequestBody requestBody = null;
         if (body != null) {
-            requestBody = RequestBody.create(body, type);
+            requestBody = RequestBody.create(body, null);
         }
+        requestBuilder.header("Content-Type", type.toString());
         requestBuilder.url(urlBuilder.build());
         requestBuilder.method(method.getName(), requestBody);
         queryHeaders.forEach(requestBuilder::addHeader);
@@ -230,7 +237,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException, request.url().toString());
             } catch (SSLHandshakeException ex) {
-                if(ex.getCause() != null && ex.getCause() instanceof SignatureException && ex.getCause().getMessage().contains("The action was cancelled by the user.")) {
+                Throwable cause = ex.getCause();
+                if (cause instanceof SignatureException && cause.getMessage().contains("The action was cancelled by the user.")) {
                     throw new SslCanceledException(ex, request.url().toString());
                 } else {
                     throw ex;

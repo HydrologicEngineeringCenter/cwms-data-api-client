@@ -114,8 +114,8 @@ class TestApiConnectionInfo {
             .withTokenProvider(tokenProvider)
             .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
-        assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
-        assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
+        assertTrue(apiConnectionInfo.authenticator().isPresent());
+        assertFalse(apiConnectionInfo.interceptors().isEmpty());
     }
 
     @Test
@@ -126,8 +126,8 @@ class TestApiConnectionInfo {
             .withSslSocketData(sslSocketData)
             .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
-        assertTrue(apiConnectionInfo.getSslSocketData().isPresent());
-        assertEquals(sslSocketData, apiConnectionInfo.getSslSocketData().get());
+        assertTrue(apiConnectionInfo.sslSocketData().isPresent());
+        assertEquals(sslSocketData, apiConnectionInfo.sslSocketData().get());
     }
 
     @Test
@@ -140,18 +140,18 @@ class TestApiConnectionInfo {
             .withTokenProvider(tokenProvider)
             .build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
-        assertTrue(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
-        assertEquals(tokenProvider, apiConnectionInfo.getOAuth2TokenProvider().get());
-        assertTrue(apiConnectionInfo.getSslSocketData().isPresent());
-        assertEquals(sslSocketData, apiConnectionInfo.getSslSocketData().get());
+        assertTrue(apiConnectionInfo.authenticator().isPresent());
+        assertFalse(apiConnectionInfo.interceptors().isEmpty());
+        assertTrue(apiConnectionInfo.sslSocketData().isPresent());
+        assertEquals(sslSocketData, apiConnectionInfo.sslSocketData().get());
     }
 
     @Test
     void testApiConnectionInfoNulls() {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(null).build();
         assertNull(apiConnectionInfo.getApiRoot());
-        assertFalse(apiConnectionInfo.getSslSocketData().isPresent());
-        assertFalse(apiConnectionInfo.getOAuth2TokenProvider().isPresent());
+        assertFalse(apiConnectionInfo.sslSocketData().isPresent());
+        assertFalse(apiConnectionInfo.authenticator().isPresent());
     }
 
     private OAuth2TokenProvider getTestTokenProvider() {

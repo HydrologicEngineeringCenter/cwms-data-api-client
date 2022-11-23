@@ -24,7 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
 import java.util.Set;
@@ -42,10 +44,10 @@ public final class LevelController {
     private static final String SPECIFIED_LEVEL_ENDPOINT = "specified-levels";
     private static final String LOCATION_LEVEL_ENDPOINT = "levels";
 
-    public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput endpointInput)
+    public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput input)
         throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
-            .addEndpointInput(endpointInput)
+            .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
@@ -53,15 +55,48 @@ public final class LevelController {
         }
     }
 
-    public LocationLevels retrieveLocationLevels(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput endpointInput)
+    public LocationLevel retrieveLocationLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.GetOne input)
+        throws IOException {
+        String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addEndpointInput(input)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevel.class);
+        }
+    }
+
+    public LocationLevels retrieveLocationLevels(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.GetAll input)
         throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
-            .addEndpointInput(endpointInput)
+            .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevels.class);
         }
+    }
+
+    public void storeLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.Post input) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.level());
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
+            .addEndpointInput(input)
+            .post()
+            .withBody(body)
+            .withMediaType(ACCEPT_HEADER_V1)
+            .execute()
+            .close();
+    }
+
+    public void deleteLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.Delete input) throws IOException {
+        String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addEndpointInput(input)
+            .delete()
+            .withMediaType(ACCEPT_HEADER_V1)
+            .execute()
+            .close();
     }
 
 }

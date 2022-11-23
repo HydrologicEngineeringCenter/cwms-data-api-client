@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -38,8 +39,8 @@ public final class LocationController {
 
     private static final String LOCATION_ENDPOINT = "locations";
 
-    public Location retrieveLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput locationEndpointInput) throws IOException {
-        String locationId = locationEndpointInput.getLocationId();
+    public Location retrieveLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.GetOne locationEndpointInput) throws IOException {
+        String locationId = locationEndpointInput.locationId();
         Location retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationId)
             .addEndpointInput(locationEndpointInput)
@@ -49,5 +50,26 @@ public final class LocationController {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), Location.class);
         }
         return retVal;
+    }
+
+    public void storeLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Post endpointInput) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(endpointInput.location());
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT)
+            .addEndpointInput(endpointInput)
+            .post()
+            .withBody(body)
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
+    }
+
+    public void deleteLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Delete locationEndPointInput) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationEndPointInput.getLocationId())
+            .addEndpointInput(locationEndPointInput)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .delete()
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
     }
 }

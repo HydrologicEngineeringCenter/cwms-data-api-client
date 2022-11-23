@@ -94,6 +94,7 @@ final class TestCwmsHttpLogger {
     @Test
     void testRedacted() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
+        System.setProperty("cwms.http.client.log.all.cookies", "true");
         CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
         loggingInterceptor.setLogLevel(Level.ALL);
         try {
@@ -132,6 +133,51 @@ final class TestCwmsHttpLogger {
             assertFalse(foundMessage.get());
         } finally {
             mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testCookiesNotLogged() throws IOException {
+        CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
+        loggingInterceptor.setLogLevel(Level.ALL);
+        try(MockWebServer mockWebServer = new MockWebServer()) {
+            String body = readJsonFile("tokens.json");
+            AtomicBoolean foundMessage = new AtomicBoolean(false);
+            Logger.getLogger("okhttp3").addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    String message = record.getMessage();
+                    if (message.contains("JSESSIONID")) {
+                        foundMessage.set(true);
+                    }
+                }
+
+                @Override
+                public void flush() {
+
+                }
+
+                @Override
+                public void close() throws SecurityException {
+
+                }
+            });
+            MockResponse mockResponse = new MockResponse()
+                .setBody(body)
+                .addHeader("Set-Cookie", "JSESSIONID=53693739C7450D5D5261ED35E2093458")
+                .setResponseCode(200);
+            mockWebServer.enqueue(mockResponse);
+            mockWebServer.start();
+            String endpoint = "tokens";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
+            HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
+            assertFalse(foundMessage.get());
         }
     }
 

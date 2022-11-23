@@ -24,31 +24,16 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-import okhttp3.CookieJar;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
 
-final class OkHttpClientFactory {
+public interface AuthCookieCallback {
 
-    private OkHttpClientFactory() {
-        throw new AssertionError("Utility class");
-    }
-
-    static OkHttpClient buildOkHttpClient(ApiConnectionInfo apiConnectionInfo) {
-        OkHttpClient.Builder builder = OkHttpClientInstance.getInstance().newBuilder();
-        Optional<SslSocketData> optionalSslSocketData = apiConnectionInfo.sslSocketData();
-        if (optionalSslSocketData.isPresent()) {
-            SslSocketData sslSocketData = optionalSslSocketData.get();
-            builder = builder.sslSocketFactory(sslSocketData.getSslSocketFactory(), sslSocketData.getX509TrustManager());
-        }
-        List<Interceptor> interceptors = apiConnectionInfo.interceptors();
-        for (Interceptor interceptor : interceptors) {
-            builder = builder.addInterceptor(interceptor);
-        }
-        builder = apiConnectionInfo.authenticator().map(builder::authenticator).orElse(builder);
-        CookieJar cookieJar = apiConnectionInfo.cookieJar().orElse(CookieJar.NO_COOKIES);
-        return builder.cookieJar(cookieJar).build();
-    }
+    /**
+     * Callback authentication mechanism for when an unauthorized error code 401 is received and a new authentication cookie is needed.
+     *
+     * @return authentication token cookies to be added to the Cookie header
+     * @throws IOException when error occurs during authentication
+     */
+    List<String> authenticate() throws IOException;
 }

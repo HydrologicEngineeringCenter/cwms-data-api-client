@@ -24,18 +24,30 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.prefs.Preferences;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
+import okhttp3.JavaNetCookieJar;
 import org.junit.jupiter.api.Test;
 
-class TestHttpRequestResponseCookies {
+final class TestPreferencesBackedCookies {
 
     @Test
     void testHttpRequestResponse() throws IOException {
+        Preferences node = Preferences.userRoot().node("test").node("cwms").node("http_client");
+        PreferencesBackedCookieStore preferencesBackedCookieStore = new PreferencesBackedCookieStore(node);
+        CookieJarFactory.CookieJarSupplier cookieJarSupplier = CookieJarFactory.preferenceBackedCookieJar(preferencesBackedCookieStore);
         try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
-            .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
+            .withCookieJarSupplier(cookieJarSupplier)
             .build())
             .get()
             .withMediaType("application/json")
@@ -43,6 +55,22 @@ class TestHttpRequestResponseCookies {
             Map<String, String> cookies = execute.getCookies();
             assertFalse(cookies.isEmpty());
         }
-    }
+        JavaNetCookieJar cookieJar = (JavaNetCookieJar) cookieJarSupplier.getCookieJar();
+        HttpUrl httpUrl = HttpUrl.get("https://www.google.com");
+        List<Cookie> cookies = cookieJar.loadForRequest(httpUrl);
+        preferencesBackedCookieStore.writeCookiesToPreferences();
 
+        CookieJar newCookieJar = CookieJarFactory.preferenceBackedCookieJar(new PreferencesBackedCookieStore(node)).getCookieJar();
+        List<Cookie> persistedCookies = newCookieJar.loadForRequest(httpUrl);
+        assertFalse(persistedCookies.isEmpty());
+        for(Cookie cookie : persistedCookies) {
+            Optional<Cookie> first = cookies.stream()
+                .filter(c -> c.name().equals(cookie.name()))
+                .filter(c -> c.domain().equals(cookie.domain()))
+                .filter(c -> c.path().equals(cookie.path()))
+                .filter(c -> c.expiresAt() == cookie.expiresAt())
+                .findFirst();
+            assertTrue(first.isPresent());
+        }
+    }
 }
