@@ -30,7 +30,7 @@ public final class CacCertificateException extends Exception {
         super(message, e);
     }
 
-    public CacCertificateException(String message) {
+    CacCertificateException(String message) {
         super(message);
     }
 

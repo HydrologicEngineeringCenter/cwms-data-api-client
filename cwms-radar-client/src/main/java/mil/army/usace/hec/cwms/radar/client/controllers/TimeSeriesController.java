@@ -25,8 +25,10 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -36,12 +38,13 @@ import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
 public final class TimeSeriesController {
 
+    private static final Logger LOGGER = Logger.getLogger(TimeSeriesController.class.getName());
     private static final String TIME_SERIES_ENDPOINT = "timeseries";
 
-    public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput timeSeriesEndpointInput) throws IOException {
+    public TimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput.GetOne timeSeriesEndpointInput) throws IOException {
         TimeSeries retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
-            .addQueryHeader("accept", "application/json;version=2")
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(timeSeriesEndpointInput)
             .get()
             .withMediaType(ACCEPT_HEADER_V2);
@@ -49,5 +52,28 @@ public final class TimeSeriesController {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
         }
         return retVal;
+    }
+
+    public void storeTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput.Post timeSeriesEndpointInput) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(timeSeriesEndpointInput.timeSeries());
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addEndpointInput(timeSeriesEndpointInput)
+            .post()
+            .withBody(body)
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
+    }
+
+    public void deleteTimeSeries(ApiConnectionInfo apiConnectionInfo, TimeSeriesEndpointInput.Delete timeSeriesEndpointInput) throws IOException {
+        String endpoint = TIME_SERIES_ENDPOINT + "/" + timeSeriesEndpointInput.timeSeriesId();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addEndpointInput(timeSeriesEndpointInput)
+            .delete()
+            .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
     }
 }

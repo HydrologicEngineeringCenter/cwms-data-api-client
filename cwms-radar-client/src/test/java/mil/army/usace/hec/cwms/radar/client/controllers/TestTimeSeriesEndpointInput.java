@@ -50,7 +50,7 @@ class TestTimeSeriesEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
             .officeId("SWT")
             .unit("SI")
             .verticalDatum("NAVD88")
@@ -74,6 +74,6 @@ class TestTimeSeriesEndpointInput {
 
     @Test
     void testNullTimeSeriesId() {
-        assertThrows(NullPointerException.class, () -> new TimeSeriesEndpointInput(null));
+        assertThrows(NullPointerException.class, () -> TimeSeriesEndpointInput.getOne(null));
     }
 }

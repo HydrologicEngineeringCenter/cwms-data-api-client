@@ -24,21 +24,26 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.List;
 import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.Authenticator;
 import okhttp3.CookieJar;
+import okhttp3.Interceptor;
 
 public final class ApiConnectionInfo {
 
     private final String apiRoot;
-    private final OAuth2TokenProvider tokenProvider;
     private final SslSocketData sslSocketData;
     private final CookieJar cookieJar;
+    private final List<Interceptor> interceptors;
+    private final Authenticator authenticator;
 
-    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, OAuth2TokenProvider tokenProvider, CookieJar cookieJar) {
+    ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, CookieJar cookieJar,
+                      List<Interceptor> interceptors, Authenticator authenticator) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
-        this.tokenProvider = tokenProvider;
+        this.interceptors = interceptors;
+        this.authenticator = authenticator;
         this.cookieJar = cookieJar;
     }
 
@@ -46,15 +51,19 @@ public final class ApiConnectionInfo {
         return apiRoot;
     }
 
-    public Optional<OAuth2TokenProvider> getOAuth2TokenProvider() {
-        return Optional.ofNullable(tokenProvider);
+    Optional<Authenticator> authenticator() {
+        return Optional.ofNullable(authenticator);
     }
 
-    public Optional<SslSocketData> getSslSocketData() {
+    List<Interceptor> interceptors() {
+        return interceptors;
+    }
+
+    Optional<SslSocketData> sslSocketData() {
         return Optional.ofNullable(sslSocketData);
     }
 
-    Optional<CookieJar> getCookieJar() {
+    Optional<CookieJar> cookieJar() {
         return Optional.ofNullable(cookieJar);
     }
 }

@@ -24,15 +24,20 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.Authenticator;
 import okhttp3.CookieJar;
+import okhttp3.Interceptor;
 
 public class ApiConnectionInfoBuilder {
 
     private final String apiRoot;
     private OAuth2TokenProvider tokenProvider;
     private SslSocketData sslSocketData;
-    private CookieJarFactory.CookieJarBuilder cookieJarBuilder;
+    private CookieJarFactory.CookieJarSupplier cookieJarSupplier;
+    private CookieAuthenticator cookieAuthenticator;
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -48,16 +53,30 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
-    public ApiConnectionInfoBuilder withCookieJarBuilder(CookieJarFactory.CookieJarBuilder cookieJarBuilder) {
-        this.cookieJarBuilder = cookieJarBuilder;
+    public ApiConnectionInfoBuilder withCookieJarSupplier(CookieJarFactory.CookieJarSupplier cookieJarSupplier) {
+        this.cookieJarSupplier = cookieJarSupplier;
+        return this;
+    }
+
+    public ApiConnectionInfoBuilder withCookieAuthenticator(AuthCookieCallback callback) {
+        cookieAuthenticator = new CookieAuthenticator(callback);
         return this;
     }
 
     public ApiConnectionInfo build() {
         CookieJar cookieJar = null;
-        if (cookieJarBuilder != null) {
-            cookieJar = cookieJarBuilder.buildCookieJar();
+        if (cookieJarSupplier != null) {
+            cookieJar = cookieJarSupplier.getCookieJar();
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, tokenProvider, cookieJar);
+        Authenticator authenticator = null;
+        List<Interceptor> interceptors = new ArrayList<>();
+        if (tokenProvider != null) {
+            authenticator = new OAuth2TokenAuthenticator(tokenProvider);
+            interceptors.add(new OAuth2TokenInterceptor(tokenProvider));
+        }
+        if (cookieAuthenticator != null) {
+            authenticator = cookieAuthenticator;
+        }
+        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator);
     }
 }

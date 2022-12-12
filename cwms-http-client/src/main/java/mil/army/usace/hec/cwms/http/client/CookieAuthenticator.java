@@ -22,54 +22,31 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.http.client;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import okhttp3.Authenticator;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public final class CwmsAAAAuthToken {
+final class CookieAuthenticator implements Authenticator {
 
-    @JsonProperty("username")
-    private String username = null;
+    private final AuthCookieCallback callback;
 
-    @JsonProperty("last-login")
-    private ZonedDateTime lastLogin = null;
-
-    @JsonProperty("roles")
-    private List<String> roles = new ArrayList<>();
-
-    private String jSessionId;
-    private String jSessionIdSso;
-
-    public String username() {
-        return username;
+    CookieAuthenticator(AuthCookieCallback callback) {
+        this.callback = callback;
     }
 
-    public ZonedDateTime lastLogin() {
-        return lastLogin;
-    }
-
-    public List<String> roles() {
-        return new ArrayList<>(roles);
-    }
-
-    void setJSessionId(String jSessionId) {
-        this.jSessionId = jSessionId;
-    }
-
-    public String jSessionId() {
-        return jSessionId;
-    }
-
-    void setJSessionIdSso(String jSessionIdSso) {
-        this.jSessionIdSso = jSessionIdSso;
-    }
-
-    public String jSessionIdSso() {
-        return jSessionIdSso;
+    @Override
+    public Request authenticate(Route route, Response response) throws IOException {
+        List<String> newCookies = callback.authenticate();
+        Request.Builder builder = response.request()
+            .newBuilder();
+        for (String cookie : newCookies) {
+            builder = builder.header("Cookie", cookie);
+        }
+        return builder.build();
     }
 }

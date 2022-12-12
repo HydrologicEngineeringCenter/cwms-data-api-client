@@ -24,7 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
@@ -38,6 +40,7 @@ public final class RadarObjectMapper {
 
     private static final ObjectMapper OBJECT_MAPPER =
         new ObjectMapper().registerModule(new JavaTimeModule()).configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
             .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
     private RadarObjectMapper() {
@@ -46,6 +49,10 @@ public final class RadarObjectMapper {
 
     public static <T> T mapJsonToObject(String json, Class<T> classObject) throws IOException {
         return OBJECT_MAPPER.readValue(json, classObject);
+    }
+
+    public static <T> String mapObjectToJson(T object) throws IOException {
+        return OBJECT_MAPPER.writeValueAsString(object);
     }
 
     public static <T> List<T> mapJsonToListOfObjects(String json, Class<T> classObject) throws IOException {

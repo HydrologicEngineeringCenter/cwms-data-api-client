@@ -55,6 +55,7 @@ import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
 final class CwmsAAALoginTest {
+    static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
 
     String readFile(String jsonPath) throws IOException {
         URL resource = getClass().getClassLoader().getResource(jsonPath);
@@ -85,26 +86,26 @@ final class CwmsAAALoginTest {
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
-                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
+                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         } else {
             KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
-            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary.rmanet.com:8443/CWMSLogin/")
-                .withCookieJarBuilder(CookieJarFactory.inMemoryCookieJar())
+            apiConnectionInfo = new ApiConnectionInfoBuilder(TOMCAT_SERVER + "/CWMSLogin/")
+                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         }
-        CwmsAAAAuthToken cwmsAAAAuthToken = new CwmsLoginController().login(apiConnectionInfo);
-        assertEquals("Q0HECANK", cwmsAAAAuthToken.username());
-        assertEquals(Arrays.asList("All Users", "CWMS Users", "TS ID Creator", "cac_auth"), cwmsAAAAuthToken.roles());
-        assertNotNull(cwmsAAAAuthToken.lastLogin());
-        assertNotNull(cwmsAAAAuthToken.jSessionId());
-        assertFalse(cwmsAAAAuthToken.jSessionId().isEmpty());
-        assertNotNull(cwmsAAAAuthToken.jSessionIdSso());
-        assertFalse(cwmsAAAAuthToken.jSessionIdSso().isEmpty());
+        CwmsAuthToken cwmsAuthToken = new CwmsLoginController().login(apiConnectionInfo);
+        assertEquals("Q0HECANK", cwmsAuthToken.username());
+        assertEquals(Arrays.asList("All Users", "CWMS Users", "TS ID Creator", "cac_auth"), cwmsAuthToken.roles());
+        assertNotNull(cwmsAuthToken.lastLogin());
+        assertNotNull(cwmsAuthToken.jSessionId());
+        assertFalse(cwmsAuthToken.jSessionId().isEmpty());
+        assertNotNull(cwmsAuthToken.jSessionIdSso());
+        assertFalse(cwmsAuthToken.jSessionIdSso().isEmpty());
 
     }
 

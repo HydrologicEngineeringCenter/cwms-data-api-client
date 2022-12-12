@@ -34,12 +34,18 @@ import okhttp3.logging.HttpLoggingInterceptor;
 final class CwmsHttpLoggingInterceptor implements Interceptor {
 
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
+    private static final String SET_COOKIE_HEADER = "Set-Cookie";
+    private static final String COOKIE_HEADER = "Cookie";
     private static CwmsHttpLoggingInterceptor instance;
     private final CwmsHttpLogger cwmsHttpLogger = new CwmsHttpLogger();
     private final HttpLoggingInterceptor delegate = new HttpLoggingInterceptor(cwmsHttpLogger);
 
     private CwmsHttpLoggingInterceptor() {
         updateInterceptorLogLevel();
+        if (!Boolean.getBoolean("cwms.http.client.log.all.cookies")) {
+            redactHeader(SET_COOKIE_HEADER);
+            redactHeader(COOKIE_HEADER);
+        }
     }
 
     static CwmsHttpLoggingInterceptor getInstance() {
