@@ -55,6 +55,7 @@ import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
 final class CwmsAAALoginTest {
+    static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
 
     String readFile(String jsonPath) throws IOException {
         URL resource = getClass().getClassLoader().getResource(jsonPath);
@@ -92,7 +93,7 @@ final class CwmsAAALoginTest {
             KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
-            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary.rmanet.com:8443/CWMSLogin/")
+            apiConnectionInfo = new ApiConnectionInfoBuilder(TOMCAT_SERVER + "/CWMSLogin/")
                 .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();

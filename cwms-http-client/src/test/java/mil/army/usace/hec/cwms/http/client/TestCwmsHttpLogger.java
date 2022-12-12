@@ -147,7 +147,7 @@ final class TestCwmsHttpLogger {
                 @Override
                 public void publish(LogRecord record) {
                     String message = record.getMessage();
-                    if (message.contains("JSESSIONID")) {
+                    if (message.contains("JSESSIONID") || message.contains("53693739C7450D5D5261ED35E2093458")) {
                         foundMessage.set(true);
                     }
                 }

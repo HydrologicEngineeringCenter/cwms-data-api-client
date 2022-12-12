@@ -54,6 +54,7 @@ import org.junit.jupiter.api.BeforeEach;
 abstract class TestController {
 
     private static final boolean USE_MOCK = true;
+    private static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
     private static PreferencesBackedCookieStore preferencesBackedCookieStore;
     MockHttpServer mockHttpServer;
     static CookieJarFactory.CookieJarSupplier cookieJarSupplier;
@@ -109,7 +110,7 @@ abstract class TestController {
         if (USE_MOCK) {
             return String.format("http://localhost:%s", mockHttpServer.getPort());
         } else {
-            return "https://leary.rmanet.com:8443/cwms-data/";
+            return TOMCAT_SERVER + "/cwms-data/";
         }
     }
 
@@ -117,7 +118,7 @@ abstract class TestController {
         if (USE_MOCK) {
             return String.format("http://localhost:%s", mockHttpServer.getPort());
         } else {
-            return "https://leary.rmanet.com:8443/CWMSLogin/";
+            return TOMCAT_SERVER + "/CWMSLogin/";
         }
     }
 

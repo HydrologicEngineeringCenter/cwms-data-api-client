@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
+import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
 import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -92,7 +93,7 @@ final class CwmsAAALogoutTest {
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
-            apiConnectionInfo = new ApiConnectionInfoBuilder("https://leary:8443/CWMSLogin/")
+            apiConnectionInfo = new ApiConnectionInfoBuilder(TOMCAT_SERVER + "/CWMSLogin/")
                 .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();

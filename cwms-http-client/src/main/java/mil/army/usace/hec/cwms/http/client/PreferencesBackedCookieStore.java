@@ -30,6 +30,8 @@ import okhttp3.HttpUrl;
 public final class PreferencesBackedCookieStore implements CookieStore {
 
     private static final Logger LOGGER = Logger.getLogger(PreferencesBackedCookieStore.class.getName());
+    //Used for preference readability only. Since the keys aren't read on restore this can be changed to anything
+    private static final String DOMAIN_COOKIE_DELIMITER = " | ";
     private static final String URI_KEY = "URI";
     private final Preferences preferences;
     private final CookieManager cookieManager;
@@ -137,7 +139,7 @@ public final class PreferencesBackedCookieStore implements CookieStore {
             if (httpUrl != null) {
                 Cookie parse = Cookie.parse(httpUrl, cookie);
                 if (parse != null) {
-                    node.put((parse.domain() + " | " + parse.name()).toLowerCase(), cookie);
+                    node.put((parse.domain() + DOMAIN_COOKIE_DELIMITER + parse.name()).toLowerCase(), cookie);
                 }
             }
         }

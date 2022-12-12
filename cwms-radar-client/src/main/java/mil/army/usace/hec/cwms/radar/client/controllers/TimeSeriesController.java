@@ -74,7 +74,6 @@ public final class TimeSeriesController {
             .delete()
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
-            System.out.println(response.getBody());
         }
     }
 }
