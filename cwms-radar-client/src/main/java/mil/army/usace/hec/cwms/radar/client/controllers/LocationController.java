@@ -63,6 +63,17 @@ public final class LocationController {
         }
     }
 
+    public void updateLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Patch endpointInput) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(endpointInput.location());
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + endpointInput.originalLocationId())
+                .addEndpointInput(endpointInput)
+                .post()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
+    }
+
     public void deleteLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Delete locationEndPointInput) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationEndPointInput.getLocationId())
             .addEndpointInput(locationEndPointInput)

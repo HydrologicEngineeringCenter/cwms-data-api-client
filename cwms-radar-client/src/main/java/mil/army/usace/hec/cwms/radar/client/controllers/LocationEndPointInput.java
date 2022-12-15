@@ -49,6 +49,10 @@ public final class LocationEndPointInput {
         return new Post(location);
     }
 
+    public static Patch patch(String originalName, Location location) {
+        return new Patch(originalName, location);
+    }
+
     public static Delete delete(String locationId) {
         return new Delete(locationId);
     }
@@ -102,6 +106,34 @@ public final class LocationEndPointInput {
             //Office ID should eventually be retired server-side
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, location.getOfficeId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
+
+    }
+
+    public static final class Patch extends EndpointInput {
+
+        private final Location location;
+        private final String originalLocationId;
+
+        private Patch(String originalLocationId, Location location) {
+            this.originalLocationId = originalLocationId;
+            this.location =  Objects.requireNonNull(location, "Cannot access the location endpoint POST without a location");
+        }
+
+        Location location() {
+            return location;
+        }
+
+        String originalLocationId()
+        {
+            return originalLocationId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            //Office ID should eventually be retired server-side
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, location.getOfficeId())
+                                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
 
     }
