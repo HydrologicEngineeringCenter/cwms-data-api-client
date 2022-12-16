@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -42,19 +43,41 @@ import org.junit.jupiter.api.Test;
 class TestRatingController extends TestController {
 
 	@Test
-	void testRetrieveRatingSpecs() throws IOException
-	{
+	void testRetrieveRatingSet() throws IOException {
 		String collect = readJsonFile("radar/v2/xml/rating.xml");
 		mockHttpServer.enqueue(collect);
 		mockHttpServer.start();
 		RatingController controller = new RatingController();
-
-		RatingEndpointInput input = new RatingEndpointInput("BIGH.Elev;Stor.Linear.Production")
-			.officeId("SWT");
-
+		RatingEndpointInput.GetOne input = RatingEndpointInput.getOne("BIGH.Elev;Stor.Linear.Production", "SWT")
+			.eager();
 		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
 		String xml = controller.retrieveRatingXml(apiConnectionInfo, input);
 		assertNotNull(xml);
+	}
+
+	@Test
+	void testStoreRatingSet() throws IOException {
+		String collect = readJsonFile("radar/v2/xml/rating.xml");
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.start();
+		RatingController controller = new RatingController();
+		RatingEndpointInput.Post input = RatingEndpointInput.post(collect);
+		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+		assertDoesNotThrow(() -> controller.storeRatingSetXml(apiConnectionInfo, input));
+	}
+
+	@Test
+	void testDeleteRatingSet() throws IOException {
+		String collect = readJsonFile("radar/v2/xml/rating.xml");
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.start();
+		RatingController controller = new RatingController();
+		RatingEndpointInput.Post input = RatingEndpointInput.post(collect);
+		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+		controller.storeRatingSetXml(apiConnectionInfo, input);
+		RatingEndpointInput.Delete deleteInput = RatingEndpointInput.delete("BIGH.Elev;Stor.Linear.Production", "SWT");
+		assertDoesNotThrow(() -> controller.deleteRatings(apiConnectionInfo, deleteInput));
 	}
 
 	@Test
