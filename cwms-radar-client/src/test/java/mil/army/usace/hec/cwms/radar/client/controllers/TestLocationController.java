@@ -107,4 +107,23 @@ class TestLocationController extends TestController {
         assertDoesNotThrow(() -> locationController.deleteLocation(apiConnectionInfo, delete));
     }
 
+    @Test
+    public void testLocationPatch() throws Exception {
+        String collect = readJsonFile("radar/v1/json/location_rename_response.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        collect = readJsonFile("radar/v1/json/location_to_rename.json");
+        Location location = RadarObjectMapper.mapJsonToObject(collect, Location.class);
+        String originalName = location.getName();
+        location.setName(originalName + "-" + System.currentTimeMillis());
+        LocationController locationController = new LocationController();
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo(cookieJarSupplier);
+        LocationEndPointInput.Post post = LocationEndPointInput.post(location);
+        locationController.storeLocation(apiConnectionInfo, post);
+        location.name(originalName + "1");
+        LocationEndPointInput.Patch patch = LocationEndPointInput.patch(originalName, location);
+        assertDoesNotThrow(() -> locationController.updateLocation(apiConnectionInfo, patch));
+    }
+
 }
