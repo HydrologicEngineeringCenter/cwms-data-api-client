@@ -67,7 +67,7 @@ public final class LocationController {
         String body = RadarObjectMapper.mapObjectToJson(endpointInput.location());
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + endpointInput.originalLocationId())
                 .addEndpointInput(endpointInput)
-                .post()
+                .patch()
                 .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
