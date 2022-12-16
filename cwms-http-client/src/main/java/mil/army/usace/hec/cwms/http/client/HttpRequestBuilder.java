@@ -24,7 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 
@@ -37,11 +36,13 @@ public interface HttpRequestBuilder {
 
     HttpRequestBuilder enableHttp2();
 
-    HttpPostRequest post() throws IOException;
+    HttpPostRequest post();
+
+    HttpPostRequest patch();
 
     HttpRequestMediaType delete();
 
-    HttpRequestMediaType get() throws IOException;
+    HttpRequestMediaType get();
 
 }
 

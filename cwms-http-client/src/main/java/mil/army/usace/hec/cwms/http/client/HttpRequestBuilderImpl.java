@@ -130,13 +130,19 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
+    public final HttpPostRequest patch() {
+        this.method = HttpRequestMethod.PATCH;
+        return new HttpPostRequestImpl();
+    }
+
+    @Override
     public final HttpRequestMediaType delete() {
         this.method = HttpRequestMethod.DELETE;
         return new HttpRequiredMediaTypeImpl();
     }
 
     @Override
-    public final HttpRequestMediaType get() throws IOException {
+    public final HttpRequestMediaType get() {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
     }
