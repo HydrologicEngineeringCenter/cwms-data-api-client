@@ -30,9 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import okhttp3.OkHttpClient;
 
-/**
- *
- */
 final class OkHttpClientInstance {
 
     private static final Logger LOGGER = Logger.getLogger(OkHttpClientInstance.class.getName());
@@ -41,7 +38,9 @@ final class OkHttpClientInstance {
     static final String CONNECT_TIMEOUT_PROPERTY_KEY = "cwms.http.client.connecttimeout.seconds";
     static final Duration CONNECT_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(5);
     static final String READ_TIMEOUT_PROPERTY_KEY = "cwms.http.client.readtimeout.seconds";
-    static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofSeconds(TimeUnit.MINUTES.toSeconds(5));
+    static final Duration READ_TIMEOUT_PROPERTY_DEFAULT = Duration.ofMinutes(5);
+    static final String WRITE_TIMEOUT_PROPERTY_KEY = "cwms.http.client.writetimeout.seconds";
+    static final Duration WRITE_TIMEOUT_PROPERTY_DEFAULT = Duration.ofMinutes(1);
     private static final CwmsHttpLoggingInterceptor LOGGING_INTERCEPTOR = CwmsHttpLoggingInterceptor.getInstance();
 
     private static final OkHttpClient INSTANCE = createClient();
@@ -57,51 +56,39 @@ final class OkHttpClientInstance {
             .callTimeout(getCallTimeout())
             .connectTimeout(getConnectTimeout())
             .readTimeout(getReadTimeout())
+            .writeTimeout(getWriteTimeout())
             .addInterceptor(LOGGING_INTERCEPTOR)
             .build();
     }
 
     private static Duration getReadTimeout() {
-        String readTimeoutPropertyValue = System.getProperty(READ_TIMEOUT_PROPERTY_KEY);
-        Duration readTimeout = READ_TIMEOUT_PROPERTY_DEFAULT;
-        if (readTimeoutPropertyValue == null) {
-            LOGGER.log(Level.FINE,
-                () -> "Setting " + READ_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " + READ_TIMEOUT_PROPERTY_DEFAULT);
-        } else {
-            LOGGER.log(Level.FINE,
-                () -> "Setting " + READ_TIMEOUT_PROPERTY_KEY + " read from system properties as " + readTimeoutPropertyValue);
-            readTimeout = Duration.parse(readTimeoutPropertyValue);
-        }
-        return readTimeout;
+        return getDurationProperty(READ_TIMEOUT_PROPERTY_KEY, READ_TIMEOUT_PROPERTY_DEFAULT);
+    }
+
+    private static Duration getWriteTimeout() {
+        return getDurationProperty(WRITE_TIMEOUT_PROPERTY_KEY, WRITE_TIMEOUT_PROPERTY_DEFAULT);
     }
 
     private static Duration getConnectTimeout() {
-        String connectTimeoutPropertyValue = System.getProperty(CONNECT_TIMEOUT_PROPERTY_KEY);
-        Duration connectTimeout = CONNECT_TIMEOUT_PROPERTY_DEFAULT;
-        if (connectTimeoutPropertyValue == null) {
-            LOGGER.log(Level.FINE,
-                () -> "Setting " + CONNECT_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " +
-                    CONNECT_TIMEOUT_PROPERTY_DEFAULT);
-        } else {
-            LOGGER.log(Level.FINE,
-                () -> "Setting " + CONNECT_TIMEOUT_PROPERTY_KEY + " read from system properties as " + connectTimeoutPropertyValue);
-            connectTimeout = Duration.parse(connectTimeoutPropertyValue);
-        }
-        return connectTimeout;
+        return getDurationProperty(CONNECT_TIMEOUT_PROPERTY_KEY, CONNECT_TIMEOUT_PROPERTY_DEFAULT);
     }
 
     private static Duration getCallTimeout() {
-        String callTimeoutPropertyValue = System.getProperty(CALL_TIMEOUT_PROPERTY_KEY);
-        Duration callTimeout = CALL_TIMEOUT_PROPERTY_DEFAULT;
-        if (callTimeoutPropertyValue == null) {
+        return getDurationProperty(CALL_TIMEOUT_PROPERTY_KEY, CALL_TIMEOUT_PROPERTY_DEFAULT);
+    }
+
+    private static Duration getDurationProperty(String writeTimeoutPropertyKey, Duration writeTimeoutPropertyDefault) {
+        String writeTimeoutPropertyValue = System.getProperty(writeTimeoutPropertyKey);
+        Duration writeTimeout = writeTimeoutPropertyDefault;
+        if (writeTimeoutPropertyValue == null) {
             LOGGER.log(Level.FINE,
-                () -> "Setting " + CALL_TIMEOUT_PROPERTY_KEY + " is not set in system properties. Defaulting to " + CALL_TIMEOUT_PROPERTY_DEFAULT);
+                () -> "Setting " + writeTimeoutPropertyKey + " is not set in system properties. Defaulting to " + writeTimeoutPropertyDefault);
         } else {
-            LOGGER.log(Level.FINER,
-                () -> "Setting " + CALL_TIMEOUT_PROPERTY_KEY + " read from system properties as " + callTimeoutPropertyValue);
-            callTimeout = Duration.parse(callTimeoutPropertyValue);
+            LOGGER.log(Level.FINE,
+                () -> "Setting " + writeTimeoutPropertyKey + " read from system properties as " + writeTimeoutPropertyValue);
+            writeTimeout = Duration.parse(writeTimeoutPropertyValue);
         }
-        return callTimeout;
+        return writeTimeout;
     }
 
     static OkHttpClient getInstance() {
