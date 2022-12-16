@@ -64,19 +64,23 @@ class TestOkHttpClientInstance {
         Duration fiveSeconds = Duration.ofSeconds(5);
         Duration sixSeconds = Duration.ofSeconds(6);
         Duration sevenSeconds = Duration.ofSeconds(7);
+        Duration eightSeconds = Duration.ofSeconds(8);
         System.setProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY, fiveSeconds.toString());
         System.setProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY, sixSeconds.toString());
         System.setProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY, sevenSeconds.toString());
+        System.setProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY, eightSeconds.toString());
         resetSingleton();
         try {
             OkHttpClient instance = OkHttpClientInstance.getInstance();
             assertEquals(fiveSeconds.toMillis(), instance.readTimeoutMillis());
             assertEquals(sixSeconds.toMillis(), instance.callTimeoutMillis());
             assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
+            assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
         } finally {
             System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY);
+            System.clearProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY);
             resetSingleton();
         }
 
