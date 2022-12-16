@@ -27,38 +27,124 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V2;
 
+import java.time.Instant;
+import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-public final class RatingEndpointInput extends EndpointInput {
+public final class RatingEndpointInput {
 
     private static final String OFFICE_QUERY_PARAMETER = "office";
+    private static final String BEGIN_QUERY_PARAMETER = "begin";
+    private static final String END_QUERY_PARAMETER = "end";
     private static final String METHOD_QUERY_PARAMETER = "method";
 
-    private String officeId;
-    private String ratingId;
-
-    public RatingEndpointInput(){
-        this(null);
+    private RatingEndpointInput() {
+        throw new AssertionError("Utility class");
     }
 
-    public RatingEndpointInput(String ratingId) {
-        this.ratingId = ratingId;
+    public static GetOne getOne(String ratingId, String officeId) {
+        return new GetOne(ratingId, officeId);
     }
 
-    public RatingEndpointInput officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
+    public static Post post(String ratingSetXml) {
+        return new Post(ratingSetXml);
     }
 
-    String getRatingId() {
-        return ratingId;
+    public static Delete delete(String ratingId, String officeId) {
+        return new Delete(ratingId, officeId);
     }
 
-    @Override
-    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-            .addQueryParameter(METHOD_QUERY_PARAMETER, "EAGER")
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+    public static class GetOne extends EndpointInput {
+
+        private final String ratingId;
+        private final String officeId;
+        private Instant begin;
+        private Instant end;
+        private String method = "EAGER";
+
+        private GetOne(String ratingId, String officeId) {
+            this.ratingId = ratingId;
+            this.officeId = officeId;
+        }
+
+        public GetOne begin(Instant begin) {
+            this.begin = begin;
+            return this;
+        }
+
+        public GetOne end(Instant end) {
+            this.end = end;
+            return this;
+        }
+
+        public GetOne eager() {
+            this.method = "EAGER";
+            return this;
+        }
+
+        public GetOne reference() {
+            this.method = "REFERENCE";
+            return this;
+        }
+
+        public GetOne lazy() {
+            this.method = "LAZY";
+            return this;
+        }
+
+        String getRatingId() {
+            return ratingId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            String beginStr = Optional.ofNullable(begin).map(Instant::toString).orElse(null);
+            String endStr = Optional.ofNullable(end).map(Instant::toString).orElse(null);
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(METHOD_QUERY_PARAMETER, method)
+                .addQueryParameter(BEGIN_QUERY_PARAMETER, beginStr)
+                .addQueryParameter(END_QUERY_PARAMETER, endStr)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+        }
+    }
+
+    public static class Post extends EndpointInput {
+
+        private final String ratingSetXml;
+
+        private Post(String ratingSetXml) {
+            this.ratingSetXml = ratingSetXml;
+        }
+
+        String ratingSetXml() {
+            return ratingSetXml;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+        }
+    }
+
+    public static class Delete extends EndpointInput {
+
+        private final String ratingId;
+        private final String officeId;
+
+        private Delete(String ratingId, String officeId) {
+            this.ratingId = ratingId;
+            this.officeId = officeId;
+        }
+
+        String getRatingId() {
+            return ratingId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+        }
     }
 }

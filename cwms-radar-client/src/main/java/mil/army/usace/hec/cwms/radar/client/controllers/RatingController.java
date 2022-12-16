@@ -47,7 +47,7 @@ public final class RatingController {
      * @return RatingSpec
      * @throws IOException - thrown if retrieve failed
      */
-    public String retrieveRatingXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput ratingEndpointInput) throws IOException {
+    public String retrieveRatingXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.GetOne ratingEndpointInput) throws IOException {
         HttpRequestExecutor executor =
             new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
                 .addEndpointInput(ratingEndpointInput)
@@ -55,6 +55,26 @@ public final class RatingController {
                 .withMediaType(ACCEPT_XML_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return response.getBody();
+        }
+    }
+
+    public void storeRatingSetXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Post input) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS)
+            .addEndpointInput(input)
+            .post()
+            .withBody(input.ratingSetXml())
+            .withMediaType(ACCEPT_XML_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+        }
+    }
+
+    public void deleteRatings(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Delete ratingEndpointInput) throws IOException {
+        HttpRequestExecutor executor =
+            new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
+                .addEndpointInput(ratingEndpointInput)
+                .delete()
+                .withMediaType(ACCEPT_XML_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
         }
     }
 
