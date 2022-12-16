@@ -25,7 +25,6 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import okhttp3.OkHttpClient;
@@ -77,15 +76,15 @@ final class OkHttpClientInstance {
         return getDurationProperty(CALL_TIMEOUT_PROPERTY_KEY, CALL_TIMEOUT_PROPERTY_DEFAULT);
     }
 
-    private static Duration getDurationProperty(String writeTimeoutPropertyKey, Duration writeTimeoutPropertyDefault) {
-        String writeTimeoutPropertyValue = System.getProperty(writeTimeoutPropertyKey);
-        Duration writeTimeout = writeTimeoutPropertyDefault;
+    private static Duration getDurationProperty(String timeoutPropertyKey, Duration timeoutPropertyDefault) {
+        String writeTimeoutPropertyValue = System.getProperty(timeoutPropertyKey);
+        Duration writeTimeout = timeoutPropertyDefault;
         if (writeTimeoutPropertyValue == null) {
             LOGGER.log(Level.FINE,
-                () -> "Setting " + writeTimeoutPropertyKey + " is not set in system properties. Defaulting to " + writeTimeoutPropertyDefault);
+                () -> "Setting " + timeoutPropertyKey + " is not set in system properties. Defaulting to " + timeoutPropertyDefault);
         } else {
             LOGGER.log(Level.FINE,
-                () -> "Setting " + writeTimeoutPropertyKey + " read from system properties as " + writeTimeoutPropertyValue);
+                () -> "Setting " + timeoutPropertyKey + " read from system properties as " + writeTimeoutPropertyValue);
             writeTimeout = Duration.parse(writeTimeoutPropertyValue);
         }
         return writeTimeout;
