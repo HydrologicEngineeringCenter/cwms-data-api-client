@@ -89,6 +89,18 @@ public final class LevelController {
             .close();
     }
 
+    public void updateLocationLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.Patch input) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.level());
+        String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.originalLocationLevelId();
+        HttpRequestExecutor httpRequestExecutor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addEndpointInput(input)
+            .patch()
+            .withBody(body)
+            .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse httpRequestResponse = httpRequestExecutor.execute()) {
+        }
+    }
+
     public void deleteLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.Delete input) throws IOException {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
@@ -98,5 +110,4 @@ public final class LevelController {
             .execute()
             .close();
     }
-
 }

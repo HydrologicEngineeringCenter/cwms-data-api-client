@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
 import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
@@ -123,6 +124,23 @@ class TestLevelController extends TestController {
         LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, LocationLevel.class);
         LocationLevelEndpointInput.Post input = LocationLevelEndpointInput.post(locationLevel);
         assertDoesNotThrow(() -> new LevelController().storeLevel(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+    @Test
+    void testPatchLocationLevel() throws IOException {
+        String collect = readJsonFile("radar/v2/json/location_level.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(readJsonFile("radar/v1/json/level_rename_response.json"));
+        mockHttpServer.start();
+        LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, LocationLevel.class);
+        LocationLevelEndpointInput.Post input = LocationLevelEndpointInput.post(locationLevel);
+        LevelController levelController = new LevelController();
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo(cookieJarSupplier);
+        levelController.storeLevel(apiConnectionInfo, input);
+        String locationLevelId = locationLevel.getLocationLevelId();
+        locationLevel.locationLevelId(locationLevelId + "Adam");
+        LocationLevelEndpointInput.Patch patch = LocationLevelEndpointInput.patch(locationLevelId, locationLevel);
+        levelController.updateLocationLevel(apiConnectionInfo, patch);
     }
 
     @Test

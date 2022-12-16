@@ -63,6 +63,10 @@ public final class LocationLevelEndpointInput {
         return new Post(level);
     }
 
+    public static Patch patch(String originalLocationLevelId, LocationLevel level) {
+        return new Patch(originalLocationLevelId, level);
+    }
+
     public static Delete delete(String levelId) {
         return new Delete(levelId);
     }
@@ -171,6 +175,31 @@ public final class LocationLevelEndpointInput {
 
         LocationLevel level() {
             return level;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, level.getOfficeId())
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static final class Patch extends EndpointInput {
+
+        private final LocationLevel level;
+        private final String originalLocationLevelId;
+
+        private Patch(String originalLocationLevelId, LocationLevel level) {
+            this.originalLocationLevelId = originalLocationLevelId;
+            this.level = level;
+        }
+
+        LocationLevel level() {
+            return level;
+        }
+
+        String originalLocationLevelId() {
+            return originalLocationLevelId;
         }
 
         @Override
