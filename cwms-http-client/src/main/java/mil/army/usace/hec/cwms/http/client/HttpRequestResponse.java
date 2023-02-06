@@ -24,21 +24,18 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import okhttp3.Cookie;
+import java.util.HashSet;
+import java.util.Set;
 import okhttp3.ResponseBody;
 
 public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
-    private final List<Cookie> cookies;
+    private final Set<HttpCookie> cookies;
 
-    HttpRequestResponse(ResponseBody body, List<Cookie> cookies) {
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies) {
         this.body = body;
         this.cookies = cookies;
     }
@@ -51,9 +48,8 @@ public final class HttpRequestResponse implements AutoCloseable {
         return body.byteStream();
     }
 
-    public Map<String, String> getCookies() {
-        return cookies.stream()
-            .collect(toMap(Cookie::name, Cookie::value, (o1, o2) -> o1));
+    public Set<HttpCookie> getCookies() {
+        return new HashSet<>(cookies);
     }
 
     @Override

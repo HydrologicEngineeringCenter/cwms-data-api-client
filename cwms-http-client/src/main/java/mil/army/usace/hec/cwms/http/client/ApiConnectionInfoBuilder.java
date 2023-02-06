@@ -75,6 +75,10 @@ public class ApiConnectionInfoBuilder {
             interceptors.add(new OAuth2TokenInterceptor(tokenProvider));
         }
         if (cookieAuthenticator != null) {
+            if(tokenProvider != null) {
+                throw new IllegalArgumentException("Cannot setup ApiConnectionInfo with both a TokenProvider and CookieAuthenticator. "
+                    + "Only a single authentication type is supported at this time");
+            }
             authenticator = cookieAuthenticator;
         }
         return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator);

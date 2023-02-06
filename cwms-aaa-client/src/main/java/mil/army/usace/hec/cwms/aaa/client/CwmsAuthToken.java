@@ -61,6 +61,12 @@ public final class CwmsAuthToken {
         this.jSessionId = jSessionId;
     }
 
+    /**
+     * The JSESSIONID cookie is used for session tracking in the CWMS_AAA web app.
+     * The timeout is set server-side and a new cookie will need to be retrieved
+     * if a HTTP 401 error code is returned.
+     * @return cookie values for JSESSIONID
+     */
     public String jSessionId() {
         return jSessionId;
     }
@@ -69,6 +75,13 @@ public final class CwmsAuthToken {
         this.jSessionIdSso = jSessionIdSso;
     }
 
+    /**
+     * The JSESSIONIDSSO cookie is used for session tracking across the CWMS Tomcat instance.
+     * This specific token is use for authentication across all CWMS apps hosted
+     * on the tomcat server. The timeout is set server-side and a new cookie will need to
+     * be retrieved if a HTTP 401 error code is returned.
+     * @return cookie values for JSESSIONIDSSO
+     */
     public String jSessionIdSso() {
         return jSessionIdSso;
     }

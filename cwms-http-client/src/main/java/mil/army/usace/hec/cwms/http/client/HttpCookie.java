@@ -24,25 +24,11 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+public interface HttpCookie {
 
-import java.io.IOException;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
+    String name();
 
-class TestHttpRequestResponseCookies {
+    String value();
 
-    @Test
-    void testHttpRequestResponse() throws IOException {
-        try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
-            .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
-            .build())
-            .get()
-            .withMediaType("application/json")
-            .execute()) {
-            Set<HttpCookie> cookies = execute.getCookies();
-            assertFalse(cookies.isEmpty());
-        }
-    }
-
+    String domain();
 }

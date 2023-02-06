@@ -24,25 +24,46 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.Objects;
+import okhttp3.Cookie;
 
-import java.io.IOException;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
+final class OkHttpCookieWrapper implements HttpCookie {
 
-class TestHttpRequestResponseCookies {
+    private final Cookie cookie;
 
-    @Test
-    void testHttpRequestResponse() throws IOException {
-        try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
-            .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
-            .build())
-            .get()
-            .withMediaType("application/json")
-            .execute()) {
-            Set<HttpCookie> cookies = execute.getCookies();
-            assertFalse(cookies.isEmpty());
-        }
+    OkHttpCookieWrapper(Cookie cookie) {
+        this.cookie = cookie;
     }
 
+    @Override
+    public String name() {
+        return cookie.name();
+    }
+
+    @Override
+    public String value() {
+        return cookie.value();
+    }
+
+    @Override
+    public String domain() {
+        return cookie.domain();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OkHttpCookieWrapper that = (OkHttpCookieWrapper) o;
+        return cookie.equals(that.cookie);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cookie);
+    }
 }

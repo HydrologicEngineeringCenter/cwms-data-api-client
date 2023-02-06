@@ -24,14 +24,13 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.prefs.Preferences;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -52,7 +51,7 @@ final class TestPreferencesBackedCookies {
             .get()
             .withMediaType("application/json")
             .execute()) {
-            Map<String, String> cookies = execute.getCookies();
+            Set<HttpCookie> cookies = execute.getCookies();
             assertFalse(cookies.isEmpty());
         }
         JavaNetCookieJar cookieJar = (JavaNetCookieJar) cookieJarSupplier.getCookieJar();
