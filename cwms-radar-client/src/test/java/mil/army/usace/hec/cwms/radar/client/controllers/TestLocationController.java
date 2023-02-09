@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,7 +34,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
 
 
@@ -50,7 +53,7 @@ class TestLocationController extends TestController {
         String collect = String.join("\n", Files.readAllLines(path));
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        LocationEndPointInput input = new LocationEndPointInput("AARK")
+        LocationEndPointInput.GetOne input = LocationEndPointInput.getOne("AARK")
             .officeId("SWT")
             .unit("SI");
         Location location = new LocationController().retrieveLocation(buildConnectionInfo(), input);
@@ -73,6 +76,54 @@ class TestLocationController extends TestController {
         assertEquals(320.04, location.getElevation(), 0.0);
         assertNull(location.getPublishedLongitude());
         assertNull(location.getPublishedLatitude());
+    }
+
+    @Test
+    void testLocationStore() throws Exception {
+        String collect = readJsonFile("radar/v2/json/location.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Location location = RadarObjectMapper.mapJsonToObject(collect, Location.class);
+        assertDoesNotThrow(() -> new LocationController().storeLocation(buildConnectionInfo(cookieJarSupplier), LocationEndPointInput.post(location)));
+    }
+
+    @Test
+    void testLocationDelete() throws Exception {
+        String collect = readJsonFile("radar/v2/json/location.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Location location = RadarObjectMapper.mapJsonToObject(collect, Location.class);
+        location.setName(location.getName() + "-" + System.currentTimeMillis());
+        LocationController locationController = new LocationController();
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo(cookieJarSupplier);
+        LocationEndPointInput.Post post = LocationEndPointInput.post(location);
+        locationController.storeLocation(apiConnectionInfo, post);
+        LocationEndPointInput.Delete delete = LocationEndPointInput.delete(location.getName())
+            .officeId(location.getOfficeId());
+        assertDoesNotThrow(() -> locationController.deleteLocation(apiConnectionInfo, delete));
+    }
+
+    @Test
+    public void testLocationPatch() throws Exception {
+        String collect = readJsonFile("radar/v1/json/location_rename_response.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        collect = readJsonFile("radar/v1/json/location_to_rename.json");
+        Location location = RadarObjectMapper.mapJsonToObject(collect, Location.class);
+        String originalName = location.getName();
+        location.setName(originalName + "-" + System.currentTimeMillis());
+        LocationController locationController = new LocationController();
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo(cookieJarSupplier);
+        LocationEndPointInput.Post post = LocationEndPointInput.post(location);
+        locationController.storeLocation(apiConnectionInfo, post);
+        location.name(originalName + "1");
+        LocationEndPointInput.Patch patch = LocationEndPointInput.patch(originalName, location);
+        assertDoesNotThrow(() -> locationController.updateLocation(apiConnectionInfo, patch));
     }
 
 }

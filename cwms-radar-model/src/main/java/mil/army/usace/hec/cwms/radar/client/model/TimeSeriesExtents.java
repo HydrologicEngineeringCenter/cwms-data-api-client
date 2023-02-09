@@ -34,10 +34,13 @@ import javax.validation.Valid;
  * TimeSeries extent information
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-10-14T13:21:38.937-07:00[America/Los_Angeles]")
 public class TimeSeriesExtents {
     @JsonProperty("earliest-time")
     private ZonedDateTime earliestTime = null;
+
+    @JsonProperty("last-update")
+    private ZonedDateTime lastUpdate = null;
 
     @JsonProperty("latest-time")
     private ZonedDateTime latestTime = null;
@@ -63,6 +66,26 @@ public class TimeSeriesExtents {
 
     public void setEarliestTime(ZonedDateTime earliestTime) {
         this.earliestTime = earliestTime;
+    }
+
+    public TimeSeriesExtents lastUpdate(ZonedDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
+    }
+
+    /**
+     * Last update in the timeseries
+     *
+     * @return lastUpdate
+     **/
+
+    @Valid
+    public ZonedDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public TimeSeriesExtents latestTime(ZonedDateTime latestTime) {
@@ -115,13 +138,16 @@ public class TimeSeriesExtents {
             return false;
         }
         TimeSeriesExtents timeSeriesExtents = (TimeSeriesExtents) o;
-        return Objects.equals(this.earliestTime, timeSeriesExtents.earliestTime) && Objects.equals(this.latestTime, timeSeriesExtents.latestTime) &&
-            Objects.equals(this.versionTime, timeSeriesExtents.versionTime);
+        return Objects.equals(this.earliestTime, timeSeriesExtents.earliestTime)
+            && Objects.equals(this.lastUpdate, timeSeriesExtents.lastUpdate)
+            && Objects.equals(this.latestTime, timeSeriesExtents.latestTime)
+            && Objects.equals(this.versionTime, timeSeriesExtents.versionTime)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(earliestTime, latestTime, versionTime);
+        return Objects.hash(earliestTime, lastUpdate, latestTime, versionTime);
     }
 
     @Override
@@ -130,6 +156,7 @@ public class TimeSeriesExtents {
         sb.append("class TimeSeriesExtents {\n");
 
         sb.append("    earliestTime: ").append(toIndentedString(earliestTime)).append("\n");
+        sb.append("    lastUpdate: ").append(toIndentedString(lastUpdate)).append("\n");
         sb.append("    latestTime: ").append(toIndentedString(latestTime)).append("\n");
         sb.append("    versionTime: ").append(toIndentedString(versionTime)).append("\n");
         sb.append("}");

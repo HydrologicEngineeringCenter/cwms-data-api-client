@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,15 +42,14 @@ class TestLocationLevelEndpointInput {
         ZoneId zoneId = ZoneId.of("America/Los_Angeles");
         Instant begin = ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 0, zoneId).toInstant();
         Instant end = begin.plusSeconds(30);
-        LocationLevelEndpointInput input = new LocationLevelEndpointInput()
+        LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll()
             .officeId("SWT")
             .levelIdMask("MASK")
             .page("abc")
             .pageSize(10)
             .begin(begin)
             .end(end)
-            .unit("EN")
-            .timeZone(zoneId);
+            .unit("EN");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.OFFICE_QUERY_PARAMETER));
         assertEquals("MASK", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.LEVEL_ID_MASK_QUERY_PARAMETER));
@@ -59,23 +58,21 @@ class TestLocationLevelEndpointInput {
         assertEquals("2015-01-01T08:00:00Z", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.BEGIN_QUERY_PARAMETER));
         assertEquals("2015-01-01T08:00:30Z", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.END_QUERY_PARAMETER));
         assertEquals("EN", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.UNIT_QUERY_PARAMETER));
-        assertEquals(zoneId.getId(), mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.TIMEZONE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testQueryRequestNulls() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationLevelEndpointInput input = new LocationLevelEndpointInput();
+        LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll();
         input.addInputParameters(mockHttpRequestBuilder);
         assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.OFFICE_QUERY_PARAMETER));
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.LEVEL_ID_MASK_QUERY_PARAMETER));
+        assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.LEVEL_ID_MASK_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_SIZE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.BEGIN_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.END_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.UNIT_QUERY_PARAMETER));
-        assertEquals("UTC", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.TIMEZONE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

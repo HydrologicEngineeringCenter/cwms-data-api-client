@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,23 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import okhttp3.Cookie;
 import okhttp3.ResponseBody;
 
 public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
+    private final List<Cookie> cookies;
 
-    HttpRequestResponse(ResponseBody body) {
+    HttpRequestResponse(ResponseBody body, List<Cookie> cookies) {
         this.body = body;
+        this.cookies = cookies;
     }
 
     public String getBody() throws IOException {
@@ -42,6 +49,11 @@ public final class HttpRequestResponse implements AutoCloseable {
 
     public InputStream getStream() {
         return body.byteStream();
+    }
+
+    public Map<String, String> getCookies() {
+        return cookies.stream()
+            .collect(toMap(Cookie::name, Cookie::value, (o1, o2) -> o1));
     }
 
     @Override

@@ -1622,14 +1622,14 @@ paths:
       tags:
         - TimeSeries
       summary: Post cwmsData timeseries
-      description: Create new TimeSeries
+      description: Create new TimeSeries, will store any data provided
       operationId: postCwmsDataTimeseries
       requestBody:
         content:
-          application/json:
+          application/json;version=2:
             schema:
               $ref: '#/components/schemas/TimeSeries'
-          application/xml:
+          application/xml;version=2:
             schema:
               $ref: '#/components/schemas/TimeSeries'
         required: true
@@ -1717,20 +1717,21 @@ paths:
       tags:
         - TimeSeries
       summary: Patch cwmsData timeseries with timeseries
-      description: Update a TimeSeries
+      description: Update a TimeSeries with provided values
       operationId: patchCwmsDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
+          description: Full CWMS Timeseries name
           required: true
           schema:
             type: string
       requestBody:
         content:
-          application/json:
+          application/json;version=2:
             schema:
               $ref: '#/components/schemas/TimeSeries'
-          application/xml:
+          application/xml;version=2:
             schema:
               $ref: '#/components/schemas/TimeSeries'
         required: true
@@ -2009,6 +2010,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+  /cwms-data/ratings/metadata:
+    get:
+      tags:
+        - Ratings
+      summary: Get cwmsData ratings metadata
+      operationId: getCwmsDataRatingsMetadata
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Rating Specs whose data is to be included in the response. If this field is not specified, matching rating information from all offices shall be returned.
+          schema:
+            type: string
+        - name: rating-id-mask
+          in: query
+          description: RegExp that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: Specifies the start of the time window of the effective dates to be included. If this field is not specified no start time will be used.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for effective dates to be included. If this field is not specified no end time will be used.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 50.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/RatingMetadataList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/ratings/{rating}:
     get:
       tags:
@@ -2028,6 +2109,26 @@ paths:
           required: true
           schema:
             type: string
+        - name: begin
+          in: query
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified no start time will be used.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified no end time will be used.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the retrieval method used.  If no method is provided EAGER will be used.
+          schema:
+            $ref: '#/components/schemas/DatabaseLoadMethod'
       responses:
         '200':
           description: OK
@@ -2218,6 +2319,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Unit'
+            text/tab-separated-values:
+              schema:
+                type: string
+            text/csv:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -2860,22 +2974,22 @@ paths:
             type: string
         - name: bottom-mask
           in: query
-          description: Bottom level mask. Default value:*"
+          description: Bottom level mask. Default value:*
           schema:
             type: string
         - name: top-mask
           in: query
-          description: Top level mask. Default value:*"
+          description: Top level mask. Default value:*
           schema:
             type: string
         - name: include-explicit
           in: query
-          description: Specifies if the results should include explicit Pools. Default value:false"
+          description: Specifies if the results should include explicit Pools. Default value:false
           schema:
             type: string
         - name: include-implicit
           in: query
-          description: Specifies if the results should include implicit Pools..Default value:true"
+          description: Specifies if the results should include implicit Pools. Default value:true
           schema:
             type: string
       responses:
@@ -2937,27 +3051,27 @@ paths:
             type: string
         - name: name-mask
           in: query
-          description: Name mask. Default value:*"
+          description: Name mask. Default value:*
           schema:
             type: string
         - name: bottom-mask
           in: query
-          description: Bottom level mask. Default value:*"
+          description: Bottom level mask. Default value:*
           schema:
             type: string
         - name: top-mask
           in: query
-          description: Top level mask. Default value:*"
+          description: Top level mask. Default value:*
           schema:
             type: string
         - name: include-explicit
           in: query
-          description: Specifies if the results should include explicit Pools. Default value:false"
+          description: Specifies if the results should include explicit Pools. Default value:false
           schema:
             type: string
         - name: include-implicit
           in: query
-          description: Specifies if the results should include implicit Pools..Default value:true"
+          description: Specifies if the results should include implicit Pools. Default value:true
           schema:
             type: string
         - name: page
@@ -3395,10 +3509,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         levels:
           type: array
           description: List of retrieved location levels
@@ -3409,10 +3525,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
       xml:
         name: location-levels
     TimeSeriesCategory:
@@ -3478,26 +3596,29 @@ components:
           type: number
           format: double
     TimeSeries:
+      required:
+        - units
       type: object
       properties:
         begin:
           type: string
           description: The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
           format: date-time
+          readOnly: true
         end:
           type: string
           description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
           format: date-time
+          readOnly: true
         interval:
           type: object
           properties:
             seconds:
               type: integer
               format: int64
-            zero:
-              type: boolean
-            negative:
-              type: boolean
+            nano:
+              type: integer
+              format: int32
             units:
               type: array
               items:
@@ -3509,56 +3630,59 @@ components:
                       seconds:
                         type: integer
                         format: int64
+                      nano:
+                        type: integer
+                        format: int32
                       zero:
                         type: boolean
                       negative:
                         type: boolean
-                      nano:
-                        type: integer
-                        format: int32
                   durationEstimated:
                     type: boolean
                   dateBased:
                     type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
+            zero:
+              type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
-        intervalOffset:
+          format: Java Duration
+          readOnly: true
+        interval-offset:
           type: integer
           description: Offset from top of interval
           format: int64
-          xml:
-            name: interval-offset
+          readOnly: true
         name:
           type: string
           description: Time-series name
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
-        officeId:
+          readOnly: true
+        office-id:
           type: string
           description: Office ID that owns the time-series
-          xml:
-            name: office-id
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
-        timeZone:
+          readOnly: true
+        time-zone:
           type: string
           description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
-          xml:
-            name: time-zone
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         units:
           type: string
           description: The units of the time series data
@@ -3569,12 +3693,30 @@ components:
             $ref: '#/components/schemas/TimeSeries.Column'
         values:
           type: array
-          description: List of retrieved time-series values
           xml:
             wrapped: true
           items:
-            $ref: '#/components/schemas/TimeSeries.Record'
-        verticalDatumInfo:
+            type: array
+            example:
+              - 123
+              - 54.3
+              - 0
+            items:
+              type: object
+              properties:
+                date-time:
+                  type: integer
+                  description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+                  format: int64
+                value:
+                  type: number
+                  description: Requested time-series data value
+                  format: double
+                quality-code:
+                  type: integer
+                  format: int32
+              description: List of retrieved time-series values
+        vertical-datum-info:
           $ref: '#/components/schemas/VerticalDatumInfo'
       xml:
         name: timeseries
@@ -3594,7 +3736,7 @@ components:
       properties:
         date-time:
           type: integer
-          description: Milliseconds since 1970-01-01 (Unix Epoch)
+          description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
           format: int64
         value:
           type: number
@@ -3603,7 +3745,7 @@ components:
         quality-code:
           type: integer
           format: int32
-      description: A representation of a time-series record
+      description: List of retrieved time-series values
     VerticalDatumInfo:
       type: object
       properties:
@@ -3668,10 +3810,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         templates:
           type: array
           items:
@@ -3679,10 +3823,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
     IndependentRoundingSpec:
       type: object
       properties:
@@ -3739,10 +3885,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         specs:
           type: array
           items:
@@ -3750,10 +3898,149 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
+    AbstractRatingMetadata:
+      type: object
+      properties:
+        office-id:
+          type: string
+        rating-spec-id:
+          type: string
+        units-id:
+          type: string
+        active:
+          type: boolean
+        effective-date:
+          type: string
+          format: date-time
+        create-date:
+          type: string
+          format: date-time
+        transition-date:
+          type: string
+          format: date-time
+        description:
+          type: string
+        vertical-datum-info:
+          $ref: '#/components/schemas/VerticalDatumInfo'
+        rating-type:
+          type: string
+      description: Rating Metadata
+      discriminator:
+        propertyName: rating-type
+        mapping:
+          table: '#/components/schemas/TableRating'
+          transitional: '#/components/schemas/TransitionalRating'
+          virtual: '#/components/schemas/VirtualRating'
+          expression-rating: '#/components/schemas/ExpressionRating'
+          usgs: '#/components/schemas/UsgsStreamRating'
+      oneOf:
+        - $ref: '#/components/schemas/TableRating'
+        - $ref: '#/components/schemas/TransitionalRating'
+        - $ref: '#/components/schemas/VirtualRating'
+        - $ref: '#/components/schemas/ExpressionRating'
+        - $ref: '#/components/schemas/UsgsStreamRating'
+    ExpressionRating:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AbstractRatingMetadata'
+        - type: object
+          properties:
+            expression:
+              type: string
+    RatingMetadata:
+      type: object
+      properties:
+        rating-spec:
+          $ref: '#/components/schemas/RatingSpec'
+        ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbstractRatingMetadata'
+    RatingMetadataList:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        rating-metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingMetadata'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+    SourceRating:
+      type: object
+    TableRating:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AbstractRatingMetadata'
+        - type: object
+          properties:
+            in-range-method:
+              type: string
+            out-range-low-method:
+              type: string
+            out-range-high-method:
+              type: string
+    TransitionalRating:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AbstractRatingMetadata'
+        - type: object
+          properties:
+            source-ratings:
+              type: array
+              items:
+                type: string
+            conditions:
+              type: array
+              items:
+                type: string
+            evaluations:
+              type: array
+              items:
+                type: string
+    UsgsStreamRating:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TableRating'
+    VirtualRating:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AbstractRatingMetadata'
+        - type: object
+          properties:
+            source-ratings:
+              type: array
+              items:
+                $ref: '#/components/schemas/SourceRating'
+            connections:
+              type: string
+    DatabaseLoadMethod:
+      type: string
+      enum:
+        - EAGER
+        - LAZY
+        - REFERENCE
     CatalogableEndpoint:
       type: string
       description: Set of data for which a larger catalog can be built.
@@ -3772,10 +4059,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         entries:
           type: array
           xml:
@@ -3785,10 +4074,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
       xml:
         name: catalog
     CatalogEntry:
@@ -3887,6 +4178,12 @@ components:
           format: date-time
           xml:
             name: earliest-time
+        lastUpdate:
+          type: string
+          description: Last update in the timeseries
+          format: date-time
+          xml:
+            name: last-update
         latestTime:
           type: string
           description: Latest value in the timeseries
@@ -4067,10 +4364,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         blobs:
           type: array
           description: List of retrieved blobs
@@ -4081,10 +4380,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
       xml:
         name: blobs
     Clob:
@@ -4110,10 +4411,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         clobs:
           type: array
           description: List of retrieved clobs
@@ -4124,10 +4427,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
       xml:
         name: clobs
     Pool:
@@ -4139,11 +4444,11 @@ components:
           type: string
         clobText:
           type: string
-        projectId:
+        topLevelId:
           type: string
         bottomLevelId:
           type: string
-        topLevelId:
+        projectId:
           type: string
         poolName:
           $ref: '#/components/schemas/PoolNameType'
@@ -4163,10 +4468,12 @@ components:
         page:
           type: string
           description: The cursor to the current page of data
+          readOnly: true
         total:
           type: integer
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
+          readOnly: true
         pools:
           type: array
           description: List of retrieved pools
@@ -4177,10 +4484,12 @@ components:
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
+          readOnly: true
       xml:
         name: pools
     SpecifiedLevel:

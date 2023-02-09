@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
 
 /**
@@ -36,9 +37,13 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+@JsonPropertyOrder({"date-time", "value", "quality-code"})
 public class TimeSeriesValues {
+    @JsonProperty("date-time")
     private Long dateTime = null;
+    @JsonProperty("value")
     private Double value = null;
+    @JsonProperty("quality-code")
     private Integer qualityCode = null;
 
     @JsonCreator

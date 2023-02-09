@@ -24,10 +24,23 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.Security;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -38,15 +51,6 @@ import okhttp3.ResponseBody;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
-
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -109,7 +113,19 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public final HttpRequestMediaType get() throws IOException {
+    public final HttpPostRequest patch() {
+        this.method = HttpRequestMethod.PATCH;
+        return new HttpPostRequestImpl();
+    }
+
+    @Override
+    public final HttpRequestMediaType delete() {
+        this.method = HttpRequestMethod.DELETE;
+        return new HttpRequiredMediaTypeImpl();
+    }
+
+    @Override
+    public final HttpRequestMediaType get() {
         this.method = HttpRequestMethod.GET;
         return new HttpRequiredMediaTypeImpl();
     }
@@ -133,8 +149,9 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         Request.Builder requestBuilder = new Request.Builder();
         RequestBody requestBody = null;
         if (body != null) {
-            requestBody = RequestBody.create(body, type);
+            requestBody = RequestBody.create(body, null);
         }
+        requestBuilder.header("Content-Type", type.toString());
         requestBuilder.url(urlBuilder.build());
         requestBuilder.method(method.getName(), requestBody);
         queryHeaders.forEach(requestBuilder::addHeader);
@@ -179,12 +196,20 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     if (responseBody == null) {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    retVal = new HttpRequestResponse(responseBody);
+                    List<Cookie> cookies = client.cookieJar().loadForRequest(request.url());
+                    retVal = new HttpRequestResponse(responseBody, cookies);
                 } else {
                     handleExecutionError(execute, request);
                 }
             } catch (ConnectException | UnknownHostException | SocketTimeoutException connectException) {
                 throw new ServerNotFoundException(connectException, request.url().toString());
+            } catch (SSLHandshakeException ex) {
+                Throwable cause = ex.getCause();
+                if (cause instanceof SignatureException && cause.getMessage().contains("The action was cancelled by the user.")) {
+                    throw new SslCanceledException(ex, request.url().toString());
+                } else {
+                    throw ex;
+                }
             }
             return retVal;
         }
@@ -199,6 +224,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             int code = execute.code();
             if (code == 404) {
                 throw new NoDataFoundException(execute, request, responseBody);
+            } else if (code == 401) {
+                throw new UnauthorizedException(execute, request, responseBody);
             } else {
                 throw new CwmsHttpResponseException(execute, request, responseBody);
             }

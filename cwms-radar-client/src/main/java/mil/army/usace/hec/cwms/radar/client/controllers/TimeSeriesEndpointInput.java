@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +33,9 @@ import java.util.Objects;
 import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
-public final class TimeSeriesEndpointInput extends EndpointInput {
+public final class TimeSeriesEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String UNIT_QUERY_PARAMETER = "unit";
@@ -46,79 +47,137 @@ public final class TimeSeriesEndpointInput extends EndpointInput {
     static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
     static final String NAME_QUERY_PARAMETER = "name";
 
-    private final String timeSeriesId;
-    private String officeId;
-    private String unit = "SI";
-    private ZoneId zoneId = ZoneId.of("UTC");
-    private String verticalDatum;
-    private Instant begin;
-    private String page;
-    private Integer pageSize;
-    private Instant end;
-
-    public TimeSeriesEndpointInput(String timeSeriesId) {
-        this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries endpoint without a time series identifier");
+    private TimeSeriesEndpointInput() {
+        throw new AssertionError("factory class");
     }
 
-    public TimeSeriesEndpointInput officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
+    public static GetOne getOne(String timeSeriesId) {
+        return new GetOne(timeSeriesId);
     }
 
-    public TimeSeriesEndpointInput unitSystem(String unitSystem) {
-        this.unit = unitSystem;
-        return this;
+    public static Post post(TimeSeries timeSeries) {
+        return new Post(timeSeries);
     }
 
-    public TimeSeriesEndpointInput unit(String unit) {
-        this.unit = unit;
-        return this;
+    public static Delete delete(String timeSeriesId, String officeId) {
+        return new Delete(timeSeriesId, officeId);
     }
 
-    public TimeSeriesEndpointInput verticalDatum(String verticalDatum) {
-        this.verticalDatum = verticalDatum;
-        return this;
+    public static final class GetOne extends EndpointInput {
+
+        private final String timeSeriesId;
+        private String officeId;
+        private String unit = "SI";
+        private ZoneId zoneId = ZoneId.of("UTC");
+        private String verticalDatum;
+        private Instant begin;
+        private String page;
+        private Integer pageSize;
+        private Instant end;
+
+        private GetOne(String timeSeriesId) {
+            this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries endpoint without a time series identifier");
+        }
+
+        public GetOne officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        public GetOne unitSystem(String unitSystem) {
+            this.unit = unitSystem;
+            return this;
+        }
+
+        public GetOne unit(String unit) {
+            this.unit = unit;
+            return this;
+        }
+
+        public GetOne verticalDatum(String verticalDatum) {
+            this.verticalDatum = verticalDatum;
+            return this;
+        }
+
+        public GetOne begin(Instant begin) {
+            this.begin = begin;
+            return this;
+        }
+
+        public GetOne end(Instant end) {
+            this.end = end;
+            return this;
+        }
+
+        public GetOne timeZone(ZoneId zoneId) {
+            this.zoneId = zoneId;
+            return this;
+        }
+
+        public GetOne page(String page) {
+            this.page = page;
+            return this;
+        }
+
+        public GetOne pageSize(int pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
+            String beginString = Optional.ofNullable(begin).map(Object::toString).orElse(null);
+            String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
+            return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, timeSeriesId)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                .addQueryParameter(DATUM_QUERY_PARAMETER, verticalDatum)
+                .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
+                .addQueryParameter(END_QUERY_PARAMETER, endString)
+                .addQueryParameter(TIMEZONE_QUERY_PARAMETER, zoneId.getId())
+                .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+                .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
     }
 
-    public TimeSeriesEndpointInput begin(Instant begin) {
-        this.begin = begin;
-        return this;
+    public static final class Post extends EndpointInput {
+
+        private final TimeSeries timeSeries;
+
+        private Post(TimeSeries timeSeries) {
+            this.timeSeries = timeSeries;
+        }
+
+        TimeSeries timeSeries() {
+            return timeSeries;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            //Plan to add support for override protection and store rules here
+            return httpRequestBuilder;
+        }
     }
 
-    public TimeSeriesEndpointInput end(Instant end) {
-        this.end = end;
-        return this;
-    }
+    public static final class Delete extends EndpointInput {
 
-    public TimeSeriesEndpointInput timeZone(ZoneId zoneId) {
-        this.zoneId = zoneId;
-        return this;
-    }
+        private final String timeSeriesId;
+        private final String officeId;
 
-    public TimeSeriesEndpointInput page(String page) {
-        this.page = page;
-        return this;
-    }
+        private Delete(String timeSeriesId, String officeId) {
+            this.timeSeriesId = timeSeriesId;
+            this.officeId = officeId;
+        }
 
-    public TimeSeriesEndpointInput pageSize(int pageSize) {
-        this.pageSize = pageSize;
-        return this;
-    }
+        String timeSeriesId() {
+            return timeSeriesId;
+        }
 
-    @Override
-    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
-        String beginString = Optional.ofNullable(begin).map(Object::toString).orElse(null);
-        String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
-        return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, timeSeriesId)
-                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                                 .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
-                                 .addQueryParameter(DATUM_QUERY_PARAMETER, verticalDatum)
-                                 .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
-                                 .addQueryParameter(END_QUERY_PARAMETER, endString)
-                                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, zoneId.getId())
-                                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
-                                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId);
+        }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ class TestLocationEndpointInput {
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST")
+        LocationEndPointInput.GetOne input = LocationEndPointInput.getOne("LOC_TEST")
             .officeId("SWT")
             .unit("SI");
         input.addInputParameters(mockHttpRequestBuilder);
@@ -52,7 +52,7 @@ class TestLocationEndpointInput {
     @Test
     void testQueryRequestDefaults() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationEndPointInput input = new LocationEndPointInput("LOC_TEST");
+        LocationEndPointInput.GetOne input = LocationEndPointInput.getOne("LOC_TEST");
         input.addInputParameters(mockHttpRequestBuilder);
         assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
@@ -61,13 +61,13 @@ class TestLocationEndpointInput {
 
     @Test
     void testLocationName() {
-        LocationEndPointInput input = new LocationEndPointInput("TEST");
-        assertEquals("TEST", input.getLocationId());
+        LocationEndPointInput.GetOne input = LocationEndPointInput.getOne("TEST");
+        assertEquals("TEST", input.locationId());
     }
 
     @Test
     void testNullLocationName() {
-        assertThrows(NullPointerException.class, () -> new LocationEndPointInput(null));
+        assertThrows(NullPointerException.class, () -> LocationEndPointInput.getOne(null));
     }
 
 

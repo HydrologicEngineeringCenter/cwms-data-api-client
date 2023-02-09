@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.htp.client;
 
 import java.io.IOException;
+import java.util.List;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
@@ -47,6 +48,14 @@ public final class MockHttpServer {
 
     public void enqueue(int responseCode, String body) {
         mockWebServer.enqueue(new MockResponse().setResponseCode(responseCode).setBody(body));
+    }
+
+    public void enqueue(String body, List<String> cookies) {
+        MockResponse mockResponse = new MockResponse().setBody(body);
+        for (String cookie : cookies) {
+            mockResponse = mockResponse.addHeader("Set-Cookie", cookie);
+        }
+        mockWebServer.enqueue(mockResponse);
     }
 
     public void shutdown() throws IOException {

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Hydrologic Engineering Center
+ * Copyright (c) 2022 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -40,12 +41,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.Offset;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesValues;
 import mil.army.usace.hec.cwms.radar.client.model.VerticalDatumInfo;
@@ -60,7 +64,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
             .officeId("SWT")
             .unit("SI")
             .verticalDatum("NAVD88")
@@ -94,6 +98,7 @@ class TestTimeSeriesController extends TestController {
         assertEquals("NAVD-88", offset.getToDatum());
         assertTrue(offset.isEstimate());
     }
+
     @Test
     void testRetrieveTimeSeriesWithoutVerticalDatumOffsets() throws IOException {
         String collect = readJsonFile("radar/v2/json/timeseries_no_vert_offsets.json");
@@ -101,7 +106,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2022, 7, 21, 16, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2022, 7, 22, 16, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("CHCR-Cherry_Creek_Dam-Cherry.Elev.Inst.1Day.0.0168")
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("CHCR-Cherry_Creek_Dam-Cherry.Elev.Inst.1Day.0.0168")
             .officeId("NWD")
             .unit("EN")
             .begin(start)
@@ -126,7 +131,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
             .officeId("SWT")
             .unit("SI")
             .verticalDatum("NAVD88")
@@ -171,7 +176,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
         assertThrows(ServerNotFoundException.class, () -> timeSeriesController.retrieveTimeSeries(
-            new ApiConnectionInfoBuilder("http://localhost:11999").build(), new TimeSeriesEndpointInput("")));
+            new ApiConnectionInfoBuilder("http://localhost:11999").build(), TimeSeriesEndpointInput.getOne("")));
     }
 
     @Test
@@ -180,7 +185,7 @@ class TestTimeSeriesController extends TestController {
         mockHttpServer.enqueue(404, collect);
         mockHttpServer.start();
         TimeSeriesController timeSeriesController = new TimeSeriesController();
-        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.bogus");
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.bogus");
         assertThrows(NoDataFoundException.class, () -> timeSeriesController.retrieveTimeSeries(buildConnectionInfo(), input));
     }
 
@@ -200,7 +205,7 @@ class TestTimeSeriesController extends TestController {
                         mockHttpServer.start();
                         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
                         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-                        TimeSeriesEndpointInput input = new TimeSeriesEndpointInput("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+                        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
                             .officeId("SWT")
                             .unit("SI")
                             .verticalDatum("NAVD88")
@@ -235,5 +240,31 @@ class TestTimeSeriesController extends TestController {
         for (CompletableFuture<Void> future : futures) {
             future.get();
         }
+    }
+
+    @Test
+    void testStoreTimeSeries() throws IOException {
+        Logger.getLogger("").setLevel(Level.ALL);
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class);
+        TimeSeriesController timeSeriesController = new TimeSeriesController();
+        TimeSeriesEndpointInput.Post input = TimeSeriesEndpointInput.post(timeSeries);
+        assertDoesNotThrow(() -> timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+    @Test
+    void testDeleteTimeSeries() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class);
+        timeSeries.setName(timeSeries.getName() + (System.currentTimeMillis() % 100_000));
+        TimeSeriesController timeSeriesController = new TimeSeriesController();
+        timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TimeSeriesEndpointInput.post(timeSeries));
+        TimeSeriesEndpointInput.Delete input = TimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
+        assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
     }
 }
