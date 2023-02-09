@@ -1,12 +1,13 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MockHttpRequestBuilder implements HttpRequestBuilder {
 
@@ -27,11 +28,6 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
 
     @Override
     public MockHttpRequestBuilder addEndpointInput(EndpointInput endpointInput) {
-        return this;
-    }
-
-    @Override
-    public HttpRequestBuilder enableHttp2() {
         return this;
     }
 

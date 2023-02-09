@@ -1,8 +1,9 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+
+import java.io.IOException;
 
 public interface HttpRequestBuilder {
     HttpRequestBuilder addQueryParameter(String key, String value);
@@ -10,8 +11,6 @@ public interface HttpRequestBuilder {
     HttpRequestBuilder addQueryHeader(String key, String value);
 
     HttpRequestBuilder addEndpointInput(EndpointInput endpointInput);
-
-    HttpRequestBuilder enableHttp2();
 
     HttpPostRequest post() throws IOException;
 
