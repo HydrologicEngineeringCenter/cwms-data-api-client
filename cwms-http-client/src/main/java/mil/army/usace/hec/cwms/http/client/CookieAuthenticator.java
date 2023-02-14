@@ -41,11 +41,11 @@ final class CookieAuthenticator implements Authenticator {
 
     @Override
     public Request authenticate(Route route, Response response) throws IOException {
-        List<String> newCookies = callback.authenticate();
+        List<HttpCookie> newCookies = callback.authenticate();
         Request.Builder builder = response.request()
             .newBuilder();
-        for (String cookie : newCookies) {
-            builder = builder.header("Cookie", cookie);
+        for (HttpCookie cookie : newCookies) {
+            builder = builder.header("Cookie", cookie.value());
         }
         return builder.build();
     }

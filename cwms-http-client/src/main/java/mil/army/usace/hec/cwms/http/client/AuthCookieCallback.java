@@ -35,5 +35,5 @@ public interface AuthCookieCallback {
      * @return authentication token cookies to be added to the Cookie header
      * @throws IOException when error occurs during authentication
      */
-    List<String> authenticate() throws IOException;
+    List<HttpCookie> authenticate() throws IOException;
 }

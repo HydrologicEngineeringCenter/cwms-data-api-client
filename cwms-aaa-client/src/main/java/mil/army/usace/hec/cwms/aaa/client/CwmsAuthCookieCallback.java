@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.AuthCookieCallback;
 import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
+import mil.army.usace.hec.cwms.http.client.HttpCookie;
 
 public final class CwmsAuthCookieCallback implements AuthCookieCallback {
 
@@ -45,20 +46,16 @@ public final class CwmsAuthCookieCallback implements AuthCookieCallback {
     }
 
     @Override
-    public List<String> authenticate() throws IOException {
+    public List<HttpCookie> authenticate() throws IOException {
         new CwmsLoginController().login(apiConnectionInfo);
         String apiRoot = apiConnectionInfo.getApiRoot();
-        List<String> retval = new ArrayList<>();
+        List<HttpCookie> retval = new ArrayList<>();
         LOGGER.log(Level.CONFIG, "Attempting to obtain CWMS_AAA login token");
         String message = "Attempted to obtain CWMS_AAA login token, but could not find auth cooke: % for URL: %";
         retval.add(cookieJarSupplier.getCookie(apiRoot, CwmsLoginController.JSESSIONIDSSO)
-            .orElseThrow(() -> new IOException(String.format(message, CwmsLoginController.JSESSIONIDSSO, apiRoot)))
-            .value());
+            .orElseThrow(() -> new IOException(String.format(message, CwmsLoginController.JSESSIONIDSSO, apiRoot))));
         retval.add(cookieJarSupplier.getCookie(apiRoot, CwmsLoginController.JSESSIONID)
             .orElseThrow(() -> new IOException(String.format(message, CwmsLoginController.JSESSIONID, apiRoot))));
-        LOGGER.log(Level.CONFIG, "CWMS_AAA login token successfully obtained");
-            .orElseThrow(() -> new IOException(String.format(message, CwmsLoginController.JSESSIONID, apiRoot)))
-            .value());
         LOGGER.log(Level.CONFIG, "CWMS_AAA login token successfully obtained from: {0}", apiRoot);
         return retval;
     }
