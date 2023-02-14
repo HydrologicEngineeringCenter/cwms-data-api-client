@@ -27,12 +27,14 @@ package mil.army.usace.hec.cwms.aaa.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +42,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -51,6 +54,7 @@ import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
+import mil.army.usace.hec.cwms.http.client.HttpCookie;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import org.junit.jupiter.api.Test;
 
@@ -68,6 +72,34 @@ final class CwmsAAALoginTest {
 
     @Test
     public void testCwmsAAASessionId() throws Exception {
+        CookieJarFactory.CookieJarSupplier cookieJarSupplier = CookieJarFactory.inMemoryCookieJar();
+        ApiConnectionInfo apiConnectionInfo = createApiConnectionInfo(cookieJarSupplier);
+        CwmsAuthToken cwmsAuthToken = new CwmsLoginController().login(apiConnectionInfo);
+        assertEquals("Q0HECANK", cwmsAuthToken.username());
+        assertEquals(Arrays.asList("All Users", "CWMS Users", "TS ID Creator", "cac_auth"), cwmsAuthToken.roles());
+        assertNotNull(cwmsAuthToken.lastLogin());
+        assertNotNull(cwmsAuthToken.jSessionId());
+        assertFalse(cwmsAuthToken.jSessionId().isEmpty());
+        assertNotNull(cwmsAuthToken.jSessionIdSso());
+        assertFalse(cwmsAuthToken.jSessionIdSso().isEmpty());
+
+    }
+
+    @Test
+    public void testCwmsAAACallback() throws Exception {
+        CookieJarFactory.CookieJarSupplier cookieJarSupplier = CookieJarFactory.inMemoryCookieJar();
+        ApiConnectionInfo apiConnectionInfo = createApiConnectionInfo(cookieJarSupplier);
+        CwmsAuthCookieCallback cwmsAuthCookieCallback = new CwmsAuthCookieCallback(apiConnectionInfo, cookieJarSupplier);
+        List<HttpCookie> authenticate = cwmsAuthCookieCallback.authenticate();
+        Optional<HttpCookie> jsessionid = authenticate.stream().filter(f -> f.name().equals(CwmsLoginController.JSESSIONID)).findAny();
+        assertTrue(jsessionid.isPresent());
+        Optional<HttpCookie> jsessionidSso = authenticate.stream().filter(f -> f.name().equals(CwmsLoginController.JSESSIONIDSSO)).findAny();
+        assertTrue(jsessionidSso.isPresent());
+
+    }
+
+    private ApiConnectionInfo createApiConnectionInfo(CookieJarFactory.CookieJarSupplier cookieJarSupplier)
+        throws NoSuchAlgorithmException, KeyStoreException, IOException, CacCertificateException, KeyManagementException {
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init((KeyStore) null);
         SSLContext sc = SSLContext.getInstance("TLS");
@@ -86,7 +118,7 @@ final class CwmsAAALoginTest {
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
-                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
+                .withCookieJarSupplier(cookieJarSupplier)
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         } else {
@@ -94,19 +126,11 @@ final class CwmsAAALoginTest {
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(TOMCAT_SERVER + "/CWMSLogin/")
-                .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
+                .withCookieJarSupplier(cookieJarSupplier)
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         }
-        CwmsAuthToken cwmsAuthToken = new CwmsLoginController().login(apiConnectionInfo);
-        assertEquals("Q0HECANK", cwmsAuthToken.username());
-        assertEquals(Arrays.asList("All Users", "CWMS Users", "TS ID Creator", "cac_auth"), cwmsAuthToken.roles());
-        assertNotNull(cwmsAuthToken.lastLogin());
-        assertNotNull(cwmsAuthToken.jSessionId());
-        assertFalse(cwmsAuthToken.jSessionId().isEmpty());
-        assertNotNull(cwmsAuthToken.jSessionIdSso());
-        assertFalse(cwmsAuthToken.jSessionIdSso().isEmpty());
-
+        return apiConnectionInfo;
     }
 
     static CacKeyManager getKeyManagerFromJreKeyStore() throws CacCertificateException {

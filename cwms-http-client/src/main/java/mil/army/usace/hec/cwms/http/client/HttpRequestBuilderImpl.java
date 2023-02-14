@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import static java.util.stream.Collectors.toSet;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -31,16 +33,15 @@ import java.net.UnknownHostException;
 import java.security.Security;
 import java.security.SignatureException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
-import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -235,7 +236,10 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     if (responseBody == null) {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
-                    List<Cookie> cookies = client.cookieJar().loadForRequest(request.url());
+                    Set<HttpCookie> cookies = client.cookieJar().loadForRequest(request.url())
+                        .stream()
+                        .map(OkHttpCookieWrapper::new)
+                        .collect(toSet());
                     retVal = new HttpRequestResponse(responseBody, cookies);
                 } else {
                     handleExecutionError(execute, request);

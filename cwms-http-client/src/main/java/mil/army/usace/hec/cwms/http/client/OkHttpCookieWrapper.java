@@ -24,29 +24,46 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.List;
-import okhttp3.Authenticator;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
+import java.util.Objects;
+import okhttp3.Cookie;
 
-final class CookieAuthenticator implements Authenticator {
+final class OkHttpCookieWrapper implements HttpCookie {
 
-    private final AuthCookieCallback callback;
+    private final Cookie cookie;
 
-    CookieAuthenticator(AuthCookieCallback callback) {
-        this.callback = callback;
+    OkHttpCookieWrapper(Cookie cookie) {
+        this.cookie = cookie;
     }
 
     @Override
-    public Request authenticate(Route route, Response response) throws IOException {
-        List<HttpCookie> newCookies = callback.authenticate();
-        Request.Builder builder = response.request()
-            .newBuilder();
-        for (HttpCookie cookie : newCookies) {
-            builder = builder.header("Cookie", cookie.value());
+    public String name() {
+        return cookie.name();
+    }
+
+    @Override
+    public String value() {
+        return cookie.value();
+    }
+
+    @Override
+    public String domain() {
+        return cookie.domain();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
         }
-        return builder.build();
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OkHttpCookieWrapper that = (OkHttpCookieWrapper) o;
+        return cookie.equals(that.cookie);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cookie);
     }
 }

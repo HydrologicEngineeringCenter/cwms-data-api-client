@@ -90,7 +90,7 @@ public final class PreferencesBackedCookieStore implements CookieStore {
         }
     }
 
-    private synchronized Map<URI, List<String>> extractCookiesFromPreferences() throws BackingStoreException {
+    private Map<URI, List<String>> extractCookiesFromPreferences() throws BackingStoreException {
         Map<URI, List<String>> uriToCookie = new HashMap<>();
         for (String child : preferences.childrenNames()) {
             Preferences node = preferences.node(child);
@@ -106,7 +106,7 @@ public final class PreferencesBackedCookieStore implements CookieStore {
         return uriToCookie;
     }
 
-    public synchronized void writeCookiesToPreferences() {
+    public void writeCookiesToPreferences() {
         try {
             List<URI> urIs = cookieManager.getCookieStore().getURIs();
             for (URI key : urIs) {

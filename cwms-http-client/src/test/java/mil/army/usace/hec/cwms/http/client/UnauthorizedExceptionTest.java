@@ -24,29 +24,27 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.List;
-import okhttp3.Authenticator;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class CookieAuthenticator implements Authenticator {
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.Test;
 
-    private final AuthCookieCallback callback;
+final class UnauthorizedExceptionTest {
 
-    CookieAuthenticator(AuthCookieCallback callback) {
-        this.callback = callback;
-    }
-
-    @Override
-    public Request authenticate(Route route, Response response) throws IOException {
-        List<HttpCookie> newCookies = callback.authenticate();
-        Request.Builder builder = response.request()
-            .newBuilder();
-        for (HttpCookie cookie : newCookies) {
-            builder = builder.header("Cookie", cookie.value());
-        }
-        return builder.build();
+    @Test
+    void testUnauthorizedThrown() throws Exception {
+        MockWebServer mockWebServer = new MockWebServer();
+        mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(401));
+        mockWebServer.start();
+        String endpoint = "success";
+        String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl)
+            .build();
+        HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .get()
+            .withMediaType("application/json");
+        assertThrows(UnauthorizedException.class, () -> executer.execute());
     }
 }

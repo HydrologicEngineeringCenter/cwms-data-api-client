@@ -27,7 +27,7 @@ package mil.army.usace.hec.cwms.http.client;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class TestHttpRequestResponseCookies {
@@ -40,7 +40,7 @@ class TestHttpRequestResponseCookies {
             .get()
             .withMediaType("application/json")
             .execute()) {
-            Map<String, String> cookies = execute.getCookies();
+            Set<HttpCookie> cookies = execute.getCookies();
             assertFalse(cookies.isEmpty());
         }
     }

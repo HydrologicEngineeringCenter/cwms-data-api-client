@@ -24,29 +24,11 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.List;
-import okhttp3.Authenticator;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
+public interface HttpCookie {
 
-final class CookieAuthenticator implements Authenticator {
+    String name();
 
-    private final AuthCookieCallback callback;
+    String value();
 
-    CookieAuthenticator(AuthCookieCallback callback) {
-        this.callback = callback;
-    }
-
-    @Override
-    public Request authenticate(Route route, Response response) throws IOException {
-        List<HttpCookie> newCookies = callback.authenticate();
-        Request.Builder builder = response.request()
-            .newBuilder();
-        for (HttpCookie cookie : newCookies) {
-            builder = builder.header("Cookie", cookie.value());
-        }
-        return builder.build();
-    }
+    String domain();
 }

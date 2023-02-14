@@ -43,7 +43,7 @@ class TestHttpRequestResponse {
         String bodyStr =
             "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
         ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptyList());
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet());
         assertEquals(bodyStr, httpRequestResponse.getBody());
     }
 
@@ -52,7 +52,7 @@ class TestHttpRequestResponse {
         String bodyStr = "Hello World";
         byte[] bytes = bodyStr.getBytes();
         ResponseBody body = ResponseBody.create(bytes, MediaType.parse("text/plain"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptyList());
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet());
         try (InputStream inputStream = httpRequestResponse.getStream()) {
             String result = new BufferedReader(new InputStreamReader(inputStream))
                 .lines().collect(Collectors.joining("\n"));

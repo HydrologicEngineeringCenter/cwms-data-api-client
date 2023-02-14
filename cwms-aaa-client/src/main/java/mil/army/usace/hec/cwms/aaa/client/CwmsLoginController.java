@@ -30,6 +30,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpCookie;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -70,7 +71,12 @@ public final class CwmsLoginController {
             .get()
             .withMediaType(APPLICATION_JSON)
             .execute()) {
-            jsessionId = login.getCookies().get(JSESSIONID);
+            jsessionId = login.getCookies()
+                .stream()
+                .filter(h -> h.name().equalsIgnoreCase(JSESSIONID))
+                .map(HttpCookie::value)
+                .findFirst()
+                .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONID cookie"));
         }
         try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGIN_ENDPOINT)
             .addEndpointInput(new EndpointInput() {
@@ -82,7 +88,12 @@ public final class CwmsLoginController {
             .get()
             .withMediaType(APPLICATION_JSON)
             .execute()) {
-            String jsessionIdSso = login.getCookies().get(JSESSIONIDSSO);
+            String jsessionIdSso = login.getCookies()
+                .stream()
+                .filter(h -> h.name().equalsIgnoreCase(JSESSIONIDSSO))
+                .map(HttpCookie::value)
+                .findFirst()
+                .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONIDSSO cookie"));
             String jsonBody = login.getBody();
             CwmsAuthToken retval = OBJECT_MAPPER.readValue(jsonBody, CwmsAuthToken.class);
             retval.setJSessionId(jsessionId);

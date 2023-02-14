@@ -48,6 +48,16 @@ class TestOAuth2Token {
         assertEquals("create", token.getScope());
     }
 
+    @Test
+    void testEquals() throws IOException {
+        ObjectMapper om = new ObjectMapper();
+        String json = readJsonFile();
+        OAuth2Token token = om.readValue(json, OAuth2Token.class);
+        OAuth2Token token2 = om.readValue(json, OAuth2Token.class);
+        assertEquals(token.hashCode(), token2.hashCode());
+        assertEquals(token, token2);
+    }
+
     private String readJsonFile() throws IOException {
         String jsonPath = "oauth2token.json";
         URL resource = getClass().getClassLoader().getResource(jsonPath);

@@ -51,24 +51,24 @@ public final class CookieJarFactory {
     public abstract static class CookieJarSupplier {
         abstract CookieJar getCookieJar();
 
-        public boolean isCookieExpired(String cwmsAAABaseUrl, String jSessionIdSso) {
+        public boolean isCookieExpired(String apiRootUrl, String cookieName) {
             CookieJar cookieJar = getCookieJar();
-            List<Cookie> cookies = cookieJar.loadForRequest(HttpUrl.get(cwmsAAABaseUrl));
+            List<Cookie> cookies = cookieJar.loadForRequest(HttpUrl.get(apiRootUrl));
             if (cookies.isEmpty()) {
                 return true;
             } else {
                 return cookies.stream()
-                    .filter(c -> c.name().equalsIgnoreCase(jSessionIdSso))
+                    .filter(c -> c.name().equalsIgnoreCase(cookieName))
                     .anyMatch(c -> c.expiresAt() < System.currentTimeMillis());
             }
         }
 
-        public Optional<String> getCookie(String url, String cookieName) {
+        public Optional<? extends HttpCookie> getCookie(String url, String cookieName) {
             CookieJar cookieJar = getCookieJar();
             return cookieJar.loadForRequest(HttpUrl.get(url))
                 .stream()
                 .filter(c -> c.name().equalsIgnoreCase(cookieName))
-                .map(Cookie::toString)
+                .map(OkHttpCookieWrapper::new)
                 .findFirst();
         }
     }
