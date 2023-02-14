@@ -51,7 +51,7 @@ public final class CwmsAuthCookieCallback implements AuthCookieCallback {
         String apiRoot = apiConnectionInfo.getApiRoot();
         List<HttpCookie> retval = new ArrayList<>();
         LOGGER.log(Level.CONFIG, "Attempting to obtain CWMS_AAA login token");
-        String message = "Attempted to obtain CWMS_AAA login token, but could not find auth cooke: % for URL: %";
+        String message = "Attempted to obtain CWMS_AAA login token, but could not find auth cooke: %s for URL: %s";
         retval.add(cookieJarSupplier.getCookie(apiRoot, CwmsLoginController.JSESSIONIDSSO)
             .orElseThrow(() -> new IOException(String.format(message, CwmsLoginController.JSESSIONIDSSO, apiRoot))));
         retval.add(cookieJarSupplier.getCookie(apiRoot, CwmsLoginController.JSESSIONID)
