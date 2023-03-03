@@ -24,29 +24,46 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.BEGIN_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.DATUM_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.END_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.NAME_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.PAGE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.PAGE_SIZE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.TIMEZONE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.UNIT_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.END_TIME_INCLUSIVE_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.END_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.MAX_VERSION_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.OVERRIDE_PROTECTION_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.START_TIME_INCLUSIVE_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.BEGIN_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.VERSION_DATE_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.BEGIN_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.DATUM_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.END_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.NAME_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.PAGE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.PAGE_SIZE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.TIMEZONE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.UNIT_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.CREATE_AS_LRTS_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.OVERRIDE_PROTECTION_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.STORE_RULE_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.VERSION_DATE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesEndpointInput {
 
     @Test
-    void testQueryRequest() {
+    void testGetOneQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
@@ -73,7 +90,100 @@ class TestTimeSeriesEndpointInput {
     }
 
     @Test
-    void testNullTimeSeriesId() {
+    void testGetOneNullTimeSeriesId() {
         assertThrows(NullPointerException.class, () -> TimeSeriesEndpointInput.getOne(null));
     }
+
+    @Test
+    void testPostQueryRequestDefaults() throws IOException {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
+        TimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class);
+        TimeSeriesEndpointInput.Post input = TimeSeriesEndpointInput.post(timeSeries);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(timeSeries, input.timeSeries());
+        assertNull(mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(STORE_RULE_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPostQueryRequest() throws IOException {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        String collect = readJsonFile("radar/v2/json/timeseries.json");
+        TimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class);
+        Instant now = Instant.now();
+        TimeSeriesEndpointInput.Post input = TimeSeriesEndpointInput.post(timeSeries)
+            .createAsLrts(true)
+            .storeRule("DELETE_INSERT")
+            .overrideProtection(true)
+            .versionDate(now);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(now.toString(), mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER));
+        assertEquals("DELETE_INSERT", mockHttpRequestBuilder.getQueryParameter(STORE_RULE_PARAMETER));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPostNullTimeSeries() {
+        assertThrows(NullPointerException.class, () -> TimeSeriesEndpointInput.post(null));
+    }
+
+    @Test
+    void testDeleteQueryRequestDefaults() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        TimeSeriesEndpointInput.Delete input = TimeSeriesEndpointInput.delete("arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev", input.timeSeriesId());
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(BEGIN_PARAMETER_QUERY));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(END_PARAMETER_QUERY));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_PARAMETER_QUERY));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(START_TIME_INCLUSIVE_PARAMETER_QUERY));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(END_TIME_INCLUSIVE_PARAMETER_QUERY));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(MAX_VERSION_PARAMETER_QUERY));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER_QUERY));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testDeleteQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant now = Instant.now();
+        TimeSeriesEndpointInput.Delete input = TimeSeriesEndpointInput.delete("arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT")
+            .begin(start)
+            .end(end)
+            .startTimeInclusive(false)
+            .endTimeInclusive(false)
+            .versionDate(now)
+            .maxVersion(false)
+            .overrideProtection(true);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_PARAMETER_QUERY));
+        assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_PARAMETER_QUERY));
+        assertEquals(now.toString(), mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_PARAMETER_QUERY));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(START_TIME_INCLUSIVE_PARAMETER_QUERY));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(END_TIME_INCLUSIVE_PARAMETER_QUERY));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(MAX_VERSION_PARAMETER_QUERY));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER_QUERY));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testDeleteNullTimeSeriesId() {
+        assertThrows(NullPointerException.class, () -> TimeSeriesEndpointInput.delete(null, null));
+    }
+
+    @Test
+    void testDeleteNullOffice() {
+        assertThrows(NullPointerException.class, () -> TimeSeriesEndpointInput.delete("", null));
+    }
+
 }

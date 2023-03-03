@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
@@ -36,16 +37,6 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
 public final class TimeSeriesEndpointInput {
-
-    static final String OFFICE_QUERY_PARAMETER = "office";
-    static final String UNIT_QUERY_PARAMETER = "unit";
-    static final String DATUM_QUERY_PARAMETER = "datum";
-    static final String BEGIN_QUERY_PARAMETER = "begin";
-    static final String END_QUERY_PARAMETER = "end";
-    static final String TIMEZONE_QUERY_PARAMETER = "timezone";
-    static final String PAGE_QUERY_PARAMETER = "page";
-    static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
-    static final String NAME_QUERY_PARAMETER = "name";
 
     private TimeSeriesEndpointInput() {
         throw new AssertionError("factory class");
@@ -65,6 +56,15 @@ public final class TimeSeriesEndpointInput {
 
     public static final class GetOne extends EndpointInput {
 
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String UNIT_QUERY_PARAMETER = "unit";
+        static final String DATUM_QUERY_PARAMETER = "datum";
+        static final String BEGIN_QUERY_PARAMETER = "begin";
+        static final String END_QUERY_PARAMETER = "end";
+        static final String TIMEZONE_QUERY_PARAMETER = "timezone";
+        static final String PAGE_QUERY_PARAMETER = "page";
+        static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
+        static final String NAME_QUERY_PARAMETER = "name";
         private final String timeSeriesId;
         private String officeId;
         private String unit = "SI";
@@ -76,7 +76,7 @@ public final class TimeSeriesEndpointInput {
         private Instant end;
 
         private GetOne(String timeSeriesId) {
-            this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries endpoint without a time series identifier");
+            this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries GET endpoint without a time series identifier");
         }
 
         public GetOne officeId(String officeId) {
@@ -144,40 +144,137 @@ public final class TimeSeriesEndpointInput {
 
     public static final class Post extends EndpointInput {
 
+        static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
+        static final String CREATE_AS_LRTS_QUERY_PARAMETER = "create-as-lrts";
+        static final String STORE_RULE_PARAMETER = "store-rule";
+        static final String OVERRIDE_PROTECTION_PARAMETER = "override-protection";
         private final TimeSeries timeSeries;
+        private Instant version;
+        private boolean createAsLrts = false;
+        private boolean overrideProtection;
+        private String storeRule;
 
         private Post(TimeSeries timeSeries) {
-            this.timeSeries = timeSeries;
+            this.timeSeries = Objects.requireNonNull(timeSeries, "Cannot access the timeseries POST endpoint without a time series");
         }
 
         TimeSeries timeSeries() {
             return timeSeries;
         }
 
+        public Post versionDate(Instant version) {
+            this.version = version;
+            return this;
+        }
+
+        public Post createAsLrts(boolean createAsLrts) {
+            this.createAsLrts = createAsLrts;
+            return this;
+        }
+
+        public Post storeRule(String storeRule) {
+            this.storeRule = storeRule;
+            return this;
+        }
+
+        public Post overrideProtection(boolean overrideProtection) {
+            this.overrideProtection = overrideProtection;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             //Plan to add support for override protection and store rules here
-            return httpRequestBuilder;
+            String versionString = null;
+            if (version != null) {
+                versionString = version.toString();
+            }
+            return httpRequestBuilder.addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionString)
+                .addQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER, Boolean.toString(createAsLrts))
+                .addQueryParameter(STORE_RULE_PARAMETER, storeRule)
+                .addQueryParameter(OVERRIDE_PROTECTION_PARAMETER, Boolean.toString(overrideProtection))
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
     public static final class Delete extends EndpointInput {
 
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String BEGIN_PARAMETER_QUERY = "begin";
+        static final String END_PARAMETER_QUERY = "end";
+        static final String VERSION_DATE_PARAMETER_QUERY = "version-date";
+        static final String START_TIME_INCLUSIVE_PARAMETER_QUERY = "start-time-inclusive";
+        static final String END_TIME_INCLUSIVE_PARAMETER_QUERY = "end-time-inclusive";
+        static final String MAX_VERSION_PARAMETER_QUERY = "max-version";
+        static final String OVERRIDE_PROTECTION_PARAMETER_QUERY = "override-protection";
         private final String timeSeriesId;
         private final String officeId;
+        private Instant begin;
+        private Instant end;
+        private Instant version;
+        private boolean startTimeInclusive = true;
+        private boolean endTimeInclusive = true;
+        private boolean maxVersion = true;
+        private boolean overrideProtection = false;
 
         private Delete(String timeSeriesId, String officeId) {
-            this.timeSeriesId = timeSeriesId;
-            this.officeId = officeId;
+            this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries DELETE endpoint without a time series identifier");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot access the timeseries DELETE endpoint without an office id");
         }
 
         String timeSeriesId() {
             return timeSeriesId;
         }
 
+        public Delete begin(Instant begin) {
+            this.begin = begin;
+            return this;
+        }
+
+        public Delete end(Instant end) {
+            this.end = end;
+            return this;
+        }
+
+        public Delete versionDate(Instant versionDate) {
+            this.version = versionDate;
+            return this;
+        }
+
+        public Delete startTimeInclusive(boolean startTimeInclusive) {
+            this.startTimeInclusive = startTimeInclusive;
+            return this;
+        }
+
+        public Delete endTimeInclusive(boolean endTimeInclusive) {
+            this.endTimeInclusive = endTimeInclusive;
+            return this;
+        }
+
+        public Delete maxVersion(boolean maxVersion) {
+            this.maxVersion = maxVersion;
+            return this;
+        }
+
+        public Delete overrideProtection(boolean overrideProtection) {
+            this.overrideProtection = overrideProtection;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId);
+            String beginString = Optional.ofNullable(begin).map(Instant::toString).orElse(null);
+            String endString = Optional.ofNullable(end).map(Instant::toString).orElse(null);
+            String versionString = Optional.ofNullable(version).map(Instant::toString).orElse(null);
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(BEGIN_PARAMETER_QUERY, beginString)
+                .addQueryParameter(END_PARAMETER_QUERY, endString)
+                .addQueryParameter(VERSION_DATE_PARAMETER_QUERY, versionString)
+                .addQueryParameter(START_TIME_INCLUSIVE_PARAMETER_QUERY, Boolean.toString(startTimeInclusive))
+                .addQueryParameter(END_TIME_INCLUSIVE_PARAMETER_QUERY, Boolean.toString(endTimeInclusive))
+                .addQueryParameter(MAX_VERSION_PARAMETER_QUERY, Boolean.toString(maxVersion))
+                .addQueryParameter(OVERRIDE_PROTECTION_PARAMETER_QUERY, Boolean.toString(overrideProtection))
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }
