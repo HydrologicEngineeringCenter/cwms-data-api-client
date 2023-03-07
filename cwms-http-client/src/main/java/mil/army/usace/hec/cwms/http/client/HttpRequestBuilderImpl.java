@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static java.util.stream.Collectors.toSet;
+import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -176,27 +177,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return requestBuilder.build();
     }
 
-
-    private boolean isHttp2NativelySupported() {
-        boolean retVal = false;
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else { //if Java 9 or higher
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        int majorVersion = Integer.parseInt(version);
-        if (majorVersion == 8) {
-            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
-            retVal = Integer.parseInt(minorVersionStr) >= 251;
-        } else if (majorVersion > 8) {
-            retVal = true;
-        }
-        return retVal;
-    }
 
     //Packaged scope for testing
     HttpRequestBuilderImpl getCurrentInstance() {

@@ -22,36 +22,32 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.model;
+package mil.army.usace.hec.cwms.http.client;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+final class Http2Util {
 
-/**
- * Gets or Sets DeleteMethod
- */
-public enum DeleteMethod {
-    ALL("DELETE_ALL"), KEY("DELETE_KEY"), DATA("DELETE_DATA");
-
-    private String value;
-
-    DeleteMethod(String value) {
-        this.value = value;
+    private Http2Util() {
+        throw new AssertionError("Utility class");
     }
 
-    @Override
-    @JsonValue
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static DeleteMethod fromValue(String text) {
-        for (DeleteMethod b : DeleteMethod.values()) {
-            if (String.valueOf(b.value).equals(text)) {
-                return b;
+    static boolean isHttp2NativelySupported() {
+        boolean retVal = false;
+        String version = System.getProperty("java.version");
+        if (version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else { //if Java 9 or higher
+            int dot = version.indexOf(".");
+            if (dot != -1) {
+                version = version.substring(0, dot);
             }
         }
-        return null;
+        int majorVersion = Integer.parseInt(version);
+        if (majorVersion == 8) {
+            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
+            retVal = Integer.parseInt(minorVersionStr) >= 251;
+        } else if (majorVersion > 8) {
+            retVal = true;
+        }
+        return retVal;
     }
 }
