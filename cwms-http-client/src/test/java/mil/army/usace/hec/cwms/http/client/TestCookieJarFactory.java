@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022
+ * Copyright (c) 2023
  * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
  * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
  * Source may not be released without written approval from HEC
@@ -7,7 +7,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
@@ -18,8 +17,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.Preferences;
-import java.util.stream.Stream;
-import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;

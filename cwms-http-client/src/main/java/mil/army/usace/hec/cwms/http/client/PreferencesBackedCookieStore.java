@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022
+ * Copyright (c) 2023
  * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
  * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
  * Source may not be released without written approval from HEC
@@ -28,7 +28,6 @@ import okhttp3.HttpUrl;
  * for persisting cookies in Java. Delegate to default java.net.InMemoryCookieStore and add hooks for storing to preferences.
  */
 public final class PreferencesBackedCookieStore implements CookieStore {
-
     private static final Logger LOGGER = Logger.getLogger(PreferencesBackedCookieStore.class.getName());
     //Used for preference readability only. Since the keys aren't read on restore this can be changed to anything
     private static final String DOMAIN_COOKIE_DELIMITER = " | ";
