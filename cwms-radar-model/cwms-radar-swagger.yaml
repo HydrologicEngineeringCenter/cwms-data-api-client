@@ -2,7 +2,9 @@ openapi: 3.0.1
 info:
   title: CWMS Radar
   description: CWMS REST API for Data Retrieval
-  version: '2.0'
+  version: '2.6'
+security:
+  - CwmsAccessManager: []
 paths:
   /cwms-data:
     get:
@@ -39,6 +41,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/location/category/{category-id}:
     get:
       tags:
@@ -96,6 +99,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/location/category:
     get:
       tags:
@@ -148,6 +152,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/location/group/{group-id}:
     get:
       tags:
@@ -217,6 +222,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/location/group:
     get:
       tags:
@@ -285,6 +291,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/locations/{location-id}:
     get:
       tags:
@@ -349,6 +356,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
     delete:
       tags:
         - Locations
@@ -406,12 +414,6 @@ paths:
       parameters:
         - name: location-id
           in: path
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the office in which Location will be updated
           required: true
           schema:
             type: string
@@ -510,6 +512,9 @@ paths:
             application/geo+json:
               schema:
                 $ref: '#/components/schemas/Unit'
+            '':
+              schema:
+                $ref: '#/components/schemas/Unit'
         '400':
           description: Bad Request
           content:
@@ -540,19 +545,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
     post:
       tags:
         - Locations
       summary: Post cwmsData locations
       description: Create new CWMS Location
       operationId: postCwmsDataLocations
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the office in which Location will be created
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -666,6 +665,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/offices:
     get:
       tags:
@@ -733,6 +733,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/units:
     get:
       tags:
@@ -780,6 +781,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
+      security: []
   /cwms-data/parameters:
     get:
       tags:
@@ -825,6 +827,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/timezones:
     get:
       tags:
@@ -872,6 +875,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: The format requested is not implemented
+      security: []
   /cwms-data/levels/{level-id}:
     get:
       tags:
@@ -941,6 +945,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
     delete:
       tags:
         - Levels
@@ -1015,12 +1020,6 @@ paths:
         - name: level-id
           in: path
           description: Specifies the location level id of the Location Level to be updated
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the office in which Location Level will be updated
           required: true
           schema:
             type: string
@@ -1147,6 +1146,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Unit'
+            '':
+              schema:
+                $ref: '#/components/schemas/Unit'
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/LocationLevels'
@@ -1180,19 +1182,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
     post:
       tags:
         - Levels
       summary: Post cwmsData levels
       description: Create new CWMS Location Level
       operationId: postCwmsDataLevels
-      parameters:
-        - name: office
-          in: query
-          description: Specifies the office in which Location Level will be created
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -1274,6 +1270,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/timeseries/category/{category-id}:
     get:
       tags:
@@ -1333,6 +1330,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+      security: []
   /cwms-data/timeseries/category:
     get:
       tags:
@@ -1387,6 +1385,308 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+      security: []
+  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
+    get:
+      tags:
+        - TimeSeries Identifier-Beta
+      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
+      description: Retrieves requested timeseries identifier
+      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      parameters:
+        - name: timeseries-id
+          in: path
+          description: Specifies the identifier of the timeseries to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Based on the combination of inputs provided the timeseries identifier was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '501':
+          description: request format is not implemented
+      security: []
+    delete:
+      tags:
+        - TimeSeries Identifier-Beta
+      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
+      description: Deletes requested timeseries identifier
+      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      parameters:
+        - name: timeseries-id
+          in: path
+          description: 'The timeseries-id of the timeseries to be deleted. '
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: 'Specifies the delete method used.Default: DELETE_ALL'
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+    patch:
+      tags:
+        - TimeSeries Identifier-Beta
+      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
+      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      parameters:
+        - name: timeseries-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: timeseries-id
+          in: query
+          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be updated
+          required: true
+          schema:
+            type: string
+        - name: utc-offset
+          in: query
+          description: The offset into the utc data interval in minutes.  If specified and a new timeseries-id is also specified both will be passed to a rename operation.  May also be passed to update operation.
+          schema:
+            type: string
+        - name: snap-forward
+          in: query
+          description: The new snap forward tolerance in minutes. This specifies how many minutes before the expected data time that data will be considered to be on time.
+          schema:
+            type: string
+        - name: snap-backward
+          in: query
+          description: The new snap backward tolerance in minutes. This specifies how many minutes after the expected data time that data will be considered to be on time.
+          schema:
+            type: string
+        - name: active
+          in: query
+          description: '''True'' or ''true'' if the time series is active'
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+  /cwms-data/timeseries/identifier-descriptor:
+    get:
+      tags:
+        - TimeSeries Identifier-Beta
+      summary: Get cwmsData timeseries identifierDescriptor
+      description: Returns CWMS timeseries identifier descriptorData
+      operationId: getCwmsDataTimeseriesIdentifierDescriptor
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier(s) whose data is to be included in the response. If this field is not specified, matching timeseries identifier information from all offices shall be returned.
+          schema:
+            type: string
+        - name: timeseries-id-regex
+          in: query
+          description: A case insensitive RegExp that will be applied to the timeseries-id field. If this field is not specified the results will not be constrained by timeseries-id.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Based on the combination of inputs provided the time series identifier descriptors were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '501':
+          description: request format is not implemented
+      security: []
+    post:
+      tags:
+        - TimeSeries Identifier-Beta
+      summary: Post cwmsData timeseries identifierDescriptor
+      description: Create new TimeSeriesIdentifierDescriptor
+      operationId: postCwmsDataTimeseriesIdentifierDescriptor
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/timeseries/group/{group-id}:
     get:
       tags:
@@ -1450,6 +1750,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/timeseries/group:
     get:
       tags:
@@ -1504,6 +1805,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+      security: []
   /cwms-data/timeseries:
     get:
       tags:
@@ -1583,7 +1885,16 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/TimeSeries'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
             application/xml:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            '':
               schema:
                 $ref: '#/components/schemas/TimeSeries'
         '400':
@@ -1618,12 +1929,39 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
+      security: []
     post:
       tags:
         - TimeSeries
       summary: Post cwmsData timeseries
       description: Create new TimeSeries, will store any data provided
       operationId: postCwmsDataTimeseries
+      parameters:
+        - name: version-date
+          in: query
+          description: Specifies the version date for the timeseries to create. If this field is not specified, a null version date will be used.  The format for this field is ISO 8601 extended, with optional timezone, i.e., 'format', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: "Specifies the time zone of the version-date field (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if version-date was specified with offset and timezone."
+          schema:
+            type: string
+        - name: create-as-lrts
+          in: query
+          description: Flag indicating if timeseries should be created as Local Regular Time Series. 'True' or 'False', default is 'False'
+          schema:
+            type: boolean
+        - name: store-rule
+          in: query
+          description: The business rule to use when merging the incoming with existing data
+          schema:
+            type: string
+        - name: override-protection
+          in: query
+          description: A flag to ignore the protected data quality when storing data. 'True' or 'False'
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json;version=2:
@@ -1673,15 +2011,56 @@ paths:
       parameters:
         - name: timeseries
           in: path
+          description: The timeseries-id of the timeseries to be deleted. If 'office' is the only additional query parameter specified a non-windowed deleteAll will be performed.
           required: true
           schema:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the timeseries to be deleted.
+          description: Specifies the office of the timeseries to be deleted.
           required: true
           schema:
             type: string
+        - name: begin
+          in: query
+          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: This field specifies a default timezone to be used if the format of the begin, end, or version-date parameters do not include offset or time zone information. Defaults to UTC.
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date/time of the time series in the specified or default time zone. If NULL, the earliest or latest version date will be used depending on p_max_version.
+          schema:
+            type: string
+        - name: start-time-inclusive
+          in: query
+          description: A flag specifying whether any data at the start time should be deleted ('True') or only data <b><em>after</em></b> the start time ('False').  Default value is True
+          schema:
+            type: boolean
+        - name: end-time-inclusive
+          in: query
+          description: A flag ('True'/'False') specifying whether any data at the end time should be deleted ('True') or only data <b><em>before</em></b> the end time ('False'). Default value is False
+          schema:
+            type: boolean
+        - name: max-version
+          in: query
+          description: A flag ('True'/'False') specifying whether to use the earliest ('False') or latest ('True') version date for each time if p_version_date is NULL.  Default is 'True'
+          schema:
+            type: boolean
+        - name: override-protection
+          in: query
+          description: A flag ('True'/'False') specifying whether to delete protected data. Default is False
+          schema:
+            type: boolean
       responses:
         '400':
           description: Bad Request
@@ -1724,6 +2103,31 @@ paths:
           in: path
           description: Full CWMS Timeseries name
           required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: Specifies the version date for the timeseries to create. If this field is not specified, a null version date will be used.  The format for this field is ISO 8601 extended, with optional timezone, i.e., 'format', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: "Specifies the time zone of the version-date field (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if version-date was specified with offset and timezone."
+          schema:
+            type: string
+        - name: create-as-lrts
+          in: query
+          description: ''
+          schema:
+            type: string
+        - name: store-rule
+          in: query
+          description: The business rule to use when merging the incoming with existing data
+          schema:
+            type: string
+        - name: override-protection
+          in: query
+          description: A flag to ignore the protected data quality when storing data.  "'True' or 'False'"
           schema:
             type: string
       requestBody:
@@ -1824,6 +2228,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/ratings/template:
     get:
       tags:
@@ -1889,6 +2294,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/ratings/spec/{rating-id}:
     get:
       tags:
@@ -1945,6 +2351,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/ratings/spec:
     get:
       tags:
@@ -2010,6 +2417,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/ratings/metadata:
     get:
       tags:
@@ -2090,6 +2498,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/ratings/{rating}:
     get:
       tags:
@@ -2169,6 +2578,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
     delete:
       tags:
         - Ratings
@@ -2364,6 +2774,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
+      security: []
     post:
       tags:
         - Ratings
@@ -2552,6 +2963,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/basins/{basin-id}:
     get:
       tags:
@@ -2614,6 +3026,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
+      security: []
   /cwms-data/basins:
     get:
       tags:
@@ -2671,6 +3084,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: Requested format is not implemented
+      security: []
   /cwms-data/blobs/{blob-id}:
     get:
       tags:
@@ -2719,6 +3133,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/blobs:
     get:
       tags:
@@ -2800,6 +3215,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
   /cwms-data/clobs/{clob-id}:
     get:
       tags:
@@ -2821,9 +3237,118 @@ paths:
         '200':
           description: Returns requested clob.
           content:
-            application/json:
+            application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Clob'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+      security: []
+    delete:
+      tags:
+        - Clob
+      summary: Delete cwmsData clobs with clobId
+      description: Delete clob
+      operationId: deleteCwmsDataClobsWithClobId
+      parameters:
+        - name: clob-id
+          in: path
+          description: Specifies the id of the clob to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the office of the clob.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+    patch:
+      tags:
+        - Clob
+      summary: Patch cwmsData clobs with clobId
+      description: Update clob
+      operationId: patchCwmsDataClobsWithClobId
+      parameters:
+        - name: clob-id
+          in: path
+          description: Specifies the id of the clob to be updated
+          required: true
+          schema:
+            type: string
+        - name: ignore-nulls
+          in: query
+          description: 'If true, null and empty fields in the provided clob will be ignored and the existing value of those fields left in place. Default: true'
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Clob'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Clob'
+        required: true
+      responses:
         '400':
           description: Bad Request
           content:
@@ -2946,6 +3471,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
+    post:
+      tags:
+        - Clob
+      summary: Post cwmsData clobs
+      description: Create new Clob
+      operationId: postCwmsDataClobs
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Clob'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Clob'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadarError'
   /cwms-data/pools/{pool-id}:
     get:
       tags:
@@ -3031,6 +3609,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+      security: []
   /cwms-data/pools:
     get:
       tags:
@@ -3137,6 +3716,7 @@ paths:
                 $ref: '#/components/schemas/RadarError'
         '501':
           description: request format is not implemented
+      security: []
   /cwms-data/specified-levels:
     get:
       tags:
@@ -3191,6 +3771,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RadarError'
+      security: []
 components:
   schemas:
     RadarError:
@@ -3545,6 +4126,26 @@ components:
       description: A representation of a TimeSeries category
       xml:
         name: timeseries-category
+    TimeSeriesIdentifierDescriptor:
+      type: object
+      properties:
+        office-id:
+          type: string
+        time-series-id:
+          type: string
+        timezone-name:
+          type: string
+        interval-offset-minutes:
+          type: integer
+          format: int64
+        active:
+          type: boolean
+    DeleteMethod:
+      type: string
+      enum:
+        - DELETE_ALL
+        - DELETE_KEY
+        - DELETE_DATA
     AssignedTimeSeries:
       type: object
       properties:
@@ -3619,6 +4220,10 @@ components:
             nano:
               type: integer
               format: int32
+            zero:
+              type: boolean
+            negative:
+              type: boolean
             units:
               type: array
               items:
@@ -3643,10 +4248,6 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            zero:
-              type: boolean
-            negative:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -4089,6 +4690,8 @@ components:
           type: string
           xml:
             attribute: true
+        cursor:
+          type: string
       xml:
         name: entry
       oneOf:
@@ -4167,30 +4770,26 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/LocationAlias'
+        cursor:
+          type: string
       xml:
         name: entry
     TimeSeriesExtents:
       type: object
       properties:
-        earliestTime:
+        earliest-time:
           type: string
           description: Earliest value in the timeseries
           format: date-time
-          xml:
-            name: earliest-time
-        lastUpdate:
+        last-update:
           type: string
           description: Last update in the timeseries
           format: date-time
-          xml:
-            name: last-update
-        latestTime:
+        latest-time:
           type: string
           description: Latest value in the timeseries
           format: date-time
-          xml:
-            name: latest-time
-        versionTime:
+        version-time:
           type: string
           description: TimeSeries version to which this extent information applies
           format: date-time
@@ -4229,6 +4828,8 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/TimeSeriesExtents'
+        cursor:
+          type: string
       xml:
         name: entry
     Basin:
@@ -4402,7 +5003,6 @@ components:
           type: string
         value:
           type: string
-      description: List of retrieved clobs
       xml:
         name: clob
     Clobs:
@@ -4444,11 +5044,11 @@ components:
           type: string
         clobText:
           type: string
-        topLevelId:
+        projectId:
           type: string
         bottomLevelId:
           type: string
-        projectId:
+        topLevelId:
           type: string
         poolName:
           $ref: '#/components/schemas/PoolNameType'
@@ -4501,3 +5101,8 @@ components:
           type: string
         description:
           type: string
+  securitySchemes:
+    CwmsAccessManager:
+      type: apiKey
+      name: JSESSIONIDSSO
+      in: cookie

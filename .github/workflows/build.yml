@@ -34,6 +34,7 @@ jobs:
             cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.csv
             cwms-http-client/build/reports/jacoco/test/jacocoTestReport.csv
             cwms-aaa-client/build/reports/jacoco/test/jacocoTestReport.csv
+          intervals: 90 70 50 40 30 20
       - name: Commit and push Badges
         if: github.event_name != 'pull_request' && github.ref != 'refs/heads/main'
         run: |

@@ -1,5 +1,9 @@
+plugins {
+    id 'java-library'
+}
+
 dependencies {
-    implementation(project(":cwms-http-client"))
+    api(project(":cwms-http-client"))
     implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
     implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0')
 

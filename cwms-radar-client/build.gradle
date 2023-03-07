@@ -1,6 +1,10 @@
+plugins {
+    id 'java-library'
+}
+
 dependencies {
-    implementation(project(":cwms-http-client"))
-    implementation(project(":cwms-radar-model"))
+    api(project(":cwms-http-client"))
+    api(project(":cwms-radar-model"))
 
     testImplementation(testFixtures(project(":cwms-http-client")))
     testImplementation(project(":cwms-aaa-client"))
