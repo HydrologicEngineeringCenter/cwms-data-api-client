@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,6 +69,33 @@ class TestHttpRequestBuilderImpl {
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         request = httpRequestBuilder.createRequest();
+        assertEquals(root + endpoint, request.url().toString());
+    }
+
+    @Test
+    void testHttpRequestBuilderCreatePatchRequest() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .patch()
+            .withBody("")
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
+        assertEquals(root + endpoint, request.url().toString());
+    }
+
+    @Test
+    void testHttpRequestBuilderCreateDeleteRequest() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .delete()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
     }
 
@@ -445,6 +472,28 @@ class TestHttpRequestBuilderImpl {
 
     @Test
     void testHttpRequestBuilderExecuteGetSuccess() throws IOException {
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
+            HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testHttpRequestBuilderExecuteWithMetrics() throws IOException {
+        CwmsHttpClientMetrics.isMetricsEnabled();
         MockWebServer mockWebServer = new MockWebServer();
         try {
             String body = readJsonFile("success.json");

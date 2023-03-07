@@ -24,6 +24,11 @@ subprojects {
         targetCompatibility = "1.8"
     }
 
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
     repositories {
         mavenCentral()
         maven {
@@ -57,10 +62,6 @@ subprojects {
             csv.required = true
             html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
-    }
-
-    build {
-        finalizedBy publishToMavenLocal
     }
 
     publishing {
