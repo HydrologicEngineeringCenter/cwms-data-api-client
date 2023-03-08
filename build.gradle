@@ -9,6 +9,9 @@ def versionLabel(gitInfo) {
     return branch == null ? tag : branch.replace("/","-") + "-SNAPSHOT"
 }
 
+jar.enabled = false
+build.enabled = false
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
