@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -151,8 +151,7 @@ public final class LocationLevelEndpointInput {
         }
 
         public GetAll unitSystem(String unit) {
-            this.unit = unit;
-            return this;
+            return unit(unit);
         }
 
         public GetAll unit(String unit) {
@@ -212,11 +211,11 @@ public final class LocationLevelEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            String effectiveDate = Optional.ofNullable(this.effectiveDate).map(Object::toString).orElse(null);
+            String effectiveDateString = Optional.ofNullable(this.effectiveDate).map(Object::toString).orElse(null);
             return httpRequestBuilder.addQueryParameter(LEVEL_ID_QUERY_PARAMETER, levelId)
                 .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryParameter(EFFECTIVE_DATE_QUERY_PARAMETER, effectiveDate)
+                .addQueryParameter(EFFECTIVE_DATE_QUERY_PARAMETER, effectiveDateString)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

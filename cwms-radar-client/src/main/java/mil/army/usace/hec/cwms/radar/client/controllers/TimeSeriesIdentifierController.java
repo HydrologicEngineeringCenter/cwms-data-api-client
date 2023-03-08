@@ -78,14 +78,14 @@ public final class TimeSeriesIdentifierController {
      */
     public void storeTimeSeriesIdentifier(ApiConnectionInfo apiConnectionInfo, TimeSeriesIdentifierEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesIdentifierDescriptor());
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
+        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
             .post()
             .withBody(body)
-            .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+            .withMediaType(ACCEPT_HEADER_V2)
+            .execute()
+            .close();
     }
 
     /**
@@ -101,14 +101,14 @@ public final class TimeSeriesIdentifierController {
      */
     public void updateTimeSeriesIdentifier(ApiConnectionInfo apiConnectionInfo, TimeSeriesIdentifierEndpointInput.Patch input) throws IOException {
         String endpoint = TIME_SERIES_ENDPOINT + "/" + input.originalIdentifier();
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
             .patch()
             .withBody("")
-            .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+            .withMediaType(ACCEPT_HEADER_V2)
+            .execute()
+            .close();
     }
 
     /**
@@ -123,12 +123,12 @@ public final class TimeSeriesIdentifierController {
      */
     public void deleteTimeSeriesIdentifier(ApiConnectionInfo apiConnectionInfo, TimeSeriesIdentifierEndpointInput.Delete input) throws IOException {
         String endpoint = TIME_SERIES_ENDPOINT + "/" + input.timeSeriesId();
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
             .delete()
-            .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+            .withMediaType(ACCEPT_HEADER_V2)
+            .execute()
+            .close();
     }
 }
