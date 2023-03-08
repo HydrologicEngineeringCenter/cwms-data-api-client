@@ -49,6 +49,10 @@ public final class TimeSeriesIdentifierEndpointInput {
         return new Post(timeSeriesIdentifierDescriptor);
     }
 
+    public static Patch patch(String originalTimeSeriesId, String newTimeSeriesId, String officeId) {
+        return new Patch(originalTimeSeriesId, newTimeSeriesId, officeId);
+    }
+
     public static Delete delete(String timeSeriesId, String officeId) {
         return new Delete(timeSeriesId, officeId);
     }
@@ -99,10 +103,47 @@ public final class TimeSeriesIdentifierEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            //Plan to add support for override protection and store rules here
             String failIfExistsString = Boolean.toString(failIfExists);
             return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, failIfExistsString)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
+    }
+
+    public static final class Patch extends EndpointInput {
+
+        static final String TIMESERIES_ID_QUERY_PARAMETER = "timeseries-id";
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String INTERVAL_OFFSET_QUERY_PARAMETER = "interval-offset";
+        private final String originalIdentifier;
+        private final String newIdentifier;
+        private final String officeId;
+        private Long intervalOffsetMinutes;
+
+        private Patch(String originalIdentifier, String newIdentifier, String officeId) {
+            this.originalIdentifier = Objects.requireNonNull(originalIdentifier,
+                "Cannot access the timeseries PATCH endpoint without an original time series identifier");
+            this.newIdentifier = Objects.requireNonNull(newIdentifier,
+                "Cannot access the timeseries PATCH endpoint without a new time series identifier");
+            this.officeId = Objects.requireNonNull(officeId,
+                "Cannot access the timeseries PATCH endpoint without an office id");
+        }
+
+        public Patch intervalOffsetMinutes(long intervalOffsetMinutes) {
+            this.intervalOffsetMinutes = intervalOffsetMinutes;
+            return this;
+        }
+
+        String originalIdentifier() {
+            return originalIdentifier;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            String intervalOffset = Optional.ofNullable(intervalOffsetMinutes).map(Object::toString).orElse(null);
+            return httpRequestBuilder.addQueryParameter(TIMESERIES_ID_QUERY_PARAMETER, newIdentifier)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(INTERVAL_OFFSET_QUERY_PARAMETER, intervalOffset)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 

@@ -89,4 +89,19 @@ class TestTimeSeriesIdentifierController extends TestController {
             TimeSeriesIdentifierEndpointInput.delete(timeSeries.getTimeSeriesId(), timeSeries.getOfficeId());
         assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeriesIdentifier(buildConnectionInfo(cookieJarSupplier), input));
     }
+
+    @Test
+    void testPatchTimeSeriesIdentifier() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseriesidentifier.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesIdentifierDescriptor timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesIdentifierDescriptor.class);
+        timeSeries.setTimeSeriesId(timeSeries.getTimeSeriesId() + (System.currentTimeMillis() % 100_000));
+        TimeSeriesIdentifierController timeSeriesController = new TimeSeriesIdentifierController();
+        timeSeriesController.storeTimeSeriesIdentifier(buildConnectionInfo(cookieJarSupplier), TimeSeriesIdentifierEndpointInput.post(timeSeries));
+        TimeSeriesIdentifierEndpointInput.Patch input =
+            TimeSeriesIdentifierEndpointInput.patch(timeSeries.getTimeSeriesId(), timeSeries.getTimeSeriesId() + "-New", timeSeries.getOfficeId());
+        assertDoesNotThrow(() -> timeSeriesController.updateTimeSeriesIdentifier(buildConnectionInfo(cookieJarSupplier), input));
+    }
 }
