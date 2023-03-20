@@ -25,11 +25,15 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
 
 class SimpleAuthHeaderInterceptorTest {
@@ -39,19 +43,39 @@ class SimpleAuthHeaderInterceptorTest {
 
     @Test
     void testNewRequestWithAuthorizationHeader() throws IOException {
-        MyAuthKeyProvider tokenProvider = new MyAuthKeyProvider();
-        SimpleAuthHeaderInterceptor interceptor = new SimpleAuthHeaderInterceptor(tokenProvider);
-        Request request = getMockRequest();
-        String accessToken = tokenProvider.getAuthorizationKey();
-        Request newRequest = interceptor.newRequestWithAccessTokenAsHeader(request, accessToken);
-        assertNotNull(newRequest);
-        assertEquals(accessToken, newRequest.headers(AUTHORIZATION_HEADER).get(0));
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(200));
+            mockWebServer.start();
+            SimpleAuthKeyProvider tokenProvider = () -> ACCESS_TOKEN;
+            SimpleAuthHeaderInterceptor interceptor = new SimpleAuthHeaderInterceptor(tokenProvider);
+            Request request = getMockRequest(mockWebServer);
+            OkHttpClient client = OkHttpClientInstance.getInstance().newBuilder()
+                .addInterceptor(interceptor)
+                .build();
+            Response execute = client.newCall(request).execute();
+            assertEquals(ACCESS_TOKEN, execute.request().header(AUTHORIZATION_HEADER));
+        }
     }
 
-    private Request getMockRequest() {
+    @Test
+    void testNewRequestWithAuthorizationHeaderNull() throws IOException {
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(200));
+            mockWebServer.start();
+            SimpleAuthKeyProvider tokenProvider = () -> null;
+            SimpleAuthHeaderInterceptor interceptor = new SimpleAuthHeaderInterceptor(tokenProvider);
+            Request request = getMockRequest(mockWebServer);
+            OkHttpClient client = OkHttpClientInstance.getInstance().newBuilder()
+                .addInterceptor(interceptor)
+                .build();
+            assertThrows(IOException.class, () -> client.newCall(request).execute());
+        }
+    }
+
+    private Request getMockRequest(MockWebServer mockWebServer) {
         return new Request.Builder()
-            .url("https://some-url.com")
-            .addHeader(AUTHORIZATION_HEADER, "Bearer " + ACCESS_TOKEN)
+            .url(String.format("http://localhost:%s", mockWebServer.getPort()))
+            .addHeader(AUTHORIZATION_HEADER, ACCESS_TOKEN)
             .build();
     }
 
