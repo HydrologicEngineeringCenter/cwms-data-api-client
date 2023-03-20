@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,30 +59,30 @@ public final class RatingController {
     }
 
     public void storeRatingSetXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Post input) throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS)
+        new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS)
             .addEndpointInput(input)
             .post()
             .withBody(input.ratingSetXml())
-            .withMediaType(ACCEPT_XML_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+            .withMediaType(ACCEPT_XML_HEADER_V2)
+            .execute()
+            .close();
     }
 
     public void deleteRatings(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Delete ratingEndpointInput) throws IOException {
-        HttpRequestExecutor executor =
-            new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
-                .addEndpointInput(ratingEndpointInput)
-                .delete()
-                .withMediaType(ACCEPT_XML_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+
+        new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
+            .addEndpointInput(ratingEndpointInput)
+            .delete()
+            .withMediaType(ACCEPT_XML_HEADER_V2)
+            .execute()
+            .close();
     }
 
     public RatingMetadataList retrieveRatingMetadata(ApiConnectionInfo apiConnectionInfo, RatingMetadataEndpointInput input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS_METADATA)
-                .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_XML_HEADER_V2);
+            .addEndpointInput(input)
+            .get()
+            .withMediaType(ACCEPT_XML_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             String body = response.getBody();
             return RadarObjectMapper.mapJsonToObject(body, RatingMetadataList.class);
