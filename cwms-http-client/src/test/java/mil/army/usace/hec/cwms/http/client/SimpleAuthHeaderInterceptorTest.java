@@ -78,12 +78,4 @@ class SimpleAuthHeaderInterceptorTest {
             .addHeader(AUTHORIZATION_HEADER, ACCESS_TOKEN)
             .build();
     }
-
-    private static class MyAuthKeyProvider implements SimpleAuthKeyProvider {
-
-        @Override
-        public String getAuthorizationKey() {
-            return ACCESS_TOKEN;
-        }
-    }
 }

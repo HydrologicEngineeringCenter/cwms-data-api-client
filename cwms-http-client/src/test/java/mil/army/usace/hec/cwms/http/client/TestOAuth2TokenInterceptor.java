@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,15 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
 
 class TestOAuth2TokenInterceptor {
@@ -41,21 +44,24 @@ class TestOAuth2TokenInterceptor {
 
     @Test
     void testNewRequestWithAuthorizationHeader() throws IOException {
-        OAuth2TokenProvider tokenProvider = getTestTokenProvider();
-        OAuth2TokenInterceptor interceptor = new OAuth2TokenInterceptor(tokenProvider);
-        Request request = getMockRequest();
-        String accessToken = tokenProvider.getToken().getAccessToken();
-        OAuth2Token oauth2Token = new OAuth2Token();
-        oauth2Token.setTokenType("Bearer");
-        oauth2Token.setAccessToken(accessToken);
-        Request newRequest = interceptor.newRequestWithAccessTokenAsHeader(request, oauth2Token);
-        assertNotNull(newRequest);
-        assertEquals("Bearer " + accessToken, newRequest.headers(AUTHORIZATION_HEADER).get(0));
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(200));
+            mockWebServer.start();
+            OAuth2TokenProvider tokenProvider = getTestTokenProvider();
+            OAuth2TokenInterceptor interceptor = new OAuth2TokenInterceptor(tokenProvider);
+            Request request = getMockRequest(mockWebServer);
+            String accessToken = tokenProvider.getToken().getAccessToken();
+            OkHttpClient client = OkHttpClientInstance.getInstance().newBuilder()
+                .addInterceptor(interceptor)
+                .build();
+            Response execute = client.newCall(request).execute();
+            assertEquals("Bearer " + accessToken, execute.request().header(AUTHORIZATION_HEADER));
+        }
     }
 
-    private Request getMockRequest() {
+    private Request getMockRequest(MockWebServer mockWebServer) {
         return new Request.Builder()
-            .url("https://some-url.com")
+            .url(String.format("http://localhost:%s", mockWebServer.getPort()))
             .addHeader(AUTHORIZATION_HEADER, "Bearer " + ACCESS_TOKEN)
             .build();
     }
