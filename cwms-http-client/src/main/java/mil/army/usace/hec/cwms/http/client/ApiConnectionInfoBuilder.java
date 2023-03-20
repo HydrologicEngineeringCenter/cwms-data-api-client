@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,20 @@ package mil.army.usace.hec.cwms.http.client;
 import java.util.ArrayList;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
 import okhttp3.Authenticator;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 
 public class ApiConnectionInfoBuilder {
 
+    private static final String SINGLE_AUTH_ERROR_MESSAGE = "Only a single authentication type is supported at this time";
     private final String apiRoot;
     private OAuth2TokenProvider tokenProvider;
     private SslSocketData sslSocketData;
     private CookieJarFactory.CookieJarSupplier cookieJarSupplier;
     private CookieAuthenticator cookieAuthenticator;
+    private SimpleAuthKeyProvider simpleAuthKeyProvider;
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -59,7 +62,12 @@ public class ApiConnectionInfoBuilder {
     }
 
     public ApiConnectionInfoBuilder withCookieAuthenticator(AuthCookieCallback callback) {
-        cookieAuthenticator = new CookieAuthenticator(callback);
+        this.cookieAuthenticator = new CookieAuthenticator(callback);
+        return this;
+    }
+
+    public ApiConnectionInfoBuilder withAuthorizationKeyProvider(SimpleAuthKeyProvider simpleAuthKeyProvider) {
+        this.simpleAuthKeyProvider = simpleAuthKeyProvider;
         return this;
     }
 
@@ -74,10 +82,22 @@ public class ApiConnectionInfoBuilder {
             authenticator = new OAuth2TokenAuthenticator(tokenProvider);
             interceptors.add(new OAuth2TokenInterceptor(tokenProvider));
         }
+        if (simpleAuthKeyProvider != null) {
+            if (tokenProvider != null) {
+                throw new IllegalArgumentException("Cannot setup ApiConnectionInfo with both a OAuth2TokenProvider and SimpleAuthKeyProvider. "
+                    + SINGLE_AUTH_ERROR_MESSAGE);
+            }
+            authenticator = new SimpleAuthHeaderAuthenticator(simpleAuthKeyProvider);
+            interceptors.add(new SimpleAuthHeaderInterceptor(simpleAuthKeyProvider));
+        }
         if (cookieAuthenticator != null) {
-            if(tokenProvider != null) {
-                throw new IllegalArgumentException("Cannot setup ApiConnectionInfo with both a TokenProvider and CookieAuthenticator. "
-                    + "Only a single authentication type is supported at this time");
+            if (tokenProvider != null) {
+                throw new IllegalArgumentException("Cannot setup ApiConnectionInfo with both a OAuth2TokenProvider and CookieAuthenticator. "
+                    + SINGLE_AUTH_ERROR_MESSAGE);
+            }
+            if (simpleAuthKeyProvider != null) {
+                throw new IllegalArgumentException("Cannot setup ApiConnectionInfo with both a SimpleAuthKeyProvider and CookieAuthenticator. "
+                    + SINGLE_AUTH_ERROR_MESSAGE);
             }
             authenticator = cookieAuthenticator;
         }
