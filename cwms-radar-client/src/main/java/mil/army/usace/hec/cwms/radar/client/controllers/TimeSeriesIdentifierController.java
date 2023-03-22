@@ -54,7 +54,7 @@ public final class TimeSeriesIdentifierController {
     public TimeSeriesIdentifierDescriptor retrieveTimeSeriesIdentifier(ApiConnectionInfo apiConnectionInfo,
                                                                        TimeSeriesIdentifierEndpointInput.GetOne input) throws IOException {
         TimeSeriesIdentifierDescriptor retVal;
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT + "/" + input.timeSeriesId())
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
             .get()
