@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import javax.validation.Valid;
  * TimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-03-22T10:35:39.488-07:00[America/Los_Angeles]")
 public class TimeSeries {
     @JsonProperty("begin")
     private ZonedDateTime begin = null;
@@ -47,6 +47,9 @@ public class TimeSeries {
 
     @JsonProperty("interval")
     private Duration interval = null;
+
+    @JsonProperty("interval-offset")
+    private Long intervalOffset = null;
 
     @JsonProperty("name")
     private String name = null;
@@ -62,6 +65,9 @@ public class TimeSeries {
 
     @JsonProperty("page-size")
     private Integer pageSize = null;
+
+    @JsonProperty("time-zone")
+    private String timeZone = null;
 
     @JsonProperty("total")
     private Integer total = null;
@@ -137,6 +143,25 @@ public class TimeSeries {
 
     public void setInterval(Duration interval) {
         this.interval = interval;
+    }
+
+    public TimeSeries intervalOffset(Long intervalOffset) {
+        this.intervalOffset = intervalOffset;
+        return this;
+    }
+
+    /**
+     * Offset from top of interval
+     *
+     * @return intervalOffset
+     **/
+
+    public Long getIntervalOffset() {
+        return intervalOffset;
+    }
+
+    public void setIntervalOffset(Long intervalOffset) {
+        this.intervalOffset = intervalOffset;
     }
 
     public TimeSeries name(String name) {
@@ -232,6 +257,25 @@ public class TimeSeries {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public TimeSeries timeZone(String timeZone) {
+        this.timeZone = timeZone;
+        return this;
+    }
+
+    /**
+     * Only on 21.1.1 Database. The timezone the Interval Offset is from.
+     *
+     * @return timeZone
+     **/
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     public TimeSeries total(Integer total) {
@@ -350,27 +394,29 @@ public class TimeSeries {
         }
         TimeSeries timeSeries = (TimeSeries) o;
         return Objects.equals(this.begin, timeSeries.begin) && Objects.equals(this.end, timeSeries.end) &&
-            Objects.equals(this.interval, timeSeries.interval) && this.name == null || timeSeries.name == null ?
-            Objects.equals(this.name, timeSeries.name) :
+            Objects.equals(this.interval, timeSeries.interval) && Objects.equals(this.intervalOffset, timeSeries.intervalOffset) &&
+            this.name == null || timeSeries.name == null ? Objects.equals(this.name, timeSeries.name) :
             this.name.equalsIgnoreCase(timeSeries.name) && this.nextPage == null || timeSeries.nextPage == null ?
                 Objects.equals(this.nextPage, timeSeries.nextPage) :
                 this.nextPage.equalsIgnoreCase(timeSeries.nextPage) && this.officeId == null || timeSeries.officeId == null ?
                     Objects.equals(this.officeId, timeSeries.officeId) :
                     this.officeId.equalsIgnoreCase(timeSeries.officeId) && this.page == null || timeSeries.page == null ?
                         Objects.equals(this.page, timeSeries.page) :
-                        this.page.equalsIgnoreCase(timeSeries.page) && Objects.equals(this.pageSize, timeSeries.pageSize) &&
-                            Objects.equals(this.total, timeSeries.total) && this.units == null || timeSeries.units == null ?
-                            Objects.equals(this.units, timeSeries.units) :
-                            this.units.equalsIgnoreCase(timeSeries.units) && Objects.equals(this.valueColumns, timeSeries.valueColumns) &&
-                                Objects.equals(this.values, timeSeries.values) &&
-                                Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo);
+                        this.page.equalsIgnoreCase(timeSeries.page) && Objects.equals(this.pageSize, timeSeries.pageSize) && this.timeZone == null ||
+                            timeSeries.timeZone == null ? Objects.equals(this.timeZone, timeSeries.timeZone) :
+                            this.timeZone.equalsIgnoreCase(timeSeries.timeZone) && Objects.equals(this.total, timeSeries.total) &&
+                                this.units == null || timeSeries.units == null ? Objects.equals(this.units, timeSeries.units) :
+                                this.units.equalsIgnoreCase(timeSeries.units) && Objects.equals(this.valueColumns, timeSeries.valueColumns) &&
+                                    Objects.equals(this.values, timeSeries.values) &&
+                                    Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(begin, end, interval, name == null ? 0 : name.toLowerCase(), nextPage == null ? 0 : nextPage.toLowerCase(),
-            officeId == null ? 0 : officeId.toLowerCase(), page == null ? 0 : page.toLowerCase(), pageSize, total,
-            units == null ? 0 : units.toLowerCase(), valueColumns, values, verticalDatumInfo);
+        return Objects.hash(begin, end, interval, intervalOffset, name == null ? 0 : name.toLowerCase(),
+            nextPage == null ? 0 : nextPage.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(), page == null ? 0 : page.toLowerCase(),
+            pageSize, timeZone == null ? 0 : timeZone.toLowerCase(), total, units == null ? 0 : units.toLowerCase(), valueColumns, values,
+            verticalDatumInfo);
     }
 
     @Override
@@ -381,11 +427,13 @@ public class TimeSeries {
         sb.append("    begin: ").append(toIndentedString(begin)).append("\n");
         sb.append("    end: ").append(toIndentedString(end)).append("\n");
         sb.append("    interval: ").append(toIndentedString(interval)).append("\n");
+        sb.append("    intervalOffset: ").append(toIndentedString(intervalOffset)).append("\n");
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    nextPage: ").append(toIndentedString(nextPage)).append("\n");
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    page: ").append(toIndentedString(page)).append("\n");
         sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
+        sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
         sb.append("    total: ").append(toIndentedString(total)).append("\n");
         sb.append("    units: ").append(toIndentedString(units)).append("\n");
         sb.append("    valueColumns: ").append(toIndentedString(valueColumns)).append("\n");
