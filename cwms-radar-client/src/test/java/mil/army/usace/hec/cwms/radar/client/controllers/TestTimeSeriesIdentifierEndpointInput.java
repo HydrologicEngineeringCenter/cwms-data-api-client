@@ -134,12 +134,12 @@ class TestTimeSeriesIdentifierEndpointInput {
     @Test
     void testPatchQueryRequestDefaults() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesIdentifierEndpointInput.Patch input = TimeSeriesIdentifierEndpointInput.patch("arbu.Elev.Inst.1Hour.0.Ccp-Rev","arbu.Elev.Inst.1Hour.0.Ccp-Rev-new", "SWT");
+        TimeSeriesIdentifierEndpointInput.Patch input = TimeSeriesIdentifierEndpointInput.patch("arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev", input.originalIdentifier());
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(INTERVAL_OFFSET_QUERY_PARAMETER));
-        assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev-new", mockHttpRequestBuilder.getQueryParameter(TIMESERIES_ID_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(TIMESERIES_ID_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -149,7 +149,8 @@ class TestTimeSeriesIdentifierEndpointInput {
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant now = Instant.now();
-        TimeSeriesIdentifierEndpointInput.Patch input = TimeSeriesIdentifierEndpointInput.patch("arbu.Elev.Inst.1Hour.0.Ccp-Rev","arbu.Elev.Inst.1Hour.0.Ccp-Rev-new", "SWT")
+        TimeSeriesIdentifierEndpointInput.Patch input = TimeSeriesIdentifierEndpointInput.patch("arbu.Elev.Inst.1Hour.0.Ccp-Rev", "SWT")
+            .newIdentifier("arbu.Elev.Inst.1Hour.0.Ccp-Rev-new")
             .intervalOffsetMinutes(500);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev", input.originalIdentifier());
@@ -161,17 +162,12 @@ class TestTimeSeriesIdentifierEndpointInput {
 
     @Test
     void testPatchNullOriginalTimeSeriesId() {
-        assertThrows(NullPointerException.class, () -> TimeSeriesIdentifierEndpointInput.patch(null, null, null));
-    }
-
-    @Test
-    void testPatchNullNewTimeSeriesId() {
-        assertThrows(NullPointerException.class, () -> TimeSeriesIdentifierEndpointInput.patch("", null, null));
+        assertThrows(NullPointerException.class, () -> TimeSeriesIdentifierEndpointInput.patch(null, null));
     }
 
     @Test
     void testPatchNullOffice() {
-        assertThrows(NullPointerException.class, () -> TimeSeriesIdentifierEndpointInput.patch("", "", null));
+        assertThrows(NullPointerException.class, () -> TimeSeriesIdentifierEndpointInput.patch("", null));
     }
 
 }

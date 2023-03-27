@@ -101,7 +101,8 @@ class TestTimeSeriesIdentifierController extends TestController {
         TimeSeriesIdentifierController timeSeriesController = new TimeSeriesIdentifierController();
         timeSeriesController.storeTimeSeriesIdentifier(buildConnectionInfo(cookieJarSupplier), TimeSeriesIdentifierEndpointInput.post(timeSeries));
         TimeSeriesIdentifierEndpointInput.Patch input =
-            TimeSeriesIdentifierEndpointInput.patch(timeSeries.getTimeSeriesId(), timeSeries.getTimeSeriesId() + "-New", timeSeries.getOfficeId());
+            TimeSeriesIdentifierEndpointInput.patch(timeSeries.getTimeSeriesId(), timeSeries.getOfficeId())
+                .newIdentifier(timeSeries.getTimeSeriesId() + "-New");
         assertDoesNotThrow(() -> timeSeriesController.updateTimeSeriesIdentifier(buildConnectionInfo(cookieJarSupplier), input));
     }
 }
