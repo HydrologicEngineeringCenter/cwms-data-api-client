@@ -49,8 +49,8 @@ public final class TimeSeriesIdentifierEndpointInput {
         return new Post(timeSeriesIdentifierDescriptor);
     }
 
-    public static Patch patch(String originalTimeSeriesId, String newTimeSeriesId, String officeId) {
-        return new Patch(originalTimeSeriesId, newTimeSeriesId, officeId);
+    public static Patch patch(String originalTimeSeriesId, String officeId) {
+        return new Patch(originalTimeSeriesId, officeId);
     }
 
     public static Delete delete(String timeSeriesId, String officeId) {
@@ -115,17 +115,20 @@ public final class TimeSeriesIdentifierEndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String INTERVAL_OFFSET_QUERY_PARAMETER = "interval-offset";
         private final String originalIdentifier;
-        private final String newIdentifier;
         private final String officeId;
+        private String newIdentifier;
         private Long intervalOffsetMinutes;
 
-        private Patch(String originalIdentifier, String newIdentifier, String officeId) {
+        private Patch(String originalIdentifier, String officeId) {
             this.originalIdentifier = Objects.requireNonNull(originalIdentifier,
                 "Cannot access the timeseries PATCH endpoint without an original time series identifier");
-            this.newIdentifier = Objects.requireNonNull(newIdentifier,
-                "Cannot access the timeseries PATCH endpoint without a new time series identifier");
             this.officeId = Objects.requireNonNull(officeId,
                 "Cannot access the timeseries PATCH endpoint without an office id");
+        }
+
+        public Patch newIdentifier(String newIdentifier) {
+            this.newIdentifier = newIdentifier;
+            return this;
         }
 
         public Patch intervalOffsetMinutes(long intervalOffsetMinutes) {
