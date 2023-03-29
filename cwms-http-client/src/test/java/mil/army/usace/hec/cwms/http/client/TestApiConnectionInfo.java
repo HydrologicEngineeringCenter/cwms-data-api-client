@@ -38,6 +38,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.HttpUrl;
 import org.junit.jupiter.api.Test;
 
 class TestApiConnectionInfo {
@@ -47,6 +48,54 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data/";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
+    }
+
+    @Test
+    void testApiConnectionInfoWithTrailingSlash() throws Exception {
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoFilename() throws Exception {
+        String root = "http://localhost:11524/cwms-data.txt";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo)
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data.txt", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoFilenameEndpoint() throws Exception {
+        String root = "http://localhost:11524/cwms-data";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "data.txt")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/data.txt", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoNoTrailingSlash() throws Exception {
+        String root = "http://localhost:11524/cwms-data";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());
     }
 
     static SSLSocketFactory getTestSslSocketFactory() {
