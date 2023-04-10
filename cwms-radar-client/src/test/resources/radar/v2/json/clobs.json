@@ -1,0 +1,14 @@
+{
+  "page": "abcdefg",
+  "total": 1,
+  "clobs": [
+    {
+      "office": "SWT",
+      "id": "TEST.CLOB.ID",
+      "description": "UNIT TESTING CLOB ENDPOINT DESCRIPTION",
+      "value": "UNIT TESTING CLOB ENDPOINT"
+    }
+  ],
+  "next-page": "hijklmnop",
+  "page-size": 1
+}
