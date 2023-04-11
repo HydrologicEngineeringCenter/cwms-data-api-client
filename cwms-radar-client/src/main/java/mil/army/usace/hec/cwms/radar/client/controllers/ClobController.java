@@ -68,7 +68,7 @@ public final class ClobController {
         String endpoint = CLOB_ENDPOINT + "/" + clob.getId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addEndpointInput(input)
-            .post()
+            .patch()
             .withBody(body)
             .withMediaType(ACCEPT_HEADER_V2)
             .execute()
