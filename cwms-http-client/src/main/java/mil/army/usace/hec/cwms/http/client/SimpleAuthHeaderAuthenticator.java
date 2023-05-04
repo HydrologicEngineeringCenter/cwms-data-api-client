@@ -62,8 +62,7 @@ final class SimpleAuthHeaderAuthenticator implements Authenticator {
     Request newRequestWithAccessTokenAsHeader(Response response, String authorizationKey) {
         return response.request()
             .newBuilder()
-            .removeHeader(AUTHORIZATION_HEADER)
-            .addHeader(AUTHORIZATION_HEADER, authorizationKey)
+            .header(AUTHORIZATION_HEADER, authorizationKey)
             .build();
     }
 

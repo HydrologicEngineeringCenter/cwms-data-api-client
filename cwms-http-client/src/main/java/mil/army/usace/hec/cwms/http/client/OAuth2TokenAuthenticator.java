@@ -87,8 +87,7 @@ final class OAuth2TokenAuthenticator implements Authenticator {
     Request newRequestWithAccessTokenAsHeader(Response response, OAuth2Token oauth2Token) {
         return response.request()
             .newBuilder()
-            .removeHeader(AUTHORIZATION_HEADER)
-            .addHeader(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
+            .header(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
     }
 
