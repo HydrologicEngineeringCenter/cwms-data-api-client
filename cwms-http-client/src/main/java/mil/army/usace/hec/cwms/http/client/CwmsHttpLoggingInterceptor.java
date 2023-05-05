@@ -88,7 +88,7 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
 
     void logStackTraceForRequest(Request request) {
         if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.log(Level.FINEST, new Exception(), () -> "CWMS HTTP API executing request: " + request.url());
+            LOGGER.log(Level.FINEST, new Exception("Stack Trace Logging"), () -> "CWMS HTTP API executing request: " + request.url());
         }
     }
 }
