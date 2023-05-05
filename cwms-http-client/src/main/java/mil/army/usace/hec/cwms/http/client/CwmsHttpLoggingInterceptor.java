@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+/**
+ * JUL Interceptor to update the logging functionality of the OkHttp HttpLogginInterceptor based on JUL log levels
+ * <p>
+ * java.util.logging.Level.FINE - the OkHttp interceptor will log at HttpLoggingInterceptor.Level.BASIC
+ * java.util.logging.Level.FINEST - the OkHttp interceptor will log at HttpLoggingInterceptor.Level.BASIC and this class will log stack traces for each request
+ * java.util.logging.Level.ALL - the OkHttp interceptor will log at HttpLoggingInterceptor.Level.BODY and this class will log stack traces for each request
+ */
 final class CwmsHttpLoggingInterceptor implements Interceptor {
 
     private static final Logger LOGGER = Logger.getLogger(CwmsHttpLoggingInterceptor.class.getName());
@@ -78,4 +86,9 @@ final class CwmsHttpLoggingInterceptor implements Interceptor {
         updateInterceptorLogLevel();
     }
 
+    void logStackTraceForRequest(Request request) {
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.log(Level.FINEST, new Exception("Stack Trace Logging"), () -> "CWMS HTTP API executing request: " + request.url());
+        }
+    }
 }

@@ -209,6 +209,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         public final HttpRequestResponse execute() throws IOException {
             HttpRequestResponse retVal = null;
             Request request = createRequest();
+            CwmsHttpLoggingInterceptor.getInstance().logStackTraceForRequest(request);
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
                 OkHttpClient client = buildOkHttpClient();
