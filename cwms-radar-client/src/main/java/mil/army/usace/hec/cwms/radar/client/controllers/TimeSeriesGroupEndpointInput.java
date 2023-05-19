@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,45 +24,161 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesGroup;
+
+import java.util.Objects;
+
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.EndpointInput;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-
-public final class TimeSeriesGroupEndpointInput extends EndpointInput {
+public final class TimeSeriesGroupEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
+    static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
+    static final String FAIL_IF_EXISTS = "fail-if-exists";
 
-    private final String categoryId;
-    private final String groupId;
-    private String officeId;
-
-    public TimeSeriesGroupEndpointInput() {
-        this.groupId = null;
-        this.categoryId = null;
+    private TimeSeriesGroupEndpointInput() {
+        throw new AssertionError("factory class");
     }
 
-    public TimeSeriesGroupEndpointInput(String categoryId, String groupId) {
-        this.categoryId = categoryId;
-        this.groupId = groupId;
+    public static GetAll getAll() {
+        return new GetAll();
     }
 
-    public TimeSeriesGroupEndpointInput officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
+    public static GetOne getOne(String categoryId, String groupId, String officeId) {
+        return new GetOne(categoryId, groupId, officeId);
     }
 
-    Optional<String> getGroupId() {
-        return Optional.ofNullable(groupId);
+    public static Post post(TimeSeriesGroup timeSeriesGroup) {
+        return new Post(timeSeriesGroup);
     }
 
-    @Override
-    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+    public static Patch patch(String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        return new Patch(originalGroupId, timeSeriesGroup);
+    }
+
+    public static Delete delete(String categoryId, String groupId, String officeId) {
+        return new Delete(categoryId, groupId, officeId);
+    }
+
+    public static class GetAll extends EndpointInput {
+        private String officeId;
+        private boolean includeAssigned = true;
+
+        public GetAll includeAssigned(boolean includeAssigned) {
+            this.includeAssigned = includeAssigned;
+            return this;
+        }
+
+        public GetAll officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static class GetOne extends EndpointInput {
+
+        private final String categoryId;
+        private final String groupId;
+        private final String officeId;
+
+        public GetOne(String categoryId, String groupId, String officeId) {
+            this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category");
+            this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office");
+        }
+
+        String getGroupId() {
+            return groupId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static class Post extends EndpointInput {
+
+        private final TimeSeriesGroup timeSeriesGroup;
+        private boolean failIfExists = true;
+
+        public Post(TimeSeriesGroup timeSeriesGroup) {
+            this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot store a time series group without a data object");
+        }
+
+        TimeSeriesGroup timeSeriesGroup() {
+            return timeSeriesGroup;
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS, Boolean.toString(failIfExists))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static class Patch extends EndpointInput {
+
+        private final TimeSeriesGroup timeSeriesGroup;
+        private final String originalGroupId;
+
+        public Patch(String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+            this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
+            this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot update a time series group without a group data object");
+        }
+
+        TimeSeriesGroup timeSeriesGroup() {
+            return timeSeriesGroup;
+        }
+
+        String originalLocationId() {
+            return originalGroupId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static class Delete extends EndpointInput {
+        private final String timeSeriesGroupId;
+        private final String categoryId;
+        private final String officeId;
+
+        public Delete(String categoryId, String timeSeriesGroupId, String officeId) {
+            this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series group without specifying the category)");
+            this.timeSeriesGroupId = Objects.requireNonNull(timeSeriesGroupId, "Cannot delete a time series group that is not defined");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a time series group without specifying the office");
+        }
+
+        String timeSeriesGroupId() {
+            return timeSeriesGroupId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
     }
 }
