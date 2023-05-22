@@ -68,6 +68,10 @@ public final class TimeSeriesGroupEndpointInput {
         private String officeId;
         private boolean includeAssigned = true;
 
+        private GetAll() {
+
+        }
+
         public GetAll includeAssigned(boolean includeAssigned) {
             this.includeAssigned = includeAssigned;
             return this;
@@ -92,7 +96,7 @@ public final class TimeSeriesGroupEndpointInput {
         private final String groupId;
         private final String officeId;
 
-        public GetOne(String categoryId, String groupId, String officeId) {
+        private GetOne(String categoryId, String groupId, String officeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category");
             this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office");
@@ -115,7 +119,7 @@ public final class TimeSeriesGroupEndpointInput {
         private final TimeSeriesGroup timeSeriesGroup;
         private boolean failIfExists = true;
 
-        public Post(TimeSeriesGroup timeSeriesGroup) {
+        private Post(TimeSeriesGroup timeSeriesGroup) {
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot store a time series group without a data object");
         }
 
@@ -140,7 +144,7 @@ public final class TimeSeriesGroupEndpointInput {
         private final TimeSeriesGroup timeSeriesGroup;
         private final String originalGroupId;
 
-        public Patch(String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        private Patch(String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot update a time series group without a group data object");
         }
@@ -164,7 +168,7 @@ public final class TimeSeriesGroupEndpointInput {
         private final String categoryId;
         private final String officeId;
 
-        public Delete(String categoryId, String timeSeriesGroupId, String officeId) {
+        private Delete(String categoryId, String timeSeriesGroupId, String officeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series group without specifying the category)");
             this.timeSeriesGroupId = Objects.requireNonNull(timeSeriesGroupId, "Cannot delete a time series group that is not defined");
             this.officeId = Objects.requireNonNull(officeId, "Cannot delete a time series group without specifying the office");
