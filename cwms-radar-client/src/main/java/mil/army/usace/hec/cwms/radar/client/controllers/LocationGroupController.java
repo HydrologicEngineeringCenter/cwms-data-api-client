@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,6 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-
-import java.io.IOException;
-import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -35,24 +31,29 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
+import java.io.IOException;
+import java.util.List;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+
 public final class LocationGroupController {
 
     private static final String LOCATION_GROUP = "location/group";
 
     /**
-     * @param apiConnectionInfo          - connection info
-     * @param locationGroupEndpointInput - group id, office id, and category id for location group
+     * @param apiConnectionInfo - connection info
+     * @param input             - group id, office id, and category id for location group
      * @return LocationGroup based on inputs given
      * @throws IOException - thrown if retrieval failed
      */
-    public LocationGroup retrieveLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
-        throws IOException {
+    public LocationGroup retrieveLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput.GetOne input)
+            throws IOException {
         LocationGroup retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-            LOCATION_GROUP + "/" + locationGroupEndpointInput.getGroupId())
-            .addEndpointInput(locationGroupEndpointInput)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+                LOCATION_GROUP + "/" + input.groupId())
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
         }
@@ -60,21 +61,58 @@ public final class LocationGroupController {
     }
 
     /**
-     * @param apiConnectionInfo          - connection info
-     * @param locationGroupEndpointInput - office id
+     * @param apiConnectionInfo - connection info
+     * @param input             - office id
      * @return LocationGroup list for input office
      * @throws IOException - thrown if retrieval failed
      */
-    public List<LocationGroup> retrieveLocationGroups(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput locationGroupEndpointInput)
-        throws IOException {
+    public List<LocationGroup> retrieveLocationGroups(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput.GetAll input)
+            throws IOException {
         List<LocationGroup> retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
-            .addEndpointInput(locationGroupEndpointInput)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
         }
         return retVal;
+    }
+
+    public void storeLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput.Post input)
+            throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.locationGroup());
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
+                .addEndpointInput(input)
+                .post()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+
+    }
+
+    public void updateLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput.Patch input)
+            throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.locationGroup());
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + input.originalGroupId())
+                .addEndpointInput(input)
+                .patch()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+
+    }
+
+    public void deleteLocationGroup(ApiConnectionInfo apiConnectionInfo, LocationGroupEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + input.groupId())
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+
     }
 }

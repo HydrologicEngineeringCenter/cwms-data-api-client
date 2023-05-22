@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,57 +24,159 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
+
+import java.util.Objects;
+
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import mil.army.usace.hec.cwms.http.client.EndpointInput;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-
-public final class LocationGroupEndpointInput extends EndpointInput {
+public final class LocationGroupEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "includeAssigned";
 
-    private final String groupId;
-    private String officeId;
-    private String categoryId;
-    private boolean includeAssigned = false;
-
-    public LocationGroupEndpointInput(String groupId) {
-        this.groupId = groupId;
+    public static GetOne getOne(String categoryId, String groupId, String officeId) {
+        return new GetOne(categoryId, groupId, officeId);
     }
 
-    public LocationGroupEndpointInput() {
-        this.groupId = null;
+    public static GetAll getAll() {
+        return new GetAll();
     }
 
-    String getGroupId() {
-        return groupId;
+    public static Post post(LocationGroup locationGroup) {
+        return new Post(locationGroup);
     }
 
-    public LocationGroupEndpointInput officeId(String officeId) {
-        this.officeId = officeId;
-        return this;
+    public static Patch patch(String originalGroupId, LocationGroup locationGroup) {
+        return new Patch(originalGroupId, locationGroup);
     }
 
-    public LocationGroupEndpointInput categoryId(String categoryId) {
-        this.categoryId = categoryId;
-        return this;
+    public static Delete delete(String categoryId, String groupId, String officeId) {
+        return new Delete(categoryId, groupId, officeId);
     }
 
-    public LocationGroupEndpointInput includeAssigned(boolean includeAssigned) {
-        this.includeAssigned = includeAssigned;
-        return this;
+    public static class GetOne extends EndpointInput {
+        private final String groupId;
+        private final String officeId;
+        private final String categoryId;
+
+        private GetOne(String categoryId, String groupId, String officeId) {
+            this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a location group without a category id");
+            this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a location group without a group id");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a location group without an office id");
+        }
+
+        String groupId() {
+            return groupId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
     }
 
-    @Override
-    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
-                                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                                 .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+    public static class GetAll extends EndpointInput {
+        private String officeId;
+        private boolean includeAssigned = false;
+
+        private GetAll() {
+
+        }
+
+        public GetAll officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        public GetAll includeAssigned(boolean includeAssigned) {
+            this.includeAssigned = includeAssigned;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+
+    }
+
+    public static class Post extends EndpointInput {
+
+        private final LocationGroup locationGroup;
+
+        private Post(LocationGroup locationGroup) {
+            this.locationGroup = Objects.requireNonNull(locationGroup, "Cannot create a location group without a data object");
+        }
+
+        LocationGroup locationGroup() {
+            return locationGroup;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+
+    }
+
+    public static class Patch extends EndpointInput {
+
+        private final LocationGroup locationGroup;
+        private final String originalGroupId;
+
+        private Patch(String originalGroupId, LocationGroup locationGroup) {
+            this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a location group without an original group id");
+            this.locationGroup = Objects.requireNonNull(locationGroup, "Cannot update a location group without a data object");
+        }
+
+        String originalGroupId() {
+            return originalGroupId;
+        }
+
+        LocationGroup locationGroup() {
+            return locationGroup;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+
+    }
+
+    public static class Delete extends EndpointInput {
+
+        private final String groupId;
+        private final String officeId;
+        private final String categoryId;
+
+        private Delete(String categoryId, String groupId, String officeId) {
+            this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a location group without a category id");
+            this.groupId = Objects.requireNonNull(groupId, "Cannot delete a location group without a group id");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a location group without an office id");
+        }
+
+        String groupId() {
+            return groupId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
     }
 }

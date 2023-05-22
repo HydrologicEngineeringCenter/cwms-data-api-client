@@ -86,7 +86,7 @@ public final class TimeSeriesGroupController {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT + "/" + input.originalLocationId())
                 .addEndpointInput(input)
-                .post()
+                .patch()
                 .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()

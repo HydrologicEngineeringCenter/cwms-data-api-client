@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,17 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-
-import java.io.IOException;
-import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCategory;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+
+import java.io.IOException;
+import java.util.List;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 
 public final class LocationCategoryController {
 
@@ -42,19 +43,19 @@ public final class LocationCategoryController {
     /**
      * Retrieve Location Category.
      *
-     * @param apiConnectionInfo             - connection info
-     * @param locationCategoryEndpointInput - category id and office
+     * @param apiConnectionInfo - connection info
+     * @param input             - category id and office
      * @return LocationCategory
      * @throws IOException - thrown if retrieve failed
      */
-    public LocationCategory retrieveLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput locationCategoryEndpointInput)
-        throws IOException {
+    public LocationCategory retrieveLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput.GetOne input)
+            throws IOException {
         LocationCategory retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-            LOCATION_CATEGORY + "/" + locationCategoryEndpointInput.getCategoryId())
-            .addEndpointInput(locationCategoryEndpointInput)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+                LOCATION_CATEGORY + "/" + input.categoryId())
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
         }
@@ -64,22 +65,44 @@ public final class LocationCategoryController {
     /**
      * Retrieve Location Category.
      *
-     * @param apiConnectionInfo             - connection info
-     * @param locationCategoryEndpointInput - office
+     * @param apiConnectionInfo - connection info
+     * @param input             - office
      * @return LocationCategories for office id
      * @throws IOException - thrown if retrieve failed
      */
     public List<LocationCategory> retrieveLocationCategories(ApiConnectionInfo apiConnectionInfo,
-                                                             LocationCategoryEndpointInput locationCategoryEndpointInput)
-        throws IOException {
+                                                             LocationCategoryEndpointInput.GetAll input)
+            throws IOException {
         List<LocationCategory> retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
-            .addEndpointInput(locationCategoryEndpointInput)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationCategory.class);
         }
         return retVal;
+    }
+
+    public void storeLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput.Post input)
+            throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.locationCategory());
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
+                .addEndpointInput(input)
+                .post()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
+
+    public void deleteLocationCategory(ApiConnectionInfo apiConnectionInfo, LocationCategoryEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY + "/" + input.categoryId())
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
     }
 }
