@@ -24,19 +24,22 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
 import okhttp3.Authenticator;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 final class SimpleAuthHeaderAuthenticator implements Authenticator {
 
     private static final Logger LOGGER = Logger.getLogger(SimpleAuthHeaderAuthenticator.class.getName());
     private static final String AUTHORIZATION_HEADER = "Authorization";
+    private final AtomicBoolean _alreadyRetried = new AtomicBoolean(false);
     private final SimpleAuthKeyProvider keyProvider;
 
     SimpleAuthHeaderAuthenticator(SimpleAuthKeyProvider keyProvider) {
@@ -46,15 +49,19 @@ final class SimpleAuthHeaderAuthenticator implements Authenticator {
 
     @Override
     public synchronized Request authenticate(Route route, Response response) throws IOException {
+        LOGGER.log(Level.FINE, () -> "Authentication required for: " + response.request().url() + " attempting acquiring authorization key");
         String authorizationKey = keyProvider.getAuthorizationKey();
         if (authorizationKey == null) {
             throw new IOException("No Authorization key retrieved from " + keyProvider.getClass().getName());
         }
         // Check if the request made was made as an authenticated request.
-        if (response.request().header(AUTHORIZATION_HEADER) == null) {
-            throw new IOException("Cannot refresh authentication token due to missing " + AUTHORIZATION_HEADER + " header");
+        if (authorizationKey.equals(response.request().header(AUTHORIZATION_HEADER))) {
+            LOGGER.log(Level.FINE, () -> "Re-authentication attempt failed. Provider returned the same key as the original request. \n"
+                    + "Requsted URL:" + response.request().url() + "\n"
+                    + "Error Code: " + response.code());
+            return null;
         }
-        LOGGER.log(Level.FINEST, "Authenticating request with Authorization Key Token");
+        LOGGER.log(Level.FINE, () -> "Authentication required for: " + response.request().url() + " acquired authorization key and creating a new request");
         return newRequestWithAccessTokenAsHeader(response, authorizationKey);
     }
 

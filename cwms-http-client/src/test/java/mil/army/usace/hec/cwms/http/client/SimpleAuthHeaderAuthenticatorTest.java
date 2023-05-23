@@ -24,18 +24,16 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
+import okhttp3.*;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
-import okhttp3.MediaType;
-import okhttp3.Protocol;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleAuthHeaderAuthenticatorTest {
 
@@ -54,14 +52,6 @@ class SimpleAuthHeaderAuthenticatorTest {
     }
 
     @Test
-    void testAuthenticateNoAuthHeader() throws IOException {
-        SimpleAuthKeyProvider tokenProvider = new MyAuthKeyProvider();
-        SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
-        Response response = getMockResponseNoAuthHeader();
-        assertThrows(IOException.class, () -> authenticator.authenticate(null, response));
-    }
-
-    @Test
     void testAuthenticateNullToken() throws IOException {
         SimpleAuthKeyProvider tokenProvider = () -> null;
         SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
@@ -69,30 +59,41 @@ class SimpleAuthHeaderAuthenticatorTest {
         assertThrows(IOException.class, () -> authenticator.authenticate(null, response));
     }
 
-    private Response getMockResponse() {
-        Request mockRequest = new Request.Builder()
-            .url("https://some-url.com")
-            .addHeader(AUTHORIZATION_HEADER, "Bearer " + ACCESS_TOKEN)
-            .build();
-        return new Response.Builder()
-            .request(mockRequest)
-            .protocol(Protocol.HTTP_2)
-            .code(401) // status code
-            .message("")
-            .body(ResponseBody.create("{}",
-                MediaType.get("application/json; charset=utf-8")
-            ))
-            .build();
+    @Test
+    void testAuthenticateSameToken() throws IOException {
+        SimpleAuthKeyProvider tokenProvider = () -> "Bearer " + ACCESS_TOKEN;
+        SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
+        Response response = getMockResponse();
+        assertNull(authenticator.authenticate(null, response));
     }
 
-    private Response getMockResponseNoAuthHeader() {
+    @Test
+    void testAuthenticateMockServer() throws IOException {
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(401));
+            mockWebServer.enqueue(new MockResponse().setBody("").setResponseCode(401));
+            mockWebServer.start();
+            SimpleAuthKeyProvider tokenProvider = () -> "Bearer " + ACCESS_TOKEN;
+            SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
+            assertThrows(UnauthorizedException.class, () -> new HttpRequestBuilderImpl(new ApiConnectionInfo(String.format("http://localhost:%s", mockWebServer.getPort()), null,
+                    null, new ArrayList<>(), authenticator))
+                    .post()
+                    .withBody("")
+                    .withMediaType("application/json")
+                    .execute()
+                    .close());
+        }
+    }
+
+    private Response getMockResponse() {
         Request mockRequest = new Request.Builder()
-            .url("https://some-url.com")
-            .build();
+                .url("https://some-url.com")
+                .addHeader(AUTHORIZATION_HEADER, "Bearer " + ACCESS_TOKEN)
+                .build();
         return new Response.Builder()
-            .request(mockRequest)
-            .protocol(Protocol.HTTP_2)
-            .code(401) // status code
+                .request(mockRequest)
+                .protocol(Protocol.HTTP_2)
+                .code(401) // status code
             .message("")
             .body(ResponseBody.create("{}",
                 MediaType.get("application/json; charset=utf-8")
