@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,11 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -37,13 +37,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
-import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestLevelController extends TestController {
 
@@ -53,16 +48,47 @@ class TestLevelController extends TestController {
         String collect = readJsonFile(resource);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        SpecifiedLevelEndpointInput input = new SpecifiedLevelEndpointInput()
-            .officeId("CWMS");
+        SpecifiedLevelEndpointInput.GetAll input = SpecifiedLevelEndpointInput.getAll()
+                .officeId("CWMS");
         Set<SpecifiedLevel> specifiedLevels = new LevelController().retrieveSpecifiedLevels(buildConnectionInfo(), input);
         assertNotNull(specifiedLevels);
         Optional<SpecifiedLevel> specifiedLevel = specifiedLevels.stream()
-                                                                 .filter(s -> s.getId().equals("Bottom of Exclusive Flood Control"))
-                                                                 .findAny();
+                .filter(s -> s.getId().equals("Bottom of Exclusive Flood Control"))
+                .findAny();
         assertTrue(specifiedLevel.isPresent());
         assertEquals("CWMS", specifiedLevel.get().getOfficeId());
         assertEquals("Bottom of Exclusive Flood Control Level", specifiedLevel.get().getDescription());
+    }
+
+    @Test
+    void testPost() throws IOException {
+        String resource = "radar/v2/json/specified_level.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        SpecifiedLevel specifiedLevel = RadarObjectMapper.mapJsonToObject(collect, SpecifiedLevel.class);
+        SpecifiedLevelEndpointInput.Post input = SpecifiedLevelEndpointInput.post(specifiedLevel);
+        assertDoesNotThrow(() -> new LevelController().storeSpecifiedLevel(buildConnectionInfo(), input));
+    }
+
+    @Test
+    void testPatch() throws IOException {
+        String resource = "radar/v2/json/specified_levels.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        SpecifiedLevelEndpointInput.Patch input = SpecifiedLevelEndpointInput.patch("original", "new", "SPK");
+        assertDoesNotThrow(() -> new LevelController().updateSpecifiedLevel(buildConnectionInfo(), input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String resource = "radar/v2/json/specified_levels.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        SpecifiedLevelEndpointInput.Delete input = SpecifiedLevelEndpointInput.delete("level", "SPK");
+        assertDoesNotThrow(() -> new LevelController().deleteSpecifiedLevel(buildConnectionInfo(), input));
     }
 
     @Test
@@ -72,7 +98,7 @@ class TestLevelController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll()
-            .officeId("LRL");
+                .officeId("LRL");
         LocationLevels locationLevels = new LevelController().retrieveLocationLevels(buildConnectionInfo(), input);
         assertEquals(100, locationLevels.getPageSize());
         assertNotNull(locationLevels.getPage());
@@ -80,8 +106,8 @@ class TestLevelController extends TestController {
         List<LocationLevel> levels = locationLevels.getLevels();
         assertFalse(levels.isEmpty());
         Optional<LocationLevel> level = levels.stream()
-                                              .filter(s -> s.getLocationLevelId().equals("CarrCreek.Elev.Inst.0.Top of Flood"))
-                                              .findAny();
+                .filter(s -> s.getLocationLevelId().equals("CarrCreek.Elev.Inst.0.Top of Flood"))
+                .findAny();
         assertTrue(level.isPresent());
         assertEquals("LRL", level.get().getOfficeId());
         assertEquals("Top of Flood", level.get().getSpecifiedLevelId());
@@ -102,7 +128,7 @@ class TestLevelController extends TestController {
         mockHttpServer.start();
         Instant instant = Instant.parse("1900-01-01T06:00:00Z");
         LocationLevelEndpointInput.GetOne input = LocationLevelEndpointInput.getOne("AARK.Elev.Inst.0.Bottom of Inlet", "SWT",
-            instant);
+                instant);
         LocationLevel level = new LevelController().retrieveLocationLevel(buildConnectionInfo(), input);
         assertEquals("SWT", level.getOfficeId());
         assertEquals("Bottom of Inlet", level.getSpecifiedLevelId());
@@ -136,9 +162,9 @@ class TestLevelController extends TestController {
         LocationLevelEndpointInput.Post input = LocationLevelEndpointInput.post(locationLevel);
         new LevelController().storeLevel(buildConnectionInfo(cookieJarSupplier), input);
         LocationLevelEndpointInput.Delete delete = LocationLevelEndpointInput.delete(locationLevel.getLocationLevelId())
-            .officeId(locationLevel.getOfficeId())
-            .cascadeDelete(false)
-            .effectiveDate(locationLevel.getLevelDate().toInstant());
+                .officeId(locationLevel.getOfficeId())
+                .cascadeDelete(false)
+                .effectiveDate(locationLevel.getLevelDate().toInstant());
         assertDoesNotThrow(() -> new LevelController().deleteLevel(buildConnectionInfo(cookieJarSupplier), delete));
     }
 }

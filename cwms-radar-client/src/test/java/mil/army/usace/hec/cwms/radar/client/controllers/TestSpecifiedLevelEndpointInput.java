@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,24 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
+import org.junit.jupiter.api.Test;
+
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import org.junit.jupiter.api.Test;
 
 class TestSpecifiedLevelEndpointInput {
 
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        SpecifiedLevelEndpointInput input = new SpecifiedLevelEndpointInput()
-            .officeId("SWT")
-            .specifiedLevelMask("MASK");
+        SpecifiedLevelEndpointInput.GetAll input = SpecifiedLevelEndpointInput.getAll()
+                .officeId("SWT")
+                .specifiedLevelMask("MASK");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.OFFICE_QUERY_PARAMETER));
         assertEquals("MASK", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.SPECIFIED_LEVEL_MASK_QUERY_PARAMETER));
@@ -48,10 +51,41 @@ class TestSpecifiedLevelEndpointInput {
     @Test
     void testQueryRequestNulls() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        SpecifiedLevelEndpointInput input = new SpecifiedLevelEndpointInput();
+        SpecifiedLevelEndpointInput.GetAll input = SpecifiedLevelEndpointInput.getAll();
         input.addInputParameters(mockHttpRequestBuilder);
         assertNull(mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.OFFICE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.SPECIFIED_LEVEL_MASK_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPost() throws Exception {
+        String collect = readJsonFile("radar/v2/json/specified_level.json");
+        SpecifiedLevel specifiedLevel = RadarObjectMapper.mapJsonToObject(collect, SpecifiedLevel.class);
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        SpecifiedLevelEndpointInput.Post input = SpecifiedLevelEndpointInput.post(specifiedLevel)
+                .failIfExists(false);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.FAIL_IF_EXISTS_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPatch() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        SpecifiedLevelEndpointInput.Patch input = SpecifiedLevelEndpointInput.patch("MASK", "MASK1", "SWT");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.OFFICE_QUERY_PARAMETER));
+        assertEquals("MASK1", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.SPECIFIED_LEVEL_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testDelete() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        SpecifiedLevelEndpointInput.Delete input = SpecifiedLevelEndpointInput.delete("MASK", "SWT");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(SpecifiedLevelEndpointInput.OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
