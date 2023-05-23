@@ -60,7 +60,7 @@ public final class LocationGroupEndpointInput {
         return new Delete(categoryId, groupId, officeId);
     }
 
-    public static class GetOne extends EndpointInput {
+    public static final class GetOne extends EndpointInput {
         private final String groupId;
         private final String officeId;
         private final String categoryId;
@@ -84,7 +84,7 @@ public final class LocationGroupEndpointInput {
         }
     }
 
-    public static class GetAll extends EndpointInput {
+    public static final class GetAll extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = false;
 
@@ -111,7 +111,7 @@ public final class LocationGroupEndpointInput {
 
     }
 
-    public static class Post extends EndpointInput {
+    public static final class Post extends EndpointInput {
 
         private final LocationGroup locationGroup;
 
@@ -130,7 +130,7 @@ public final class LocationGroupEndpointInput {
 
     }
 
-    public static class Patch extends EndpointInput {
+    public static final class Patch extends EndpointInput {
 
         private final LocationGroup locationGroup;
         private final String originalGroupId;
@@ -155,7 +155,7 @@ public final class LocationGroupEndpointInput {
 
     }
 
-    public static class Delete extends EndpointInput {
+    public static final class Delete extends EndpointInput {
 
         private final String groupId;
         private final String officeId;

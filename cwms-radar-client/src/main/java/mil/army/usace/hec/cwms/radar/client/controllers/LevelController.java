@@ -24,11 +24,6 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-
-import java.io.IOException;
-import java.util.Set;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -38,29 +33,68 @@ import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
 
+import java.io.IOException;
+import java.util.Set;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+
 public final class LevelController {
 
     private static final String SPECIFIED_LEVEL_ENDPOINT = "specified-levels";
     private static final String LOCATION_LEVEL_ENDPOINT = "levels";
 
-    public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput input)
-        throws IOException {
+    public Set<SpecifiedLevel> retrieveSpecifiedLevels(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput.GetAll input)
+            throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
-            .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), SpecifiedLevel.class);
         }
     }
 
+    public void storeSpecifiedLevel(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput.Post input)
+            throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.specifiedLevel());
+        new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
+                .addEndpointInput(input)
+                .post()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V2)
+                .execute()
+                .close();
+    }
+
+    public void updateSpecifiedLevel(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput.Patch input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT + "/" + input.originalId())
+                .addEndpointInput(input)
+                .patch()
+                .withBody("")
+                .withMediaType(ACCEPT_HEADER_V2)
+                .execute()
+                .close();
+    }
+
+    public void deleteSpecifiedLevel(ApiConnectionInfo apiConnectionInfo, SpecifiedLevelEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT + "/" + input.specifiedLevel())
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V2)
+                .execute()
+                .close();
+    }
+
     public LocationLevel retrieveLocationLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.GetOne input)
-        throws IOException {
+            throws IOException {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevel.class);
         }

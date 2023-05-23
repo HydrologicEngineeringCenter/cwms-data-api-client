@@ -58,7 +58,7 @@ public final class TimeSeriesCategoryEndpointInput {
         return new Delete(categoryId, officeId);
     }
 
-    public static class GetAll extends EndpointInput {
+    public static final class GetAll extends EndpointInput {
 
         private String officeId;
 
@@ -78,7 +78,7 @@ public final class TimeSeriesCategoryEndpointInput {
         }
     }
 
-    public static class GetOne extends EndpointInput {
+    public static final class GetOne extends EndpointInput {
         private final String categoryId;
         private final String officeId;
 
@@ -98,7 +98,7 @@ public final class TimeSeriesCategoryEndpointInput {
         }
     }
 
-    public static class Post extends EndpointInput {
+    public static final class Post extends EndpointInput {
         private final TimeSeriesCategory timeSeriesCategory;
 
         private Post(TimeSeriesCategory timeSeriesCategory) {
@@ -115,7 +115,7 @@ public final class TimeSeriesCategoryEndpointInput {
         }
     }
 
-    public static class Delete extends EndpointInput {
+    public static final class Delete extends EndpointInput {
         private final String categoryId;
         private final String officeId;
         private boolean cascadeDelete;
