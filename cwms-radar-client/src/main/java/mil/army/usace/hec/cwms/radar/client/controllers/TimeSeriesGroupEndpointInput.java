@@ -64,7 +64,7 @@ public final class TimeSeriesGroupEndpointInput {
         return new Delete(categoryId, groupId, officeId);
     }
 
-    public static class GetAll extends EndpointInput {
+    public static final class GetAll extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = true;
 
@@ -90,7 +90,7 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static class GetOne extends EndpointInput {
+    public static final class GetOne extends EndpointInput {
 
         private final String categoryId;
         private final String groupId;
@@ -114,7 +114,7 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static class Post extends EndpointInput {
+    public static final class Post extends EndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private boolean failIfExists = true;
@@ -139,7 +139,7 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static class Patch extends EndpointInput {
+    public static final class Patch extends EndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private final String originalGroupId;
@@ -163,7 +163,7 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static class Delete extends EndpointInput {
+    public static final class Delete extends EndpointInput {
         private final String timeSeriesGroupId;
         private final String categoryId;
         private final String officeId;

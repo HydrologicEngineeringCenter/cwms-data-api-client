@@ -60,12 +60,12 @@ public final class LocationCategoryEndpointInput {
         return new Delete(categoryId, officeId);
     }
 
-    public static class GetOne extends EndpointInput {
+    public static final class GetOne extends EndpointInput {
 
         private final String categoryId;
         private final String officeId;
 
-        public GetOne(String categoryId, String officeId) {
+        private GetOne(String categoryId, String officeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a location category without an id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a location category without an office");
         }
@@ -81,7 +81,7 @@ public final class LocationCategoryEndpointInput {
         }
     }
 
-    public static class GetAll extends EndpointInput {
+    public static final class GetAll extends EndpointInput {
         private String officeId;
 
         private GetAll() {
@@ -101,7 +101,7 @@ public final class LocationCategoryEndpointInput {
 
     }
 
-    public static class Post extends EndpointInput {
+    public static final class Post extends EndpointInput {
 
         private final LocationCategory locationCategory;
 
@@ -119,7 +119,7 @@ public final class LocationCategoryEndpointInput {
         }
     }
 
-    public static class Delete extends EndpointInput {
+    public static final class Delete extends EndpointInput {
 
         private final String categoryId;
         private final String officeId;
