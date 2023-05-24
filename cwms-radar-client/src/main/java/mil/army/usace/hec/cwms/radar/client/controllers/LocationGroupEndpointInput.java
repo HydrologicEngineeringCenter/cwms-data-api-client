@@ -39,6 +39,7 @@ public final class LocationGroupEndpointInput {
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "includeAssigned";
+    static final String REPLACE_ASSIGNED_LOCS = "replace-assigned-locs";
 
     public static GetOne getOne(String categoryId, String groupId, String officeId) {
         return new GetOne(categoryId, groupId, officeId);
@@ -134,6 +135,7 @@ public final class LocationGroupEndpointInput {
 
         private final LocationGroup locationGroup;
         private final String originalGroupId;
+        private boolean replaceAssignedLocs;
 
         private Patch(String originalGroupId, LocationGroup locationGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a location group without an original group id");
@@ -148,9 +150,15 @@ public final class LocationGroupEndpointInput {
             return locationGroup;
         }
 
+        public Patch replaceAssignedLocs(boolean replaceAssignedLocs) {
+            this.replaceAssignedLocs = replaceAssignedLocs;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_LOCS, Boolean.toString(replaceAssignedLocs))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 
     }

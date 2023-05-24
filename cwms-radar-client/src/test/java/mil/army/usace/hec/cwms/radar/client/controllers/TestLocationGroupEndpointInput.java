@@ -76,8 +76,10 @@ class TestLocationGroupEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/location_group.json");
         LocationGroup locationGroup = RadarObjectMapper.mapJsonToObject(collect, LocationGroup.class);
-        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch(locationGroup.getId() + "1", locationGroup);
+        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch(locationGroup.getId() + "1", locationGroup)
+                .replaceAssignedLocs(true);
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REPLACE_ASSIGNED_LOCS));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
