@@ -74,8 +74,10 @@ class TestTimeSeriesGroupEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("group-id", timeSeriesGroup);
+        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("group-id", timeSeriesGroup)
+                .replaceAssignedTs(true);
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 

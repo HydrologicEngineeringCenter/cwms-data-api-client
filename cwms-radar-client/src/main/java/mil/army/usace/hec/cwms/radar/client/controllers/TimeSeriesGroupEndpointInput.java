@@ -39,6 +39,7 @@ public final class TimeSeriesGroupEndpointInput {
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String FAIL_IF_EXISTS = "fail-if-exists";
+    static final String REPLACE_ASSIGNED_TS_QUERY_PARAMETER = "replace-assigned-ts";
 
     private TimeSeriesGroupEndpointInput() {
         throw new AssertionError("factory class");
@@ -143,6 +144,7 @@ public final class TimeSeriesGroupEndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private final String originalGroupId;
+        private boolean replaceAssignedTs;
 
         private Patch(String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
@@ -157,9 +159,15 @@ public final class TimeSeriesGroupEndpointInput {
             return originalGroupId;
         }
 
+        public Patch replaceAssignedTs(boolean replaceAssignedTs) {
+            this.replaceAssignedTs = replaceAssignedTs;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER, Boolean.toString(replaceAssignedTs))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
