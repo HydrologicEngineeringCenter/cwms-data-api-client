@@ -1,0 +1,39 @@
+@startuml
+
+cloud tomcat {
+    component cwms_aaa
+    component cwms_data_api
+}
+
+package "cda_client repo" {
+
+    component cwms_aaa_client
+    component cwms_http_client
+    note right of cwms_http_client
+        Fluent API for HTTP
+        communications and authentication
+    end note
+    component cwms_radar_client
+    note right of cwms_radar_client : Performs calls to CDA
+    component cwms_radar_model
+    note right of cwms_radar_model : CDA data parsing
+}
+
+
+
+
+cwms_radar_client -left[hidden]- cwms_aaa_client
+
+cwms_aaa <.down.> cwms_http_client : CWMS_AAA login (https)
+cwms_http_client <.down.> cwms_aaa_client : Uses http client for login
+
+
+cwms_data_api <.down.> cwms_http_client : CDA read/write (https)
+cwms_http_client <.down.> cwms_radar_client : Uses http client for get/post
+
+cwms_http_client <-down- cwms_aaa_client
+cwms_http_client <-down- cwms_radar_client
+
+cwms_radar_client -down-> cwms_radar_model
+
+@enduml

@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
-
+    apply plugin: 'project-report'
 
     version = versionLabel(versionDetails())
     group = "mil.army.usace.hec"
