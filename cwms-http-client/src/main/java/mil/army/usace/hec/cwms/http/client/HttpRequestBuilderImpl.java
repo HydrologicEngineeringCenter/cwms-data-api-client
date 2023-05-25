@@ -24,37 +24,29 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toSet;
-import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
-
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.Security;
-import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
-import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
+
+import javax.net.ssl.SSLHandshakeException;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.Security;
+import java.security.SignatureException;
+import java.util.*;
+
+import static java.util.stream.Collectors.toSet;
+import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -248,12 +240,15 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
         private void checkError(Response execute, Request request, ResponseBody responseBody) throws IOException {
             int code = execute.code();
-            if (code == 404) {
-                throw new NoDataFoundException(execute, request, responseBody);
-            } else if (code == 401) {
-                throw new UnauthorizedException(execute, request, responseBody);
-            } else {
-                throw new CwmsHttpResponseException(execute, request, responseBody);
+            switch (code) {
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    throw new NoDataFoundException(execute, request, responseBody);
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    throw new UnauthorizedException(execute, request, responseBody);
+                case HttpURLConnection.HTTP_CONFLICT:
+                    throw new DataAlreadyExistsException(execute, request, responseBody);
+                default:
+                    throw new CwmsHttpResponseException(execute, request, responseBody);
             }
         }
 

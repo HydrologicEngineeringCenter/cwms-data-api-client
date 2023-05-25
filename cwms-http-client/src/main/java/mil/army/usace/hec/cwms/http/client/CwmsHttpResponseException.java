@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,14 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.Optional;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class CwmsHttpResponseException extends IOException {
     private static final String ERROR_MESSAGE = "Unknown error occurred for request: %s %s \nError code: %s %s %s";
@@ -37,6 +40,7 @@ public class CwmsHttpResponseException extends IOException {
     private final int errorCode;
     private final String responseBody;
     private final String requestType;
+    private final String requestBody;
 
     CwmsHttpResponseException(Response execute, Request request, ResponseBody responseBody) throws IOException {
         this.reasonPhrase = execute.message();
@@ -47,6 +51,14 @@ public class CwmsHttpResponseException extends IOException {
             this.responseBody = null;
         } else {
             this.responseBody = responseBody.string();
+        }
+        RequestBody requestBody = request.body();
+        if (requestBody == null) {
+            this.requestBody = null;
+        } else {
+            Buffer buffer = new Buffer();
+            requestBody.writeTo(buffer);
+            this.requestBody = buffer.readUtf8();
         }
     }
 
@@ -70,9 +82,13 @@ public class CwmsHttpResponseException extends IOException {
         return Optional.ofNullable(responseBody);
     }
 
+    public final Optional<String> getRequestBody() {
+        return Optional.ofNullable(requestBody);
+    }
+
     @Override
     public String getMessage() {
         return String.format(ERROR_MESSAGE, getRequestType(), getUrl(), getErrorCode(), getReasonPhrase(),
-            getResponseBody().map(c -> "\n" + c).orElse(""));
+                getResponseBody().map(c -> "\n" + c).orElse(""));
     }
 }
