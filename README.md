@@ -5,6 +5,7 @@ CWMS RADAR is undergoing a rename process to CWMS DATA API.
 This repository name will be changed as well as the artifacts/packages/classes in a future release. 
 This will follow the guidance and process of the [cwms-radar-api](https://github.com/USACE/cwms-radar-api) repository rename effort.
 
+![Modules](docs/CDA-client-modules.png)
 
 # cwms-http-client
 An HTTP client API for performing REST calls as well as adding authentication and HTTPS support.
