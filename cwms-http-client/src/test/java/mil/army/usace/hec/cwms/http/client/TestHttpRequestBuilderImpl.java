@@ -24,20 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.security.Provider;
-import java.security.Security;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import okhttp3.Request;
@@ -46,6 +32,17 @@ import okhttp3.mockwebserver.MockWebServer;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.Provider;
+import java.security.Security;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestHttpRequestBuilderImpl {
 
@@ -712,6 +709,21 @@ class TestHttpRequestBuilderImpl {
             }
         } finally {
             mockWebServer.shutdown();
+        }
+    }
+
+    @Test
+    void testDataAlreadyExistsException() throws IOException {
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            mockWebServer.enqueue(new MockResponse().setResponseCode(HttpURLConnection.HTTP_CONFLICT));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
+            HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
+            String body = readJsonFile("success.json");
+            HttpRequestExecutor executor = httpRequestBuilder.post().withBody(body).withMediaType(ACCEPT_HEADER_V1);
+            assertThrows(DataAlreadyExistsException.class, () -> executor.execute().close());
         }
     }
 
