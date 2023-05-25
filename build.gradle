@@ -60,7 +60,8 @@ subprojects {
         dependsOn test
         reports {
             csv.required = true
-            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+            xml.required = true
+            html.outputLocation = layout.buildDirectory.dir('jacoco')
         }
     }
 
