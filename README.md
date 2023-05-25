@@ -1,4 +1,4 @@
-![Coverage](.github/badges/jacoco.svg)
+![BranchCoverage](.github/coveragereport/badge_shieldsio_branchcoverage_blue.svg) ![LineCoverage](.github/coveragereport/badge_shieldsio_linecoverage_blue.svg) ![MethodCoverage](.github/coveragereport/badge_shieldsio_methodcoverage_blue.svg)
 
 ### <span style="color:orange">Notice</span>
 CWMS RADAR is undergoing a rename process to CWMS DATA API. 
