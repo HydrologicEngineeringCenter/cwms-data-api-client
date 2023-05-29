@@ -25,12 +25,14 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpecs;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TestRatingSpecController extends TestController {
@@ -61,6 +63,32 @@ class TestRatingSpecController extends TestController {
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         RatingSpec spec = controller.retrieveRatingSpec(apiConnectionInfo, input);
         assertNotNull(spec);
+    }
+
+    @Test
+    void testPost() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_spec.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingSpecController controller = new RatingSpecController();
+
+        RatingSpecEndpointInput.Post input = RatingSpecEndpointInput.post("xml");
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.storeRatingSpec(apiConnectionInfo, input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_spec.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingSpecController controller = new RatingSpecController();
+
+        RatingSpecEndpointInput.Delete input = RatingSpecEndpointInput.delete("BUFF.Stage;Flow.WCDS.Production", "SWT", DeleteMethod.ALL);
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.deleteRatingSpec(apiConnectionInfo, input));
     }
 
 }

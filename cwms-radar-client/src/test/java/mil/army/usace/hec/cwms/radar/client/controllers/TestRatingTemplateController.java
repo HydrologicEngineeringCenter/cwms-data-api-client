@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.ParameterSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RatingTemplate;
 import mil.army.usace.hec.cwms.radar.client.model.RatingTemplates;
@@ -97,6 +98,31 @@ class TestRatingTemplateController extends TestController {
         assertEquals("ERROR", parameterSpec.getInRangeMethod());
         assertEquals("ERROR", parameterSpec.getOutRangeHighMethod());
         assertEquals("LINEAR", parameterSpec.getOutRangeLowMethod());
+    }
+
+    @Test
+    void testStore() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_template.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
+
+        RatingTemplateEndpointInput.Post input = RatingTemplateEndpointInput.post("xml");
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.storeRatingTemplate(apiConnectionInfo, input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_template.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
+
+        RatingTemplateEndpointInput.Delete input = RatingTemplateEndpointInput.delete("Stage;Stage.USGS-CORR", "LRL", DeleteMethod.ALL);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.deleteRatingTemplate(apiConnectionInfo, input));
     }
 
 }
