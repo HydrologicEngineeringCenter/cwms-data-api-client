@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,51 +24,43 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpecs;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TestRatingSpecController extends TestController {
 
-	@Test
-	void testRetrieveRatingSpecs() throws IOException
-	{
-		String collect = readJsonFile("radar/v2/json/rating_specs.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		RatingSpecController controller = new RatingSpecController();
+    @Test
+    void testRetrieveRatingSpecs() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_specs.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingSpecController controller = new RatingSpecController();
 
-		RatingSpecEndpointInput input = new RatingSpecEndpointInput()
-			.officeId("SWT")
-			.ratingIdMask("BUFF.Stage;Flow.WCDS.Production")
-				;
+        RatingSpecEndpointInput.GetAll input = RatingSpecEndpointInput.getAll().officeId("SWT").ratingIdMask("BUFF.Stage;Flow.WCDS.Production");
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		RatingSpecs specs = controller.retrieveRatingSpecs(apiConnectionInfo, input);
-		assertNotNull(specs);
-	}
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        RatingSpecs specs = controller.retrieveRatingSpecs(apiConnectionInfo, input);
+        assertNotNull(specs);
+    }
 
-	@Test
-	void testRetrieveRatingSpec() throws IOException
-	{
-		String collect = readJsonFile("radar/v2/json/rating_spec.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		RatingSpecController controller = new RatingSpecController();
+    @Test
+    void testRetrieveRatingSpec() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_spec.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingSpecController controller = new RatingSpecController();
 
-		RatingSpecEndpointInput input = new RatingSpecEndpointInput()
-				.officeId("SWT")
-				.ratingId("BUFF.Stage;Flow.WCDS.Production")
-				;
+        RatingSpecEndpointInput.GetOne input = RatingSpecEndpointInput.getOne("BUFF.Stage;Flow.WCDS.Production", "SWT");
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		RatingSpec spec = controller.retrieveRatingSpec(apiConnectionInfo, input);
-		assertNotNull(spec);
-	}
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        RatingSpec spec = controller.retrieveRatingSpec(apiConnectionInfo, input);
+        assertNotNull(spec);
+    }
 
 }

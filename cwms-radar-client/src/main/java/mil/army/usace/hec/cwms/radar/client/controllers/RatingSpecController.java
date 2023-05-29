@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,6 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -35,6 +32,10 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RatingSpecs;
 
+import java.io.IOException;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+
 
 public final class RatingSpecController {
     private static final String RATING_SPEC = "ratings/spec";
@@ -42,17 +43,17 @@ public final class RatingSpecController {
     /**
      * Retrieve Rating Spec.
      *
-     * @param apiConnectionInfo       - connection info
-     * @param ratingSpecEndpointInput - rating-id and office
+     * @param apiConnectionInfo connection info
+     * @param input             rating-id and office
      * @return RatingSpec
-     * @throws IOException - thrown if retrieve failed
+     * @throws IOException thrown if retrieve failed
      */
-    public RatingSpec retrieveRatingSpec(ApiConnectionInfo apiConnectionInfo,
-                                         RatingSpecEndpointInput ratingSpecEndpointInput) throws IOException {
+    public RatingSpec retrieveRatingSpec(ApiConnectionInfo apiConnectionInfo, RatingSpecEndpointInput.GetOne input)
+            throws IOException {
         RatingSpec retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-                RATING_SPEC + "/" + ratingSpecEndpointInput.getRatingId())
-                .addEndpointInput(ratingSpecEndpointInput)
+                RATING_SPEC + "/" + input.ratingId())
+                .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
@@ -64,21 +65,58 @@ public final class RatingSpecController {
     /**
      * Retrieve Location Category.
      *
-     * @param apiConnectionInfo       - connection info
-     * @param ratingSpecEndpointInput - rating-id and office
+     * @param apiConnectionInfo connection info
+     * @param input             rating-id and office
      * @return RatingSpecs for office id
-     * @throws IOException - thrown if retrieve failed
+     * @throws IOException thrown if retrieve failed
      */
-    public RatingSpecs retrieveRatingSpecs(ApiConnectionInfo apiConnectionInfo,
-                                           RatingSpecEndpointInput ratingSpecEndpointInput) throws IOException {
+    public RatingSpecs retrieveRatingSpecs(ApiConnectionInfo apiConnectionInfo, RatingSpecEndpointInput.GetAll input)
+            throws IOException {
         RatingSpecs retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATING_SPEC)
-                .addEndpointInput(ratingSpecEndpointInput)
+                .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), RatingSpecs.class);
         }
         return retVal;
+    }
+
+    /**
+     * Retrieve Rating Spec.
+     *
+     * @param apiConnectionInfo connection info
+     * @param input             rating-id and office
+     * @throws IOException thrown if retrieve failed
+     */
+    public void storeRatingSpec(ApiConnectionInfo apiConnectionInfo, RatingSpecEndpointInput.Post input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo,
+                RATING_SPEC)
+                .addEndpointInput(input)
+                .post()
+                .withBody(input.ratingSpecXml())
+                .withMediaType(ACCEPT_HEADER_V2)
+                .execute()
+                .close();
+    }
+
+    /**
+     * Delete Rating Spec.
+     *
+     * @param apiConnectionInfo connection info
+     * @param input             rating-id and office
+     * @throws IOException thrown if retrieve failed
+     */
+    public void deleteRatingSpec(ApiConnectionInfo apiConnectionInfo, RatingSpecEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo,
+                RATING_SPEC + "/" + input.ratingId())
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V2)
+                .execute()
+                .close();
     }
 }
