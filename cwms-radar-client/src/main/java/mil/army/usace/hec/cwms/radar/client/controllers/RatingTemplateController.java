@@ -35,6 +35,7 @@ import mil.army.usace.hec.cwms.radar.client.model.RatingTemplates;
 import java.io.IOException;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V2;
 
 
 public final class RatingTemplateController {
@@ -96,7 +97,7 @@ public final class RatingTemplateController {
                 .addEndpointInput(input)
                 .post()
                 .withBody(input.templateXml())
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_XML_HEADER_V2)
                 .execute()
                 .close();
     }
