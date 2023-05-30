@@ -37,6 +37,7 @@ public final class TimeSeriesCategoryEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
+    static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
 
     private TimeSeriesCategoryEndpointInput() {
         throw new AssertionError("factory class");
@@ -100,6 +101,7 @@ public final class TimeSeriesCategoryEndpointInput {
 
     public static final class Post extends EndpointInput {
         private final TimeSeriesCategory timeSeriesCategory;
+        private boolean failIfExists = true;
 
         private Post(TimeSeriesCategory timeSeriesCategory) {
             this.timeSeriesCategory = Objects.requireNonNull(timeSeriesCategory, "Cannot update a time series category without a data object");
@@ -109,9 +111,15 @@ public final class TimeSeriesCategoryEndpointInput {
             return timeSeriesCategory;
         }
 
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, Boolean.toString(failIfExists))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
