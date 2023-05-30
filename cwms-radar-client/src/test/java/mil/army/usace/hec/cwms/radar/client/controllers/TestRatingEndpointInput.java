@@ -24,59 +24,58 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import org.junit.jupiter.api.Test;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RatingSpecEndpointInput.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RatingEndpointInput.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestRatingSpecEndpointInput {
-    @Test
-    void testGetAll() {
-        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        String ratingId = "BUFF.Stage;Flow.WCDS.Production";
-        RatingSpecEndpointInput.GetAll input = RatingSpecEndpointInput.getAll()
-                .officeId("SWT")
-                .pageSize(5)
-                .ratingIdMask(ratingId);
-
-        input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-
-        assertEquals("5", mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
-        assertEquals(ratingId, mockHttpRequestBuilder.getQueryParameter(RATING_ID_MASK_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-    }
+class TestRatingEndpointInput {
 
     @Test
     void testGetOne() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        RatingSpecEndpointInput.GetOne input = RatingSpecEndpointInput.getOne("BUFF.Stage;Flow.WCDS.Production", "SWT");
+        String ratingId = "BUFF.Stage;Flow.WCDS.Production";
+
+        ZonedDateTime begin = ZonedDateTime.of(2018, 1, 1, 1, 1, 1, 1, ZoneId.of("UTC"));
+        ZonedDateTime end = ZonedDateTime.of(2019, 1, 1, 1, 1, 1, 1, ZoneId.of("UTC"));
+        RatingEndpointInput.GetOne input = RatingEndpointInput.getOne(ratingId, "SWT")
+                .begin(begin.toInstant())
+                .end(end.toInstant())
+                .lazy();
 
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("2018-01-01T01:01:01.000000001Z", mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertEquals("2019-01-01T01:01:01.000000001Z", mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals(ACCEPT_XML_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testPost() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        RatingSpecEndpointInput.Post input = RatingSpecEndpointInput.post("xml")
-                .failIfExists(true);
+        RatingEndpointInput.Post input = RatingEndpointInput.post("xml");
+
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_XML_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testDelete() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        RatingSpecEndpointInput.Delete input = RatingSpecEndpointInput.delete("BUFF.Stage;Flow.WCDS.Production", "SWT", DeleteMethod.ALL);
+        String ratingId = "BUFF.Stage;Flow.WCDS.Production";
+        ZonedDateTime begin = ZonedDateTime.of(2018, 1, 1, 1, 1, 1, 1, ZoneId.of("UTC"));
+        ZonedDateTime end = ZonedDateTime.of(2019, 1, 1, 1, 1, 1, 1, ZoneId.of("UTC"));
+        RatingEndpointInput.Delete input = RatingEndpointInput.delete(ratingId, "SWT", begin.toInstant(), end.toInstant());
+
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals("DELETE_ALL", mockHttpRequestBuilder.getQueryParameter(DELETE_METHOD_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("2018-01-01T01:01:01.000000001Z", mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertEquals("2019-01-01T01:01:01.000000001Z", mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals(ACCEPT_XML_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

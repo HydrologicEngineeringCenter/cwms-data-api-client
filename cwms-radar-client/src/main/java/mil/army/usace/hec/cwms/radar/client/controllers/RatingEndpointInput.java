@@ -28,6 +28,7 @@ import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
@@ -35,10 +36,10 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 
 public final class RatingEndpointInput {
 
-    private static final String OFFICE_QUERY_PARAMETER = "office";
-    private static final String BEGIN_QUERY_PARAMETER = "begin";
-    private static final String END_QUERY_PARAMETER = "end";
-    private static final String METHOD_QUERY_PARAMETER = "method";
+    static final String OFFICE_QUERY_PARAMETER = "office";
+    static final String BEGIN_QUERY_PARAMETER = "begin";
+    static final String END_QUERY_PARAMETER = "end";
+    static final String METHOD_QUERY_PARAMETER = "method";
 
     private RatingEndpointInput() {
         throw new AssertionError("Utility class");
@@ -52,8 +53,8 @@ public final class RatingEndpointInput {
         return new Post(ratingSetXml);
     }
 
-    public static Delete delete(String ratingId, String officeId) {
-        return new Delete(ratingId, officeId);
+    public static Delete delete(String ratingId, String officeId, Instant begin, Instant end) {
+        return new Delete(ratingId, officeId, begin, end);
     }
 
     public static final class GetOne extends EndpointInput {
@@ -65,8 +66,8 @@ public final class RatingEndpointInput {
         private String method = "EAGER";
 
         private GetOne(String ratingId, String officeId) {
-            this.ratingId = ratingId;
-            this.officeId = officeId;
+            this.ratingId = Objects.requireNonNull(ratingId, "Cannot retrieve rating without an id");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve rating without an office");
         }
 
         public GetOne begin(Instant begin) {
@@ -115,7 +116,7 @@ public final class RatingEndpointInput {
         private final String ratingSetXml;
 
         private Post(String ratingSetXml) {
-            this.ratingSetXml = ratingSetXml;
+            this.ratingSetXml = Objects.requireNonNull(ratingSetXml, "Cannot store a rating without rating set xml");
         }
 
         String ratingSetXml() {
@@ -132,10 +133,14 @@ public final class RatingEndpointInput {
 
         private final String ratingId;
         private final String officeId;
+        private final Instant begin;
+        private final Instant end;
 
-        private Delete(String ratingId, String officeId) {
-            this.ratingId = ratingId;
-            this.officeId = officeId;
+        private Delete(String ratingId, String officeId, Instant begin, Instant end) {
+            this.ratingId = Objects.requireNonNull(ratingId, "Cannot delete a rating without an id");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a rating without an office");
+            this.begin = Objects.requireNonNull(begin, "Cannot delete rating effective dates without a start time");
+            this.end = Objects.requireNonNull(end, "Cannot delete rating effective dates without an end time");
         }
 
         String getRatingId() {
@@ -144,8 +149,10 @@ public final class RatingEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+            return httpRequestBuilder.addQueryParameter(BEGIN_QUERY_PARAMETER, begin.toString())
+                    .addQueryParameter(END_QUERY_PARAMETER, end.toString())
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
         }
     }
 }
