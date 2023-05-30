@@ -33,6 +33,7 @@ import java.io.IOException;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.FAIL_IF_EXISTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.OFFICE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -70,8 +71,10 @@ class TestTimeSeriesCategoryEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/ts_category.json");
         TimeSeriesCategory timeSeriesCategory = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesCategory.class);
-        TimeSeriesCategoryEndpointInput.Post input = TimeSeriesCategoryEndpointInput.post(timeSeriesCategory);
+        TimeSeriesCategoryEndpointInput.Post input = TimeSeriesCategoryEndpointInput.post(timeSeriesCategory)
+                .failIfExists(false);
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
