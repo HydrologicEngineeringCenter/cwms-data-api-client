@@ -24,15 +24,14 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-
-import java.time.Instant;
-import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
+
+import java.time.Instant;
+import java.util.Optional;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
 
 public final class LocationLevelEndpointInput {
 
@@ -45,7 +44,7 @@ public final class LocationLevelEndpointInput {
     static final String BEGIN_QUERY_PARAMETER = "begin";
     static final String END_QUERY_PARAMETER = "end";
     static final String UNIT_QUERY_PARAMETER = "unit";
-    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete*";
+    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
     private LocationLevelEndpointInput() {
         throw new AssertionError("factory class");
