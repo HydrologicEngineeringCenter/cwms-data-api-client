@@ -26,8 +26,9 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Objects;
+
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * Clob
@@ -35,7 +36,7 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-04-10T10:29:07.376-07:00[America/Los_Angeles]")
 public class Clob {
-    @JsonProperty("office")
+    @JsonProperty("office-id")
     private String office = null;
 
     @JsonProperty("id")

@@ -3,7 +3,7 @@
   "total": 1,
   "clobs": [
     {
-      "office": "SWT",
+      "office-id": "SWT",
       "id": "TEST.CLOB.ID",
       "description": "UNIT TESTING CLOB ENDPOINT DESCRIPTION",
       "value": "UNIT TESTING CLOB ENDPOINT"
