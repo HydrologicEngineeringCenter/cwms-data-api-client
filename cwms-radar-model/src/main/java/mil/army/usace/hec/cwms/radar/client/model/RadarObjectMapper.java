@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.core.json.JsonWriteFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,14 @@ public final class RadarObjectMapper {
 
     public static <T> List<T> mapJsonToListOfObjects(String json, Class<T> classObject) throws IOException {
         return OBJECT_MAPPER.readValue(json, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, classObject));
+    }
+
+    public static <T> List<T> mapJsonToListOfObjects(String json, Class<T> classObject, String... path) throws IOException {
+        JsonNode node = OBJECT_MAPPER.readTree(json);
+        for (String pathNode : path) {
+            node = node.path(pathNode);
+        }
+        return OBJECT_MAPPER.readValue(node.toString(), OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, classObject));
     }
 
     public static <T> Set<T> mapJsonToSetOfObjects(String json, Class<T> classObject) throws IOException {
