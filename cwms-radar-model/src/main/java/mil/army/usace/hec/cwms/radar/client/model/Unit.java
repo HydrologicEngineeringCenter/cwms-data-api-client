@@ -22,33 +22,49 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.controllers;
+package mil.army.usace.hec.cwms.radar.client.model;
 
-import mil.army.usace.hec.cwms.radar.client.model.Parameter;
-import mil.army.usace.hec.cwms.radar.client.model.Unit;
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+//This class is not codegenned as there is no OpenAPI docs for the parameter catalog
+public final class Unit {
+    @JsonProperty(value = "abstract-parameter")
+    private String abstractParameter;
+    @JsonProperty(value = "name")
+    private String name;
+    @JsonProperty(value = "unit-system")
+    private String unitSystem;
+    @JsonProperty(value = "long-name")
+    private String longName;
+    @JsonProperty(value = "description")
+    private String description;
+    @JsonProperty(value = "alternate-names")
+    private List<String> alternateNames = new ArrayList<>();
 
-final class TestCatalogController extends TestController {
-
-    @Test
-    void testParameterCatalog() throws Exception {
-        String collect = readJsonFile("radar/v1/json/parameter_catalog.json");
-        mockHttpServer.enqueue(collect);
-        mockHttpServer.start();
-        List<Parameter> parameters = new CatalogController().retrieveParameterCatalog(buildConnectionInfo());
-        assertFalse(parameters.isEmpty());
+    public String abstractParameter() {
+        return abstractParameter;
     }
 
-    @Test
-    void testUnitCatalog() throws Exception {
-        String collect = readJsonFile("radar/v1/json/unit_catalog.json");
-        mockHttpServer.enqueue(collect);
-        mockHttpServer.start();
-        List<Unit> units = new CatalogController().retrieveUnitCatalog(buildConnectionInfo());
-        assertFalse(units.isEmpty());
+    public String name() {
+        return name;
+    }
+
+    public String unitSystem() {
+        return unitSystem;
+    }
+
+    public String longName() {
+        return longName;
+    }
+
+    public String description() {
+        return description;
+    }
+
+    public List<String> alternateNames() {
+        return alternateNames;
     }
 }

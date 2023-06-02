@@ -28,10 +28,7 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
-import mil.army.usace.hec.cwms.radar.client.model.Parameter;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
+import mil.army.usace.hec.cwms.radar.client.model.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +40,7 @@ public final class CatalogController {
     private static final String CATALOG_TIMESERIES_ENDPOINT = "catalog/timeseries";
     private static final String CATALOG_LOCATIONS_ENDPOINT = "catalog/locations";
     private static final String CATALOG_PARAMETERS_ENDPOINT = "parameters";
+    private static final String CATALOG_UNITS_ENDPOINT = "units";
 
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
@@ -76,6 +74,16 @@ public final class CatalogController {
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Parameter.class, "parameters", "parameters");
+        }
+    }
+
+    public List<Unit> retrieveUnitCatalog(ApiConnectionInfo apiConnectionInfo) throws Exception {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_UNITS_ENDPOINT)
+                .addEndpointInput(new UnitCatalogEndpointInput())
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Unit.class, "units", "units");
         }
     }
 }

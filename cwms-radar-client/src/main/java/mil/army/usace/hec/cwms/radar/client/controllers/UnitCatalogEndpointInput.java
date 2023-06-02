@@ -24,31 +24,18 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.Parameter;
-import mil.army.usace.hec.cwms.radar.client.model.Unit;
-import org.junit.jupiter.api.Test;
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-import java.util.List;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+public final class UnitCatalogEndpointInput extends EndpointInput {
+    private static final String FORMAT_QUERY_PARAMETER = "format";
 
-final class TestCatalogController extends TestController {
-
-    @Test
-    void testParameterCatalog() throws Exception {
-        String collect = readJsonFile("radar/v1/json/parameter_catalog.json");
-        mockHttpServer.enqueue(collect);
-        mockHttpServer.start();
-        List<Parameter> parameters = new CatalogController().retrieveParameterCatalog(buildConnectionInfo());
-        assertFalse(parameters.isEmpty());
-    }
-
-    @Test
-    void testUnitCatalog() throws Exception {
-        String collect = readJsonFile("radar/v1/json/unit_catalog.json");
-        mockHttpServer.enqueue(collect);
-        mockHttpServer.start();
-        List<Unit> units = new CatalogController().retrieveUnitCatalog(buildConnectionInfo());
-        assertFalse(units.isEmpty());
+    @Override
+    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        return httpRequestBuilder.addQueryParameter(FORMAT_QUERY_PARAMETER, "json")
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
     }
 }
