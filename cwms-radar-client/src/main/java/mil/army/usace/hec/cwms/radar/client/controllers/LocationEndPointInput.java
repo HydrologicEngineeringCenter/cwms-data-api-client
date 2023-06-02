@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,20 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-
-import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.Location;
+
+import java.util.Objects;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class LocationEndPointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String UNIT_QUERY_PARAMETER = "unit";
+    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
     private LocationEndPointInput() {
         throw new AssertionError("Factory class");
@@ -142,6 +144,7 @@ public final class LocationEndPointInput {
 
         private final String locationId;
         private String officeId;
+        private boolean cascadeDelete;
 
         private Delete(String locationId) {
             this.locationId = Objects.requireNonNull(locationId, "Cannot access the location endpoint DELETE without a location name");
@@ -156,10 +159,16 @@ public final class LocationEndPointInput {
             return this;
         }
 
+        public Delete cascadeDelete(boolean cascadeDelete) {
+            this.cascadeDelete = cascadeDelete;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 }
