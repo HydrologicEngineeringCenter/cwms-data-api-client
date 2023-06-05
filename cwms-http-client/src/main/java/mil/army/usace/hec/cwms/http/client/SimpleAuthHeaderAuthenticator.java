@@ -48,7 +48,7 @@ final class SimpleAuthHeaderAuthenticator implements Authenticator {
     }
 
     @Override
-    public synchronized Request authenticate(Route route, Response response) throws IOException {
+    public Request authenticate(Route route, Response response) throws IOException {
         LOGGER.log(Level.FINE, () -> "Authentication required for: " + response.request().url() + " attempting acquiring authorization key");
         String authorizationKey = keyProvider.getAuthorizationKey();
         if (authorizationKey == null) {

@@ -24,13 +24,14 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 final class SimpleAuthHeaderInterceptor implements Interceptor {
 
@@ -44,7 +45,7 @@ final class SimpleAuthHeaderInterceptor implements Interceptor {
     }
 
     @Override
-    public synchronized Response intercept(Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
         String authorizationKey = keyProvider.getAuthorizationKey();
         if (authorizationKey == null) {
             throw new IOException("Authentication failed: No authorization key retrieved from " + keyProvider.getClass().getName());
