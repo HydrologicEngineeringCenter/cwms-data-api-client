@@ -1,25 +1,35 @@
 @startuml
 
 cloud tomcat {
-    component cwms_aaa
-    component cwms_data_api
+    component cwms_aaa as "cwms-aaa
+        <host>/CWMSLogin/"
+    component cwms_data_api as "cwms-data-api
+        <host>/cwms-data/"
 }
 
 package "cda_client repo" {
 
-    component cwms_aaa_client
-    component cwms_http_client
+    component cwms_aaa_client as "cwms-aaa-client
+        mil.army.usace.hec.cwms.aaa.client"
+    note bottom of cwms_aaa_client : Performs calls to CWMS_AAA
+    component cwms_http_client as "cwms-http-client
+        mil.army.usace.hec.cwms.http.client"
     note right of cwms_http_client
         Fluent API for HTTP
         communications and authentication
     end note
-    component cwms_radar_client
+    component cwms_radar_client as "cwms-radar-client
+        mil.army.usace.hec.cwms.radar.client.controllers"
     note right of cwms_radar_client : Performs calls to CDA
-    component cwms_radar_model
+
+    component cwms_radar_model as "cwms-radar-model
+        mil.army.usace.hec.cwms.radar.client.model"
     note right of cwms_radar_model : CDA data parsing
+
 }
-
-
+legend top right
+    group: mil.army.usace.hec
+end legend
 
 
 cwms_radar_client -left[hidden]- cwms_aaa_client
