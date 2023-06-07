@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -40,9 +41,12 @@ import java.util.Set;
 public final class RadarObjectMapper {
 
     private static final ObjectMapper OBJECT_MAPPER =
-        new ObjectMapper().registerModule(new JavaTimeModule()).configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-            .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-            .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+            new ObjectMapper().registerModule(new JavaTimeModule())
+                    .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+                    .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                    .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+
+    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
     private RadarObjectMapper() {
         throw new AssertionError("Utility class");
@@ -66,6 +70,11 @@ public final class RadarObjectMapper {
             node = node.path(pathNode);
         }
         return OBJECT_MAPPER.readValue(node.toString(), OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, classObject));
+    }
+
+    public static <T> List<T> mapXmlToListOfObjects(String json, Class<T> classObject, String path) throws IOException {
+        JsonNode value = XML_MAPPER.readTree(json).findValue(path);
+        return mapJsonToListOfObjects(value.toString(), classObject);
     }
 
     public static <T> Set<T> mapJsonToSetOfObjects(String json, Class<T> classObject) throws IOException {
