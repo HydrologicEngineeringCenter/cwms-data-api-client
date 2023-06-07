@@ -31,7 +31,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class ParameterCatalogEndpointInput extends EndpointInput {
-    private static final String FORMAT_QUERY_PARAMETER = "format";
+    static final String FORMAT_QUERY_PARAMETER = "format";
 
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {

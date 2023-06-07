@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.DbTimeZone;
 import mil.army.usace.hec.cwms.radar.client.model.Parameter;
 import mil.army.usace.hec.cwms.radar.client.model.Unit;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,15 @@ final class TestCatalogController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         List<Unit> units = new CatalogController().retrieveUnitCatalog(buildConnectionInfo());
+        assertFalse(units.isEmpty());
+    }
+
+    @Test
+    void testTimeZoneCatalog() throws Exception {
+        String collect = readJsonFile("radar/v1/xml/timezone_catalog.xml");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        List<DbTimeZone> units = new CatalogController().retrieveTimeZoneCatalog(buildConnectionInfo());
         assertFalse(units.isEmpty());
     }
 }

@@ -22,17 +22,29 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.radar.client.controllers;
+package mil.army.usace.hec.cwms.radar.client.model;
 
-final class RadarEndpointConstants {
 
-    static final String ACCEPT_QUERY_HEADER = "accept";
-    static final String ACCEPT_HEADER_V1 = "application/json";
-    static final String ACCEPT_XML_HEADER_V1 = "application/xml";
-    static final String ACCEPT_HEADER_V2 = "application/json;version=2";
-    static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private RadarEndpointConstants() {
-        throw new AssertionError("Utility class");
+//This class is not codegenned as there is no OpenAPI docs for the timezone catalog
+public final class DbTimeZone {
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("utc-offset")
+    private String utcOffset;
+    @JsonProperty("dst-offset")
+    private String dstOffset;
+
+    public String name() {
+        return name;
+    }
+
+    public String utcOffset() {
+        return utcOffset;
+    }
+
+    public String dstOffset() {
+        return dstOffset;
     }
 }

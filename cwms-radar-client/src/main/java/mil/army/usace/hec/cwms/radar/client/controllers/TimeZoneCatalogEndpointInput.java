@@ -24,15 +24,19 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-final class RadarEndpointConstants {
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
-    static final String ACCEPT_QUERY_HEADER = "accept";
-    static final String ACCEPT_HEADER_V1 = "application/json";
-    static final String ACCEPT_XML_HEADER_V1 = "application/xml";
-    static final String ACCEPT_HEADER_V2 = "application/json;version=2";
-    static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V1;
 
-    private RadarEndpointConstants() {
-        throw new AssertionError("Utility class");
+public final class TimeZoneCatalogEndpointInput extends EndpointInput {
+    static final String FORMAT_QUERY_PARAMETER = "format";
+
+    @Override
+    protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        //Current workaround since JSON returns invalid formatted data
+        return httpRequestBuilder.addQueryParameter(FORMAT_QUERY_PARAMETER, "xml")
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V1);
     }
 }

@@ -41,6 +41,7 @@ public final class CatalogController {
     private static final String CATALOG_LOCATIONS_ENDPOINT = "catalog/locations";
     private static final String CATALOG_PARAMETERS_ENDPOINT = "parameters";
     private static final String CATALOG_UNITS_ENDPOINT = "units";
+    private static final String CATALOG_TIMEZONES_ENDPOINT = "timezones";
 
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
@@ -77,13 +78,23 @@ public final class CatalogController {
         }
     }
 
-    public List<Unit> retrieveUnitCatalog(ApiConnectionInfo apiConnectionInfo) throws Exception {
+    public List<Unit> retrieveUnitCatalog(ApiConnectionInfo apiConnectionInfo) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_UNITS_ENDPOINT)
                 .addEndpointInput(new UnitCatalogEndpointInput())
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Unit.class, "units", "units");
+        }
+    }
+
+    public List<DbTimeZone> retrieveTimeZoneCatalog(ApiConnectionInfo apiConnectionInfo) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMEZONES_ENDPOINT)
+                .addEndpointInput(new TimeZoneCatalogEndpointInput())
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapXmlToListOfObjects(response.getBody(), DbTimeZone.class, "time-zone");
         }
     }
 }
