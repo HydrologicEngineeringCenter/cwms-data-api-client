@@ -58,10 +58,23 @@ class TestRatingEndpointInput {
     @Test
     void testPost() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        RatingEndpointInput.Post input = RatingEndpointInput.post("xml");
+        RatingEndpointInput.Post input = RatingEndpointInput.post("xml")
+                .storeTemplate(false);
 
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_XML_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(STORE_TEMPLATE_QUERY_PARAMETER));
+    }
+
+    @Test
+    void testPut() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        RatingEndpointInput.Put input = RatingEndpointInput.put("xml")
+                .storeTemplate(false);
+
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_XML_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(STORE_TEMPLATE_QUERY_PARAMETER));
     }
 
     @Test

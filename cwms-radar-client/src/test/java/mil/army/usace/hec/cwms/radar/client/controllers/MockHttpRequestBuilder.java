@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,14 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MockHttpRequestBuilder implements HttpRequestBuilder {
 
@@ -61,6 +62,11 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
 
     @Override
     public HttpPostRequest post() {
+        return null;
+    }
+
+    @Override
+    public HttpPutRequest put() {
         return null;
     }
 

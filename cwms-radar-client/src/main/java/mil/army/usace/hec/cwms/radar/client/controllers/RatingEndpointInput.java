@@ -40,6 +40,7 @@ public final class RatingEndpointInput {
     static final String BEGIN_QUERY_PARAMETER = "begin";
     static final String END_QUERY_PARAMETER = "end";
     static final String METHOD_QUERY_PARAMETER = "method";
+    static final String STORE_TEMPLATE_QUERY_PARAMETER = "store-template";
 
     private RatingEndpointInput() {
         throw new AssertionError("Utility class");
@@ -51,6 +52,10 @@ public final class RatingEndpointInput {
 
     public static Post post(String ratingSetXml) {
         return new Post(ratingSetXml);
+    }
+
+    public static Put put(String ratingSetXml) {
+        return new Put(ratingSetXml);
     }
 
     public static Delete delete(String ratingId, String officeId, Instant begin, Instant end) {
@@ -114,9 +119,15 @@ public final class RatingEndpointInput {
     public static final class Post extends EndpointInput {
 
         private final String ratingSetXml;
+        private boolean storeTemplate = true;
 
         private Post(String ratingSetXml) {
             this.ratingSetXml = Objects.requireNonNull(ratingSetXml, "Cannot store a rating without rating set xml");
+        }
+
+        public Post storeTemplate(boolean storeTemplate) {
+            this.storeTemplate = storeTemplate;
+            return this;
         }
 
         String ratingSetXml() {
@@ -125,7 +136,33 @@ public final class RatingEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+            return httpRequestBuilder.addQueryParameter(STORE_TEMPLATE_QUERY_PARAMETER, Boolean.toString(storeTemplate))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
+        }
+    }
+
+    public static final class Put extends EndpointInput {
+
+        private final String ratingSetXml;
+        private boolean storeTemplate = true;
+
+        private Put(String ratingSetXml) {
+            this.ratingSetXml = Objects.requireNonNull(ratingSetXml, "Cannot store a rating without rating set xml");
+        }
+
+        public Put storeTemplate(boolean storeTemplate) {
+            this.storeTemplate = storeTemplate;
+            return this;
+        }
+
+        String ratingSetXml() {
+            return ratingSetXml;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(STORE_TEMPLATE_QUERY_PARAMETER, Boolean.toString(storeTemplate))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_XML_HEADER_V2);
         }
     }
 

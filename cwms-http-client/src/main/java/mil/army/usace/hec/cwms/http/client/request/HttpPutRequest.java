@@ -24,21 +24,8 @@
 
 package mil.army.usace.hec.cwms.http.client.request;
 
-public enum HttpRequestMethod {
-    POST("POST"),
-    PATCH("PATCH"),
-    PUT("PUT"),
-    GET("GET"),
-    DELETE("DELETE");
+public interface HttpPutRequest {
 
-    private final String name;
-
-    HttpRequestMethod(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    HttpRequestMediaType withBody(String body);
 
 }
