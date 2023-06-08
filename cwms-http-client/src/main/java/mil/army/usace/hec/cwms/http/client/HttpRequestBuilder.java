@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 
 public interface HttpRequestBuilder {
@@ -37,6 +38,8 @@ public interface HttpRequestBuilder {
     HttpRequestBuilder enableHttp2();
 
     HttpPostRequest post();
+
+    HttpPutRequest put();
 
     HttpPostRequest patch();
 

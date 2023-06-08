@@ -24,10 +24,7 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import mil.army.usace.hec.cwms.http.client.request.*;
 import okhttp3.*;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
@@ -124,6 +121,12 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
+    public final HttpPutRequest put() {
+        this.method = HttpRequestMethod.POST;
+        return new HttpPutRequestImpl();
+    }
+
+    @Override
     public final HttpPostRequest patch() {
         this.method = HttpRequestMethod.PATCH;
         return new HttpPostRequestImpl();
@@ -182,6 +185,15 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         @Override
         public HttpRequestMediaType withBody(String postBody) {
             body = postBody;
+            return new HttpRequiredMediaTypeImpl();
+        }
+    }
+
+    private class HttpPutRequestImpl implements HttpPutRequest {
+
+        @Override
+        public HttpRequestMediaType withBody(String putBody) {
+            body = putBody;
             return new HttpRequiredMediaTypeImpl();
         }
     }

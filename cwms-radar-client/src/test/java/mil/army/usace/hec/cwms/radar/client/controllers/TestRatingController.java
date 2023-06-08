@@ -61,6 +61,17 @@ class TestRatingController extends TestController {
 	}
 
 	@Test
+	void testUpdateRatingSet() throws IOException {
+		String collect = readJsonFile("radar/v2/xml/rating.xml");
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.start();
+		RatingController controller = new RatingController();
+		RatingEndpointInput.Put input = RatingEndpointInput.put(collect);
+		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+		assertDoesNotThrow(() -> controller.updateRatingSetXml(apiConnectionInfo, input));
+	}
+
+	@Test
 	void testDeleteRatingSet() throws IOException {
 		String collect = readJsonFile("radar/v2/xml/rating.xml");
 		mockHttpServer.enqueue(collect);

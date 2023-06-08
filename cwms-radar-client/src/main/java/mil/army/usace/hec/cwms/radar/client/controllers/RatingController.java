@@ -24,15 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V2;
-
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.RatingMetadataList;
+
+import java.io.IOException;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_XML_HEADER_V2;
 
 public final class RatingController {
 
@@ -60,22 +61,32 @@ public final class RatingController {
 
     public void storeRatingSetXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Post input) throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS)
-            .addEndpointInput(input)
-            .post()
-            .withBody(input.ratingSetXml())
-            .withMediaType(ACCEPT_XML_HEADER_V2)
-            .execute()
-            .close();
+                .addEndpointInput(input)
+                .post()
+                .withBody(input.ratingSetXml())
+                .withMediaType(ACCEPT_XML_HEADER_V2)
+                .execute()
+                .close();
+    }
+
+    public void updateRatingSetXml(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Put input) throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS)
+                .addEndpointInput(input)
+                .put()
+                .withBody(input.ratingSetXml())
+                .withMediaType(ACCEPT_XML_HEADER_V2)
+                .execute()
+                .close();
     }
 
     public void deleteRatings(ApiConnectionInfo apiConnectionInfo, RatingEndpointInput.Delete ratingEndpointInput) throws IOException {
 
         new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
-            .addEndpointInput(ratingEndpointInput)
-            .delete()
-            .withMediaType(ACCEPT_XML_HEADER_V2)
-            .execute()
-            .close();
+                .addEndpointInput(ratingEndpointInput)
+                .delete()
+                .withMediaType(ACCEPT_XML_HEADER_V2)
+                .execute()
+                .close();
     }
 
     public RatingMetadataList retrieveRatingMetadata(ApiConnectionInfo apiConnectionInfo, RatingMetadataEndpointInput input) throws IOException {
