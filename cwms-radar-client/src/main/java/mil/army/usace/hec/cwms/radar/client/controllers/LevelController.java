@@ -32,6 +32,7 @@ import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
 import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
 import java.io.IOException;
 import java.util.Set;
@@ -125,11 +126,23 @@ public final class LevelController {
     public void deleteLevel(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.Delete input) throws IOException {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .addEndpointInput(input)
-            .delete()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute()
-            .close();
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
+
+    public TimeSeries retrieveLevelAsTimeSeries(ApiConnectionInfo apiConnectionInfo, LocationLevelEndpointInput.GetTimeSeries input)
+            throws IOException {
+        String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId() + "/timeseries";
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
+        }
     }
 
 }

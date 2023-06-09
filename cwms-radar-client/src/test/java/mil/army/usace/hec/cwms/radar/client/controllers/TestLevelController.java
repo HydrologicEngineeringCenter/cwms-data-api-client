@@ -28,6 +28,7 @@ import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
 import mil.army.usace.hec.cwms.radar.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.SpecifiedLevel;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -166,5 +167,20 @@ class TestLevelController extends TestController {
                 .cascadeDelete(false)
                 .effectiveDate(locationLevel.getLevelDate().toInstant());
         assertDoesNotThrow(() -> new LevelController().deleteLevel(buildConnectionInfo(cookieJarSupplier), delete));
+    }
+
+    @Test
+    void testLevelAsTimeSeries() throws IOException {
+        String resource = "radar/v2/json/level_timeseries.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, LocationLevel.class);
+        Instant begin = Instant.parse("2023-06-01T07:00:00Z");
+        Instant end = Instant.parse("2023-06-11T07:00:00Z");
+        LocationLevelEndpointInput.GetTimeSeries input = LocationLevelEndpointInput.getAsTimeSeries("level_as_timeseries.Flow.Ave.1Day.Regulating", "SPK", begin, end)
+                .interval("1Hour");
+        TimeSeries timeSeries = new LevelController().retrieveLevelAsTimeSeries(buildConnectionInfo(), input);
+        assertEquals(RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class), timeSeries);
     }
 }
