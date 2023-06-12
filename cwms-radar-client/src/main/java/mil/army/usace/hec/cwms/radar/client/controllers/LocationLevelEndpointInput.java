@@ -43,6 +43,7 @@ public final class LocationLevelEndpointInput {
     static final String EFFECTIVE_DATE_QUERY_PARAMETER = "effective-date";
     static final String BEGIN_QUERY_PARAMETER = "begin";
     static final String END_QUERY_PARAMETER = "end";
+    static final String INTERVAL_QUERY_PARAMETER = "interval";
     static final String UNIT_QUERY_PARAMETER = "unit";
     static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
@@ -52,6 +53,10 @@ public final class LocationLevelEndpointInput {
 
     public static GetOne getOne(String levelId, String officeId, Instant effectiveDate) {
         return new GetOne(levelId, officeId, effectiveDate);
+    }
+
+    public static GetTimeSeries getAsTimeSeries(String levelId, String officeId, Instant begin, Instant end) {
+        return new GetTimeSeries(levelId, officeId, begin, end);
     }
 
     public static GetAll getAll() {
@@ -80,9 +85,43 @@ public final class LocationLevelEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryParameter(LEVEL_ID_QUERY_PARAMETER, levelId)
-                .addQueryParameter(EFFECTIVE_DATE_QUERY_PARAMETER, effectiveDate.toString())
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryParameter(LEVEL_ID_QUERY_PARAMETER, levelId)
+                    .addQueryParameter(EFFECTIVE_DATE_QUERY_PARAMETER, effectiveDate.toString())
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
+
+        String levelId() {
+            return levelId;
+        }
+    }
+
+    public static final class GetTimeSeries extends EndpointInput {
+        private String officeId;
+        private String levelId;
+        private final Instant begin;
+        private final Instant end;
+        private String interval;
+
+        private GetTimeSeries(String levelId, String officeId, Instant begin, Instant end) {
+            this.officeId = officeId;
+            this.levelId = levelId;
+            this.begin = begin;
+            this.end = end;
+        }
+
+        public GetTimeSeries interval(String interval) {
+            this.interval = interval;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(LEVEL_ID_QUERY_PARAMETER, levelId)
+                    .addQueryParameter(BEGIN_QUERY_PARAMETER, begin.toString())
+                    .addQueryParameter(END_QUERY_PARAMETER, end.toString())
+                    .addQueryParameter(INTERVAL_QUERY_PARAMETER, interval)
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
 
         String levelId() {

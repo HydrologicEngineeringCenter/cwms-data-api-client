@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,20 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import mil.army.usace.hec.cwms.radar.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import org.junit.jupiter.api.Test;
+import java.time.temporal.ChronoUnit;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationLevelEndpointInput.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class TestLocationLevelEndpointInput {
 
@@ -43,21 +48,21 @@ class TestLocationLevelEndpointInput {
         Instant begin = ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 0, zoneId).toInstant();
         Instant end = begin.plusSeconds(30);
         LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll()
-            .officeId("SWT")
-            .levelIdMask("MASK")
-            .page("abc")
-            .pageSize(10)
-            .begin(begin)
-            .end(end)
-            .unit("EN");
+                .officeId("SWT")
+                .levelIdMask("MASK")
+                .page("abc")
+                .pageSize(10)
+                .begin(begin)
+                .end(end)
+                .unit("EN");
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.OFFICE_QUERY_PARAMETER));
-        assertEquals("MASK", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.LEVEL_ID_MASK_QUERY_PARAMETER));
-        assertEquals("10", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_SIZE_QUERY_PARAMETER));
-        assertEquals("abc", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_QUERY_PARAMETER));
-        assertEquals("2015-01-01T08:00:00Z", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.BEGIN_QUERY_PARAMETER));
-        assertEquals("2015-01-01T08:00:30Z", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.END_QUERY_PARAMETER));
-        assertEquals("EN", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.UNIT_QUERY_PARAMETER));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("MASK", mockHttpRequestBuilder.getQueryParameter(LEVEL_ID_MASK_QUERY_PARAMETER));
+        assertEquals("10", mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertEquals("abc", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
+        assertEquals("2015-01-01T08:00:00Z", mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertEquals("2015-01-01T08:00:30Z", mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals("EN", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -66,13 +71,59 @@ class TestLocationLevelEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll();
         input.addInputParameters(mockHttpRequestBuilder);
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.OFFICE_QUERY_PARAMETER));
-        assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.LEVEL_ID_MASK_QUERY_PARAMETER));
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_SIZE_QUERY_PARAMETER));
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.PAGE_QUERY_PARAMETER));
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.BEGIN_QUERY_PARAMETER));
-        assertNull(mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.END_QUERY_PARAMETER));
-        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(LocationLevelEndpointInput.UNIT_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LEVEL_ID_MASK_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testGet() {
+        Instant now = Instant.now();
+        LocationLevelEndpointInput.GetOne input = LocationLevelEndpointInput.getOne("Test", "SWT", now);
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals(now.toString(), mockHttpRequestBuilder.getQueryParameter(EFFECTIVE_DATE_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPost() throws Exception {
+        String json = readJsonFile("radar/v2/json/location_level.json");
+        LocationLevel level = RadarObjectMapper.mapJsonToObject(json, LocationLevel.class);
+        LocationLevelEndpointInput.Post input = LocationLevelEndpointInput.post(level);
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testDelete() throws Exception {
+        LocationLevelEndpointInput.Delete input = LocationLevelEndpointInput.delete("Test")
+                .officeId("SPK");
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+    }
+
+    @Test
+    void testGetAsTimeSeries() {
+        Instant begin = Instant.now();
+        Instant end = begin.plus(10, ChronoUnit.DAYS);
+        GetTimeSeries input = getAsTimeSeries("Test", "SPK", begin, end)
+                .interval("1Day");
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals(begin.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals("1Day", mockHttpRequestBuilder.getQueryParameter(INTERVAL_QUERY_PARAMETER));
     }
 }
