@@ -24,13 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.County;
 import mil.army.usace.hec.cwms.radar.client.model.DbTimeZone;
 import mil.army.usace.hec.cwms.radar.client.model.Parameter;
+import mil.army.usace.hec.cwms.radar.client.model.State;
 import mil.army.usace.hec.cwms.radar.client.model.Unit;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class TestCatalogController extends TestController {
@@ -60,5 +63,30 @@ final class TestCatalogController extends TestController {
         mockHttpServer.start();
         List<DbTimeZone> units = new CatalogController().retrieveTimeZoneCatalog(buildConnectionInfo());
         assertFalse(units.isEmpty());
+    }
+
+    @Test
+    void testCountyCatalog() throws Exception {
+        String collect = readJsonFile("radar/v2/json/county_catalog.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        List<County> counties = new CatalogController().retrieveCountyCatalog(buildConnectionInfo());
+        assertFalse(counties.isEmpty());
+        County county = counties.get(0);
+        assertEquals("Unknown County or County N/A", county.getName());
+        assertEquals("000", county.getCountyId());
+        assertEquals("00", county.getStateInitial());
+    }
+
+    @Test
+    void testStateCatalog() throws Exception {
+        String collect = readJsonFile("radar/v2/json/state_catalog.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        List<State> states = new CatalogController().retrieveStateCatalog(buildConnectionInfo());
+        assertFalse(states.isEmpty());
+        State state = states.get(0);
+        assertEquals("Unknown State or State N/A", state.getName());
+        assertEquals("00", state.getStateInitial());
     }
 }

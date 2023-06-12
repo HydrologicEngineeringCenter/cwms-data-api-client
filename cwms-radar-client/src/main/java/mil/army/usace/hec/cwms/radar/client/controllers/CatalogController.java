@@ -28,7 +28,14 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.radar.client.model.*;
+import mil.army.usace.hec.cwms.radar.client.model.County;
+import mil.army.usace.hec.cwms.radar.client.model.DbTimeZone;
+import mil.army.usace.hec.cwms.radar.client.model.LocationCatalog;
+import mil.army.usace.hec.cwms.radar.client.model.Parameter;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.State;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
+import mil.army.usace.hec.cwms.radar.client.model.Unit;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,14 +49,16 @@ public final class CatalogController {
     private static final String CATALOG_PARAMETERS_ENDPOINT = "parameters";
     private static final String CATALOG_UNITS_ENDPOINT = "units";
     private static final String CATALOG_TIMEZONES_ENDPOINT = "timezones";
+    private static final String CATALOG_COUNTY_ENDPOINT = "counties";
+    private static final String CATALOG_STATE_ENDPOINT = "states";
 
 
     public TimeSeriesCatalog retrieveTimeSeriesCatalog(ApiConnectionInfo apiConnectionInfo, TimeSeriesCatalogEndpointInput input) throws IOException {
         TimeSeriesCatalog retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_TIMESERIES_ENDPOINT)
-            .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCatalog.class);
         }
@@ -95,6 +104,26 @@ public final class CatalogController {
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapXmlToListOfObjects(response.getBody(), DbTimeZone.class, "time-zone");
+        }
+    }
+
+    public List<County> retrieveCountyCatalog(ApiConnectionInfo apiConnectionInfo) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_COUNTY_ENDPOINT)
+                .addEndpointInput(new CountyCatalogEndpointInput())
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), County.class);
+        }
+    }
+
+    public List<State> retrieveStateCatalog(ApiConnectionInfo apiConnectionInfo) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, CATALOG_STATE_ENDPOINT)
+                .addEndpointInput(new StateCatalogEndpointInput())
+                .get()
+                .withMediaType(ACCEPT_HEADER_V2);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), State.class);
         }
     }
 }
