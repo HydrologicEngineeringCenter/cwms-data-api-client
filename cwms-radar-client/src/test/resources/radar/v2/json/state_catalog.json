@@ -1,0 +1,286 @@
+[
+  {
+    "state-initial": "00",
+    "name": "Unknown State or State N/A"
+  },
+  {
+    "state-initial": "AB",
+    "name": "Alberta"
+  },
+  {
+    "state-initial": "AK",
+    "name": "Alaska"
+  },
+  {
+    "state-initial": "AL",
+    "name": "Alabama"
+  },
+  {
+    "state-initial": "AR",
+    "name": "Arkansas"
+  },
+  {
+    "state-initial": "AS",
+    "name": "American Samoa"
+  },
+  {
+    "state-initial": "AZ",
+    "name": "Arizona"
+  },
+  {
+    "state-initial": "BC",
+    "name": "British Columbia"
+  },
+  {
+    "state-initial": "CA",
+    "name": "California"
+  },
+  {
+    "state-initial": "CO",
+    "name": "Colorado"
+  },
+  {
+    "state-initial": "CT",
+    "name": "Connecticut"
+  },
+  {
+    "state-initial": "DC",
+    "name": "District of Columbia"
+  },
+  {
+    "state-initial": "DE",
+    "name": "Delaware"
+  },
+  {
+    "state-initial": "FL",
+    "name": "Florida"
+  },
+  {
+    "state-initial": "GA",
+    "name": "Georgia"
+  },
+  {
+    "state-initial": "GU",
+    "name": "Guam"
+  },
+  {
+    "state-initial": "HI",
+    "name": "Hawaii"
+  },
+  {
+    "state-initial": "IA",
+    "name": "Iowa"
+  },
+  {
+    "state-initial": "ID",
+    "name": "Idaho"
+  },
+  {
+    "state-initial": "IL",
+    "name": "Illinois"
+  },
+  {
+    "state-initial": "IN",
+    "name": "Indiana"
+  },
+  {
+    "state-initial": "KS",
+    "name": "Kansas"
+  },
+  {
+    "state-initial": "KY",
+    "name": "Kentucky"
+  },
+  {
+    "state-initial": "LA",
+    "name": "Louisiana"
+  },
+  {
+    "state-initial": "MA",
+    "name": "Massachusetts"
+  },
+  {
+    "state-initial": "MB",
+    "name": "Manitoba"
+  },
+  {
+    "state-initial": "MD",
+    "name": "Maryland"
+  },
+  {
+    "state-initial": "ME",
+    "name": "Maine"
+  },
+  {
+    "state-initial": "MH",
+    "name": "Marshall Islands"
+  },
+  {
+    "state-initial": "MI",
+    "name": "Michigan"
+  },
+  {
+    "state-initial": "MN",
+    "name": "Minnesota"
+  },
+  {
+    "state-initial": "MO",
+    "name": "Missouri"
+  },
+  {
+    "state-initial": "MP",
+    "name": "Northern Mariana Islands"
+  },
+  {
+    "state-initial": "MS",
+    "name": "Mississippi"
+  },
+  {
+    "state-initial": "MT",
+    "name": "Montana"
+  },
+  {
+    "state-initial": "NB",
+    "name": "New Brunswick"
+  },
+  {
+    "state-initial": "NC",
+    "name": "North Carolina"
+  },
+  {
+    "state-initial": "ND",
+    "name": "North Dakota"
+  },
+  {
+    "state-initial": "NE",
+    "name": "Nebraska"
+  },
+  {
+    "state-initial": "NF",
+    "name": "Newfoundland"
+  },
+  {
+    "state-initial": "NH",
+    "name": "New Hampshire"
+  },
+  {
+    "state-initial": "NJ",
+    "name": "New Jersey"
+  },
+  {
+    "state-initial": "NM",
+    "name": "New Mexico"
+  },
+  {
+    "state-initial": "NS",
+    "name": "Nova Scotia"
+  },
+  {
+    "state-initial": "NT",
+    "name": "Northwest Territories"
+  },
+  {
+    "state-initial": "NU",
+    "name": "Nunavut"
+  },
+  {
+    "state-initial": "NV",
+    "name": "Nevada"
+  },
+  {
+    "state-initial": "NY",
+    "name": "New York"
+  },
+  {
+    "state-initial": "OH",
+    "name": "Ohio"
+  },
+  {
+    "state-initial": "OK",
+    "name": "Oklahoma"
+  },
+  {
+    "state-initial": "ON",
+    "name": "Ontario"
+  },
+  {
+    "state-initial": "OR",
+    "name": "Oregon"
+  },
+  {
+    "state-initial": "PA",
+    "name": "Pennsylvania"
+  },
+  {
+    "state-initial": "PE",
+    "name": "Prince Edward Island"
+  },
+  {
+    "state-initial": "PR",
+    "name": "Puerto Rico"
+  },
+  {
+    "state-initial": "QC",
+    "name": "Quebec"
+  },
+  {
+    "state-initial": "RI",
+    "name": "Rhode Island"
+  },
+  {
+    "state-initial": "SC",
+    "name": "South Carolina"
+  },
+  {
+    "state-initial": "SD",
+    "name": "South Dakota"
+  },
+  {
+    "state-initial": "SK",
+    "name": "Saskatchewan"
+  },
+  {
+    "state-initial": "TN",
+    "name": "Tennessee"
+  },
+  {
+    "state-initial": "TX",
+    "name": "Texas"
+  },
+  {
+    "state-initial": "UT",
+    "name": "Utah"
+  },
+  {
+    "state-initial": "VA",
+    "name": "Virginia"
+  },
+  {
+    "state-initial": "VI",
+    "name": "Virgin Islands of the U.S."
+  },
+  {
+    "state-initial": "VT",
+    "name": "Vermont"
+  },
+  {
+    "state-initial": "WA",
+    "name": "Washington"
+  },
+  {
+    "state-initial": "WI",
+    "name": "Wisconsin"
+  },
+  {
+    "state-initial": "WV",
+    "name": "West Virginia"
+  },
+  {
+    "state-initial": "WY",
+    "name": "Wyoming"
+  },
+  {
+    "state-initial": "YT",
+    "name": "Yukon"
+  }
+]

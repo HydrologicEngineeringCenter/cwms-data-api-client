@@ -1,54 +1,54 @@
 openapi: 3.0.1
 info:
-  title: CWMS Radar
+  title: CWMS Data API
   description: CWMS REST API for Data Retrieval
-  version: '2.6'
+  version: '3.0'
 security:
-  - CwmsAccessManager: []
+  - MultipleAccessManager: [ ]
 paths:
-  /cwms-data:
+  /swt-data:
     get:
-      summary: Get cwmsData
-      operationId: getCwmsData
+      summary: Get swtData
+      operationId: getSwtData
       responses:
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/location/category/{category-id}:
+  /swt-data/location/category/{category-id}:
     get:
       tags:
         - Location Categories-Beta
-      summary: Get cwmsData location category with categoryId
+      summary: Get swtData location category with categoryId
       description: Retrieves requested Location Category
-      operationId: getCwmsDataLocationCategoryWithCategoryId
+      operationId: getSwtDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -74,39 +74,97 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/location/category:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Location Categories-Beta
+      summary: Delete swtData location category with categoryId
+      description: Deletes requested location category
+      operationId: deleteSwtDataLocationCategoryWithCategoryId
+      parameters:
+        - name: category-id
+          in: path
+          description: The location category to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location category to be deleted
+          required: true
+          schema:
+            type: string
+        - name: cascade-delete
+          in: query
+          description: 'Specifies whether to delete any location groups in this location category. Default: false'
+          schema:
+            type: boolean
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/location/category:
     get:
       tags:
         - Location Categories-Beta
-      summary: Get cwmsData location category
+      summary: Get swtData location category
       description: Returns CWMS Location Category Data
-      operationId: getCwmsDataLocationCategory
+      operationId: getSwtDataLocationCategory
       parameters:
         - name: office
           in: query
@@ -127,39 +185,85 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/location/group/{group-id}:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Location Categories-Beta
+      summary: Post swtData location category
+      description: Create new LocationCategory
+      operationId: postSwtDataLocationCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationCategory'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/location/group/{group-id}:
     get:
       tags:
         - Location Groups-Beta
-      summary: Get cwmsData location group with groupId
+      summary: Get swtData location group with groupId
       description: Retrieves requested Location Group
-      operationId: getCwmsDataLocationGroupWithGroupId
+      operationId: getSwtDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -197,39 +301,166 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/location/group:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Location Groups-Beta
+      summary: Delete swtData location group with groupId
+      description: Deletes requested location group
+      operationId: deleteSwtDataLocationGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          description: The location group to be deleted
+          required: true
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the location category of the location group to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location group to be deleted
+          required: true
+          schema:
+            type: string
+        - name: cascade-delete
+          in: query
+          description: 'Specifies whether to specifies whether to unassign any location assignments. Default: false'
+          schema:
+            type: boolean
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+    patch:
+      tags:
+        - Location Groups-Beta
+      summary: Patch swtData location group with groupId
+      description: Update existing LocationGroup
+      operationId: patchSwtDataLocationGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: replace-assigned-locs
+          in: query
+          description: 'Specifies whether to unassign all existing locations before assigning new locations specified in the content body Default: false'
+          schema:
+            type: boolean
+        - name: office
+          in: query
+          description: Specifies the owning office of the location group to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationGroup'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/location/group:
     get:
       tags:
         - Location Groups-Beta
-      summary: Get cwmsData location group
+      summary: Get swtData location group
       description: Returns CWMS Location Groups Data
-      operationId: getCwmsDataLocationGroup
+      operationId: getSwtDataLocationGroup
       parameters:
         - name: office
           in: query
@@ -266,39 +497,85 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/locations/{location-id}:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Location Groups-Beta
+      summary: Post swtData location group
+      description: Create new LocationGroup
+      operationId: postSwtDataLocationGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationGroup'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations with locationId
+      summary: Get swtData locations with locationId
       description: Returns CWMS Location Data
-      operationId: getCwmsDataLocationsWithLocationId
+      operationId: getSwtDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -331,38 +608,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: Based on the combination of inputs provided the location was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     delete:
       tags:
         - Locations
-      summary: Delete cwmsData locations with locationId
+      summary: Delete swtData locations with locationId
       description: Delete CWMS Location
-      operationId: deleteCwmsDataLocationsWithLocationId
+      operationId: deleteSwtDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -380,37 +657,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: Based on the combination of inputs provided the location was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - Locations
-      summary: Patch cwmsData locations with locationId
+      summary: Patch swtData locations with locationId
       description: Update CWMS Location
-      operationId: patchCwmsDataLocationsWithLocationId
+      operationId: patchSwtDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -432,38 +712,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: Based on the combination of inputs provided the location was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/locations:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/locations:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations
+      summary: Get swtData locations
       description: Returns CWMS Location Data
-      operationId: getCwmsDataLocations
+      operationId: getSwtDataLocations
       parameters:
         - name: names
           in: query
@@ -520,38 +803,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     post:
       tags:
         - Locations
-      summary: Post cwmsData locations
+      summary: Post swtData locations
       description: Create new CWMS Location
-      operationId: postCwmsDataLocations
+      operationId: postSwtDataLocations
       requestBody:
         content:
           application/json:
@@ -567,37 +850,132 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/offices/{office}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/states:
+    get:
+      tags:
+        - States
+      summary: Get swtData states
+      operationId: getSwtDataStates
+      responses:
+        '200':
+          description: A list of states.
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/State'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /swt-data/counties:
+    get:
+      tags:
+        - Counties
+      summary: Get swtData counties
+      operationId: getSwtDataCounties
+      responses:
+        '200':
+          description: A list of counties.
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/County'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /swt-data/offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices with office
-      operationId: getCwmsDataOfficesWithOffice
+      summary: Get swtData offices with office
+      operationId: getSwtDataOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -640,38 +1018,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/offices:
+  /swt-data/offices:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices
-      operationId: getCwmsDataOffices
+      summary: Get swtData offices
+      operationId: getSwtDataOffices
       parameters:
         - name: format
           in: query
@@ -679,6 +1057,11 @@ paths:
           deprecated: true
           schema:
             type: string
+        - name: has-data
+          in: query
+          description: 'A flag (''True''/''False'') When set to true this returns offices that have operational data. Default value is <b>False</b>,. <a href="https://github.com/USACE/cwms-data-api/issues/321" target="_blank">Feature #321</a>'
+          schema:
+            type: boolean
       responses:
         '200':
           description: A list of offices.
@@ -708,38 +1091,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/units:
+  /swt-data/units:
     get:
       tags:
         - Units
-      summary: Get cwmsData units
-      operationId: getCwmsDataUnits
+      summary: Get swtData units
+      operationId: getSwtDataUnits
       parameters:
         - name: format
           in: query
@@ -754,40 +1137,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: The format requested is not implemented
       security: []
-  /cwms-data/parameters:
+  /swt-data/parameters:
     get:
       tags:
         - Parameters
-      summary: Get cwmsData parameters
-      operationId: getCwmsDataParameters
+      summary: Get swtData parameters
+      operationId: getSwtDataParameters
       parameters:
         - name: format
           in: query
@@ -802,38 +1185,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/timezones:
+  /swt-data/timezones:
     get:
       tags:
         - TimeZones
-      summary: Get cwmsData timezones
-      operationId: getCwmsDataTimezones
+      summary: Get swtData timezones
+      operationId: getSwtDataTimezones
       parameters:
         - name: format
           in: query
@@ -848,41 +1231,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: The format requested is not implemented
       security: []
-  /cwms-data/levels/{level-id}:
+  /swt-data/levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels with levelId
+      summary: Get swtData levels with levelId
       description: Retrieves requested Location Level
-      operationId: getCwmsDataLevelsWithLevelId
+      operationId: getSwtDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -920,38 +1303,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData levels with levelId
+      summary: Delete swtData levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteCwmsDataLevelsWithLevelId
+      operationId: deleteSwtDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -985,37 +1368,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData levels with levelId
+      summary: Patch swtData levels with levelId
       description: Update CWMS Location Level
-      operationId: patchCwmsDataLevelsWithLevelId
+      operationId: patchSwtDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1032,7 +1418,6 @@ paths:
         - name: effective-date
           in: query
           description: Specifies the effective date of Location Level that will be updated
-          required: true
           schema:
             type: string
       requestBody:
@@ -1050,37 +1435,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/levels:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/levels:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels
-      operationId: getCwmsDataLevels
+      summary: Get swtData levels
+      operationId: getSwtDataLevels
       parameters:
         - name: name
           in: query
@@ -1157,38 +1545,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     post:
       tags:
         - Levels
-      summary: Post cwmsData levels
+      summary: Post swtData levels
       description: Create new CWMS Location Level
-      operationId: postCwmsDataLevels
+      operationId: postSwtDataLevels
       requestBody:
         content:
           application/json:
@@ -1204,35 +1592,80 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/timeseries/recent/{group-id}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/levels/{level-id}/timeseries:
     get:
-      summary: Get cwmsData timeseries recent with groupId
-      operationId: getCwmsDataTimeseriesRecentWithGroupId
+      summary: Get swtData levels with levelId timeseries
+      operationId: getSwtDataLevelsWithLevelIdTimeseries
+      parameters:
+        - name: level-id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /swt-data/timeseries/recent/{group-id}:
+    get:
+      summary: Get swtData timeseries recent with groupId
+      operationId: getSwtDataTimeseriesRecentWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -1245,39 +1678,39 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/timeseries/category/{category-id}:
+  /swt-data/timeseries/category/{category-id}:
     get:
       tags:
         - TimeSeries Categories-Beta
-      summary: Get cwmsData timeseries category with categoryId
+      summary: Get swtData timeseries category with categoryId
       description: Retrieves requested timeseries category
-      operationId: getCwmsDataTimeseriesCategoryWithCategoryId
+      operationId: getSwtDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -1303,41 +1736,99 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the timeseries category was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: []
-  /cwms-data/timeseries/category:
+      security: [ ]
+    delete:
+      tags:
+        - TimeSeries Categories-Beta
+      summary: Delete swtData timeseries category with categoryId
+      description: Deletes requested time series category
+      operationId: deleteSwtDataTimeseriesCategoryWithCategoryId
+      parameters:
+        - name: category-id
+          in: path
+          description: The time series category to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the time series category to be deleted
+          required: true
+          schema:
+            type: string
+        - name: cascade-delete
+          in: query
+          description: 'Specifies whether to delete any time series groups in this time series category. Default: false'
+          schema:
+            type: boolean
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/category:
     get:
       tags:
         - TimeSeries Categories-Beta
-      summary: Get cwmsData timeseries category
+      summary: Get swtData timeseries category
       description: Returns CWMS timeseries category Data
-      operationId: getCwmsDataTimeseriesCategory
+      operationId: getSwtDataTimeseriesCategory
       parameters:
         - name: office
           in: query
@@ -1358,41 +1849,93 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the categories were not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: []
-  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
+      security: [ ]
+    post:
+      tags:
+        - TimeSeries Categories-Beta
+      summary: Post swtData timeseries category
+      description: Create new TimeSeriesCategory
+      operationId: postSwtDataTimeseriesCategory
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesCategory'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
         - TimeSeries Identifier-Beta
-      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
-      description: Retrieves requested timeseries identifier
-      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Get swtData timeseries identifierDescriptor with timeseriesId
+      description: Retrieves requested timeseries identifier descriptor
+      operationId: getSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -1418,40 +1961,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
-          description: Based on the combination of inputs provided the timeseries identifier was not found.
+          description: Based on the combination of inputs provided the timeseries identifier descriptor was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
       security: []
     delete:
       tags:
         - TimeSeries Identifier-Beta
-      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Delete swtData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
-      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -1467,7 +2010,8 @@ paths:
             type: string
         - name: method
           in: query
-          description: 'Specifies the delete method used.Default: DELETE_ALL'
+          description: Specifies the delete method used.
+          required: true
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
@@ -1476,36 +2020,39 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - TimeSeries Identifier-Beta
-      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
-      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Patch swtData timeseries identifierDescriptor with timeseriesId
+      operationId: patchSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -1524,64 +2071,70 @@ paths:
           required: true
           schema:
             type: string
-        - name: utc-offset
+        - name: interval-offset
           in: query
-          description: The offset into the utc data interval in minutes.  If specified and a new timeseries-id is also specified both will be passed to a rename operation.  May also be passed to update operation.
+          description: The offset into the data interval in minutes.  If specified and a new timeseries-id is also specified both will be passed to a rename operation.  May also be passed to update operation.
           schema:
-            type: string
+            type: integer
+            format: int64
         - name: snap-forward
           in: query
           description: The new snap forward tolerance in minutes. This specifies how many minutes before the expected data time that data will be considered to be on time.
           schema:
-            type: string
+            type: integer
+            format: int64
         - name: snap-backward
           in: query
           description: The new snap backward tolerance in minutes. This specifies how many minutes after the expected data time that data will be considered to be on time.
           schema:
-            type: string
+            type: integer
+            format: int64
         - name: active
           in: query
           description: '''True'' or ''true'' if the time series is active'
           schema:
-            type: string
+            type: boolean
       responses:
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/timeseries/identifier-descriptor:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/identifier-descriptor:
     get:
       tags:
         - TimeSeries Identifier-Beta
-      summary: Get cwmsData timeseries identifierDescriptor
+      summary: Get swtData timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
-      operationId: getCwmsDataTimeseriesIdentifierDescriptor
+      operationId: getSwtDataTimeseriesIdentifierDescriptor
       parameters:
         - name: office
           in: query
@@ -1593,54 +2146,63 @@ paths:
           description: A case insensitive RegExp that will be applied to the timeseries-id field. If this field is not specified the results will not be constrained by timeseries-id.
           schema:
             type: string
+        - name: page
+          in: query
+          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 500.
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: OK
           content:
             application/json;version=2:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+                $ref: '#/components/schemas/TimeSeriesIdentifierDescriptors'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the time series identifier descriptors were not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
       security: []
     post:
       tags:
         - TimeSeries Identifier-Beta
-      summary: Post cwmsData timeseries identifierDescriptor
+      summary: Post swtData timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
-      operationId: postCwmsDataTimeseriesIdentifierDescriptor
+      operationId: postSwtDataTimeseriesIdentifierDescriptor
       parameters:
         - name: fail-if-exists
           in: query
@@ -1662,38 +2224,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/timeseries/group/{group-id}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/group/{group-id}:
     get:
       tags:
         - Timeseries Groups
-      summary: Get cwmsData timeseries group with groupId
+      summary: Get swtData timeseries group with groupId
       description: Retrieves requested timeseries group
-      operationId: getCwmsDataTimeseriesGroupWithGroupId
+      operationId: getSwtDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -1725,39 +2290,161 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/timeseries/group:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Timeseries Groups-Beta
+      summary: Delete swtData timeseries group with groupId
+      description: Deletes requested time series group
+      operationId: deleteSwtDataTimeseriesGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          description: The time series group to be deleted
+          required: true
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the time series category of the time series group to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the time series group to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+    patch:
+      tags:
+        - Timeseries Groups-Beta
+      summary: Patch swtData timeseries group with groupId
+      description: Update existing TimeSeriesGroup
+      operationId: patchSwtDataTimeseriesGroupWithGroupId
+      parameters:
+        - name: group-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: replace-assigned-ts
+          in: query
+          description: 'Specifies whether to unassign all existing time series before assigning new time series specified in the content body Default: false'
+          schema:
+            type: boolean
+        - name: office
+          in: query
+          description: Specifies the owning office of the time series group to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesGroup'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/group:
     get:
       tags:
         - Timeseries Groups-Beta
-      summary: Get cwmsData timeseries group
+      summary: Get swtData timeseries group
       description: Returns CWMS Timeseries Groups Data
-      operationId: getCwmsDataTimeseriesGroup
+      operationId: getSwtDataTimeseriesGroup
       parameters:
         - name: office
           in: query
@@ -1778,40 +2465,92 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the timeseries group(s) were not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: []
-  /cwms-data/timeseries:
+      security: [ ]
+    post:
+      tags:
+        - Timeseries Groups-Beta
+      summary: Post swtData timeseries group
+      description: Create new TimeSeriesGroup
+      operationId: postSwtDataTimeseriesGroup
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesGroup'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get cwmsData timeseries
-      operationId: getCwmsDataTimeseries
+      summary: Get swtData timeseries
+      operationId: getSwtDataTimeseries
       parameters:
         - name: name
           in: query
@@ -1902,40 +2641,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: The provided combination of parameters did not find a timeseries.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented
       security: []
     post:
       tags:
         - TimeSeries
-      summary: Post cwmsData timeseries
+      summary: Post swtData timeseries
       description: Create new TimeSeries, will store any data provided
-      operationId: postCwmsDataTimeseries
+      operationId: postSwtDataTimeseries
       parameters:
         - name: version-date
           in: query
@@ -1956,7 +2695,7 @@ paths:
           in: query
           description: The business rule to use when merging the incoming with existing data
           schema:
-            type: string
+            $ref: '#/components/schemas/StoreRule'
         - name: override-protection
           in: query
           description: A flag to ignore the protected data quality when storing data. 'True' or 'False'
@@ -1977,41 +2716,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/timeseries/{timeseries}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete cwmsData timeseries with timeseries
-      operationId: deleteCwmsDataTimeseriesWithTimeseries
+      summary: Delete swtData timeseries with timeseries
+      operationId: deleteSwtDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
-          description: The timeseries-id of the timeseries to be deleted. If 'office' is the only additional query parameter specified a non-windowed deleteAll will be performed.
+          description: 'The timeseries-id of the timeseries values to be deleted. '
           required: true
           schema:
             type: string
@@ -2024,11 +2766,13 @@ paths:
         - name: begin
           in: query
           description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          required: true
           schema:
             type: string
         - name: end
           in: query
           description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          required: true
           schema:
             type: string
         - name: timezone
@@ -2067,37 +2811,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - TimeSeries
-      summary: Patch cwmsData timeseries with timeseries
+      summary: Patch swtData timeseries with timeseries
       description: Update a TimeSeries with provided values
-      operationId: patchCwmsDataTimeseriesWithTimeseries
+      operationId: patchSwtDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -2119,17 +2866,17 @@ paths:
           in: query
           description: ''
           schema:
-            type: string
+            type: boolean
         - name: store-rule
           in: query
           description: The business rule to use when merging the incoming with existing data
           schema:
-            type: string
+            $ref: '#/components/schemas/StoreRule'
         - name: override-protection
           in: query
-          description: A flag to ignore the protected data quality when storing data.  "'True' or 'False'"
+          description: A flag to ignore the protected data quality when storing data.  "'true' or 'false'"
           schema:
-            type: string
+            type: boolean
       requestBody:
         content:
           application/json;version=2:
@@ -2145,37 +2892,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/ratings/template/{template-id}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings/template/{template-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template with templateId
-      operationId: getCwmsDataRatingsTemplateWithTemplateId
+      summary: Get swtData ratings template with templateId
+      operationId: getSwtDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -2203,38 +2953,97 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/ratings/template:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Ratings
+      summary: Delete swtData ratings template with templateId
+      description: Deletes requested rating specification
+      operationId: deleteSwtDataRatingsTemplateWithTemplateId
+      parameters:
+        - name: template-id
+          in: path
+          description: The rating-template-id of the ratings data to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the ratings to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used.
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings/template:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template
-      operationId: getCwmsDataRatingsTemplate
+      summary: Get swtData ratings template
+      operationId: getSwtDataRatingsTemplate
       parameters:
         - name: office
           in: query
@@ -2269,38 +3078,90 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/ratings/spec/{rating-id}:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Ratings
+      summary: Post swtData ratings template
+      description: Create new Rating Template
+      operationId: postSwtDataRatingsTemplate
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/RatingTemplate'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings/spec/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec with ratingId
-      operationId: getCwmsDataRatingsSpecWithRatingId
+      summary: Get swtData ratings spec with ratingId
+      operationId: getSwtDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -2326,38 +3187,97 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/ratings/spec:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Ratings
+      summary: Delete swtData ratings spec with ratingId
+      description: Deletes requested rating specification
+      operationId: deleteSwtDataRatingsSpecWithRatingId
+      parameters:
+        - name: rating-id
+          in: path
+          description: The rating-spec-id of the ratings data to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the ratings to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used.
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings/spec:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec
-      operationId: getCwmsDataRatingsSpec
+      summary: Get swtData ratings spec
+      operationId: getSwtDataRatingsSpec
       parameters:
         - name: office
           in: query
@@ -2392,38 +3312,90 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
-  /cwms-data/ratings/metadata:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Ratings
+      summary: Post swtData ratings spec
+      description: Create new Rating Specification
+      operationId: postSwtDataRatingsSpec
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/RatingSpec'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings/metadata:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings metadata
-      operationId: getCwmsDataRatingsMetadata
+      summary: Get swtData ratings metadata
+      operationId: getSwtDataRatingsMetadata
       parameters:
         - name: office
           in: query
@@ -2473,42 +3445,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/ratings/{rating}:
+  /swt-data/ratings/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings with rating
+      summary: Get swtData ratings with ratingId
       description: Returns CWMS Rating Data
-      operationId: getCwmsDataRatingsWithRating
+      operationId: getSwtDataRatingsWithRatingId
       parameters:
-        - name: rating
+        - name: rating-id
           in: path
+          description: 'The rating-id of the effective dates to be retrieve. '
           required: true
           schema:
             type: string
@@ -2553,47 +3526,65 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings with rating
-      operationId: deleteCwmsDataRatingsWithRating
+      summary: Delete swtData ratings with ratingId
+      operationId: deleteSwtDataRatingsWithRatingId
       parameters:
-        - name: rating
+        - name: rating-id
           in: path
+          description: 'The rating-id of the effective dates to be deleted. '
           required: true
           schema:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the rating to be deleted.
+          description: Specifies the office of the ratings to be deleted.
           required: true
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: This field specifies a default timezone to be used if the format of the begin, end, or version-date parameters do not include offset or time zone information. Defaults to UTC.
           schema:
             type: string
       responses:
@@ -2602,43 +3593,51 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - Ratings
-      summary: Patch cwmsData ratings with rating
+      summary: Patch swtData ratings with ratingId
       description: Update a RatingSet
-      operationId: patchCwmsDataRatingsWithRating
+      operationId: patchSwtDataRatingsWithRatingId
       parameters:
-        - name: rating
+        - name: rating-id
           in: path
           required: true
           schema:
             type: string
+        - name: store-template
+          in: query
+          description: 'Also store updates to the rating template. Default: true'
+          schema:
+            type: boolean
       requestBody:
         content:
           application/xml;version=2:
@@ -2654,37 +3653,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/ratings:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/ratings:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings
-      operationId: getCwmsDataRatings
+      summary: Get swtData ratings
+      operationId: getSwtDataRatings
       parameters:
         - name: name
           in: query
@@ -2747,40 +3749,46 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: The provided combination of parameters did not find a rating table.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented
       security: []
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings
+      summary: Post swtData ratings
       description: Create new RatingSet
-      operationId: postCwmsDataRatings
+      operationId: postSwtDataRatings
+      parameters:
+        - name: store-template
+          in: query
+          description: 'Also store updates to the rating template. Default: true'
+          schema:
+            type: boolean
       requestBody:
         content:
           application/xml;version=2:
@@ -2796,37 +3804,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/catalog/{dataset}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/catalog/{dataset}:
     get:
       tags:
         - Catalog-Beta
-      summary: Get cwmsData catalog with dataset
-      operationId: getCwmsDataCatalogWithDataset
+      summary: Get swtData catalog with dataset
+      operationId: getSwtDataCatalogWithDataset
       parameters:
         - name: dataset
           in: path
@@ -2938,39 +3949,39 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/basins/{basin-id}:
+  /swt-data/basins/{basin-id}:
     get:
       tags:
         - Basins-Beta
-      summary: Get cwmsData basins with basinId
+      summary: Get swtData basins with basinId
       description: Returns CWMS Basin Data
-      operationId: getCwmsDataBasinsWithBasinId
+      operationId: getSwtDataBasinsWithBasinId
       parameters:
         - name: basin-id
           in: path
@@ -2999,41 +4010,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: The provided combination of parameters did not find a basin.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented
       security: []
-  /cwms-data/basins:
+  /swt-data/basins:
     get:
       tags:
         - Basins-Beta
-      summary: Get cwmsData basins
+      summary: Get swtData basins
       description: Returns CWMS Basin Data
-      operationId: getCwmsDataBasins
+      operationId: getSwtDataBasins
       parameters:
         - name: office
           in: query
@@ -3057,40 +4068,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: The provided combination of parameters did not find a basin.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented
       security: []
-  /cwms-data/blobs/{blob-id}:
+  /swt-data/blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs with blobId
-      operationId: getCwmsDataBlobsWithBlobId
+      summary: Get swtData blobs with blobId
+      operationId: getSwtDataBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -3108,38 +4119,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/blobs:
+  /swt-data/blobs:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs
-      operationId: getCwmsDataBlobs
+      summary: Get swtData blobs
+      operationId: getSwtDataBlobs
       parameters:
         - name: office
           in: query
@@ -3190,38 +4201,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/clobs/{clob-id}:
+  /swt-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs with clobId
-      operationId: getCwmsDataClobsWithClobId
+      summary: Get swtData clobs with clobId
+      operationId: getSwtDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -3245,38 +4256,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     delete:
       tags:
         - Clob
-      summary: Delete cwmsData clobs with clobId
+      summary: Delete swtData clobs with clobId
       description: Delete clob
-      operationId: deleteCwmsDataClobsWithClobId
+      operationId: deleteSwtDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -3296,37 +4307,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
     patch:
       tags:
         - Clob
-      summary: Patch cwmsData clobs with clobId
+      summary: Patch swtData clobs with clobId
       description: Update clob
-      operationId: patchCwmsDataClobsWithClobId
+      operationId: patchSwtDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -3338,7 +4352,7 @@ paths:
           in: query
           description: 'If true, null and empty fields in the provided clob will be ignored and the existing value of those fields left in place. Default: true'
           schema:
-            type: string
+            type: boolean
       requestBody:
         content:
           application/json;version=2:
@@ -3354,37 +4368,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/clobs:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/clobs:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs
-      operationId: getCwmsDataClobs
+      summary: Get swtData clobs
+      operationId: getSwtDataClobs
       parameters:
         - name: office
           in: query
@@ -3446,38 +4463,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
       security: []
     post:
       tags:
         - Clob
-      summary: Post cwmsData clobs
+      summary: Post swtData clobs
       description: Create new Clob
-      operationId: postCwmsDataClobs
+      operationId: postSwtDataClobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -3499,38 +4516,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-  /cwms-data/pools/{pool-id}:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools with poolId
+      summary: Get swtData pools with poolId
       description: Retrieves requested Pool
-      operationId: getCwmsDataPoolsWithPoolId
+      operationId: getSwtDataPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -3582,41 +4602,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the Location Category was not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
       security: []
-  /cwms-data/pools:
+  /swt-data/pools:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools
+      summary: Get swtData pools
       description: Returns Pools Data
-      operationId: getCwmsDataPools
+      operationId: getSwtDataPools
       parameters:
         - name: office
           in: query
@@ -3689,40 +4709,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Based on the combination of inputs provided the pools were not found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
       security: []
-  /cwms-data/specified-levels:
+  /swt-data/specified-levels:
     get:
       tags:
-        - Specified Levels
-      summary: Get cwmsData specifiedLevels
-      operationId: getCwmsDataSpecifiedLevels
+        - Levels
+      summary: Get swtData specifiedLevels
+      operationId: getSwtDataSpecifiedLevels
       parameters:
         - name: office
           in: query
@@ -3746,35 +4766,199 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
+                $ref: '#/components/schemas/CdaError'
         '500':
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RadarError'
-      security: []
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Levels
+      summary: Post swtData specifiedLevels
+      description: Create new SpecifiedLevel
+      operationId: postSwtDataSpecifiedLevels
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/SpecifiedLevel'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+  /swt-data/specified-levels/{specified-level-id}:
+    delete:
+      tags:
+        - Levels
+      summary: Delete swtData specifiedLevels with specifiedLevelId
+      description: Deletes requested specified level id
+      operationId: deleteSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      parameters:
+        - name: specified-level-id
+          in: path
+          description: The specified level id to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
+    patch:
+      tags:
+        - Levels
+      summary: Patch swtData specifiedLevels with specifiedLevelId
+      description: Renames the requested specified level id
+      operationId: patchSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      parameters:
+        - name: specified-level-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: specified-level-id
+          in: query
+          description: The new specified level id.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the specified level to be renamed
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: [ ]
+        - CwmsAAACacAuth: [ ]
 components:
   schemas:
-    RadarError:
+    CdaError:
       type: object
       properties:
         message:
@@ -3787,10 +4971,13 @@ components:
           additionalProperties:
             type: object
     LocationCategory:
+      required:
+        - office-id
       type: object
       properties:
-        officeId:
+        office-id:
           type: string
+          description: Owning office of object.
         id:
           type: string
         description:
@@ -3812,23 +4999,26 @@ components:
         refLocationId:
           type: string
     LocationGroup:
+      required:
+        - office-id
       type: object
       properties:
+        office-id:
+          type: string
+          description: Owning office of object.
         id:
           type: string
-        locationCategory:
+        location-category:
           $ref: '#/components/schemas/LocationCategory'
-        officeId:
-          type: string
         description:
           type: string
-        sharedLocAliasId:
+        shared-loc-alias-id:
           type: string
-        sharedRefLocationId:
+        shared-ref-location-id:
           type: string
-        locGroupAttribute:
+        loc-group-attribute:
           type: number
-        assignedLocations:
+        assigned-locations:
           type: array
           items:
             $ref: '#/components/schemas/AssignedLocation'
@@ -3848,8 +5038,12 @@ components:
     Location:
       required:
         - name
+        - office-id
       type: object
       properties:
+        office-id:
+          type: string
+          description: Owning office of object.
         name:
           type: string
         latitude:
@@ -3901,8 +5095,34 @@ components:
           type: string
         bounding-office-id:
           type: string
-        office-id:
+    State:
+      type: object
+      properties:
+        stateInitial:
           type: string
+          xml:
+            name: state-initial
+        name:
+          type: string
+      description: A representation of a state
+      xml:
+        name: state
+    County:
+      type: object
+      properties:
+        name:
+          type: string
+        countyId:
+          type: string
+          xml:
+            name: county-id
+        stateInitial:
+          type: string
+          xml:
+            name: state-initial
+      description: A representation of a county
+      xml:
+        name: county
     Office:
       type: object
       properties:
@@ -3999,12 +5219,12 @@ components:
         - office-id
       type: object
       properties:
+        office-id:
+          type: string
+          description: Owning office of object.
         location-level-id:
           type: string
           description: Name of the location level
-        office-id:
-          type: string
-          description: Owning office of the level
         seasonal-time-series-id:
           type: string
           description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
@@ -4115,10 +5335,13 @@ components:
       xml:
         name: location-levels
     TimeSeriesCategory:
+      required:
+        - office-id
       type: object
       properties:
-        officeId:
+        office-id:
           type: string
+          description: Owning office of object.
         id:
           type: string
         description:
@@ -4127,10 +5350,13 @@ components:
       xml:
         name: timeseries-category
     TimeSeriesIdentifierDescriptor:
+      required:
+        - office-id
       type: object
       properties:
         office-id:
           type: string
+          description: Owning office of object.
         time-series-id:
           type: string
         timezone-name:
@@ -4140,6 +5366,31 @@ components:
           format: int64
         active:
           type: boolean
+    TimeSeriesIdentifierDescriptors:
+      type: object
+      properties:
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        descriptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
     DeleteMethod:
       type: string
       enum:
@@ -4161,21 +5412,24 @@ components:
           type: integer
           format: int32
     TimeSeriesGroup:
+      required:
+        - office-id
       type: object
       properties:
+        office-id:
+          type: string
+          description: Owning office of object.
         id:
           type: string
-        timeSeriesCategory:
+        time-series-category:
           $ref: '#/components/schemas/TimeSeriesCategory'
-        officeId:
-          type: string
         description:
           type: string
-        sharedAliasId:
+        shared-alias-id:
           type: string
-        sharedRefTsId:
+        shared-ref-ts-id:
           type: string
-        assignedTimeSeries:
+        assigned-time-series:
           type: array
           items:
             $ref: '#/components/schemas/AssignedTimeSeries'
@@ -4217,13 +5471,6 @@ components:
             seconds:
               type: integer
               format: int64
-            nano:
-              type: integer
-              format: int32
-            zero:
-              type: boolean
-            negative:
-              type: boolean
             units:
               type: array
               items:
@@ -4248,6 +5495,13 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
+            nano:
+              type: integer
+              format: int32
+            zero:
+              type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -4373,6 +5627,14 @@ components:
             $ref: '#/components/schemas/Offset'
       xml:
         name: vertical-datum-info
+    StoreRule:
+      type: string
+      enum:
+        - REPLACE_ALL
+        - DO_NOT_REPLACE
+        - REPLACE_MISSING_VALUES_ONLY
+        - REPLACE_WITH_NON_MISSING
+        - DELETE_INSERT
     ParameterSpec:
       type: object
       properties:
@@ -4385,10 +5647,13 @@ components:
         out-range-high-method:
           type: string
     RatingTemplate:
+      required:
+        - office-id
       type: object
       properties:
         office-id:
           type: string
+          description: Owning office of object.
         id:
           type: string
         version:
@@ -4439,10 +5704,13 @@ components:
         value:
           type: string
     RatingSpec:
+      required:
+        - office-id
       type: object
       properties:
         office-id:
           type: string
+          description: Owning office of object.
         rating-id:
           type: string
         template-id:
@@ -4833,107 +6101,119 @@ components:
       xml:
         name: entry
     Basin:
+      required:
+        - office-id
       type: object
       properties:
-        basinName:
+        office-id:
           type: string
-        officeId:
+          description: Owning office of object.
+        basin-name:
           type: string
-        primaryStream:
+        primary-stream:
           $ref: '#/components/schemas/Stream'
-        sortOrder:
+        sort-order:
           type: number
           format: double
-        basinArea:
+        basin-area:
           type: number
           format: double
-        contributingArea:
+        contributing-area:
           type: number
           format: double
-        parentBasinId:
+        parent-basin-id:
           type: string
     Stream:
+      required:
+        - office-id
       type: object
       properties:
-        streamName:
+        office-id:
+          type: string
+          description: Owning office of object.
+        stream-name:
           type: string
         tributaries:
           type: array
           items:
             $ref: '#/components/schemas/Stream'
-        streamReaches:
+        stream-reaches:
           type: array
           items:
             $ref: '#/components/schemas/StreamReach'
-        divertingStreamId:
+        diverting-stream-id:
           type: string
-        receivingStreamId:
+        receiving-stream-id:
           type: string
-        confluenceBank:
+        confluence-bank:
           type: string
-        diversionBank:
+        diversion-bank:
           type: string
-        streamLength:
+        stream-length:
           type: number
           format: double
-        confluenceStation:
+        confluence-station:
           type: number
           format: double
-        diversionStation:
+        diversion-station:
           type: number
           format: double
-        streamLocations:
+        stream-locations:
           type: array
           items:
             $ref: '#/components/schemas/StreamLocation'
-        officeId:
-          type: string
         comment:
           type: string
-        averageSlope:
+        average-slope:
           type: number
           format: double
     StreamLocation:
+      required:
+        - office-id
       type: object
       properties:
-        locationName:
+        office-id:
           type: string
-        streamName:
+          description: Owning office of object.
+        location-name:
+          type: string
+        stream-name:
           type: string
         station:
           type: number
           format: double
         bank:
           type: string
-        officeId:
-          type: string
-        publishedStation:
+        published-station:
           type: number
           format: double
-        lowestMeasurableStage:
+        lowest-measurable-stage:
           type: number
           format: double
-        totalDrainageArea:
+        total-drainage-area:
           type: number
           format: double
-        ungagedDrainageArea:
+        ungaged-drainage-area:
           type: number
           format: double
-        nagivationStation:
+        nagivation-station:
           type: number
           format: double
     StreamReach:
+      required:
+        - office-id
       type: object
       properties:
-        upstreamLocationName:
+        office-id:
           type: string
-        downstreamLocationName:
+          description: Owning office of object.
+        upstream-location-name:
           type: string
-        streamName:
+        downstream-location-name:
           type: string
-        reachName:
+        stream-name:
           type: string
-        officeId:
+        reach-name:
           type: string
         comment:
           type: string
@@ -4942,16 +6222,17 @@ components:
     Blob:
       required:
         - id
-        - office
+        - office-id
       type: object
       properties:
-        office:
+        office-id:
           type: string
+          description: Owning office of object.
         id:
           type: string
         description:
           type: string
-        mediaTypeId:
+        media-type-id:
           type: string
         value:
           type: array
@@ -4992,11 +6273,12 @@ components:
     Clob:
       required:
         - id
-        - office
+        - office-id
       type: object
       properties:
-        office:
+        office-id:
           type: string
+          description: Owning office of object.
         id:
           type: string
         description:
@@ -5044,11 +6326,11 @@ components:
           type: string
         clobText:
           type: string
-        projectId:
-          type: string
         bottomLevelId:
           type: string
         topLevelId:
+          type: string
+        projectId:
           type: string
         poolName:
           $ref: '#/components/schemas/PoolNameType'
@@ -5093,16 +6375,24 @@ components:
       xml:
         name: pools
     SpecifiedLevel:
+      required:
+        - office-id
       type: object
       properties:
-        id:
+        office-id:
           type: string
-        officeId:
+          description: Owning office of object.
+        id:
           type: string
         description:
           type: string
   securitySchemes:
-    CwmsAccessManager:
+    ApiKey:
       type: apiKey
+      name: Authorization
+      in: header
+    CwmsAAACacAuth:
+      type: apiKey
+      description: Auth handler running on same tomcat instance as the data api.
       name: JSESSIONIDSSO
       in: cookie

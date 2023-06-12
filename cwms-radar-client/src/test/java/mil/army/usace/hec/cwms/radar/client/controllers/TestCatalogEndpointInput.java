@@ -58,4 +58,20 @@ final class TestCatalogEndpointInput {
         assertEquals("xml", mockHttpRequestBuilder.getQueryParameter(FORMAT_QUERY_PARAMETER));
         assertEquals(ACCEPT_XML_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
+
+    @Test
+    void testCountyEndpointInput() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        CountyCatalogEndpointInput input = new CountyCatalogEndpointInput();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testStateEndpointInput() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        StateCatalogEndpointInput input = new StateCatalogEndpointInput();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
 }
