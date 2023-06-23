@@ -24,11 +24,21 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
+import mil.army.usace.hec.cwms.http.client.HttpCookie;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import org.junit.jupiter.api.Test;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509KeyManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,20 +53,8 @@ import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509KeyManager;
-import javax.net.ssl.X509TrustManager;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
-import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
-import mil.army.usace.hec.cwms.http.client.HttpCookie;
-import mil.army.usace.hec.cwms.http.client.MockHttpServer;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 final class CwmsAAALoginTest {
     static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
@@ -109,9 +107,8 @@ final class CwmsAAALoginTest {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
             List<String> cookie = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
-            mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_login.json");
-            mockHttpServer.enqueue(collect);
+            mockHttpServer.enqueue(collect, cookie);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
             KeyManager keyManager = getKeyManagerFromJreKeyStore();
