@@ -24,10 +24,19 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
-import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
-import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import org.junit.jupiter.api.Test;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,18 +45,10 @@ import java.nio.file.Path;
 import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.List;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
-import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
-import mil.army.usace.hec.cwms.http.client.MockHttpServer;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
-import org.junit.jupiter.api.Test;
+
+import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
+import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 final class CwmsAAALogoutTest {
 
@@ -73,9 +74,8 @@ final class CwmsAAALogoutTest {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
             List<String> cookie = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
-            mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_login.json");
-            mockHttpServer.enqueue(collect);
+            mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_logout.html");
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();

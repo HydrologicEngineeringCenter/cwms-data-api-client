@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ package mil.army.usace.hec.cwms.aaa.client;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpCookie;
@@ -35,6 +34,8 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.SslCanceledException;
+
+import java.io.IOException;
 
 public final class CwmsLoginController {
 
@@ -60,24 +61,6 @@ public final class CwmsLoginController {
      * @throws IOException          thrown if any errors occur in the server request
      */
     public CwmsAuthToken login(ApiConnectionInfo apiConnectionInfo) throws IOException {
-        /*
-            Need to first get the jSessionId from the /login endpoint, this brings up the
-            DoD agreement banner, which is designed for a browser redirect.
-            Instead, we will bypass in a follow-up request ignoring the banner
-            I would think eventually the banner bypass should still provide the jSessionId
-        */
-        String jsessionId;
-        try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGIN_ENDPOINT)
-            .get()
-            .withMediaType(APPLICATION_JSON)
-            .execute()) {
-            jsessionId = login.getCookies()
-                .stream()
-                .filter(h -> h.name().equalsIgnoreCase(JSESSIONID))
-                .map(HttpCookie::value)
-                .findFirst()
-                .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONID cookie"));
-        }
         try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGIN_ENDPOINT)
             .addEndpointInput(new EndpointInput() {
                 @Override
@@ -89,11 +72,17 @@ public final class CwmsLoginController {
             .withMediaType(APPLICATION_JSON)
             .execute()) {
             String jsessionIdSso = login.getCookies()
-                .stream()
-                .filter(h -> h.name().equalsIgnoreCase(JSESSIONIDSSO))
-                .map(HttpCookie::value)
-                .findFirst()
-                .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONIDSSO cookie"));
+                    .stream()
+                    .filter(h -> h.name().equalsIgnoreCase(JSESSIONIDSSO))
+                    .map(HttpCookie::value)
+                    .findFirst()
+                    .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONIDSSO cookie"));
+            String jsessionId = login.getCookies()
+                    .stream()
+                    .filter(h -> h.name().equalsIgnoreCase(JSESSIONID))
+                    .map(HttpCookie::value)
+                    .findFirst()
+                    .orElseThrow(() -> new IOException("CWMS_AAA did not return a JSESSIONID cookie"));
             String jsonBody = login.getBody();
             CwmsAuthToken retval = OBJECT_MAPPER.readValue(jsonBody, CwmsAuthToken.class);
             retval.setJSessionId(jsessionId);
