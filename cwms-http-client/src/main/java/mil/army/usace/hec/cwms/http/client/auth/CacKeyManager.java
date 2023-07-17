@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.http.client.auth;
 
 import javax.net.ssl.X509KeyManager;
 import java.net.Socket;

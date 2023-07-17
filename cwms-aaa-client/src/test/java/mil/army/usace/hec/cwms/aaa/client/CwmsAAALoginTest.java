@@ -30,6 +30,9 @@ import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
 import mil.army.usace.hec.cwms.http.client.HttpCookie;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import mil.army.usace.hec.cwms.http.client.auth.CacCertificateException;
+import mil.army.usace.hec.cwms.http.client.auth.CacKeyManager;
+import mil.army.usace.hec.cwms.http.client.auth.CacKeyManagerUtil;
 import org.junit.jupiter.api.Test;
 
 import javax.net.ssl.KeyManager;
