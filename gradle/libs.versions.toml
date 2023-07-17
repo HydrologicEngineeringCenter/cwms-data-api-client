@@ -16,7 +16,7 @@ okhttp = "4.11.0"
 bouncycastle = "1.75"
 
 #Test Dependencies
-junit = "5.9.1"
+junit = "5.9.3"
 
 [libraries]
 #HEC Dependencies

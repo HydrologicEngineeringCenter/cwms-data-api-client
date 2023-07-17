@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,9 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import okhttp3.OkHttpClient;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -32,16 +34,15 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import okhttp3.OkHttpClient;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestOkHttpClientInstance {
 
     @BeforeEach
-    private void resetSingleton() throws Exception {
+    void resetSingleton() throws Exception {
         Arrays.stream(Logger.getLogger(OkHttpClientInstance.class.getName()).getHandlers())
-              .forEach(h -> h.setLevel(Level.FINEST));
+                .forEach(h -> h.setLevel(Level.FINEST));
         Logger.getLogger(OkHttpClientInstance.class.getName()).setLevel(Level.FINEST);
         Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
         field.setAccessible(true);
