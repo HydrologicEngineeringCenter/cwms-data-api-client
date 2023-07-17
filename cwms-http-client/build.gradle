@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.lookup)
     implementation(libs.jackson.jsr310)
     implementation(libs.jwt)
+    implementation(libs.bctls)
 
     runtimeOnly(libs.metrics.codahale)
     annotationProcessor(libs.service.annotations)
