@@ -27,29 +27,26 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    implementation("com.squareup.okhttp3:okhttp:4.9.2")
-    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
-    implementation('mil.army.usace.hec:metrics-services:2.0')
-    implementation('mil.army.usace.hec:lookup:1.0')
-    implementation('org.bouncycastle:bctls-jdk15on:1.63')
-    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0')
-    implementation('javax.annotation:javax.annotation-api:1.3.2')
-    implementation("com.auth0:java-jwt:4.0.0")
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.urlconnection)
+    implementation(libs.okhttp.logging)
+    implementation(libs.metrics)
+    implementation(libs.lookup)
+    implementation(libs.jackson.jsr310)
+    implementation(libs.jwt)
 
-    runtimeOnly('mil.army.usace.hec:metrics-codahale:2.0')
-    annotationProcessor('mil.army.usace.hec:service-annotations:1.2.1')
+    runtimeOnly(libs.metrics.codahale)
+    annotationProcessor(libs.service.annotations)
 
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
-    testImplementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    testImplementation('com.squareup.okhttp3:okhttp:4.9.2')
-    testImplementation('com.squareup.okhttp3:mockwebserver:4.9.2')
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
+    testImplementation(libs.junit.api)
+    testImplementation(platform(libs.okhttp.bom))
+    testImplementation(libs.okhttp.mockwebserver)
+    testRuntimeOnly(libs.junit.engine)
 
-    testFixturesImplementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
-    testFixturesImplementation('com.squareup.okhttp3:okhttp:4.9.2')
-    testFixturesImplementation('com.squareup.okhttp3:mockwebserver:4.9.2')
+    testFixturesImplementation(platform(libs.okhttp.bom))
+    testFixturesImplementation(libs.okhttp)
+    testFixturesImplementation(libs.okhttp.mockwebserver)
 }
 
 publishing {

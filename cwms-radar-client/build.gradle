@@ -8,8 +8,8 @@ dependencies {
 
     testImplementation(testFixtures(project(":cwms-http-client")))
     testImplementation(project(":cwms-aaa-client"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
 }
 
 
