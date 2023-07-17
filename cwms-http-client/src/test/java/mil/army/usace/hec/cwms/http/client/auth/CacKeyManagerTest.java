@@ -22,9 +22,8 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.http.client.auth;
 
-import mil.army.usace.hec.cwms.http.client.auth.CacKeyManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

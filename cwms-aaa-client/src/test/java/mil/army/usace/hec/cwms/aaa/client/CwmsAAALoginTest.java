@@ -31,16 +31,14 @@ import mil.army.usace.hec.cwms.http.client.HttpCookie;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import mil.army.usace.hec.cwms.http.client.auth.CacCertificateException;
-import mil.army.usace.hec.cwms.http.client.auth.CacKeyManager;
 import mil.army.usace.hec.cwms.http.client.auth.CacKeyManagerUtil;
+import mil.army.usace.hec.cwms.http.client.auth.KeyManagerTestUtil;
 import org.junit.jupiter.api.Test;
 
 import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509KeyManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +49,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -114,7 +110,7 @@ final class CwmsAAALoginTest {
             mockHttpServer.enqueue(collect, cookie);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-            KeyManager keyManager = getKeyManagerFromJreKeyStore();
+            KeyManager keyManager = KeyManagerTestUtil.getKeyManagerFromJreKeyStore();
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl + "/CWMSLogin/")
@@ -131,24 +127,5 @@ final class CwmsAAALoginTest {
                 .build();
         }
         return apiConnectionInfo;
-    }
-
-    static CacKeyManager getKeyManagerFromJreKeyStore() throws CacCertificateException {
-        String defaultType = KeyStore.getDefaultType();
-        try {
-            KeyStore keystore = KeyStore.getInstance(defaultType);
-            keystore.load(null, null);
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            kmf.init(keystore, null);
-            KeyManager[] kms = kmf.getKeyManagers();
-            for (KeyManager km : kms) {
-                if (km instanceof X509KeyManager) {
-                    return new CacKeyManager((X509KeyManager) km, keystore);
-                }
-            }
-            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType);
-        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
-            throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType, e);
-        }
     }
 }
