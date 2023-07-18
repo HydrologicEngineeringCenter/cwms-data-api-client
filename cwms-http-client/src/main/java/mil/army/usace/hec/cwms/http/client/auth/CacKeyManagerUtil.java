@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 
 
 public final class CacKeyManagerUtil {
-    static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{16}@mil", Pattern.CASE_INSENSITIVE);
+    static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{10}@", Pattern.CASE_INSENSITIVE);
     private static final Logger LOGGER = Logger.getLogger(CacKeyManagerUtil.class.getName());
 
     private CacKeyManagerUtil() {
@@ -115,9 +115,13 @@ public final class CacKeyManagerUtil {
                 Object bytes = subjectAlternativeName.get(1);
                 if (bytes instanceof byte[]) {
                     String encoded = new String((byte[]) bytes);
+                    int edipiLengh = 10;
                     int index = encoded.indexOf("@mil");
-                    if (index >= 16) {
-                        String edipiSan = encoded.substring(index - 16, index + 4);
+                    if (index < edipiLengh) {
+                        index = encoded.indexOf("@rma");
+                    }
+                    if (index >= edipiLengh) {
+                        String edipiSan = encoded.substring(index - edipiLengh, index + 1);
                         if (EDIPI_PATTERN.matcher(edipiSan).matches()) {
                             return true;
                         }

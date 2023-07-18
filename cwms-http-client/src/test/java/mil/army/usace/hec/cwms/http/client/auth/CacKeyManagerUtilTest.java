@@ -33,9 +33,8 @@ final class CacKeyManagerUtilTest {
 
     @Test
     void testPivEdipiPattern() {
-        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@mil").matches());
-        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@MIL").matches());
-        assertFalse(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@ARMY").matches());
-        assertFalse(CacKeyManagerUtil.EDIPI_PATTERN.matcher("234567890123456@mil").matches());
+        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890@").matches());
+        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890@").matches());
+        assertFalse(CacKeyManagerUtil.EDIPI_PATTERN.matcher("123456@").matches());
     }
 }
