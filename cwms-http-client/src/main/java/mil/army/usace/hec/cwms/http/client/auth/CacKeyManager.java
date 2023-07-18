@@ -31,16 +31,11 @@ import java.security.KeyStoreException;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
-import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 final class CacKeyManager implements X509KeyManager {
-    static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{16}@mil", Pattern.CASE_INSENSITIVE);
     private static final Logger LOGGER = Logger.getLogger(CacKeyManager.class.getName());
     private final X509KeyManager delegate;
     private final KeyStore keystore;
@@ -103,7 +98,7 @@ final class CacKeyManager implements X509KeyManager {
         for (String alias : aliases) {
             try {
                 Certificate cr = keystore.getCertificate(alias);
-                if (cr instanceof X509Certificate && isPivCertificate((X509Certificate) cr)) {
+                if (cr instanceof X509Certificate && CacKeyManagerUtil.isPivCertificate((X509Certificate) cr)) {
                     retVal = alias;
                     break;
                 }
@@ -113,28 +108,4 @@ final class CacKeyManager implements X509KeyManager {
         }
         return retVal;
     }
-
-    private boolean isPivCertificate(X509Certificate cr) throws CacCertificateException {
-        try {
-            X509Certificate xcr = cr;
-            Collection<List<?>> subjectAlternativeNames = xcr.getSubjectAlternativeNames();
-            for (List<?> subjectAlternativeName : subjectAlternativeNames) {
-                Object bytes = subjectAlternativeName.get(1);
-                if (bytes instanceof byte[]) {
-                    String encoded = new String((byte[]) bytes);
-                    int index = encoded.indexOf("@mil");
-                    if (index >= 16) {
-                        String edipiSan = encoded.substring(index - 16, index + 4);
-                        if (EDIPI_PATTERN.matcher(edipiSan).matches()) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        } catch (CertificateParsingException e) {
-            throw new CacCertificateException("Unable to parse X509 Certificate", e);
-        }
-    }
-
 }

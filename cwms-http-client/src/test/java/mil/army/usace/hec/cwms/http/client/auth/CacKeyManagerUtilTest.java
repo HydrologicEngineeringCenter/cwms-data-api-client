@@ -29,13 +29,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-final class CacKeyManagerTest {
+final class CacKeyManagerUtilTest {
 
     @Test
     void testPivEdipiPattern() {
-        assertTrue(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@mil").matches());
-        assertTrue(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@MIL").matches());
-        assertFalse(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@ARMY").matches());
-        assertFalse(CacKeyManager.EDIPI_PATTERN.matcher("234567890123456@mil").matches());
+        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@mil").matches());
+        assertTrue(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@MIL").matches());
+        assertFalse(CacKeyManagerUtil.EDIPI_PATTERN.matcher("1234567890123456@ARMY").matches());
+        assertFalse(CacKeyManagerUtil.EDIPI_PATTERN.matcher("234567890123456@mil").matches());
     }
 }

@@ -32,10 +32,24 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateParsingException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 public final class CacKeyManagerUtil {
+    static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{16}@mil", Pattern.CASE_INSENSITIVE);
+    private static final Logger LOGGER = Logger.getLogger(CacKeyManagerUtil.class.getName());
 
     private CacKeyManagerUtil() {
         throw new AssertionError("Utility class");
@@ -62,8 +76,57 @@ public final class CacKeyManagerUtil {
                 }
             }
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS");
-        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
+        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException |
+                 CertificateException e) {
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS", e);
+        }
+    }
+
+
+    public static List<String> getCertificateAliases() {
+        Set<String> aliases = new TreeSet<>();
+        try {
+            KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
+            keystore.load(null, null);
+            Enumeration<String> keystoreAliases = keystore.aliases();
+            while (keystoreAliases.hasMoreElements()) {
+                String alias = keystoreAliases.nextElement();
+                Certificate[] certificateChain = keystore.getCertificateChain(alias);
+                if (certificateChain != null && certificateChain.length > 1 && certificateChain[0] instanceof X509Certificate) {
+                    if (isPivCertificate((X509Certificate) certificateChain[0])) {
+                        aliases.add(alias);
+                    }
+                }
+            }
+        } catch (IOException | NoSuchAlgorithmException | CertificateException | CacCertificateException |
+                 KeyStoreException e) {
+            LOGGER.log(Level.WARNING, "Error reading certificates from WINDOWS-MY keystore", e);
+        }
+        return new ArrayList<>(aliases);
+    }
+
+    public static boolean isPivCertificate(X509Certificate cr) throws CacCertificateException {
+        try {
+            Collection<List<?>> subjectAlternativeNames = cr.getSubjectAlternativeNames();
+            if (subjectAlternativeNames == null) {
+                return false;
+            }
+            for (List<?> subjectAlternativeName : subjectAlternativeNames) {
+                Object bytes = subjectAlternativeName.get(1);
+                if (bytes instanceof byte[]) {
+                    String encoded = new String((byte[]) bytes);
+                    int index = encoded.indexOf("@mil");
+                    if (index >= 16) {
+                        String edipiSan = encoded.substring(index - 16, index + 4);
+                        if (EDIPI_PATTERN.matcher(edipiSan).matches()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        } catch (CertificateParsingException e) {
+            throw new CacCertificateException("Unable to parse X509 Certificate", e);
         }
     }
 
