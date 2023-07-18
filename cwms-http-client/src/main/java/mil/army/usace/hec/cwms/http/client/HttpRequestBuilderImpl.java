@@ -24,8 +24,19 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.request.*;
-import okhttp3.*;
+import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import usace.metrics.noop.NoOpTimer;
@@ -40,7 +51,11 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.Security;
 import java.security.SignatureException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
@@ -224,10 +239,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
                     Set<HttpCookie> cookies = client.cookieJar().loadForRequest(request.url())
-                        .stream()
-                        .map(OkHttpCookieWrapper::new)
-                        .collect(toSet());
-                    retVal = new HttpRequestResponse(responseBody, cookies);
+                            .stream()
+                            .map(OkHttpCookieWrapper::new)
+                            .collect(toSet());
+                    Headers headers = execute.headers();
+                    retVal = new HttpRequestResponse(responseBody, cookies, headers);
                 } else {
                     handleExecutionError(execute, request);
                 }

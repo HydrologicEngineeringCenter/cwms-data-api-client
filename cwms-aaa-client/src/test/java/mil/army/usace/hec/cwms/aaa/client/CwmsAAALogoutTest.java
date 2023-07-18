@@ -29,6 +29,8 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import mil.army.usace.hec.cwms.http.client.auth.CacKeyManagerUtil;
+import mil.army.usace.hec.cwms.http.client.auth.KeyManagerTestUtil;
 import org.junit.jupiter.api.Test;
 
 import javax.net.ssl.KeyManager;
@@ -47,7 +49,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
-import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 final class CwmsAAALogoutTest {
@@ -80,7 +81,7 @@ final class CwmsAAALogoutTest {
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-            KeyManager keyManager = getKeyManagerFromJreKeyStore();
+            KeyManager keyManager = KeyManagerTestUtil.getKeyManagerFromJreKeyStore();
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
@@ -89,7 +90,7 @@ final class CwmsAAALogoutTest {
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         } else {
-            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            KeyManager keyManager = CacKeyManagerUtil.createKeyManager();
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();

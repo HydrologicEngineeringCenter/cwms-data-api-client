@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,13 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.util.List;
-import java.util.Optional;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+
+import javax.net.ssl.HostnameVerifier;
+import java.util.List;
+import java.util.Optional;
 
 final class OkHttpClientFactory {
 
@@ -49,6 +51,10 @@ final class OkHttpClientFactory {
         }
         builder = apiConnectionInfo.authenticator().map(builder::authenticator).orElse(builder);
         CookieJar cookieJar = apiConnectionInfo.cookieJar().orElse(CookieJar.NO_COOKIES);
+        Optional<HostnameVerifier> hostnameVerifier = apiConnectionInfo.hostnameVerifier();
+        if (hostnameVerifier.isPresent()) {
+            builder.hostnameVerifier(hostnameVerifier.get());
+        }
         return builder.cookieJar(cookieJar).build();
     }
 }

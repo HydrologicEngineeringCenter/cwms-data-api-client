@@ -24,8 +24,15 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import mil.army.usace.hec.cwms.http.client.auth.CacKeyManagerUtil;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.net.ssl.X509KeyManager;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -35,13 +42,8 @@ import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.net.ssl.X509KeyManager;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class CacEncryptedToken {
 
@@ -49,7 +51,7 @@ final class CacEncryptedToken {
     @Test
     public void testCacEncryptedToken() throws Exception {
         String unencryptedToken = "8AAF8621FD4748C050814BE6D6AFDAFC";
-        X509KeyManager keyManager = (X509KeyManager) CacKeyManagerUtil.getKeyManager();
+        X509KeyManager keyManager = (X509KeyManager) CacKeyManagerUtil.createKeyManager();
         String[] aliases = keyManager.getClientAliases("RSA", null);
         String encryptionAlias = Arrays.stream(aliases)
             .filter(a -> a.toLowerCase().contains("encryption"))
