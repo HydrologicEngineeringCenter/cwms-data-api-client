@@ -46,7 +46,7 @@ public final class KeyManagerTestUtil {
             KeyManager[] kms = kmf.getKeyManagers();
             for (KeyManager km : kms) {
                 if (km instanceof X509KeyManager) {
-                    return new CacKeyManager((X509KeyManager) km, keystore);
+                    return new CacKeyManager((X509KeyManager) km, keystore, null);
                 }
             }
             throw new CacCertificateException("Failed to get X509KeyManager from type: " + defaultType);

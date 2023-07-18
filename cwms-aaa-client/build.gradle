@@ -11,14 +11,6 @@ dependencies {
     testRuntimeOnly(libs.junit.engine)
 }
 
-jacocoTestReport {
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'mil/army/usace/hec/cwms/aaa/client/Cac*')
-        }))
-    }
-}
-
 publishing {
     publications {
         maven(MavenPublication) {

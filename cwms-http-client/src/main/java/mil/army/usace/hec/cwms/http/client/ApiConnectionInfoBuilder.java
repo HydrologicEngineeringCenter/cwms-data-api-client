@@ -24,13 +24,15 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.util.ArrayList;
-import java.util.List;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
 import okhttp3.Authenticator;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
+
+import javax.net.ssl.HostnameVerifier;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiConnectionInfoBuilder {
 
@@ -41,6 +43,7 @@ public class ApiConnectionInfoBuilder {
     private CookieJarFactory.CookieJarSupplier cookieJarSupplier;
     private CookieAuthenticator cookieAuthenticator;
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
+    private HostnameVerifier hostnameVerifier;
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -68,6 +71,11 @@ public class ApiConnectionInfoBuilder {
 
     public ApiConnectionInfoBuilder withAuthorizationKeyProvider(SimpleAuthKeyProvider simpleAuthKeyProvider) {
         this.simpleAuthKeyProvider = simpleAuthKeyProvider;
+        return this;
+    }
+
+    public ApiConnectionInfoBuilder withHostnameVerifier(HostnameVerifier hostnameVerifier) {
+        this.hostnameVerifier = hostnameVerifier;
         return this;
     }
 
@@ -101,6 +109,6 @@ public class ApiConnectionInfoBuilder {
             }
             authenticator = cookieAuthenticator;
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator);
+        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, hostnameVerifier);
     }
 }

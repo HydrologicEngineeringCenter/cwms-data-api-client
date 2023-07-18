@@ -51,7 +51,7 @@ final class CacEncryptedToken {
     @Test
     public void testCacEncryptedToken() throws Exception {
         String unencryptedToken = "8AAF8621FD4748C050814BE6D6AFDAFC";
-        X509KeyManager keyManager = (X509KeyManager) CacKeyManagerUtil.getKeyManager();
+        X509KeyManager keyManager = (X509KeyManager) CacKeyManagerUtil.createKeyManager();
         String[] aliases = keyManager.getClientAliases("RSA", null);
         String encryptionAlias = Arrays.stream(aliases)
             .filter(a -> a.toLowerCase().contains("encryption"))

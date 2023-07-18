@@ -29,6 +29,7 @@ import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -238,10 +239,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
                     Set<HttpCookie> cookies = client.cookieJar().loadForRequest(request.url())
-                        .stream()
-                        .map(OkHttpCookieWrapper::new)
-                        .collect(toSet());
-                    retVal = new HttpRequestResponse(responseBody, cookies);
+                            .stream()
+                            .map(OkHttpCookieWrapper::new)
+                            .collect(toSet());
+                    Headers headers = execute.headers();
+                    retVal = new HttpRequestResponse(responseBody, cookies, headers);
                 } else {
                     handleExecutionError(execute, request);
                 }

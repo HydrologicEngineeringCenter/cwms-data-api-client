@@ -25,7 +25,11 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
@@ -76,7 +80,7 @@ class SimpleAuthHeaderAuthenticatorTest {
             SimpleAuthKeyProvider tokenProvider = () -> "Bearer " + ACCESS_TOKEN;
             SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
             assertThrows(UnauthorizedException.class, () -> new HttpRequestBuilderImpl(new ApiConnectionInfo(String.format("http://localhost:%s", mockWebServer.getPort()), null,
-                    null, new ArrayList<>(), authenticator))
+                    null, new ArrayList<>(), authenticator, null))
                     .post()
                     .withBody("")
                     .withMediaType("application/json")

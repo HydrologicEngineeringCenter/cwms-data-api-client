@@ -151,7 +151,7 @@ abstract class TestController {
             if(USE_MOCK) {
                 keyManager = getKeyManagerFromJreKeyStore();
             } else {
-                keyManager = CacKeyManagerUtil.getKeyManager();
+                keyManager = CacKeyManagerUtil.createKeyManager();
             }
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();

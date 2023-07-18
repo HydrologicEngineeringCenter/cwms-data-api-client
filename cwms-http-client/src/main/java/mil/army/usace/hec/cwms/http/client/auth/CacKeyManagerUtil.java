@@ -36,17 +36,20 @@ import java.security.cert.CertificateException;
 
 
 public final class CacKeyManagerUtil {
-    private static KeyManager instance;
 
     private CacKeyManagerUtil() {
         throw new AssertionError("Utility class");
     }
 
-    private static KeyManager createKeyManager() throws CacCertificateException {
-        return getKeyManagerFromWindowsKeyStore();
+    public static KeyManager createKeyManager() throws CacCertificateException {
+        return getKeyManagerFromWindowsKeyStore(null);
     }
 
-    private static CacKeyManager getKeyManagerFromWindowsKeyStore() throws CacCertificateException {
+    public static KeyManager createKeyManager(String certificateAlias) throws CacCertificateException {
+        return getKeyManagerFromWindowsKeyStore(certificateAlias);
+    }
+
+    private static CacKeyManager getKeyManagerFromWindowsKeyStore(String certificateAlias) throws CacCertificateException {
         try {
             KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
             keystore.load(null, null);
@@ -55,20 +58,13 @@ public final class CacKeyManagerUtil {
             KeyManager[] kms = kmf.getKeyManagers();
             for (KeyManager km : kms) {
                 if (km instanceof X509KeyManager) {
-                    return new CacKeyManager((X509KeyManager) km, keystore);
+                    return new CacKeyManager((X509KeyManager) km, keystore, certificateAlias);
                 }
             }
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS");
         } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | IOException | CertificateException e) {
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS", e);
         }
-    }
-
-    public static synchronized KeyManager getKeyManager() throws CacCertificateException {
-        if (instance == null) {
-            instance = createKeyManager();
-        }
-        return instance;
     }
 
 }

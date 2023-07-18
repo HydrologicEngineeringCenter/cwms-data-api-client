@@ -68,7 +68,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: ['mil/army/usace/hec/cwms/http/client/CwmsHttpMetricsServiceProvider*',
-                                        'mil/army/usace/hec/cwms/http/client/Http2Util'])
+                                        'mil/army/usace/hec/cwms/http/client/Http2Util',
+                                        'mil/army/usace/hec/cwms/http/client/auth/Cac*'])
         }))
     }
 }

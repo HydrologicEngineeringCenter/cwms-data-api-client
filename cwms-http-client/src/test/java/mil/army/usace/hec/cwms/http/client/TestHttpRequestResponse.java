@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,9 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,9 +34,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.stream.Collectors;
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestHttpRequestResponse {
 
@@ -43,7 +44,7 @@ class TestHttpRequestResponse {
         String bodyStr =
             "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
         ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet());
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), null);
         assertEquals(bodyStr, httpRequestResponse.getBody());
     }
 
@@ -52,7 +53,7 @@ class TestHttpRequestResponse {
         String bodyStr = "Hello World";
         byte[] bytes = bodyStr.getBytes();
         ResponseBody body = ResponseBody.create(bytes, MediaType.parse("text/plain"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet());
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), null);
         try (InputStream inputStream = httpRequestResponse.getStream()) {
             String result = new BufferedReader(new InputStreamReader(inputStream))
                 .lines().collect(Collectors.joining("\n"));

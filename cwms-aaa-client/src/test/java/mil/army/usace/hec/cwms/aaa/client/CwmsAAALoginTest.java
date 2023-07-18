@@ -118,7 +118,7 @@ final class CwmsAAALoginTest {
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagerFactory.getTrustManagers()[0]))
                 .build();
         } else {
-            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            KeyManager keyManager = CacKeyManagerUtil.createKeyManager();
             sc.init(new KeyManager[] {keyManager}, trustManagerFactory.getTrustManagers(), null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
             apiConnectionInfo = new ApiConnectionInfoBuilder(TOMCAT_SERVER + "/CWMSLogin/")

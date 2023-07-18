@@ -90,7 +90,7 @@ final class CwmsAAALogoutTest {
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         } else {
-            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            KeyManager keyManager = CacKeyManagerUtil.createKeyManager();
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();

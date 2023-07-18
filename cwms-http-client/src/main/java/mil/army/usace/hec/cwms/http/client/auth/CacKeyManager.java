@@ -44,10 +44,12 @@ final class CacKeyManager implements X509KeyManager {
     private static final Logger LOGGER = Logger.getLogger(CacKeyManager.class.getName());
     private final X509KeyManager delegate;
     private final KeyStore keystore;
+    private final String certificateAlias;
 
-    CacKeyManager(X509KeyManager delegate, KeyStore keystore) {
+    CacKeyManager(X509KeyManager delegate, KeyStore keystore, String certificateAlias) {
         this.delegate = delegate;
         this.keystore = keystore;
+        this.certificateAlias = certificateAlias;
     }
 
     @Override
@@ -57,13 +59,19 @@ final class CacKeyManager implements X509KeyManager {
 
     @Override
     public String chooseClientAlias(String[] keyTypes, Principal[] issuers, Socket socket) {
-        String retVal = delegate.chooseClientAlias(keyTypes, issuers, socket);
-        if (keyTypes != null) {
-            for (String keyType : keyTypes) {
-                String[] clientAliases = this.getClientAliases(keyType, issuers);
-                if (clientAliases != null && clientAliases.length > 0) {
-                    retVal = getPivCertificate(clientAliases);
-                    break;
+        String retVal = null;
+        if (certificateAlias != null) {
+            retVal = getPivCertificate(new String[]{certificateAlias});
+        }
+        if (retVal == null) {
+            delegate.chooseClientAlias(keyTypes, issuers, socket);
+            if (keyTypes != null) {
+                for (String keyType : keyTypes) {
+                    String[] clientAliases = this.getClientAliases(keyType, issuers);
+                    if (clientAliases != null && clientAliases.length > 0) {
+                        retVal = getPivCertificate(clientAliases);
+                        break;
+                    }
                 }
             }
         }

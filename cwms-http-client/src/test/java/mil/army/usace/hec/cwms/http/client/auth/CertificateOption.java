@@ -22,48 +22,53 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.http.client.auth;
 
-import okhttp3.Headers;
-import okhttp3.ResponseBody;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+public final class CertificateOption {
+	private final Certificate _cert;
+	private final String _alias;
 
-public final class HttpRequestResponse implements AutoCloseable {
+	CertificateOption(String alias, Certificate cert) {
+		_cert = cert;
+		_alias = alias;
+	}
 
-    private final ResponseBody body;
-    private final Set<HttpCookie> cookies;
-    private final Headers headers;
+	private static String getCN(String dn) {
+		String pat = "CN=(.*?),";
 
-    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers) {
-        this.body = body;
-        this.cookies = cookies;
-        this.headers = headers;
-    }
+		Pattern r = Pattern.compile(pat);
+		Matcher m = r.matcher(dn);
 
-    public String getBody() throws IOException {
-        return body.string();
-    }
+		if (m.find()) {
+			if (m.groupCount() == 1) {
+				return m.group(1);
+			}
+		}
+		return null;
+	}
 
-    public InputStream getStream() {
-        return body.byteStream();
-    }
+	public String getAlias() {
+		return _alias;
+	}
 
-    public Set<HttpCookie> getCookies() {
-        return new HashSet<>(cookies);
-    }
+	@Override
+	public String toString() {
+		if (_cert instanceof X509Certificate) {
+			X509Certificate xc = (X509Certificate) _cert;
+			String subject = getCN(xc.getSubjectX500Principal().getName());
+			String issuer = getCN(xc.getIssuerX500Principal().getName());
 
-    public Map<String, List<String>> getHeaders() {
-        return headers.toMultimap();
-    }
+			if (subject != null && issuer != null) {
+				return "Subject: " + subject + " Issuer: " + issuer;
+			}
+		}
+		return _alias;
+	}
 
-    @Override
-    public void close() {
-        body.close();
-    }
 }
+
