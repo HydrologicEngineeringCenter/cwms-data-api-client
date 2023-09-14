@@ -137,9 +137,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     //Packaged scope for testing
     Request createRequest() throws IOException {
-        HttpUrl resolve = httpUrl.resolve(endpoint);
-        if (resolve == null) {
-            throw new IOException("Endpoint to API is malformed: " + endpoint);
+        HttpUrl resolve = httpUrl;
+        if (!endpoint.isEmpty()) {
+            resolve = httpUrl.newBuilder()
+                .addPathSegments(endpoint)
+                .build();
         }
         MediaType type = MediaType.parse(mediaType);
         if (type == null) {
