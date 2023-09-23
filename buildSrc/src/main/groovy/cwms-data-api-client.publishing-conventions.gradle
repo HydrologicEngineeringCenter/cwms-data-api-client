@@ -1,0 +1,18 @@
+plugins {
+    id 'maven-publish'
+}
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username System.getenv("DEPLOY_USER")
+                password System.getenv("DEPLOY_PASSWORD")
+            }
+            def repositoryUrl = System.getenv("DEPLOY_URL")
+            afterEvaluate {
+                url = version.endsWith("SNAPSHOT") ? repositoryUrl + "/github-snapshots" : repositoryUrl + "/github-releases"
+            }
+        }
+    }
+}

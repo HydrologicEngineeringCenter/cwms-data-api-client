@@ -1,0 +1,28 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+dependencies {
+    annotationProcessor(libs.service.annotations)
+
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
+}
+
+configurations.implementation.extendsFrom(configurations.annotationProcessor)
+
+test {
+    useJUnitPlatform()
+}
+
+javadoc {
+    options.addBooleanOption("Xdoclint:none", true)
+}

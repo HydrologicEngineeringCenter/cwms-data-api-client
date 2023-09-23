@@ -23,6 +23,9 @@
  */
 
 plugins {
+    id "cwms-data-api-client.java-conventions"
+    id "cwms-data-api-client.deps-conventions"
+    id "cwms-data-api-client.publishing-conventions"
     id 'java-test-fixtures'
 }
 
@@ -57,11 +60,6 @@ publishing {
             from components.java
         }
     }
-}
-
-compileTestFixturesJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
 }
 
 jacocoTestReport {
