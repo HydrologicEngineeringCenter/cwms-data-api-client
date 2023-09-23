@@ -1,5 +1,7 @@
 plugins {
-    id 'java-library'
+    id "cwms-data-api-client.java-conventions"
+    id "cwms-data-api-client.deps-conventions"
+    id "cwms-data-api-client.publishing-conventions"
 }
 
 dependencies {
@@ -8,8 +10,6 @@ dependencies {
 
     testImplementation(testFixtures(project(":cwms-http-client")))
     testImplementation(project(":cwms-aaa-client"))
-    testImplementation(libs.junit.api)
-    testRuntimeOnly(libs.junit.engine)
 }
 
 

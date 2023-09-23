@@ -19,32 +19,11 @@ subprojects {
     version = versionLabel(versionDetails())
     group = "mil.army.usace.hec"
 
-    compileJava {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
-    }
-
-    java {
-        withSourcesJar()
-        withJavadocJar()
-    }
-
-    repositories {
-        mavenCentral()
-        maven {
-            url = uri('https://repo.maven.apache.org/maven2')
-        }
-        maven {
-            url = uri('https://www.hec.usace.army.mil/nexus/repository/maven-public')
-        }
-    }
-
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
 
     test {
-        useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
 
@@ -62,19 +41,6 @@ subprojects {
             csv.required = true
             xml.required = true
             html.outputLocation = layout.buildDirectory.dir('jacoco')
-        }
-    }
-
-    publishing {
-        repositories {
-            maven {
-                def repositoryUrl = System.getenv("DEPLOY_URL")
-                url = version.endsWith("SNAPSHOT") ? repositoryUrl + "/github-snapshots" : repositoryUrl + "/github-releases"
-                credentials {
-                    username System.getenv("DEPLOY_USER")
-                    password System.getenv("DEPLOY_PASSWORD")
-                }
-            }
         }
     }
 }

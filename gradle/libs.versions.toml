@@ -2,8 +2,8 @@
 
 #HEC Dependencies
 metrics = "2.0"
-lookup = "1.1"
-service-annotations = "1.2.1"
+service-annotations = "2.0.1"
+lookup = "2.0"
 
 #Third Party Dependencies
 jackson = "2.13.0"
