@@ -268,7 +268,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             if (!CwmsHttpClientMetrics.isMetricsEnabled()) {
                 return new NoOpTimer();
             }
-            Metrics metrics = CwmsHttpClientMetrics.createMetrics(Objects.toString(httpUrl.resolve(endpoint)));
+            Metrics metrics = CwmsHttpClientMetrics.createMetrics(method.getName() + " " + httpUrl.resolve(endpoint));
             Timer timer = metrics.createTimer();
             Properties metricsProperties = new Properties();
             metricsProperties.putAll(queryParameters);
