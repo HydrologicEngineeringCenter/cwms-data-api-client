@@ -24,10 +24,11 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import okhttp3.OkHttpClient;
+
 import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import okhttp3.OkHttpClient;
 
 final class OkHttpClientInstance {
 
@@ -52,11 +53,12 @@ final class OkHttpClientInstance {
     // package scoped for testing only
     static OkHttpClient createClient() {
         return new OkHttpClient.Builder()
-            .callTimeout(getCallTimeout())
-            .connectTimeout(getConnectTimeout())
-            .readTimeout(getReadTimeout())
-            .writeTimeout(getWriteTimeout())
-            .addInterceptor(LOGGING_INTERCEPTOR)
+                .callTimeout(getCallTimeout())
+                .connectTimeout(getConnectTimeout())
+                .readTimeout(getReadTimeout())
+                .writeTimeout(getWriteTimeout())
+                .addInterceptor(LOGGING_INTERCEPTOR)
+                .cache(CwmsHttpCache.getInstance())
             .build();
     }
 

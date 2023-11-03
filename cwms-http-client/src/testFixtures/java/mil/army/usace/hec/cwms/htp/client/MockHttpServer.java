@@ -24,10 +24,11 @@
 
 package mil.army.usace.hec.cwms.htp.client;
 
-import java.io.IOException;
-import java.util.List;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+
+import java.io.IOException;
+import java.util.List;
 
 public final class MockHttpServer {
 
@@ -54,6 +55,14 @@ public final class MockHttpServer {
         MockResponse mockResponse = new MockResponse().setBody(body);
         for (String cookie : cookies) {
             mockResponse = mockResponse.addHeader("Set-Cookie", cookie);
+        }
+        mockWebServer.enqueue(mockResponse);
+    }
+
+    public void enqueueWithCache(String body, List<String> cacheControls) {
+        MockResponse mockResponse = new MockResponse().setResponseCode(200).setBody(body);
+        if (!cacheControls.isEmpty()) {
+            mockResponse = mockResponse.addHeader("Cache-Control", String.join(", ", cacheControls));
         }
         mockWebServer.enqueue(mockResponse);
     }

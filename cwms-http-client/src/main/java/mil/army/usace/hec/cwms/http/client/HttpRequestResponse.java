@@ -24,24 +24,31 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import okhttp3.ResponseBody;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
-import okhttp3.ResponseBody;
 
 public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
     private final Set<HttpCookie> cookies;
+    private final boolean usedCache;
 
-    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies) {
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, boolean usedCache) {
         this.body = body;
         this.cookies = cookies;
+        this.usedCache = usedCache;
     }
 
     public String getBody() throws IOException {
         return body.string();
+    }
+
+    public boolean usedCache() {
+        return usedCache;
     }
 
     public InputStream getStream() {

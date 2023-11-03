@@ -24,20 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import static java.util.stream.Collectors.toSet;
-
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.Security;
-import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
-import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
@@ -54,6 +40,21 @@ import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
+
+import javax.net.ssl.SSLHandshakeException;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.Security;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -237,10 +238,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                         throw new IOException("Error with request, body not returned for request: " + request);
                     }
                     Set<HttpCookie> cookies = client.cookieJar().loadForRequest(request.url())
-                        .stream()
-                        .map(OkHttpCookieWrapper::new)
-                        .collect(toSet());
-                    retVal = new HttpRequestResponse(responseBody, cookies);
+                            .stream()
+                            .map(OkHttpCookieWrapper::new)
+                            .collect(toSet());
+                    boolean usedCache = execute.cacheResponse() != null;
+                    retVal = new HttpRequestResponse(responseBody, cookies, usedCache);
                 } else {
                     handleExecutionError(execute, request);
                 }
