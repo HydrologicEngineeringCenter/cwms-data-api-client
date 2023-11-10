@@ -63,7 +63,7 @@ public final class TimeSeriesEndpointInput {
         static final String END_QUERY_PARAMETER = "end";
         static final String TIMEZONE_QUERY_PARAMETER = "timezone";
         static final String PAGE_QUERY_PARAMETER = "page";
-        static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
+        static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
         static final String NAME_QUERY_PARAMETER = "name";
         private final String timeSeriesId;
         private String officeId;
