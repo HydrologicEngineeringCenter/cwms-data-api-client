@@ -38,7 +38,7 @@ public final class LocationGroupEndpointInput {
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
-    static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "includeAssigned";
+    static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String REPLACE_ASSIGNED_LOCS = "replace-assigned-locs";
 
     public static GetOne getOne(String categoryId, String groupId, String officeId) {

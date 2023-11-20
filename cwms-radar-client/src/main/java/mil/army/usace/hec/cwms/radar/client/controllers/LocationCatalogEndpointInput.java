@@ -34,12 +34,12 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 public final class LocationCatalogEndpointInput extends EndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
-    static final String UNIT_SYSTEM_QUERY_PARAMETER = "unitSystem";
+    static final String UNIT_SYSTEM_QUERY_PARAMETER = "unit-system";
     static final String CURSOR_QUERY_PARAMETER = "cursor";
-    static final String PAGE_SIZE_QUERY_PARAMETER = "pageSize";
+    static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
     static final String LIKE_QUERY_PARAMETER = "like";
-    static final String CATEGORY_LIKE_QUERY_PARAMETER = "categoryLike";
-    static final String GROUP_LIKE_QUERY_PARAMETER = "groupLike";
+    static final String CATEGORY_LIKE_QUERY_PARAMETER = "location-category-like";
+    static final String GROUP_LIKE_QUERY_PARAMETER = "location-group-like";
 
     private String cursor;
     private Integer pageSize;
