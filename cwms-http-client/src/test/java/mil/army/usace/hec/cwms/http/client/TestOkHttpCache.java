@@ -1,18 +1,17 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -29,7 +28,7 @@ final class TestOkHttpCache {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
-        cacheField.set(null, CwmsHttpCache.createCache());
+        cacheField.set(null, new CwmsHttpCache.Builder().build());
         Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
         field.setAccessible(true);
         modifiersField = Field.class.getDeclaredField("modifiers");
@@ -41,7 +40,7 @@ final class TestOkHttpCache {
     @Test
     void testOkHttpCache() throws Exception {
         MockHttpServer mockServer = MockHttpServer.create();
-        Path cacheDirectory = Paths.get(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY).getParent().resolve("test");
+        Path cacheDirectory = CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("test");
         System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, cacheDirectory.toString());
         try {
             List<String> cacheControls = new ArrayList<>();

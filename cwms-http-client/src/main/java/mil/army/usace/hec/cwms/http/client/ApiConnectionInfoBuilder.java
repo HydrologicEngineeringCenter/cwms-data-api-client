@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import okhttp3.Authenticator;
+import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 
@@ -38,6 +39,7 @@ public class ApiConnectionInfoBuilder {
     private SslSocketData sslSocketData;
     private CookieJarFactory.CookieJarSupplier cookieJarSupplier;
     private CookieAuthenticator cookieAuthenticator;
+    private Cache cache = CwmsHttpCache.getInstance();  // default to the shared static cache.
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -63,6 +65,11 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
+    public ApiConnectionInfoBuilder withCache(Cache cache) {
+        this.cache = cache;
+        return this;
+    }
+
     public ApiConnectionInfo build() {
         CookieJar cookieJar = null;
         if (cookieJarSupplier != null) {
@@ -81,6 +88,6 @@ public class ApiConnectionInfoBuilder {
             }
             authenticator = cookieAuthenticator;
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator);
+        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, cache);
     }
 }

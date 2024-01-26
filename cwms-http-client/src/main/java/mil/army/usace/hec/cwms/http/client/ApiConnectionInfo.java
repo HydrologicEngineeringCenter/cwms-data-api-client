@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.http.client;
 import java.util.List;
 import java.util.Optional;
 import okhttp3.Authenticator;
+import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 
@@ -37,14 +38,16 @@ public final class ApiConnectionInfo {
     private final CookieJar cookieJar;
     private final List<Interceptor> interceptors;
     private final Authenticator authenticator;
+    private final Cache cache;
 
     ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, CookieJar cookieJar,
-                      List<Interceptor> interceptors, Authenticator authenticator) {
+                      List<Interceptor> interceptors, Authenticator authenticator, Cache cache) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.interceptors = interceptors;
         this.authenticator = authenticator;
         this.cookieJar = cookieJar;
+        this.cache = cache;
     }
 
     public String getApiRoot() {
@@ -66,4 +69,9 @@ public final class ApiConnectionInfo {
     Optional<CookieJar> cookieJar() {
         return Optional.ofNullable(cookieJar);
     }
+
+    Optional<Cache> cache(){
+        return Optional.ofNullable(cache);
+    }
+
 }

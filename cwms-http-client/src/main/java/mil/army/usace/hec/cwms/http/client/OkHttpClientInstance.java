@@ -58,7 +58,7 @@ final class OkHttpClientInstance {
                 .readTimeout(getReadTimeout())
                 .writeTimeout(getWriteTimeout())
                 .addInterceptor(LOGGING_INTERCEPTOR)
-                .cache(CwmsHttpCache.getInstance())
+                .cache(getCache())
             .build();
     }
 
@@ -76,6 +76,10 @@ final class OkHttpClientInstance {
 
     private static Duration getCallTimeout() {
         return getDurationProperty(CALL_TIMEOUT_PROPERTY_KEY, CALL_TIMEOUT_PROPERTY_DEFAULT);
+    }
+
+    private static okhttp3.Cache getCache() {
+        return CwmsHttpCache.getInstance();
     }
 
     private static Duration getDurationProperty(String timeoutPropertyKey, Duration timeoutPropertyDefault) {

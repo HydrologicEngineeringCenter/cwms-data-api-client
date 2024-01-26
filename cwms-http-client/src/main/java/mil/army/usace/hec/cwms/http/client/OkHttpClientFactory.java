@@ -49,6 +49,7 @@ final class OkHttpClientFactory {
         }
         builder = apiConnectionInfo.authenticator().map(builder::authenticator).orElse(builder);
         CookieJar cookieJar = apiConnectionInfo.cookieJar().orElse(CookieJar.NO_COOKIES);
+        builder = builder.cache(apiConnectionInfo.cache().orElse(null));
         return builder.cookieJar(cookieJar).build();
     }
 }
