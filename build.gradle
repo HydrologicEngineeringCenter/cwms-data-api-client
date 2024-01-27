@@ -6,7 +6,7 @@ def versionLabel(gitInfo) {
     def branch = gitInfo.branchName // all branches are snapshots, only tags get released
     def tag = gitInfo.lastTag
     // tag is returned as is. Branch may need cleanup
-    return branch == null ? tag : "99." + branch.replace("/", "-") + "-SNAPSHOT"
+    return branch == null ? tag : 99 + "." + branch.replace("/","-") + "-SNAPSHOT"
 }
 
 subprojects {
@@ -14,32 +14,16 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
-
+    apply plugin: 'project-report'
 
     version = versionLabel(versionDetails())
     group = "mil.army.usace.hec"
-
-    compileJava {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
-    }
-
-    repositories {
-        mavenCentral()
-        maven {
-            url = uri('https://repo.maven.apache.org/maven2')
-        }
-        maven {
-            url = uri('https://www.hec.usace.army.mil/nexus/repository/maven-public')
-        }
-    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
 
     test {
-        useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
 
@@ -55,24 +39,8 @@ subprojects {
         dependsOn test
         reports {
             csv.required = true
-            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-        }
-    }
-
-    build {
-        finalizedBy publishToMavenLocal
-    }
-
-    publishing {
-        repositories {
-            maven {
-                def repositoryUrl = System.getenv("DEPLOY_URL")
-                url = version.endsWith("SNAPSHOT") ? repositoryUrl + "/github-snapshots" : repositoryUrl + "/github-releases"
-                credentials {
-                    username System.getenv("DEPLOY_USER")
-                    password System.getenv("DEPLOY_PASSWORD")
-                }
-            }
+            xml.required = true
+            html.outputLocation = layout.buildDirectory.dir('jacoco')
         }
     }
 }

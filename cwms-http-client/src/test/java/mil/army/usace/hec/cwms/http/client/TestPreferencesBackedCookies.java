@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -71,5 +72,34 @@ final class TestPreferencesBackedCookies {
                 .findFirst();
             assertTrue(first.isPresent());
         }
+    }
+
+
+    @Test
+    void testCookieAccess() throws IOException {
+        Preferences node = Preferences.userRoot().node("test").node("cwms").node("http_client");
+        PreferencesBackedCookieStore preferencesBackedCookieStore = new PreferencesBackedCookieStore(node);
+        CookieJarFactory.CookieJarSupplier cookieJarSupplier = CookieJarFactory.preferenceBackedCookieJar(preferencesBackedCookieStore);
+        try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
+            .withCookieJarSupplier(cookieJarSupplier)
+            .build())
+            .get()
+            .withMediaType("application/json")
+            .execute()) {
+            Set<HttpCookie> cookies = execute.getCookies();
+            assertFalse(cookies.isEmpty());
+        }
+        JavaNetCookieJar cookieJar = (JavaNetCookieJar) cookieJarSupplier.getCookieJar();
+        HttpUrl httpUrl = HttpUrl.get("https://www.google.com");
+        List<java.net.HttpCookie> cookies = preferencesBackedCookieStore.getCookies();
+        assertFalse(cookies.isEmpty());
+        List<URI> urIs = preferencesBackedCookieStore.getURIs();
+        assertFalse(urIs.isEmpty());
+        assertTrue(preferencesBackedCookieStore.remove(urIs.get(0), cookies.get(0)));
+        preferencesBackedCookieStore.removeAll();
+        cookies = preferencesBackedCookieStore.getCookies();
+        assertTrue(cookies.isEmpty());
+        urIs = preferencesBackedCookieStore.getURIs();
+        assertTrue(urIs.isEmpty());
     }
 }

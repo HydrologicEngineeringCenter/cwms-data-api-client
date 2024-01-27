@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,10 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.http.client.request;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+public interface HttpPutRequest {
 
-import org.junit.jupiter.api.Test;
+    HttpRequestMediaType withBody(String body);
 
-final class CacKeyManagerTest {
-
-    @Test
-    void testPivEdipiPattern() {
-        assertTrue(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@mil").matches());
-        assertTrue(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@MIL").matches());
-        assertFalse(CacKeyManager.EDIPI_PATTERN.matcher("1234567890123456@ARMY").matches());
-        assertFalse(CacKeyManager.EDIPI_PATTERN.matcher("234567890123456@mil").matches());
-    }
 }

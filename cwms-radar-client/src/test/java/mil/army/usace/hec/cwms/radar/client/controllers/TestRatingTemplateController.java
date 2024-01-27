@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,83 +24,105 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import java.util.List;
-
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.ParameterSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RatingTemplate;
 import mil.army.usace.hec.cwms.radar.client.model.RatingTemplates;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestRatingTemplateController extends TestController {
 
-	@Test
-	void testRetrieveRatingTemplates() throws IOException {
-		String collect = readJsonFile("radar/v2/json/rating_templates.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		RatingTemplateController controller = new RatingTemplateController();
+    @Test
+    void testRetrieveRatingTemplates() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_templates.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
 
-		RatingTemplateEndpointInput input = new RatingTemplateEndpointInput()
-				.pageSize(2)
-				.officeId("LRL");
+        RatingTemplateEndpointInput.GetAll input = RatingTemplateEndpointInput.getAll()
+                .pageSize(2)
+                .officeId("LRL");
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		RatingTemplates templates = controller.retrieveRatingTemplates(apiConnectionInfo, input);
-		assertNotNull(templates);
-		assertEquals(2, templates.getPageSize());
-		assertFalse(templates.getTemplates().isEmpty());
-		assertNotNull(templates.getPage());
-		assertNotNull(templates.getNextPage());
-		RatingTemplate ratingTemplate = templates.getTemplates().get(0);
-		assertEquals("Stage;Stage.USGS-CORR", ratingTemplate.getId());
-		assertEquals("USGS-CORR", ratingTemplate.getVersion());
-		assertEquals("Stream Stage Correction Rating", ratingTemplate.getDescription());
-		assertEquals("LRL", ratingTemplate.getOfficeId());
-		assertFalse(ratingTemplate.getRatingIds().isEmpty());
-		assertEquals("Stage", ratingTemplate.getDependentParameter());
-		List<ParameterSpec> independentParameterSpecs = ratingTemplate.getIndependentParameterSpecs();
-		assertEquals(1, independentParameterSpecs.size());
-		ParameterSpec parameterSpec = independentParameterSpecs.get(0);
-		assertEquals("Stage", parameterSpec.getParameter());
-		assertEquals("ERROR", parameterSpec.getInRangeMethod());
-		assertEquals("ERROR", parameterSpec.getOutRangeHighMethod());
-		assertEquals("LINEAR", parameterSpec.getOutRangeLowMethod());
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        RatingTemplates templates = controller.retrieveRatingTemplates(apiConnectionInfo, input);
+        assertNotNull(templates);
+        assertEquals(2, templates.getPageSize());
+        assertFalse(templates.getTemplates().isEmpty());
+        assertNotNull(templates.getPage());
+        assertNotNull(templates.getNextPage());
+        RatingTemplate ratingTemplate = templates.getTemplates().get(0);
+        assertEquals("Stage;Stage.USGS-CORR", ratingTemplate.getId());
+        assertEquals("USGS-CORR", ratingTemplate.getVersion());
+        assertEquals("Stream Stage Correction Rating", ratingTemplate.getDescription());
+        assertEquals("LRL", ratingTemplate.getOfficeId());
+        assertFalse(ratingTemplate.getRatingIds().isEmpty());
+        assertEquals("Stage", ratingTemplate.getDependentParameter());
+        List<ParameterSpec> independentParameterSpecs = ratingTemplate.getIndependentParameterSpecs();
+        assertEquals(1, independentParameterSpecs.size());
+        ParameterSpec parameterSpec = independentParameterSpecs.get(0);
+        assertEquals("Stage", parameterSpec.getParameter());
+        assertEquals("ERROR", parameterSpec.getInRangeMethod());
+        assertEquals("ERROR", parameterSpec.getOutRangeHighMethod());
+        assertEquals("LINEAR", parameterSpec.getOutRangeLowMethod());
 
-	}
+    }
 
-	@Test
-	void testRetrieveRatingTemplate() throws IOException {
-		String collect = readJsonFile("radar/v2/json/rating_template.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		RatingTemplateController controller = new RatingTemplateController();
+    @Test
+    void testRetrieveRatingTemplate() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_template.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
 
-		RatingTemplateEndpointInput input = new RatingTemplateEndpointInput()
-				.officeId("LRL")
-				.templateId("Stage;Stage.USGS-CORR");
+        RatingTemplateEndpointInput.GetOne input = RatingTemplateEndpointInput.getOne("Stage;Stage.USGS-CORR", "LRL");
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		RatingTemplate ratingTemplate = controller.retrieveRatingTemplate(apiConnectionInfo, input);
-		assertNotNull(ratingTemplate);
-		assertEquals("Stage;Stage.USGS-CORR", ratingTemplate.getId());
-		assertEquals("USGS-CORR", ratingTemplate.getVersion());
-		assertEquals("Stream Stage Correction Rating", ratingTemplate.getDescription());
-		assertEquals("LRL", ratingTemplate.getOfficeId());
-		assertFalse(ratingTemplate.getRatingIds().isEmpty());
-		assertEquals("Stage", ratingTemplate.getDependentParameter());
-		List<ParameterSpec> independentParameterSpecs = ratingTemplate.getIndependentParameterSpecs();
-		assertEquals(1, independentParameterSpecs.size());
-		ParameterSpec parameterSpec = independentParameterSpecs.get(0);
-		assertEquals("Stage", parameterSpec.getParameter());
-		assertEquals("ERROR", parameterSpec.getInRangeMethod());
-		assertEquals("ERROR", parameterSpec.getOutRangeHighMethod());
-		assertEquals("LINEAR", parameterSpec.getOutRangeLowMethod());
-	}
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        RatingTemplate ratingTemplate = controller.retrieveRatingTemplate(apiConnectionInfo, input);
+        assertNotNull(ratingTemplate);
+        assertEquals("Stage;Stage.USGS-CORR", ratingTemplate.getId());
+        assertEquals("USGS-CORR", ratingTemplate.getVersion());
+        assertEquals("Stream Stage Correction Rating", ratingTemplate.getDescription());
+        assertEquals("LRL", ratingTemplate.getOfficeId());
+        assertFalse(ratingTemplate.getRatingIds().isEmpty());
+        assertEquals("Stage", ratingTemplate.getDependentParameter());
+        List<ParameterSpec> independentParameterSpecs = ratingTemplate.getIndependentParameterSpecs();
+        assertEquals(1, independentParameterSpecs.size());
+        ParameterSpec parameterSpec = independentParameterSpecs.get(0);
+        assertEquals("Stage", parameterSpec.getParameter());
+        assertEquals("ERROR", parameterSpec.getInRangeMethod());
+        assertEquals("ERROR", parameterSpec.getOutRangeHighMethod());
+        assertEquals("LINEAR", parameterSpec.getOutRangeLowMethod());
+    }
+
+    @Test
+    void testStore() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_template.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
+
+        RatingTemplateEndpointInput.Post input = RatingTemplateEndpointInput.post("xml");
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.storeRatingTemplate(apiConnectionInfo, input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String collect = readJsonFile("radar/v2/json/rating_template.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RatingTemplateController controller = new RatingTemplateController();
+
+        RatingTemplateEndpointInput.Delete input = RatingTemplateEndpointInput.delete("Stage;Stage.USGS-CORR", "LRL", DeleteMethod.ALL);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.deleteRatingTemplate(apiConnectionInfo, input));
+    }
 
 }

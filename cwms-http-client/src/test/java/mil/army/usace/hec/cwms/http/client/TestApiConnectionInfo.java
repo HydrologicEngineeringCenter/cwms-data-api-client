@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.http.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -37,6 +38,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import okhttp3.HttpUrl;
 import org.junit.jupiter.api.Test;
 
 class TestApiConnectionInfo {
@@ -46,6 +48,54 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data/";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         assertEquals(root, apiConnectionInfo.getApiRoot());
+    }
+
+    @Test
+    void testApiConnectionInfoWithTrailingSlash() throws Exception {
+        String root = "http://localhost:11524/cwms-data/";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoFilename() throws Exception {
+        String root = "http://localhost:11524/cwms-data.txt";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo)
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data.txt", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoFilenameEndpoint() throws Exception {
+        String root = "http://localhost:11524/cwms-data";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "data.txt")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/data.txt", url.url().toString());
+    }
+
+    @Test
+    void testApiConnectionInfoNoTrailingSlash() throws Exception {
+        String root = "http://localhost:11524/cwms-data";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
+            .get()
+            .withMediaType("application/json"))
+            .getInstance();
+        HttpUrl url = httpRequestBuilder.createRequest().url();
+        assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());
     }
 
     static SSLSocketFactory getTestSslSocketFactory() {
@@ -182,6 +232,52 @@ class TestApiConnectionInfo {
     private SslSocketData getTestSslSocketData() {
 
         return new SslSocketData(getTestSslSocketFactory(), getTestX509TrustManager());
+    }
+
+    @Test
+    void testMultipleAuthTypes() {
+        ApiConnectionInfoBuilder builder = new ApiConnectionInfoBuilder("")
+            .withCookieAuthenticator(() -> null)
+            .withAuthorizationKeyProvider(() -> null);
+        assertThrows(IllegalArgumentException.class, () -> builder.build());
+        ApiConnectionInfoBuilder builder2 = new ApiConnectionInfoBuilder("")
+            .withCookieAuthenticator(() -> null)
+            .withTokenProvider(new OAuth2TokenProvider() {
+                @Override
+                public OAuth2Token getToken() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public OAuth2Token refreshToken() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public OAuth2Token newToken() throws IOException {
+                    return null;
+                }
+            });
+        assertThrows(IllegalArgumentException.class, () -> builder2.build());
+        ApiConnectionInfoBuilder builder3 = new ApiConnectionInfoBuilder("")
+            .withAuthorizationKeyProvider(() -> null)
+            .withTokenProvider(new OAuth2TokenProvider() {
+                @Override
+                public OAuth2Token getToken() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public OAuth2Token refreshToken() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public OAuth2Token newToken() throws IOException {
+                    return null;
+                }
+            });
+        assertThrows(IllegalArgumentException.class, () -> builder3.build());
     }
 
 }

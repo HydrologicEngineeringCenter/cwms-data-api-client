@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,87 @@ import org.junit.jupiter.api.Test;
 final class TestCwmsHttpLogger {
 
     private static final String ACCEPT_HEADER_V1 = "application/json";
+
+    @Test
+    void testInfoNotLogged() throws IOException {
+        CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
+        loggingInterceptor.setLogLevel(Level.INFO);
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            AtomicBoolean foundMessage = new AtomicBoolean(false);
+            Logger.getLogger("okhttp3").addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    foundMessage.set(true);
+                }
+
+                @Override
+                public void flush() {
+
+                }
+
+                @Override
+                public void close() throws SecurityException {
+
+                }
+            });
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
+            HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
+            assertFalse(foundMessage.get());
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
+    @Test
+    void testFineLogged() throws IOException {
+        CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
+        loggingInterceptor.setLogLevel(Level.FINE);
+        MockWebServer mockWebServer = new MockWebServer();
+        try {
+            String body = readJsonFile("success.json");
+            AtomicBoolean foundMessage = new AtomicBoolean(false);
+            Logger.getLogger("okhttp3").addHandler(new Handler() {
+                @Override
+                public void publish(LogRecord record) {
+                    foundMessage.set(true);
+                }
+
+                @Override
+                public void flush() {
+
+                }
+
+                @Override
+                public void close() throws SecurityException {
+
+                }
+            });
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.start();
+            String endpoint = "success";
+            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
+            HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
+            assertTrue(foundMessage.get());
+        } finally {
+            mockWebServer.shutdown();
+        }
+    }
 
     @Test
     void testNothingRedacted() throws IOException {
@@ -94,11 +175,9 @@ final class TestCwmsHttpLogger {
     @Test
     void testRedacted() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
-        System.setProperty("cwms.http.client.log.all.cookies", "true");
         CwmsHttpLoggingInterceptor loggingInterceptor = CwmsHttpLoggingInterceptor.getInstance();
         loggingInterceptor.setLogLevel(Level.ALL);
         try {
-            String body = readJsonFile("tokens.json");
             AtomicBoolean foundMessage = new AtomicBoolean(false);
             Logger.getLogger("okhttp3").addHandler(new Handler() {
                 @Override
@@ -119,6 +198,9 @@ final class TestCwmsHttpLogger {
 
                 }
             });
+            String body = readJsonFile("tokens.json");
+            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            body = body.replace("access_token", "");
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String endpoint = "tokens";
@@ -127,6 +209,9 @@ final class TestCwmsHttpLogger {
             HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
+            try (HttpRequestResponse response = executer.execute()) {
+                assertNotNull(response.getBody());
+            }
             try (HttpRequestResponse response = executer.execute()) {
                 assertNotNull(response.getBody());
             }

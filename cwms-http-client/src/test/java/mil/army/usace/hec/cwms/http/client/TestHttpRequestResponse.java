@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ class TestHttpRequestResponse {
         String bodyStr =
             "{\"message\":\"Unable to find category based on parameters given\",\"incidentIdentifier\":\"-49092149940938\",\"details\":{}}";
         ResponseBody body = ResponseBody.create(bodyStr, MediaType.parse("application/json"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), false);
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), null, false);
         assertEquals(bodyStr, httpRequestResponse.getBody());
     }
 
@@ -53,7 +53,7 @@ class TestHttpRequestResponse {
         String bodyStr = "Hello World";
         byte[] bytes = bodyStr.getBytes();
         ResponseBody body = ResponseBody.create(bytes, MediaType.parse("text/plain"));
-        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), false);
+        HttpRequestResponse httpRequestResponse = new HttpRequestResponse(body, Collections.emptySet(), null, false);
         try (InputStream inputStream = httpRequestResponse.getStream()) {
             String result = new BufferedReader(new InputStreamReader(inputStream))
                 .lines().collect(Collectors.joining("\n"));

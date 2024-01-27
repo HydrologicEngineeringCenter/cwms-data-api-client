@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,14 @@ package mil.army.usace.hec.cwms.http.client;
 
 import okhttp3.ResponseBody;
 
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public final class HttpRequestResponse implements AutoCloseable {
@@ -36,11 +41,13 @@ public final class HttpRequestResponse implements AutoCloseable {
     private final ResponseBody body;
     private final Set<HttpCookie> cookies;
     private final boolean usedCache;
+    private final Headers headers;
 
-    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, boolean usedCache) {
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache) {
         this.body = body;
         this.cookies = cookies;
         this.usedCache = usedCache;
+        this.headers = headers;
     }
 
     public String getBody() throws IOException {
@@ -57,6 +64,10 @@ public final class HttpRequestResponse implements AutoCloseable {
 
     public Set<HttpCookie> getCookies() {
         return new HashSet<>(cookies);
+    }
+
+    public Map<String, List<String>> getHeaders() {
+        return headers.toMultimap();
     }
 
     @Override

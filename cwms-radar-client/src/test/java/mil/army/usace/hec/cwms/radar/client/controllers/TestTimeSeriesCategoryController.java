@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,14 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCategory;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCategory;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestTimeSeriesCategoryController extends TestController {
 
@@ -41,8 +40,7 @@ class TestTimeSeriesCategoryController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_category.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesCategoryEndpointInput input = new TimeSeriesCategoryEndpointInput("RDL_Aliases")
-            .officeId("SWT");
+        TimeSeriesCategoryEndpointInput.GetOne input = TimeSeriesCategoryEndpointInput.getOne("RDL_Aliases", "SWT");
         TimeSeriesCategory timeSeriesCategory = new TimeSeriesCategoryController().retrieveTimeSeriesCategory(buildConnectionInfo(), input);
         assertEquals("RDL_Aliases", timeSeriesCategory.getId());
         assertEquals("RDL_Aliases", timeSeriesCategory.getDescription());
@@ -50,28 +48,36 @@ class TestTimeSeriesCategoryController extends TestController {
     }
 
     @Test
-    void testRetrieveSpecificTimeSeriesCategoryNull() throws IOException {
-        String collect = readJsonFile("radar/v1/json/ts_category_nodatafound.json");
-        mockHttpServer.enqueue(404, collect);
-        mockHttpServer.start();
-        TimeSeriesCategoryEndpointInput input = new TimeSeriesCategoryEndpointInput()
-            .officeId("SWT");
-        TimeSeriesCategoryController controller = new TimeSeriesCategoryController();
-        assertThrows(NoDataFoundException.class, () -> controller.retrieveTimeSeriesCategory(buildConnectionInfo(), input));
-    }
-
-    @Test
     void testRetrieveAllTimeSeriesCategories() throws IOException {
         String collect = readJsonFile("radar/v1/json/ts_categories.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesCategoryEndpointInput input = new TimeSeriesCategoryEndpointInput()
-            .officeId("SWT");
+        TimeSeriesCategoryEndpointInput.GetAll input = TimeSeriesCategoryEndpointInput.getAll()
+                .officeId("SWT");
         List<TimeSeriesCategory> timeSeriesCategories = new TimeSeriesCategoryController().retrieveTimeSeriesCategories(buildConnectionInfo(), input);
         assertEquals(4, timeSeriesCategories.size());
         TimeSeriesCategory timeSeriesCategory = timeSeriesCategories.get(0);
         assertEquals("Lakes", timeSeriesCategory.getId());
         assertNull(timeSeriesCategory.getDescription());
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
+    }
+
+    @Test
+    void testPost() throws IOException {
+        String collect = readJsonFile("radar/v1/json/ts_category.json");
+        TimeSeriesCategory timeSeriesCategory = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesCategory.class);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesCategoryEndpointInput.Post input = TimeSeriesCategoryEndpointInput.post(timeSeriesCategory);
+        assertDoesNotThrow(() -> new TimeSeriesCategoryController().storeTimeSeriesCategory(buildConnectionInfo(), input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String collect = readJsonFile("radar/v1/json/ts_category.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesCategoryEndpointInput.Delete input = TimeSeriesCategoryEndpointInput.delete("Lakes", "SWT");
+        assertDoesNotThrow(() -> new TimeSeriesCategoryController().deleteCategory(buildConnectionInfo(), input));
     }
 }

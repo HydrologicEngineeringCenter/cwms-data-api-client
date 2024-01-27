@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,21 @@
 
 package mil.army.usace.hec.cwms.aaa.client;
 
-import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
-import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.getKeyManagerFromJreKeyStore;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import mil.army.usace.hec.cwms.http.client.auth.CacKeyManagerUtil;
+import mil.army.usace.hec.cwms.http.client.auth.KeyManagerTestUtil;
+import org.junit.jupiter.api.Test;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,18 +47,9 @@ import java.nio.file.Path;
 import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.List;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
-import mil.army.usace.hec.cwms.http.client.CookieJarFactory;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
-import org.junit.jupiter.api.Test;
+
+import static mil.army.usace.hec.cwms.aaa.client.CwmsAAALoginTest.TOMCAT_SERVER;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 final class CwmsAAALogoutTest {
 
@@ -73,14 +75,13 @@ final class CwmsAAALogoutTest {
             MockHttpServer mockHttpServer = MockHttpServer.create();
             String collect = readFile("cwms_aaa/cwms_aaa_banner_agreement.html");
             List<String> cookie = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
-            mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_login.json");
-            mockHttpServer.enqueue(collect);
+            mockHttpServer.enqueue(collect, cookie);
             collect = readFile("cwms_aaa/cwms_aaa_logout.html");
             mockHttpServer.enqueue(collect);
             mockHttpServer.start();
             String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
-            KeyManager keyManager = getKeyManagerFromJreKeyStore();
+            KeyManager keyManager = KeyManagerTestUtil.getKeyManagerFromJreKeyStore();
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();
@@ -89,7 +90,7 @@ final class CwmsAAALogoutTest {
                 .withSslSocketData(new SslSocketData(socketFactory, (X509TrustManager) trustManagers[0]))
                 .build();
         } else {
-            KeyManager keyManager = CacKeyManagerUtil.getKeyManager();
+            KeyManager keyManager = CacKeyManagerUtil.createKeyManager();
             TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
             sc.init(new KeyManager[] {keyManager}, trustManagers, null);
             SSLSocketFactory socketFactory = sc.getSocketFactory();

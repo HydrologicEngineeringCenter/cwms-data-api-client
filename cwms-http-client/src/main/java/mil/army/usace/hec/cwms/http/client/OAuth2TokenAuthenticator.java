@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,6 +70,9 @@ final class OAuth2TokenAuthenticator implements Authenticator {
             //if refresh token is still valid, refresh using refresh token
             LOGGER.log(Level.FINE, "Refreshing OAuth2 Token");
             updatedToken = tokenProvider.refreshToken();
+            if(updatedToken == null) {
+                throw new IOException("No access token present in refreshed authentication token");
+            }
             String accessToken = updatedToken.getAccessToken();
             if (accessToken == null || accessToken.isEmpty()) {
                 throw new IOException("No access token present in refreshed authentication token");
@@ -84,8 +87,7 @@ final class OAuth2TokenAuthenticator implements Authenticator {
     Request newRequestWithAccessTokenAsHeader(Response response, OAuth2Token oauth2Token) {
         return response.request()
             .newBuilder()
-            .removeHeader(AUTHORIZATION_HEADER)
-            .addHeader(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
+            .header(AUTHORIZATION_HEADER, oauth2Token.getTokenType() + " " + oauth2Token.getAccessToken())
             .build();
     }
 

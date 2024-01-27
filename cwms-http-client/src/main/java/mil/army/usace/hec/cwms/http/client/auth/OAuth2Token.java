@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -115,7 +115,8 @@ public class OAuth2Token {
             return false;
         }
         OAuth2Token that = (OAuth2Token) o;
-        return getExpiresIn() == that.getExpiresIn() && Objects.equals(getAccessToken(), that.getAccessToken())
+        return getExpiresIn() == that.getExpiresIn()
+            && Objects.equals(getAccessToken(), that.getAccessToken())
             && Objects.equals(getTokenType(), that.getTokenType());
     }
 

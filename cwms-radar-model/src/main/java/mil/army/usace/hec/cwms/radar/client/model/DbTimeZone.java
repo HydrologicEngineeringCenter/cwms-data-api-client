@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,29 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.radar.client.model;
 
-public final class CacCertificateException extends Exception {
 
-    CacCertificateException(String message, Exception e) {
-        super(message, e);
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+//This class is not codegenned as there is no OpenAPI docs for the timezone catalog
+public final class DbTimeZone {
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("utc-offset")
+    private String utcOffset;
+    @JsonProperty("dst-offset")
+    private String dstOffset;
+
+    public String name() {
+        return name;
     }
 
-    CacCertificateException(String message) {
-        super(message);
+    public String utcOffset() {
+        return utcOffset;
     }
 
+    public String dstOffset() {
+        return dstOffset;
+    }
 }

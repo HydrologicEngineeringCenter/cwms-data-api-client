@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,9 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
-import usace.metrics.noop.NoOpTimer;
-import usace.metrics.services.Metrics;
-import usace.metrics.services.Timer;
-
-import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.Security;
@@ -53,8 +36,30 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import javax.net.ssl.SSLHandshakeException;
+
+import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
+
+import usace.metrics.noop.NoOpTimer;
+import usace.metrics.services.Metrics;
+import usace.metrics.services.Timer;
 
 import static java.util.stream.Collectors.toSet;
+import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -132,6 +137,12 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
+    public final HttpPutRequest put() {
+        this.method = HttpRequestMethod.POST;
+        return new HttpPutRequestImpl();
+    }
+
+    @Override
     public final HttpPostRequest patch() {
         this.method = HttpRequestMethod.PATCH;
         return new HttpPostRequestImpl();
@@ -155,9 +166,11 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
     //Packaged scope for testing
     Request createRequest() throws IOException {
-        HttpUrl resolve = httpUrl.resolve(endpoint);
-        if (resolve == null) {
-            throw new IOException("Endpoint to API is malformed: " + endpoint);
+        HttpUrl resolve = httpUrl;
+        if (!endpoint.isEmpty()) {
+            resolve = httpUrl.newBuilder()
+                .addPathSegments(endpoint)
+                .build();
         }
         MediaType type = MediaType.parse(mediaType);
         if (type == null) {
@@ -178,27 +191,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
 
-    private boolean isHttp2NativelySupported() {
-        boolean retVal = false;
-        String version = System.getProperty("java.version");
-        if (version.startsWith("1.")) {
-            version = version.substring(2, 3);
-        } else { //if Java 9 or higher
-            int dot = version.indexOf(".");
-            if (dot != -1) {
-                version = version.substring(0, dot);
-            }
-        }
-        int majorVersion = Integer.parseInt(version);
-        if (majorVersion == 8) {
-            String minorVersionStr = version.substring(version.lastIndexOf("_") + 1);
-            retVal = Integer.parseInt(minorVersionStr) >= 251;
-        } else if (majorVersion > 8) {
-            retVal = true;
-        }
-        return retVal;
-    }
-
     //Packaged scope for testing
     HttpRequestBuilderImpl getCurrentInstance() {
         return this;
@@ -209,6 +201,15 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         @Override
         public HttpRequestMediaType withBody(String postBody) {
             body = postBody;
+            return new HttpRequiredMediaTypeImpl();
+        }
+    }
+
+    private class HttpPutRequestImpl implements HttpPutRequest {
+
+        @Override
+        public HttpRequestMediaType withBody(String putBody) {
+            body = putBody;
             return new HttpRequiredMediaTypeImpl();
         }
     }
@@ -228,6 +229,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         public final HttpRequestResponse execute() throws IOException {
             HttpRequestResponse retVal = null;
             Request request = createRequest();
+            CwmsHttpLoggingInterceptor.getInstance().logStackTraceForRequest(request);
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
                 OkHttpClient client = buildOkHttpClient();
@@ -242,7 +244,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                             .map(OkHttpCookieWrapper::new)
                             .collect(toSet());
                     boolean usedCache = execute.cacheResponse() != null;
-                    retVal = new HttpRequestResponse(responseBody, cookies, usedCache);
+	                Headers headers = execute.headers();
+                    retVal = new HttpRequestResponse(responseBody, cookies, headers, usedCache);
                 } else {
                     handleExecutionError(execute, request);
                 }
@@ -267,12 +270,15 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
         private void checkError(Response execute, Request request, ResponseBody responseBody) throws IOException {
             int code = execute.code();
-            if (code == 404) {
-                throw new NoDataFoundException(execute, request, responseBody);
-            } else if (code == 401) {
-                throw new UnauthorizedException(execute, request, responseBody);
-            } else {
-                throw new CwmsHttpResponseException(execute, request, responseBody);
+            switch (code) {
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    throw new NoDataFoundException(execute, request, responseBody);
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    throw new UnauthorizedException(execute, request, responseBody);
+                case HttpURLConnection.HTTP_CONFLICT:
+                    throw new DataAlreadyExistsException(execute, request, responseBody);
+                default:
+                    throw new CwmsHttpResponseException(execute, request, responseBody);
             }
         }
 
@@ -280,7 +286,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             if (!CwmsHttpClientMetrics.isMetricsEnabled()) {
                 return new NoOpTimer();
             }
-            Metrics metrics = CwmsHttpClientMetrics.createMetrics(Objects.toString(httpUrl.resolve(endpoint)));
+            Metrics metrics = CwmsHttpClientMetrics.createMetrics(method.getName() + " " + httpUrl.resolve(endpoint));
             Timer timer = metrics.createTimer();
             Properties metricsProperties = new Properties();
             metricsProperties.putAll(queryParameters);

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,28 +59,27 @@ public final class LocationController {
             .post()
             .withBody(body)
             .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+        executor.execute().close();
     }
 
     public void updateLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Patch endpointInput) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(endpointInput.location());
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + endpointInput.originalLocationId())
-                .addEndpointInput(endpointInput)
-                .patch()
-                .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + endpointInput.originalLocationId())
+            .addEndpointInput(endpointInput)
+            .patch()
+            .withBody(body)
+            .withMediaType(ACCEPT_HEADER_V2)
+            .execute()
+            .close();
     }
 
     public void deleteLocation(ApiConnectionInfo apiConnectionInfo, LocationEndPointInput.Delete locationEndPointInput) throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationEndPointInput.getLocationId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_ENDPOINT + "/" + locationEndPointInput.getLocationId())
             .addEndpointInput(locationEndPointInput)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .delete()
-            .withMediaType(ACCEPT_HEADER_V2);
-        try (HttpRequestResponse response = executor.execute()) {
-        }
+            .withMediaType(ACCEPT_HEADER_V2)
+            .execute()
+            .close();
     }
 }

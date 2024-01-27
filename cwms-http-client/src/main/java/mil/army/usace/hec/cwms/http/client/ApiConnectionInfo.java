@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,14 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.util.List;
-import java.util.Optional;
 import okhttp3.Authenticator;
 import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
+
+import javax.net.ssl.HostnameVerifier;
+import java.util.List;
+import java.util.Optional;
 
 public final class ApiConnectionInfo {
 
@@ -39,15 +41,17 @@ public final class ApiConnectionInfo {
     private final List<Interceptor> interceptors;
     private final Authenticator authenticator;
     private final Cache cache;
+    private final HostnameVerifier hostnameVerifier;
 
     ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, CookieJar cookieJar,
-                      List<Interceptor> interceptors, Authenticator authenticator, Cache cache) {
+                      List<Interceptor> interceptors, Authenticator authenticator, HostnameVerifier hostnameVerifier, Cache cache) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.interceptors = interceptors;
         this.authenticator = authenticator;
         this.cookieJar = cookieJar;
         this.cache = cache;
+        this.hostnameVerifier = hostnameVerifier;
     }
 
     public String getApiRoot() {
@@ -68,6 +72,10 @@ public final class ApiConnectionInfo {
 
     Optional<CookieJar> cookieJar() {
         return Optional.ofNullable(cookieJar);
+    }
+
+    Optional<HostnameVerifier> hostnameVerifier() {
+        return Optional.ofNullable(hostnameVerifier);
     }
 
     Optional<Cache> cache(){

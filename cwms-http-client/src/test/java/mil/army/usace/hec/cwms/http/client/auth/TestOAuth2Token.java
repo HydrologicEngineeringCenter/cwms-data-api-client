@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 package mil.army.usace.hec.cwms.http.client.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -56,6 +57,26 @@ class TestOAuth2Token {
         OAuth2Token token2 = om.readValue(json, OAuth2Token.class);
         assertEquals(token.hashCode(), token2.hashCode());
         assertEquals(token, token2);
+        assertEquals(token.toString(), token2.toString());
+        assertEquals(token, token);
+    }
+
+    @Test
+    void testNotEquals() throws IOException {
+        ObjectMapper om = new ObjectMapper();
+        String json = readJsonFile();
+        OAuth2Token token = om.readValue(json, OAuth2Token.class);
+        assertNotEquals(token, new Object());
+        assertNotEquals(token, null);
+        OAuth2Token token2 = new OAuth2Token();
+        assertNotEquals(token.hashCode(), token2.hashCode());
+        assertNotEquals(token, token2);
+        assertNotEquals(token.toString(), token2.toString());
+        assertNotEquals(token, token2);
+        token2.setExpiresIn(token.getExpiresIn());
+        assertNotEquals(token, token2);
+        token2.setAccessToken(token.getAccessToken());
+        assertNotEquals(token, token2);
     }
 
     private String readJsonFile() throws IOException {

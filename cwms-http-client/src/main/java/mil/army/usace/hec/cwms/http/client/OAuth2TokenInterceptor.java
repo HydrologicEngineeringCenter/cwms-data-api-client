@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,15 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 final class OAuth2TokenInterceptor implements Interceptor {
 
@@ -45,7 +46,7 @@ final class OAuth2TokenInterceptor implements Interceptor {
     }
 
     @Override
-    public synchronized Response intercept(Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
         OAuth2Token oauth2Token = tokenProvider.getToken();
         if (oauth2Token == null) {
             throw new IOException("Authentication failed: No token retrieved from " + OAuth2TokenProvider.class.getName());

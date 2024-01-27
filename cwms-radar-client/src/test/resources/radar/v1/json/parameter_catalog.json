@@ -1,0 +1,2317 @@
+{
+  "parameters": {
+    "query-info": {
+      "time-of-query": "2023-06-01T23:13:52Z",
+      "process-query": "PT0.003S",
+      "format-output": "PT0.003S",
+      "requested-format": "JSON",
+      "parameters-retrieved": 256
+    },
+    "parameters": [
+      {
+        "abstract-param": "Angle",
+        "name": "Dir",
+        "office": "All",
+        "default-english-unit": "deg",
+        "default-si-unit": "deg",
+        "long-name": "Direction",
+        "description": "Map direction specified clockwise from North"
+      },
+      {
+        "abstract-param": "Angle",
+        "name": "Dir-Wind",
+        "office": "SWT",
+        "default-english-unit": "deg",
+        "default-si-unit": "deg",
+        "long-name": "Direction",
+        "description": "Map direction specified clockwise from North-Wind"
+      },
+      {
+        "abstract-param": "Angle",
+        "name": "Rotation",
+        "office": "All",
+        "default-english-unit": "deg",
+        "default-si-unit": "deg",
+        "long-name": "Rotation",
+        "description": "Angular displacement"
+      },
+      {
+        "abstract-param": "Angle",
+        "name": "Rotation-Low_Flow_Gate_Controls",
+        "office": "SWT",
+        "default-english-unit": "deg",
+        "default-si-unit": "deg",
+        "long-name": "Rotation",
+        "description": "Angular displacement-Low_Flow_Gate_Controls"
+      },
+      {
+        "abstract-param": "Angular Speed",
+        "name": "SpinRate",
+        "office": "All",
+        "default-english-unit": "rpm",
+        "default-si-unit": "rpm",
+        "long-name": "Spin Rate",
+        "description": "Number of revolutions made about an axis per unit of time"
+      },
+      {
+        "abstract-param": "Area",
+        "name": "Area",
+        "office": "All",
+        "default-english-unit": "ft2",
+        "default-si-unit": "ft2",
+        "long-name": "Surface Area",
+        "description": "Area of a surface"
+      },
+      {
+        "abstract-param": "Area",
+        "name": "Area-Cross_Section",
+        "office": "SWT",
+        "default-english-unit": "ft2",
+        "default-si-unit": "ft2",
+        "long-name": "Surface Area",
+        "description": "Area of a surface-Cross_Section"
+      },
+      {
+        "abstract-param": "Conductivity",
+        "name": "Cond",
+        "office": "All",
+        "default-english-unit": "umho/cm",
+        "default-si-unit": "umho/cm",
+        "long-name": "Conductivity",
+        "description": "Ability of an aqueous solution to conduct electricity"
+      },
+      {
+        "abstract-param": "Conductivity",
+        "name": "Cond-Water",
+        "office": "SWT",
+        "default-english-unit": "umho/cm",
+        "default-si-unit": "umho/cm",
+        "long-name": "Conductivity",
+        "description": "Ability of an aqueous solution to conduct electricity-Water"
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Count",
+        "office": "All",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Count",
+        "description": "Progressive sum of items enumerated one by one or group by group."
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Count-Conduit_Gates",
+        "office": "SWT",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Count",
+        "description": "Progressive sum of items enumerated one by one or group by group.-Conduit_Gates"
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Count-Lockages",
+        "office": "SWT",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Count",
+        "description": "Progressive sum of items enumerated one by one or group by group.-Lockages"
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Count-Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Count",
+        "description": "Progressive sum of items enumerated one by one or group by group.-Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Count-Sluice_Gates",
+        "office": "SWT",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Count",
+        "description": "Progressive sum of items enumerated one by one or group by group.-Sluice_Gates"
+      },
+      {
+        "abstract-param": "Count",
+        "name": "Fish",
+        "office": "All",
+        "default-english-unit": "unit",
+        "default-si-unit": "unit",
+        "long-name": "Fish Count",
+        "description": "Fish Count."
+      },
+      {
+        "abstract-param": "Currency",
+        "name": "Currency",
+        "office": "All",
+        "default-english-unit": "$",
+        "default-si-unit": "$",
+        "long-name": "Currency",
+        "description": "Economic value expressed as currency/money"
+      },
+      {
+        "abstract-param": "Depth Velocity",
+        "name": "DepthVelocity",
+        "office": "All",
+        "default-english-unit": "ft2/s",
+        "default-si-unit": "ft2/s",
+        "long-name": "Depth Velocity",
+        "description": "Depth Velocity"
+      },
+      {
+        "abstract-param": "Elapsed Time",
+        "name": "Timing",
+        "office": "All",
+        "default-english-unit": "sec",
+        "default-si-unit": "sec",
+        "long-name": "Timing",
+        "description": "A duration of a phenomenon"
+      },
+      {
+        "abstract-param": "Electric Charge Rate",
+        "name": "Current",
+        "office": "All",
+        "default-english-unit": "ampere",
+        "default-si-unit": "ampere",
+        "long-name": "Current",
+        "description": "Electric current flowing past a point in a circuit"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt",
+        "office": "All",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt-Alt",
+        "office": "SWT",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential-Alt"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt-Battery",
+        "office": "SWT",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential-Battery"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt-Battery Load",
+        "office": "SWT",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential-Battery Load"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt-Battery_Load",
+        "office": "SWT",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential-Battery_Load"
+      },
+      {
+        "abstract-param": "Electromotive Potential",
+        "name": "Volt-Battload",
+        "office": "SWT",
+        "default-english-unit": "volt",
+        "default-si-unit": "volt",
+        "long-name": "Voltage",
+        "description": "Electric Potential-Battload"
+      },
+      {
+        "abstract-param": "Energy",
+        "name": "Energy",
+        "office": "All",
+        "default-english-unit": "MWh",
+        "default-si-unit": "MWh",
+        "long-name": "Energy",
+        "description": "Energy, work, or quantity of heat"
+      },
+      {
+        "abstract-param": "Frequency",
+        "name": "Freq",
+        "office": "All",
+        "default-english-unit": "Hz",
+        "default-si-unit": "Hz",
+        "long-name": "Frequency",
+        "description": "The number of cycles or occurrences per time unit"
+      },
+      {
+        "abstract-param": "Hydrogen Ion Concentration Index",
+        "name": "pH",
+        "office": "All",
+        "default-english-unit": "su",
+        "default-si-unit": "su",
+        "long-name": "pH",
+        "description": "Negative logarithm of hydrogen-ion concentration in a solution"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad",
+        "office": "All",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface."
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-Flux_IR",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-Flux_IR"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-Flux_Out",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-Flux_Out"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-Flux_Solar",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-Flux_Solar"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-Heat_Latent",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-Heat_Latent"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-Heat_Sensible",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-Heat_Sensible"
+      },
+      {
+        "abstract-param": "Irradiance",
+        "name": "Irrad-SOLAR",
+        "office": "SWT",
+        "default-english-unit": "langley/min",
+        "default-si-unit": "langley/min",
+        "long-name": "Irradiance",
+        "description": "Radiant Power on a unit area of irradiated surface.-SOLAR"
+      },
+      {
+        "abstract-param": "Irradiation",
+        "name": "Rad",
+        "office": "All",
+        "default-english-unit": "langley",
+        "default-si-unit": "langley",
+        "long-name": "Irradiation",
+        "description": "Radiant energy on a unit area of irradiated surface."
+      },
+      {
+        "abstract-param": "Irradiation",
+        "name": "Rad-Solar",
+        "office": "SWT",
+        "default-english-unit": "langley",
+        "default-si-unit": "langley",
+        "long-name": "Irradiation",
+        "description": "Radiant energy on a unit area of irradiated surface.-Solar"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-Alt_Meas_1",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-Alt_Meas_1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-Alt_Meas_2",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-Alt_Meas_2"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-Snow",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Snow Depth"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-SnowWE",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Snow Water Equivalance"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-Corrected",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-Corrected"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD10",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD10"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD11",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD11"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD14",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD14"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD15",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD15"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD16",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD16"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD17",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD17"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD18",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD18"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD19",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD19"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD20",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD20"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD23",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD23"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD24",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD24"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD27",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD27"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD28",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD28"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Depth-water-WD9",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Depth",
+        "description": "Depth of any form of water above the ground surface-water-WD9"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Dist",
+        "office": "All",
+        "default-english-unit": "mi",
+        "default-si-unit": "mi",
+        "long-name": "Distance",
+        "description": "Distance between two points."
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-1",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-2",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-2"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-3",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-3"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Alt",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-CloudHigh",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-CloudHigh"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-CloudLow",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-CloudLow"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-CloudMid",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-CloudMid"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Forebay",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Forebay"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Levee Exterior",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Levee Exterior"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Levee Interior",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Levee Interior"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Lock Chamber",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Lock Chamber"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Lock_Chamber",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Lock_Chamber"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Pool",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Pool"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-Tailwater",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-Tailwater"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-a",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-a"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-b",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-b"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-dead",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-dead"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-precip",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-precip"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Elev-test",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Elevation",
+        "description": "The height of a surface above a datum which approximates sea level-test"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Evap",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Evaporation",
+        "description": "Liquid water lost to vapor measured as an equivalent depth of liquid water"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Evap-Computed",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Evaporation",
+        "description": "Liquid water lost to vapor measured as an equivalent depth of liquid water-Computed"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Evap-Pan",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Evaporation",
+        "description": "Liquid water lost to vapor measured as an equivalent depth of liquid water-Pan"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Evap-UDT",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Evaporation",
+        "description": "Liquid water lost to vapor measured as an equivalent depth of liquid water-UDT"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Frost",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Ground Frost",
+        "description": "Depth of frost penetration into the ground (non-permafrost)"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Head",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Head",
+        "description": "Difference between two elevations in a column of water"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Head-PresAir",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Head",
+        "description": "Difference between two elevations in a column of water-PresAir"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Height",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Height",
+        "description": "The height of a surface above an arbitrary datum"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Length",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Length",
+        "description": "Linear displacement associated with the larger horizontal planar measurment"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-%-Opening-Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-%-Opening-Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Auxiliary_Spillway_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Auxiliary_Spillway_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Conduit_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Conduit_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Dial_Reading",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Dial_Reading"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Opening-Sluice_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Opening-Sluice_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Sluice_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Sluice_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Spillway_Gates",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Spillway_Gates"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Spillway_Gates_Total",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Spillway_Gates_Total"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Tainter Gate 1",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Tainter Gate 1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Tainter Gate 2",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Tainter Gate 2"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Opening-Tainter Gate 3",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Opening Height",
+        "description": "Height of opening controlling passage of water-Tainter Gate 3"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-1",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Alt",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Alt_Meas_1",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Alt_Meas_1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Cum",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Cum"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Cuml",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Cuml"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Cuml Alt",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Cuml Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Cuml-Alt",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Cuml-Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Inc",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Inc"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Inc Alt",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Inc Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Incr",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Incr"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Incr Alt",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Incr Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Mean Areal",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Mean Areal"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-Tipping Bucket",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-Tipping Bucket"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Precip-UDT",
+        "office": "SWT",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Precipitation",
+        "description": "Deposit on the earth of hail, mist, rain, sleet, or snow-UDT"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Alt",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Alt_Meas_1",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Alt_Meas_1"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Corrected",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Corrected"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Offset",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Offset"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Pool",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Pool"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-River",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-River"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-River Alt",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-River Alt"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Shift",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Shift"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Tail",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Tail"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Stage-Tailwater",
+        "office": "SWT",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Stage",
+        "description": "The height of a water surface above a designated datum other than sea level-Tailwater"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Thick",
+        "office": "All",
+        "default-english-unit": "in",
+        "default-si-unit": "in",
+        "long-name": "Thickness",
+        "description": "Thickness of sheet of substance"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Travel",
+        "office": "All",
+        "default-english-unit": "mi",
+        "default-si-unit": "mi",
+        "long-name": "Accumulated Travel",
+        "description": "Accumulated movement of a fluid past a point"
+      },
+      {
+        "abstract-param": "Length",
+        "name": "Width",
+        "office": "All",
+        "default-english-unit": "ft",
+        "default-si-unit": "ft",
+        "long-name": "Width",
+        "description": "Linear displacement associated with the smaller horizontal planar measurment"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "EvapRate",
+        "office": "All",
+        "default-english-unit": "in/day",
+        "default-si-unit": "in/day",
+        "long-name": "Evaporation Rate",
+        "description": "Rate of liquid water evaporation"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed",
+        "office": "All",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed-Flow_Index",
+        "office": "SWT",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction-Flow_Index"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed-Index",
+        "office": "SWT",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction-Index"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed-Water",
+        "office": "SWT",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction-Water"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed-Water Index",
+        "office": "SWT",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction-Water Index"
+      },
+      {
+        "abstract-param": "Linear Speed",
+        "name": "Speed-Wind",
+        "office": "SWT",
+        "default-english-unit": "mph",
+        "default-si-unit": "mph",
+        "long-name": "Speed",
+        "description": "Rate of moving substance or object irrespective of direction-Wind"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Relative content of a component dissolved or dispersed in a volume of water"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Acidity",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Acidity Concentration"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Alkalinity",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Alkalinity Concentration"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-DO",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Disolved Oxygen Concentration"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-DO-Alt_Meas_1",
+        "office": "SWT",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Relative content of a component dissolved or dispersed in a volume of water-DO-Alt_Meas_1"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-DO-Alt_Meas_2",
+        "office": "SWT",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Relative content of a component dissolved or dispersed in a volume of water-DO-Alt_Meas_2"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Iron",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Iron Concentration"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Oxy",
+        "office": "SWT",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Relative content of a component dissolved or dispersed in a volume of water-Oxy"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Salinity",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Salinity Concentration"
+      },
+      {
+        "abstract-param": "Mass Concentration",
+        "name": "Conc-Sulfate",
+        "office": "All",
+        "default-english-unit": "ppm",
+        "default-si-unit": "ppm",
+        "long-name": "Concentration",
+        "description": "Sulfate Concentration"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%",
+        "office": "All",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-CloudHigh",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-CloudHigh"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-CloudLow",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-CloudLow"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-CloudMid",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-CloudMid"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Conservation Pool Full",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Conservation Pool Full"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-DO-Saturation",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-DO-Saturation"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Flood Pool",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Flood Pool"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Flood Pool Full",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Flood Pool Full"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Humidity",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Humidity"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Humidity_Relative",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Humidity_Relative"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Navigation Pool Full",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Navigation Pool Full"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Opening",
+        "office": "All",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Percent Open"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Opening-Auxiliary_Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Opening-Auxiliary_Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Opening-Conduit_Gates",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Opening-Conduit_Gates"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Opening-Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Opening-Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Rel Humid",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Rel Humid"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-RelativeHumidity",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-RelativeHumidity"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Stor,Conservation",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Stor,Conservation"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Stor,Flood",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Stor,Flood"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Stor,Inactive",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Stor,Inactive"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-Stor,Surcharge",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-Stor,Surcharge"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-o",
+        "office": "SWT",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Ratio expressed as hundredths-o"
+      },
+      {
+        "abstract-param": "None",
+        "name": "%-ofArea-Snow",
+        "office": "All",
+        "default-english-unit": "%",
+        "default-si-unit": "%",
+        "long-name": "Percent",
+        "description": "Percent of Area Covered by Snow"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Binary",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Binary Data",
+        "description": "Binary data such as images, documents, etc..."
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code-DO-Charge",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon-DO-Charge"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code-Evap Type",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon-Evap Type"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code-Lake Condition",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon-Lake Condition"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code-ProjectStatus",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon-ProjectStatus"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Code-Weather Condition",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coded Information",
+        "description": "Numeric code symbolically representing a phenomenon-Weather Condition"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Coeff",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Coefficient",
+        "description": "Unitless coefficient for formulas"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Probability",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Probability",
+        "description": "Expected fraction of all events for a specific event"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Ratio",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Ratio",
+        "description": "Quotient of two numbers having the same units"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Text",
+        "office": "All",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Text Data",
+        "description": "Text data only, no numeric values"
+      },
+      {
+        "abstract-param": "None",
+        "name": "Text-ProjectStatus",
+        "office": "SWT",
+        "default-english-unit": "n/a",
+        "default-si-unit": "n/a",
+        "long-name": "Text Data",
+        "description": "Text data only, no numeric values-ProjectStatus"
+      },
+      {
+        "abstract-param": "Power",
+        "name": "Power",
+        "office": "All",
+        "default-english-unit": "MW",
+        "default-si-unit": "MW",
+        "long-name": "Power",
+        "description": "Energy rate, Radiant Flux"
+      },
+      {
+        "abstract-param": "Pressure",
+        "name": "Pres",
+        "office": "All",
+        "default-english-unit": "in-hg",
+        "default-si-unit": "in-hg",
+        "long-name": "Pressure",
+        "description": "Pressure (force per unit area)"
+      },
+      {
+        "abstract-param": "Pressure",
+        "name": "Pres-Air",
+        "office": "SWT",
+        "default-english-unit": "in-hg",
+        "default-si-unit": "in-hg",
+        "long-name": "Pressure",
+        "description": "Pressure (force per unit area)-Air"
+      },
+      {
+        "abstract-param": "Pressure",
+        "name": "Pres-Air Alt",
+        "office": "SWT",
+        "default-english-unit": "in-hg",
+        "default-si-unit": "in-hg",
+        "long-name": "Pressure",
+        "description": "Pressure (force per unit area)-Air Alt"
+      },
+      {
+        "abstract-param": "Pressure",
+        "name": "Pres-Atmospheric",
+        "office": "SWT",
+        "default-english-unit": "in-hg",
+        "default-si-unit": "in-hg",
+        "long-name": "Pressure",
+        "description": "Pressure (force per unit area)-Atmospheric"
+      },
+      {
+        "abstract-param": "Temperature",
+        "name": "Temp",
+        "office": "All",
+        "default-english-unit": "F",
+        "default-si-unit": "F",
+        "long-name": "Temperature",
+        "description": "Hotness or coldness of a substance based on measuring expansion of mercury"
+      },
+      {
+        "abstract-param": "Temperature",
+        "name": "Temp-Air",
+        "office": "All",
+        "default-english-unit": "F",
+        "default-si-unit": "F",
+        "long-name": "Temperature",
+        "description": "Air Temperature"
+      },
+      {
+        "abstract-param": "Temperature",
+        "name": "Temp-Water",
+        "office": "All",
+        "default-english-unit": "F",
+        "default-si-unit": "F",
+        "long-name": "Temperature",
+        "description": "Water Temperature"
+      },
+      {
+        "abstract-param": "Temperature",
+        "name": "Temp-Water-Alt_Meas_1",
+        "office": "SWT",
+        "default-english-unit": "F",
+        "default-si-unit": "F",
+        "long-name": "Temperature",
+        "description": "Hotness or coldness of a substance based on measuring expansion of mercury-Water-Alt_Meas_1"
+      },
+      {
+        "abstract-param": "Temperature",
+        "name": "Temp-Water-Alt_Meas_2",
+        "office": "SWT",
+        "default-english-unit": "F",
+        "default-si-unit": "F",
+        "long-name": "Temperature",
+        "description": "Hotness or coldness of a substance based on measuring expansion of mercury-Water-Alt_Meas_2"
+      },
+      {
+        "abstract-param": "Turbidity",
+        "name": "Turb",
+        "office": "All",
+        "default-english-unit": "JTU",
+        "default-si-unit": "JTU",
+        "long-name": "Turbidity",
+        "description": "Measurement of interference to the passage of light by matter in suspension"
+      },
+      {
+        "abstract-param": "Turbidity",
+        "name": "TurbF",
+        "office": "All",
+        "default-english-unit": "FNU",
+        "default-si-unit": "FNU",
+        "long-name": "Turbidity",
+        "description": "Measurement of scattered light at an angle of 90+/-2.5 degrees to the incident light beam from a monochromatic light source (860+/-60 nm) (ISO 7027)"
+      },
+      {
+        "abstract-param": "Turbidity",
+        "name": "TurbJ",
+        "office": "All",
+        "default-english-unit": "JTU",
+        "default-si-unit": "JTU",
+        "long-name": "Turbidity",
+        "description": "Measurement of interference to the passage of light by matter in suspension"
+      },
+      {
+        "abstract-param": "Turbidity",
+        "name": "TurbN",
+        "office": "All",
+        "default-english-unit": "NTU",
+        "default-si-unit": "NTU",
+        "long-name": "Turbidity",
+        "description": "Measurement of scattered light at an angle of 90+/-30 degrees to the incident light beam from a white light source (540+/-140 nm) (EPA method 180.1)"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor",
+        "office": "All",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor-Alt",
+        "office": "SWT",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water-Alt"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor-Conservation Pool",
+        "office": "SWT",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water-Conservation Pool"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor-Flood Pool",
+        "office": "SWT",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water-Flood Pool"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor-Navigation Pool",
+        "office": "SWT",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water-Navigation Pool"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Stor-Res EOP",
+        "office": "SWT",
+        "default-english-unit": "ac-ft",
+        "default-si-unit": "ac-ft",
+        "long-name": "Storage",
+        "description": "Volume of impounded water-Res EOP"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Volume",
+        "office": "All",
+        "default-english-unit": "ft3",
+        "default-si-unit": "ft3",
+        "long-name": "Volume",
+        "description": "Volume of anything other than impounded water"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Volume-Pump",
+        "office": "SWT",
+        "default-english-unit": "ft3",
+        "default-si-unit": "ft3",
+        "long-name": "Volume",
+        "description": "Volume of anything other than impounded water-Pump"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Volume-Res In",
+        "office": "SWT",
+        "default-english-unit": "ft3",
+        "default-si-unit": "ft3",
+        "long-name": "Volume",
+        "description": "Volume of anything other than impounded water-Res In"
+      },
+      {
+        "abstract-param": "Volume",
+        "name": "Volume-Res Out",
+        "office": "SWT",
+        "default-english-unit": "ft3",
+        "default-si-unit": "ft3",
+        "long-name": "Volume",
+        "description": "Volume of anything other than impounded water-Res Out"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Adam",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Adam"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Auxiliary_Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Auxiliary_Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Auxiliary_Spillway_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Auxiliary_Spillway_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Auxiliary_Uncontrolled_Spillway",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Auxiliary_Uncontrolled_Spillway"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-CG Total",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-CG Total"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-ConduitGates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-ConduitGates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Conduit_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Conduit_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Controlled",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Controlled"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Controllled",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Controllled"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Evap",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Evap"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-FPL",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-FPL"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Flow",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-GatedTotal",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-GatedTotal"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Gated_Total",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Gated_Total"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-HouseUnit",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-HouseUnit"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-In",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Inflow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-LF",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-LF"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Loc Cum",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Loc Cum"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Low Flow",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Low Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-LowFlow",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-LowFlow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Low_Flow",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Low_Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Low_Flow_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Low_Flow_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Navigation Out",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Navigation Out"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Out",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Outflow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Power",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Power"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Power Out",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Power Out"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-RES-TGs",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-RES-TGs"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Reg",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Regulated Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Res In",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Res In"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Res In Adj",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Res In Adj"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Res In Comp",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Res In Comp"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Res Out",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Res Out"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Res Out Flood",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Res Out Flood"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-SluiceGates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-SluiceGates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Sluice_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Sluice_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Spill",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Spillway Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Spillway",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Spillway"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Spillway_Gates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Spillway_Gates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-TainterGates",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-TainterGates"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Total",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Total"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Turbine",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Turbine"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Turbines",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Turbines"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-UC",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-UC"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-UC Total",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-UC Total"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Unc",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Unc"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Uncontrolled",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Uncontrolled"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Uncontrolled_Spillway",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-Uncontrolled_Spillway"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-Unreg",
+        "office": "All",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Unregulated Flow"
+      },
+      {
+        "abstract-param": "Volume Rate",
+        "name": "Flow-pumpage",
+        "office": "SWT",
+        "default-english-unit": "cfs",
+        "default-si-unit": "cfs",
+        "long-name": "Flow Rate",
+        "description": "Volume rate of moving water-pumpage"
+      }
+    ]
+  }
+}

@@ -1,11 +1,15 @@
+plugins {
+    id "cwms-data-api-client.java-conventions"
+    id "cwms-data-api-client.deps-conventions"
+    id "cwms-data-api-client.publishing-conventions"
+}
+
 dependencies {
-    implementation(project(":cwms-http-client"))
-    implementation(project(":cwms-radar-model"))
+    api(project(":cwms-http-client"))
+    api(project(":cwms-radar-model"))
 
     testImplementation(testFixtures(project(":cwms-http-client")))
     testImplementation(project(":cwms-aaa-client"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,15 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.radar.client.model.*;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.radar.client.model.AbstractRatingMetadata;
-import mil.army.usace.hec.cwms.radar.client.model.RatingMetadata;
-import mil.army.usace.hec.cwms.radar.client.model.RatingMetadataList;
-import mil.army.usace.hec.cwms.radar.client.model.RatingSpec;
-import mil.army.usace.hec.cwms.radar.client.model.UsgsStreamRating;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestRatingController extends TestController {
 
@@ -67,6 +61,17 @@ class TestRatingController extends TestController {
 	}
 
 	@Test
+	void testUpdateRatingSet() throws IOException {
+		String collect = readJsonFile("radar/v2/xml/rating.xml");
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.start();
+		RatingController controller = new RatingController();
+		RatingEndpointInput.Put input = RatingEndpointInput.put(collect);
+		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+		assertDoesNotThrow(() -> controller.updateRatingSetXml(apiConnectionInfo, input));
+	}
+
+	@Test
 	void testDeleteRatingSet() throws IOException {
 		String collect = readJsonFile("radar/v2/xml/rating.xml");
 		mockHttpServer.enqueue(collect);
@@ -76,7 +81,7 @@ class TestRatingController extends TestController {
 		RatingEndpointInput.Post input = RatingEndpointInput.post(collect);
 		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
 		controller.storeRatingSetXml(apiConnectionInfo, input);
-		RatingEndpointInput.Delete deleteInput = RatingEndpointInput.delete("BIGH.Elev;Stor.Linear.Production", "SWT");
+		RatingEndpointInput.Delete deleteInput = RatingEndpointInput.delete("BIGH.Elev;Stor.Linear.Production", "SWT", Instant.now(), Instant.now());
 		assertDoesNotThrow(() -> controller.deleteRatings(apiConnectionInfo, deleteInput));
 	}
 

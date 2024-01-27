@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,39 +22,29 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.aaa.client;
+package mil.army.usace.hec.cwms.http.client.auth;
 
+import javax.net.ssl.X509KeyManager;
 import java.net.Socket;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.net.ssl.X509KeyManager;
-import org.bouncycastle.asn1.BERTags;
-import org.bouncycastle.asn1.DERUTF8String;
-import org.bouncycastle.asn1.DLSequence;
-import org.bouncycastle.asn1.DLTaggedObject;
-import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
 final class CacKeyManager implements X509KeyManager {
-    static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{16}@mil", Pattern.CASE_INSENSITIVE);
     private static final Logger LOGGER = Logger.getLogger(CacKeyManager.class.getName());
     private final X509KeyManager delegate;
     private final KeyStore keystore;
+    private final String certificateAlias;
 
-    CacKeyManager(X509KeyManager delegate, KeyStore keystore) {
+    CacKeyManager(X509KeyManager delegate, KeyStore keystore, String certificateAlias) {
         this.delegate = delegate;
         this.keystore = keystore;
+        this.certificateAlias = certificateAlias;
     }
 
     @Override
@@ -64,13 +54,19 @@ final class CacKeyManager implements X509KeyManager {
 
     @Override
     public String chooseClientAlias(String[] keyTypes, Principal[] issuers, Socket socket) {
-        String retVal = delegate.chooseClientAlias(keyTypes, issuers, socket);
-        if (keyTypes != null) {
-            for (String keyType : keyTypes) {
-                String[] clientAliases = this.getClientAliases(keyType, issuers);
-                if (clientAliases != null && clientAliases.length > 0) {
-                    retVal = getPivCertificate(clientAliases);
-                    break;
+        String retVal = null;
+        if (certificateAlias != null) {
+            retVal = getPivCertificate(new String[]{certificateAlias});
+        }
+        if (retVal == null) {
+            delegate.chooseClientAlias(keyTypes, issuers, socket);
+            if (keyTypes != null) {
+                for (String keyType : keyTypes) {
+                    String[] clientAliases = this.getClientAliases(keyType, issuers);
+                    if (clientAliases != null && clientAliases.length > 0) {
+                        retVal = getPivCertificate(clientAliases);
+                        break;
+                    }
                 }
             }
         }
@@ -102,7 +98,7 @@ final class CacKeyManager implements X509KeyManager {
         for (String alias : aliases) {
             try {
                 Certificate cr = keystore.getCertificate(alias);
-                if (cr instanceof X509Certificate && isPivCertificate((X509Certificate) cr)) {
+                if (cr instanceof X509Certificate && CacKeyManagerUtil.isPivCertificate((X509Certificate) cr)) {
                     retVal = alias;
                     break;
                 }
@@ -112,26 +108,4 @@ final class CacKeyManager implements X509KeyManager {
         }
         return retVal;
     }
-
-    @SuppressWarnings("unchecked")
-    private boolean isPivCertificate(X509Certificate cr) throws CacCertificateException {
-        try {
-            return JcaX509ExtensionUtils.getSubjectAlternativeNames(cr)
-                .stream()
-                .flatMap(s -> ((List<?>) s).stream())
-                .filter(DLSequence.class::isInstance)
-                .map(l -> ((DLSequence) l).getObjects())
-                .flatMap(e -> Collections.list((Enumeration<?>) e).stream())
-                .filter(DLTaggedObject.class::isInstance)
-                .filter(dt -> ((DLTaggedObject) dt).getTagClass() == BERTags.CONTEXT_SPECIFIC
-                    && ((DLTaggedObject) dt).getBaseObject() instanceof DERUTF8String)
-                .map(dt -> ((DLTaggedObject) dt).getBaseObject())
-                .map(o -> ((DERUTF8String) o).getString())
-                .map(s -> EDIPI_PATTERN.matcher(s.toString()))
-                .anyMatch(m -> ((Matcher) m).matches());
-        } catch (CertificateParsingException e) {
-            throw new CacCertificateException("Unable to parse X509 Certificate", e);
-        }
-    }
-
 }

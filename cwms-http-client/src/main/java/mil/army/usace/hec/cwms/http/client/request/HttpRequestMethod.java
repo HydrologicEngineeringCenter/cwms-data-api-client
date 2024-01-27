@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.http.client.request;
 public enum HttpRequestMethod {
     POST("POST"),
     PATCH("PATCH"),
+    PUT("PUT"),
     GET("GET"),
     DELETE("DELETE");
 

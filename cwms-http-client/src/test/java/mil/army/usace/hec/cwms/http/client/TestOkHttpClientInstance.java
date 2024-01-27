@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2023 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestOkHttpClientInstance {
 
     @BeforeEach
-    private void resetSingleton() throws Exception {
+    void resetSingleton() throws Exception {
         Arrays.stream(Logger.getLogger(OkHttpClientInstance.class.getName()).getHandlers())
                 .forEach(h -> h.setLevel(Level.FINEST));
         Logger.getLogger(OkHttpClientInstance.class.getName()).setLevel(Level.FINEST);
