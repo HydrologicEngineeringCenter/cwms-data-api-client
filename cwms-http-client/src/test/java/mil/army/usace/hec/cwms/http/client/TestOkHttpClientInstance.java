@@ -50,7 +50,7 @@ class TestOkHttpClientInstance {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
-        cacheField.set(null, CwmsHttpCache.createCache());
+        cacheField.set(null, new CwmsHttpCache.Builder().build());
         Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
         field.setAccessible(true);
         modifiersField = Field.class.getDeclaredField("modifiers");
@@ -77,7 +77,7 @@ class TestOkHttpClientInstance {
         System.setProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY, sixSeconds.toString());
         System.setProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY, sevenSeconds.toString());
         System.setProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY, eightSeconds.toString());
-        System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, Paths.get(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY).getParent().resolve("testCache").toString());
+        System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString());
         System.setProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY, "124");
         resetSingleton();
         int mbMultiplicativeFactor = (1024 * 1024);
@@ -88,7 +88,7 @@ class TestOkHttpClientInstance {
             assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
             assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
             assertEquals(124 * mbMultiplicativeFactor, instance.cache().maxSize());
-            assertEquals(Paths.get(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY).getParent().resolve("testCache").toString(), instance.cache().directory().toString());
+            assertEquals(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString(), instance.cache().directory().toString());
         } finally {
             System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY);

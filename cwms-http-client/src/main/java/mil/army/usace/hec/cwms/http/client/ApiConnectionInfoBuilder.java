@@ -43,9 +43,9 @@ public class ApiConnectionInfoBuilder {
     private SslSocketData sslSocketData;
     private CookieJarFactory.CookieJarSupplier cookieJarSupplier;
     private CookieAuthenticator cookieAuthenticator;
-    private Cache cache = CwmsHttpCache.getInstance();  // default to the shared static cache.
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
     private HostnameVerifier hostnameVerifier;
+    private Cache cache = CwmsHttpCache.getInstance();  // default to the shared static cache.
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;

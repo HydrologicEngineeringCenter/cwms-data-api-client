@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import mil.army.usace.hec.cwms.htp.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import org.junit.jupiter.api.Test;
 
