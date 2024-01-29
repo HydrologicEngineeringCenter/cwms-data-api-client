@@ -24,16 +24,16 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
-import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
-import okhttp3.Authenticator;
-import okhttp3.Cache;
-import okhttp3.CookieJar;
-import okhttp3.Interceptor;
-
-import javax.net.ssl.HostnameVerifier;
 import java.util.ArrayList;
 import java.util.List;
+import javax.net.ssl.HostnameVerifier;
+
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
+import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
+import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
+import okhttp3.Authenticator;
+import okhttp3.CookieJar;
+import okhttp3.Interceptor;
 
 public class ApiConnectionInfoBuilder {
 
@@ -45,7 +45,7 @@ public class ApiConnectionInfoBuilder {
     private CookieAuthenticator cookieAuthenticator;
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
     private HostnameVerifier hostnameVerifier;
-    private Cache cache = CwmsHttpCache.getInstance();  // default to the shared static cache.
+    private CacheSupplier cacheSupplier = CwmsHttpCache.getInstance();  // default to the shared static cache.
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -81,8 +81,8 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
-    public ApiConnectionInfoBuilder withCache(Cache cache) {
-        this.cache = cache;
+    public ApiConnectionInfoBuilder withCacheSupplier(CacheSupplier cache) {
+        this.cacheSupplier = cache;
         return this;
     }
 
@@ -116,6 +116,9 @@ public class ApiConnectionInfoBuilder {
             }
             authenticator = cookieAuthenticator;
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, hostnameVerifier, cache);
+
+
+        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, hostnameVerifier,
+                cacheSupplier);
     }
 }

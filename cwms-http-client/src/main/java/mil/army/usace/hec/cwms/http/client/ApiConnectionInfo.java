@@ -24,14 +24,13 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import okhttp3.Authenticator;
-import okhttp3.Cache;
-import okhttp3.CookieJar;
-import okhttp3.Interceptor;
-
-import javax.net.ssl.HostnameVerifier;
 import java.util.List;
 import java.util.Optional;
+import javax.net.ssl.HostnameVerifier;
+import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
+import okhttp3.Authenticator;
+import okhttp3.CookieJar;
+import okhttp3.Interceptor;
 
 public final class ApiConnectionInfo {
 
@@ -40,17 +39,17 @@ public final class ApiConnectionInfo {
     private final CookieJar cookieJar;
     private final List<Interceptor> interceptors;
     private final Authenticator authenticator;
-    private final Cache cache;
+    private final CacheSupplier cacheSupplier;
     private final HostnameVerifier hostnameVerifier;
 
     ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, CookieJar cookieJar,
-                      List<Interceptor> interceptors, Authenticator authenticator, HostnameVerifier hostnameVerifier, Cache cache) {
+                      List<Interceptor> interceptors, Authenticator authenticator, HostnameVerifier hostnameVerifier, CacheSupplier cache) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.interceptors = interceptors;
         this.authenticator = authenticator;
         this.cookieJar = cookieJar;
-        this.cache = cache;
+        this.cacheSupplier = cache;
         this.hostnameVerifier = hostnameVerifier;
     }
 
@@ -78,8 +77,8 @@ public final class ApiConnectionInfo {
         return Optional.ofNullable(hostnameVerifier);
     }
 
-    Optional<Cache> cache(){
-        return Optional.ofNullable(cache);
+    Optional<CacheSupplier> cacheSupplier() {
+        return Optional.ofNullable(cacheSupplier);
     }
 
 }
