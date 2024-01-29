@@ -79,7 +79,7 @@ final class OkHttpClientInstance {
     }
 
     private static okhttp3.Cache getCache() {
-        return CwmsHttpCache.getInstance();
+        return CwmsHttpCache.getInstance().getOkCache();
     }
 
     private static Duration getDurationProperty(String timeoutPropertyKey, Duration timeoutPropertyDefault) {
