@@ -1,5 +1,7 @@
 package mil.army.usace.hec.cwms.http.client;
 
+import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
+import mil.army.usace.hec.cwms.http.client.cache.OkHttpCacheSupplier;
 import okhttp3.Cache;
 
 import java.io.IOException;
@@ -7,46 +9,62 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-final class CwmsHttpCache {
-    static final String CACHE_SIZE_PROPERTY_KEY = "cwms.http.client.cache.size";
+public class CwmsHttpCache implements CacheSupplier, OkHttpCacheSupplier {
+    static final String CACHE_SIZE_PROPERTY_KEY = "cwms.http.client.cache.maxsizebytes";
     static final String CACHE_DIRECTORY_PROPERTY_KEY = "cwms.http.client.cache.directory";
     static final Path CACHE_DEFAULT_DIRECTORY = Paths.get(System.getProperty("java.io.tmpdir"))
             .resolve("CWMS").resolve("cwms-http-client").resolve("cache");
     static final long CACHE_DEFAULT_SIZE_MB = 100;
-    static final Cache INSTANCE = new Builder().build();
+    private final Cache cache;
 
-    private CwmsHttpCache() {
-        throw new AssertionError("Singleton utility class, do not instantiate");
+    private static final CwmsHttpCache INSTANCE = new Builder().build();
+
+    private CwmsHttpCache(Cache cache)
+    {
+        this.cache = cache;
     }
 
+    public Cache getOkCache()
+    {
+        return cache;
+    }
 
-    static Cache getInstance() {
+    public static CwmsHttpCache getInstance() {
         return INSTANCE;
     }
 
-    public static class Builder{
-        private Path cacheDirectory = Paths.get(System.getProperty(CACHE_DIRECTORY_PROPERTY_KEY, CACHE_DEFAULT_DIRECTORY.toString()));
-        private long cacheSize = Long.parseLong(System.getProperty(CACHE_SIZE_PROPERTY_KEY, CACHE_DEFAULT_SIZE_MB + ""));
+    static class Builder
+    {
+        private Path directory = Paths.get(
+                System.getProperty(CACHE_DIRECTORY_PROPERTY_KEY, CACHE_DEFAULT_DIRECTORY.toString()));
+        private long maxSizeBytes = Long.getLong(CACHE_SIZE_PROPERTY_KEY, CACHE_DEFAULT_SIZE_MB * 1024 * 1024);
 
-        public Builder(){
+        public Builder()
+        {
         }
 
-        public Builder withCacheDirectory(Path cacheDirectory){
-            this.cacheDirectory = cacheDirectory;
+        public Builder withDirectory(Path cacheDirectory)
+        {
+            this.directory = cacheDirectory;
             return this;
         }
 
-        public Builder withCacheSize(long cacheSize){
-            this.cacheSize = cacheSize;
+        public Builder withMaxSizeBytes(long cacheSize)
+        {
+            this.maxSizeBytes = cacheSize;
             return this;
         }
 
-        public Cache build(){
-            try {
-                Files.createDirectories(cacheDirectory);
-                return new Cache(cacheDirectory.toFile(), cacheSize * 1024 * 1024);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        public CwmsHttpCache build()
+        {
+            try
+            {
+                Files.createDirectories(directory);
+                return new CwmsHttpCache(new Cache(directory.toFile(), maxSizeBytes));
+            }
+            catch(IOException e)
+            {
+                throw new IllegalStateException("Could not create cache directory:" + directory, e);
             }
         }
 

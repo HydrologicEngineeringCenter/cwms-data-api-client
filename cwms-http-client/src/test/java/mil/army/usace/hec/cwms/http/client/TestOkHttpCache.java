@@ -27,7 +27,7 @@ final class TestOkHttpCache {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
-        cacheField.set(null, new CwmsHttpCache.Builder().build());
+        cacheField.set(null, CwmsHttpCache.getInstance());
         Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
         field.setAccessible(true);
         modifiersField = Field.class.getDeclaredField("modifiers");

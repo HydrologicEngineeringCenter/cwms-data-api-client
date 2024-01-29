@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -78,16 +77,17 @@ class TestOkHttpClientInstance {
         System.setProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY, sevenSeconds.toString());
         System.setProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY, eightSeconds.toString());
         System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString());
-        System.setProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY, "124");
-        resetSingleton();
         int mbMultiplicativeFactor = (1024 * 1024);
+        int sizeInBytes = 124 * mbMultiplicativeFactor;
+        System.setProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY, String.valueOf(sizeInBytes));
+        resetSingleton();
         try {
             OkHttpClient instance = OkHttpClientInstance.getInstance();
             assertEquals(fiveSeconds.toMillis(), instance.readTimeoutMillis());
             assertEquals(sixSeconds.toMillis(), instance.callTimeoutMillis());
             assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
             assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
-            assertEquals(124 * mbMultiplicativeFactor, instance.cache().maxSize());
+            assertEquals(sizeInBytes, instance.cache().maxSize());
             assertEquals(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString(), instance.cache().directory().toString());
         } finally {
             System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
