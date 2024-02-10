@@ -1898,13 +1898,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/timeseries/text/standard-text-id/{standard-text-id}:
+  /swt-data/standard-text-id/{standard-text-id}:
     get:
       tags:
-        - Text-TimeSeries
-      summary: Get swtData timeseries text standardTextId with standardTextId
+        - Standard Text
+      summary: Get swtData standardTextId with standardTextId
       description: Retrieve a single Standard Text value
-      operationId: getSwtDataTimeseriesTextStandardTextIdWithStandardTextId
+      operationId: getSwtDataStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -1958,10 +1958,10 @@ paths:
       security: []
     delete:
       tags:
-        - Text-TimeSeries
-      summary: Delete swtData timeseries text standardTextId with standardTextId
+        - Standard Text
+      summary: Delete swtData standardTextId with standardTextId
       description: Delete a single Standard Text value
-      operationId: deleteSwtDataTimeseriesTextStandardTextIdWithStandardTextId
+      operationId: deleteSwtDataStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -2015,13 +2015,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/text/standard-text-id:
+  /swt-data/standard-text-id:
     get:
       tags:
-        - Text-TimeSeries
-      summary: Get swtData timeseries text standardTextId
+        - Standard Text
+      summary: Get swtData standardTextId
       description: Retrieve a Standard Text catalog
-      operationId: getSwtDataTimeseriesTextStandardTextId
+      operationId: getSwtDataStandardTextId
       parameters:
         - name: office-mask
           in: query
@@ -2073,10 +2073,10 @@ paths:
       security: []
     post:
       tags:
-        - Text-TimeSeries
-      summary: Post swtData timeseries text standardTextId
+        - Standard Text
+      summary: Post swtData standardTextId
       description: Create new Standard Text
-      operationId: postSwtDataTimeseriesTextStandardTextId
+      operationId: postSwtDataStandardTextId
       parameters:
         - name: fail-if-exists
           in: query
@@ -2176,17 +2176,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: mode
-          in: query
-          description: |-
-            Type of Text TimeSeries to retrieve.<table>
-            <tr><td>ALL</td><td>Retrieve Standard and Regular text timeseries.</td></tr>
-            <tr><td>STANDARD</td><td>Retrieve Standard text timeseries.</td></tr>
-            <tr><td>REGULAR</td><td>Retrieve Regular text timeseries.</td></tr>
-            </table>
-          required: true
-          schema:
-            $ref: '#/components/schemas/TimeSeriesTextMode'
       responses:
         '200':
           description: OK
@@ -2303,18 +2292,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: mode
-          in: query
-          description: |-
-            Type of delete to perform. 
-            <table>
-            <tr><td>ALL</td><td>Delete Standard and Regular text timeseries values for the specified time series.</td></tr>
-            <tr><td>STANDARD</td><td>Delete Standard text time series for the specified text timeseries.</td></tr>
-            <tr><td>REGULAR</td><td>Delete Regular text timeseries values for the specified time series.</td></tr>
-            </table>
-          required: true
-          schema:
-            $ref: '#/components/schemas/TimeSeriesTextMode'
         - name: timezone
           in: query
           description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
@@ -2484,7 +2461,7 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: The version date for the time series.  If not specified, the maximum version date is used.
+          description: The version date for the time series.
           schema:
             type: string
         - name: min-attribute
@@ -3619,17 +3596,12 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: Specifies the version date of a time series trace to be selected. The format for this field is ISO 8601 extended, i.e., 'format', e.g., '2021-06-10T13:00:00-0700' .If field is empty, query will return a max aggregate for the timeseries.
+          description: Specifies the version date of a time series trace to be selected. The format for this field is ISO 8601 extended, i.e., 'format', e.g., '2021-06-10T13:00:00-0700' .If field is empty, query will return a max aggregate for the timeseries. Only supported for:application/json;version=2 and application/xml;version=2
           schema:
             type: string
-        - name: date-version-type
-          in: query
-          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be ran if version date field is specified. If unspecified, defaults to max aggregate.
-          schema:
-            $ref: '#/components/schemas/VersionType'
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum.  This parameter is not supported for:application/json;version=2 or application/xml;version=2"
           schema:
             type: string
         - name: begin
@@ -3644,7 +3616,12 @@ paths:
             type: string
         - name: timezone
           in: query
-          description: "Specifies the time zone of the values of the begin and end fields (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if begin was specified with offset and timezone."
+          description: "Specifies the time zone of the values of the begin and end fields (unless otherwise specified).  For application/json;version=2 and application/xml;version=2 the results are returned in UTC.  For other formats this parameter affects the time zone of times in the response. If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if begin was specified with offset and timezone."
+          schema:
+            type: string
+        - name: trim
+          in: query
+          description: Specifies whether to trim missing values from the beginning and end of the retrieved values. Only supported for:application/json;version=2 and application/xml;version=2. Default is false.
           schema:
             type: string
         - name: format
@@ -3654,7 +3631,7 @@ paths:
             type: string
         - name: page
           in: query
-          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          description: This end point can return large amounts of data as a series of pages. This parameter is used to describes the current location in the response stream.  This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
         - name: page-size
@@ -6484,70 +6461,28 @@ components:
         - DELETE_ALL
         - DELETE_KEY
         - DELETE_DATA
-    TimeSeriesTextMode:
-      type: string
-      enum:
-        - ALL
-        - STANDARD
-        - REGULAR
     RegularTextTimeSeriesRow:
       type: object
       properties:
         date-time:
           type: string
           format: date-time
-        version-date:
-          type: string
-          format: date-time
         data-entry-date:
           type: string
           format: date-time
-        attribute:
-          type: integer
-          format: int64
-        text-id:
-          type: string
         text-value:
           type: string
-    StandardCatalog:
-      required:
-        - office-id
-      type: object
-      properties:
-        office-id:
+        filename:
           type: string
-          description: Owning office of object.
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardCatalogEntry'
-    StandardCatalogEntry:
-      type: object
-      properties:
-        id:
+        media-type:
           type: string
-        value:
-          type: string
-    StandardTextTimeSeriesRow:
-      type: object
-      properties:
-        date-time:
-          type: string
-          format: date-time
-        version-date:
-          type: string
-          format: date-time
-        data-entry-date:
-          type: string
-          format: date-time
-        attribute:
+        quality-code:
           type: integer
           format: int64
-        office-id:
-          type: string
-        standard-text-id:
-          type: string
-        text-value:
+        dest-flag:
+          type: integer
+          format: int32
+        value-url:
           type: string
     TextTimeSeries:
       required:
@@ -6564,14 +6499,17 @@ components:
           format: int64
         time-zone:
           type: string
-        standard-text-catalog:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardCatalog'
-        standard-text-values:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardTextTimeSeriesRow'
+        date-version-type:
+          type: string
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+          enum:
+            - MAX_AGGREGATE
+            - SINGLE_VERSION
+            - UNVERSIONED
+        version-date:
+          type: string
+          description: The version date of the time series trace
+          format: date-time
         regular-text-values:
           type: array
           items:
@@ -6591,6 +6529,17 @@ components:
           format: int64
         time-zone:
           type: string
+        date-version-type:
+          type: string
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+          enum:
+            - MAX_AGGREGATE
+            - SINGLE_VERSION
+            - UNVERSIONED
+        version-date:
+          type: string
+          description: The version date of the time series trace
+          format: date-time
         binary-values:
           type: array
           items:
@@ -6601,26 +6550,26 @@ components:
         date-time:
           type: string
           format: date-time
-        version-date:
-          type: string
-          format: date-time
         data-entry-date:
           type: string
           format: date-time
-        binary-id:
-          type: string
-        attribute:
-          type: integer
-          format: int64
         media-type:
           type: string
-        file-extension:
+        filename:
           type: string
+        dest-flag:
+          type: integer
+          format: int32
         binary-value:
           type: array
           items:
             type: string
             format: byte
+        value-url:
+          type: string
+        quality-code:
+          type: integer
+          format: int64
     TimeSeriesCategory:
       required:
         - office-id
@@ -6719,14 +6668,6 @@ components:
       description: A representation of a timeseries group
       xml:
         name: timeseries-group
-    VersionType:
-      type: string
-      description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
-      enum:
-        - MAX_AGGREGATE
-        - SINGLE_VERSION
-        - UNVERSIONED
-        - UNDEF
     Offset:
       type: object
       properties:
@@ -6758,7 +6699,6 @@ components:
             - MAX_AGGREGATE
             - SINGLE_VERSION
             - UNVERSIONED
-            - UNDEF
         end:
           type: string
           description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
@@ -6770,11 +6710,16 @@ components:
             seconds:
               type: integer
               format: int64
+            nano:
+              type: integer
+              format: int32
             units:
               type: array
               items:
                 type: object
                 properties:
+                  dateBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -6788,15 +6733,10 @@ components:
                         type: boolean
                       negative:
                         type: boolean
-                  dateBased:
-                    type: boolean
                   durationEstimated:
                     type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
             zero:
               type: boolean
             negative:
@@ -7628,9 +7568,9 @@ components:
           $ref: '#/components/schemas/PoolNameType'
         bottomLevelId:
           type: string
-        projectId:
-          type: string
         topLevelId:
+          type: string
+        projectId:
           type: string
       description: List of retrieved pools
     PoolNameType:

@@ -6,7 +6,7 @@ service-annotations = "2.0.1"
 lookup = "2.0"
 
 #Third Party Dependencies
-jackson = "2.13.0"
+jackson = "2.15.0"
 swagger-annotations = "1.6.3"
 validation-api = "2.0.1.Final"
 annotation-api = "1.3.2"
