@@ -17,6 +17,7 @@ jobs:
         with:
           java-version: '17'
           java-package: jdk
+          distribution: 'temurin'
       - name: build and test
         id: thebuild
         run: ./gradlew build --info --init-script init.gradle

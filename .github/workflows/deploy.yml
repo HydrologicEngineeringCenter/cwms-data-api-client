@@ -18,6 +18,7 @@ jobs:
         with:
           java-version: '17'
           java-package: jdk
+          distribution: 'temurin'
       - name: Publish Artifacts
         id: thedeploy
         run: ./gradlew publish --info --init-script init.gradle
