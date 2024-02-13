@@ -37,7 +37,7 @@ import java.util.Objects;
  * StandardCatalog
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-09T17:34:24.994233-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-13T10:48:01.962877200-08:00[America/Los_Angeles]")
 public class StandardCatalog {
     @JsonProperty("office-id")
     private String officeId = null;

@@ -37,13 +37,19 @@ import java.util.Objects;
  * TextTimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-09T17:34:24.994233-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-13T10:48:01.962877200-08:00[America/Los_Angeles]")
 public class TextTimeSeries {
     @JsonProperty("office-id")
     private String officeId = null;
 
-    @JsonProperty("id")
-    private String id = null;
+    @JsonProperty("name")
+    private String name = null;
+
+    @JsonProperty("interval-offset")
+    private Long intervalOffset = null;
+
+    @JsonProperty("time-zone")
+    private String timeZone = null;
 
     @JsonProperty("regular-text-values")
     @Valid
@@ -77,23 +83,61 @@ public class TextTimeSeries {
         this.officeId = officeId;
     }
 
-    public TextTimeSeries id(String id) {
-        this.id = id;
+    public TextTimeSeries name(String name) {
+        this.name = name;
         return this;
     }
 
     /**
-     * Get id
+     * Get name
      *
-     * @return id
+     * @return name
      **/
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public TextTimeSeries intervalOffset(Long intervalOffset) {
+        this.intervalOffset = intervalOffset;
+        return this;
+    }
+
+    /**
+     * Get intervalOffset
+     *
+     * @return intervalOffset
+     **/
+
+    public Long getIntervalOffset() {
+        return intervalOffset;
+    }
+
+    public void setIntervalOffset(Long intervalOffset) {
+        this.intervalOffset = intervalOffset;
+    }
+
+    public TextTimeSeries timeZone(String timeZone) {
+        this.timeZone = timeZone;
+        return this;
+    }
+
+    /**
+     * Get timeZone
+     *
+     * @return timeZone
+     **/
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     public TextTimeSeries regularTextValues(List<RegularTextTimeSeriesRow> regularTextValues) {
@@ -188,15 +232,18 @@ public class TextTimeSeries {
         }
         TextTimeSeries textTimeSeries = (TextTimeSeries) o;
         return this.officeId == null || textTimeSeries.officeId == null ? Objects.equals(this.officeId, textTimeSeries.officeId) : this.officeId.equalsIgnoreCase(textTimeSeries.officeId)
-                && this.id == null || textTimeSeries.id == null ? Objects.equals(this.id, textTimeSeries.id) : this.id.equalsIgnoreCase(textTimeSeries.id)
+                && this.name == null || textTimeSeries.name == null ? Objects.equals(this.name, textTimeSeries.name) : this.name.equalsIgnoreCase(textTimeSeries.name)
+                && Objects.equals(this.intervalOffset, textTimeSeries.intervalOffset)
+                && this.timeZone == null || textTimeSeries.timeZone == null ? Objects.equals(this.timeZone, textTimeSeries.timeZone) : this.timeZone.equalsIgnoreCase(textTimeSeries.timeZone)
                 && Objects.equals(this.regularTextValues, textTimeSeries.regularTextValues)
                 && Objects.equals(this.standardTextValues, textTimeSeries.standardTextValues)
-                && Objects.equals(this.standardTextCatalog, textTimeSeries.standardTextCatalog);
+                && Objects.equals(this.standardTextCatalog, textTimeSeries.standardTextCatalog)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), id == null ? 0 : id.toLowerCase(), regularTextValues, standardTextValues, standardTextCatalog);
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), name == null ? 0 : name.toLowerCase(), intervalOffset, timeZone == null ? 0 : timeZone.toLowerCase(), regularTextValues, standardTextValues, standardTextCatalog);
     }
 
     @Override
@@ -205,7 +252,9 @@ public class TextTimeSeries {
         sb.append("class TextTimeSeries {\n");
 
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    intervalOffset: ").append(toIndentedString(intervalOffset)).append("\n");
+        sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
         sb.append("    regularTextValues: ").append(toIndentedString(regularTextValues)).append("\n");
         sb.append("    standardTextValues: ").append(toIndentedString(standardTextValues)).append("\n");
         sb.append("    standardTextCatalog: ").append(toIndentedString(standardTextCatalog)).append("\n");

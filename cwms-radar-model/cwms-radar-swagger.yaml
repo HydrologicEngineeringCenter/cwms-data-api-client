@@ -1488,6 +1488,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the effective date field (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
         - name: unit
           in: query
           description: Desired unit for the values retrieved.
@@ -1556,6 +1561,11 @@ paths:
         - name: effective-date
           in: query
           description: Specifies the effective date of the level to be deleted. If not provided will delete all data and reference to the location level.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the value of the effective date field (unless otherwise specified).If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
       responses:
@@ -1901,7 +1911,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: ts-id
+        - name: name
           in: query
           description: Specifies the ts-id of the text timeseries
           required: true
@@ -1912,7 +1922,7 @@ paths:
           description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
-        - name: start
+        - name: begin
           in: query
           description: The start of the time window
           required: true
@@ -1920,41 +1930,34 @@ paths:
             type: string
         - name: end
           in: query
-          description: The end of the time window. If specified the text associated with all times from start to end (inclusive) is deleted.
+          description: The end of the time window. If specified the text associated with all times from start to end (inclusive) is returned.
           schema:
             type: string
         - name: version-date
           in: query
-          description: The version date for the time series.  If not specified, the minimum or maximum version date (depending on p_max_version) is used.
+          description: The version date for the time series.  If not specified, the maximum version date is used.
           schema:
             type: string
-        - name: max-version
-          in: query
-          description: Whether to use the maximum version date if p_version_date is not specified.
-          schema:
-            type: boolean
         - name: min-attribute
           in: query
-          description: The minimum attribute value to delete. If not specified, no minimum value is used.
+          description: The minimum attribute value to retrieve. If not specified, no minimum value is used.
           schema:
             type: integer
             format: int64
         - name: max-attribute
           in: query
-          description: The maximum attribute value to delete. If not specified, no maximum value is used.
+          description: The maximum attribute value to retrieve. If not specified, no maximum value is used.
           schema:
             type: integer
             format: int64
         - name: mode
           in: query
-          description: |
-            Type of Text TimeSeries to retrieve. Options are:
-            ALL
-             - Retrieve Standard and Regular text timeseries 
-            STANDARD
-             - Retrieve Standard text time series.
-            REGULAR
-             - Retrieve Regular text timeseries
+          description: |-
+            Type of Text TimeSeries to retrieve.<table>
+            <tr><td>ALL</td><td>Retrieve Standard and Regular text timeseries.</td></tr>
+            <tr><td>STANDARD</td><td>Retrieve Standard text timeseries.</td></tr>
+            <tr><td>REGULAR</td><td>Retrieve Regular text timeseries.</td></tr>
+            </table>
           required: true
           schema:
             $ref: '#/components/schemas/TimeSeriesTextMode'
@@ -2003,13 +2006,9 @@ paths:
       description: Create new TextTimeSeries
       operationId: postCwmsDataTimeseriesText
       parameters:
-        - name: max-version
-          in: query
-          description: Whether to use the maximum version date if p_version_date is not specified.
-          schema:
-            type: boolean
         - name: replace-all
           in: query
+          description: Whether to replace any and all existing text with the specified text. Default is false
           schema:
             type: boolean
       requestBody:
@@ -2052,15 +2051,15 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/text/{ts-id}:
+  /cwms-data/timeseries/text/{timeseries}:
     delete:
       tags:
         - Text-TimeSeries
-      summary: Delete cwmsData timeseries text with tsId
+      summary: Delete cwmsData timeseries text with timeseries
       description: Deletes requested text timeseries id
-      operationId: deleteCwmsDataTimeseriesTextWithTsId
+      operationId: deleteCwmsDataTimeseriesTextWithTimeseries
       parameters:
-        - name: ts-id
+        - name: timeseries
           in: path
           description: The time series identifier to be deleted
           required: true
@@ -2080,14 +2079,13 @@ paths:
             type: string
         - name: mode
           in: query
-          description: |
-            Type of delete to perform. Options are:
-            ALL
-             - Delete Standard and Regular text timeseries values for the specified time series.
-            STANDARD
-             - Delete Standard text time series for the specified text timeseries.
-            REGULAR
-             - Delete Regular text timeseries values for the specified time series.
+          description: |-
+            Type of delete to perform. 
+            <table>
+            <tr><td>ALL</td><td>Delete Standard and Regular text timeseries values for the specified time series.</td></tr>
+            <tr><td>STANDARD</td><td>Delete Standard text time series for the specified text timeseries.</td></tr>
+            <tr><td>REGULAR</td><td>Delete Regular text timeseries values for the specified time series.</td></tr>
+            </table>
           required: true
           schema:
             $ref: '#/components/schemas/TimeSeriesTextMode'
@@ -2096,7 +2094,7 @@ paths:
           description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
-        - name: start
+        - name: begin
           in: query
           description: The start of the time window
           required: true
@@ -2109,14 +2107,9 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: The version date for the time series.  If not specified, the minimum or maximum version date (depending on p_max_version) is used.
+          description: The version date for the time series.  If not specified, maximum version date is used.
           schema:
             type: string
-        - name: max-version
-          in: query
-          description: Whether to use the maximum version date if p_version_date is not specified.
-          schema:
-            type: boolean
         - name: min-attribute
           in: query
           description: The minimum attribute value to delete. If not specified, no minimum value is used.
@@ -2166,23 +2159,19 @@ paths:
     patch:
       tags:
         - Text-TimeSeries
-      summary: Patch cwmsData timeseries text with tsId
+      summary: Patch cwmsData timeseries text with timeseries
       description: Updates a text timeseries
-      operationId: patchCwmsDataTimeseriesTextWithTsId
+      operationId: patchCwmsDataTimeseriesTextWithTimeseries
       parameters:
-        - name: ts-id
+        - name: timeseries
           in: path
           description: The id of the text timeseries to be updated
           required: true
           schema:
             type: string
-        - name: max-version
-          in: query
-          description: Whether to use the maximum version date if p_version_date is not specified.
-          schema:
-            type: boolean
         - name: replace-all
           in: query
+          description: Whether to replace any and all existing text with the specified text. Default is:false
           schema:
             type: boolean
       requestBody:
@@ -3196,7 +3185,7 @@ paths:
       tags:
         - TimeSeries
       summary: Post cwmsData timeseries
-      description: Create new TimeSeries, will store any data provided
+      description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
       operationId: postCwmsDataTimeseries
       parameters:
         - name: version-date
@@ -4781,6 +4770,61 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
+    post:
+      tags:
+        - Blob
+      summary: Post cwmsData blobs
+      description: Create new Blob
+      operationId: postCwmsDataBlobs
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
   /cwms-data/clobs/{clob-id}:
     get:
       tags:
@@ -4798,6 +4842,11 @@ paths:
           description: Specifies the owning office.
           schema:
             type: string
+        - name: clob-id
+          in: query
+          description: 'If this _query_ parameter is provided the id _path_ parameter is ignored and the value of the query parameter is used.   Note: this query parameter is necessary for id''s that contain ''/'' or other special characters.  Because of abuse even properly escaped ''/'' in url paths are blocked.  When using this query parameter a valid path parameter must still be provided for the request to be properly routed.  If your clob id contains ''/'' you can''t specify the clob-id query parameter and also specify the id path parameter because firewall and/or server rules will deny the request even though you are specifying this override. "ignored" is suggested.'
+          schema:
+            type: string
       responses:
         '200':
           description: Returns requested clob.
@@ -4805,6 +4854,9 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Clob'
+            text/plain:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -5902,8 +5954,6 @@ components:
           type: string
         text-value:
           type: string
-        new-data:
-          type: boolean
     StandardCatalog:
       required:
         - office-id
@@ -5952,7 +6002,12 @@ components:
         office-id:
           type: string
           description: Owning office of object.
-        id:
+        name:
+          type: string
+        interval-offset:
+          type: integer
+          format: int64
+        time-zone:
           type: string
         regular-text-values:
           type: array
@@ -6105,10 +6160,7 @@ components:
             seconds:
               type: integer
               format: int64
-            nano:
-              type: integer
-              format: int32
-            zero:
+            negative:
               type: boolean
             units:
               type: array
@@ -6121,12 +6173,12 @@ components:
                       seconds:
                         type: integer
                         format: int64
+                      negative:
+                        type: boolean
                       nano:
                         type: integer
                         format: int32
                       zero:
-                        type: boolean
-                      negative:
                         type: boolean
                   durationEstimated:
                     type: boolean
@@ -6134,7 +6186,10 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            negative:
+            nano:
+              type: integer
+              format: int32
+            zero:
               type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
@@ -6867,7 +6922,6 @@ components:
           items:
             type: string
             format: byte
-      description: List of retrieved blobs
     Blobs:
       type: object
       properties:

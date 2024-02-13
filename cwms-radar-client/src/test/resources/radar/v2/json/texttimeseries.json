@@ -1,6 +1,6 @@
 {
   "office-id": "SWT",
-  "id": "TEST.Text.Inst.1Hour.0.MockTest",
+  "name": "TEST.Text.Inst.1Hour.0.MockTest",
   "regular-text-values": [
     {
       "date-time": "2024-02-12T00:00:00Z",
@@ -8,16 +8,14 @@
       "data-entry-date": "2024-02-12T00:00:00Z",
       "attribute": 0,
       "text-id": "id1",
-      "text-value": "Hello, Davis",
-      "new-data": true
+      "text-value": "Hello, Davis"
     },
     {
       "date-time": "2024-02-12T01:00:00Z",
       "version-date": "2024-02-12T00:00:00Z",
       "data-entry-date": "2024-02-12T00:00:00Z",
       "text-id": "id2",
-      "text-value": "Hello, USA",
-      "new-data": true
+      "text-value": "Hello, USA"
     }
   ],
   "standard-text-values": [

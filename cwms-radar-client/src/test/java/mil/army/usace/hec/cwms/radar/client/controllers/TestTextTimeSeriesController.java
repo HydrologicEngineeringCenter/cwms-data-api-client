@@ -57,7 +57,7 @@ class TestTextTimeSeriesController extends TestController {
                 .page(null);
         TextTimeSeries timeSeries = new TextTimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals("SWT", timeSeries.getOfficeId());
-        assertEquals("TEST.Text.Inst.1Hour.0.MockTest", timeSeries.getId());
+        assertEquals("TEST.Text.Inst.1Hour.0.MockTest", timeSeries.getName());
         List<RegularTextTimeSeriesRow> regularTextValues = timeSeries.getRegularTextValues();
         assertEquals(2, regularTextValues.size());
         RegularTextTimeSeriesRow regularRow = regularTextValues.get(0);
@@ -99,10 +99,10 @@ class TestTextTimeSeriesController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TextTimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TextTimeSeries.class);
-        timeSeries.setId(timeSeries.getId() + (System.currentTimeMillis() % 100_000));
+        timeSeries.setName(timeSeries.getName() + (System.currentTimeMillis() % 100_000));
         TextTimeSeriesController timeSeriesController = new TextTimeSeriesController();
         timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TextTimeSeriesEndpointInput.post(timeSeries));
-        TextTimeSeriesEndpointInput.Delete input = TextTimeSeriesEndpointInput.delete(timeSeries.getId(), timeSeries.getOfficeId());
+        TextTimeSeriesEndpointInput.Delete input = TextTimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
         assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
     }
 }

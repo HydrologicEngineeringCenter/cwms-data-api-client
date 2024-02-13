@@ -35,7 +35,7 @@ import java.util.Objects;
  * RegularTextTimeSeriesRow
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-09T17:34:24.994233-08:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-13T10:48:01.962877200-08:00[America/Los_Angeles]")
 public class RegularTextTimeSeriesRow {
     @JsonProperty("date-time")
     private ZonedDateTime dateTime = null;
@@ -54,9 +54,6 @@ public class RegularTextTimeSeriesRow {
 
     @JsonProperty("text-value")
     private String textValue = null;
-
-    @JsonProperty("new-data")
-    private Boolean newData = null;
 
     public RegularTextTimeSeriesRow dateTime(ZonedDateTime dateTime) {
         this.dateTime = dateTime;
@@ -175,25 +172,6 @@ public class RegularTextTimeSeriesRow {
         this.textValue = textValue;
     }
 
-    public RegularTextTimeSeriesRow newData(Boolean newData) {
-        this.newData = newData;
-        return this;
-    }
-
-    /**
-     * Get newData
-     *
-     * @return newData
-     **/
-
-    public Boolean isisNewData() {
-        return newData;
-    }
-
-    public void setNewData(Boolean newData) {
-        this.newData = newData;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -210,13 +188,12 @@ public class RegularTextTimeSeriesRow {
                 && Objects.equals(this.attribute, regularTextTimeSeriesRow.attribute)
                 && this.textId == null || regularTextTimeSeriesRow.textId == null ? Objects.equals(this.textId, regularTextTimeSeriesRow.textId) : this.textId.equalsIgnoreCase(regularTextTimeSeriesRow.textId)
                 && this.textValue == null || regularTextTimeSeriesRow.textValue == null ? Objects.equals(this.textValue, regularTextTimeSeriesRow.textValue) : this.textValue.equalsIgnoreCase(regularTextTimeSeriesRow.textValue)
-                && Objects.equals(this.newData, regularTextTimeSeriesRow.newData)
                 ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateTime, versionDate, dataEntryDate, attribute, textId == null ? 0 : textId.toLowerCase(), textValue == null ? 0 : textValue.toLowerCase(), newData);
+        return Objects.hash(dateTime, versionDate, dataEntryDate, attribute, textId == null ? 0 : textId.toLowerCase(), textValue == null ? 0 : textValue.toLowerCase());
     }
 
     @Override
@@ -230,7 +207,6 @@ public class RegularTextTimeSeriesRow {
         sb.append("    attribute: ").append(toIndentedString(attribute)).append("\n");
         sb.append("    textId: ").append(toIndentedString(textId)).append("\n");
         sb.append("    textValue: ").append(toIndentedString(textValue)).append("\n");
-        sb.append("    newData: ").append(toIndentedString(newData)).append("\n");
         sb.append("}");
         return sb.toString();
     }
