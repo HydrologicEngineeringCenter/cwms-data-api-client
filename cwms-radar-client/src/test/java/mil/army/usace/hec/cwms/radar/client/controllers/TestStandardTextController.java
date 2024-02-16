@@ -42,7 +42,7 @@ class TestStandardTextController extends TestController {
 
     @Test
     void testRetrieveCatalog() throws IOException {
-        String collect = readJsonFile("radar/v2/json/standard-text-catalog.json");
+        String collect = readJsonFile("radar/v2/json/standard_text_catalog.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         StandardTextEndpointInput.GetAll input = StandardTextEndpointInput.getAll();
@@ -57,7 +57,7 @@ class TestStandardTextController extends TestController {
 
     @Test
     void testRetrieveOne() throws IOException {
-        String collect = readJsonFile("radar/v2/json/standard-text.json");
+        String collect = readJsonFile("radar/v2/json/standard_text.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         StandardTextEndpointInput.GetOne input = StandardTextEndpointInput.getOne("HW", "SPK");
@@ -70,7 +70,7 @@ class TestStandardTextController extends TestController {
     @Test
     void testStoreStandardText() throws IOException {
         Logger.getLogger("").setLevel(Level.ALL);
-        String collect = readJsonFile("radar/v2/json/standard-text.json");
+        String collect = readJsonFile("radar/v2/json/standard_text.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         StandardTextValue timeSeries = RadarObjectMapper.mapJsonToObject(collect, StandardTextValue.class);
@@ -81,7 +81,7 @@ class TestStandardTextController extends TestController {
 
     @Test
     void testDeleteStandardText() throws IOException {
-        String collect = readJsonFile("radar/v2/json/standard-text.json");
+        String collect = readJsonFile("radar/v2/json/standard_text.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();

@@ -65,7 +65,7 @@ class TestStandardTextEndpointInput {
     @Test
     void testPostQueryRequestDefaults() throws IOException {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        String collect = readJsonFile("radar/v2/json/standard-text.json");
+        String collect = readJsonFile("radar/v2/json/standard_text.json");
         StandardTextValue textTimeSerietextValue = RadarObjectMapper.mapJsonToObject(collect, StandardTextValue.class);
         StandardTextEndpointInput.Post input = StandardTextEndpointInput.post(textTimeSerietextValue);
         input.addInputParameters(mockHttpRequestBuilder);
@@ -76,7 +76,7 @@ class TestStandardTextEndpointInput {
     @Test
     void testPostQueryRequest() throws IOException {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        String collect = readJsonFile("radar/v2/json/standard-text.json");
+        String collect = readJsonFile("radar/v2/json/standard_text.json");
         StandardTextValue textTimeSerietextValue = RadarObjectMapper.mapJsonToObject(collect, StandardTextValue.class);
         StandardTextEndpointInput.Post input = StandardTextEndpointInput.post(textTimeSerietextValue)
                 .failIfExists(true);

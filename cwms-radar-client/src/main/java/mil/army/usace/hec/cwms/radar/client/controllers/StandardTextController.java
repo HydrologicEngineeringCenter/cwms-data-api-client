@@ -43,30 +43,27 @@ public final class StandardTextController {
 
     public StandardTextCatalog retrieveStandardTextCatalog(ApiConnectionInfo apiConnectionInfo, StandardTextEndpointInput.GetAll input)
             throws IOException {
-        StandardTextCatalog retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
-            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextCatalog.class);
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextCatalog.class);
         }
-        return retVal;
     }
 
     public StandardTextValue retrieveStandardText(ApiConnectionInfo apiConnectionInfo, StandardTextEndpointInput.GetOne input)
             throws IOException {
-        StandardTextValue retVal;
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT)
+        String endpoint = STANDARD_TEXT_ENDPOINT + "/" + input.textId();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
-            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextValue.class);
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextValue.class);
         }
-        return retVal;
     }
 
     public void storeStandardText(ApiConnectionInfo apiConnectionInfo, StandardTextEndpointInput.Post input) throws IOException {
