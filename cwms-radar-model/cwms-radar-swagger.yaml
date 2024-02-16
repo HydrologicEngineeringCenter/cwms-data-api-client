@@ -4,10 +4,10 @@ info:
   description: CWMS REST API for Data Retrieval
   version: '3.0'
 paths:
-  /cwms-data:
+  /spk-data:
     get:
-      summary: Get cwmsData
-      operationId: getCwmsData
+      summary: Get spkData
+      operationId: getSpkData
       responses:
         '400':
           description: Bad Request
@@ -40,13 +40,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/auth/keys/{key-name}:
+  /spk-data/auth/keys/{key-name}:
     get:
       tags:
         - Authorization
-      summary: Get cwmsData auth keys with keyName
+      summary: Get spkData auth keys with keyName
       description: View specific key
-      operationId: getCwmsDataAuthKeysWithKeyName
+      operationId: getSpkDataAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -97,9 +97,9 @@ paths:
     delete:
       tags:
         - Authorization
-      summary: Delete cwmsData auth keys with keyName
+      summary: Delete spkData auth keys with keyName
       description: Delete API key for a user
-      operationId: deleteCwmsDataAuthKeysWithKeyName
+      operationId: deleteSpkDataAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -146,13 +146,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/auth/keys:
+  /spk-data/auth/keys:
     get:
       tags:
         - Authorization
-      summary: Get cwmsData auth keys
+      summary: Get spkData auth keys
       description: View all keys for the current user
-      operationId: getCwmsDataAuthKeys
+      operationId: getSpkDataAuthKeys
       responses:
         '201':
           description: Created
@@ -198,9 +198,9 @@ paths:
     post:
       tags:
         - Authorization
-      summary: Post cwmsData auth keys
+      summary: Post spkData auth keys
       description: Create a new API Key for user. The randomly generated key is returned to the caller. A provided key will be ignored.
-      operationId: postCwmsDataAuthKeys
+      operationId: postSpkDataAuthKeys
       requestBody:
         content:
           application/json:
@@ -246,13 +246,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/location/category/{category-id}:
+  /spk-data/location/category/{category-id}:
     get:
       tags:
         - Location Categories
-      summary: Get cwmsData location category with categoryId
+      summary: Get spkData location category with categoryId
       description: Retrieves requested Location Category
-      operationId: getCwmsDataLocationCategoryWithCategoryId
+      operationId: getSpkDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -307,9 +307,9 @@ paths:
     delete:
       tags:
         - Location Categories
-      summary: Delete cwmsData location category with categoryId
+      summary: Delete spkData location category with categoryId
       description: Deletes requested location category
-      operationId: deleteCwmsDataLocationCategoryWithCategoryId
+      operationId: deleteSpkDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -362,13 +362,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/location/category:
+  /spk-data/location/category:
     get:
       tags:
         - Location Categories
-      summary: Get cwmsData location category
+      summary: Get spkData location category
       description: Returns CWMS Location Category Data
-      operationId: getCwmsDataLocationCategory
+      operationId: getSpkDataLocationCategory
       parameters:
         - name: office
           in: query
@@ -418,9 +418,9 @@ paths:
     post:
       tags:
         - Location Categories
-      summary: Post cwmsData location category
+      summary: Post spkData location category
       description: Create new LocationCategory
-      operationId: postCwmsDataLocationCategory
+      operationId: postSpkDataLocationCategory
       requestBody:
         content:
           application/json:
@@ -461,13 +461,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/location/group/{group-id}:
+  /spk-data/location/group/{group-id}:
     get:
       tags:
         - Location Groups
-      summary: Get cwmsData location group with groupId
+      summary: Get spkData location group with groupId
       description: Retrieves requested Location Group
-      operationId: getCwmsDataLocationGroupWithGroupId
+      operationId: getSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -534,9 +534,9 @@ paths:
     delete:
       tags:
         - Location Groups
-      summary: Delete cwmsData location group with groupId
+      summary: Delete spkData location group with groupId
       description: Deletes requested location group
-      operationId: deleteCwmsDataLocationGroupWithGroupId
+      operationId: deleteSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -598,9 +598,9 @@ paths:
     patch:
       tags:
         - Location Groups
-      summary: Patch cwmsData location group with groupId
+      summary: Patch spkData location group with groupId
       description: Update existing LocationGroup
-      operationId: patchCwmsDataLocationGroupWithGroupId
+      operationId: patchSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -658,13 +658,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/location/group:
+  /spk-data/location/group:
     get:
       tags:
         - Location Groups
-      summary: Get cwmsData location group
+      summary: Get spkData location group
       description: Returns CWMS Location Groups Data
-      operationId: getCwmsDataLocationGroup
+      operationId: getSpkDataLocationGroup
       parameters:
         - name: office
           in: query
@@ -729,9 +729,9 @@ paths:
     post:
       tags:
         - Location Groups
-      summary: Post cwmsData location group
+      summary: Post spkData location group
       description: Create new LocationGroup
-      operationId: postCwmsDataLocationGroup
+      operationId: postSpkDataLocationGroup
       requestBody:
         content:
           application/json:
@@ -772,13 +772,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/locations/{location-id}:
+  /spk-data/locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations with locationId
+      summary: Get spkData locations with locationId
       description: Returns CWMS Location Data
-      operationId: getCwmsDataLocationsWithLocationId
+      operationId: getSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -840,9 +840,9 @@ paths:
     delete:
       tags:
         - Locations
-      summary: Delete cwmsData locations with locationId
+      summary: Delete spkData locations with locationId
       description: Delete CWMS Location
-      operationId: deleteCwmsDataLocationsWithLocationId
+      operationId: deleteSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -891,9 +891,9 @@ paths:
     patch:
       tags:
         - Locations
-      summary: Patch cwmsData locations with locationId
+      summary: Patch spkData locations with locationId
       description: Update CWMS Location
-      operationId: patchCwmsDataLocationsWithLocationId
+      operationId: patchSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -943,13 +943,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/locations:
+  /spk-data/locations:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations
+      summary: Get spkData locations
       description: Returns CWMS Location Data
-      operationId: getCwmsDataLocations
+      operationId: getSpkDataLocations
       parameters:
         - name: names
           in: query
@@ -1035,9 +1035,9 @@ paths:
     post:
       tags:
         - Locations
-      summary: Post cwmsData locations
+      summary: Post spkData locations
       description: Create new CWMS Location
-      operationId: postCwmsDataLocations
+      operationId: postSpkDataLocations
       requestBody:
         content:
           application/json:
@@ -1081,12 +1081,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/states:
+  /spk-data/states:
     get:
       tags:
         - States
-      summary: Get cwmsData states
-      operationId: getCwmsDataStates
+      summary: Get spkData states
+      operationId: getSpkDataStates
       responses:
         '200':
           description: A list of states.
@@ -1127,12 +1127,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /cwms-data/counties:
+  /spk-data/counties:
     get:
       tags:
         - Counties
-      summary: Get cwmsData counties
-      operationId: getCwmsDataCounties
+      summary: Get spkData counties
+      operationId: getSpkDataCounties
       responses:
         '200':
           description: A list of counties.
@@ -1173,12 +1173,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /cwms-data/offices/{office}:
+  /spk-data/offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices with office
-      operationId: getCwmsDataOfficesWithOffice
+      summary: Get spkData offices with office
+      operationId: getSpkDataOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -1247,12 +1247,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/offices:
+  /spk-data/offices:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices
-      operationId: getCwmsDataOffices
+      summary: Get spkData offices
+      operationId: getSpkDataOffices
       parameters:
         - name: format
           in: query
@@ -1320,12 +1320,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/units:
+  /spk-data/units:
     get:
       tags:
         - Units
-      summary: Get cwmsData units
-      operationId: getCwmsDataUnits
+      summary: Get spkData units
+      operationId: getSpkDataUnits
       parameters:
         - name: format
           in: query
@@ -1368,12 +1368,12 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /cwms-data/parameters:
+  /spk-data/parameters:
     get:
       tags:
         - Parameters
-      summary: Get cwmsData parameters
-      operationId: getCwmsDataParameters
+      summary: Get spkData parameters
+      operationId: getSpkDataParameters
       parameters:
         - name: format
           in: query
@@ -1414,12 +1414,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/timezones:
+  /spk-data/timezones:
     get:
       tags:
         - TimeZones
-      summary: Get cwmsData timezones
-      operationId: getCwmsDataTimezones
+      summary: Get spkData timezones
+      operationId: getSpkDataTimezones
       parameters:
         - name: format
           in: query
@@ -1462,13 +1462,13 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /cwms-data/levels/{level-id}:
+  /spk-data/levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels with levelId
+      summary: Get spkData levels with levelId
       description: Retrieves requested Location Level
-      operationId: getCwmsDataLevelsWithLevelId
+      operationId: getSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1539,9 +1539,9 @@ paths:
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData levels with levelId
+      summary: Delete spkData levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteCwmsDataLevelsWithLevelId
+      operationId: deleteSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1605,9 +1605,9 @@ paths:
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData levels with levelId
+      summary: Patch spkData levels with levelId
       description: Update CWMS Location Level
-      operationId: patchCwmsDataLevelsWithLevelId
+      operationId: patchSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1663,12 +1663,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/levels:
+  /spk-data/levels:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels
-      operationId: getCwmsDataLevels
+      summary: Get spkData levels
+      operationId: getSpkDataLevels
       parameters:
         - name: level-id-mask
           in: query
@@ -1768,9 +1768,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post cwmsData levels
+      summary: Post spkData levels
       description: Create new CWMS Location Level
-      operationId: postCwmsDataLevels
+      operationId: postSpkDataLevels
       requestBody:
         content:
           application/json:
@@ -1814,10 +1814,10 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/levels/{level-id}/timeseries:
+  /spk-data/levels/{level-id}/timeseries:
     get:
-      summary: Get cwmsData levels with levelId timeseries
-      operationId: getCwmsDataLevelsWithLevelIdTimeseries
+      summary: Get spkData levels with levelId timeseries
+      operationId: getSpkDataLevelsWithLevelIdTimeseries
       parameters:
         - name: level-id
           in: path
@@ -1856,10 +1856,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /cwms-data/timeseries/recent/{group-id}:
+  /spk-data/timeseries/recent/{group-id}:
     get:
-      summary: Get cwmsData timeseries recent with groupId
-      operationId: getCwmsDataTimeseriesRecentWithGroupId
+      summary: Get spkData timeseries recent with groupId
+      operationId: getSpkDataTimeseriesRecentWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -1898,12 +1898,237 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/timeseries/text:
+  /spk-data/timeseries/text/standard-text-id/{standard-text-id}:
     get:
       tags:
         - Text-TimeSeries
-      summary: Get cwmsData timeseries text
-      operationId: getCwmsDataTimeseriesText
+      summary: Get spkData timeseries text standardTextId with standardTextId
+      description: Retrieve a single Standard Text value
+      operationId: getSpkDataTimeseriesTextStandardTextIdWithStandardTextId
+      parameters:
+        - name: standard-text-id
+          in: path
+          description: Specifies the text id of the standard text to retrieve. Default includes all text ids
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of thestandard text. Default includes all offices
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/StandardTextValue'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Text-TimeSeries
+      summary: Delete spkData timeseries text standardTextId with standardTextId
+      description: Delete a single Standard Text value
+      operationId: deleteSpkDataTimeseriesTextStandardTextIdWithStandardTextId
+      parameters:
+        - name: standard-text-id
+          in: path
+          description: Specifies the text id of the standard text to delete
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of thestandard text.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used.
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/timeseries/text/standard-text-id:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get spkData timeseries text standardTextId
+      description: Retrieve a Standard Text catalog
+      operationId: getSpkDataTimeseriesTextStandardTextId
+      parameters:
+        - name: office-mask
+          in: query
+          description: Specifies the office filter of thestandard text.
+          schema:
+            type: string
+        - name: standard-text-id-mask
+          in: query
+          description: Specifies the text id filter of the standard text
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/StandardTextCatalog'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Text-TimeSeries
+      summary: Post spkData timeseries text standardTextId
+      description: Create new Standard Text
+      operationId: postSpkDataTimeseriesTextStandardTextId
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/StandardTextValue'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/timeseries/text:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get spkData timeseries text
+      operationId: getSpkDataTimeseriesText
       parameters:
         - name: office
           in: query
@@ -2002,9 +2227,9 @@ paths:
     post:
       tags:
         - Text-TimeSeries
-      summary: Post cwmsData timeseries text
+      summary: Post spkData timeseries text
       description: Create new TextTimeSeries
-      operationId: postCwmsDataTimeseriesText
+      operationId: postSpkDataTimeseriesText
       parameters:
         - name: replace-all
           in: query
@@ -2051,13 +2276,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/text/{timeseries}:
+  /spk-data/timeseries/text/{timeseries}:
     delete:
       tags:
         - Text-TimeSeries
-      summary: Delete cwmsData timeseries text with timeseries
+      summary: Delete spkData timeseries text with timeseries
       description: Deletes requested text timeseries id
-      operationId: deleteCwmsDataTimeseriesTextWithTimeseries
+      operationId: deleteSpkDataTimeseriesTextWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -2159,9 +2384,9 @@ paths:
     patch:
       tags:
         - Text-TimeSeries
-      summary: Patch cwmsData timeseries text with timeseries
+      summary: Patch spkData timeseries text with timeseries
       description: Updates a text timeseries
-      operationId: patchCwmsDataTimeseriesTextWithTimeseries
+      operationId: patchSpkDataTimeseriesTextWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -2214,13 +2439,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/category/{category-id}:
+  /spk-data/timeseries/category/{category-id}:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get cwmsData timeseries category with categoryId
+      summary: Get spkData timeseries category with categoryId
       description: Retrieves requested timeseries category
-      operationId: getCwmsDataTimeseriesCategoryWithCategoryId
+      operationId: getSpkDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -2277,9 +2502,9 @@ paths:
     delete:
       tags:
         - TimeSeries Categories
-      summary: Delete cwmsData timeseries category with categoryId
+      summary: Delete spkData timeseries category with categoryId
       description: Deletes requested time series category
-      operationId: deleteCwmsDataTimeseriesCategoryWithCategoryId
+      operationId: deleteSpkDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -2332,13 +2557,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/category:
+  /spk-data/timeseries/category:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get cwmsData timeseries category
+      summary: Get spkData timeseries category
       description: Returns CWMS timeseries category Data
-      operationId: getCwmsDataTimeseriesCategory
+      operationId: getSpkDataTimeseriesCategory
       parameters:
         - name: office
           in: query
@@ -2390,9 +2615,9 @@ paths:
     post:
       tags:
         - TimeSeries Categories
-      summary: Post cwmsData timeseries category
+      summary: Post spkData timeseries category
       description: Create new TimeSeriesCategory
-      operationId: postCwmsDataTimeseriesCategory
+      operationId: postSpkDataTimeseriesCategory
       parameters:
         - name: fail-if-exists
           in: query
@@ -2439,13 +2664,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
+  /spk-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Get spkData timeseries identifierDescriptor with timeseriesId
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: getSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -2502,9 +2727,9 @@ paths:
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Delete spkData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
-      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -2561,8 +2786,8 @@ paths:
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
-      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Patch spkData timeseries identifierDescriptor with timeseriesId
+      operationId: patchSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -2638,13 +2863,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/identifier-descriptor:
+  /spk-data/timeseries/identifier-descriptor:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor
+      summary: Get spkData timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
-      operationId: getCwmsDataTimeseriesIdentifierDescriptor
+      operationId: getSpkDataTimeseriesIdentifierDescriptor
       parameters:
         - name: office
           in: query
@@ -2710,9 +2935,9 @@ paths:
     post:
       tags:
         - TimeSeries Identifier
-      summary: Post cwmsData timeseries identifierDescriptor
+      summary: Post spkData timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
-      operationId: postCwmsDataTimeseriesIdentifierDescriptor
+      operationId: postSpkDataTimeseriesIdentifierDescriptor
       parameters:
         - name: fail-if-exists
           in: query
@@ -2762,13 +2987,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/group/{group-id}:
+  /spk-data/timeseries/group/{group-id}:
     get:
       tags:
         - Timeseries Groups
-      summary: Get cwmsData timeseries group with groupId
+      summary: Get spkData timeseries group with groupId
       description: Retrieves requested timeseries group
-      operationId: getCwmsDataTimeseriesGroupWithGroupId
+      operationId: getSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2829,9 +3054,9 @@ paths:
     delete:
       tags:
         - Timeseries Groups
-      summary: Delete cwmsData timeseries group with groupId
+      summary: Delete spkData timeseries group with groupId
       description: Deletes requested time series group
-      operationId: deleteCwmsDataTimeseriesGroupWithGroupId
+      operationId: deleteSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2888,9 +3113,9 @@ paths:
     patch:
       tags:
         - Timeseries Groups
-      summary: Patch cwmsData timeseries group with groupId
+      summary: Patch spkData timeseries group with groupId
       description: Update existing TimeSeriesGroup
-      operationId: patchCwmsDataTimeseriesGroupWithGroupId
+      operationId: patchSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2948,13 +3173,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/group:
+  /spk-data/timeseries/group:
     get:
       tags:
         - Timeseries Groups
-      summary: Get cwmsData timeseries group
+      summary: Get spkData timeseries group
       description: Returns CWMS Timeseries Groups Data
-      operationId: getCwmsDataTimeseriesGroup
+      operationId: getSpkDataTimeseriesGroup
       parameters:
         - name: office
           in: query
@@ -3021,9 +3246,9 @@ paths:
     post:
       tags:
         - Timeseries Groups
-      summary: Post cwmsData timeseries group
+      summary: Post spkData timeseries group
       description: Create new TimeSeriesGroup
-      operationId: postCwmsDataTimeseriesGroup
+      operationId: postSpkDataTimeseriesGroup
       parameters:
         - name: fail-if-exists
           in: query
@@ -3070,12 +3295,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries:
+  /spk-data/timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get cwmsData timeseries
-      operationId: getCwmsDataTimeseries
+      summary: Get spkData timeseries
+      operationId: getSpkDataTimeseries
       parameters:
         - name: name
           in: query
@@ -3184,9 +3409,9 @@ paths:
     post:
       tags:
         - TimeSeries
-      summary: Post cwmsData timeseries
+      summary: Post spkData timeseries
       description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
-      operationId: postCwmsDataTimeseries
+      operationId: postSpkDataTimeseries
       parameters:
         - name: version-date
           in: query
@@ -3297,12 +3522,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/timeseries/{timeseries}:
+  /spk-data/timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete cwmsData timeseries with timeseries
-      operationId: deleteCwmsDataTimeseriesWithTimeseries
+      summary: Delete spkData timeseries with timeseries
+      operationId: deleteSpkDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -3395,9 +3620,9 @@ paths:
     patch:
       tags:
         - TimeSeries
-      summary: Patch cwmsData timeseries with timeseries
+      summary: Patch spkData timeseries with timeseries
       description: Update a TimeSeries with provided values
-      operationId: patchCwmsDataTimeseriesWithTimeseries
+      operationId: patchSpkDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -3514,12 +3739,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings/template/{template-id}:
+  /spk-data/ratings/template/{template-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template with templateId
-      operationId: getCwmsDataRatingsTemplateWithTemplateId
+      summary: Get spkData ratings template with templateId
+      operationId: getSpkDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -3576,9 +3801,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings template with templateId
+      summary: Delete spkData ratings template with templateId
       description: Deletes requested rating specification
-      operationId: deleteCwmsDataRatingsTemplateWithTemplateId
+      operationId: deleteSpkDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -3632,12 +3857,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings/template:
+  /spk-data/ratings/template:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template
-      operationId: getCwmsDataRatingsTemplate
+      summary: Get spkData ratings template
+      operationId: getSpkDataRatingsTemplate
       parameters:
         - name: office
           in: query
@@ -3701,9 +3926,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings template
+      summary: Post spkData ratings template
       description: Create new Rating Template
-      operationId: postCwmsDataRatingsTemplate
+      operationId: postSpkDataRatingsTemplate
       parameters:
         - name: fail-if-exists
           in: query
@@ -3750,12 +3975,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings/spec/{rating-id}:
+  /spk-data/ratings/spec/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec with ratingId
-      operationId: getCwmsDataRatingsSpecWithRatingId
+      summary: Get spkData ratings spec with ratingId
+      operationId: getSpkDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3810,9 +4035,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings spec with ratingId
+      summary: Delete spkData ratings spec with ratingId
       description: Deletes requested rating specification
-      operationId: deleteCwmsDataRatingsSpecWithRatingId
+      operationId: deleteSpkDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3866,12 +4091,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings/spec:
+  /spk-data/ratings/spec:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec
-      operationId: getCwmsDataRatingsSpec
+      summary: Get spkData ratings spec
+      operationId: getSpkDataRatingsSpec
       parameters:
         - name: office
           in: query
@@ -3935,9 +4160,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings spec
+      summary: Post spkData ratings spec
       description: Create new Rating Specification
-      operationId: postCwmsDataRatingsSpec
+      operationId: postSpkDataRatingsSpec
       parameters:
         - name: fail-if-exists
           in: query
@@ -3984,12 +4209,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings/metadata:
+  /spk-data/ratings/metadata:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings metadata
-      operationId: getCwmsDataRatingsMetadata
+      summary: Get spkData ratings metadata
+      operationId: getSpkDataRatingsMetadata
       parameters:
         - name: office
           in: query
@@ -4065,13 +4290,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/ratings/{rating-id}:
+  /spk-data/ratings/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings with ratingId
+      summary: Get spkData ratings with ratingId
       description: Returns CWMS Rating Data
-      operationId: getCwmsDataRatingsWithRatingId
+      operationId: getSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4149,8 +4374,8 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings with ratingId
-      operationId: deleteCwmsDataRatingsWithRatingId
+      summary: Delete spkData ratings with ratingId
+      operationId: deleteSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4218,9 +4443,9 @@ paths:
     patch:
       tags:
         - Ratings
-      summary: Patch cwmsData ratings with ratingId
+      summary: Patch spkData ratings with ratingId
       description: Update a RatingSet
-      operationId: patchCwmsDataRatingsWithRatingId
+      operationId: patchSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4275,12 +4500,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/ratings:
+  /spk-data/ratings:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings
-      operationId: getCwmsDataRatings
+      summary: Get spkData ratings
+      operationId: getSpkDataRatings
       parameters:
         - name: name
           in: query
@@ -4374,9 +4599,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings
+      summary: Post spkData ratings
       description: Create new RatingSet
-      operationId: postCwmsDataRatings
+      operationId: postSpkDataRatings
       parameters:
         - name: store-template
           in: query
@@ -4426,12 +4651,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/catalog/{dataset}:
+  /spk-data/catalog/{dataset}:
     get:
       tags:
         - Catalog
-      summary: Get cwmsData catalog with dataset
-      operationId: getCwmsDataCatalogWithDataset
+      summary: Get spkData catalog with dataset
+      operationId: getSpkDataCatalogWithDataset
       parameters:
         - name: dataset
           in: path
@@ -4531,13 +4756,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/basins/{basin-id}:
+  /spk-data/basins/{basin-id}:
     get:
       tags:
         - Basins
-      summary: Get cwmsData basins with basinId
+      summary: Get spkData basins with basinId
       description: Returns CWMS Basin Data
-      operationId: getCwmsDataBasinsWithBasinId
+      operationId: getSpkDataBasinsWithBasinId
       parameters:
         - name: basin-id
           in: path
@@ -4594,13 +4819,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /cwms-data/basins:
+  /spk-data/basins:
     get:
       tags:
         - Basins
-      summary: Get cwmsData basins
+      summary: Get spkData basins
       description: Returns CWMS Basin Data
-      operationId: getCwmsDataBasins
+      operationId: getSpkDataBasins
       parameters:
         - name: office
           in: query
@@ -4652,12 +4877,12 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /cwms-data/blobs/{blob-id}:
+  /spk-data/blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs with blobId
-      operationId: getCwmsDataBlobsWithBlobId
+      summary: Get spkData blobs with blobId
+      operationId: getSpkDataBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -4701,12 +4926,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/blobs:
+  /spk-data/blobs:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs
-      operationId: getCwmsDataBlobs
+      summary: Get spkData blobs
+      operationId: getSpkDataBlobs
       parameters:
         - name: office
           in: query
@@ -4773,9 +4998,9 @@ paths:
     post:
       tags:
         - Blob
-      summary: Post cwmsData blobs
+      summary: Post spkData blobs
       description: Create new Blob
-      operationId: postCwmsDataBlobs
+      operationId: postSpkDataBlobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -4825,12 +5050,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/clobs/{clob-id}:
+  /spk-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs with clobId
-      operationId: getCwmsDataClobsWithClobId
+      summary: Get spkData clobs with clobId
+      operationId: getSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -4891,9 +5116,9 @@ paths:
     delete:
       tags:
         - Clob
-      summary: Delete cwmsData clobs with clobId
+      summary: Delete spkData clobs with clobId
       description: Delete clob
-      operationId: deleteCwmsDataClobsWithClobId
+      operationId: deleteSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -4944,9 +5169,9 @@ paths:
     patch:
       tags:
         - Clob
-      summary: Patch cwmsData clobs with clobId
+      summary: Patch spkData clobs with clobId
       description: Update clob
-      operationId: patchCwmsDataClobsWithClobId
+      operationId: patchSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -5002,12 +5227,12 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/clobs:
+  /spk-data/clobs:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs
-      operationId: getCwmsDataClobs
+      summary: Get spkData clobs
+      operationId: getSpkDataClobs
       parameters:
         - name: office
           in: query
@@ -5079,9 +5304,9 @@ paths:
     post:
       tags:
         - Clob
-      summary: Post cwmsData clobs
+      summary: Post spkData clobs
       description: Create new Clob
-      operationId: postCwmsDataClobs
+      operationId: postSpkDataClobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -5131,13 +5356,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/pools/{pool-id}:
+  /spk-data/pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools with poolId
+      summary: Get spkData pools with poolId
       description: Retrieves requested Pool
-      operationId: getCwmsDataPoolsWithPoolId
+      operationId: getSpkDataPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -5217,13 +5442,13 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /cwms-data/pools:
+  /spk-data/pools:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools
+      summary: Get spkData pools
       description: Returns Pools Data
-      operationId: getCwmsDataPools
+      operationId: getSpkDataPools
       parameters:
         - name: office
           in: query
@@ -5311,12 +5536,12 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /cwms-data/specified-levels:
+  /spk-data/specified-levels:
     get:
       tags:
         - Levels
-      summary: Get cwmsData specifiedLevels
-      operationId: getCwmsDataSpecifiedLevels
+      summary: Get spkData specifiedLevels
+      operationId: getSpkDataSpecifiedLevels
       parameters:
         - name: office
           in: query
@@ -5369,9 +5594,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post cwmsData specifiedLevels
+      summary: Post spkData specifiedLevels
       description: Create new SpecifiedLevel
-      operationId: postCwmsDataSpecifiedLevels
+      operationId: postSpkDataSpecifiedLevels
       parameters:
         - name: fail-if-exists
           in: query
@@ -5418,13 +5643,13 @@ paths:
       security:
         - CwmsAAACacAuth: [ ]
         - ApiKey: [ ]
-  /cwms-data/specified-levels/{specified-level-id}:
+  /spk-data/specified-levels/{specified-level-id}:
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData specifiedLevels with specifiedLevelId
+      summary: Delete spkData specifiedLevels with specifiedLevelId
       description: Deletes requested specified level id
-      operationId: deleteCwmsDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: deleteSpkDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -5475,9 +5700,9 @@ paths:
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData specifiedLevels with specifiedLevelId
+      summary: Patch spkData specifiedLevels with specifiedLevelId
       description: Renames the requested specified level id
-      operationId: patchCwmsDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: patchSpkDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -5929,6 +6154,36 @@ components:
           readOnly: true
       xml:
         name: location-levels
+    StandardTextId:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+    StandardTextValue:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/StandardTextId'
+        standard-text:
+          type: string
+    StandardTextCatalog:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardTextValue'
+    DeleteMethod:
+      type: string
+      enum:
+        - DELETE_ALL
+        - DELETE_KEY
+        - DELETE_DATA
     TimeSeriesTextMode:
       type: string
       enum:
@@ -6013,14 +6268,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RegularTextTimeSeriesRow'
-        standard-text-values:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardTextTimeSeriesRow'
         standard-text-catalog:
           type: array
           items:
             $ref: '#/components/schemas/StandardCatalog'
+        standard-text-values:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardTextTimeSeriesRow'
     TimeSeriesCategory:
       required:
         - office-id
@@ -6078,12 +6333,6 @@ components:
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-    DeleteMethod:
-      type: string
-      enum:
-        - DELETE_ALL
-        - DELETE_KEY
-        - DELETE_DATA
     AssignedTimeSeries:
       type: object
       properties:
@@ -6160,6 +6409,9 @@ components:
             seconds:
               type: integer
               format: int64
+            nano:
+              type: integer
+              format: int32
             negative:
               type: boolean
             units:
@@ -6173,11 +6425,11 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      negative:
-                        type: boolean
                       nano:
                         type: integer
                         format: int32
+                      negative:
+                        type: boolean
                       zero:
                         type: boolean
                   durationEstimated:
@@ -6186,9 +6438,6 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
             zero:
               type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
@@ -7008,16 +7257,16 @@ components:
           type: string
         clobText:
           type: string
-        implicit:
-          type: boolean
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
         projectId:
           type: string
         bottomLevelId:
           type: string
         topLevelId:
           type: string
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
+        implicit:
+          type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
