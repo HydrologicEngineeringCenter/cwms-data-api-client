@@ -29,9 +29,13 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.StandardCatalog;
+import mil.army.usace.hec.cwms.radar.client.model.StandardCatalogEntry;
 import mil.army.usace.hec.cwms.radar.client.model.TextTimeSeries;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
@@ -50,8 +54,21 @@ public final class TextTimeSeriesController {
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TextTimeSeries.class);
+            resolveStandardText(retVal);
         }
         return retVal;
+    }
+
+    private void resolveStandardText(TextTimeSeries timeseries) {
+        List<StandardCatalog> officeCatalogs = timeseries.getStandardTextCatalog();
+        timeseries.getStandardTextValues()
+                .forEach(v -> officeCatalogs.stream()
+                        .filter(c -> Objects.equals(c.getOfficeId(), v.getOfficeId()))
+                        .flatMap(c -> c.getEntries().stream())
+                        .filter(e -> Objects.equals(e.getId(), v.getStandardTextId()))
+                        .findAny()
+                        .map(StandardCatalogEntry::getValue)
+                        .ifPresent(v::setTextValue));
     }
 
     public void storeTimeSeries(ApiConnectionInfo apiConnectionInfo, TextTimeSeriesEndpointInput.Post timeSeriesEndpointInput) throws IOException {
