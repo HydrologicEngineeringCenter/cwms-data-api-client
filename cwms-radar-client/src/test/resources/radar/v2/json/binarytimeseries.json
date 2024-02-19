@@ -1,0 +1,33 @@
+{
+  "office-id": "SWT",
+  "name": "TEST.Binary.Inst.1Hour.0.MockTest",
+  "interval-offset": 0,
+  "time-zone": "America/Los_Angeles",
+  "date-version-type": "MAX_AGGREGATE",
+  "version-date": 1707696000000,
+  "binary-values": [
+    {
+      "date-time": 1707696000000,
+      "data-entry-date": 1707696000000,
+      "media-type": "text/plain",
+      "filename": "filename.txt",
+      "dest-flag": 0,
+      "binary-value": [
+          72,
+          101,
+          108,
+          108,
+          111,
+          44,
+          32,
+          87,
+          111,
+          114,
+          108,
+          100
+      ],
+      "value-url": "HelloWorld.com",
+      "quality-code": 0
+    }
+  ]
+}

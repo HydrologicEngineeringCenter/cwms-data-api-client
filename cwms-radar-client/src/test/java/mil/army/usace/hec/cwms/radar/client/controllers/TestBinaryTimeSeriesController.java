@@ -24,10 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.DateVersionTypeEnum;
+import mil.army.usace.hec.cwms.radar.client.model.BinaryTimeSeries;
+import mil.army.usace.hec.cwms.radar.client.model.BinaryTimeSeriesRow;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.RegularTextTimeSeriesRow;
-import mil.army.usace.hec.cwms.radar.client.model.TextTimeSeries;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -40,60 +39,60 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestTextTimeSeriesController extends TestController {
+class TestBinaryTimeSeriesController extends TestController {
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
-        String collect = readJsonFile("radar/v2/json/texttimeseries.json");
+        String collect = readJsonFile("radar/v2/json/binarytimeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2024, 2, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2024, 2, 12, 2, 0, 0, 0, ZoneId.of("UTC")).toInstant();
-        TextTimeSeriesEndpointInput.GetAll input = TextTimeSeriesEndpointInput.getAll("TEST.Text.Inst.1Hour.0.MockTest", "SWT", start, end)
+        BinaryTimeSeriesEndpointInput.GetAll input = BinaryTimeSeriesEndpointInput.getAll("TEST.Binary.Inst.1Hour.0.MockTest", "SWT", start, end)
                 .page(null);
-        TextTimeSeries timeSeries = new TextTimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        BinaryTimeSeries timeSeries = new BinaryTimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
         assertEquals("SWT", timeSeries.getOfficeId());
-        assertEquals("TEST.Text.Inst.1Hour.0.MockTest", timeSeries.getName());
+        assertEquals("TEST.Binary.Inst.1Hour.0.MockTest", timeSeries.getName());
         assertEquals(0, timeSeries.getIntervalOffset());
-        assertEquals("UTC", timeSeries.getTimeZone());
-        assertEquals(DateVersionTypeEnum.MAX_AGGREGATE, timeSeries.getDateVersionType());
+        assertEquals("America/Los_Angeles", timeSeries.getTimeZone());
+        assertEquals("MAX_AGGREGATE", timeSeries.getDateVersionType().toString());
         assertEquals(start, timeSeries.getVersionDate());
-        List<RegularTextTimeSeriesRow> regularTextValues = timeSeries.getRegularTextValues();
-        assertEquals(2, regularTextValues.size());
-        RegularTextTimeSeriesRow regularRow = regularTextValues.get(0);
-        assertEquals(start, regularRow.getDateTime());
-        assertEquals(start, regularRow.getDataEntryDate());
-        assertEquals("Hello, Davis", regularRow.getTextValue());
-        assertEquals("filename.txt", regularRow.getFilename());
-        assertEquals("application/json", regularRow.getMediaType());
-        assertEquals(0, regularRow.getQualityCode());
-        assertEquals(1, regularRow.getDestFlag());
-        assertEquals("www.testHelloDavis.com", regularRow.getValueUrl());
+        List<BinaryTimeSeriesRow> regularBinaryValues = timeSeries.getBinaryValues();
+        assertEquals(1, regularBinaryValues.size());
+        BinaryTimeSeriesRow binaryRow = regularBinaryValues.get(0);
+        assertEquals(start, binaryRow.getDateTime());
+        assertEquals(start, binaryRow.getDataEntryDate());
+        assertArrayEquals("Hello, World".getBytes(), binaryRow.getBinaryValue());
+        assertEquals(0, binaryRow.getDestFlag());
+        assertEquals("text/plain", binaryRow.getMediaType());
+        assertEquals("filename.txt", binaryRow.getFilename());
+        assertEquals("HelloWorld.com", binaryRow.getValueUrl());
+        assertEquals(0, binaryRow.getQualityCode());
     }
 
     @Test
     void testStoreTimeSeries() throws IOException {
         Logger.getLogger("").setLevel(Level.ALL);
-        String collect = readJsonFile("radar/v2/json/texttimeseries.json");
+        String collect = readJsonFile("radar/v2/json/binarytimeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TextTimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TextTimeSeries.class);
-        TextTimeSeriesController timeSeriesController = new TextTimeSeriesController();
-        TextTimeSeriesEndpointInput.Post input = TextTimeSeriesEndpointInput.post(timeSeries);
+        BinaryTimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, BinaryTimeSeries.class);
+        BinaryTimeSeriesController timeSeriesController = new BinaryTimeSeriesController();
+        BinaryTimeSeriesEndpointInput.Post input = BinaryTimeSeriesEndpointInput.post(timeSeries);
         assertDoesNotThrow(() -> timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
     }
 
     @Test
     void testDeleteTimeSeries() throws IOException {
-        String collect = readJsonFile("radar/v2/json/texttimeseries.json");
+        String collect = readJsonFile("radar/v2/json/binarytimeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TextTimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TextTimeSeries.class);
+        BinaryTimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, BinaryTimeSeries.class);
         timeSeries.setName(timeSeries.getName() + (System.currentTimeMillis() % 100_000));
-        TextTimeSeriesController timeSeriesController = new TextTimeSeriesController();
-        timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TextTimeSeriesEndpointInput.post(timeSeries));
-        TextTimeSeriesEndpointInput.Delete input = TextTimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
+        BinaryTimeSeriesController timeSeriesController = new BinaryTimeSeriesController();
+        timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), BinaryTimeSeriesEndpointInput.post(timeSeries));
+        BinaryTimeSeriesEndpointInput.Delete input = BinaryTimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
         assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
     }
 }
