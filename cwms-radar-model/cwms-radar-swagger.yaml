@@ -3,13 +3,11 @@ info:
   title: CWMS Data API
   description: CWMS REST API for Data Retrieval
   version: '3.0'
-security:
-  - MultipleAccessManager: [ ]
 paths:
-  /swt-data:
+  /spk-data:
     get:
-      summary: Get swtData
-      operationId: getSwtData
+      summary: Get spkData
+      operationId: getSpkData
       responses:
         '400':
           description: Bad Request
@@ -42,13 +40,219 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/location/category/{category-id}:
+  /spk-data/auth/keys/{key-name}:
     get:
       tags:
-        - Location Categories-Beta
-      summary: Get swtData location category with categoryId
+        - Authorization
+      summary: Get spkData auth keys with keyName
+      description: View specific key
+      operationId: getSpkDataAuthKeysWithKeyName
+      parameters:
+        - name: key-name
+          in: path
+          description: 'Name of the specific key to get more information for. NOTE: Case-sensitive.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    delete:
+      tags:
+        - Authorization
+      summary: Delete spkData auth keys with keyName
+      description: Delete API key for a user
+      operationId: deleteSpkDataAuthKeysWithKeyName
+      parameters:
+        - name: key-name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/auth/keys:
+    get:
+      tags:
+        - Authorization
+      summary: Get spkData auth keys
+      description: View all keys for the current user
+      operationId: getSpkDataAuthKeys
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    post:
+      tags:
+        - Authorization
+      summary: Post spkData auth keys
+      description: Create a new API Key for user. The randomly generated key is returned to the caller. A provided key will be ignored.
+      operationId: postSpkDataAuthKeys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKey'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/location/category/{category-id}:
+    get:
+      tags:
+        - Location Categories
+      summary: Get spkData location category with categoryId
       description: Retrieves requested Location Category
-      operationId: getSwtDataLocationCategoryWithCategoryId
+      operationId: getSpkDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -102,10 +306,10 @@ paths:
       security: [ ]
     delete:
       tags:
-        - Location Categories-Beta
-      summary: Delete swtData location category with categoryId
+        - Location Categories
+      summary: Delete spkData location category with categoryId
       description: Deletes requested location category
-      operationId: deleteSwtDataLocationCategoryWithCategoryId
+      operationId: deleteSpkDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -156,15 +360,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/location/category:
+        - ApiKey: [ ]
+  /spk-data/location/category:
     get:
       tags:
-        - Location Categories-Beta
-      summary: Get swtData location category
+        - Location Categories
+      summary: Get spkData location category
       description: Returns CWMS Location Category Data
-      operationId: getSwtDataLocationCategory
+      operationId: getSpkDataLocationCategory
       parameters:
         - name: office
           in: query
@@ -213,10 +417,10 @@ paths:
       security: [ ]
     post:
       tags:
-        - Location Categories-Beta
-      summary: Post swtData location category
+        - Location Categories
+      summary: Post spkData location category
       description: Create new LocationCategory
-      operationId: postSwtDataLocationCategory
+      operationId: postSpkDataLocationCategory
       requestBody:
         content:
           application/json:
@@ -255,15 +459,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/location/group/{group-id}:
+        - ApiKey: [ ]
+  /spk-data/location/group/{group-id}:
     get:
       tags:
-        - Location Groups-Beta
-      summary: Get swtData location group with groupId
+        - Location Groups
+      summary: Get spkData location group with groupId
       description: Retrieves requested Location Group
-      operationId: getSwtDataLocationGroupWithGroupId
+      operationId: getSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -329,10 +533,10 @@ paths:
       security: [ ]
     delete:
       tags:
-        - Location Groups-Beta
-      summary: Delete swtData location group with groupId
+        - Location Groups
+      summary: Delete spkData location group with groupId
       description: Deletes requested location group
-      operationId: deleteSwtDataLocationGroupWithGroupId
+      operationId: deleteSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -389,14 +593,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
-        - Location Groups-Beta
-      summary: Patch swtData location group with groupId
+        - Location Groups
+      summary: Patch spkData location group with groupId
       description: Update existing LocationGroup
-      operationId: patchSwtDataLocationGroupWithGroupId
+      operationId: patchSpkDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -452,15 +656,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/location/group:
+        - ApiKey: [ ]
+  /spk-data/location/group:
     get:
       tags:
-        - Location Groups-Beta
-      summary: Get swtData location group
+        - Location Groups
+      summary: Get spkData location group
       description: Returns CWMS Location Groups Data
-      operationId: getSwtDataLocationGroup
+      operationId: getSpkDataLocationGroup
       parameters:
         - name: office
           in: query
@@ -472,12 +676,11 @@ paths:
           description: 'Include the assigned locations in the returned location groups. (default: false)'
           schema:
             type: boolean
-        - name: includeAssigned
+        - name: location-category-like
           in: query
-          description: Deprecated. Use include-assigned instead.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location category id
           schema:
-            type: boolean
+            type: string
       responses:
         '200':
           description: OK
@@ -525,10 +728,10 @@ paths:
       security: [ ]
     post:
       tags:
-        - Location Groups-Beta
-      summary: Post swtData location group
+        - Location Groups
+      summary: Post spkData location group
       description: Create new LocationGroup
-      operationId: postSwtDataLocationGroup
+      operationId: postSpkDataLocationGroup
       requestBody:
         content:
           application/json:
@@ -567,15 +770,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/locations/{location-id}:
+        - ApiKey: [ ]
+  /spk-data/locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get swtData locations with locationId
+      summary: Get spkData locations with locationId
       description: Returns CWMS Location Data
-      operationId: getSwtDataLocationsWithLocationId
+      operationId: getSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -637,9 +840,9 @@ paths:
     delete:
       tags:
         - Locations
-      summary: Delete swtData locations with locationId
+      summary: Delete spkData locations with locationId
       description: Delete CWMS Location
-      operationId: deleteSwtDataLocationsWithLocationId
+      operationId: deleteSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -683,14 +886,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - Locations
-      summary: Patch swtData locations with locationId
+      summary: Patch spkData locations with locationId
       description: Update CWMS Location
-      operationId: patchSwtDataLocationsWithLocationId
+      operationId: patchSpkDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -738,15 +941,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/locations:
+        - ApiKey: [ ]
+  /spk-data/locations:
     get:
       tags:
         - Locations
-      summary: Get swtData locations
+      summary: Get spkData locations
       description: Returns CWMS Location Data
-      operationId: getSwtDataLocations
+      operationId: getSpkDataLocations
       parameters:
         - name: names
           in: query
@@ -832,9 +1035,9 @@ paths:
     post:
       tags:
         - Locations
-      summary: Post swtData locations
+      summary: Post spkData locations
       description: Create new CWMS Location
-      operationId: postSwtDataLocations
+      operationId: postSpkDataLocations
       requestBody:
         content:
           application/json:
@@ -876,14 +1079,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/states:
+        - ApiKey: [ ]
+  /spk-data/states:
     get:
       tags:
         - States
-      summary: Get swtData states
-      operationId: getSwtDataStates
+      summary: Get spkData states
+      operationId: getSpkDataStates
       responses:
         '200':
           description: A list of states.
@@ -924,12 +1127,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /swt-data/counties:
+  /spk-data/counties:
     get:
       tags:
         - Counties
-      summary: Get swtData counties
-      operationId: getSwtDataCounties
+      summary: Get spkData counties
+      operationId: getSpkDataCounties
       responses:
         '200':
           description: A list of counties.
@@ -970,12 +1173,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /swt-data/offices/{office}:
+  /spk-data/offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get swtData offices with office
-      operationId: getSwtDataOfficesWithOffice
+      summary: Get spkData offices with office
+      operationId: getSpkDataOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -1044,12 +1247,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/offices:
+  /spk-data/offices:
     get:
       tags:
         - Offices
-      summary: Get swtData offices
-      operationId: getSwtDataOffices
+      summary: Get spkData offices
+      operationId: getSpkDataOffices
       parameters:
         - name: format
           in: query
@@ -1117,12 +1320,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/units:
+  /spk-data/units:
     get:
       tags:
         - Units
-      summary: Get swtData units
-      operationId: getSwtDataUnits
+      summary: Get spkData units
+      operationId: getSpkDataUnits
       parameters:
         - name: format
           in: query
@@ -1165,12 +1368,12 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /swt-data/parameters:
+  /spk-data/parameters:
     get:
       tags:
         - Parameters
-      summary: Get swtData parameters
-      operationId: getSwtDataParameters
+      summary: Get spkData parameters
+      operationId: getSpkDataParameters
       parameters:
         - name: format
           in: query
@@ -1211,12 +1414,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/timezones:
+  /spk-data/timezones:
     get:
       tags:
         - TimeZones
-      summary: Get swtData timezones
-      operationId: getSwtDataTimezones
+      summary: Get spkData timezones
+      operationId: getSpkDataTimezones
       parameters:
         - name: format
           in: query
@@ -1259,13 +1462,13 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /swt-data/levels/{level-id}:
+  /spk-data/levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get swtData levels with levelId
+      summary: Get spkData levels with levelId
       description: Retrieves requested Location Level
-      operationId: getSwtDataLevelsWithLevelId
+      operationId: getSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1279,16 +1482,20 @@ paths:
           required: true
           schema:
             type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
-          schema:
-            type: string
         - name: effective-date
           in: query
           description: Specifies the effective date of Location Level to be returned
           required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the effective date field (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: Desired unit for the values retrieved.
           schema:
             type: string
       responses:
@@ -1332,9 +1539,9 @@ paths:
     delete:
       tags:
         - Levels
-      summary: Delete swtData levels with levelId
+      summary: Delete spkData levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteSwtDataLevelsWithLevelId
+      operationId: deleteSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1351,15 +1558,14 @@ paths:
           description: Specifies the owning office of the location level whose data is to be deleted. If this field is not specified, matching location level information will be deleted from all offices.
           schema:
             type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
-          schema:
-            type: string
         - name: effective-date
           in: query
           description: Specifies the effective date of the level to be deleted. If not provided will delete all data and reference to the location level.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the value of the effective date field (unless otherwise specified).If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
       responses:
@@ -1394,25 +1600,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - Levels
-      summary: Patch swtData levels with levelId
+      summary: Patch spkData levels with levelId
       description: Update CWMS Location Level
-      operationId: patchSwtDataLevelsWithLevelId
+      operationId: patchSpkDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
           description: Specifies the location level id of the Location Level to be updated
           required: true
-          schema:
-            type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
           schema:
             type: string
         - name: effective-date
@@ -1461,21 +1661,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/levels:
+        - ApiKey: [ ]
+  /spk-data/levels:
     get:
       tags:
         - Levels
-      summary: Get swtData levels
-      operationId: getSwtDataLevels
+      summary: Get spkData levels
+      operationId: getSpkDataLevels
       parameters:
-        - name: name
-          in: query
-          description: 'Deprecated, use level-id-mask. '
-          deprecated: true
-          schema:
-            type: string
         - name: level-id-mask
           in: query
           description: Specifies the name(s) of the location level(s) whose data is to be included in the response. Uses * for all.
@@ -1574,9 +1768,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post swtData levels
+      summary: Post spkData levels
       description: Create new CWMS Location Level
-      operationId: postSwtDataLevels
+      operationId: postSpkDataLevels
       requestBody:
         content:
           application/json:
@@ -1618,12 +1812,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/levels/{level-id}/timeseries:
+        - ApiKey: [ ]
+  /spk-data/levels/{level-id}/timeseries:
     get:
-      summary: Get swtData levels with levelId timeseries
-      operationId: getSwtDataLevelsWithLevelIdTimeseries
+      summary: Get spkData levels with levelId timeseries
+      operationId: getSpkDataLevelsWithLevelIdTimeseries
       parameters:
         - name: level-id
           in: path
@@ -1662,10 +1856,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: [ ]
-  /swt-data/timeseries/recent/{group-id}:
+  /spk-data/timeseries/recent/{group-id}:
     get:
-      summary: Get swtData timeseries recent with groupId
-      operationId: getSwtDataTimeseriesRecentWithGroupId
+      summary: Get spkData timeseries recent with groupId
+      operationId: getSpkDataTimeseriesRecentWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -1704,13 +1898,310 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/timeseries/category/{category-id}:
+  /spk-data/timeseries/binary:
     get:
       tags:
-        - TimeSeries Categories-Beta
-      summary: Get swtData timeseries category with categoryId
+        - Binary-TimeSeries
+      summary: Get spkData timeseries binary
+      operationId: getSpkDataTimeseriesBinary
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Binary TimeSeries whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the id of the binary timeseries
+          required: true
+          schema:
+            type: string
+        - name: binary-type-mask
+          in: query
+          description: The data type pattern expressed as either an internet media type (e.g. 'image/*') or a file extension (e.g. '.*'). Use glob-style wildcard characters as shown above instead of sql-style wildcard characters for pattern matching. Default is:*
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window. If specified the binaries associated with all times from start to end (inclusive) is retrieved.
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, the maximum version date is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/BinaryTimeSeries'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Binary-TimeSeries
+      summary: Post spkData timeseries binary
+      description: Create new BinaryTimeSeries
+      operationId: postSpkDataTimeseriesBinary
+      parameters:
+        - name: replace-all
+          in: query
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/BinaryTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/timeseries/binary/{timeseries}:
+    delete:
+      tags:
+        - Binary-TimeSeries
+      summary: Delete spkData timeseries binary with timeseries
+      description: Deletes requested binary timeseries id
+      operationId: deleteSpkDataTimeseriesBinaryWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The time series identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: binary-type-mask
+          in: query
+          description: The data type pattern expressed as either an internet media type (e.g. 'image/*') or a file extension (e.g. '.*'). Use glob-style wildcard characters as shown above instead of sql-style wildcard characters for pattern matching. Default:*
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window. If specified the binaries associated with all times from start to end (inclusive) is deleted.
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, the minimum or maximum version date (depending on p_max_version) is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value to delete. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value to delete. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    patch:
+      tags:
+        - Binary-TimeSeries
+      summary: Patch spkData timeseries binary with timeseries
+      description: Updates a binary timeseries
+      operationId: patchSpkDataTimeseriesBinaryWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The id of the binary timeseries to be updated
+          required: true
+          schema:
+            type: string
+        - name: replace-all
+          in: query
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/BinaryTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/timeseries/category/{category-id}:
+    get:
+      tags:
+        - TimeSeries Categories
+      summary: Get spkData timeseries category with categoryId
       description: Retrieves requested timeseries category
-      operationId: getSwtDataTimeseriesCategoryWithCategoryId
+      operationId: getSpkDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -1766,10 +2257,10 @@ paths:
       security: [ ]
     delete:
       tags:
-        - TimeSeries Categories-Beta
-      summary: Delete swtData timeseries category with categoryId
+        - TimeSeries Categories
+      summary: Delete spkData timeseries category with categoryId
       description: Deletes requested time series category
-      operationId: deleteSwtDataTimeseriesCategoryWithCategoryId
+      operationId: deleteSpkDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -1820,15 +2311,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/category:
+        - ApiKey: [ ]
+  /spk-data/timeseries/category:
     get:
       tags:
-        - TimeSeries Categories-Beta
-      summary: Get swtData timeseries category
+        - TimeSeries Categories
+      summary: Get spkData timeseries category
       description: Returns CWMS timeseries category Data
-      operationId: getSwtDataTimeseriesCategory
+      operationId: getSpkDataTimeseriesCategory
       parameters:
         - name: office
           in: query
@@ -1879,10 +2370,10 @@ paths:
       security: [ ]
     post:
       tags:
-        - TimeSeries Categories-Beta
-      summary: Post swtData timeseries category
+        - TimeSeries Categories
+      summary: Post spkData timeseries category
       description: Create new TimeSeriesCategory
-      operationId: postSwtDataTimeseriesCategory
+      operationId: postSpkDataTimeseriesCategory
       parameters:
         - name: fail-if-exists
           in: query
@@ -1927,15 +2418,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/identifier-descriptor/{timeseries-id}:
+        - ApiKey: [ ]
+  /spk-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
-        - TimeSeries Identifier-Beta
-      summary: Get swtData timeseries identifierDescriptor with timeseriesId
+        - TimeSeries Identifier
+      summary: Get spkData timeseries identifierDescriptor with timeseriesId
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: getSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -1991,10 +2482,10 @@ paths:
       security: []
     delete:
       tags:
-        - TimeSeries Identifier-Beta
-      summary: Delete swtData timeseries identifierDescriptor with timeseriesId
+        - TimeSeries Identifier
+      summary: Delete spkData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
-      operationId: deleteSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -2046,13 +2537,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
-        - TimeSeries Identifier-Beta
-      summary: Patch swtData timeseries identifierDescriptor with timeseriesId
-      operationId: patchSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+        - TimeSeries Identifier
+      summary: Patch spkData timeseries identifierDescriptor with timeseriesId
+      operationId: patchSpkDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -2126,15 +2617,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/identifier-descriptor:
+        - ApiKey: [ ]
+  /spk-data/timeseries/identifier-descriptor:
     get:
       tags:
-        - TimeSeries Identifier-Beta
-      summary: Get swtData timeseries identifierDescriptor
+        - TimeSeries Identifier
+      summary: Get spkData timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
-      operationId: getSwtDataTimeseriesIdentifierDescriptor
+      operationId: getSpkDataTimeseriesIdentifierDescriptor
       parameters:
         - name: office
           in: query
@@ -2199,10 +2690,10 @@ paths:
       security: []
     post:
       tags:
-        - TimeSeries Identifier-Beta
-      summary: Post swtData timeseries identifierDescriptor
+        - TimeSeries Identifier
+      summary: Post spkData timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
-      operationId: postSwtDataTimeseriesIdentifierDescriptor
+      operationId: postSpkDataTimeseriesIdentifierDescriptor
       parameters:
         - name: fail-if-exists
           in: query
@@ -2250,15 +2741,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/group/{group-id}:
+        - ApiKey: [ ]
+  /spk-data/timeseries/group/{group-id}:
     get:
       tags:
         - Timeseries Groups
-      summary: Get swtData timeseries group with groupId
+      summary: Get spkData timeseries group with groupId
       description: Retrieves requested timeseries group
-      operationId: getSwtDataTimeseriesGroupWithGroupId
+      operationId: getSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2318,10 +2809,10 @@ paths:
       security: [ ]
     delete:
       tags:
-        - Timeseries Groups-Beta
-      summary: Delete swtData timeseries group with groupId
+        - Timeseries Groups
+      summary: Delete spkData timeseries group with groupId
       description: Deletes requested time series group
-      operationId: deleteSwtDataTimeseriesGroupWithGroupId
+      operationId: deleteSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2373,14 +2864,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
-        - Timeseries Groups-Beta
-      summary: Patch swtData timeseries group with groupId
+        - Timeseries Groups
+      summary: Patch spkData timeseries group with groupId
       description: Update existing TimeSeriesGroup
-      operationId: patchSwtDataTimeseriesGroupWithGroupId
+      operationId: patchSpkDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -2436,19 +2927,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/group:
+        - ApiKey: [ ]
+  /spk-data/timeseries/group:
     get:
       tags:
-        - Timeseries Groups-Beta
-      summary: Get swtData timeseries group
+        - Timeseries Groups
+      summary: Get spkData timeseries group
       description: Returns CWMS Timeseries Groups Data
-      operationId: getSwtDataTimeseriesGroup
+      operationId: getSpkDataTimeseriesGroup
       parameters:
         - name: office
           in: query
           description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
+          schema:
+            type: string
+        - name: include-assigned
+          in: query
+          description: 'Include the assigned timeseries in the returned timeseries groups. (default: true)'
+          schema:
+            type: boolean
+        - name: timeseries-category-like
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries category id
+          schema:
+            type: string
+        - name: timeseries-group-like
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries group id
           schema:
             type: string
       responses:
@@ -2495,10 +3001,10 @@ paths:
       security: [ ]
     post:
       tags:
-        - Timeseries Groups-Beta
-      summary: Post swtData timeseries group
+        - Timeseries Groups
+      summary: Post spkData timeseries group
       description: Create new TimeSeriesGroup
-      operationId: postSwtDataTimeseriesGroup
+      operationId: postSpkDataTimeseriesGroup
       parameters:
         - name: fail-if-exists
           in: query
@@ -2543,14 +3049,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries:
+        - ApiKey: [ ]
+  /spk-data/timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get swtData timeseries
-      operationId: getSwtDataTimeseries
+      summary: Get spkData timeseries
+      operationId: getSpkDataTimeseries
       parameters:
         - name: name
           in: query
@@ -2598,22 +3104,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 500.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Please use page-size instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -2672,9 +3165,9 @@ paths:
     post:
       tags:
         - TimeSeries
-      summary: Post swtData timeseries
-      description: Create new TimeSeries, will store any data provided
-      operationId: postSwtDataTimeseries
+      summary: Post spkData timeseries
+      description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
+      operationId: postSpkDataTimeseries
       parameters:
         - name: version-date
           in: query
@@ -2693,7 +3186,48 @@ paths:
             type: boolean
         - name: store-rule
           in: query
-          description: The business rule to use when merging the incoming with existing data
+          description: |-
+            The business rule to use when merging the incoming with existing data
+            <table  border="1" summary="">
+            <tr><td colspan=2>Store Rules</td></tr>
+            <tr>
+                <td>Delete Insert</td>
+                <td>All existing data in the time window will be deleted and then replaced with the new dataset.</td>
+            </tr>
+            <tr>
+                <td>Replace All</td>
+                <td>
+                    <ul>
+                        <li>When the new dataset's date/time exactly matches the date/time of an existing data value, the new data value will replace the existing data.</li>
+                    <li>When the new dataset's data/time does not match an existing data/time (i.e., a new data/time - data value pair) then an insert to the database will occur.</li>
+                        <li>When there's an existing "data/time - data value pair" without a corresponding date/time value pair, no change will happen to the existing date/time value pair.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Replace With Non Missing</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only non-missing value will replace the existing data value*.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Replace Missing Values Only</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only replace an existing data/time-value pair whose missing flag was set.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Do Not Replace</td>
+                <td>
+                    Only inserts new data values if an existing date/time-value pair does not already exist.
+                    Note: an existing date/time-value pair whose missing value quality bit is set will NOT be overwritten.
+                </td>
+            </tr>
+            </table>
           schema:
             $ref: '#/components/schemas/StoreRule'
         - name: override-protection
@@ -2742,14 +3276,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/timeseries/{timeseries}:
+        - ApiKey: [ ]
+  /spk-data/timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete swtData timeseries with timeseries
-      operationId: deleteSwtDataTimeseriesWithTimeseries
+      summary: Delete spkData timeseries with timeseries
+      operationId: deleteSpkDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -2837,14 +3371,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - TimeSeries
-      summary: Patch swtData timeseries with timeseries
+      summary: Patch spkData timeseries with timeseries
       description: Update a TimeSeries with provided values
-      operationId: patchSwtDataTimeseriesWithTimeseries
+      operationId: patchSpkDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -2869,7 +3403,48 @@ paths:
             type: boolean
         - name: store-rule
           in: query
-          description: The business rule to use when merging the incoming with existing data
+          description: |-
+            The business rule to use when merging the incoming with existing data
+            <table  border="1" summary="">
+            <tr><td colspan=2>Store Rules</td></tr>
+            <tr>
+                <td>Delete Insert</td>
+                <td>All existing data in the time window will be deleted and then replaced with the new dataset.</td>
+            </tr>
+            <tr>
+                <td>Replace All</td>
+                <td>
+                    <ul>
+                        <li>When the new dataset's date/time exactly matches the date/time of an existing data value, the new data value will replace the existing data.</li>
+                    <li>When the new dataset's data/time does not match an existing data/time (i.e., a new data/time - data value pair) then an insert to the database will occur.</li>
+                        <li>When there's an existing "data/time - data value pair" without a corresponding date/time value pair, no change will happen to the existing date/time value pair.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Replace With Non Missing</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only non-missing value will replace the existing data value*.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Replace Missing Values Only</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only replace an existing data/time-value pair whose missing flag was set.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Do Not Replace</td>
+                <td>
+                    Only inserts new data values if an existing date/time-value pair does not already exist.
+                    Note: an existing date/time-value pair whose missing value quality bit is set will NOT be overwritten.
+                </td>
+            </tr>
+            </table>
           schema:
             $ref: '#/components/schemas/StoreRule'
         - name: override-protection
@@ -2918,14 +3493,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings/template/{template-id}:
+        - ApiKey: [ ]
+  /spk-data/ratings/template/{template-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings template with templateId
-      operationId: getSwtDataRatingsTemplateWithTemplateId
+      summary: Get spkData ratings template with templateId
+      operationId: getSpkDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -2982,9 +3557,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings template with templateId
+      summary: Delete spkData ratings template with templateId
       description: Deletes requested rating specification
-      operationId: deleteSwtDataRatingsTemplateWithTemplateId
+      operationId: deleteSpkDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -3036,14 +3611,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings/template:
+        - ApiKey: [ ]
+  /spk-data/ratings/template:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings template
-      operationId: getSwtDataRatingsTemplate
+      summary: Get spkData ratings template
+      operationId: getSpkDataRatingsTemplate
       parameters:
         - name: office
           in: query
@@ -3107,9 +3682,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings template
+      summary: Post spkData ratings template
       description: Create new Rating Template
-      operationId: postSwtDataRatingsTemplate
+      operationId: postSpkDataRatingsTemplate
       parameters:
         - name: fail-if-exists
           in: query
@@ -3154,14 +3729,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings/spec/{rating-id}:
+        - ApiKey: [ ]
+  /spk-data/ratings/spec/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings spec with ratingId
-      operationId: getSwtDataRatingsSpecWithRatingId
+      summary: Get spkData ratings spec with ratingId
+      operationId: getSpkDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3216,9 +3791,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings spec with ratingId
+      summary: Delete spkData ratings spec with ratingId
       description: Deletes requested rating specification
-      operationId: deleteSwtDataRatingsSpecWithRatingId
+      operationId: deleteSpkDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3270,14 +3845,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings/spec:
+        - ApiKey: [ ]
+  /spk-data/ratings/spec:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings spec
-      operationId: getSwtDataRatingsSpec
+      summary: Get spkData ratings spec
+      operationId: getSpkDataRatingsSpec
       parameters:
         - name: office
           in: query
@@ -3286,7 +3861,7 @@ paths:
             type: string
         - name: rating-id-mask
           in: query
-          description: RegExp that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
+          description: Posix <a href="regexp.html">regular expression</a>  that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
           schema:
             type: string
         - name: page
@@ -3341,9 +3916,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings spec
+      summary: Post spkData ratings spec
       description: Create new Rating Specification
-      operationId: postSwtDataRatingsSpec
+      operationId: postSpkDataRatingsSpec
       parameters:
         - name: fail-if-exists
           in: query
@@ -3388,14 +3963,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings/metadata:
+        - ApiKey: [ ]
+  /spk-data/ratings/metadata:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings metadata
-      operationId: getSwtDataRatingsMetadata
+      summary: Get spkData ratings metadata
+      operationId: getSpkDataRatingsMetadata
       parameters:
         - name: office
           in: query
@@ -3471,13 +4046,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/ratings/{rating-id}:
+  /spk-data/ratings/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings with ratingId
+      summary: Get spkData ratings with ratingId
       description: Returns CWMS Rating Data
-      operationId: getSwtDataRatingsWithRatingId
+      operationId: getSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3555,8 +4130,8 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings with ratingId
-      operationId: deleteSwtDataRatingsWithRatingId
+      summary: Delete spkData ratings with ratingId
+      operationId: deleteSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3619,14 +4194,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - Ratings
-      summary: Patch swtData ratings with ratingId
+      summary: Patch spkData ratings with ratingId
       description: Update a RatingSet
-      operationId: patchSwtDataRatingsWithRatingId
+      operationId: patchSpkDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -3679,14 +4254,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/ratings:
+        - ApiKey: [ ]
+  /spk-data/ratings:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings
-      operationId: getSwtDataRatings
+      summary: Get spkData ratings
+      operationId: getSpkDataRatings
       parameters:
         - name: name
           in: query
@@ -3780,9 +4355,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings
+      summary: Post spkData ratings
       description: Create new RatingSet
-      operationId: postSwtDataRatings
+      operationId: postSpkDataRatings
       parameters:
         - name: store-template
           in: query
@@ -3830,14 +4405,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/catalog/{dataset}:
+        - ApiKey: [ ]
+  /spk-data/catalog/{dataset}:
     get:
       tags:
-        - Catalog-Beta
-      summary: Get swtData catalog with dataset
-      operationId: getSwtDataCatalogWithDataset
+        - Catalog
+      summary: Get spkData catalog with dataset
+      operationId: getSpkDataCatalogWithDataset
       parameters:
         - name: dataset
           in: path
@@ -3850,31 +4425,12 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entires per page returned. Default 500.
           schema:
             type: integer
             format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Use page-size.
-          deprecated: true
-          schema:
-            type: integer
-            format: int32
-        - name: unitSystem
-          in: query
-          description: Deprecated. Use unit-system.
-          deprecated: true
-          schema:
-            $ref: '#/components/schemas/UnitSystem'
         - name: unit-system
           in: query
           description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
@@ -3887,51 +4443,32 @@ paths:
             type: string
         - name: like
           in: query
-          description: Posix regular expression matching against the id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the id
           schema:
             type: string
         - name: timeseries-category-like
           in: query
-          description: Posix regular expression matching against the timeseries category id
-          schema:
-            type: string
-        - name: timeseriesCategoryLike
-          in: query
-          description: Deprecated. Use timeseries-category-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries category id
           schema:
             type: string
         - name: timeseries-group-like
           in: query
-          description: Posix regular expression matching against the timeseries group id
-          schema:
-            type: string
-        - name: timeseriesGroupLike
-          in: query
-          description: Deprecated. Use timeseries-group-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries group id
           schema:
             type: string
         - name: location-category-like
           in: query
-          description: Posix regular expression matching against the location category id
-          schema:
-            type: string
-        - name: locationCategoryLike
-          in: query
-          description: Deprecated. Use location-category-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location category id
           schema:
             type: string
         - name: location-group-like
           in: query
-          description: Posix regular expression matching against the location group id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location group id
           schema:
             type: string
-        - name: locationGroupLike
+        - name: bounding-office-like
           in: query
-          description: Deprecated. Use location-group-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location bounding office. When this field is used items with no bounding office set will not be present in results.
           schema:
             type: string
       responses:
@@ -3975,13 +4512,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/basins/{basin-id}:
+  /spk-data/basins/{basin-id}:
     get:
       tags:
-        - Basins-Beta
-      summary: Get swtData basins with basinId
+        - Basins
+      summary: Get spkData basins with basinId
       description: Returns CWMS Basin Data
-      operationId: getSwtDataBasinsWithBasinId
+      operationId: getSpkDataBasinsWithBasinId
       parameters:
         - name: basin-id
           in: path
@@ -4038,13 +4575,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /swt-data/basins:
+  /spk-data/basins:
     get:
       tags:
-        - Basins-Beta
-      summary: Get swtData basins
+        - Basins
+      summary: Get spkData basins
       description: Returns CWMS Basin Data
-      operationId: getSwtDataBasins
+      operationId: getSpkDataBasins
       parameters:
         - name: office
           in: query
@@ -4096,12 +4633,12 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /swt-data/blobs/{blob-id}:
+  /spk-data/blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get swtData blobs with blobId
-      operationId: getSwtDataBlobsWithBlobId
+      summary: Get spkData blobs with blobId
+      operationId: getSpkDataBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -4145,12 +4682,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/blobs:
+  /spk-data/blobs:
     get:
       tags:
         - Blob
-      summary: Get swtData blobs
-      operationId: getSwtDataBlobs
+      summary: Get spkData blobs
+      operationId: getSpkDataBlobs
       parameters:
         - name: office
           in: query
@@ -4162,19 +4699,6 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: Deprecated.  Use page-size instead.
-          deprecated: true
-          schema:
-            type: integer
-            format: int32
         - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
@@ -4183,7 +4707,7 @@ paths:
             format: int32
         - name: like
           in: query
-          description: Posix regular expression describing the blob id's you want
+          description: Posix <a href="regexp.html">regular expression</a> describing the blob id's you want
           schema:
             type: string
       responses:
@@ -4227,12 +4751,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/clobs/{clob-id}:
+    post:
+      tags:
+        - Blob
+      summary: Post spkData blobs
+      description: Create new Blob
+      operationId: postSpkDataBlobs
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /spk-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get swtData clobs with clobId
-      operationId: getSwtDataClobsWithClobId
+      summary: Get spkData clobs with clobId
+      description: Get a single clob.  If the accept header is set to text/plain, the raw value is returned as the response body. Responses to text/plain requests are streamed and support the Range header.  When the accept header is set to application/json;version=2 the clob will be returned as a serialized Clob object with fields for office-id, id, description and value.
+      operationId: getSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -4244,6 +4824,11 @@ paths:
           description: Specifies the owning office.
           schema:
             type: string
+        - name: clob-id
+          in: query
+          description: 'If this _query_ parameter is provided the id _path_ parameter is ignored and the value of the query parameter is used.   Note: this query parameter is necessary for id''s that contain ''/'' or other special characters.  Because of abuse even properly escaped ''/'' in url paths are blocked.  When using this query parameter a valid path parameter must still be provided for the request to be properly routed.  If your clob id contains ''/'' you can''t specify the clob-id query parameter and also specify the id path parameter because firewall and/or server rules will deny the request even though you are specifying this override. "ignored" is suggested.'
+          schema:
+            type: string
       responses:
         '200':
           description: Returns requested clob.
@@ -4251,6 +4836,9 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Clob'
+            text/plain:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -4285,9 +4873,9 @@ paths:
     delete:
       tags:
         - Clob
-      summary: Delete swtData clobs with clobId
+      summary: Delete spkData clobs with clobId
       description: Delete clob
-      operationId: deleteSwtDataClobsWithClobId
+      operationId: deleteSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -4333,14 +4921,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - Clob
-      summary: Patch swtData clobs with clobId
+      summary: Patch spkData clobs with clobId
       description: Update clob
-      operationId: patchSwtDataClobsWithClobId
+      operationId: patchSpkDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -4394,14 +4982,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/clobs:
+        - ApiKey: [ ]
+  /spk-data/clobs:
     get:
       tags:
         - Clob
-      summary: Get swtData clobs
-      operationId: getSwtDataClobs
+      summary: Get spkData clobs
+      operationId: getSpkDataClobs
       parameters:
         - name: office
           in: query
@@ -4413,22 +5001,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated, use 'page-size' instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -4437,15 +5012,9 @@ paths:
           description: 'Do you want the value associated with this particular clob (default: false)'
           schema:
             type: boolean
-        - name: includeValues
-          in: query
-          description: Deprecated, use 'include-values' instead.
-          deprecated: true
-          schema:
-            type: boolean
         - name: like
           in: query
-          description: Posix regular expression matching against the id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the id
           schema:
             type: string
       responses:
@@ -4492,9 +5061,9 @@ paths:
     post:
       tags:
         - Clob
-      summary: Post swtData clobs
+      summary: Post spkData clobs
       description: Create new Clob
-      operationId: postSwtDataClobs
+      operationId: postSpkDataClobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -4542,15 +5111,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/pools/{pool-id}:
+        - ApiKey: [ ]
+  /spk-data/pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get swtData pools with poolId
+      summary: Get spkData pools with poolId
       description: Retrieves requested Pool
-      operationId: getSwtDataPoolsWithPoolId
+      operationId: getSpkDataPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -4630,13 +5199,13 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /swt-data/pools:
+  /spk-data/pools:
     get:
       tags:
         - Pools
-      summary: Get swtData pools
+      summary: Get spkData pools
       description: Returns Pools Data
-      operationId: getSwtDataPools
+      operationId: getSpkDataPools
       parameters:
         - name: office
           in: query
@@ -4678,22 +5247,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 100.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Use 'page-size' instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -4737,12 +5293,12 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /swt-data/specified-levels:
+  /spk-data/specified-levels:
     get:
       tags:
         - Levels
-      summary: Get swtData specifiedLevels
-      operationId: getSwtDataSpecifiedLevels
+      summary: Get spkData specifiedLevels
+      operationId: getSpkDataSpecifiedLevels
       parameters:
         - name: office
           in: query
@@ -4795,9 +5351,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post swtData specifiedLevels
+      summary: Post spkData specifiedLevels
       description: Create new SpecifiedLevel
-      operationId: postSwtDataSpecifiedLevels
+      operationId: postSpkDataSpecifiedLevels
       parameters:
         - name: fail-if-exists
           in: query
@@ -4842,15 +5398,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
-  /swt-data/specified-levels/{specified-level-id}:
+        - ApiKey: [ ]
+  /spk-data/specified-levels/{specified-level-id}:
     delete:
       tags:
         - Levels
-      summary: Delete swtData specifiedLevels with specifiedLevelId
+      summary: Delete spkData specifiedLevels with specifiedLevelId
       description: Deletes requested specified level id
-      operationId: deleteSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: deleteSpkDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -4896,14 +5452,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
     patch:
       tags:
         - Levels
-      summary: Patch swtData specifiedLevels with specifiedLevelId
+      summary: Patch spkData specifiedLevels with specifiedLevelId
       description: Renames the requested specified level id
-      operationId: patchSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: patchSpkDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -4954,8 +5510,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
         - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
 components:
   schemas:
     CdaError:
@@ -4970,6 +5526,27 @@ components:
           type: object
           additionalProperties:
             type: object
+    ApiKey:
+      required:
+        - key-name
+        - user-id
+      type: object
+      properties:
+        user-id:
+          type: string
+        key-name:
+          type: string
+        api-key:
+          type: string
+        created:
+          type: string
+          description: The instant this Key was created, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        expires:
+          type: string
+          description: When this key expires, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
     LocationCategory:
       required:
         - office-id
@@ -5254,7 +5831,7 @@ components:
           format: double
         level-units-id:
           type: string
-          description: Units thhe provided levels are in
+          description: Units the provided levels are in
         level-date:
           type: string
           description: The date/time at which this location level configuration takes effect.
@@ -5334,6 +5911,51 @@ components:
           readOnly: true
       xml:
         name: location-levels
+    BinaryTimeSeries:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        interval-offset:
+          type: integer
+          format: int64
+        time-zone:
+          type: string
+        binary-values:
+          type: array
+          items:
+            $ref: '#/components/schemas/BinaryTimeSeriesRow'
+    BinaryTimeSeriesRow:
+      type: object
+      properties:
+        date-time:
+          type: string
+          format: date-time
+        version-date:
+          type: string
+          format: date-time
+        data-entry-date:
+          type: string
+          format: date-time
+        binary-id:
+          type: string
+        attribute:
+          type: integer
+          format: int64
+        media-type:
+          type: string
+        file-extension:
+          type: string
+        binary-value:
+          type: array
+          items:
+            type: string
+            format: byte
     TimeSeriesCategory:
       required:
         - office-id
@@ -5400,6 +6022,8 @@ components:
     AssignedTimeSeries:
       type: object
       properties:
+        officeId:
+          type: string
         timeseriesId:
           type: string
         tsCode:
@@ -5471,6 +6095,13 @@ components:
             seconds:
               type: integer
               format: int64
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            zero:
+              type: boolean
             units:
               type: array
               items:
@@ -5485,9 +6116,9 @@ components:
                       nano:
                         type: integer
                         format: int32
-                      zero:
-                        type: boolean
                       negative:
+                        type: boolean
+                      zero:
                         type: boolean
                   durationEstimated:
                     type: boolean
@@ -5495,13 +6126,6 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
-            zero:
-              type: boolean
-            negative:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -5630,11 +6254,11 @@ components:
     StoreRule:
       type: string
       enum:
-        - REPLACE_ALL
-        - DO_NOT_REPLACE
-        - REPLACE_MISSING_VALUES_ONLY
-        - REPLACE_WITH_NON_MISSING
-        - DELETE_INSERT
+        - REPLACE ALL
+        - DO NOT REPLACE
+        - REPLACE MISSING VALUES ONLY
+        - REPLACE WITH NON MISSING
+        - DELETE INSERT
     ParameterSpec:
       type: object
       properties:
@@ -5958,8 +6582,6 @@ components:
           type: string
           xml:
             attribute: true
-        cursor:
-          type: string
       xml:
         name: entry
       oneOf:
@@ -6038,8 +6660,6 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/LocationAlias'
-        cursor:
-          type: string
       xml:
         name: entry
     TimeSeriesExtents:
@@ -6096,8 +6716,6 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/TimeSeriesExtents'
-        cursor:
-          type: string
       xml:
         name: entry
     Basin:
@@ -6239,7 +6857,6 @@ components:
           items:
             type: string
             format: byte
-      description: List of retrieved blobs
     Blobs:
       type: object
       properties:
@@ -6326,23 +6943,23 @@ components:
           type: string
         clobText:
           type: string
-        bottomLevelId:
-          type: string
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
         topLevelId:
+          type: string
+        bottomLevelId:
           type: string
         projectId:
           type: string
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
         implicit:
           type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     Pools:
       type: object
@@ -6387,12 +7004,13 @@ components:
         description:
           type: string
   securitySchemes:
-    ApiKey:
-      type: apiKey
-      name: Authorization
-      in: header
     CwmsAAACacAuth:
       type: apiKey
       description: Auth handler running on same tomcat instance as the data api.
       name: JSESSIONIDSSO
       in: cookie
+    ApiKey:
+      type: apiKey
+      description: 'Key value as generated from the /auth/keys endpoint. NOTE: you MUST manually prefix your key with ''apikey '' (without the single quotes).'
+      name: Authorization
+      in: header
