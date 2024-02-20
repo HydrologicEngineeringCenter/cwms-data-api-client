@@ -69,8 +69,8 @@ public final class BinaryTimeSeriesEndpointInput {
         private Integer pageSize;
         private Instant end;
         private String binaryTypeMask = "*";
-        private Number minAttribute;
-        private Number maxAttribute;
+        private Long minAttribute;
+        private Long maxAttribute;
 
         private GetAll(String timeSeriesId) {
             this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries GET endpoint without a time series identifier");
@@ -101,12 +101,12 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
-        public GetAll minAttribute(Number minAttribute) {
+        public GetAll minAttribute(Long minAttribute) {
             this.minAttribute = minAttribute;
             return this;
         }
 
-        public GetAll maxAttribute(Number maxAttribute) {
+        public GetAll maxAttribute(Long maxAttribute) {
             this.maxAttribute = maxAttribute;
             return this;
         }
@@ -172,8 +172,8 @@ public final class BinaryTimeSeriesEndpointInput {
         private final String officeId;
         private Instant begin;
         private Instant end;
-        private Number minAttribute;
-        private Number maxAttribute;
+        private Long minAttribute;
+        private Long maxAttribute;
         private String binaryTypeMask = "*";
 
         private Delete(String timeSeriesId, String officeId) {
@@ -195,12 +195,12 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
-        public Delete minAttribute(Number minAttribute) {
+        public Delete minAttribute(Long minAttribute) {
             this.minAttribute = minAttribute;
             return this;
         }
 
-        public Delete maxAttribute(Number maxAttribute) {
+        public Delete maxAttribute(Long maxAttribute) {
             this.maxAttribute = maxAttribute;
             return this;
         }

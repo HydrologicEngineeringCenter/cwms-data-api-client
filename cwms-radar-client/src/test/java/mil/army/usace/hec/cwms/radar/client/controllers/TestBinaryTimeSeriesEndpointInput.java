@@ -54,8 +54,8 @@ class TestBinaryTimeSeriesEndpointInput {
                 .end(end)
                 .pageSize(10)
                 .page("page")
-                .maxAttribute(1000)
-                .minAttribute(-50.0);
+                .maxAttribute(1000L)
+                .minAttribute(-50L);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
@@ -64,7 +64,7 @@ class TestBinaryTimeSeriesEndpointInput {
         assertEquals("page", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
         assertEquals("arbu.Binary.Inst.1Hour.0.Ccp-Rev", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
         assertEquals("1000", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.MAX_ATTRIBUTE_QUERY_PARAMETER));
-        assertEquals("-50.0", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.MIN_ATTRIBUTE_QUERY_PARAMETER));
+        assertEquals("-50", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.MIN_ATTRIBUTE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -124,15 +124,15 @@ class TestBinaryTimeSeriesEndpointInput {
         BinaryTimeSeriesEndpointInput.Delete input = BinaryTimeSeriesEndpointInput.delete("arbu.Binary.Inst.1Hour.0.Ccp-Rev", "SWT")
                 .begin(start)
                 .end(end)
-                .minAttribute(-100)
-                .maxAttribute(90.09)
+                .minAttribute(-100L)
+                .maxAttribute(90L)
                 .binaryTypeMask("Hello, World");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_PARAMETER_QUERY));
         assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_PARAMETER_QUERY));
         assertEquals("-100", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.MIN_ATTRIBUTE_QUERY_PARAMETER));
-        assertEquals("90.09", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.MAX_ATTRIBUTE_QUERY_PARAMETER));
+        assertEquals("90", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.MAX_ATTRIBUTE_QUERY_PARAMETER));
         assertEquals("Hello, World", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.BINARY_TYPE_MASK_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
