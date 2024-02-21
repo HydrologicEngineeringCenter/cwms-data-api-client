@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,11 +52,6 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
 
     @Override
     public MockHttpRequestBuilder addEndpointInput(EndpointInput endpointInput) {
-        return this;
-    }
-
-    @Override
-    public HttpRequestBuilder enableHttp2() {
         return this;
     }
 
