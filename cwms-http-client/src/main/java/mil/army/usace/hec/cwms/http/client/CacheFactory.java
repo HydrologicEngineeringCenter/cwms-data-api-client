@@ -2,7 +2,7 @@ package mil.army.usace.hec.cwms.http.client;
 
 import okhttp3.Cache;
 
-public class CacheFactory {
+public final class CacheFactory {
 
 	private CacheFactory() {
 		throw new AssertionError("Utility class");
