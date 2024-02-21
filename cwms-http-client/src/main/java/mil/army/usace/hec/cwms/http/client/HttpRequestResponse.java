@@ -24,6 +24,8 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import okhttp3.ResponseBody;
+
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
@@ -38,16 +40,22 @@ public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
     private final Set<HttpCookie> cookies;
+    private final boolean usedCache;
     private final Headers headers;
 
-    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers) {
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache) {
         this.body = body;
         this.cookies = cookies;
+        this.usedCache = usedCache;
         this.headers = headers;
     }
 
     public String getBody() throws IOException {
         return body.string();
+    }
+
+    public boolean usedCache() {
+        return usedCache;
     }
 
     public InputStream getStream() {

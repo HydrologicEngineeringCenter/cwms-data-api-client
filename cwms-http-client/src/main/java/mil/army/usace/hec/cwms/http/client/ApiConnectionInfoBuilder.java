@@ -24,15 +24,16 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.net.ssl.HostnameVerifier;
+
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
+
 import okhttp3.Authenticator;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
-
-import javax.net.ssl.HostnameVerifier;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApiConnectionInfoBuilder {
 
@@ -44,6 +45,7 @@ public class ApiConnectionInfoBuilder {
     private CookieAuthenticator cookieAuthenticator;
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
     private HostnameVerifier hostnameVerifier;
+    private CacheFactory.CacheSupplier cacheSupplier = CacheFactory.okHttpCacheSupplier();
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -79,6 +81,11 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
+    public ApiConnectionInfoBuilder withCacheSupplier(CacheFactory.CacheSupplier supplier) {
+        this.cacheSupplier = supplier;
+        return this;
+    }
+
     public ApiConnectionInfo build() {
         CookieJar cookieJar = null;
         if (cookieJarSupplier != null) {
@@ -109,6 +116,9 @@ public class ApiConnectionInfoBuilder {
             }
             authenticator = cookieAuthenticator;
         }
-        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, hostnameVerifier);
+
+
+        return new ApiConnectionInfo(apiRoot, sslSocketData, cookieJar, interceptors, authenticator, hostnameVerifier,
+                cacheSupplier);
     }
 }

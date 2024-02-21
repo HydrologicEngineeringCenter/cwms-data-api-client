@@ -24,13 +24,12 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.List;
+import java.util.Optional;
+import javax.net.ssl.HostnameVerifier;
 import okhttp3.Authenticator;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
-
-import javax.net.ssl.HostnameVerifier;
-import java.util.List;
-import java.util.Optional;
 
 public final class ApiConnectionInfo {
 
@@ -39,17 +38,20 @@ public final class ApiConnectionInfo {
     private final CookieJar cookieJar;
     private final List<Interceptor> interceptors;
     private final Authenticator authenticator;
+    private final CacheFactory.CacheSupplier cacheSupplier;
     private final HostnameVerifier hostnameVerifier;
 
     ApiConnectionInfo(String apiRoot, SslSocketData sslSocketData, CookieJar cookieJar,
-                      List<Interceptor> interceptors, Authenticator authenticator, HostnameVerifier hostnameVerifier) {
+                      List<Interceptor> interceptors, Authenticator authenticator, HostnameVerifier hostnameVerifier, CacheFactory.CacheSupplier cache) {
         this.apiRoot = apiRoot;
         this.sslSocketData = sslSocketData;
         this.interceptors = interceptors;
         this.authenticator = authenticator;
         this.cookieJar = cookieJar;
+        this.cacheSupplier = cache;
         this.hostnameVerifier = hostnameVerifier;
     }
+
 
     public String getApiRoot() {
         return apiRoot;
@@ -74,4 +76,9 @@ public final class ApiConnectionInfo {
     Optional<HostnameVerifier> hostnameVerifier() {
         return Optional.ofNullable(hostnameVerifier);
     }
+
+    Optional<CacheFactory.CacheSupplier> cacheSupplier() {
+        return Optional.ofNullable(cacheSupplier);
+    }
+
 }

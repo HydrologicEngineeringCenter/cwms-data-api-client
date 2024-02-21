@@ -80,7 +80,7 @@ class SimpleAuthHeaderAuthenticatorTest {
             SimpleAuthKeyProvider tokenProvider = () -> "Bearer " + ACCESS_TOKEN;
             SimpleAuthHeaderAuthenticator authenticator = new SimpleAuthHeaderAuthenticator(tokenProvider);
             assertThrows(UnauthorizedException.class, () -> new HttpRequestBuilderImpl(new ApiConnectionInfo(String.format("http://localhost:%s", mockWebServer.getPort()), null,
-                    null, new ArrayList<>(), authenticator, null))
+                    null, new ArrayList<>(), authenticator, null, CacheFactory.okHttpCacheSupplier()))
                     .post()
                     .withBody("")
                     .withMediaType("application/json")

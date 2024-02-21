@@ -24,6 +24,20 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.Security;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+import javax.net.ssl.SSLHandshakeException;
+
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
@@ -223,8 +237,9 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                             .stream()
                             .map(OkHttpCookieWrapper::new)
                             .collect(toSet());
-                    Headers headers = execute.headers();
-                    retVal = new HttpRequestResponse(responseBody, cookies, headers);
+                    boolean usedCache = execute.cacheResponse() != null;
+	                Headers headers = execute.headers();
+                    retVal = new HttpRequestResponse(responseBody, cookies, headers, usedCache);
                 } else {
                     handleExecutionError(execute, request);
                 }

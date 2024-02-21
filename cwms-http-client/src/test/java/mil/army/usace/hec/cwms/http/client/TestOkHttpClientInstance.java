@@ -44,9 +44,15 @@ class TestOkHttpClientInstance {
         Arrays.stream(Logger.getLogger(OkHttpClientInstance.class.getName()).getHandlers())
                 .forEach(h -> h.setLevel(Level.FINEST));
         Logger.getLogger(OkHttpClientInstance.class.getName()).setLevel(Level.FINEST);
+        Field cacheField = CwmsHttpCache.class.getDeclaredField("INSTANCE");
+        cacheField.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
+        cacheField.set(null, new CwmsHttpCache.Builder().build());
         Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
         field.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
         field.set(null, OkHttpClientInstance.createClient());
@@ -70,6 +76,10 @@ class TestOkHttpClientInstance {
         System.setProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY, sixSeconds.toString());
         System.setProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY, sevenSeconds.toString());
         System.setProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY, eightSeconds.toString());
+        System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString());
+        int mbMultiplicativeFactor = (1024 * 1024);
+        int sizeInBytes = 124 * mbMultiplicativeFactor;
+        System.setProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY, String.valueOf(sizeInBytes));
         resetSingleton();
         try {
             OkHttpClient instance = OkHttpClientInstance.getInstance();
@@ -77,11 +87,15 @@ class TestOkHttpClientInstance {
             assertEquals(sixSeconds.toMillis(), instance.callTimeoutMillis());
             assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
             assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
+            assertEquals(sizeInBytes, instance.cache().maxSize());
+            assertEquals(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString(), instance.cache().directory().toString());
         } finally {
             System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY);
             System.clearProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY);
+            System.clearProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY);
+            System.clearProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY);
             resetSingleton();
         }
 

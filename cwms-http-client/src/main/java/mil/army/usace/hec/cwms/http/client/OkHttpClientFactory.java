@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -55,6 +56,16 @@ final class OkHttpClientFactory {
         if (hostnameVerifier.isPresent()) {
             builder.hostnameVerifier(hostnameVerifier.get());
         }
-        return builder.cookieJar(cookieJar).build();
+        builder = builder.cookieJar(cookieJar);
+
+        Cache okCache = null;
+        Optional<CacheFactory.CacheSupplier> optionalCacheSupplier = apiConnectionInfo.cacheSupplier();
+        if(optionalCacheSupplier.isPresent()) {
+            CacheFactory.CacheSupplier cacheSupplier = optionalCacheSupplier.get();
+            okCache = cacheSupplier.getCache();
+        }
+        builder.cache(okCache);
+
+        return builder.build();
     }
 }
