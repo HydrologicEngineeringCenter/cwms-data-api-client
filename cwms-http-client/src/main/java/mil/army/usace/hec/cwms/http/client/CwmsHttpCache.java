@@ -1,15 +1,13 @@
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
-import mil.army.usace.hec.cwms.http.client.cache.OkHttpCacheSupplier;
-import okhttp3.Cache;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class CwmsHttpCache implements CacheSupplier, OkHttpCacheSupplier {
+import okhttp3.Cache;
+
+public class CwmsHttpCache {
     static final String CACHE_SIZE_PROPERTY_KEY = "cwms.http.client.cache.maxsizebytes";
     static final String CACHE_DIRECTORY_PROPERTY_KEY = "cwms.http.client.cache.directory";
     static final Path CACHE_DEFAULT_DIRECTORY = Paths.get(System.getProperty("java.io.tmpdir"))
@@ -24,7 +22,7 @@ public class CwmsHttpCache implements CacheSupplier, OkHttpCacheSupplier {
         this.cache = cache;
     }
 
-    public Cache getOkCache()
+    Cache getOkCache()
     {
         return cache;
     }

@@ -30,7 +30,7 @@ import javax.net.ssl.HostnameVerifier;
 
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import mil.army.usace.hec.cwms.http.client.auth.SimpleAuthKeyProvider;
-import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
+
 import okhttp3.Authenticator;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
@@ -45,7 +45,7 @@ public class ApiConnectionInfoBuilder {
     private CookieAuthenticator cookieAuthenticator;
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
     private HostnameVerifier hostnameVerifier;
-    private CacheSupplier cacheSupplier = CwmsHttpCache.getInstance();  // default to the shared static cache.
+    private CacheFactory.CacheSupplier cacheSupplier = CacheFactory.okHttpCacheSupplier();
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
@@ -81,8 +81,8 @@ public class ApiConnectionInfoBuilder {
         return this;
     }
 
-    public ApiConnectionInfoBuilder withCacheSupplier(CacheSupplier cache) {
-        this.cacheSupplier = cache;
+    public ApiConnectionInfoBuilder withCacheSupplier(CacheFactory.CacheSupplier supplier) {
+        this.cacheSupplier = supplier;
         return this;
     }
 

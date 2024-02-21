@@ -24,8 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.cache.CacheSupplier;
-import mil.army.usace.hec.cwms.http.client.cache.OkHttpCacheSupplier;
 import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
@@ -61,14 +59,10 @@ final class OkHttpClientFactory {
         builder = builder.cookieJar(cookieJar);
 
         Cache okCache = null;
-        Optional<CacheSupplier> optionalCacheSupplier = apiConnectionInfo.cacheSupplier();
+        Optional<CacheFactory.CacheSupplier> optionalCacheSupplier = apiConnectionInfo.cacheSupplier();
         if(optionalCacheSupplier.isPresent()) {
-            CacheSupplier cacheSupplier = optionalCacheSupplier.get();
-            if(cacheSupplier instanceof OkHttpCacheSupplier){
-                okCache = ((OkHttpCacheSupplier) cacheSupplier).getOkCache();
-            } else {
-                throw new IllegalArgumentException("CacheSupplier must be an instance of CwmsHttpCache");
-            }
+            CacheFactory.CacheSupplier cacheSupplier = optionalCacheSupplier.get();
+            okCache = cacheSupplier.getCache();
         }
         builder.cache(okCache);
 
