@@ -5,9 +5,9 @@
   "time-zone": "America/Los_Angeles",
   "binary-values": [
     {
-      "date-time": "2024-02-12T00:00:00Z",
-      "version-date": "2024-02-12T00:00:00Z",
-      "data-entry-date": "2024-02-12T00:00:00Z",
+      "date-time": 1707696000000,
+      "version-date": 1707696000000,
+      "data-entry-date": 1707696000000,
       "binary-id": "HW",
       "attribute": 0,
       "media-type": "text/plain",

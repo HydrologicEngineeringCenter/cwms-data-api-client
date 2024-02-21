@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.Valid;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -38,13 +38,13 @@ import java.util.Objects;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-16T17:17:17.680135500-08:00[America/Los_Angeles]")
 public class BinaryTimeSeriesRow {
     @JsonProperty("date-time")
-    private ZonedDateTime dateTime = null;
+    private Instant dateTime = null;
 
     @JsonProperty("version-date")
-    private ZonedDateTime versionDate = null;
+    private Instant versionDate = null;
 
     @JsonProperty("data-entry-date")
-    private ZonedDateTime dataEntryDate = null;
+    private Instant dataEntryDate = null;
 
     @JsonProperty("binary-id")
     private String binaryId = null;
@@ -62,7 +62,7 @@ public class BinaryTimeSeriesRow {
     @Valid
     private byte[] binaryValue;
 
-    public BinaryTimeSeriesRow dateTime(ZonedDateTime dateTime) {
+    public BinaryTimeSeriesRow dateTime(Instant dateTime) {
         this.dateTime = dateTime;
         return this;
     }
@@ -74,15 +74,15 @@ public class BinaryTimeSeriesRow {
      **/
 
     @Valid
-    public ZonedDateTime getDateTime() {
+    public Instant getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(ZonedDateTime dateTime) {
+    public void setDateTime(Instant dateTime) {
         this.dateTime = dateTime;
     }
 
-    public BinaryTimeSeriesRow versionDate(ZonedDateTime versionDate) {
+    public BinaryTimeSeriesRow versionDate(Instant versionDate) {
         this.versionDate = versionDate;
         return this;
     }
@@ -94,15 +94,15 @@ public class BinaryTimeSeriesRow {
      **/
 
     @Valid
-    public ZonedDateTime getVersionDate() {
+    public Instant getVersionDate() {
         return versionDate;
     }
 
-    public void setVersionDate(ZonedDateTime versionDate) {
+    public void setVersionDate(Instant versionDate) {
         this.versionDate = versionDate;
     }
 
-    public BinaryTimeSeriesRow dataEntryDate(ZonedDateTime dataEntryDate) {
+    public BinaryTimeSeriesRow dataEntryDate(Instant dataEntryDate) {
         this.dataEntryDate = dataEntryDate;
         return this;
     }
@@ -114,11 +114,11 @@ public class BinaryTimeSeriesRow {
      **/
 
     @Valid
-    public ZonedDateTime getDataEntryDate() {
+    public Instant getDataEntryDate() {
         return dataEntryDate;
     }
 
-    public void setDataEntryDate(ZonedDateTime dataEntryDate) {
+    public void setDataEntryDate(Instant dataEntryDate) {
         this.dataEntryDate = dataEntryDate;
     }
 

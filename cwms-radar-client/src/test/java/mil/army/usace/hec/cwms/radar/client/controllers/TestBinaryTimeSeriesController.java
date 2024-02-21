@@ -59,9 +59,9 @@ class TestBinaryTimeSeriesController extends TestController {
         List<BinaryTimeSeriesRow> regularBinaryValues = timeSeries.getBinaryValues();
         assertEquals(1, regularBinaryValues.size());
         BinaryTimeSeriesRow binaryRow = regularBinaryValues.get(0);
-        assertEquals(start, binaryRow.getDateTime().toInstant());
-        assertEquals(start, binaryRow.getDataEntryDate().toInstant());
-        assertEquals(start, binaryRow.getVersionDate().toInstant());
+        assertEquals(start, binaryRow.getDateTime());
+        assertEquals(start, binaryRow.getDataEntryDate());
+        assertEquals(start, binaryRow.getVersionDate());
         assertEquals("HW", binaryRow.getBinaryId());
         assertArrayEquals("Hello, World".getBytes(), binaryRow.getBinaryValue());
         assertEquals(0, binaryRow.getAttribute());
