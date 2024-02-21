@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,19 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.radar.client.model.Clob;
 import mil.army.usace.hec.cwms.radar.client.model.Clobs;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestClobController extends TestController {
 
@@ -103,5 +106,11 @@ class TestClobController extends TestController {
         clobController.updateClob(buildConnectionInfo(cookieJarSupplier), ClobEndpointInput.patch(clob));
         ClobEndpointInput.Patch input = ClobEndpointInput.patch(clob);
         assertDoesNotThrow(() -> clobController.updateClob(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+    @Test
+    void testMediaType() throws Exception {
+        String fileMimeType = Files.probeContentType(Paths.get("C:\\Users\\adam\\.m2\\repository\\mil\\army\\usace\\hec\\cwms-http-client\\maven-metadata-local - Copy.json"));
+        System.out.println(fileMimeType);
     }
 }
