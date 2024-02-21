@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,8 +37,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
@@ -49,7 +47,6 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.security.Security;
 import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +55,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static mil.army.usace.hec.cwms.http.client.Http2Util.isHttp2NativelySupported;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -111,21 +107,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     @Override
     public final HttpRequestBuilderImpl addEndpointInput(EndpointInput endpointInput) {
         endpointInput.addInputParameters(this);
-        return this;
-    }
-
-    /**
-     * Enables HTTP/2 protocol if running a Java 8 version before 251.
-     *
-     * @return HttpRequestBuilder
-     */
-    @Override
-    public HttpRequestBuilder enableHttp2() {
-        //if Java 8 less than minor version 251, then use BouncyCastle to allow for HTTP/2 requests
-        if (!isHttp2NativelySupported()) {
-            Security.insertProviderAt(new BouncyCastleProvider(), 1);
-            Security.insertProviderAt(new BouncyCastleJsseProvider(), 2);
-        }
         return this;
     }
 
