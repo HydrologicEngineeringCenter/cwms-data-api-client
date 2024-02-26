@@ -6,16 +6,16 @@ service-annotations = "2.0.1"
 lookup = "2.0"
 
 #Third Party Dependencies
-jackson = "2.13.0"
-swagger-annotations = "1.6.3"
+jackson = "2.16.1"
+swagger-annotations = "1.6.13"
 validation-api = "2.0.1.Final"
 annotation-api = "1.3.2"
-swagger-codegen = "3.0.30"
-jwt = "4.0.0"
-okhttp = "4.11.0"
+swagger-codegen = "3.0.54"
+jwt = "4.4.0"
+okhttp = "4.12.0"
 
 #Test Dependencies
-junit = "5.9.3"
+junit = "5.10.2"
 
 [libraries]
 #HEC Dependencies
