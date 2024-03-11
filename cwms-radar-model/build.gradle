@@ -26,7 +26,7 @@ plugins {
     id "cwms-data-api-client.java-conventions"
     id "cwms-data-api-client.deps-conventions"
     id "cwms-data-api-client.publishing-conventions"
-    id 'org.hidetake.swagger.generator' version '2.18.2'
+    id 'org.hidetake.swagger.generator' version '2.19.2'
 }
 
 dependencies {
