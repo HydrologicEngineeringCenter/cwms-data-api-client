@@ -36,7 +36,7 @@ import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
-public final class TimeSeriesEndpointInput {
+public final class      TimeSeriesEndpointInput {
 
     private TimeSeriesEndpointInput() {
         throw new AssertionError("factory class");
@@ -75,6 +75,7 @@ public final class TimeSeriesEndpointInput {
         private Instant begin;
         private String page;
         private Integer pageSize;
+        private Instant versionDate;
         private Instant end;
 
         private GetOne(String timeSeriesId) {
@@ -111,6 +112,11 @@ public final class TimeSeriesEndpointInput {
             return this;
         }
 
+        public GetOne versionDate(Instant versionDate) {
+            this.versionDate = versionDate;
+            return this;
+        }
+
         public GetOne timeZone(ZoneId zoneId) {
             this.zoneId = zoneId;
             return this;
@@ -131,6 +137,7 @@ public final class TimeSeriesEndpointInput {
             String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
             String beginString = Optional.ofNullable(begin).map(Object::toString).orElse(null);
             String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
+            String versionDateString = Optional.ofNullable(versionDate).map(Object::toString).orElse(null);
             return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, timeSeriesId)
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
@@ -140,7 +147,9 @@ public final class TimeSeriesEndpointInput {
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, zoneId.getId())
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDateString)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+
         }
     }
 

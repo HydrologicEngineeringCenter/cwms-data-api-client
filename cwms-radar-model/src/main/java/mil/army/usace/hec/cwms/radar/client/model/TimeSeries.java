@@ -26,6 +26,8 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import mil.army.usace.hec.cwms.radar.client.model.enums.VersionType;
+
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -84,6 +86,9 @@ public class TimeSeries {
 
     @JsonProperty("version-date")
     private ZonedDateTime versionDate = null;
+
+    @JsonProperty("date-version-type")
+    private VersionType versionType = null;
 
     @JsonProperty("vertical-datum-info")
     private VerticalDatumInfo verticalDatumInfo = null;
@@ -386,6 +391,27 @@ public class TimeSeries {
         this.versionDate = versionDate;
     }
 
+    public TimeSeries versionType(VersionType versionType) {
+        this.versionType = versionType;
+        return this;
+    }
+
+    /**
+     * The version type of the timeseries, specified as UNVERSIONED, VERSIONED, or MAX_AGGREGATE
+     *
+     * @return begin
+     **/
+
+    @Valid
+    public VersionType getVersionType() {
+        return versionType;
+    }
+
+    public void setVersionType(VersionType versionType) {
+        this.versionType = versionType;
+    }
+
+
     public TimeSeries verticalDatumInfo(VerticalDatumInfo verticalDatumInfo) {
         this.verticalDatumInfo = verticalDatumInfo;
         return this;
@@ -431,7 +457,9 @@ public class TimeSeries {
                                 this.units == null || timeSeries.units == null ? Objects.equals(this.units, timeSeries.units) :
                                 this.units.equalsIgnoreCase(timeSeries.units) && Objects.equals(this.valueColumns, timeSeries.valueColumns) &&
                                     Objects.equals(this.values, timeSeries.values) &&
-                                    Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo);
+                                    Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo) &&
+                                    Objects.equals(this.versionDate, timeSeries.versionDate) &&
+                                    Objects.equals(this.versionType, timeSeries.versionType);
     }
 
     @Override
@@ -439,7 +467,7 @@ public class TimeSeries {
         return Objects.hash(begin, end, interval, intervalOffset, name == null ? 0 : name.toLowerCase(),
             nextPage == null ? 0 : nextPage.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(), page == null ? 0 : page.toLowerCase(),
             pageSize, timeZone == null ? 0 : timeZone.toLowerCase(), total, units == null ? 0 : units.toLowerCase(), valueColumns, values,
-            verticalDatumInfo);
+            verticalDatumInfo, versionDate, versionType);
     }
 
     @Override
@@ -462,6 +490,8 @@ public class TimeSeries {
         sb.append("    valueColumns: ").append(toIndentedString(valueColumns)).append("\n");
         sb.append("    values: ").append(toIndentedString(values)).append("\n");
         sb.append("    verticalDatumInfo: ").append(toIndentedString(verticalDatumInfo)).append("\n");
+        sb.append("    versionDate: ").append(toIndentedString(versionDate)).append("\n");
+        sb.append("    versionType: ").append(toIndentedString(versionType)).append("\n");
         sb.append("}");
         return sb.toString();
     }
