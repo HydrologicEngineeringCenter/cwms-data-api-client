@@ -82,6 +82,9 @@ public class TimeSeries {
     @JsonProperty("values")
     private List<TimeSeriesValues> values = new ArrayList<>();
 
+    @JsonProperty("version-date")
+    private ZonedDateTime versionDate = null;
+
     @JsonProperty("vertical-datum-info")
     private VerticalDatumInfo verticalDatumInfo = null;
 
@@ -361,6 +364,26 @@ public class TimeSeries {
 
     public void setValues(List<TimeSeriesValues> values) {
         this.values = values;
+    }
+
+    public TimeSeries versionDate(ZonedDateTime versionDate) {
+        this.versionDate = versionDate;
+        return this;
+    }
+
+    /**
+     * The requested versionDate for the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+     *
+     * @return versionDate
+     **/
+
+    @Valid
+    public ZonedDateTime getVersionDate() {
+        return versionDate;
+    }
+
+    public void setVersionDate(ZonedDateTime versionDate) {
+        this.versionDate = versionDate;
     }
 
     public TimeSeries verticalDatumInfo(VerticalDatumInfo verticalDatumInfo) {
