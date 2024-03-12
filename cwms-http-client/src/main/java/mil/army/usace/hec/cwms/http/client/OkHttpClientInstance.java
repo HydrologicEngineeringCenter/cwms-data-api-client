@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
 import java.time.Duration;
@@ -51,6 +52,18 @@ final class OkHttpClientInstance {
     }
 
     // package scoped for testing only
+    static OkHttpClient createClient(Cache cache) {
+        return new OkHttpClient.Builder()
+                .callTimeout(getCallTimeout())
+                .connectTimeout(getConnectTimeout())
+                .readTimeout(getReadTimeout())
+                .writeTimeout(getWriteTimeout())
+                .addInterceptor(LOGGING_INTERCEPTOR)
+                .cache(cache)
+                .build();
+    }
+
+    // package scoped for testing only
     static OkHttpClient createClient() {
         return new OkHttpClient.Builder()
                 .callTimeout(getCallTimeout())
@@ -59,7 +72,7 @@ final class OkHttpClientInstance {
                 .writeTimeout(getWriteTimeout())
                 .addInterceptor(LOGGING_INTERCEPTOR)
                 .cache(getCache())
-            .build();
+                .build();
     }
 
     private static Duration getReadTimeout() {

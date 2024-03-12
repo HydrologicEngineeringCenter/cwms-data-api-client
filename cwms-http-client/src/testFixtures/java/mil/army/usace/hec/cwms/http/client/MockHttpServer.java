@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import okhttp3.mockwebserver.MockWebServer;
 import java.io.IOException;
 import java.util.List;
 
-public final class MockHttpServer {
+public final class MockHttpServer implements AutoCloseable {
 
     private final MockWebServer mockWebServer;
 
@@ -77,5 +77,10 @@ public final class MockHttpServer {
 
     public void start() throws IOException {
         mockWebServer.start();
+    }
+
+    @Override
+    public void close() throws Exception {
+        mockWebServer.close();
     }
 }
