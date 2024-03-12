@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,37 +25,23 @@
 package mil.army.usace.hec.cwms.http.client;
 
 import okhttp3.OkHttpClient;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestOkHttpClientInstance {
 
-    @BeforeEach
-    void resetSingleton() throws Exception {
-        Arrays.stream(Logger.getLogger(OkHttpClientInstance.class.getName()).getHandlers())
-                .forEach(h -> h.setLevel(Level.FINEST));
-        Logger.getLogger(OkHttpClientInstance.class.getName()).setLevel(Level.FINEST);
-        Field cacheField = CwmsHttpCache.class.getDeclaredField("INSTANCE");
-        cacheField.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
-        cacheField.set(null, new CwmsHttpCache.Builder().build());
-        Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
-        field.setAccessible(true);
-        modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(null, OkHttpClientInstance.createClient());
+    @AfterEach
+    public void tearDown() {
+        System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
+        System.clearProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY);
+        System.clearProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY);
+        System.clearProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY);
+        System.clearProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY);
+        System.clearProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY);
     }
 
     @Test
@@ -67,7 +53,7 @@ class TestOkHttpClientInstance {
     }
 
     @Test
-    void testOkHttpClientInstanceSystemProperties() throws Exception {
+    void testOkHttpClientInstanceSystemProperties() {
         Duration fiveSeconds = Duration.ofSeconds(5);
         Duration sixSeconds = Duration.ofSeconds(6);
         Duration sevenSeconds = Duration.ofSeconds(7);
@@ -80,24 +66,14 @@ class TestOkHttpClientInstance {
         int mbMultiplicativeFactor = (1024 * 1024);
         int sizeInBytes = 124 * mbMultiplicativeFactor;
         System.setProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY, String.valueOf(sizeInBytes));
-        resetSingleton();
-        try {
-            OkHttpClient instance = OkHttpClientInstance.getInstance();
-            assertEquals(fiveSeconds.toMillis(), instance.readTimeoutMillis());
-            assertEquals(sixSeconds.toMillis(), instance.callTimeoutMillis());
-            assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
-            assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
-            assertEquals(sizeInBytes, instance.cache().maxSize());
-            assertEquals(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString(), instance.cache().directory().toString());
-        } finally {
-            System.clearProperty(OkHttpClientInstance.READ_TIMEOUT_PROPERTY_KEY);
-            System.clearProperty(OkHttpClientInstance.CALL_TIMEOUT_PROPERTY_KEY);
-            System.clearProperty(OkHttpClientInstance.CONNECT_TIMEOUT_PROPERTY_KEY);
-            System.clearProperty(OkHttpClientInstance.WRITE_TIMEOUT_PROPERTY_KEY);
-            System.clearProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY);
-            System.clearProperty(CwmsHttpCache.CACHE_SIZE_PROPERTY_KEY);
-            resetSingleton();
-        }
 
+        OkHttpClient instance = OkHttpClientInstance.createClient(new CwmsHttpCache.Builder().build().getOkCache());
+        assertEquals(fiveSeconds.toMillis(), instance.readTimeoutMillis());
+        assertEquals(sixSeconds.toMillis(), instance.callTimeoutMillis());
+        assertEquals(sevenSeconds.toMillis(), instance.connectTimeoutMillis());
+        assertEquals(eightSeconds.toMillis(), instance.writeTimeoutMillis());
+        assertEquals(sizeInBytes, instance.cache().maxSize());
+        assertEquals(CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("testCache").toString(),
+                instance.cache().directory().toString());
     }
 }

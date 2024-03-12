@@ -1,47 +1,52 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2024 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package mil.army.usace.hec.cwms.http.client;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 final class TestOkHttpCache {
 
-    private void resetSingleton() throws Exception {
-        Arrays.stream(Logger.getLogger(OkHttpClientInstance.class.getName()).getHandlers())
-                .forEach(h -> h.setLevel(Level.FINEST));
-        Logger.getLogger(OkHttpClientInstance.class.getName()).setLevel(Level.FINEST);
-        Field cacheField = CwmsHttpCache.class.getDeclaredField("INSTANCE");
-        cacheField.setAccessible(true);
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(cacheField, cacheField.getModifiers() & ~Modifier.FINAL);
-        cacheField.set(null, CwmsHttpCache.getInstance());
-        Field field = OkHttpClientInstance.class.getDeclaredField("INSTANCE");
-        field.setAccessible(true);
-        modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(null, OkHttpClientInstance.createClient());
+    @AfterEach
+    public void tearDown() {
+        System.clearProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY);
     }
 
     @Test
     void testOkHttpCache() throws Exception {
-        MockHttpServer mockServer = MockHttpServer.create();
-        Path cacheDirectory = CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("test");
-        System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, cacheDirectory.toString());
-        try {
+        try (MockHttpServer mockServer = MockHttpServer.create()) {
+            Path cacheDirectory = CwmsHttpCache.CACHE_DEFAULT_DIRECTORY.getParent().resolve("test");
+            System.setProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY, cacheDirectory.toString());
             List<String> cacheControls = new ArrayList<>();
             cacheControls.add("max-age=3600");
             mockServer.enqueueWithCache("Mock response body", cacheControls);
@@ -62,15 +67,13 @@ final class TestOkHttpCache {
                 assertEquals("Mock response body", response2.getBody());
                 assertTrue(response2.usedCache());
             }
-        } finally {
-            System.clearProperty(CwmsHttpCache.CACHE_DIRECTORY_PROPERTY_KEY);
-            resetSingleton();
-            mockServer.shutdown();
         }
     }
 
     private ApiConnectionInfo buildMockApiConnectionInfo(MockHttpServer mockHttpServer) {
+        CwmsHttpCache build = new CwmsHttpCache.Builder().build();
         return new ApiConnectionInfoBuilder(String.format("http://localhost:%s", mockHttpServer.getPort()))
+                .withCacheSupplier(CacheFactory.okHttpCacheSupplier(build))
                 .build();
     }
 }
