@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -54,7 +53,7 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesValues;
 import mil.army.usace.hec.cwms.radar.client.model.VerticalDatumInfo;
-import mil.army.usace.hec.cwms.radar.client.model.enums.VersionType;
+import mil.army.usace.hec.cwms.radar.client.model.VersionType;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesController extends TestController {
@@ -79,7 +78,7 @@ class TestTimeSeriesController extends TestController {
         assertEquals("SWT", timeSeries.getOfficeId());
         assertEquals("m", timeSeries.getUnits());
         assertEquals(Duration.ZERO, timeSeries.getInterval());
-        assertEquals(VersionType.UNVERSIONED, timeSeries.getVersionType());
+        assertEquals(VersionType.UNVERSIONED, timeSeries.getDateVersionType());
         assertNull(timeSeries.getVersionDate());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
         assertEquals(start, timeSeries.getBegin().toInstant());
@@ -124,7 +123,7 @@ class TestTimeSeriesController extends TestController {
         assertEquals("SWT", timeSeries.getOfficeId());
         assertEquals("m", timeSeries.getUnits());
         assertEquals(Duration.ZERO, timeSeries.getInterval());
-        assertEquals(VersionType.SINGLE_VERSION, timeSeries.getVersionType());
+        assertEquals(VersionType.SINGLE_VERSION, timeSeries.getDateVersionType());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
         assertEquals(start, timeSeries.getBegin().toInstant());
         TimeSeriesValues v1 = timeSeries.getValues().get(0);
@@ -151,7 +150,7 @@ class TestTimeSeriesController extends TestController {
         assertEquals("SWT", timeSeries.getOfficeId());
         assertEquals("m", timeSeries.getUnits());
         assertEquals(Duration.ZERO, timeSeries.getInterval());
-        assertEquals(VersionType.MAX_AGGREGATE, timeSeries.getVersionType());
+        assertEquals(VersionType.MAX_AGGREGATE, timeSeries.getDateVersionType());
         assertNull(timeSeries.getVersionDate());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
         assertEquals(start, timeSeries.getBegin().toInstant());
@@ -365,7 +364,7 @@ class TestTimeSeriesController extends TestController {
         assertEquals("SWT", timeSeriesResponse.getOfficeId());
         assertEquals("m", timeSeriesResponse.getUnits());
         assertEquals(Duration.ZERO, timeSeriesResponse.getInterval());
-        assertEquals(VersionType.SINGLE_VERSION, timeSeriesResponse.getVersionType());
+        assertEquals(VersionType.SINGLE_VERSION, timeSeriesResponse.getDateVersionType());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeriesResponse.getName());
         assertEquals(start, timeSeriesResponse.getBegin().toInstant());
         TimeSeriesValues v1 = timeSeriesResponse.getValues().get(0);
