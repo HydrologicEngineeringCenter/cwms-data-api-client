@@ -3,11 +3,12 @@ plugins {
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
     withSourcesJar()
     withJavadocJar()
+}
+
+compileJava {
+    options.release = 11
 }
 
 dependencies {
