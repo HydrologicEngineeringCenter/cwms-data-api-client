@@ -3,8 +3,6 @@ info:
   title: CWMS Data API
   description: CWMS REST API for Data Retrieval
   version: '3.0'
-security:
-  - MultipleAccessManager: [ ]
 paths:
   /swt-data:
     get:
@@ -42,10 +40,216 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
+  /swt-data/auth/keys/{key-name}:
+    get:
+      tags:
+        - Authorization
+      summary: Get swtData auth keys with keyName
+      description: View specific key
+      operationId: getSwtDataAuthKeysWithKeyName
+      parameters:
+        - name: key-name
+          in: path
+          description: 'Name of the specific key to get more information for. NOTE: Case-sensitive.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    delete:
+      tags:
+        - Authorization
+      summary: Delete swtData auth keys with keyName
+      description: Delete API key for a user
+      operationId: deleteSwtDataAuthKeysWithKeyName
+      parameters:
+        - name: key-name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/auth/keys:
+    get:
+      tags:
+        - Authorization
+      summary: Get swtData auth keys
+      description: View all keys for the current user
+      operationId: getSwtDataAuthKeys
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    post:
+      tags:
+        - Authorization
+      summary: Post swtData auth keys
+      description: Create a new API Key for user. The randomly generated key is returned to the caller. A provided key will be ignored.
+      operationId: postSwtDataAuthKeys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiKey'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/location/category/{category-id}:
     get:
       tags:
-        - Location Categories-Beta
+        - Location Categories
       summary: Get swtData location category with categoryId
       description: Retrieves requested Location Category
       operationId: getSwtDataLocationCategoryWithCategoryId
@@ -99,10 +303,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
-        - Location Categories-Beta
+        - Location Categories
       summary: Delete swtData location category with categoryId
       description: Deletes requested location category
       operationId: deleteSwtDataLocationCategoryWithCategoryId
@@ -156,12 +360,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/location/category:
     get:
       tags:
-        - Location Categories-Beta
+        - Location Categories
       summary: Get swtData location category
       description: Returns CWMS Location Category Data
       operationId: getSwtDataLocationCategory
@@ -210,10 +414,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
-        - Location Categories-Beta
+        - Location Categories
       summary: Post swtData location category
       description: Create new LocationCategory
       operationId: postSwtDataLocationCategory
@@ -255,12 +459,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/location/group/{group-id}:
     get:
       tags:
-        - Location Groups-Beta
+        - Location Groups
       summary: Get swtData location group with groupId
       description: Retrieves requested Location Group
       operationId: getSwtDataLocationGroupWithGroupId
@@ -326,10 +530,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
-        - Location Groups-Beta
+        - Location Groups
       summary: Delete swtData location group with groupId
       description: Deletes requested location group
       operationId: deleteSwtDataLocationGroupWithGroupId
@@ -389,11 +593,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
-        - Location Groups-Beta
+        - Location Groups
       summary: Patch swtData location group with groupId
       description: Update existing LocationGroup
       operationId: patchSwtDataLocationGroupWithGroupId
@@ -452,12 +656,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/location/group:
     get:
       tags:
-        - Location Groups-Beta
+        - Location Groups
       summary: Get swtData location group
       description: Returns CWMS Location Groups Data
       operationId: getSwtDataLocationGroup
@@ -472,12 +676,11 @@ paths:
           description: 'Include the assigned locations in the returned location groups. (default: false)'
           schema:
             type: boolean
-        - name: includeAssigned
+        - name: location-category-like
           in: query
-          description: Deprecated. Use include-assigned instead.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location category id
           schema:
-            type: boolean
+            type: string
       responses:
         '200':
           description: OK
@@ -522,10 +725,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
-        - Location Groups-Beta
+        - Location Groups
       summary: Post swtData location group
       description: Create new LocationGroup
       operationId: postSwtDataLocationGroup
@@ -567,8 +770,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/locations/{location-id}:
     get:
       tags:
@@ -683,8 +886,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Locations
@@ -738,8 +941,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/locations:
     get:
       tags:
@@ -876,8 +1079,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/states:
     get:
       tags:
@@ -923,7 +1126,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
   /swt-data/counties:
     get:
       tags:
@@ -969,7 +1172,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
   /swt-data/offices/{office}:
     get:
       tags:
@@ -1279,16 +1482,20 @@ paths:
           required: true
           schema:
             type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
-          schema:
-            type: string
         - name: effective-date
           in: query
           description: Specifies the effective date of Location Level to be returned
           required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the effective date field (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: Desired unit for the values retrieved.
           schema:
             type: string
       responses:
@@ -1351,15 +1558,14 @@ paths:
           description: Specifies the owning office of the location level whose data is to be deleted. If this field is not specified, matching location level information will be deleted from all offices.
           schema:
             type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
-          schema:
-            type: string
         - name: effective-date
           in: query
           description: Specifies the effective date of the level to be deleted. If not provided will delete all data and reference to the location level.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the value of the effective date field (unless otherwise specified).If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
       responses:
@@ -1394,8 +1600,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Levels
@@ -1407,12 +1613,6 @@ paths:
           in: path
           description: Specifies the location level id of the Location Level to be updated
           required: true
-          schema:
-            type: string
-        - name: date
-          in: query
-          description: Deprecated, use effective-date
-          deprecated: true
           schema:
             type: string
         - name: effective-date
@@ -1461,8 +1661,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/levels:
     get:
       tags:
@@ -1470,12 +1670,6 @@ paths:
       summary: Get swtData levels
       operationId: getSwtDataLevels
       parameters:
-        - name: name
-          in: query
-          description: 'Deprecated, use level-id-mask. '
-          deprecated: true
-          schema:
-            type: string
         - name: level-id-mask
           in: query
           description: Specifies the name(s) of the location level(s) whose data is to be included in the response. Uses * for all.
@@ -1618,8 +1812,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/levels/{level-id}/timeseries:
     get:
       summary: Get swtData levels with levelId timeseries
@@ -1661,7 +1855,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
   /swt-data/timeseries/recent/{group-id}:
     get:
       summary: Get swtData timeseries recent with groupId
@@ -1704,10 +1898,850 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
+  /swt-data/timeseries/text/standard-text-id/{standard-text-id}:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get swtData timeseries text standardTextId with standardTextId
+      description: Retrieve a single Standard Text value
+      operationId: getSwtDataTimeseriesTextStandardTextIdWithStandardTextId
+      parameters:
+        - name: standard-text-id
+          in: path
+          description: Specifies the text id of the standard text to retrieve. Default includes all text ids
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of thestandard text. Default includes all offices
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/StandardTextValue'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    delete:
+      tags:
+        - Text-TimeSeries
+      summary: Delete swtData timeseries text standardTextId with standardTextId
+      description: Delete a single Standard Text value
+      operationId: deleteSwtDataTimeseriesTextStandardTextIdWithStandardTextId
+      parameters:
+        - name: standard-text-id
+          in: path
+          description: Specifies the text id of the standard text to delete
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of thestandard text.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used.
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/timeseries/text/standard-text-id:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get swtData timeseries text standardTextId
+      description: Retrieve a Standard Text catalog
+      operationId: getSwtDataTimeseriesTextStandardTextId
+      parameters:
+        - name: office-mask
+          in: query
+          description: Specifies the office filter of thestandard text.
+          schema:
+            type: string
+        - name: standard-text-id-mask
+          in: query
+          description: Specifies the text id filter of the standard text
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/StandardTextCatalog'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Text-TimeSeries
+      summary: Post swtData timeseries text standardTextId
+      description: Create new Standard Text
+      operationId: postSwtDataTimeseriesTextStandardTextId
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/StandardTextValue'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/timeseries/text:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get swtData timeseries text
+      operationId: getSwtDataTimeseriesText
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Text TimeSeries whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the ts-id of the text timeseries
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window.
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, the maximum version date is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value to retrieve. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value to retrieve. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: mode
+          in: query
+          description: |-
+            Type of Text TimeSeries to retrieve.<table>
+            <tr><td>ALL</td><td>Retrieve Standard and Regular text timeseries.</td></tr>
+            <tr><td>STANDARD</td><td>Retrieve Standard text timeseries.</td></tr>
+            <tr><td>REGULAR</td><td>Retrieve Regular text timeseries.</td></tr>
+            </table>
+          required: true
+          schema:
+            $ref: '#/components/schemas/TimeSeriesTextMode'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TextTimeSeries'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Text-TimeSeries
+      summary: Post swtData timeseries text
+      description: Create new TextTimeSeries
+      operationId: postSwtDataTimeseriesText
+      parameters:
+        - name: replace-all
+          in: query
+          description: Whether to replace any and all existing text with the specified text. Default is false
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/TextTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/timeseries/text/{timeseries}:
+    delete:
+      tags:
+        - Text-TimeSeries
+      summary: Delete swtData timeseries text with timeseries
+      description: Deletes requested text timeseries id
+      operationId: deleteSwtDataTimeseriesTextWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The time series identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: text-mask
+          in: query
+          description: The standard text pattern to match. Use glob-style wildcard characters instead of sql-style wildcard characters for pattern matching.  For StandardTextTimeSeries this should be the Standard_Text_Id (such as 'E' for ESTIMATED)
+          required: true
+          schema:
+            type: string
+        - name: mode
+          in: query
+          description: |-
+            Type of delete to perform. 
+            <table>
+            <tr><td>ALL</td><td>Delete Standard and Regular text timeseries values for the specified time series.</td></tr>
+            <tr><td>STANDARD</td><td>Delete Standard text time series for the specified text timeseries.</td></tr>
+            <tr><td>REGULAR</td><td>Delete Regular text timeseries values for the specified time series.</td></tr>
+            </table>
+          required: true
+          schema:
+            $ref: '#/components/schemas/TimeSeriesTextMode'
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window.
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, maximum version date is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value to delete. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value to delete. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Text-TimeSeries
+      summary: Patch swtData timeseries text with timeseries
+      description: Updates a text timeseries
+      operationId: patchSwtDataTimeseriesTextWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The id of the text timeseries to be updated
+          required: true
+          schema:
+            type: string
+        - name: replace-all
+          in: query
+          description: Whether to replace any and all existing text with the specified text. Default is:true
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/TextTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/timeseries/binary:
+    get:
+      tags:
+        - Binary-TimeSeries
+      summary: Get swtData timeseries binary
+      operationId: getSwtDataTimeseriesBinary
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the Binary TimeSeries whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the id of the binary timeseries
+          required: true
+          schema:
+            type: string
+        - name: binary-type-mask
+          in: query
+          description: The data type pattern expressed as either an internet media type (e.g. 'image/*') or a file extension (e.g. '.*'). Use glob-style wildcard characters as shown above instead of sql-style wildcard characters for pattern matching. Default is:*
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, the maximum version date is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/BinaryTimeSeries'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Binary-TimeSeries
+      summary: Post swtData timeseries binary
+      description: Create new BinaryTimeSeries
+      operationId: postSwtDataTimeseriesBinary
+      parameters:
+        - name: replace-all
+          in: query
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/BinaryTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/timeseries/binary/{timeseries}:
+    delete:
+      tags:
+        - Binary-TimeSeries
+      summary: Delete swtData timeseries binary with timeseries
+      description: Deletes requested binary timeseries id
+      operationId: deleteSwtDataTimeseriesBinaryWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The time series identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: binary-type-mask
+          in: query
+          description: The data type pattern expressed as either an internet media type (e.g. 'image/*') or a file extension (e.g. '.*'). Use glob-style wildcard characters as shown above instead of sql-style wildcard characters for pattern matching. Default:*
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: 'The end of the time window. '
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the time series.  If not specified, the minimum or maximum version date (depending on p_max_version) is used.
+          schema:
+            type: string
+        - name: min-attribute
+          in: query
+          description: The minimum attribute value to delete. If not specified, no minimum value is used.
+          schema:
+            type: integer
+            format: int64
+        - name: max-attribute
+          in: query
+          description: The maximum attribute value to delete. If not specified, no maximum value is used.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Binary-TimeSeries
+      summary: Patch swtData timeseries binary with timeseries
+      description: Updates a binary timeseries
+      operationId: patchSwtDataTimeseriesBinaryWithTimeseries
+      parameters:
+        - name: timeseries
+          in: path
+          description: The id of the binary timeseries to be updated
+          required: true
+          schema:
+            type: string
+        - name: replace-all
+          in: query
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/BinaryTimeSeries'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/category/{category-id}:
     get:
       tags:
-        - TimeSeries Categories-Beta
+        - TimeSeries Categories
       summary: Get swtData timeseries category with categoryId
       description: Retrieves requested timeseries category
       operationId: getSwtDataTimeseriesCategoryWithCategoryId
@@ -1763,10 +2797,10 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: [ ]
+      security: []
     delete:
       tags:
-        - TimeSeries Categories-Beta
+        - TimeSeries Categories
       summary: Delete swtData timeseries category with categoryId
       description: Deletes requested time series category
       operationId: deleteSwtDataTimeseriesCategoryWithCategoryId
@@ -1820,12 +2854,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/category:
     get:
       tags:
-        - TimeSeries Categories-Beta
+        - TimeSeries Categories
       summary: Get swtData timeseries category
       description: Returns CWMS timeseries category Data
       operationId: getSwtDataTimeseriesCategory
@@ -1876,10 +2910,10 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: [ ]
+      security: []
     post:
       tags:
-        - TimeSeries Categories-Beta
+        - TimeSeries Categories
       summary: Post swtData timeseries category
       description: Create new TimeSeriesCategory
       operationId: postSwtDataTimeseriesCategory
@@ -1927,12 +2961,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
-        - TimeSeries Identifier-Beta
+        - TimeSeries Identifier
       summary: Get swtData timeseries identifierDescriptor with timeseriesId
       description: Retrieves requested timeseries identifier descriptor
       operationId: getSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
@@ -1991,7 +3025,7 @@ paths:
       security: []
     delete:
       tags:
-        - TimeSeries Identifier-Beta
+        - TimeSeries Identifier
       summary: Delete swtData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
       operationId: deleteSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
@@ -2046,11 +3080,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
-        - TimeSeries Identifier-Beta
+        - TimeSeries Identifier
       summary: Patch swtData timeseries identifierDescriptor with timeseriesId
       operationId: patchSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
@@ -2126,12 +3160,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/identifier-descriptor:
     get:
       tags:
-        - TimeSeries Identifier-Beta
+        - TimeSeries Identifier
       summary: Get swtData timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
       operationId: getSwtDataTimeseriesIdentifierDescriptor
@@ -2199,7 +3233,7 @@ paths:
       security: []
     post:
       tags:
-        - TimeSeries Identifier-Beta
+        - TimeSeries Identifier
       summary: Post swtData timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
       operationId: postSwtDataTimeseriesIdentifierDescriptor
@@ -2250,8 +3284,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/group/{group-id}:
     get:
       tags:
@@ -2315,10 +3349,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
-        - Timeseries Groups-Beta
+        - Timeseries Groups
       summary: Delete swtData timeseries group with groupId
       description: Deletes requested time series group
       operationId: deleteSwtDataTimeseriesGroupWithGroupId
@@ -2373,11 +3407,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
-        - Timeseries Groups-Beta
+        - Timeseries Groups
       summary: Patch swtData timeseries group with groupId
       description: Update existing TimeSeriesGroup
       operationId: patchSwtDataTimeseriesGroupWithGroupId
@@ -2436,12 +3470,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/group:
     get:
       tags:
-        - Timeseries Groups-Beta
+        - Timeseries Groups
       summary: Get swtData timeseries group
       description: Returns CWMS Timeseries Groups Data
       operationId: getSwtDataTimeseriesGroup
@@ -2449,6 +3483,21 @@ paths:
         - name: office
           in: query
           description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
+          schema:
+            type: string
+        - name: include-assigned
+          in: query
+          description: 'Include the assigned timeseries in the returned timeseries groups. (default: true)'
+          schema:
+            type: boolean
+        - name: timeseries-category-like
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries category id
+          schema:
+            type: string
+        - name: timeseries-group-like
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries group id
           schema:
             type: string
       responses:
@@ -2492,10 +3541,10 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: [ ]
+      security: []
     post:
       tags:
-        - Timeseries Groups-Beta
+        - Timeseries Groups
       summary: Post swtData timeseries group
       description: Create new TimeSeriesGroup
       operationId: postSwtDataTimeseriesGroup
@@ -2543,8 +3592,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries:
     get:
       tags:
@@ -2568,6 +3617,16 @@ paths:
           description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
           schema:
             type: string
+        - name: version-date
+          in: query
+          description: Specifies the version date of a time series trace to be selected. The format for this field is ISO 8601 extended, i.e., 'format', e.g., '2021-06-10T13:00:00-0700' .If field is empty, query will return a max aggregate for the timeseries.
+          schema:
+            type: string
+        - name: date-version-type
+          in: query
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be ran if version date field is specified. If unspecified, defaults to max aggregate.
+          schema:
+            $ref: '#/components/schemas/VersionType'
         - name: datum
           in: query
           description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
@@ -2598,22 +3657,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 500.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Please use page-size instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -2673,14 +3719,9 @@ paths:
       tags:
         - TimeSeries
       summary: Post swtData timeseries
-      description: Create new TimeSeries, will store any data provided
+      description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
       operationId: postSwtDataTimeseries
       parameters:
-        - name: version-date
-          in: query
-          description: Specifies the version date for the timeseries to create. If this field is not specified, a null version date will be used.  The format for this field is ISO 8601 extended, with optional timezone, i.e., 'format', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
-          schema:
-            type: string
         - name: timezone
           in: query
           description: "Specifies the time zone of the version-date field (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if version-date was specified with offset and timezone."
@@ -2693,7 +3734,48 @@ paths:
             type: boolean
         - name: store-rule
           in: query
-          description: The business rule to use when merging the incoming with existing data
+          description: |-
+            The business rule to use when merging the incoming with existing data
+            <table  border="1" summary="">
+            <tr><td colspan=2>Store Rules</td></tr>
+            <tr>
+                <td>Delete Insert</td>
+                <td>All existing data in the time window will be deleted and then replaced with the new dataset.</td>
+            </tr>
+            <tr>
+                <td>Replace All</td>
+                <td>
+                    <ul>
+                        <li>When the new dataset's date/time exactly matches the date/time of an existing data value, the new data value will replace the existing data.</li>
+                    <li>When the new dataset's data/time does not match an existing data/time (i.e., a new data/time - data value pair) then an insert to the database will occur.</li>
+                        <li>When there's an existing "data/time - data value pair" without a corresponding date/time value pair, no change will happen to the existing date/time value pair.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Replace With Non Missing</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only non-missing value will replace the existing data value*.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Replace Missing Values Only</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only replace an existing data/time-value pair whose missing flag was set.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Do Not Replace</td>
+                <td>
+                    Only inserts new data values if an existing date/time-value pair does not already exist.
+                    Note: an existing date/time-value pair whose missing value quality bit is set will NOT be overwritten.
+                </td>
+            </tr>
+            </table>
           schema:
             $ref: '#/components/schemas/StoreRule'
         - name: override-protection
@@ -2742,8 +3824,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/timeseries/{timeseries}:
     delete:
       tags:
@@ -2837,8 +3919,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - TimeSeries
@@ -2850,11 +3932,6 @@ paths:
           in: path
           description: Full CWMS Timeseries name
           required: true
-          schema:
-            type: string
-        - name: version-date
-          in: query
-          description: Specifies the version date for the timeseries to create. If this field is not specified, a null version date will be used.  The format for this field is ISO 8601 extended, with optional timezone, i.e., 'format', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
           schema:
             type: string
         - name: timezone
@@ -2869,7 +3946,48 @@ paths:
             type: boolean
         - name: store-rule
           in: query
-          description: The business rule to use when merging the incoming with existing data
+          description: |-
+            The business rule to use when merging the incoming with existing data
+            <table  border="1" summary="">
+            <tr><td colspan=2>Store Rules</td></tr>
+            <tr>
+                <td>Delete Insert</td>
+                <td>All existing data in the time window will be deleted and then replaced with the new dataset.</td>
+            </tr>
+            <tr>
+                <td>Replace All</td>
+                <td>
+                    <ul>
+                        <li>When the new dataset's date/time exactly matches the date/time of an existing data value, the new data value will replace the existing data.</li>
+                    <li>When the new dataset's data/time does not match an existing data/time (i.e., a new data/time - data value pair) then an insert to the database will occur.</li>
+                        <li>When there's an existing "data/time - data value pair" without a corresponding date/time value pair, no change will happen to the existing date/time value pair.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Replace With Non Missing</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only non-missing value will replace the existing data value*.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Replace Missing Values Only</td>
+                <td>
+                    <ul>
+                        <li>New data is always inserted, i.e., an existing date/time-value pair does not already exist for the record.</li>
+                        <li>If date/time-value pair does exist, then only replace an existing data/time-value pair whose missing flag was set.</li>
+                    </ul>
+                </td>
+            <tr>
+                <td>Do Not Replace</td>
+                <td>
+                    Only inserts new data values if an existing date/time-value pair does not already exist.
+                    Note: an existing date/time-value pair whose missing value quality bit is set will NOT be overwritten.
+                </td>
+            </tr>
+            </table>
           schema:
             $ref: '#/components/schemas/StoreRule'
         - name: override-protection
@@ -2918,8 +4036,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings/template/{template-id}:
     get:
       tags:
@@ -2978,7 +4096,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
         - Ratings
@@ -3036,8 +4154,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings/template:
     get:
       tags:
@@ -3103,7 +4221,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Ratings
@@ -3154,8 +4272,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings/spec/{rating-id}:
     get:
       tags:
@@ -3212,7 +4330,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
         - Ratings
@@ -3270,8 +4388,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings/spec:
     get:
       tags:
@@ -3286,7 +4404,7 @@ paths:
             type: string
         - name: rating-id-mask
           in: query
-          description: RegExp that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
+          description: Posix <a href="regexp.html">regular expression</a>  that specifies the rating IDs to be included in the response. If this field is not specified, all Rating Specs shall be returned.
           schema:
             type: string
         - name: page
@@ -3337,7 +4455,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Ratings
@@ -3388,8 +4506,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings/metadata:
     get:
       tags:
@@ -3619,8 +4737,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Ratings
@@ -3679,8 +4797,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/ratings:
     get:
       tags:
@@ -3830,12 +4948,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/catalog/{dataset}:
     get:
       tags:
-        - Catalog-Beta
+        - Catalog
       summary: Get swtData catalog with dataset
       operationId: getSwtDataCatalogWithDataset
       parameters:
@@ -3850,31 +4968,12 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entires per page returned. Default 500.
           schema:
             type: integer
             format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Use page-size.
-          deprecated: true
-          schema:
-            type: integer
-            format: int32
-        - name: unitSystem
-          in: query
-          description: Deprecated. Use unit-system.
-          deprecated: true
-          schema:
-            $ref: '#/components/schemas/UnitSystem'
         - name: unit-system
           in: query
           description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
@@ -3887,51 +4986,32 @@ paths:
             type: string
         - name: like
           in: query
-          description: Posix regular expression matching against the id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the id
           schema:
             type: string
         - name: timeseries-category-like
           in: query
-          description: Posix regular expression matching against the timeseries category id
-          schema:
-            type: string
-        - name: timeseriesCategoryLike
-          in: query
-          description: Deprecated. Use timeseries-category-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries category id
           schema:
             type: string
         - name: timeseries-group-like
           in: query
-          description: Posix regular expression matching against the timeseries group id
-          schema:
-            type: string
-        - name: timeseriesGroupLike
-          in: query
-          description: Deprecated. Use timeseries-group-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries group id
           schema:
             type: string
         - name: location-category-like
           in: query
-          description: Posix regular expression matching against the location category id
-          schema:
-            type: string
-        - name: locationCategoryLike
-          in: query
-          description: Deprecated. Use location-category-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location category id
           schema:
             type: string
         - name: location-group-like
           in: query
-          description: Posix regular expression matching against the location group id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location group id
           schema:
             type: string
-        - name: locationGroupLike
+        - name: bounding-office-like
           in: query
-          description: Deprecated. Use location-group-like.
-          deprecated: true
+          description: Posix <a href="regexp.html">regular expression</a> matching against the location bounding office. When this field is used items with no bounding office set will not be present in results.
           schema:
             type: string
       responses:
@@ -3978,7 +5058,7 @@ paths:
   /swt-data/basins/{basin-id}:
     get:
       tags:
-        - Basins-Beta
+        - Basins
       summary: Get swtData basins with basinId
       description: Returns CWMS Basin Data
       operationId: getSwtDataBasinsWithBasinId
@@ -4041,7 +5121,7 @@ paths:
   /swt-data/basins:
     get:
       tags:
-        - Basins-Beta
+        - Basins
       summary: Get swtData basins
       description: Returns CWMS Basin Data
       operationId: getSwtDataBasins
@@ -4162,19 +5242,6 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          description: Deprecated.  Use page-size instead.
-          deprecated: true
-          schema:
-            type: integer
-            format: int32
         - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
@@ -4183,7 +5250,7 @@ paths:
             format: int32
         - name: like
           in: query
-          description: Posix regular expression describing the blob id's you want
+          description: Posix <a href="regexp.html">regular expression</a> describing the blob id's you want
           schema:
             type: string
       responses:
@@ -4227,11 +5294,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
+    post:
+      tags:
+        - Blob
+      summary: Post swtData blobs
+      description: Create new Blob
+      operationId: postSwtDataBlobs
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+          application/xml;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
       summary: Get swtData clobs with clobId
+      description: Get a single clob.  If the accept header is set to text/plain, the raw value is returned as the response body. Responses to text/plain requests are streamed and support the Range header.  When the accept header is set to application/json;version=2 the clob will be returned as a serialized Clob object with fields for office-id, id, description and value.
       operationId: getSwtDataClobsWithClobId
       parameters:
         - name: clob-id
@@ -4244,6 +5367,11 @@ paths:
           description: Specifies the owning office.
           schema:
             type: string
+        - name: clob-id
+          in: query
+          description: 'If this _query_ parameter is provided the id _path_ parameter is ignored and the value of the query parameter is used.   Note: this query parameter is necessary for id''s that contain ''/'' or other special characters.  Because of abuse even properly escaped ''/'' in url paths are blocked.  When using this query parameter a valid path parameter must still be provided for the request to be properly routed.  If your clob id contains ''/'' you can''t specify the clob-id query parameter and also specify the id path parameter because firewall and/or server rules will deny the request even though you are specifying this override. "ignored" is suggested.'
+          schema:
+            type: string
       responses:
         '200':
           description: Returns requested clob.
@@ -4251,6 +5379,9 @@ paths:
             application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Clob'
+            text/plain:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -4333,8 +5464,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Clob
@@ -4394,8 +5525,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/clobs:
     get:
       tags:
@@ -4413,22 +5544,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 20.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated, use 'page-size' instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -4437,15 +5555,9 @@ paths:
           description: 'Do you want the value associated with this particular clob (default: false)'
           schema:
             type: boolean
-        - name: includeValues
-          in: query
-          description: Deprecated, use 'include-values' instead.
-          deprecated: true
-          schema:
-            type: boolean
         - name: like
           in: query
-          description: Posix regular expression matching against the id
+          description: Posix <a href="regexp.html">regular expression</a> matching against the id
           schema:
             type: string
       responses:
@@ -4542,8 +5654,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/pools/{pool-id}:
     get:
       tags:
@@ -4678,22 +5790,9 @@ paths:
           description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
           schema:
             type: string
-        - name: cursor
-          in: query
-          description: Deprecated. Use 'page' instead.
-          deprecated: true
-          schema:
-            type: string
         - name: page-size
           in: query
           description: How many entries per page returned. Default 100.
-          schema:
-            type: integer
-            format: int32
-        - name: pageSize
-          in: query
-          description: Deprecated. Use 'page-size' instead.
-          deprecated: true
           schema:
             type: integer
             format: int32
@@ -4791,7 +5890,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Levels
@@ -4842,8 +5941,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /swt-data/specified-levels/{specified-level-id}:
     delete:
       tags:
@@ -4896,8 +5995,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Levels
@@ -4954,8 +6053,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - ApiKey: [ ]
-        - CwmsAAACacAuth: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
 components:
   schemas:
     CdaError:
@@ -4970,6 +6069,27 @@ components:
           type: object
           additionalProperties:
             type: object
+    ApiKey:
+      required:
+        - key-name
+        - user-id
+      type: object
+      properties:
+        user-id:
+          type: string
+        key-name:
+          type: string
+        api-key:
+          type: string
+        created:
+          type: string
+          description: The instant this Key was created, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        expires:
+          type: string
+          description: When this key expires, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
     LocationCategory:
       required:
         - office-id
@@ -5254,7 +6374,7 @@ components:
           format: double
         level-units-id:
           type: string
-          description: Units thhe provided levels are in
+          description: Units the provided levels are in
         level-date:
           type: string
           description: The date/time at which this location level configuration takes effect.
@@ -5334,6 +6454,173 @@ components:
           readOnly: true
       xml:
         name: location-levels
+    StandardTextId:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+    StandardTextValue:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/StandardTextId'
+        standard-text:
+          type: string
+    StandardTextCatalog:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardTextValue'
+    DeleteMethod:
+      type: string
+      enum:
+        - DELETE_ALL
+        - DELETE_KEY
+        - DELETE_DATA
+    TimeSeriesTextMode:
+      type: string
+      enum:
+        - ALL
+        - STANDARD
+        - REGULAR
+    RegularTextTimeSeriesRow:
+      type: object
+      properties:
+        date-time:
+          type: string
+          format: date-time
+        version-date:
+          type: string
+          format: date-time
+        data-entry-date:
+          type: string
+          format: date-time
+        attribute:
+          type: integer
+          format: int64
+        text-id:
+          type: string
+        text-value:
+          type: string
+    StandardCatalog:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardCatalogEntry'
+    StandardCatalogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+    StandardTextTimeSeriesRow:
+      type: object
+      properties:
+        date-time:
+          type: string
+          format: date-time
+        version-date:
+          type: string
+          format: date-time
+        data-entry-date:
+          type: string
+          format: date-time
+        attribute:
+          type: integer
+          format: int64
+        office-id:
+          type: string
+        standard-text-id:
+          type: string
+        text-value:
+          type: string
+    TextTimeSeries:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        interval-offset:
+          type: integer
+          format: int64
+        time-zone:
+          type: string
+        standard-text-catalog:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardCatalog'
+        standard-text-values:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandardTextTimeSeriesRow'
+        regular-text-values:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegularTextTimeSeriesRow'
+    BinaryTimeSeries:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        interval-offset:
+          type: integer
+          format: int64
+        time-zone:
+          type: string
+        binary-values:
+          type: array
+          items:
+            $ref: '#/components/schemas/BinaryTimeSeriesRow'
+    BinaryTimeSeriesRow:
+      type: object
+      properties:
+        date-time:
+          type: string
+          format: date-time
+        version-date:
+          type: string
+          format: date-time
+        data-entry-date:
+          type: string
+          format: date-time
+        binary-id:
+          type: string
+        attribute:
+          type: integer
+          format: int64
+        media-type:
+          type: string
+        file-extension:
+          type: string
+        binary-value:
+          type: array
+          items:
+            type: string
+            format: byte
     TimeSeriesCategory:
       required:
         - office-id
@@ -5391,15 +6678,11 @@ components:
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-    DeleteMethod:
-      type: string
-      enum:
-        - DELETE_ALL
-        - DELETE_KEY
-        - DELETE_DATA
     AssignedTimeSeries:
       type: object
       properties:
+        officeId:
+          type: string
         timeseriesId:
           type: string
         tsCode:
@@ -5436,6 +6719,14 @@ components:
       description: A representation of a timeseries group
       xml:
         name: timeseries-group
+    VersionType:
+      type: string
+      description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+      enum:
+        - MAX_AGGREGATE
+        - SINGLE_VERSION
+        - UNVERSIONED
+        - UNDEF
     Offset:
       type: object
       properties:
@@ -5460,6 +6751,14 @@ components:
           description: The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
           format: date-time
           readOnly: true
+        date-version-type:
+          type: string
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+          enum:
+            - MAX_AGGREGATE
+            - SINGLE_VERSION
+            - UNVERSIONED
+            - UNDEF
         end:
           type: string
           description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
@@ -5489,9 +6788,9 @@ components:
                         type: boolean
                       negative:
                         type: boolean
-                  durationEstimated:
-                    type: boolean
                   dateBased:
+                    type: boolean
+                  durationEstimated:
                     type: boolean
                   timeBased:
                     type: boolean
@@ -5553,7 +6852,7 @@ components:
           items:
             type: array
             example:
-              - 123
+              - 1509654000000
               - 54.3
               - 0
             items:
@@ -5571,6 +6870,10 @@ components:
                   type: integer
                   format: int32
               description: List of retrieved time-series values
+        version-date:
+          type: string
+          description: The version date of the time series trace
+          format: date-time
         vertical-datum-info:
           $ref: '#/components/schemas/VerticalDatumInfo'
       xml:
@@ -5630,11 +6933,11 @@ components:
     StoreRule:
       type: string
       enum:
-        - REPLACE_ALL
-        - DO_NOT_REPLACE
-        - REPLACE_MISSING_VALUES_ONLY
-        - REPLACE_WITH_NON_MISSING
-        - DELETE_INSERT
+        - REPLACE ALL
+        - DO NOT REPLACE
+        - REPLACE MISSING VALUES ONLY
+        - REPLACE WITH NON MISSING
+        - DELETE INSERT
     ParameterSpec:
       type: object
       properties:
@@ -5958,8 +7261,6 @@ components:
           type: string
           xml:
             attribute: true
-        cursor:
-          type: string
       xml:
         name: entry
       oneOf:
@@ -6038,8 +7339,6 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/LocationAlias'
-        cursor:
-          type: string
       xml:
         name: entry
     TimeSeriesExtents:
@@ -6096,8 +7395,6 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/TimeSeriesExtents'
-        cursor:
-          type: string
       xml:
         name: entry
     Basin:
@@ -6239,7 +7536,6 @@ components:
           items:
             type: string
             format: byte
-      description: List of retrieved blobs
     Blobs:
       type: object
       properties:
@@ -6326,23 +7622,23 @@ components:
           type: string
         clobText:
           type: string
+        implicit:
+          type: boolean
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
         bottomLevelId:
-          type: string
-        topLevelId:
           type: string
         projectId:
           type: string
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
-        implicit:
-          type: boolean
+        topLevelId:
+          type: string
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     Pools:
       type: object
@@ -6387,12 +7683,13 @@ components:
         description:
           type: string
   securitySchemes:
-    ApiKey:
-      type: apiKey
-      name: Authorization
-      in: header
     CwmsAAACacAuth:
       type: apiKey
       description: Auth handler running on same tomcat instance as the data api.
       name: JSESSIONIDSSO
       in: cookie
+    ApiKey:
+      type: apiKey
+      description: 'Key value as generated from the /auth/keys endpoint. NOTE: you MUST manually prefix your key with ''apikey '' (without the single quotes).'
+      name: Authorization
+      in: header

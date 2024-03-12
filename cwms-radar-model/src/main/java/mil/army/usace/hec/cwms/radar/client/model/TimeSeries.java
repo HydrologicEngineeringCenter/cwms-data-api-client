@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -81,6 +82,12 @@ public class TimeSeries {
 
     @JsonProperty("values")
     private List<TimeSeriesValues> values = new ArrayList<>();
+
+    @JsonProperty("version-date")
+    private ZonedDateTime versionDate = null;
+
+    @JsonProperty("date-version-type")
+    private VersionType dateVersionType = null;
 
     @JsonProperty("vertical-datum-info")
     private VerticalDatumInfo verticalDatumInfo = null;
@@ -363,6 +370,47 @@ public class TimeSeries {
         this.values = values;
     }
 
+    public TimeSeries versionDate(ZonedDateTime versionDate) {
+        this.versionDate = versionDate;
+        return this;
+    }
+
+    /**
+     * The version date of the time series trace
+     *
+     * @return versionDate
+     **/
+
+    @Valid
+    public ZonedDateTime getVersionDate() {
+        return versionDate;
+    }
+
+    public void setVersionDate(ZonedDateTime versionDate) {
+        this.versionDate = versionDate;
+    }
+
+    public TimeSeries versionType(VersionType versionType) {
+        this.dateVersionType = versionType;
+        return this;
+    }
+
+    /**
+     * The version type of the timeseries, specified as UNVERSIONED, VERSIONED, or MAX_AGGREGATE
+     *
+     * @return begin
+     **/
+
+    @Valid
+    public VersionType getDateVersionType() {
+        return dateVersionType;
+    }
+
+    public void setDateVersionType(VersionType dateVersionType) {
+        this.dateVersionType = dateVersionType;
+    }
+
+
     public TimeSeries verticalDatumInfo(VerticalDatumInfo verticalDatumInfo) {
         this.verticalDatumInfo = verticalDatumInfo;
         return this;
@@ -393,30 +441,29 @@ public class TimeSeries {
             return false;
         }
         TimeSeries timeSeries = (TimeSeries) o;
-        return Objects.equals(this.begin, timeSeries.begin) && Objects.equals(this.end, timeSeries.end) &&
-            Objects.equals(this.interval, timeSeries.interval) && Objects.equals(this.intervalOffset, timeSeries.intervalOffset) &&
-            this.name == null || timeSeries.name == null ? Objects.equals(this.name, timeSeries.name) :
-            this.name.equalsIgnoreCase(timeSeries.name) && this.nextPage == null || timeSeries.nextPage == null ?
-                Objects.equals(this.nextPage, timeSeries.nextPage) :
-                this.nextPage.equalsIgnoreCase(timeSeries.nextPage) && this.officeId == null || timeSeries.officeId == null ?
-                    Objects.equals(this.officeId, timeSeries.officeId) :
-                    this.officeId.equalsIgnoreCase(timeSeries.officeId) && this.page == null || timeSeries.page == null ?
-                        Objects.equals(this.page, timeSeries.page) :
-                        this.page.equalsIgnoreCase(timeSeries.page) && Objects.equals(this.pageSize, timeSeries.pageSize) && this.timeZone == null ||
-                            timeSeries.timeZone == null ? Objects.equals(this.timeZone, timeSeries.timeZone) :
-                            this.timeZone.equalsIgnoreCase(timeSeries.timeZone) && Objects.equals(this.total, timeSeries.total) &&
-                                this.units == null || timeSeries.units == null ? Objects.equals(this.units, timeSeries.units) :
-                                this.units.equalsIgnoreCase(timeSeries.units) && Objects.equals(this.valueColumns, timeSeries.valueColumns) &&
-                                    Objects.equals(this.values, timeSeries.values) &&
-                                    Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo);
+        return Objects.equals(this.begin, timeSeries.begin)
+                && this.dateVersionType == timeSeries.dateVersionType
+                && Objects.equals(this.end, timeSeries.end)
+                && Objects.equals(this.interval, timeSeries.interval)
+                && Objects.equals(this.intervalOffset, timeSeries.intervalOffset)
+                && this.name == null || timeSeries.name == null ? Objects.equals(this.name, timeSeries.name) : this.name.equalsIgnoreCase(timeSeries.name)
+                && this.nextPage == null || timeSeries.nextPage == null ? Objects.equals(this.nextPage, timeSeries.nextPage) : this.nextPage.equalsIgnoreCase(timeSeries.nextPage)
+                && this.officeId == null || timeSeries.officeId == null ? Objects.equals(this.officeId, timeSeries.officeId) : this.officeId.equalsIgnoreCase(timeSeries.officeId)
+                && this.page == null || timeSeries.page == null ? Objects.equals(this.page, timeSeries.page) : this.page.equalsIgnoreCase(timeSeries.page)
+                && Objects.equals(this.pageSize, timeSeries.pageSize)
+                && this.timeZone == null || timeSeries.timeZone == null ? Objects.equals(this.timeZone, timeSeries.timeZone) : this.timeZone.equalsIgnoreCase(timeSeries.timeZone)
+                && Objects.equals(this.total, timeSeries.total)
+                && this.units == null || timeSeries.units == null ? Objects.equals(this.units, timeSeries.units) : this.units.equalsIgnoreCase(timeSeries.units)
+                && Objects.equals(this.valueColumns, timeSeries.valueColumns)
+                && Objects.equals(this.values, timeSeries.values)
+                && Objects.equals(this.versionDate, timeSeries.versionDate)
+                && Objects.equals(this.verticalDatumInfo, timeSeries.verticalDatumInfo)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(begin, end, interval, intervalOffset, name == null ? 0 : name.toLowerCase(),
-            nextPage == null ? 0 : nextPage.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(), page == null ? 0 : page.toLowerCase(),
-            pageSize, timeZone == null ? 0 : timeZone.toLowerCase(), total, units == null ? 0 : units.toLowerCase(), valueColumns, values,
-            verticalDatumInfo);
+        return Objects.hash(begin, dateVersionType == null ? 0 : dateVersionType, end, interval, intervalOffset, name == null ? 0 : name.toLowerCase(), nextPage == null ? 0 : nextPage.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase(), page == null ? 0 : page.toLowerCase(), pageSize, timeZone == null ? 0 : timeZone.toLowerCase(), total, units == null ? 0 : units.toLowerCase(), valueColumns, values, versionDate, verticalDatumInfo);
     }
 
     @Override
@@ -425,6 +472,7 @@ public class TimeSeries {
         sb.append("class TimeSeries {\n");
 
         sb.append("    begin: ").append(toIndentedString(begin)).append("\n");
+        sb.append("    dateVersionType: ").append(toIndentedString(dateVersionType)).append("\n");
         sb.append("    end: ").append(toIndentedString(end)).append("\n");
         sb.append("    interval: ").append(toIndentedString(interval)).append("\n");
         sb.append("    intervalOffset: ").append(toIndentedString(intervalOffset)).append("\n");
@@ -438,6 +486,7 @@ public class TimeSeries {
         sb.append("    units: ").append(toIndentedString(units)).append("\n");
         sb.append("    valueColumns: ").append(toIndentedString(valueColumns)).append("\n");
         sb.append("    values: ").append(toIndentedString(values)).append("\n");
+        sb.append("    versionDate: ").append(toIndentedString(versionDate)).append("\n");
         sb.append("    verticalDatumInfo: ").append(toIndentedString(verticalDatumInfo)).append("\n");
         sb.append("}");
         return sb.toString();

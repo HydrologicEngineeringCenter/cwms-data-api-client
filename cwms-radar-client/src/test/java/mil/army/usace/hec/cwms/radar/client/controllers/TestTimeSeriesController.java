@@ -53,12 +53,13 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesValues;
 import mil.army.usace.hec.cwms.radar.client.model.VerticalDatumInfo;
+import mil.army.usace.hec.cwms.radar.client.model.VersionType;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesController extends TestController {
 
     @Test
-    void testRetrieveTimeSeries() throws IOException {
+    void testRetrieveUnversionedTimeSeries() throws IOException {
         String collect = readJsonFile("radar/v2/json/timeseries.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -77,6 +78,8 @@ class TestTimeSeriesController extends TestController {
         assertEquals("SWT", timeSeries.getOfficeId());
         assertEquals("m", timeSeries.getUnits());
         assertEquals(Duration.ZERO, timeSeries.getInterval());
+        assertEquals(VersionType.UNVERSIONED, timeSeries.getDateVersionType());
+        assertNull(timeSeries.getVersionDate());
         assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
         assertEquals(start, timeSeries.getBegin().toInstant());
         Instant lastTime = Instant.ofEpochMilli(
@@ -97,6 +100,63 @@ class TestTimeSeriesController extends TestController {
         assertEquals(0.0632, offset.getValue(), .001);
         assertEquals("NAVD-88", offset.getToDatum());
         assertTrue(offset.isEstimate());
+    }
+
+    @Test
+    void testRetrieveVersionedTimeSeries() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseries_versioned.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant versionDate = ZonedDateTime.of(2024, 3, 11, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+            .officeId("SWT")
+            .unit("SI")
+            .begin(start)
+            .end(end)
+            .page(null)
+            .versionDate(versionDate);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        assertEquals(3, timeSeries.getValues().size());
+        assertEquals(3, timeSeries.getTotal());
+        assertEquals("SWT", timeSeries.getOfficeId());
+        assertEquals("m", timeSeries.getUnits());
+        assertEquals(Duration.ZERO, timeSeries.getInterval());
+        assertEquals(VersionType.SINGLE_VERSION, timeSeries.getDateVersionType());
+        assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
+        assertEquals(start, timeSeries.getBegin().toInstant());
+        TimeSeriesValues v1 = timeSeries.getValues().get(0);
+        assertEquals(1, v1.getValue(), .001);
+        assertEquals(0, v1.getQualityCode());
+    }
+
+    @Test
+    void testRetrieveMaxAgg() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseries_max_agg.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        TimeSeriesEndpointInput.GetOne input = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+                .officeId("SWT")
+                .unit("SI")
+                .begin(start)
+                .end(end)
+                .page(null);
+        TimeSeries timeSeries = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        assertEquals(3, timeSeries.getValues().size());
+        assertEquals(3, timeSeries.getTotal());
+        assertEquals("SWT", timeSeries.getOfficeId());
+        assertEquals("m", timeSeries.getUnits());
+        assertEquals(Duration.ZERO, timeSeries.getInterval());
+        assertEquals(VersionType.MAX_AGGREGATE, timeSeries.getDateVersionType());
+        assertNull(timeSeries.getVersionDate());
+        assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeries.getName());
+        assertEquals(start, timeSeries.getBegin().toInstant());
+        TimeSeriesValues v1 = timeSeries.getValues().get(0);
+        assertEquals(1, v1.getValue(), .001);
+        assertEquals(0, v1.getQualityCode());
     }
 
     @Test
@@ -266,5 +326,49 @@ class TestTimeSeriesController extends TestController {
         timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TimeSeriesEndpointInput.post(timeSeries));
         TimeSeriesEndpointInput.Delete input = TimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
         assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+    @Test
+    void testDeleteVersionedTimeSeries() throws IOException {
+        String collect = readJsonFile("radar/v2/json/timeseries_versioned.json");
+        String collect2 = readJsonFile("radar/v2/json/timeseries_versioned2.json");
+        TimeSeries timeSeries = RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class);
+        TimeSeries timeSeries2 = RadarObjectMapper.mapJsonToObject(collect2, TimeSeries.class);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect2);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect2);
+
+        TimeSeriesController timeSeriesController = new TimeSeriesController();
+        // Post 2 timeseries with different version dates
+        timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TimeSeriesEndpointInput.post(timeSeries));
+        timeSeriesController.storeTimeSeries(buildConnectionInfo(cookieJarSupplier), TimeSeriesEndpointInput.post(timeSeries2));
+        // Delete first timeseries
+        TimeSeriesEndpointInput.Delete input = TimeSeriesEndpointInput.delete(timeSeries.getName(), timeSeries.getOfficeId());
+        input.versionDate(timeSeries.getVersionDate().toInstant());
+        assertDoesNotThrow(() -> timeSeriesController.deleteTimeSeries(buildConnectionInfo(cookieJarSupplier), input));
+        // Get second timeseries
+        Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant versionDate = ZonedDateTime.of(2024, 3, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        TimeSeriesEndpointInput.GetOne getInput = TimeSeriesEndpointInput.getOne("arbu.Elev.Inst.1Hour.0.Ccp-Rev")
+                .officeId("SWT")
+                .unit("SI")
+                .begin(start)
+                .end(end)
+                .page(null)
+                .versionDate(versionDate);
+        TimeSeries timeSeriesResponse = new TimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), getInput);
+        assertEquals(3, timeSeriesResponse.getValues().size());
+        assertEquals(3, timeSeriesResponse.getTotal());
+        assertEquals("SWT", timeSeriesResponse.getOfficeId());
+        assertEquals("m", timeSeriesResponse.getUnits());
+        assertEquals(Duration.ZERO, timeSeriesResponse.getInterval());
+        assertEquals(VersionType.SINGLE_VERSION, timeSeriesResponse.getDateVersionType());
+        assertEquals("ARBU.Elev.Inst.1Hour.0.Ccp-Rev", timeSeriesResponse.getName());
+        assertEquals(start, timeSeriesResponse.getBegin().toInstant());
+        TimeSeriesValues v1 = timeSeriesResponse.getValues().get(0);
+        assertEquals(1, v1.getValue(), .001);
+        assertEquals(0, v1.getQualityCode());
     }
 }

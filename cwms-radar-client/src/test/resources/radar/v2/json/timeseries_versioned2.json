@@ -1,0 +1,52 @@
+{
+  "begin": "2018-01-05T00:00:00+0000[Z]",
+  "end": "2018-02-05T00:00:00+0000[Z]",
+  "version-date": "2024-03-12T00:00:00+0000[Z]",
+  "date-version-type": "SINGLE_VERSION",
+  "interval": "PT0S",
+  "name": "ARBU.Elev.Inst.1Hour.0.Ccp-Rev",
+  "office-id": "SWT",
+  "page": "MTUxNTExMDQwMDAwMHx8NzQ1fHw1MDA=",
+  "page-size": 500,
+  "total": 3,
+  "units": "m",
+  "value-columns": [
+    {
+      "name": "date-time",
+      "ordinal": 1,
+      "datatype": "java.sql.Timestamp"
+    },
+    {
+      "name": "value",
+      "ordinal": 2,
+      "datatype": "java.lang.Double"
+    },
+    {
+      "name": "quality-code",
+      "ordinal": 3,
+      "datatype": "int"
+    }
+  ],
+  "values": [
+    [
+      1515110400000,
+      1,
+      0
+    ],
+    [
+      1515114000000,
+      1,
+      0
+    ],
+    [
+      1515117600000,
+      1,
+      0
+    ]
+  ],
+  "vertical-datum-info": {
+    "office": "SWT",
+    "unit": "m",
+    "location": "ARBU"
+  }
+}
