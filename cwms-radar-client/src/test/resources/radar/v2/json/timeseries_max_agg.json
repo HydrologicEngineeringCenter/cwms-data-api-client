@@ -1,7 +1,6 @@
 {
   "begin": "2018-01-05T00:00:00+0000[Z]",
   "end": "2018-02-05T00:00:00+0000[Z]",
-  "version-date": "2024-03-11T00:00:00+0000[Z]",
   "date-version-type": "MAX_AGGREGATE",
   "interval": "PT0S",
   "name": "ARBU.Elev.Inst.1Hour.0.Ccp-Rev",
