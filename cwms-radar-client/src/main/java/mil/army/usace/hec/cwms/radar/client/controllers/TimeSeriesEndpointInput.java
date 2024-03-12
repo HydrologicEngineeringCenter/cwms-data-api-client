@@ -36,7 +36,7 @@ import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
-public final class      TimeSeriesEndpointInput {
+public final class TimeSeriesEndpointInput {
 
     private TimeSeriesEndpointInput() {
         throw new AssertionError("factory class");
