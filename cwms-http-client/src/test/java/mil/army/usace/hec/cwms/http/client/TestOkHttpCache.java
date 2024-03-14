@@ -76,4 +76,22 @@ final class TestOkHttpCache {
                 .withCacheSupplier(CacheFactory.okHttpCacheSupplier(build))
                 .build();
     }
+
+    @Test
+    void buildMockApiConnectionInfo() throws Exception {
+        try (MockHttpServer mockServer = MockHttpServer.create()) {
+            mockServer.enqueue("Mock response body");
+            mockServer.start();
+            CwmsHttpCache build = new CwmsHttpCache.Builder().build();
+            ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(String.format("http://localhost:%s", mockServer.getPort()))
+                    .withCacheSupplier(CacheFactory.noCache())
+                    .build();
+            try (HttpRequestResponse request = new HttpRequestBuilderImpl(apiConnectionInfo)
+                    .get()
+                    .withMediaType("application/json")
+                    .execute()) {
+                assertFalse(request.usedCache());
+            }
+        }
+    }
 }
