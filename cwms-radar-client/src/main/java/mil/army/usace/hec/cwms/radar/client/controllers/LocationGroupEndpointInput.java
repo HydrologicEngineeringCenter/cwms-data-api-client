@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ public final class LocationGroupEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
+    static final String CATEGORY_ID_LIKE_QUERY_PARAMETER = "location-category-like";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String REPLACE_ASSIGNED_LOCS = "replace-assigned-locs";
@@ -88,6 +89,7 @@ public final class LocationGroupEndpointInput {
     public static final class GetAll extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = false;
+        private String categoryIdMask;
 
         private GetAll() {
 
@@ -103,10 +105,16 @@ public final class LocationGroupEndpointInput {
             return this;
         }
 
+        public GetAll categoryIdMask(String categoryIdMask) {
+            this.categoryIdMask = categoryIdMask;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
+                    .addQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER, categoryIdMask)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,10 +53,14 @@ class TestLocationGroupEndpointInput {
     @Test
     void testGetAll() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationGroupEndpointInput.GetAll input = LocationGroupEndpointInput.getAll().officeId("SWT").includeAssigned(true);
+        LocationGroupEndpointInput.GetAll input = LocationGroupEndpointInput.getAll()
+                .officeId("SWT")
+                .includeAssigned(true)
+                .categoryIdMask("Default");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER));
+        assertEquals("Default", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
