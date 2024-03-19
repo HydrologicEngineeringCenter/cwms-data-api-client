@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -117,7 +117,7 @@ class TestLevelController extends TestController {
         assertEquals(321.564, level.get().getConstantValue());
         assertEquals("m", level.get().getLevelUnitsId());
         ZonedDateTime effectiveDate = ZonedDateTime.of(1900, 1, 1, 5, 0, 0, 0, ZoneId.of("UTC"));
-        assertEquals(effectiveDate, level.get().getLevelDate());
+        assertEquals(effectiveDate.toInstant(), level.get().getLevelDate().toInstant());
         assertEquals("0", level.get().getDurationId());
     }
 

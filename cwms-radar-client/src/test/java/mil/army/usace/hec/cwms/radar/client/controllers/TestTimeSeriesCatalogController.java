@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,19 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.io.IOException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.ServerNotFoundException;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalogEntry;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesExtents;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestTimeSeriesCatalogController extends TestController {
 
@@ -65,9 +63,9 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
         List<TimeSeriesExtents> extents = catalogEntry.getExtents();
         TimeSeriesExtents timeSeriesExtents = extents.get(0);
-        assertEquals(ZonedDateTime.of(2005, 1, 2, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getEarliestTime());
-        assertEquals(ZonedDateTime.of(2005, 2, 1, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getLatestTime());
-        assertEquals(ZonedDateTime.of(2018, 7, 5, 20, 40, 59, 398000000, ZoneId.of("UTC")), timeSeriesExtents.getLastUpdate());
+        assertEquals(ZonedDateTime.of(2005, 1, 2, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getEarliestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2005, 2, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getLatestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2018, 7, 5, 20, 40, 59, 398000000, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getLastUpdate().toInstant());
         assertNull(timeSeriesExtents.getVersionTime());
     }
 
@@ -96,9 +94,9 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
         List<TimeSeriesExtents> extents = catalogEntry.getExtents();
         TimeSeriesExtents timeSeriesExtents = extents.get(0);
-        assertEquals(ZonedDateTime.of(2016, 6, 1, 1, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getEarliestTime());
-        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getLatestTime());
-        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getVersionTime());
+        assertEquals(ZonedDateTime.of(2016, 6, 1, 1, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getEarliestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getLatestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2018, 8, 29, 21, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getVersionTime().toInstant());
     }
 
     @Test
@@ -126,8 +124,8 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
         List<TimeSeriesExtents> extents = catalogEntry.getExtents();
         TimeSeriesExtents timeSeriesExtents = extents.get(0);
-        assertEquals(ZonedDateTime.of(2005, 1, 2, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getEarliestTime());
-        assertEquals(ZonedDateTime.of(2005, 2, 1, 0, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getLatestTime());
+        assertEquals(ZonedDateTime.of(2005, 1, 2, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getEarliestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2005, 2, 1, 0, 0, 0, 0, ZoneId.of("GMT")).toInstant(), timeSeriesExtents.getLatestTime().toInstant());
         assertNull(timeSeriesExtents.getVersionTime());
 
         input.cursor(catalog.getNextPage());
@@ -145,8 +143,8 @@ class TestTimeSeriesCatalogController extends TestController {
         assertEquals("US/Central", catalogEntry.getLocationTimeZone());
         assertEquals(0, catalogEntry.getIntervalOffsetMinutes());
         timeSeriesExtents = catalogEntry.getExtents().get(0);
-        assertEquals(ZonedDateTime.of(2013, 12, 6, 20, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getEarliestTime());
-        assertEquals(ZonedDateTime.of(2018, 8, 29, 23, 0, 0, 0, ZoneId.of("UTC")), timeSeriesExtents.getLatestTime());
+        assertEquals(ZonedDateTime.of(2013, 12, 6, 20, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getEarliestTime().toInstant());
+        assertEquals(ZonedDateTime.of(2018, 8, 29, 23, 0, 0, 0, ZoneId.of("UTC")).toInstant(), timeSeriesExtents.getLatestTime().toInstant());
         assertNull(timeSeriesExtents.getVersionTime());
     }
 

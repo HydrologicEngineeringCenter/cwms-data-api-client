@@ -1,0 +1,31 @@
+{
+  "office-id": "SWT",
+  "name": "TEST.Text.Inst.1Hour.0.MockTest",
+  "interval-offset": 0,
+  "time-zone": "UTC",
+  "date-version-type": "MAX_AGGREGATE",
+  "version-date": "2024-02-12T00:00:00Z",
+  "regular-text-values": [
+    {
+      "date-time": "2024-02-12T00:00:00Z",
+      "data-entry-date": "2024-02-12T00:00:00Z",
+      "attribute": 0,
+      "text-value": "Hello, Davis",
+      "filename": "filename.txt",
+      "media-type": "application/json",
+      "quality-code": 0,
+      "dest-flag": 1,
+      "value-url": "www.testHelloDavis.com"
+    },
+    {
+      "date-time": "2024-02-12T01:00:00Z",
+      "data-entry-date": "2024-02-12T00:00:00Z",
+      "text-value": "Hello, USA",
+      "filename": "filename2.txt",
+      "media-type": "application/json",
+      "quality-code": 0,
+      "dest-flag": 1,
+      "value-url": "www.testHelloUSA.com"
+    }
+  ]
+}
