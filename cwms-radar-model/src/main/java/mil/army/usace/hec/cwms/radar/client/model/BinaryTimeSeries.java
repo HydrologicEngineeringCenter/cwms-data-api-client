@@ -31,14 +31,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 
 /**
- * TextTimeSeries
+ * BinaryTimeSeries
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-18T13:18:54.786175600-07:00[America/Los_Angeles]")
-public class TextTimeSeries {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-19T14:26:29.428379500-07:00[America/Los_Angeles]")
+public class BinaryTimeSeries {
     @JsonProperty("office-id")
     private String officeId = null;
 
@@ -57,11 +57,11 @@ public class TextTimeSeries {
     @JsonProperty("version-date")
     private Instant versionDate = null;
 
-    @JsonProperty("regular-text-values")
+    @JsonProperty("binary-values")
     @Valid
-    private List<RegularTextTimeSeriesRow> regularTextValues = new ArrayList<>();
+    private List<BinaryTimeSeriesRow> binaryValues = new ArrayList<>();
 
-    public TextTimeSeries officeId(String officeId) {
+    public BinaryTimeSeries officeId(String officeId) {
         this.officeId = officeId;
         return this;
     }
@@ -81,7 +81,7 @@ public class TextTimeSeries {
         this.officeId = officeId;
     }
 
-    public TextTimeSeries name(String name) {
+    public BinaryTimeSeries name(String name) {
         this.name = name;
         return this;
     }
@@ -100,7 +100,7 @@ public class TextTimeSeries {
         this.name = name;
     }
 
-    public TextTimeSeries intervalOffset(Long intervalOffset) {
+    public BinaryTimeSeries intervalOffset(Long intervalOffset) {
         this.intervalOffset = intervalOffset;
         return this;
     }
@@ -119,7 +119,7 @@ public class TextTimeSeries {
         this.intervalOffset = intervalOffset;
     }
 
-    public TextTimeSeries timeZone(String timeZone) {
+    public BinaryTimeSeries timeZone(String timeZone) {
         this.timeZone = timeZone;
         return this;
     }
@@ -138,7 +138,7 @@ public class TextTimeSeries {
         this.timeZone = timeZone;
     }
 
-    public TextTimeSeries dateVersionType(DateVersionTypeEnum dateVersionType) {
+    public BinaryTimeSeries dateVersionType(DateVersionTypeEnum dateVersionType) {
         this.dateVersionType = dateVersionType;
         return this;
     }
@@ -157,7 +157,7 @@ public class TextTimeSeries {
         this.dateVersionType = dateVersionType;
     }
 
-    public TextTimeSeries versionDate(Instant versionDate) {
+    public BinaryTimeSeries versionDate(Instant versionDate) {
         this.versionDate = versionDate;
         return this;
     }
@@ -177,31 +177,31 @@ public class TextTimeSeries {
         this.versionDate = versionDate;
     }
 
-    public TextTimeSeries regularTextValues(List<RegularTextTimeSeriesRow> regularTextValues) {
-        this.regularTextValues = regularTextValues;
+    public BinaryTimeSeries binaryValues(List<BinaryTimeSeriesRow> binaryValues) {
+        this.binaryValues = binaryValues;
         return this;
     }
 
-    public TextTimeSeries addRegularTextValuesItem(RegularTextTimeSeriesRow regularTextValuesItem) {
-        if (this.regularTextValues == null) {
-            this.regularTextValues = new ArrayList<RegularTextTimeSeriesRow>();
+    public BinaryTimeSeries addBinaryValuesItem(BinaryTimeSeriesRow binaryValuesItem) {
+        if (this.binaryValues == null) {
+            this.binaryValues = new ArrayList<BinaryTimeSeriesRow>();
         }
-        this.regularTextValues.add(regularTextValuesItem);
+        this.binaryValues.add(binaryValuesItem);
         return this;
     }
 
     /**
-     * Get regularTextValues
+     * Get binaryValues
      *
-     * @return regularTextValues
+     * @return binaryValues
      **/
     @Valid
-    public List<RegularTextTimeSeriesRow> getRegularTextValues() {
-        return regularTextValues;
+    public List<BinaryTimeSeriesRow> getBinaryValues() {
+        return binaryValues;
     }
 
-    public void setRegularTextValues(List<RegularTextTimeSeriesRow> regularTextValues) {
-        this.regularTextValues = regularTextValues;
+    public void setBinaryValues(List<BinaryTimeSeriesRow> binaryValues) {
+        this.binaryValues = binaryValues;
     }
 
 
@@ -213,26 +213,25 @@ public class TextTimeSeries {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TextTimeSeries textTimeSeries = (TextTimeSeries) o;
-        return this.officeId == null || textTimeSeries.officeId == null ? Objects.equals(this.officeId, textTimeSeries.officeId) : this.officeId.equalsIgnoreCase(textTimeSeries.officeId)
-                && this.name == null || textTimeSeries.name == null ? Objects.equals(this.name, textTimeSeries.name) : this.name.equalsIgnoreCase(textTimeSeries.name)
-                && Objects.equals(this.intervalOffset, textTimeSeries.intervalOffset)
-                && this.timeZone == null || textTimeSeries.timeZone == null ? Objects.equals(this.timeZone, textTimeSeries.timeZone) : this.timeZone.equalsIgnoreCase(textTimeSeries.timeZone)
-                && this.dateVersionType == null || textTimeSeries.dateVersionType == null ? Objects.equals(this.dateVersionType, textTimeSeries.dateVersionType) : this.dateVersionType == textTimeSeries.dateVersionType
-                && Objects.equals(this.versionDate, textTimeSeries.versionDate)
-                && Objects.equals(this.regularTextValues, textTimeSeries.regularTextValues)
-                ;
+        BinaryTimeSeries binaryTimeSeries = (BinaryTimeSeries) o;
+        return this.officeId == null || binaryTimeSeries.officeId == null ? Objects.equals(this.officeId, binaryTimeSeries.officeId) : this.officeId.equalsIgnoreCase(binaryTimeSeries.officeId)
+                && this.name == null || binaryTimeSeries.name == null ? Objects.equals(this.name, binaryTimeSeries.name) : this.name.equalsIgnoreCase(binaryTimeSeries.name)
+                && Objects.equals(this.intervalOffset, binaryTimeSeries.intervalOffset)
+                && this.timeZone == null || binaryTimeSeries.timeZone == null ? Objects.equals(this.timeZone, binaryTimeSeries.timeZone) : this.timeZone.equalsIgnoreCase(binaryTimeSeries.timeZone)
+                && this.dateVersionType == null || binaryTimeSeries.dateVersionType == null ? Objects.equals(this.dateVersionType, binaryTimeSeries.dateVersionType) : this.dateVersionType == binaryTimeSeries.dateVersionType
+                && Objects.equals(this.versionDate, binaryTimeSeries.versionDate)
+                && Objects.equals(this.binaryValues, binaryTimeSeries.binaryValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), name == null ? 0 : name.toLowerCase(), intervalOffset, timeZone == null ? 0 : timeZone.toLowerCase(), dateVersionType, versionDate, regularTextValues);
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), name == null ? 0 : name.toLowerCase(), intervalOffset, timeZone == null ? 0 : timeZone.toLowerCase(), dateVersionType, versionDate, binaryValues);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class TextTimeSeries {\n");
+        sb.append("class BinaryTimeSeries {\n");
 
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
@@ -240,7 +239,7 @@ public class TextTimeSeries {
         sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
         sb.append("    dateVersionType: ").append(toIndentedString(dateVersionType)).append("\n");
         sb.append("    versionDate: ").append(toIndentedString(versionDate)).append("\n");
-        sb.append("    regularTextValues: ").append(toIndentedString(regularTextValues)).append("\n");
+        sb.append("    binaryValues: ").append(toIndentedString(binaryValues)).append("\n");
         sb.append("}");
         return sb.toString();
     }
