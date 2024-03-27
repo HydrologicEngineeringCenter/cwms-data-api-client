@@ -48,13 +48,16 @@ class TestBinaryTimeSeriesEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant versionDate = ZonedDateTime.of(2018, 1, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         BinaryTimeSeriesEndpointInput.GetAll input = BinaryTimeSeriesEndpointInput.getAll("arbu.Binary.Inst.1Hour.0.Ccp-Rev", "SWT", start, end)
                 .pageSize(10)
+                .versionDate(versionDate)
                 .page("page");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
         assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals(versionDate.toString(), mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
         assertEquals(Integer.toString(10), mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
         assertEquals("page", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
         assertEquals("arbu.Binary.Inst.1Hour.0.Ccp-Rev", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
@@ -113,6 +116,7 @@ class TestBinaryTimeSeriesEndpointInput {
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(BEGIN_PARAMETER_QUERY));
         assertNull(mockHttpRequestBuilder.getQueryParameter(END_PARAMETER_QUERY));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
         assertEquals("*", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.BINARY_TYPE_MASK_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
@@ -122,14 +126,17 @@ class TestBinaryTimeSeriesEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         Instant start = ZonedDateTime.of(2018, 1, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         Instant end = ZonedDateTime.of(2018, 2, 5, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant versionDate = ZonedDateTime.of(2018, 1, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
         BinaryTimeSeriesEndpointInput.Delete input = BinaryTimeSeriesEndpointInput.delete("arbu.Binary.Inst.1Hour.0.Ccp-Rev", "SWT")
                 .begin(start)
                 .end(end)
+                .versionDate(versionDate)
                 .binaryTypeMask("Hello, World");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_PARAMETER_QUERY));
         assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_PARAMETER_QUERY));
+        assertEquals(versionDate.toString(), mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
         assertEquals("Hello, World", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.Delete.BINARY_TYPE_MASK_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }

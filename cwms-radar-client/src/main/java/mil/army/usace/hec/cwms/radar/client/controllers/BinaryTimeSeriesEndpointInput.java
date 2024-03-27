@@ -60,10 +60,12 @@ public final class BinaryTimeSeriesEndpointInput {
         static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
         static final String NAME_QUERY_PARAMETER = "name";
         static final String BINARY_TYPE_MASK_PARAMETER = "binary-type-mask";
+        static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
         private final String timeSeriesId;
         private final String office;
         private final Instant begin;
         private final Instant end;
+        private Instant versionDate;
         private String page;
         private Integer pageSize;
         private String binaryTypeMask = "*";
@@ -85,6 +87,11 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
+        public GetAll versionDate(Instant versionDate) {
+            this.versionDate = versionDate;
+            return this;
+        }
+
         public GetAll getBinaryTypeMask(String binaryTypeMask) {
             this.binaryTypeMask = Objects.requireNonNull(binaryTypeMask, "Cannot retrieve binary time series without a type mask");
             return this;
@@ -95,11 +102,13 @@ public final class BinaryTimeSeriesEndpointInput {
             String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
             String beginString = begin.toString();
             String endString = end.toString();
+            String versionDateString = Optional.ofNullable(versionDate).map(Object::toString).orElse(null);
             return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, timeSeriesId)
                     .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
                     .addQueryParameter(BINARY_TYPE_MASK_PARAMETER, binaryTypeMask)
                     .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
                     .addQueryParameter(END_QUERY_PARAMETER, endString)
+                    .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDateString)
                     .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                     .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
@@ -135,11 +144,13 @@ public final class BinaryTimeSeriesEndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String BEGIN_PARAMETER_QUERY = "begin";
         static final String END_PARAMETER_QUERY = "end";
+        static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
         static final String BINARY_TYPE_MASK_QUERY_PARAMETER = "binary-type-mask";
         private final String timeSeriesId;
         private final String officeId;
         private Instant begin;
         private Instant end;
+        private Instant versionDate;
         private String binaryTypeMask = "*";
 
         private Delete(String timeSeriesId, String officeId) {
@@ -161,6 +172,11 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
+        public Delete versionDate(Instant versionDate) {
+            this.versionDate = versionDate;
+            return this;
+        }
+
         public Delete binaryTypeMask(String binaryTypeMask) {
             this.binaryTypeMask = Objects.requireNonNull(binaryTypeMask, "Null binary mask is not supported for deleting binary time series");
             return this;
@@ -170,10 +186,12 @@ public final class BinaryTimeSeriesEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             String beginString = Optional.ofNullable(begin).map(Instant::toString).orElse(null);
             String endString = Optional.ofNullable(end).map(Instant::toString).orElse(null);
+            String versionDateString = Optional.ofNullable(versionDate).map(Instant::toString).orElse(null);
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(BINARY_TYPE_MASK_QUERY_PARAMETER, binaryTypeMask)
                     .addQueryParameter(BEGIN_PARAMETER_QUERY, beginString)
                     .addQueryParameter(END_PARAMETER_QUERY, endString)
+                    .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDateString)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
