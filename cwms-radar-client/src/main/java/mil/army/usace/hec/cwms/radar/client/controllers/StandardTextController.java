@@ -39,7 +39,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 
 public final class StandardTextController {
 
-    private static final String STANDARD_TEXT_ENDPOINT = "timeseries/text/standard-text-id";
+    private static final String STANDARD_TEXT_ENDPOINT = "standard-text-id";
 
     public StandardTextCatalog retrieveStandardTextCatalog(ApiConnectionInfo apiConnectionInfo, StandardTextEndpointInput.GetAll input)
             throws IOException {
