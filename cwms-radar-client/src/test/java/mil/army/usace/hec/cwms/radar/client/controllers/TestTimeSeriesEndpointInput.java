@@ -47,7 +47,6 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpoin
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.CREATE_AS_LRTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.OVERRIDE_PROTECTION_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.STORE_RULE_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.VERSION_DATE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -102,7 +101,6 @@ class TestTimeSeriesEndpointInput {
         TimeSeriesEndpointInput.Post input = TimeSeriesEndpointInput.post(timeSeries);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(timeSeries, input.timeSeries());
-        assertNull(mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
         assertEquals("false", mockHttpRequestBuilder.getQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER));
         assertEquals("false", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(STORE_RULE_PARAMETER));
@@ -118,10 +116,8 @@ class TestTimeSeriesEndpointInput {
         TimeSeriesEndpointInput.Post input = TimeSeriesEndpointInput.post(timeSeries)
             .createAsLrts(true)
             .storeRule("DELETE_INSERT")
-            .overrideProtection(true)
-            .versionDate(now);
+            .overrideProtection(true);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(now.toString(), mockHttpRequestBuilder.getQueryParameter(VERSION_DATE_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER));
         assertEquals("DELETE_INSERT", mockHttpRequestBuilder.getQueryParameter(STORE_RULE_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(OVERRIDE_PROTECTION_PARAMETER));

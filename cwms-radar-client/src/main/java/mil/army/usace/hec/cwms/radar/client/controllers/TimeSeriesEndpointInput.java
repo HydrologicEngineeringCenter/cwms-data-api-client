@@ -155,12 +155,10 @@ public final class TimeSeriesEndpointInput {
 
     public static final class Post extends EndpointInput {
 
-        static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
         static final String CREATE_AS_LRTS_QUERY_PARAMETER = "create-as-lrts";
         static final String STORE_RULE_PARAMETER = "store-rule";
         static final String OVERRIDE_PROTECTION_PARAMETER = "override-protection";
         private final TimeSeries timeSeries;
-        private Instant version;
         private boolean createAsLrts = false;
         private boolean overrideProtection;
         private String storeRule;
@@ -171,11 +169,6 @@ public final class TimeSeriesEndpointInput {
 
         TimeSeries timeSeries() {
             return timeSeries;
-        }
-
-        public Post versionDate(Instant version) {
-            this.version = version;
-            return this;
         }
 
         public Post createAsLrts(boolean createAsLrts) {
@@ -196,12 +189,7 @@ public final class TimeSeriesEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             //Plan to add support for override protection and store rules here
-            String versionString = null;
-            if (version != null) {
-                versionString = version.toString();
-            }
-            return httpRequestBuilder.addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionString)
-                .addQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER, Boolean.toString(createAsLrts))
+            return httpRequestBuilder.addQueryParameter(CREATE_AS_LRTS_QUERY_PARAMETER, Boolean.toString(createAsLrts))
                 .addQueryParameter(STORE_RULE_PARAMETER, storeRule)
                 .addQueryParameter(OVERRIDE_PROTECTION_PARAMETER, Boolean.toString(overrideProtection))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
