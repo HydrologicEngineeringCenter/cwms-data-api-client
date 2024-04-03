@@ -92,7 +92,7 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
-        public GetAll getBinaryTypeMask(String binaryTypeMask) {
+        public GetAll binaryTypeMask(String binaryTypeMask) {
             this.binaryTypeMask = Objects.requireNonNull(binaryTypeMask, "Cannot retrieve binary time series without a type mask");
             return this;
         }
