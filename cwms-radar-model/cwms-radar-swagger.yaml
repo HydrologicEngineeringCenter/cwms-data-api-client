@@ -1816,17 +1816,71 @@ paths:
         - ApiKey: []
   /swt-data/levels/{level-id}/timeseries:
     get:
+      tags:
+        - Levels
       summary: Get swtData levels with levelId timeseries
+      description: Retrieves requested Location Level
       operationId: getSwtDataLevelsWithLevelIdTimeseries
       parameters:
         - name: level-id
           in: path
+          description: Specifies the requested location level.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the office of the Location Level to be returned
+          required: true
+          schema:
+            type: string
+        - name: interval
+          in: query
+          description: 'Interval time step for the returned time series. Pseudo-regular interval definitions will be treated like local regular. Irregular interval will generate daily time steps. Default: 0'
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The format for this field is ISO 8601 extended, with optional timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: "Specifies the time zone of the values of the begin and end fields (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if begin was specified with offset and timezone."
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: Desired unit for the values retrieved.
           required: true
           schema:
             type: string
       responses:
+        '200':
+          description: A CWMS Time Series representation of the specified location level.
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            '':
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
         '400':
-          description: Bad Request
+          description: Invalid parameter combination
           content:
             application/json:
               schema:
@@ -1844,7 +1898,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: The provided combination of parameters did not find a timeseries.
           content:
             application/json:
               schema:
@@ -1855,10 +1909,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
       security: []
   /swt-data/timeseries/recent/{group-id}:
     get:
+      tags:
+        - TimeSeries
       summary: Get swtData timeseries recent with groupId
+      description: Returns CWMS Timeseries Groups Data
       operationId: getSwtDataTimeseriesRecentWithGroupId
       parameters:
         - name: group-id
@@ -1866,7 +1925,35 @@ paths:
           required: true
           schema:
             type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the category id of the timeseries to be included in the response.  Optional.
+          schema:
+            type: string
+        - name: group-id
+          in: query
+          description: Specifies the group id of the timeseries to be included in the response.  Optional.
+          schema:
+            type: string
+        - name: ts-ids
+          in: query
+          description: Specifies a list of timeseries ids to be included in the response.  Optional. Cannot be used in combination with category_id and group_id.
+          schema:
+            type: string
       responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tsv'
         '400':
           description: Bad Request
           content:
@@ -1886,7 +1973,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: Based on the combination of inputs provided the timeseries group(s) were not found.
           content:
             application/json:
               schema:
@@ -1897,6 +1984,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
+        '501':
+          description: request format is not implemented
       security: []
   /swt-data/standard-text-id/{standard-text-id}:
     get:
@@ -6032,6 +6121,614 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /swt-data/forecast-instance/{name}:
+    get:
+      tags:
+        - Forecast
+      summary: Get swtData forecastInstance with name
+      description: Used to get all forecast instances for a given forecast spec
+      operationId: getSwtDataForecastInstanceWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec whose forecast instance data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: forecast-date
+          in: query
+          description: Specifies the forecast date time of the forecast instance to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: issue-date
+          in: query
+          description: Specifies the issue date time of the forecast instance to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose forecast instance is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: Specifies the designator of the forecast spec whose forecast instance data to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of elements of the data set you've selected.
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/ForecastInstance'
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a forecast instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    delete:
+      tags:
+        - Forecast
+      summary: Delete swtData forecastInstance with name
+      description: Used to delete forecast instance data based on unique fields
+      operationId: deleteSwtDataForecastInstanceWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec associated with the forecast instanceto be deleted.
+          required: true
+          schema:
+            type: string
+        - name: forecast-date
+          in: query
+          description: Specifies the forecast date time of the forecast instance to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: issue-date
+          in: query
+          description: Specifies the issue date time of the forecast instance to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec associated with the forecast instance to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: Specifies the designator of the forecast spec associated with the forecast instance to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a forecast instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Forecast
+      summary: Patch swtData forecastInstance with name
+      description: Update a forecast instance with new max age, notes, forecast fileand forecast info key/value pairs.
+      operationId: patchSwtDataForecastInstanceWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec to be updated.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/ForecastInstance'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the ForecastInstance was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/forecast-instance:
+    get:
+      tags:
+        - Forecast
+      summary: Get swtData forecastInstance
+      description: Used to get all forecast instances for a given forecast spec
+      operationId: getSwtDataForecastInstance
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose forecast instance is to be included in the response. Default will be all offices.
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the spec id of the forecast spec whose forecast instance data is to be included in the response. Default will be all names.
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: 'Specifies the designator of the forecast spec whose forecast instance data to be included in the response. '
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of elements of the data set you've selected.
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/ForecastInstance'
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    post:
+      tags:
+        - Forecast
+      summary: Post swtData forecastInstance
+      description: Used to create and save a forecast instance
+      operationId: postSwtDataForecastInstance
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/ForecastInstance'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/forecast-spec/{name}:
+    get:
+      tags:
+        - Forecast
+      summary: Get swtData forecastSpec with name
+      description: Used to query a single forecast spec record
+      operationId: getSwtDataForecastSpecWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: Specifies the designator of the forecast spec whose data to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the requested forecast spec
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/ForecastSpec'
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a forecast spec.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    delete:
+      tags:
+        - Forecast
+      summary: Delete swtData forecastSpec with name
+      description: Used to delete forecast spec data based on unique fields
+      operationId: deleteSwtDataForecastSpecWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec whose data is to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose data is to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: Specifies the designator of the forecast spec whose data is to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a forecast spec.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Forecast
+      summary: Patch swtData forecastSpec with name
+      description: Update a forecast spec with provided values
+      operationId: patchSwtDataForecastSpecWithName
+      parameters:
+        - name: name
+          in: path
+          description: Forecast spec id to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/ForecastSpec'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the forecaskspec was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /swt-data/forecast-spec:
+    get:
+      tags:
+        - Forecast
+      summary: Get swtData forecastSpec
+      description: Used to query multiple forecast specs
+      operationId: getSwtDataForecastSpec
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose data is to be included in the response.
+          schema:
+            type: string
+        - name: id-mask
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a>  that specifies the spec IDs to be included in the response.
+          schema:
+            type: string
+        - name: designator-mask
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a>  that specifies the designator of the forecast spec whose data to be included in the response.
+          schema:
+            type: string
+        - name: location-mask
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a>  that specifies the location of the forecast spec whose data to be included in the response.
+          schema:
+            type: string
+        - name: source-entity
+          in: query
+          description: Specifies the source identity of the forecast spec whose data is to be included in the response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of elements of the data set you've selected.
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/ForecastSpec'
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    post:
+      tags:
+        - Forecast
+      summary: Post swtData forecastSpec
+      description: Used to create and save forecast spec data
+      operationId: postSwtDataForecastSpec
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/ForecastSpec'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
 components:
   schemas:
     CdaError:
@@ -6431,6 +7128,240 @@ components:
           readOnly: true
       xml:
         name: location-levels
+    Offset:
+      type: object
+      properties:
+        estimate:
+          type: boolean
+          xml:
+            attribute: true
+        toDatum:
+          type: string
+          xml:
+            name: to-datum
+        value:
+          type: number
+          format: double
+    TimeSeries:
+      required:
+        - units
+      type: object
+      properties:
+        begin:
+          type: string
+          description: The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        date-version-type:
+          type: string
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+          enum:
+            - MAX_AGGREGATE
+            - SINGLE_VERSION
+            - UNVERSIONED
+        end:
+          type: string
+          description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        interval:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  dateBased:
+                    type: boolean
+                  duration:
+                    type: object
+                    properties:
+                      seconds:
+                        type: integer
+                        format: int64
+                      nano:
+                        type: integer
+                        format: int32
+                      zero:
+                        type: boolean
+                      negative:
+                        type: boolean
+                  durationEstimated:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+            nano:
+              type: integer
+              format: int32
+            zero:
+              type: boolean
+            negative:
+              type: boolean
+          description: The interval of the time-series, in ISO-8601 duration format
+          format: Java Duration
+          readOnly: true
+        interval-offset:
+          type: integer
+          description: Offset from top of interval
+          format: int64
+          readOnly: true
+        name:
+          type: string
+          description: Time-series name
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        office-id:
+          type: string
+          description: Office ID that owns the time-series
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        time-zone:
+          type: string
+          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        units:
+          type: string
+          description: The units of the time series data
+        value-columns:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/TimeSeries.Column'
+        values:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: array
+            example:
+              - 1509654000000
+              - 54.3
+              - 0
+            items:
+              type: object
+              properties:
+                date-time:
+                  type: integer
+                  description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+                  format: int64
+                value:
+                  type: number
+                  description: Requested time-series data value
+                  format: double
+                quality-code:
+                  type: integer
+                  format: int32
+              description: List of retrieved time-series values
+        version-date:
+          type: string
+          description: The version date of the time series trace
+          format: date-time
+        vertical-datum-info:
+          $ref: '#/components/schemas/VerticalDatumInfo'
+      xml:
+        name: timeseries
+    TimeSeries.Column:
+      type: object
+      properties:
+        name:
+          type: string
+        ordinal:
+          type: integer
+          format: int32
+        datatype:
+          type: string
+      readOnly: true
+    TimeSeries.Record:
+      type: object
+      properties:
+        date-time:
+          type: integer
+          description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+          format: int64
+        value:
+          type: number
+          description: Requested time-series data value
+          format: double
+        quality-code:
+          type: integer
+          format: int32
+      description: List of retrieved time-series values
+    VerticalDatumInfo:
+      type: object
+      properties:
+        office:
+          type: string
+          xml:
+            attribute: true
+        unit:
+          type: string
+          xml:
+            attribute: true
+        location:
+          type: string
+        native-datum:
+          type: string
+        elevation:
+          type: number
+          format: double
+        offsets:
+          type: array
+          xml:
+            name: offset
+          items:
+            $ref: '#/components/schemas/Offset'
+      xml:
+        name: vertical-datum-info
+    Tsv:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/TsvId'
+        value:
+          type: number
+          format: double
+        qualityCode:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    TsvId:
+      type: object
+      properties:
+        tsCode:
+          type: integer
+          format: int64
+        dateTime:
+          type: string
+          format: date-time
+        versionDate:
+          type: string
+          format: date-time
+        dataEntryDate:
+          type: string
+          format: date-time
     StandardTextId:
       required:
         - office-id
@@ -6602,6 +7533,7 @@ components:
           format: int64
         active:
           type: boolean
+      description: List of Time Series IDs belonging to this Forecast Spec
     TimeSeriesIdentifierDescriptors:
       type: object
       properties:
@@ -6668,208 +7600,6 @@ components:
       description: A representation of a timeseries group
       xml:
         name: timeseries-group
-    Offset:
-      type: object
-      properties:
-        estimate:
-          type: boolean
-          xml:
-            attribute: true
-        toDatum:
-          type: string
-          xml:
-            name: to-datum
-        value:
-          type: number
-          format: double
-    TimeSeries:
-      required:
-        - units
-      type: object
-      properties:
-        begin:
-          type: string
-          description: The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
-          format: date-time
-          readOnly: true
-        date-version-type:
-          type: string
-          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
-          enum:
-            - MAX_AGGREGATE
-            - SINGLE_VERSION
-            - UNVERSIONED
-        end:
-          type: string
-          description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
-          format: date-time
-          readOnly: true
-        interval:
-          type: object
-          properties:
-            seconds:
-              type: integer
-              format: int64
-            nano:
-              type: integer
-              format: int32
-            units:
-              type: array
-              items:
-                type: object
-                properties:
-                  dateBased:
-                    type: boolean
-                  duration:
-                    type: object
-                    properties:
-                      seconds:
-                        type: integer
-                        format: int64
-                      nano:
-                        type: integer
-                        format: int32
-                      zero:
-                        type: boolean
-                      negative:
-                        type: boolean
-                  durationEstimated:
-                    type: boolean
-                  timeBased:
-                    type: boolean
-            zero:
-              type: boolean
-            negative:
-              type: boolean
-          description: The interval of the time-series, in ISO-8601 duration format
-          format: Java Duration
-          readOnly: true
-        interval-offset:
-          type: integer
-          description: Offset from top of interval
-          format: int64
-          readOnly: true
-        name:
-          type: string
-          description: Time-series name
-        next-page:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          readOnly: true
-        office-id:
-          type: string
-          description: Office ID that owns the time-series
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        page-size:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          readOnly: true
-        time-zone:
-          type: string
-          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
-        units:
-          type: string
-          description: The units of the time series data
-        value-columns:
-          type: array
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/TimeSeries.Column'
-        values:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            type: array
-            example:
-              - 1509654000000
-              - 54.3
-              - 0
-            items:
-              type: object
-              properties:
-                date-time:
-                  type: integer
-                  description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
-                  format: int64
-                value:
-                  type: number
-                  description: Requested time-series data value
-                  format: double
-                quality-code:
-                  type: integer
-                  format: int32
-              description: List of retrieved time-series values
-        version-date:
-          type: string
-          description: The version date of the time series trace
-          format: date-time
-        vertical-datum-info:
-          $ref: '#/components/schemas/VerticalDatumInfo'
-      xml:
-        name: timeseries
-    TimeSeries.Column:
-      type: object
-      properties:
-        name:
-          type: string
-        ordinal:
-          type: integer
-          format: int32
-        datatype:
-          type: string
-      readOnly: true
-    TimeSeries.Record:
-      type: object
-      properties:
-        date-time:
-          type: integer
-          description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
-          format: int64
-        value:
-          type: number
-          description: Requested time-series data value
-          format: double
-        quality-code:
-          type: integer
-          format: int32
-      description: List of retrieved time-series values
-    VerticalDatumInfo:
-      type: object
-      properties:
-        office:
-          type: string
-          xml:
-            attribute: true
-        unit:
-          type: string
-          xml:
-            attribute: true
-        location:
-          type: string
-        native-datum:
-          type: string
-        elevation:
-          type: number
-          format: double
-        offsets:
-          type: array
-          xml:
-            name: offset
-          items:
-            $ref: '#/components/schemas/Offset'
-      xml:
-        name: vertical-datum-info
     StoreRule:
       type: string
       enum:
@@ -7566,19 +8296,19 @@ components:
           type: boolean
         poolName:
           $ref: '#/components/schemas/PoolNameType'
+        projectId:
+          type: string
         bottomLevelId:
           type: string
         topLevelId:
-          type: string
-        projectId:
           type: string
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     Pools:
       type: object
@@ -7622,6 +8352,118 @@ components:
           type: string
         description:
           type: string
+    ForecastInstance:
+      type: object
+      properties:
+        spec:
+          $ref: '#/components/schemas/ForecastSpec'
+        date-time:
+          type: string
+          format: date-time
+          xml:
+            attribute: true
+        issue-date-time:
+          type: string
+          format: date-time
+          xml:
+            attribute: true
+        first-date-time:
+          type: string
+          format: date-time
+          xml:
+            attribute: true
+        last-date-time:
+          type: string
+          format: date-time
+          xml:
+            attribute: true
+        max-age:
+          type: integer
+          format: int32
+          xml:
+            attribute: true
+        time-series-count:
+          type: integer
+          format: int32
+          xml:
+            attribute: true
+        notes:
+          type: string
+          description: Forecast Instance Notes
+          xml:
+            attribute: true
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        filename:
+          type: string
+          description: Forecast Filename
+          xml:
+            attribute: true
+        file-description:
+          type: string
+          description: Description of Forecast File
+          xml:
+            attribute: true
+        file-data:
+          type: array
+          description: Forecast File binary data
+          xml:
+            name: forecast-data
+          items:
+            type: string
+            description: Forecast File binary data
+            format: byte
+            xml:
+              name: forecast-data
+        file-data-url:
+          type: string
+          description: Link to Forecast File binary data
+          xml:
+            attribute: true
+      xml:
+        name: forecast-instance
+    ForecastSpec:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        spec-id:
+          type: string
+          description: Forecast Spec ID
+        designator:
+          type: string
+          description: Forecast Designator
+          xml:
+            attribute: true
+        location-ids:
+          uniqueItems: true
+          type: array
+          description: Location IDs
+          items:
+            type: string
+            description: Location IDs
+            xml:
+              name: location-ids
+        source-entity-id:
+          type: string
+          description: Source Entity ID
+        description:
+          type: string
+          description: Description of Forecast
+          xml:
+            attribute: true
+        time-series-ids:
+          type: array
+          description: List of Time Series IDs belonging to this Forecast Spec
+          items:
+            $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+      xml:
+        name: forecast-spec
   securitySchemes:
     CwmsAAACacAuth:
       type: apiKey
