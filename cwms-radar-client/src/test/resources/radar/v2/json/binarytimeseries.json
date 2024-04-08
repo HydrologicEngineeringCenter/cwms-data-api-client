@@ -26,7 +26,7 @@
           108,
           100
       ],
-      "value-url": "HelloWorld.com",
+      "value-url": "https://localhost:59947/cwms-data/timeseries/binary/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z",
       "quality-code": 0
     }
   ]

@@ -32,7 +32,9 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class BinaryTimeSeriesEndpointInput {
 

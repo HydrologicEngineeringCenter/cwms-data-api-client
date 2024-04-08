@@ -35,10 +35,12 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestTextTimeSeriesController extends TestController {
 
@@ -68,7 +70,42 @@ class TestTextTimeSeriesController extends TestController {
         assertEquals("application/json", regularRow.getMediaType());
         assertEquals(0, regularRow.getQualityCode());
         assertEquals(1, regularRow.getDestFlag());
-        assertEquals("www.testHelloDavis.com", regularRow.getValueUrl());
+        assertEquals("https://localhost:59947/cwms-data/timeseries/text/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z", regularRow.getValueUrl());
+    }
+
+    @Test
+    void testRetrieveFromUrl() throws IOException {
+        String collect = readJsonFile("radar/v2/json/texttimeseries.json");
+
+        // create large string to enqueue
+        // considering 1 character = 2 bytes in Java, hence dividing by 2 to get character count for 100KB size
+        int size = 1024 * 100 / 2;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            // assuming only ascii characters.
+            sb.append((char) (random.nextInt(26) + 'a'));
+        }
+        String largeString = sb.toString();
+
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(largeString);
+        mockHttpServer.start();
+        Instant start = ZonedDateTime.of(2024, 2, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2024, 2, 12, 2, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        TextTimeSeriesEndpointInput.GetAll input = TextTimeSeriesEndpointInput.getAll("TEST.Text.Inst.1Hour.0.MockTest", "SWT", start, end)
+                .page(null);
+        TextTimeSeries timeSeries = new TextTimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        List<RegularTextTimeSeriesRow> regularTextValues = timeSeries.getRegularTextValues();
+        assertEquals(2, regularTextValues.size());
+        RegularTextTimeSeriesRow regularRow = regularTextValues.get(0);
+        assertEquals("https://localhost:59947/cwms-data/timeseries/text/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z", regularRow.getValueUrl());
+
+        String replacementString = String.format("http://localhost:%s", mockHttpServer.getPort());
+        String updatedValueUrl = regularRow.getValueUrl().replace("https://localhost:59947", replacementString);
+        regularRow.setValueUrl(updatedValueUrl);
+        String downloadedString = new TextTimeSeriesController().getTextValueFromUrl(buildConnectionInfo(), regularRow);
+        assertEquals(largeString, downloadedString);
     }
 
     @Test
