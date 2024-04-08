@@ -32,7 +32,9 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class BinaryTimeSeriesEndpointInput {
 
@@ -92,7 +94,7 @@ public final class BinaryTimeSeriesEndpointInput {
             return this;
         }
 
-        public GetAll getBinaryTypeMask(String binaryTypeMask) {
+        public GetAll binaryTypeMask(String binaryTypeMask) {
             this.binaryTypeMask = Objects.requireNonNull(binaryTypeMask, "Cannot retrieve binary time series without a type mask");
             return this;
         }

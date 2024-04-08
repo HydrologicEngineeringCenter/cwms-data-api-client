@@ -25,13 +25,17 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoFactory;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.BinaryTimeSeries;
+import mil.army.usace.hec.cwms.radar.client.model.BinaryTimeSeriesRow;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
@@ -39,6 +43,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 public final class BinaryTimeSeriesController {
 
     private static final String BINARY_TIME_SERIES_ENDPOINT = "timeseries/binary";
+    private static final int BUFFER_SIZE = 1024;
 
     public BinaryTimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, BinaryTimeSeriesEndpointInput.GetAll input)
             throws IOException {
@@ -75,5 +80,36 @@ public final class BinaryTimeSeriesController {
                 .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
+    }
+
+    public byte[] getBytesFromUrl(ApiConnectionInfo apiConnectionInfo, BinaryTimeSeriesRow row) throws IOException {
+        if(row.getValueUrl() == null) {
+            throw new IllegalArgumentException("Value URL is null for this row.");
+        }
+        String valueUrl = row.getValueUrl();
+        return download(ApiConnectionInfoFactory.cloneWithNewUrl(apiConnectionInfo, valueUrl));
+    }
+
+    private byte[] download(ApiConnectionInfo apiConnectionInfo) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo)
+                .get()
+                .withMediaType("application/octet-stream");
+
+        try (HttpRequestResponse response = executor.execute();
+             InputStream inputStream = response.getStream()) {
+            return readFully(inputStream);
+        }
+    }
+
+    // Method to read input stream fully into a String
+    private static byte[] readFully(InputStream inputStream) throws IOException {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            return outputStream.toByteArray();
+        }
     }
 }

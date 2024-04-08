@@ -15,7 +15,7 @@
       "media-type": "application/json",
       "quality-code": 0,
       "dest-flag": 1,
-      "value-url": "www.testHelloDavis.com"
+      "value-url": "https://localhost:59947/cwms-data/timeseries/text/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z"
     },
     {
       "date-time": "2024-02-12T01:00:00Z",
@@ -25,7 +25,7 @@
       "media-type": "application/json",
       "quality-code": 0,
       "dest-flag": 1,
-      "value-url": "www.testHelloUSA.com"
+      "value-url": "https://localhost:8888/timeseries/text/TEST.Text.Inst.1Hour.0.MockTest/value2"
     }
   ]
 }

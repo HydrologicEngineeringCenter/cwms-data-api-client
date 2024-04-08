@@ -30,20 +30,25 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestBinaryTimeSeriesController extends TestController {
 
     @Test
     void testRetrieveTimeSeries() throws IOException {
         String collect = readJsonFile("radar/v2/json/binarytimeseries.json");
+
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Instant start = ZonedDateTime.of(2024, 2, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
@@ -66,8 +71,47 @@ class TestBinaryTimeSeriesController extends TestController {
         assertEquals(0, binaryRow.getDestFlag());
         assertEquals("text/plain", binaryRow.getMediaType());
         assertEquals("filename.txt", binaryRow.getFilename());
-        assertEquals("HelloWorld.com", binaryRow.getValueUrl());
+        assertEquals("https://localhost:59947/cwms-data/timeseries/binary/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z", binaryRow.getValueUrl());
         assertEquals(0, binaryRow.getQualityCode());
+    }
+
+    @Test
+    void testRetrieveFromUrl() throws IOException {
+        String collect = readJsonFile("radar/v2/json/binarytimeseries.json");
+
+        // create large string to enqueue
+        // considering 1 character = 2 bytes in Java, hence dividing by 2 to get character count for 100KB size
+        int size = 1024 * 100 / 2;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            // assuming only ascii characters.
+            sb.append((char) (random.nextInt(26) + 'a'));
+        }
+        String largeString = sb.toString();
+        byte[] b = largeString.getBytes(StandardCharsets.UTF_8);
+
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(largeString);
+        mockHttpServer.start();
+
+        Instant start = ZonedDateTime.of(2024, 2, 12, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        Instant end = ZonedDateTime.of(2024, 2, 12, 2, 0, 0, 0, ZoneId.of("UTC")).toInstant();
+        BinaryTimeSeriesEndpointInput.GetAll input = BinaryTimeSeriesEndpointInput.getAll("TEST.Binary.Inst.1Hour.0.MockTest", "SWT", start, end)
+                .page(null);
+
+        BinaryTimeSeries timeSeries = new BinaryTimeSeriesController().retrieveTimeSeries(buildConnectionInfo(), input);
+        List<BinaryTimeSeriesRow> regularBinaryValues = timeSeries.getBinaryValues();
+        assertEquals(1, regularBinaryValues.size());
+
+        BinaryTimeSeriesRow binaryRow = regularBinaryValues.get(0);
+        assertEquals("https://localhost:59947/cwms-data/timeseries/binary/Test.Flow.Inst.1Hour.0.raw/value?office=SPK&version-date=2008-05-01T15%3A00%3A00Z", binaryRow.getValueUrl());
+
+        String replacementString = String.format("http://localhost:%s", mockHttpServer.getPort());
+        String updatedValueUrl = binaryRow.getValueUrl().replace("https://localhost:59947", replacementString);
+        binaryRow.setValueUrl(updatedValueUrl);
+        byte[] downloadedByteArray = new BinaryTimeSeriesController().getBytesFromUrl(buildConnectionInfo(), binaryRow);
+        assertArrayEquals(downloadedByteArray, b);
     }
 
     @Test

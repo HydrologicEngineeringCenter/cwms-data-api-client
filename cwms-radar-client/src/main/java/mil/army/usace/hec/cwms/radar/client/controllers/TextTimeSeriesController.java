@@ -25,13 +25,18 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoFactory;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.RegularTextTimeSeriesRow;
 import mil.army.usace.hec.cwms.radar.client.model.TextTimeSeries;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
@@ -39,6 +44,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 public final class TextTimeSeriesController {
 
     private static final String TEXT_TIME_SERIES_ENDPOINT = "timeseries/text";
+    private static final int BUFFER_SIZE = 1024;
 
     public TextTimeSeries retrieveTimeSeries(ApiConnectionInfo apiConnectionInfo, TextTimeSeriesEndpointInput.GetAll timeSeriesEndpointInput)
             throws IOException {
@@ -75,5 +81,37 @@ public final class TextTimeSeriesController {
                 .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
+    }
+
+    public String getTextValueFromUrl(ApiConnectionInfo apiConnectionInfo, RegularTextTimeSeriesRow row) throws IOException {
+        if(row.getValueUrl() == null) {
+            throw new IllegalArgumentException("Value URL is null for this row.");
+        }
+        String valueUrl = row.getValueUrl();
+        return download(ApiConnectionInfoFactory.cloneWithNewUrl(apiConnectionInfo, valueUrl));
+    }
+
+    private String download(ApiConnectionInfo apiConnectionInfo) throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo)
+                .get()
+                .withMediaType("text/plain");
+
+        try (HttpRequestResponse response = executor.execute();
+             InputStream inputStream = response.getStream()) {
+            return readFully(inputStream);
+        }
+    }
+
+    // Method to read input stream fully into a String
+    private String readFully(InputStream inputStream) throws IOException {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+            StringBuilder stringBuilder = new StringBuilder();
+            char[] buffer = new char[BUFFER_SIZE];
+            int numCharsRead;
+            while ((numCharsRead = bufferedReader.read(buffer)) != -1) {
+                stringBuilder.append(buffer, 0, numCharsRead);
+            }
+            return stringBuilder.toString();
+        }
     }
 }

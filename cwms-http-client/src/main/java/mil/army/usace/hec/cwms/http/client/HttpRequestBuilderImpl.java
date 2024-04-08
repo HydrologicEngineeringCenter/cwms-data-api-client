@@ -24,20 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.Security;
-import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
-import javax.net.ssl.SSLHandshakeException;
-
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
@@ -163,8 +149,8 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         HttpUrl resolve = httpUrl;
         if (!endpoint.isEmpty()) {
             resolve = httpUrl.newBuilder()
-                .addPathSegments(endpoint)
-                .build();
+                    .addPathSegments(endpoint)
+                    .build();
         }
         MediaType type = MediaType.parse(mediaType);
         if (type == null) {
@@ -218,7 +204,6 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     class HttpRequestExecutorImpl implements HttpRequestExecutor {
-
         @Override
         public final HttpRequestResponse execute() throws IOException {
             HttpRequestResponse retVal = null;

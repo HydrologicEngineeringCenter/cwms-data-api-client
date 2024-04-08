@@ -35,11 +35,21 @@ import java.time.ZonedDateTime;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.Delete.BEGIN_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.Delete.END_PARAMETER_QUERY;
-import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.BEGIN_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.BINARY_TYPE_MASK_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.END_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.NAME_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.PAGE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.PAGE_SIZE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.GetAll.VERSION_DATE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.BinaryTimeSeriesEndpointInput.Post.REPLACE_ALL_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TestBinaryTimeSeriesEndpointInput {
 
@@ -52,6 +62,7 @@ class TestBinaryTimeSeriesEndpointInput {
         BinaryTimeSeriesEndpointInput.GetAll input = BinaryTimeSeriesEndpointInput.getAll("arbu.Binary.Inst.1Hour.0.Ccp-Rev", "SWT", start, end)
                 .pageSize(10)
                 .versionDate(versionDate)
+                .binaryTypeMask("image/png")
                 .page("page");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(BinaryTimeSeriesEndpointInput.GetAll.OFFICE_QUERY_PARAMETER));
@@ -61,6 +72,7 @@ class TestBinaryTimeSeriesEndpointInput {
         assertEquals(Integer.toString(10), mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
         assertEquals("page", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
         assertEquals("arbu.Binary.Inst.1Hour.0.Ccp-Rev", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals("image/png", mockHttpRequestBuilder.getQueryParameter(BINARY_TYPE_MASK_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
