@@ -94,4 +94,15 @@ public final class ForecastInstanceController {
                 .execute()
                 .close();
     }
+
+    public byte[] getBytesFromUrl(ApiConnectionInfo apiConnectionInfo, ForecastInstance instance) throws IOException {
+        byte[] retVal;
+        String fileDataUrl = instance.getFileDataUrl();
+        if(fileDataUrl == null || fileDataUrl.isEmpty()) {
+            retVal = instance.getFileData();
+        } else {
+            retVal = DataDownloadUtil.readBytesFromUrl(apiConnectionInfo, fileDataUrl);
+        }
+        return retVal;
+    }
 }
