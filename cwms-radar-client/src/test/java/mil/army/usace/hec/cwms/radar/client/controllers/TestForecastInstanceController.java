@@ -24,11 +24,14 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.Random;
 import java.util.Set;
 import mil.army.usace.hec.cwms.radar.client.model.ForecastInstance;
 import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -121,6 +124,44 @@ final class TestForecastInstanceController extends TestController {
         assertEquals("valueA", forecastInstance2.getMetadata().get("key1"));
         assertEquals("valueB", forecastInstance2.getMetadata().get("key2"));
         assertEquals("valueC", forecastInstance2.getMetadata().get("key3"));
+    }
+
+    @Test
+    void testRetrieveFromUrl() throws IOException {
+        String collect = readJsonFile("radar/v2/json/forecast_instance.json");
+
+        // create large string to enqueue
+        // considering 1 character = 2 bytes in Java, hence dividing by 2 to get character count for 100KB size
+        int size = 1024 * 100 / 2;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            // assuming only ascii characters.
+            sb.append((char) (random.nextInt(26) + 'a'));
+        }
+        String largeString = sb.toString();
+        byte[] b = largeString.getBytes(StandardCharsets.UTF_8);
+
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(largeString);
+        mockHttpServer.start();
+
+        Instant forecastDateTime = Instant.ofEpochMilli(1624284010000L);
+        Instant issueDateTime = Instant.ofEpochMilli(1653221020000L);
+        ForecastSpec spec = new ForecastSpec()
+                .officeId("SPK")
+                .specId("test-spec")
+                .designator("designator");
+        ForecastInstanceEndpointInput.GetOne input = ForecastInstanceEndpointInput.getOne(spec, forecastDateTime, issueDateTime);
+        ForecastInstance forecastInstance = new ForecastInstanceController().retrieveForecastInstance(buildConnectionInfo(), input);
+        String url = forecastInstance.getFileDataUrl();
+        assertEquals("https://localhost:59947/cwms-data/forecast-instance/test-spec/file-data/value?office=SPK&forecast-date=2008-05-01T15%3A00%3A00Z", url);
+
+        String replacementString = String.format("http://localhost:%s", mockHttpServer.getPort());
+        String updatedValueUrl = url.replace("https://localhost:59947", replacementString);
+        forecastInstance.setFileDataUrl(updatedValueUrl);
+        byte[] downloadedByteArray = new ForecastInstanceController().getBytesFromUrl(buildConnectionInfo(), forecastInstance);
+        assertArrayEquals(downloadedByteArray, b);
     }
 
     @Test

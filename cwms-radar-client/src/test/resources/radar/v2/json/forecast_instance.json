@@ -21,5 +21,6 @@
   },
   "filename": "testFilename.txt",
   "file-description": "test file description",
-  "file-data": "dGVzdCBmaWxlIGNvbnRlbnQ="
+  "file-data": "dGVzdCBmaWxlIGNvbnRlbnQ=",
+  "file-data-url": "https://localhost:59947/cwms-data/forecast-instance/test-spec/file-data/value?office=SPK&forecast-date=2008-05-01T15%3A00%3A00Z"
 }
