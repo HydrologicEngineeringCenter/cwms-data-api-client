@@ -23,19 +23,18 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.ForecastInstance;
+import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Random;
 import java.util.Set;
-import mil.army.usace.hec.cwms.radar.client.model.ForecastInstance;
-import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForecastInstanceController extends TestController {
     @Test
@@ -57,13 +56,12 @@ final class TestForecastInstanceController extends TestController {
         assertEquals("SPK", forecastInstance.getSpec().getOfficeId());
         assertEquals("test-spec", forecastInstance.getSpec().getSpecId());
         assertEquals("designator", forecastInstance.getSpec().getDesignator());
-        assertEquals("FcstInstTestLoc", forecastInstance.getSpec().getLocationIds().get(0));
+        assertEquals("FcstInstTestLoc", forecastInstance.getSpec().getLocationId());
         assertEquals(1624284010000L, forecastInstance.getDateTime().toEpochMilli());
         assertEquals(1653221020000L, forecastInstance.getIssueDateTime().toEpochMilli());
         assertEquals(1692702150000L, forecastInstance.getFirstDateTime().toEpochMilli());
         assertEquals(1727017260000L, forecastInstance.getLastDateTime().toEpochMilli());
         assertEquals(5, forecastInstance.getMaxAge());
-        assertEquals(3, forecastInstance.getTimeSeriesCount());
         assertEquals("test notes", forecastInstance.getNotes());
         assertEquals("value1", forecastInstance.getMetadata().get("key1"));
         assertEquals("value2", forecastInstance.getMetadata().get("key2"));
@@ -90,13 +88,12 @@ final class TestForecastInstanceController extends TestController {
         assertEquals("SWT", forecastInstance.getSpec().getOfficeId());
         assertEquals("test-spec", forecastInstance.getSpec().getSpecId());
         assertEquals("designator", forecastInstance.getSpec().getDesignator());
-        assertEquals("FcstInstTestLoc", forecastInstance.getSpec().getLocationIds().get(0));
+        assertEquals("FcstInstTestLoc", forecastInstance.getSpec().getLocationId());
         assertEquals(1624284010000L, forecastInstance.getDateTime().toEpochMilli());
         assertEquals(1653221020000L, forecastInstance.getIssueDateTime().toEpochMilli());
         assertEquals(1692702150000L, forecastInstance.getFirstDateTime().toEpochMilli());
         assertEquals(1727017260000L, forecastInstance.getLastDateTime().toEpochMilli());
         assertEquals(5, forecastInstance.getMaxAge());
-        assertEquals(3, forecastInstance.getTimeSeriesCount());
         assertEquals("test notes", forecastInstance.getNotes());
         assertEquals("value1", forecastInstance.getMetadata().get("key1"));
         assertEquals("value2", forecastInstance.getMetadata().get("key2"));
@@ -113,13 +110,12 @@ final class TestForecastInstanceController extends TestController {
         assertEquals("SWT", forecastInstance2.getSpec().getOfficeId());
         assertEquals("test-spec2", forecastInstance2.getSpec().getSpecId());
         assertEquals("designator2", forecastInstance2.getSpec().getDesignator());
-        assertEquals("FcstInstTestLoc2", forecastInstance2.getSpec().getLocationIds().get(0));
+        assertEquals("FcstInstTestLoc2", forecastInstance2.getSpec().getLocationId());
         assertEquals(1624284020000L, forecastInstance2.getDateTime().toEpochMilli());
         assertEquals(1653221030000L, forecastInstance2.getIssueDateTime().toEpochMilli());
         assertEquals(1692702160000L, forecastInstance2.getFirstDateTime().toEpochMilli());
         assertEquals(1727017270000L, forecastInstance2.getLastDateTime().toEpochMilli());
         assertEquals(6, forecastInstance2.getMaxAge());
-        assertEquals(3, forecastInstance2.getTimeSeriesCount());
         assertEquals("test notes2", forecastInstance2.getNotes());
         assertEquals("valueA", forecastInstance2.getMetadata().get("key1"));
         assertEquals("valueB", forecastInstance2.getMetadata().get("key2"));

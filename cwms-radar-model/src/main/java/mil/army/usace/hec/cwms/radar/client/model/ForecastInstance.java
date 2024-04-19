@@ -21,22 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.Valid;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
-import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * ForecastInstance
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-09T15:43:11.361601200-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-18T23:14:24.845196800-07:00[America/Los_Angeles]")
 public class ForecastInstance {
     @JsonProperty("spec")
     private ForecastSpec spec = null;
@@ -56,9 +58,6 @@ public class ForecastInstance {
     @JsonProperty("max-age")
     private Integer maxAge = null;
 
-    @JsonProperty("time-series-count")
-    private Integer timeSeriesCount = null;
-
     @JsonProperty("notes")
     private String notes = null;
 
@@ -71,6 +70,9 @@ public class ForecastInstance {
 
     @JsonProperty("file-description")
     private String fileDescription = null;
+
+    @JsonProperty("file-media-type")
+    private String fileMediaType = null;
 
     @JsonProperty("file-data")
     @Valid
@@ -198,25 +200,6 @@ public class ForecastInstance {
         this.maxAge = maxAge;
     }
 
-    public ForecastInstance timeSeriesCount(Integer timeSeriesCount) {
-        this.timeSeriesCount = timeSeriesCount;
-        return this;
-    }
-
-    /**
-     * Get timeSeriesCount
-     *
-     * @return timeSeriesCount
-     **/
-
-    public Integer getTimeSeriesCount() {
-        return timeSeriesCount;
-    }
-
-    public void setTimeSeriesCount(Integer timeSeriesCount) {
-        this.timeSeriesCount = timeSeriesCount;
-    }
-
     public ForecastInstance notes(String notes) {
         this.notes = notes;
         return this;
@@ -301,6 +284,25 @@ public class ForecastInstance {
         this.fileDescription = fileDescription;
     }
 
+    public ForecastInstance fileMediaType(String fileMediaType) {
+        this.fileMediaType = fileMediaType;
+        return this;
+    }
+
+    /**
+     * Forecast File Media Type
+     *
+     * @return fileMediaType
+     **/
+
+    public String getFileMediaType() {
+        return fileMediaType;
+    }
+
+    public void setFileMediaType(String fileMediaType) {
+        this.fileMediaType = fileMediaType;
+    }
+
     public ForecastInstance fileData(byte[] fileData) {
         this.fileData = fileData;
         return this;
@@ -355,18 +357,19 @@ public class ForecastInstance {
                 && Objects.equals(this.firstDateTime, forecastInstance.firstDateTime)
                 && Objects.equals(this.lastDateTime, forecastInstance.lastDateTime)
                 && Objects.equals(this.maxAge, forecastInstance.maxAge)
-                && Objects.equals(this.timeSeriesCount, forecastInstance.timeSeriesCount)
                 && this.notes == null || forecastInstance.notes == null ? Objects.equals(this.notes, forecastInstance.notes) : this.notes.equalsIgnoreCase(forecastInstance.notes)
                 && Objects.equals(this.metadata, forecastInstance.metadata)
                 && this.filename == null || forecastInstance.filename == null ? Objects.equals(this.filename, forecastInstance.filename) : this.filename.equalsIgnoreCase(forecastInstance.filename)
                 && this.fileDescription == null || forecastInstance.fileDescription == null ? Objects.equals(this.fileDescription, forecastInstance.fileDescription) : this.fileDescription.equalsIgnoreCase(forecastInstance.fileDescription)
+                && this.fileMediaType == null || forecastInstance.fileMediaType == null ? Objects.equals(this.fileMediaType, forecastInstance.fileMediaType) : this.fileMediaType.equalsIgnoreCase(forecastInstance.fileMediaType)
                 && Arrays.equals(this.fileData, forecastInstance.fileData)
-                && this.fileDataUrl == null || forecastInstance.fileDataUrl == null ? Objects.equals(this.fileDataUrl, forecastInstance.fileDataUrl) : this.fileDataUrl.equalsIgnoreCase(forecastInstance.fileDataUrl);
+                && this.fileDataUrl == null || forecastInstance.fileDataUrl == null ? Objects.equals(this.fileDataUrl, forecastInstance.fileDataUrl) : this.fileDataUrl.equalsIgnoreCase(forecastInstance.fileDataUrl)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(spec, dateTime, issueDateTime, firstDateTime, lastDateTime, maxAge, timeSeriesCount, notes == null ? 0 : notes.toLowerCase(), metadata, filename == null ? 0 : filename.toLowerCase(), fileDescription == null ? 0 : fileDescription.toLowerCase(), fileData, fileDataUrl == null ? 0 : fileDataUrl.toLowerCase());
+        return Objects.hash(spec, dateTime, issueDateTime, firstDateTime, lastDateTime, maxAge, notes == null ? 0 : notes.toLowerCase(), metadata, filename == null ? 0 : filename.toLowerCase(), fileDescription == null ? 0 : fileDescription.toLowerCase(), fileMediaType == null ? 0 : fileMediaType.toLowerCase(), fileData, fileDataUrl == null ? 0 : fileDataUrl.toLowerCase());
     }
 
     @Override
@@ -380,11 +383,11 @@ public class ForecastInstance {
         sb.append("    firstDateTime: ").append(toIndentedString(firstDateTime)).append("\n");
         sb.append("    lastDateTime: ").append(toIndentedString(lastDateTime)).append("\n");
         sb.append("    maxAge: ").append(toIndentedString(maxAge)).append("\n");
-        sb.append("    timeSeriesCount: ").append(toIndentedString(timeSeriesCount)).append("\n");
         sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
         sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
         sb.append("    filename: ").append(toIndentedString(filename)).append("\n");
         sb.append("    fileDescription: ").append(toIndentedString(fileDescription)).append("\n");
+        sb.append("    fileMediaType: ").append(toIndentedString(fileMediaType)).append("\n");
         sb.append("    fileData: ").append(toIndentedString(fileData)).append("\n");
         sb.append("    fileDataUrl: ").append(toIndentedString(fileDataUrl)).append("\n");
         sb.append("}");

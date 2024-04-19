@@ -23,13 +23,14 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
+
+import java.util.Objects;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
 
 public final class ForecastSpecEndpointInput {
     private ForecastSpecEndpointInput() {
@@ -182,14 +183,21 @@ public final class ForecastSpecEndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String NAME_PARAMETER_QUERY = "name";
         static final String DESIGNATOR_PARAMETER_QUERY = "designator";
+        static final String DELETE_METHOD_PARAMETER_QUERY = "method";
         private final String officeId;
         private final String specId;
         private final String designator;
+        private DeleteMethod deleteMethod = DeleteMethod.KEY;
 
         private Delete(String officeId, String specId, String designator) {
             this.specId = Objects.requireNonNull(specId, "Cannot access the forecast spec DELETE endpoint without a spec identifier");
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the forecast spec DELETE endpoint without an office id");
             this.designator = Objects.requireNonNull(designator, "Cannot access the forecast spec DELETE endpoint without a designator");
+        }
+
+        public ForecastSpecEndpointInput.Delete deleteMethod(DeleteMethod deleteMethod) {
+            this.deleteMethod = deleteMethod;
+            return this;
         }
 
         String specId() {
@@ -201,6 +209,7 @@ public final class ForecastSpecEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(NAME_PARAMETER_QUERY, specId)
                     .addQueryParameter(DESIGNATOR_PARAMETER_QUERY, designator)
+                    .addQueryParameter(DELETE_METHOD_PARAMETER_QUERY, deleteMethod.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

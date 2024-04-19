@@ -23,17 +23,16 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForecastSpecEndpointInput {
     @Test
@@ -124,11 +123,13 @@ final class TestForecastSpecEndpointInput {
     @Test
     void testDeleteQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        ForecastSpecEndpointInput.Delete input = ForecastSpecEndpointInput.delete("SWT", "spec-id", "designator");
+        ForecastSpecEndpointInput.Delete input = ForecastSpecEndpointInput.delete("SWT", "spec-id", "designator")
+                .deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("spec-id", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.Delete.NAME_PARAMETER_QUERY));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals("designator", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.Delete.DESIGNATOR_PARAMETER_QUERY));
+        assertEquals("DELETE_ALL", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.Delete.DELETE_METHOD_PARAMETER_QUERY));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
