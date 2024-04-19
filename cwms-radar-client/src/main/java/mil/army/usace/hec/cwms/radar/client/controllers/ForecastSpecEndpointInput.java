@@ -72,7 +72,7 @@ public final class ForecastSpecEndpointInput {
         }
 
         String specId() {
-            return officeId;
+            return specId;
         }
 
         @Override
