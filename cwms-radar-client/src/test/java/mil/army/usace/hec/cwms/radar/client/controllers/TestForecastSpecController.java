@@ -23,14 +23,14 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
-import java.util.Set;
 import mil.army.usace.hec.cwms.radar.client.model.ForecastSpec;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForecastSpecController extends TestController {
 
@@ -46,15 +46,13 @@ final class TestForecastSpecController extends TestController {
         assertEquals("SPK", spec.getOfficeId());
         assertEquals("test-spec", spec.getSpecId());
         assertEquals("designator", spec.getDesignator());
-        assertEquals(2, spec.getLocationIds().size());
-        assertEquals("location", spec.getLocationIds().get(0));
-        assertEquals("location2", spec.getLocationIds().get(1));
+        assertEquals("location", spec.getLocationId());
         assertEquals("description", spec.getDescription());
         assertEquals("sourceEntity", spec.getSourceEntityId());
         assertEquals(3, spec.getTimeSeriesIds().size());
-        assertEquals("tsid1", spec.getTimeSeriesIds().get(0).getTimeSeriesId());
-        assertEquals("tsid2", spec.getTimeSeriesIds().get(1).getTimeSeriesId());
-        assertEquals("tsid3", spec.getTimeSeriesIds().get(2).getTimeSeriesId());
+        assertEquals("tsid1", spec.getTimeSeriesIds().get(0));
+        assertEquals("tsid2", spec.getTimeSeriesIds().get(1));
+        assertEquals("tsid3", spec.getTimeSeriesIds().get(2));
     }
 
     @Test
@@ -74,15 +72,13 @@ final class TestForecastSpecController extends TestController {
         assertEquals("SPK", spec.getOfficeId());
         assertEquals("test-spec", spec.getSpecId());
         assertEquals("designator", spec.getDesignator());
-        assertEquals(2, spec.getLocationIds().size());
-        assertEquals("location", spec.getLocationIds().get(0));
-        assertEquals("location2", spec.getLocationIds().get(1));
+        assertEquals("location", spec.getLocationId());
         assertEquals("description", spec.getDescription());
         assertEquals("sourceEntity", spec.getSourceEntityId());
         assertEquals(3, spec.getTimeSeriesIds().size());
-        assertEquals("tsid1", spec.getTimeSeriesIds().get(0).getTimeSeriesId());
-        assertEquals("tsid2", spec.getTimeSeriesIds().get(1).getTimeSeriesId());
-        assertEquals("tsid3", spec.getTimeSeriesIds().get(2).getTimeSeriesId());
+        assertEquals("tsid1", spec.getTimeSeriesIds().get(0));
+        assertEquals("tsid2", spec.getTimeSeriesIds().get(1));
+        assertEquals("tsid3", spec.getTimeSeriesIds().get(2));
 
         ForecastSpec spec2 = specs.stream()
                 .filter(s -> "test-spec2".equals(s.getSpecId()))
@@ -92,15 +88,13 @@ final class TestForecastSpecController extends TestController {
         assertEquals("SPK", spec2.getOfficeId());
         assertEquals("test-spec2", spec2.getSpecId());
         assertEquals("designator2", spec2.getDesignator());
-        assertEquals(2, spec2.getLocationIds().size());
-        assertEquals("locationA", spec2.getLocationIds().get(0));
-        assertEquals("locationB", spec2.getLocationIds().get(1));
+        assertEquals("locationA", spec2.getLocationId());
         assertEquals("description2", spec2.getDescription());
         assertEquals("sourceEntity2", spec2.getSourceEntityId());
         assertEquals(3, spec2.getTimeSeriesIds().size());
-        assertEquals("tsidA", spec2.getTimeSeriesIds().get(0).getTimeSeriesId());
-        assertEquals("tsidB", spec2.getTimeSeriesIds().get(1).getTimeSeriesId());
-        assertEquals("tsidC", spec2.getTimeSeriesIds().get(2).getTimeSeriesId());
+        assertEquals("tsidA", spec2.getTimeSeriesIds().get(0));
+        assertEquals("tsidB", spec2.getTimeSeriesIds().get(1));
+        assertEquals("tsidC", spec2.getTimeSeriesIds().get(2));
     }
 
     @Test

@@ -4,10 +4,10 @@ info:
   description: CWMS REST API for Data Retrieval
   version: '3.0'
 paths:
-  /swt-data:
+  /cwms-data:
     get:
-      summary: Get swtData
-      operationId: getSwtData
+      summary: Get cwmsData
+      operationId: getCwmsData
       responses:
         '400':
           description: Bad Request
@@ -40,13 +40,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/auth/keys/{key-name}:
+  /cwms-data/auth/keys/{key-name}:
     get:
       tags:
         - Authorization
-      summary: Get swtData auth keys with keyName
+      summary: Get cwmsData auth keys with keyName
       description: View specific key
-      operationId: getSwtDataAuthKeysWithKeyName
+      operationId: getCwmsDataAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -97,9 +97,9 @@ paths:
     delete:
       tags:
         - Authorization
-      summary: Delete swtData auth keys with keyName
+      summary: Delete cwmsData auth keys with keyName
       description: Delete API key for a user
-      operationId: deleteSwtDataAuthKeysWithKeyName
+      operationId: deleteCwmsDataAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -146,13 +146,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/auth/keys:
+  /cwms-data/auth/keys:
     get:
       tags:
         - Authorization
-      summary: Get swtData auth keys
+      summary: Get cwmsData auth keys
       description: View all keys for the current user
-      operationId: getSwtDataAuthKeys
+      operationId: getCwmsDataAuthKeys
       responses:
         '201':
           description: Created
@@ -198,9 +198,9 @@ paths:
     post:
       tags:
         - Authorization
-      summary: Post swtData auth keys
+      summary: Post cwmsData auth keys
       description: Create a new API Key for user. The randomly generated key is returned to the caller. A provided key will be ignored.
-      operationId: postSwtDataAuthKeys
+      operationId: postCwmsDataAuthKeys
       requestBody:
         content:
           application/json:
@@ -246,13 +246,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/location/category/{category-id}:
+  /cwms-data/location/category/{category-id}:
     get:
       tags:
         - Location Categories
-      summary: Get swtData location category with categoryId
+      summary: Get cwmsData location category with categoryId
       description: Retrieves requested Location Category
-      operationId: getSwtDataLocationCategoryWithCategoryId
+      operationId: getCwmsDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -307,9 +307,9 @@ paths:
     delete:
       tags:
         - Location Categories
-      summary: Delete swtData location category with categoryId
+      summary: Delete cwmsData location category with categoryId
       description: Deletes requested location category
-      operationId: deleteSwtDataLocationCategoryWithCategoryId
+      operationId: deleteCwmsDataLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -362,13 +362,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/location/category:
+  /cwms-data/location/category:
     get:
       tags:
         - Location Categories
-      summary: Get swtData location category
+      summary: Get cwmsData location category
       description: Returns CWMS Location Category Data
-      operationId: getSwtDataLocationCategory
+      operationId: getCwmsDataLocationCategory
       parameters:
         - name: office
           in: query
@@ -418,9 +418,9 @@ paths:
     post:
       tags:
         - Location Categories
-      summary: Post swtData location category
+      summary: Post cwmsData location category
       description: Create new LocationCategory
-      operationId: postSwtDataLocationCategory
+      operationId: postCwmsDataLocationCategory
       requestBody:
         content:
           application/json:
@@ -461,13 +461,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/location/group/{group-id}:
+  /cwms-data/location/group/{group-id}:
     get:
       tags:
         - Location Groups
-      summary: Get swtData location group with groupId
+      summary: Get cwmsData location group with groupId
       description: Retrieves requested Location Group
-      operationId: getSwtDataLocationGroupWithGroupId
+      operationId: getCwmsDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -534,9 +534,9 @@ paths:
     delete:
       tags:
         - Location Groups
-      summary: Delete swtData location group with groupId
+      summary: Delete cwmsData location group with groupId
       description: Deletes requested location group
-      operationId: deleteSwtDataLocationGroupWithGroupId
+      operationId: deleteCwmsDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -598,9 +598,9 @@ paths:
     patch:
       tags:
         - Location Groups
-      summary: Patch swtData location group with groupId
+      summary: Patch cwmsData location group with groupId
       description: Update existing LocationGroup
-      operationId: patchSwtDataLocationGroupWithGroupId
+      operationId: patchCwmsDataLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -658,13 +658,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/location/group:
+  /cwms-data/location/group:
     get:
       tags:
         - Location Groups
-      summary: Get swtData location group
+      summary: Get cwmsData location group
       description: Returns CWMS Location Groups Data
-      operationId: getSwtDataLocationGroup
+      operationId: getCwmsDataLocationGroup
       parameters:
         - name: office
           in: query
@@ -729,9 +729,9 @@ paths:
     post:
       tags:
         - Location Groups
-      summary: Post swtData location group
+      summary: Post cwmsData location group
       description: Create new LocationGroup
-      operationId: postSwtDataLocationGroup
+      operationId: postCwmsDataLocationGroup
       requestBody:
         content:
           application/json:
@@ -772,13 +772,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/locations/{location-id}:
+  /cwms-data/locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get swtData locations with locationId
+      summary: Get cwmsData locations with locationId
       description: Returns CWMS Location Data
-      operationId: getSwtDataLocationsWithLocationId
+      operationId: getCwmsDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -840,9 +840,9 @@ paths:
     delete:
       tags:
         - Locations
-      summary: Delete swtData locations with locationId
+      summary: Delete cwmsData locations with locationId
       description: Delete CWMS Location
-      operationId: deleteSwtDataLocationsWithLocationId
+      operationId: deleteCwmsDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -891,9 +891,9 @@ paths:
     patch:
       tags:
         - Locations
-      summary: Patch swtData locations with locationId
+      summary: Patch cwmsData locations with locationId
       description: Update CWMS Location
-      operationId: patchSwtDataLocationsWithLocationId
+      operationId: patchCwmsDataLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -943,13 +943,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/locations:
+  /cwms-data/locations:
     get:
       tags:
         - Locations
-      summary: Get swtData locations
+      summary: Get cwmsData locations
       description: Returns CWMS Location Data
-      operationId: getSwtDataLocations
+      operationId: getCwmsDataLocations
       parameters:
         - name: names
           in: query
@@ -1035,9 +1035,9 @@ paths:
     post:
       tags:
         - Locations
-      summary: Post swtData locations
+      summary: Post cwmsData locations
       description: Create new CWMS Location
-      operationId: postSwtDataLocations
+      operationId: postCwmsDataLocations
       requestBody:
         content:
           application/json:
@@ -1081,12 +1081,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/states:
+  /cwms-data/states:
     get:
       tags:
         - States
-      summary: Get swtData states
-      operationId: getSwtDataStates
+      summary: Get cwmsData states
+      operationId: getCwmsDataStates
       responses:
         '200':
           description: A list of states.
@@ -1127,12 +1127,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/counties:
+  /cwms-data/counties:
     get:
       tags:
         - Counties
-      summary: Get swtData counties
-      operationId: getSwtDataCounties
+      summary: Get cwmsData counties
+      operationId: getCwmsDataCounties
       responses:
         '200':
           description: A list of counties.
@@ -1173,12 +1173,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/offices/{office}:
+  /cwms-data/offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get swtData offices with office
-      operationId: getSwtDataOfficesWithOffice
+      summary: Get cwmsData offices with office
+      operationId: getCwmsDataOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -1207,15 +1207,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OfficeFormatV1'
-            text/tab-separated-values:
-              schema:
-                $ref: '#/components/schemas/TabV1Office'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/CsvV1Office'
             application/xml:
               schema:
-                $ref: '#/components/schemas/CsvV1Office'
+                $ref: '#/components/schemas/Office'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/Office'
         '400':
           description: Bad Request
           content:
@@ -1247,12 +1244,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/offices:
+  /cwms-data/offices:
     get:
       tags:
         - Offices
-      summary: Get swtData offices
-      operationId: getSwtDataOffices
+      summary: Get cwmsData offices
+      operationId: getCwmsDataOffices
       parameters:
         - name: format
           in: query
@@ -1280,15 +1277,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OfficeFormatV1'
-            text/tab-separated-values:
-              schema:
-                $ref: '#/components/schemas/TabV1Office'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/CsvV1Office'
             application/xml:
               schema:
-                $ref: '#/components/schemas/CsvV1Office'
+                $ref: '#/components/schemas/XMLv1Office'
         '400':
           description: Bad Request
           content:
@@ -1320,12 +1311,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/units:
+  /cwms-data/units:
     get:
       tags:
         - Units
-      summary: Get swtData units
-      operationId: getSwtDataUnits
+      summary: Get cwmsData units
+      operationId: getCwmsDataUnits
       parameters:
         - name: format
           in: query
@@ -1368,12 +1359,12 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /swt-data/parameters:
+  /cwms-data/parameters:
     get:
       tags:
         - Parameters
-      summary: Get swtData parameters
-      operationId: getSwtDataParameters
+      summary: Get cwmsData parameters
+      operationId: getCwmsDataParameters
       parameters:
         - name: format
           in: query
@@ -1414,12 +1405,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/timezones:
+  /cwms-data/timezones:
     get:
       tags:
         - TimeZones
-      summary: Get swtData timezones
-      operationId: getSwtDataTimezones
+      summary: Get cwmsData timezones
+      operationId: getCwmsDataTimezones
       parameters:
         - name: format
           in: query
@@ -1462,13 +1453,13 @@ paths:
         '501':
           description: The format requested is not implemented
       security: []
-  /swt-data/levels/{level-id}:
+  /cwms-data/levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get swtData levels with levelId
+      summary: Get cwmsData levels with levelId
       description: Retrieves requested Location Level
-      operationId: getSwtDataLevelsWithLevelId
+      operationId: getCwmsDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1539,9 +1530,9 @@ paths:
     delete:
       tags:
         - Levels
-      summary: Delete swtData levels with levelId
+      summary: Delete cwmsData levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteSwtDataLevelsWithLevelId
+      operationId: deleteCwmsDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1605,9 +1596,9 @@ paths:
     patch:
       tags:
         - Levels
-      summary: Patch swtData levels with levelId
+      summary: Patch cwmsData levels with levelId
       description: Update CWMS Location Level
-      operationId: patchSwtDataLevelsWithLevelId
+      operationId: patchCwmsDataLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1663,12 +1654,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/levels:
+  /cwms-data/levels:
     get:
       tags:
         - Levels
-      summary: Get swtData levels
-      operationId: getSwtDataLevels
+      summary: Get cwmsData levels
+      operationId: getCwmsDataLevels
       parameters:
         - name: level-id-mask
           in: query
@@ -1768,9 +1759,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post swtData levels
+      summary: Post cwmsData levels
       description: Create new CWMS Location Level
-      operationId: postSwtDataLevels
+      operationId: postCwmsDataLevels
       requestBody:
         content:
           application/json:
@@ -1814,13 +1805,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/levels/{level-id}/timeseries:
+  /cwms-data/levels/{level-id}/timeseries:
     get:
       tags:
         - Levels
-      summary: Get swtData levels with levelId timeseries
+      summary: Get cwmsData levels with levelId timeseries
       description: Retrieves requested Location Level
-      operationId: getSwtDataLevelsWithLevelIdTimeseries
+      operationId: getCwmsDataLevelsWithLevelIdTimeseries
       parameters:
         - name: level-id
           in: path
@@ -1912,13 +1903,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /swt-data/timeseries/recent/{group-id}:
+  /cwms-data/timeseries/recent/{group-id}:
     get:
       tags:
         - TimeSeries
-      summary: Get swtData timeseries recent with groupId
+      summary: Get cwmsData timeseries recent with groupId
       description: Returns CWMS Timeseries Groups Data
-      operationId: getSwtDataTimeseriesRecentWithGroupId
+      operationId: getCwmsDataTimeseriesRecentWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -1987,13 +1978,13 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /swt-data/standard-text-id/{standard-text-id}:
+  /cwms-data/standard-text-id/{standard-text-id}:
     get:
       tags:
         - Standard Text
-      summary: Get swtData standardTextId with standardTextId
+      summary: Get cwmsData standardTextId with standardTextId
       description: Retrieve a single Standard Text value
-      operationId: getSwtDataStandardTextIdWithStandardTextId
+      operationId: getCwmsDataStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -2048,9 +2039,9 @@ paths:
     delete:
       tags:
         - Standard Text
-      summary: Delete swtData standardTextId with standardTextId
+      summary: Delete cwmsData standardTextId with standardTextId
       description: Delete a single Standard Text value
-      operationId: deleteSwtDataStandardTextIdWithStandardTextId
+      operationId: deleteCwmsDataStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -2104,13 +2095,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/standard-text-id:
+  /cwms-data/standard-text-id:
     get:
       tags:
         - Standard Text
-      summary: Get swtData standardTextId
+      summary: Get cwmsData standardTextId
       description: Retrieve a Standard Text catalog
-      operationId: getSwtDataStandardTextId
+      operationId: getCwmsDataStandardTextId
       parameters:
         - name: office-mask
           in: query
@@ -2163,9 +2154,9 @@ paths:
     post:
       tags:
         - Standard Text
-      summary: Post swtData standardTextId
+      summary: Post cwmsData standardTextId
       description: Create new Standard Text
-      operationId: postSwtDataStandardTextId
+      operationId: postCwmsDataStandardTextId
       parameters:
         - name: fail-if-exists
           in: query
@@ -2212,12 +2203,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/text:
+  /cwms-data/timeseries/text:
     get:
       tags:
         - Text-TimeSeries
-      summary: Get swtData timeseries text
-      operationId: getSwtDataTimeseriesText
+      summary: Retrieve text time series values for a provided time window and date version.If individual values exceed 64 kilobytes, a URL to a separate download is provided instead of being included in the returned payload from this request.
+      operationId: getCwmsDataTimeseriesText
       parameters:
         - name: office
           in: query
@@ -2248,23 +2239,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: version-date
-          in: query
-          description: The version date for the time series.  If not specified, the maximum version date is used.
-          schema:
-            type: string
-        - name: min-attribute
-          in: query
-          description: The minimum attribute value to retrieve. If not specified, no minimum value is used.
-          schema:
-            type: integer
-            format: int64
-        - name: max-attribute
-          in: query
-          description: The maximum attribute value to retrieve. If not specified, no maximum value is used.
-          schema:
-            type: integer
-            format: int64
       responses:
         '200':
           description: OK
@@ -2306,9 +2280,9 @@ paths:
     post:
       tags:
         - Text-TimeSeries
-      summary: Post swtData timeseries text
+      summary: Post cwmsData timeseries text
       description: Create new TextTimeSeries
-      operationId: postSwtDataTimeseriesText
+      operationId: postCwmsDataTimeseriesText
       parameters:
         - name: replace-all
           in: query
@@ -2355,17 +2329,16 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/text/{timeseries}:
+  /cwms-data/timeseries/text/{name}:
     delete:
       tags:
         - Text-TimeSeries
-      summary: Delete swtData timeseries text with timeseries
+      summary: Delete cwmsData timeseries text with name
       description: Deletes requested text timeseries id
-      operationId: deleteSwtDataTimeseriesTextWithTimeseries
+      operationId: deleteCwmsDataTimeseriesTextWithName
       parameters:
-        - name: timeseries
+        - name: name
           in: path
-          description: The time series identifier to be deleted
           required: true
           schema:
             type: string
@@ -2403,18 +2376,6 @@ paths:
           description: The version date for the time series.  If not specified, maximum version date is used.
           schema:
             type: string
-        - name: min-attribute
-          in: query
-          description: The minimum attribute value to delete. If not specified, no minimum value is used.
-          schema:
-            type: integer
-            format: int64
-        - name: max-attribute
-          in: query
-          description: The maximum attribute value to delete. If not specified, no maximum value is used.
-          schema:
-            type: integer
-            format: int64
       responses:
         '400':
           description: Bad Request
@@ -2452,13 +2413,12 @@ paths:
     patch:
       tags:
         - Text-TimeSeries
-      summary: Patch swtData timeseries text with timeseries
+      summary: Patch cwmsData timeseries text with name
       description: Updates a text timeseries
-      operationId: patchSwtDataTimeseriesTextWithTimeseries
+      operationId: patchCwmsDataTimeseriesTextWithName
       parameters:
-        - name: timeseries
+        - name: name
           in: path
-          description: The id of the text timeseries to be updated
           required: true
           schema:
             type: string
@@ -2507,12 +2467,91 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/binary:
+  /cwms-data/timeseries/text/{name}/value:
+    get:
+      tags:
+        - Text-TimeSeries
+      summary: Get cwmsData timeseries text with name value
+      operationId: getCwmsDataTimeseriesTextWithNameValue
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the id of the text timeseries
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Text TimeSeries whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: The date of the text value to retrieve
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the value to retrieve.
+          schema:
+            type: string
+        - name: clob-id
+          in: query
+          description: Will be removed in a schema update. This is a placeholder for integration testing with schema 23.3.16
+          deprecated: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /cwms-data/timeseries/binary:
     get:
       tags:
         - Binary-TimeSeries
-      summary: Get swtData timeseries binary
-      operationId: getSwtDataTimeseriesBinary
+      summary: Retrieve binary time series values for a provided time window and date version.If individual values exceed 64 kilobytes, a URL to a separate download is provided instead of being included in the returned payload from this request.
+      operationId: getCwmsDataTimeseriesBinary
       parameters:
         - name: office
           in: query
@@ -2553,18 +2592,6 @@ paths:
           description: The version date for the time series.
           schema:
             type: string
-        - name: min-attribute
-          in: query
-          description: The minimum attribute value. If not specified, no minimum value is used.
-          schema:
-            type: integer
-            format: int64
-        - name: max-attribute
-          in: query
-          description: The maximum attribute value. If not specified, no maximum value is used.
-          schema:
-            type: integer
-            format: int64
       responses:
         '200':
           description: OK
@@ -2606,9 +2633,9 @@ paths:
     post:
       tags:
         - Binary-TimeSeries
-      summary: Post swtData timeseries binary
+      summary: Post cwmsData timeseries binary
       description: Create new BinaryTimeSeries
-      operationId: postSwtDataTimeseriesBinary
+      operationId: postCwmsDataTimeseriesBinary
       parameters:
         - name: replace-all
           in: query
@@ -2654,17 +2681,16 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/binary/{timeseries}:
+  /cwms-data/timeseries/binary/{name}:
     delete:
       tags:
         - Binary-TimeSeries
-      summary: Delete swtData timeseries binary with timeseries
+      summary: Delete cwmsData timeseries binary with name
       description: Deletes requested binary timeseries id
-      operationId: deleteSwtDataTimeseriesBinaryWithTimeseries
+      operationId: deleteCwmsDataTimeseriesBinaryWithName
       parameters:
-        - name: timeseries
+        - name: name
           in: path
-          description: The time series identifier to be deleted
           required: true
           schema:
             type: string
@@ -2698,21 +2724,9 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: The version date for the time series.  If not specified, the minimum or maximum version date (depending on p_max_version) is used.
+          description: The version date for the time series.  If not specified, the maximum version date is used.
           schema:
             type: string
-        - name: min-attribute
-          in: query
-          description: The minimum attribute value to delete. If not specified, no minimum value is used.
-          schema:
-            type: integer
-            format: int64
-        - name: max-attribute
-          in: query
-          description: The maximum attribute value to delete. If not specified, no maximum value is used.
-          schema:
-            type: integer
-            format: int64
       responses:
         '400':
           description: Bad Request
@@ -2750,13 +2764,12 @@ paths:
     patch:
       tags:
         - Binary-TimeSeries
-      summary: Patch swtData timeseries binary with timeseries
+      summary: Patch cwmsData timeseries binary with name
       description: Updates a binary timeseries
-      operationId: patchSwtDataTimeseriesBinaryWithTimeseries
+      operationId: patchCwmsDataTimeseriesBinaryWithName
       parameters:
-        - name: timeseries
+        - name: name
           in: path
-          description: The id of the binary timeseries to be updated
           required: true
           schema:
             type: string
@@ -2804,13 +2817,93 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/category/{category-id}:
+  /cwms-data/timeseries/binary/{name}/value:
+    get:
+      tags:
+        - Binary-TimeSeries
+      summary: Get cwmsData timeseries binary with name value
+      operationId: getCwmsDataTimeseriesBinaryWithNameValue
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the id of the binary timeseries
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the Binary TimeSeries whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: The date of the binary value to retrieve
+          required: true
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: The version date for the value to retrieve.
+          schema:
+            type: string
+        - name: blob-id
+          in: query
+          description: Will be removed in a schema update. This is a placeholder for integration testing with schema 23.3.16
+          deprecated: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /cwms-data/timeseries/category/{category-id}:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get swtData timeseries category with categoryId
+      summary: Get cwmsData timeseries category with categoryId
       description: Retrieves requested timeseries category
-      operationId: getSwtDataTimeseriesCategoryWithCategoryId
+      operationId: getCwmsDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -2867,9 +2960,9 @@ paths:
     delete:
       tags:
         - TimeSeries Categories
-      summary: Delete swtData timeseries category with categoryId
+      summary: Delete cwmsData timeseries category with categoryId
       description: Deletes requested time series category
-      operationId: deleteSwtDataTimeseriesCategoryWithCategoryId
+      operationId: deleteCwmsDataTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -2922,13 +3015,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/category:
+  /cwms-data/timeseries/category:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get swtData timeseries category
+      summary: Get cwmsData timeseries category
       description: Returns CWMS timeseries category Data
-      operationId: getSwtDataTimeseriesCategory
+      operationId: getCwmsDataTimeseriesCategory
       parameters:
         - name: office
           in: query
@@ -2980,9 +3073,9 @@ paths:
     post:
       tags:
         - TimeSeries Categories
-      summary: Post swtData timeseries category
+      summary: Post cwmsData timeseries category
       description: Create new TimeSeriesCategory
-      operationId: postSwtDataTimeseriesCategory
+      operationId: postCwmsDataTimeseriesCategory
       parameters:
         - name: fail-if-exists
           in: query
@@ -3029,13 +3122,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/identifier-descriptor/{timeseries-id}:
+  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get swtData timeseries identifierDescriptor with timeseriesId
+      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -3092,9 +3185,9 @@ paths:
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete swtData timeseries identifierDescriptor with timeseriesId
+      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
-      operationId: deleteSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -3151,8 +3244,8 @@ paths:
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch swtData timeseries identifierDescriptor with timeseriesId
-      operationId: patchSwtDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
+      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
         - name: timeseries-id
           in: path
@@ -3228,13 +3321,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/identifier-descriptor:
+  /cwms-data/timeseries/identifier-descriptor:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get swtData timeseries identifierDescriptor
+      summary: Get cwmsData timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
-      operationId: getSwtDataTimeseriesIdentifierDescriptor
+      operationId: getCwmsDataTimeseriesIdentifierDescriptor
       parameters:
         - name: office
           in: query
@@ -3300,9 +3393,9 @@ paths:
     post:
       tags:
         - TimeSeries Identifier
-      summary: Post swtData timeseries identifierDescriptor
+      summary: Post cwmsData timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
-      operationId: postSwtDataTimeseriesIdentifierDescriptor
+      operationId: postCwmsDataTimeseriesIdentifierDescriptor
       parameters:
         - name: fail-if-exists
           in: query
@@ -3352,13 +3445,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/group/{group-id}:
+  /cwms-data/timeseries/group/{group-id}:
     get:
       tags:
         - Timeseries Groups
-      summary: Get swtData timeseries group with groupId
+      summary: Get cwmsData timeseries group with groupId
       description: Retrieves requested timeseries group
-      operationId: getSwtDataTimeseriesGroupWithGroupId
+      operationId: getCwmsDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -3419,9 +3512,9 @@ paths:
     delete:
       tags:
         - Timeseries Groups
-      summary: Delete swtData timeseries group with groupId
+      summary: Delete cwmsData timeseries group with groupId
       description: Deletes requested time series group
-      operationId: deleteSwtDataTimeseriesGroupWithGroupId
+      operationId: deleteCwmsDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -3478,9 +3571,9 @@ paths:
     patch:
       tags:
         - Timeseries Groups
-      summary: Patch swtData timeseries group with groupId
+      summary: Patch cwmsData timeseries group with groupId
       description: Update existing TimeSeriesGroup
-      operationId: patchSwtDataTimeseriesGroupWithGroupId
+      operationId: patchCwmsDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -3538,13 +3631,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/group:
+  /cwms-data/timeseries/group:
     get:
       tags:
         - Timeseries Groups
-      summary: Get swtData timeseries group
+      summary: Get cwmsData timeseries group
       description: Returns CWMS Timeseries Groups Data
-      operationId: getSwtDataTimeseriesGroup
+      operationId: getCwmsDataTimeseriesGroup
       parameters:
         - name: office
           in: query
@@ -3611,9 +3704,9 @@ paths:
     post:
       tags:
         - Timeseries Groups
-      summary: Post swtData timeseries group
+      summary: Post cwmsData timeseries group
       description: Create new TimeSeriesGroup
-      operationId: postSwtDataTimeseriesGroup
+      operationId: postCwmsDataTimeseriesGroup
       parameters:
         - name: fail-if-exists
           in: query
@@ -3660,12 +3753,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries:
+  /cwms-data/timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get swtData timeseries
-      operationId: getSwtDataTimeseries
+      summary: Get cwmsData timeseries
+      operationId: getCwmsDataTimeseries
       parameters:
         - name: name
           in: query
@@ -3784,9 +3877,9 @@ paths:
     post:
       tags:
         - TimeSeries
-      summary: Post swtData timeseries
+      summary: Post cwmsData timeseries
       description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
-      operationId: postSwtDataTimeseries
+      operationId: postCwmsDataTimeseries
       parameters:
         - name: timezone
           in: query
@@ -3892,12 +3985,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/timeseries/{timeseries}:
+  /cwms-data/timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete swtData timeseries with timeseries
-      operationId: deleteSwtDataTimeseriesWithTimeseries
+      summary: Delete cwmsData timeseries with timeseries
+      operationId: deleteCwmsDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -3990,9 +4083,9 @@ paths:
     patch:
       tags:
         - TimeSeries
-      summary: Patch swtData timeseries with timeseries
+      summary: Patch cwmsData timeseries with timeseries
       description: Update a TimeSeries with provided values
-      operationId: patchSwtDataTimeseriesWithTimeseries
+      operationId: patchCwmsDataTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -4104,12 +4197,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings/template/{template-id}:
+  /cwms-data/ratings/template/{template-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings template with templateId
-      operationId: getSwtDataRatingsTemplateWithTemplateId
+      summary: Get cwmsData ratings template with templateId
+      operationId: getCwmsDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -4166,9 +4259,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings template with templateId
+      summary: Delete cwmsData ratings template with templateId
       description: Deletes requested rating specification
-      operationId: deleteSwtDataRatingsTemplateWithTemplateId
+      operationId: deleteCwmsDataRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -4222,12 +4315,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings/template:
+  /cwms-data/ratings/template:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings template
-      operationId: getSwtDataRatingsTemplate
+      summary: Get cwmsData ratings template
+      operationId: getCwmsDataRatingsTemplate
       parameters:
         - name: office
           in: query
@@ -4291,9 +4384,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings template
+      summary: Post cwmsData ratings template
       description: Create new Rating Template
-      operationId: postSwtDataRatingsTemplate
+      operationId: postCwmsDataRatingsTemplate
       parameters:
         - name: fail-if-exists
           in: query
@@ -4340,12 +4433,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings/spec/{rating-id}:
+  /cwms-data/ratings/spec/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings spec with ratingId
-      operationId: getSwtDataRatingsSpecWithRatingId
+      summary: Get cwmsData ratings spec with ratingId
+      operationId: getCwmsDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4400,9 +4493,9 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings spec with ratingId
+      summary: Delete cwmsData ratings spec with ratingId
       description: Deletes requested rating specification
-      operationId: deleteSwtDataRatingsSpecWithRatingId
+      operationId: deleteCwmsDataRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4456,12 +4549,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings/spec:
+  /cwms-data/ratings/spec:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings spec
-      operationId: getSwtDataRatingsSpec
+      summary: Get cwmsData ratings spec
+      operationId: getCwmsDataRatingsSpec
       parameters:
         - name: office
           in: query
@@ -4525,9 +4618,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings spec
+      summary: Post cwmsData ratings spec
       description: Create new Rating Specification
-      operationId: postSwtDataRatingsSpec
+      operationId: postCwmsDataRatingsSpec
       parameters:
         - name: fail-if-exists
           in: query
@@ -4574,12 +4667,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings/metadata:
+  /cwms-data/ratings/metadata:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings metadata
-      operationId: getSwtDataRatingsMetadata
+      summary: Get cwmsData ratings metadata
+      operationId: getCwmsDataRatingsMetadata
       parameters:
         - name: office
           in: query
@@ -4655,13 +4748,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/ratings/{rating-id}:
+  /cwms-data/ratings/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings with ratingId
+      summary: Get cwmsData ratings with ratingId
       description: Returns CWMS Rating Data
-      operationId: getSwtDataRatingsWithRatingId
+      operationId: getCwmsDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4739,8 +4832,8 @@ paths:
     delete:
       tags:
         - Ratings
-      summary: Delete swtData ratings with ratingId
-      operationId: deleteSwtDataRatingsWithRatingId
+      summary: Delete cwmsData ratings with ratingId
+      operationId: deleteCwmsDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4808,9 +4901,9 @@ paths:
     patch:
       tags:
         - Ratings
-      summary: Patch swtData ratings with ratingId
+      summary: Patch cwmsData ratings with ratingId
       description: Update a RatingSet
-      operationId: patchSwtDataRatingsWithRatingId
+      operationId: patchCwmsDataRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -4865,12 +4958,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/ratings:
+  /cwms-data/ratings:
     get:
       tags:
         - Ratings
-      summary: Get swtData ratings
-      operationId: getSwtDataRatings
+      summary: Get cwmsData ratings
+      operationId: getCwmsDataRatings
       parameters:
         - name: name
           in: query
@@ -4964,9 +5057,9 @@ paths:
     post:
       tags:
         - Ratings
-      summary: Post swtData ratings
+      summary: Post cwmsData ratings
       description: Create new RatingSet
-      operationId: postSwtDataRatings
+      operationId: postCwmsDataRatings
       parameters:
         - name: store-template
           in: query
@@ -5016,12 +5109,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/catalog/{dataset}:
+  /cwms-data/catalog/{dataset}:
     get:
       tags:
         - Catalog
-      summary: Get swtData catalog with dataset
-      operationId: getSwtDataCatalogWithDataset
+      summary: Get cwmsData catalog with dataset
+      operationId: getCwmsDataCatalogWithDataset
       parameters:
         - name: dataset
           in: path
@@ -5121,13 +5214,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/basins/{basin-id}:
+  /cwms-data/basins/{basin-id}:
     get:
       tags:
         - Basins
-      summary: Get swtData basins with basinId
+      summary: Get cwmsData basins with basinId
       description: Returns CWMS Basin Data
-      operationId: getSwtDataBasinsWithBasinId
+      operationId: getCwmsDataBasinsWithBasinId
       parameters:
         - name: basin-id
           in: path
@@ -5184,13 +5277,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /swt-data/basins:
+  /cwms-data/basins:
     get:
       tags:
         - Basins
-      summary: Get swtData basins
+      summary: Get cwmsData basins
       description: Returns CWMS Basin Data
-      operationId: getSwtDataBasins
+      operationId: getCwmsDataBasins
       parameters:
         - name: office
           in: query
@@ -5242,12 +5335,12 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /swt-data/blobs/{blob-id}:
+  /cwms-data/blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get swtData blobs with blobId
-      operationId: getSwtDataBlobsWithBlobId
+      summary: Get cwmsData blobs with blobId
+      operationId: getCwmsDataBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -5291,12 +5384,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /swt-data/blobs:
+  /cwms-data/blobs:
     get:
       tags:
         - Blob
-      summary: Get swtData blobs
-      operationId: getSwtDataBlobs
+      summary: Get cwmsData blobs
+      operationId: getCwmsDataBlobs
       parameters:
         - name: office
           in: query
@@ -5363,9 +5456,9 @@ paths:
     post:
       tags:
         - Blob
-      summary: Post swtData blobs
+      summary: Post cwmsData blobs
       description: Create new Blob
-      operationId: postSwtDataBlobs
+      operationId: postCwmsDataBlobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -5415,13 +5508,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/clobs/{clob-id}:
+  /cwms-data/clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get swtData clobs with clobId
+      summary: Get cwmsData clobs with clobId
       description: Get a single clob.  If the accept header is set to text/plain, the raw value is returned as the response body. Responses to text/plain requests are streamed and support the Range header.  When the accept header is set to application/json;version=2 the clob will be returned as a serialized Clob object with fields for office-id, id, description and value.
-      operationId: getSwtDataClobsWithClobId
+      operationId: getCwmsDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -5482,9 +5575,9 @@ paths:
     delete:
       tags:
         - Clob
-      summary: Delete swtData clobs with clobId
+      summary: Delete cwmsData clobs with clobId
       description: Delete clob
-      operationId: deleteSwtDataClobsWithClobId
+      operationId: deleteCwmsDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -5535,9 +5628,9 @@ paths:
     patch:
       tags:
         - Clob
-      summary: Patch swtData clobs with clobId
+      summary: Patch cwmsData clobs with clobId
       description: Update clob
-      operationId: patchSwtDataClobsWithClobId
+      operationId: patchCwmsDataClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -5593,12 +5686,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/clobs:
+  /cwms-data/clobs:
     get:
       tags:
         - Clob
-      summary: Get swtData clobs
-      operationId: getSwtDataClobs
+      summary: Get cwmsData clobs
+      operationId: getCwmsDataClobs
       parameters:
         - name: office
           in: query
@@ -5670,9 +5763,9 @@ paths:
     post:
       tags:
         - Clob
-      summary: Post swtData clobs
+      summary: Post cwmsData clobs
       description: Create new Clob
-      operationId: postSwtDataClobs
+      operationId: postCwmsDataClobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -5722,13 +5815,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/pools/{pool-id}:
+  /cwms-data/pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get swtData pools with poolId
+      summary: Get cwmsData pools with poolId
       description: Retrieves requested Pool
-      operationId: getSwtDataPoolsWithPoolId
+      operationId: getCwmsDataPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -5808,13 +5901,13 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /swt-data/pools:
+  /cwms-data/pools:
     get:
       tags:
         - Pools
-      summary: Get swtData pools
+      summary: Get cwmsData pools
       description: Returns Pools Data
-      operationId: getSwtDataPools
+      operationId: getCwmsDataPools
       parameters:
         - name: office
           in: query
@@ -5902,12 +5995,12 @@ paths:
         '501':
           description: request format is not implemented
       security: []
-  /swt-data/specified-levels:
+  /cwms-data/specified-levels:
     get:
       tags:
         - Levels
-      summary: Get swtData specifiedLevels
-      operationId: getSwtDataSpecifiedLevels
+      summary: Get cwmsData specifiedLevels
+      operationId: getCwmsDataSpecifiedLevels
       parameters:
         - name: office
           in: query
@@ -5960,9 +6053,9 @@ paths:
     post:
       tags:
         - Levels
-      summary: Post swtData specifiedLevels
+      summary: Post cwmsData specifiedLevels
       description: Create new SpecifiedLevel
-      operationId: postSwtDataSpecifiedLevels
+      operationId: postCwmsDataSpecifiedLevels
       parameters:
         - name: fail-if-exists
           in: query
@@ -6009,13 +6102,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/specified-levels/{specified-level-id}:
+  /cwms-data/specified-levels/{specified-level-id}:
     delete:
       tags:
         - Levels
-      summary: Delete swtData specifiedLevels with specifiedLevelId
+      summary: Delete cwmsData specifiedLevels with specifiedLevelId
       description: Deletes requested specified level id
-      operationId: deleteSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: deleteCwmsDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -6066,9 +6159,9 @@ paths:
     patch:
       tags:
         - Levels
-      summary: Patch swtData specifiedLevels with specifiedLevelId
+      summary: Patch cwmsData specifiedLevels with specifiedLevelId
       description: Renames the requested specified level id
-      operationId: patchSwtDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: patchCwmsDataSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -6121,13 +6214,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/forecast-instance/{name}:
+  /cwms-data/forecast-instance/{name}:
     get:
       tags:
         - Forecast
-      summary: Get swtData forecastInstance with name
+      summary: Get cwmsData forecastInstance with name
       description: Used to get all forecast instances for a given forecast spec
-      operationId: getSwtDataForecastInstanceWithName
+      operationId: getCwmsDataForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -6202,9 +6295,9 @@ paths:
     delete:
       tags:
         - Forecast
-      summary: Delete swtData forecastInstance with name
+      summary: Delete cwmsData forecastInstance with name
       description: Used to delete forecast instance data based on unique fields
-      operationId: deleteSwtDataForecastInstanceWithName
+      operationId: deleteCwmsDataForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -6273,9 +6366,9 @@ paths:
     patch:
       tags:
         - Forecast
-      summary: Patch swtData forecastInstance with name
+      summary: Patch cwmsData forecastInstance with name
       description: Update a forecast instance with new max age, notes, forecast fileand forecast info key/value pairs.
-      operationId: patchSwtDataForecastInstanceWithName
+      operationId: patchCwmsDataForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -6323,13 +6416,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/forecast-instance:
+  /cwms-data/forecast-instance:
     get:
       tags:
         - Forecast
-      summary: Get swtData forecastInstance
+      summary: Get cwmsData forecastInstance
       description: Used to get all forecast instances for a given forecast spec
-      operationId: getSwtDataForecastInstance
+      operationId: getCwmsDataForecastInstance
       parameters:
         - name: office
           in: query
@@ -6389,9 +6482,9 @@ paths:
     post:
       tags:
         - Forecast
-      summary: Post swtData forecastInstance
+      summary: Post cwmsData forecastInstance
       description: Used to create and save a forecast instance
-      operationId: postSwtDataForecastInstance
+      operationId: postCwmsDataForecastInstance
       requestBody:
         content:
           application/json;version=2:
@@ -6432,13 +6525,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/forecast-spec/{name}:
+  /cwms-data/forecast-spec/{name}:
     get:
       tags:
         - Forecast
-      summary: Get swtData forecastSpec with name
+      summary: Get cwmsData forecastSpec with name
       description: Used to query a single forecast spec record
-      operationId: getSwtDataForecastSpecWithName
+      operationId: getCwmsDataForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -6501,9 +6594,9 @@ paths:
     delete:
       tags:
         - Forecast
-      summary: Delete swtData forecastSpec with name
+      summary: Delete cwmsData forecastSpec with name
       description: Used to delete forecast spec data based on unique fields
-      operationId: deleteSwtDataForecastSpecWithName
+      operationId: deleteCwmsDataForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -6523,6 +6616,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Defaults to "DELETE_KEY"
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
       responses:
         '400':
           description: Bad Request
@@ -6560,9 +6658,9 @@ paths:
     patch:
       tags:
         - Forecast
-      summary: Patch swtData forecastSpec with name
+      summary: Patch cwmsData forecastSpec with name
       description: Update a forecast spec with provided values
-      operationId: patchSwtDataForecastSpecWithName
+      operationId: patchCwmsDataForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -6596,7 +6694,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: Based on the combination of inputs provided the forecaskspec was not found.
+          description: Based on the combination of inputs provided the forecast spec was not found.
           content:
             application/json:
               schema:
@@ -6610,13 +6708,13 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /swt-data/forecast-spec:
+  /cwms-data/forecast-spec:
     get:
       tags:
         - Forecast
-      summary: Get swtData forecastSpec
+      summary: Get cwmsData forecastSpec
       description: Used to query multiple forecast specs
-      operationId: getSwtDataForecastSpec
+      operationId: getCwmsDataForecastSpec
       parameters:
         - name: office
           in: query
@@ -6631,11 +6729,6 @@ paths:
         - name: designator-mask
           in: query
           description: Posix <a href="regexp.html">regular expression</a>  that specifies the designator of the forecast spec whose data to be included in the response.
-          schema:
-            type: string
-        - name: location-mask
-          in: query
-          description: Posix <a href="regexp.html">regular expression</a>  that specifies the location of the forecast spec whose data to be included in the response.
           schema:
             type: string
         - name: source-entity
@@ -6686,9 +6779,9 @@ paths:
     post:
       tags:
         - Forecast
-      summary: Post swtData forecastSpec
+      summary: Post cwmsData forecastSpec
       description: Used to create and save forecast spec data
-      operationId: postSwtDataForecastSpec
+      operationId: postCwmsDataForecastSpec
       requestBody:
         content:
           application/json;version=2:
@@ -6729,6 +6822,85 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /cwms-data/forecast-instance/{name}/file-data:
+    get:
+      tags:
+        - Forecast
+      summary: Get cwmsData forecastInstance with name fileData
+      description: Used to download forecast file for the given parameters
+      operationId: getCwmsDataForecastInstanceWithNameFileData
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the spec id of the forecast spec whose forecast instance data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: forecast-date
+          in: query
+          description: Specifies the forecast date time of the forecast instance to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: issue-date
+          in: query
+          description: Specifies the issue date time of the forecast instance to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the forecast spec whose forecast instance is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: designator
+          in: query
+          description: Specifies the designator of the forecast spec whose forecast instance data to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a forecast instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: [ ]
 components:
   schemas:
     CdaError:
@@ -6955,58 +7127,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Office'
-    Office_Tabulation:
+    XMLv1Office:
       type: object
-      properties:
-        Office:
-          type: string
-        longName:
-          type: string
-        officeType:
-          type: string
-        reportsToOffice:
-          type: string
-      description: Single Office or List of Offices in tab separated format
-      example: "#Office Name<tab>Long Name<tab>Office Type<tab>Reports To Office\r\nCERL\tConstruction Engineering Research Laboratory\tField Operating Activity\tERD\r\nCHL\tCoastal and Hydraulics Laboratory\tField Operating Activity\tERD\r\nNAB\tBaltimore District\tDistrict\tNADNAD\tNorth Atlantic Division\tDivision Headquarters\tHQ"
-    TabV1Office:
-      type: object
-      properties:
-        Office:
-          type: string
-        longName:
-          type: string
-        officeType:
-          type: string
-        reportsToOffice:
-          type: string
-      description: Single Office or List of Offices in tab separated format
-      example: "#Office Name<tab>Long Name<tab>Office Type<tab>Reports To Office\r\nCERL\tConstruction Engineering Research Laboratory\tField Operating Activity\tERD\r\nCHL\tCoastal and Hydraulics Laboratory\tField Operating Activity\tERD\r\nNAB\tBaltimore District\tDistrict\tNADNAD\tNorth Atlantic Division\tDivision Headquarters\tHQ"
-    Office_CSV:
-      type: object
-      properties:
-        Office:
-          type: string
-        longName:
-          type: string
-        officeType:
-          type: string
-        reportsToOffice:
-          type: string
-      description: Single Office or List of Offices in comma separated format
-      example: "#Office Name,Long Name,Office Type,Reports To Office\r\nCERL,Construction Engineering Research Laboratory,Field Operating Activity\tERD\r\nCHL,Coastal and Hydraulics Laboratory,Field Operating Activity\tERD\r\nNAB,Baltimore District,District,NAD\r\nNAD,North Atlantic Division,Division Headquarters,HQ"
-    CsvV1Office:
-      type: object
-      properties:
-        Office:
-          type: string
-        longName:
-          type: string
-        officeType:
-          type: string
-        reportsToOffice:
-          type: string
-      description: Single Office or List of Offices in comma separated format
-      example: "#Office Name,Long Name,Office Type,Reports To Office\r\nCERL,Construction Engineering Research Laboratory,Field Operating Activity\tERD\r\nCHL,Coastal and Hydraulics Laboratory,Field Operating Activity\tERD\r\nNAB,Baltimore District,District,NAD\r\nNAD,North Atlantic Division,Division Headquarters,HQ"
+      xml:
+        name: offices
     LocationLevel:
       required:
         - location-level-id
@@ -7170,13 +7294,14 @@ components:
             seconds:
               type: integer
               format: int64
+            nano:
+              type: integer
+              format: int32
             units:
               type: array
               items:
                 type: object
                 properties:
-                  dateBased:
-                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -7192,11 +7317,10 @@ components:
                         type: boolean
                   durationEstimated:
                     type: boolean
+                  dateBased:
+                    type: boolean
                   timeBased:
                     type: boolean
-            nano:
-              type: integer
-              format: int32
             zero:
               type: boolean
             negative:
@@ -7533,7 +7657,6 @@ components:
           format: int64
         active:
           type: boolean
-      description: List of Time Series IDs belonging to this Forecast Spec
     TimeSeriesIdentifierDescriptors:
       type: object
       properties:
@@ -8292,16 +8415,16 @@ components:
           type: string
         clobText:
           type: string
-        implicit:
-          type: boolean
         poolName:
           $ref: '#/components/schemas/PoolNameType'
-        projectId:
+        topLevelId:
           type: string
         bottomLevelId:
           type: string
-        topLevelId:
+        projectId:
           type: string
+        implicit:
+          type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
@@ -8382,11 +8505,6 @@ components:
           format: int32
           xml:
             attribute: true
-        time-series-count:
-          type: integer
-          format: int32
-          xml:
-            attribute: true
         notes:
           type: string
           description: Forecast Instance Notes
@@ -8406,6 +8524,11 @@ components:
           description: Description of Forecast File
           xml:
             attribute: true
+        file-media-type:
+          type: string
+          description: Forecast File Media Type
+          xml:
+            attribute: true
         file-data:
           type: array
           description: Forecast File binary data
@@ -8420,8 +8543,6 @@ components:
         file-data-url:
           type: string
           description: Link to Forecast File binary data
-          xml:
-            attribute: true
       xml:
         name: forecast-instance
     ForecastSpec:
@@ -8440,15 +8561,9 @@ components:
           description: Forecast Designator
           xml:
             attribute: true
-        location-ids:
-          uniqueItems: true
-          type: array
+        location-id:
+          type: string
           description: Location IDs
-          items:
-            type: string
-            description: Location IDs
-            xml:
-              name: location-ids
         source-entity-id:
           type: string
           description: Source Entity ID
@@ -8461,7 +8576,8 @@ components:
           type: array
           description: List of Time Series IDs belonging to this Forecast Spec
           items:
-            $ref: '#/components/schemas/TimeSeriesIdentifierDescriptor'
+            type: string
+            description: List of Time Series IDs belonging to this Forecast Spec
       xml:
         name: forecast-spec
   securitySchemes:
