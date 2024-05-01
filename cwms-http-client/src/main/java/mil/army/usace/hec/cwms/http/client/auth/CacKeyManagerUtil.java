@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 public final class CacKeyManagerUtil {
     static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{10}@", Pattern.CASE_INSENSITIVE);
     private static final Logger LOGGER = Logger.getLogger(CacKeyManagerUtil.class.getName());
+    private static KeyStore WINDOWS_KEY_STORE;
 
     private CacKeyManagerUtil() {
         throw new AssertionError("Utility class");
@@ -63,10 +64,18 @@ public final class CacKeyManagerUtil {
         return getKeyManagerFromWindowsKeyStore(certificateAlias);
     }
 
-    private static CacKeyManager getKeyManagerFromWindowsKeyStore(String certificateAlias) throws CacCertificateException {
-        try {
+    private static synchronized KeyStore loadWindowsKeyStore() throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException {
+        if (WINDOWS_KEY_STORE == null) {
             KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
             keystore.load(null, null);
+            WINDOWS_KEY_STORE = keystore;
+        }
+        return WINDOWS_KEY_STORE;
+    }
+
+    private static CacKeyManager getKeyManagerFromWindowsKeyStore(String certificateAlias) throws CacCertificateException {
+        try {
+            KeyStore keystore = loadWindowsKeyStore();
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             kmf.init(keystore, null);
             KeyManager[] kms = kmf.getKeyManagers();
@@ -86,8 +95,7 @@ public final class CacKeyManagerUtil {
     public static List<String> getCertificateAliases() {
         Set<String> aliases = new TreeSet<>();
         try {
-            KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
-            keystore.load(null, null);
+            KeyStore keystore = loadWindowsKeyStore();
             Enumeration<String> keystoreAliases = keystore.aliases();
             while (keystoreAliases.hasMoreElements()) {
                 String alias = keystoreAliases.nextElement();
