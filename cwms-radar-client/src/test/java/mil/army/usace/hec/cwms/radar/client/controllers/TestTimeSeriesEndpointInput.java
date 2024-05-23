@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,25 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.END_TIME_INCLUSIVE_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.BEGIN_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.END_PARAMETER_QUERY;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.END_TIME_INCLUSIVE_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.MAX_VERSION_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.OVERRIDE_PROTECTION_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.START_TIME_INCLUSIVE_PARAMETER_QUERY;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.BEGIN_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Delete.VERSION_DATE_PARAMETER_QUERY;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.BEGIN_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.DATUM_QUERY_PARAMETER;
@@ -43,6 +52,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpoin
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.PAGE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.PAGE_SIZE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.TIMEZONE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.TRIM_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.GetOne.UNIT_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.CREATE_AS_LRTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpointInput.Post.OVERRIDE_PROTECTION_PARAMETER;
@@ -50,14 +60,6 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesEndpoin
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.io.IOException;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
-import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesEndpointInput {
 
@@ -74,7 +76,8 @@ class TestTimeSeriesEndpointInput {
             .end(end)
             .timeZone(ZoneId.of("UTC"))
             .pageSize(10)
-            .page("page");
+                .page("page")
+                .trim(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
@@ -85,6 +88,7 @@ class TestTimeSeriesEndpointInput {
         assertEquals(Integer.toString(10), mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
         assertEquals("page", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
         assertEquals("arbu.Elev.Inst.1Hour.0.Ccp-Rev", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(TRIM_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 

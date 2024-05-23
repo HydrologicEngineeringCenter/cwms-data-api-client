@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
 import java.util.Optional;
-import mil.army.usace.hec.cwms.http.client.EndpointInput;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeries;
+
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
 
 public final class TimeSeriesEndpointInput {
 
@@ -66,6 +65,7 @@ public final class TimeSeriesEndpointInput {
         static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
         static final String NAME_QUERY_PARAMETER = "name";
         static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
+        static final String TRIM_QUERY_PARAMETER = "trim";
 
         private final String timeSeriesId;
         private String officeId;
@@ -77,6 +77,7 @@ public final class TimeSeriesEndpointInput {
         private Integer pageSize;
         private Instant versionDate;
         private Instant end;
+        private boolean trim = false;
 
         private GetOne(String timeSeriesId) {
             this.timeSeriesId = Objects.requireNonNull(timeSeriesId, "Cannot access the timeseries GET endpoint without a time series identifier");
@@ -132,6 +133,11 @@ public final class TimeSeriesEndpointInput {
             return this;
         }
 
+        public GetOne trim(boolean trim) {
+            this.trim = trim;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
@@ -148,6 +154,7 @@ public final class TimeSeriesEndpointInput {
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
                 .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDateString)
+                    .addQueryParameter(TRIM_QUERY_PARAMETER, Boolean.toString(trim))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
 
         }
