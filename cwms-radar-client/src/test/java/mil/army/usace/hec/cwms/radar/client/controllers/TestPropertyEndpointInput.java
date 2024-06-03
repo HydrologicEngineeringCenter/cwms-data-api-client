@@ -30,7 +30,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,7 +43,7 @@ class TestPropertyEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         PropertyEndpointInput.GetAll input = PropertyEndpointInput.getAll();
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -53,7 +54,7 @@ class TestPropertyEndpointInput {
                 .officeIdMask("SPK")
                 .propertyIdMask("PROP");
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetAll.OFFICE_ID_MASK_PARAMETER));
         assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetAll.CATEGORY_ID_MASK_PARAMETER));
         assertEquals("PROP", mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetAll.NAME_MASK_PARAMETER));
@@ -67,7 +68,7 @@ class TestPropertyEndpointInput {
         String office = "SPK";
         PropertyEndpointInput.GetOne input = PropertyEndpointInput.getOne(categoryId, propertyId, office);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
         assertEquals(categoryId, mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetOne.CATEGORY_ID_QUERY_PARAMETER));
     }
@@ -85,7 +86,7 @@ class TestPropertyEndpointInput {
         PropertyEndpointInput.Post input = PropertyEndpointInput.post(property);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(property, input.property());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test

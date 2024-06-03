@@ -30,7 +30,8 @@ import mil.army.usace.hec.cwms.radar.client.model.Property;
 
 import java.util.Objects;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class PropertyEndpointInput {
 
@@ -86,7 +87,7 @@ public final class PropertyEndpointInput {
             return httpRequestBuilder.addQueryParameter(CATEGORY_ID_MASK_PARAMETER, categoryIdMask)
                     .addQueryParameter(NAME_MASK_PARAMETER, propertyIdMask)
                     .addQueryParameter(OFFICE_ID_MASK_PARAMETER, officeIdMask)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -111,7 +112,7 @@ public final class PropertyEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -129,7 +130,7 @@ public final class PropertyEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
