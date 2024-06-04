@@ -66,10 +66,12 @@ class TestPropertyEndpointInput {
         String categoryId = "mockCategory";
         String propertyId = "HW";
         String office = "SPK";
-        PropertyEndpointInput.GetOne input = PropertyEndpointInput.getOne(categoryId, propertyId, office);
+        PropertyEndpointInput.GetOne input = PropertyEndpointInput.getOne(categoryId, propertyId, office)
+                .defaultValue("default");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
+        assertEquals("default", mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetOne.DEFAULT_VALUE_QUERY_PARAMETER));
         assertEquals(categoryId, mockHttpRequestBuilder.getQueryParameter(PropertyEndpointInput.GetOne.CATEGORY_ID_QUERY_PARAMETER));
     }
 

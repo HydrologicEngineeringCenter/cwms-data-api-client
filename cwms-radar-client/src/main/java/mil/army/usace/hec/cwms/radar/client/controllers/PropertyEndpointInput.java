@@ -56,7 +56,7 @@ public final class PropertyEndpointInput {
     }
 
     public static final class GetAll extends EndpointInput {
-        static final String OFFICE_ID_MASK_PARAMETER = "office-id-mask";
+        static final String OFFICE_ID_MASK_PARAMETER = "office-mask";
         static final String CATEGORY_ID_MASK_PARAMETER = "category-id-mask";
         static final String NAME_MASK_PARAMETER = "name-mask";
         private String categoryIdMask;
@@ -94,9 +94,11 @@ public final class PropertyEndpointInput {
     public static final class GetOne extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
+        static final String DEFAULT_VALUE_QUERY_PARAMETER = "default-value";
         private final String categoryId;
         private final String propertyId;
         private final String officeId;
+        private String defaultValue;
 
         private GetOne(String categoryId, String propertyId, String officeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Category id required for getOne property endpoint");
@@ -108,10 +110,16 @@ public final class PropertyEndpointInput {
             return propertyId;
         }
 
+        public GetOne defaultValue(String defaultValue) {
+            this.defaultValue = defaultValue;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryParameter(DEFAULT_VALUE_QUERY_PARAMETER, defaultValue)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
