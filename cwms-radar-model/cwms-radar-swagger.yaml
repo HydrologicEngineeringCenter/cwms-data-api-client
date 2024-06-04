@@ -793,7 +793,11 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  Specifies English unit system.  Location values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
       responses:
@@ -948,12 +952,12 @@ paths:
       tags:
         - Locations
       summary: Get cwmsData locations
-      description: Returns CWMS Location Data
+      description: Returns CWMS Location Data.  The Catalog end-point is also capable of retrieving lists of locations and can filter on additional fields.
       operationId: getCwmsDataLocations
       parameters:
         - name: names
           in: query
-          description: Specifies the name(s) of the location(s) whose data is to be included in the response
+          description: Specifies the name(s) of the location(s) whose data is to be included in the response.  When the `format` parameter is not provided and `application/json;version=2` is specified in the accept header, this parameter is a Posix <a href="regexp.html">regular expression</a> matching against the id
           schema:
             type: string
         - name: office
@@ -963,23 +967,44 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are:
+            * `EN`  Specifies English unit system.  Location level values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          description: |-
+            Specifies the elevation datum of the response. This field affects only vertical datum. Valid values for this field are:
+            * `NAVD88`  The elevation values will in the specified or default units above the NAVD-88 datum.
+            * `NGVD29`  The elevation values will be in the specified or default units above the NGVD-29 datum.
           schema:
             type: string
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.  wml2 (only if name field is specified)\r\n5.    json (default)\n6.    geojson"
+          description: |-
+            Specifies the encoding format of the response. Valid values for the format field for this URI are:
+
+            * `tab`
+            * `csv`
+            * `xml`
+            * `wml2` (only if name field is specified)
+            * `json` (default)
+
+            * `geojson`
           schema:
             type: string
       responses:
         '200':
           description: OK
           content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
             application/json:
               schema:
                 $ref: '#/components/schemas/Unit'
@@ -1253,7 +1278,7 @@ paths:
       parameters:
         - name: format
           in: query
-          description: "(Deprecated in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n1. tab\r\n2. csv\r\n 3. xml\r\n4. json (default)"
+          description: "(Deprecated in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n\n* `tab`\r\n\n* `csv`\r\n \n* `xml`\r\n\n* `json` (default)"
           deprecated: true
           schema:
             type: string
@@ -1320,7 +1345,12 @@ paths:
       parameters:
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n1. tab\r\n2. csv\r\n 3. xml\r\n4. json (default)"
+          description: |-
+            Specifies the encoding format of the response. Valid value for the format field for this URI are:
+            * `tab`
+            * `csv`
+            * `xml`
+            * `json` (default)
           schema:
             type: string
       responses:
@@ -1368,7 +1398,12 @@ paths:
       parameters:
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n1. tab\r\n2. csv\r\n 3. xml\r\n4. json (default)"
+          description: |-
+            Specifies the encoding format of the response. Valid value for the format field for this URI are:
+            * `tab`
+            * `csv`
+            * `xml`
+            * `json` (default)
           schema:
             type: string
       responses:
@@ -1414,7 +1449,12 @@ paths:
       parameters:
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n1. tab\r\n2. csv\r\n 3. xml\r\n4. json (default)"
+          description: |-
+            Specifies the encoding format of the response. Valid value for the format field for this URI are:
+            * `tab`  
+            * `csv`  
+            * `xml`  
+            * `json`  (default)
           schema:
             type: string
       responses:
@@ -1673,12 +1713,19 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are:
+            * `EN`  Specifies English unit system.  Location level values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters. The application/json;version=2 format currently only supports SI.
           schema:
             type: string
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          description: |-
+            Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:
+            * `NAVD88`  The elevation values will in the specified or default units above the NAVD-88 datum.
+            * `NGVD29`  The elevation values will be in the specified or default units above the NGVD-29 datum.
           schema:
             type: string
         - name: begin
@@ -1698,7 +1745,13 @@ paths:
             type: string
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Requests specifying an Accept header:application/json;version=2 must not include this field. Valid format field values for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.    wml2 (only if name field is specified)\r\n5.    json (default)\r\n"
+          description: |-
+            Specifies the encoding format of the response. Requests specifying an Accept header:application/json;version=2 must not include this field. Valid format field values for this URI are:
+            * `tab`
+            * `csv`
+            * `xml`
+            * `wml2` (only if name field is specified)
+            * `json` (default)
           schema:
             type: string
         - name: page
@@ -1903,19 +1956,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-  /cwms-data/timeseries/recent/{group-id}:
+  /cwms-data/timeseries/recent:
     get:
       tags:
         - TimeSeries
-      summary: Get cwmsData timeseries recent with groupId
+      summary: Get cwmsData timeseries recent
       description: Returns CWMS Timeseries Groups Data
-      operationId: getCwmsDataTimeseriesRecentWithGroupId
+      operationId: getCwmsDataTimeseriesRecent
       parameters:
-        - name: group-id
-          in: path
-          required: true
-          schema:
-            type: string
         - name: office
           in: query
           description: Specifies the owning office of the timeseries group(s) whose data is to be included in the response. If this field is not specified, matching timeseries groups information from all offices shall be returned.
@@ -1933,9 +1981,14 @@ paths:
             type: string
         - name: ts-ids
           in: query
-          description: Specifies a list of timeseries ids to be included in the response.  Optional. Cannot be used in combination with category_id and group_id.
+          description: Accepts a comma separated list of timeseries ids to be included in the response.  Optional. Cannot be used in combination with category_id and group_id.
           schema:
             type: string
+        - name: unit-system
+          in: query
+          description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to EN.
+          schema:
+            $ref: '#/components/schemas/UnitSystem'
       responses:
         '200':
           description: OK
@@ -2342,6 +2395,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: timeseries
+          in: path
+          description: The time series identifier to be deleted
+          required: true
+          schema:
+            type: string
         - name: office
           in: query
           description: Specifies the owning office of the timeseries identifier to be deleted
@@ -2419,6 +2478,12 @@ paths:
       parameters:
         - name: name
           in: path
+          required: true
+          schema:
+            type: string
+        - name: timeseries
+          in: path
+          description: The id of the text timeseries to be updated
           required: true
           schema:
             type: string
@@ -2694,6 +2759,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: timeseries
+          in: path
+          description: The time series identifier to be deleted
+          required: true
+          schema:
+            type: string
         - name: office
           in: query
           description: Specifies the owning office of the timeseries identifier to be deleted
@@ -2770,6 +2841,12 @@ paths:
       parameters:
         - name: name
           in: path
+          required: true
+          schema:
+            type: string
+        - name: timeseries
+          in: path
+          description: The id of the binary timeseries to be updated
           required: true
           schema:
             type: string
@@ -3768,12 +3845,16 @@ paths:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the time series(s) whose data is to be included in the response. If this field is not specified, matching location level information from all offices shall be returned.
+          description: Specifies the owning office of the time series(s) whose data is to be included in the response. Required for:application/json;version=2 and application/xml;version=2. For other formats, if this field is not specified, matching location level information from all offices shall be returned.
           schema:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
         - name: version-date
@@ -3783,7 +3864,10 @@ paths:
             type: string
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum.  This parameter is not supported for:application/json;version=2 or application/xml;version=2"
+          description: |-
+            Specifies the elevation datum of the response. This field affects only elevation location levels. Valid values for this field are:
+            * `NAVD88`  The elevation values will in the specified or default units above the NAVD-88 datum.
+            * `NGVD29`  The elevation values will be in the specified or default units above the NGVD-29 datum.  This parameter is not supported for:application/json;version=2 or application/xml;version=2
           schema:
             type: string
         - name: begin
@@ -3805,10 +3889,16 @@ paths:
           in: query
           description: Specifies whether to trim missing values from the beginning and end of the retrieved values. Only supported for:application/json;version=2 and application/xml;version=2. Default is false.
           schema:
-            type: string
+            type: boolean
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.  wml2 (only if name field is specified)\r\n5.    json (default)"
+          description: |-
+            Specifies the encoding format of the response. Valid values for the format field for this URI are:
+            * `tab`
+            * `csv`
+            * `xml`
+            * `wml2` (only if name field is specified)
+            * `json` (default)
           schema:
             type: string
         - name: page
@@ -4855,7 +4945,7 @@ paths:
             type: string
         - name: end
           in: query
-          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
+          description: The end of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-0700[PST8PDT]'.
           required: true
           schema:
             type: string
@@ -4977,12 +5067,19 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n1. EN.   Specifies English unit system.  Rating values will be in the default English units for their parameters.\r\n2. SI.   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.\r\n3. Other. Any unit returned in the response to the units URI request that is appropriate for the requested parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are:
+            * `EN`  Specifies English unit system.  Rating values will be in the default English units for their parameters.
+            * `SI`   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
         - name: datum
           in: query
-          description: "Specifies the elevation datum of the response. This field affects only elevation Ratings. Valid values for this field are:\r\n1. NAVD88.  The elevation values will in the specified or default units above the NAVD-88 datum.\r\n2. NGVD29.  The elevation values will be in the specified or default units above the NGVD-29 datum."
+          description: |-
+            Specifies the elevation datum of the response. This field affects only elevation Ratings. Valid values for this field are:
+            * `NAVD88`  The elevation values will in the specified or default units above the NAVD-88 datum.
+            * `NGVD29`  The elevation values will be in the specified or default units above the NGVD-29 datum.
           schema:
             type: string
         - name: at
@@ -5002,7 +5099,12 @@ paths:
             type: string
         - name: format
           in: query
-          description: "Specifies the encoding format of the response. Valid values for the format field for this URI are:\r\n1.    tab\r\n2.    csv\r\n3.    xml\r\n4.    json (default)"
+          description: |-
+            Specifies the encoding format of the response. Valid values for the format field for this URI are:
+            * `tab`
+            * `csv`
+            * `xml`
+            * `json` (default)
           schema:
             type: string
       responses:
@@ -5129,7 +5231,7 @@ paths:
             type: string
         - name: page-size
           in: query
-          description: How many entires per page returned. Default 500.
+          description: How many entries per page returned. Default 500.
           schema:
             type: integer
             format: int32
@@ -5234,7 +5336,10 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are:
+            * `EN`  Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)
+            * `SI`  Specifies the SI unit system. Basin values will be in the default SI units for their parameters.
           schema:
             type: string
       responses:
@@ -5292,7 +5397,10 @@ paths:
             type: string
         - name: unit
           in: query
-          description: "Specifies the unit or unit system of the response. Valid values for the unit field are:\r\n 1. EN.   Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)\r\n2. SI.   Specifies the SI unit system. Basin values will be in the default SI units for their parameters."
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)
+            * `SI`  Specifies the SI unit system. Basin values will be in the default SI units for their parameters.
           schema:
             type: string
       responses:
@@ -6901,6 +7009,297 @@ paths:
         '501':
           description: Requested format is not implemented
       security: [ ]
+  /cwms-data/properties/{name}:
+    get:
+      tags:
+        - Properties
+      summary: Get cwmsData properties with name
+      description: Returns CWMS Property Data
+      operationId: getCwmsDataPropertiesWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the property to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the property to be retrieved.
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the category id of the property to be retrieved.
+          schema:
+            type: string
+        - name: default-value
+          in: query
+          description: Specifies the default value if the property does not exist.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/Property'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Properties
+      summary: Delete cwmsData properties with name
+      description: Delete CWMS Property
+      operationId: deleteCwmsDataPropertiesWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the property to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the property to be deleted.
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Specifies the category id of the property to be deleted.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Property successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the property was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    patch:
+      tags:
+        - Properties
+      summary: Patch cwmsData properties with name
+      description: Update CWMS Property
+      operationId: patchCwmsDataPropertiesWithName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      responses:
+        '204':
+          description: Property successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/properties:
+    get:
+      tags:
+        - Properties
+      summary: Get cwmsData properties
+      description: Returns matching CWMS Property Data.
+      operationId: getCwmsDataProperties
+      parameters:
+        - name: office-mask
+          in: query
+          description: Filters properties to the specified office mask
+          schema:
+            type: string
+        - name: category-id
+          in: query
+          description: Filters properties to the specified category mask
+          schema:
+            type: string
+        - name: name-mask
+          in: query
+          description: Filters properties to the specified name mask
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Properties
+      summary: Post cwmsData properties
+      description: Create CWMS Property
+      operationId: postCwmsDataProperties
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      responses:
+        '204':
+          description: Property successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
 components:
   schemas:
     CdaError:
@@ -7146,11 +7545,6 @@ components:
         seasonal-time-series-id:
           type: string
           description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
-        seasonal-values:
-          type: array
-          description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
-          items:
-            $ref: '#/components/schemas/SeasonalValueBean'
         specified-level-id:
           type: string
           description: Generic name of this location level. Common names are 'Top of Dam', 'Streambed', 'Bottom of Dam'.
@@ -7210,6 +7604,11 @@ components:
           type: string
         attribute-comment:
           type: string
+        seasonal-values:
+          type: array
+          description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+          items:
+            $ref: '#/components/schemas/SeasonalValueBean'
     SeasonalValueBean:
       type: object
       properties:
@@ -7297,6 +7696,8 @@ components:
             nano:
               type: integer
               format: int32
+            negative:
+              type: boolean
             units:
               type: array
               items:
@@ -7311,9 +7712,9 @@ components:
                       nano:
                         type: integer
                         format: int32
-                      zero:
-                        type: boolean
                       negative:
+                        type: boolean
+                      zero:
                         type: boolean
                   durationEstimated:
                     type: boolean
@@ -7322,8 +7723,6 @@ components:
                   timeBased:
                     type: boolean
             zero:
-              type: boolean
-            negative:
               type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
@@ -7454,6 +7853,12 @@ components:
             $ref: '#/components/schemas/Offset'
       xml:
         name: vertical-datum-info
+    UnitSystem:
+      type: string
+      description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
+      enum:
+        - SI
+        - EN
     Tsv:
       type: object
       properties:
@@ -8012,12 +8417,6 @@ components:
       enum:
         - TIMESERIES
         - LOCATIONS
-    UnitSystem:
-      type: string
-      description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
-      enum:
-        - SI
-        - EN
     Catalog:
       type: object
       properties:
@@ -8415,23 +8814,23 @@ components:
           type: string
         clobText:
           type: string
+        implicit:
+          type: boolean
         poolName:
           $ref: '#/components/schemas/PoolNameType'
-        topLevelId:
-          type: string
         bottomLevelId:
+          type: string
+        topLevelId:
           type: string
         projectId:
           type: string
-        implicit:
-          type: boolean
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     Pools:
       type: object
@@ -8580,6 +8979,21 @@ components:
             description: List of Time Series IDs belonging to this Forecast Spec
       xml:
         name: forecast-spec
+    Property:
+      type: object
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+        office-id:
+          type: string
+        value:
+          type: string
+        comment:
+          type: string
+      xml:
+        name: property
   securitySchemes:
     CwmsAAACacAuth:
       type: apiKey

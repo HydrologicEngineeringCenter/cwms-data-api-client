@@ -1,0 +1,7 @@
+{
+  "category": "PropertyControllerIT",
+  "name": "test_prop_id",
+  "office-id": "SPK",
+  "value": "test value",
+  "comment": "integration test"
+}
