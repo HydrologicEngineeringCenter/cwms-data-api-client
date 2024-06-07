@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * Location
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-08-09T09:29:33.859-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-07T14:38:25.006765600-07:00[America/Los_Angeles]")
 public class Location {
+    @JsonProperty("office-id")
+    private String officeId = null;
+
     @JsonProperty("name")
     private String name = null;
 
@@ -65,30 +70,95 @@ public class Location {
 
     @JsonProperty("location-kind")
     private String locationKind = null;
+
+    /**
+     * Gets or Sets nation
+     */
+    public enum NationEnum {
+        US("US"),
+
+        CANADA("CANADA"),
+
+        MEXICO("MEXICO");
+
+        private String value;
+
+        NationEnum(String value) {
+            this.value = value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        @JsonCreator
+        public static NationEnum fromValue(String text) {
+            for (NationEnum b : NationEnum.values()) {
+                if (String.valueOf(b.value).equals(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
+
     @JsonProperty("nation")
     private NationEnum nation = null;
+
     @JsonProperty("state-initial")
     private String stateInitial = null;
+
     @JsonProperty("county-name")
     private String countyName = null;
+
     @JsonProperty("nearest-city")
     private String nearestCity = null;
+
     @JsonProperty("horizontal-datum")
     private String horizontalDatum = null;
+
     @JsonProperty("published-longitude")
     private Double publishedLongitude = null;
+
     @JsonProperty("published-latitude")
     private Double publishedLatitude = null;
+
     @JsonProperty("vertical-datum")
     private String verticalDatum = null;
+
     @JsonProperty("elevation")
     private Double elevation = null;
+
     @JsonProperty("map-label")
     private String mapLabel = null;
+
     @JsonProperty("bounding-office-id")
     private String boundingOfficeId = null;
-    @JsonProperty("office-id")
-    private String officeId = null;
+
+    @JsonProperty("elevation-units")
+    private String elevationUnits = null;
+
+    public Location officeId(String officeId) {
+        this.officeId = officeId;
+        return this;
+    }
+
+    /**
+     * Owning office of object.
+     *
+     * @return officeId
+     **/
+    @NotNull
+
+    public String getOfficeId() {
+        return officeId;
+    }
+
+    public void setOfficeId(String officeId) {
+        this.officeId = officeId;
+    }
 
     public Location name(String name) {
         this.name = name;
@@ -100,6 +170,7 @@ public class Location {
      *
      * @return name
      **/
+    @NotNull
 
     public String getName() {
         return name;
@@ -119,6 +190,7 @@ public class Location {
      *
      * @return latitude
      **/
+    @NotNull
 
     public Double getLatitude() {
         return latitude;
@@ -138,6 +210,7 @@ public class Location {
      *
      * @return longitude
      **/
+    @NotNull
 
     public Double getLongitude() {
         return longitude;
@@ -157,6 +230,7 @@ public class Location {
      *
      * @return active
      **/
+    @NotNull
 
     public Boolean isActive() {
         return active;
@@ -176,6 +250,7 @@ public class Location {
      *
      * @return publicName
      **/
+    @NotNull
 
     public String getPublicName() {
         return publicName;
@@ -195,6 +270,7 @@ public class Location {
      *
      * @return longName
      **/
+    @NotNull
 
     public String getLongName() {
         return longName;
@@ -214,6 +290,7 @@ public class Location {
      *
      * @return description
      **/
+    @NotNull
 
     public String getDescription() {
         return description;
@@ -233,6 +310,7 @@ public class Location {
      *
      * @return timezoneName
      **/
+    @NotNull
 
     public String getTimezoneName() {
         return timezoneName;
@@ -252,6 +330,7 @@ public class Location {
      *
      * @return locationType
      **/
+    @NotNull
 
     public String getLocationType() {
         return locationType;
@@ -271,6 +350,7 @@ public class Location {
      *
      * @return locationKind
      **/
+    @NotNull
 
     public String getLocationKind() {
         return locationKind;
@@ -290,6 +370,7 @@ public class Location {
      *
      * @return nation
      **/
+    @NotNull
 
     public NationEnum getNation() {
         return nation;
@@ -309,6 +390,7 @@ public class Location {
      *
      * @return stateInitial
      **/
+    @NotNull
 
     public String getStateInitial() {
         return stateInitial;
@@ -328,6 +410,7 @@ public class Location {
      *
      * @return countyName
      **/
+    @NotNull
 
     public String getCountyName() {
         return countyName;
@@ -347,6 +430,7 @@ public class Location {
      *
      * @return nearestCity
      **/
+    @NotNull
 
     public String getNearestCity() {
         return nearestCity;
@@ -366,6 +450,7 @@ public class Location {
      *
      * @return horizontalDatum
      **/
+    @NotNull
 
     public String getHorizontalDatum() {
         return horizontalDatum;
@@ -385,6 +470,7 @@ public class Location {
      *
      * @return publishedLongitude
      **/
+    @NotNull
 
     public Double getPublishedLongitude() {
         return publishedLongitude;
@@ -404,6 +490,7 @@ public class Location {
      *
      * @return publishedLatitude
      **/
+    @NotNull
 
     public Double getPublishedLatitude() {
         return publishedLatitude;
@@ -423,6 +510,7 @@ public class Location {
      *
      * @return verticalDatum
      **/
+    @NotNull
 
     public String getVerticalDatum() {
         return verticalDatum;
@@ -442,6 +530,7 @@ public class Location {
      *
      * @return elevation
      **/
+    @NotNull
 
     public Double getElevation() {
         return elevation;
@@ -461,6 +550,7 @@ public class Location {
      *
      * @return mapLabel
      **/
+    @NotNull
 
     public String getMapLabel() {
         return mapLabel;
@@ -480,6 +570,7 @@ public class Location {
      *
      * @return boundingOfficeId
      **/
+    @NotNull
 
     public String getBoundingOfficeId() {
         return boundingOfficeId;
@@ -489,24 +580,26 @@ public class Location {
         this.boundingOfficeId = boundingOfficeId;
     }
 
-    public Location officeId(String officeId) {
-        this.officeId = officeId;
+    public Location elevationUnits(String elevationUnits) {
+        this.elevationUnits = elevationUnits;
         return this;
     }
 
     /**
-     * Get officeId
+     * Get elevationUnits
      *
-     * @return officeId
+     * @return elevationUnits
      **/
+    @NotNull
 
-    public String getOfficeId() {
-        return officeId;
+    public String getElevationUnits() {
+        return elevationUnits;
     }
 
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
+    public void setElevationUnits(String elevationUnits) {
+        this.elevationUnits = elevationUnits;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -517,57 +610,48 @@ public class Location {
             return false;
         }
         Location location = (Location) o;
-        return this.name == null || location.name == null ? Objects.equals(this.name, location.name) :
-            this.name.equalsIgnoreCase(location.name) && Objects.equals(this.latitude, location.latitude) &&
-                Objects.equals(this.longitude, location.longitude) && Objects.equals(this.active, location.active) && this.publicName == null ||
-                location.publicName == null ? Objects.equals(this.publicName, location.publicName) :
-                this.publicName.equalsIgnoreCase(location.publicName) && this.longName == null || location.longName == null ?
-                    Objects.equals(this.longName, location.longName) :
-                    this.longName.equalsIgnoreCase(location.longName) && this.description == null || location.description == null ?
-                        Objects.equals(this.description, location.description) :
-                        this.description.equalsIgnoreCase(location.description) && this.timezoneName == null || location.timezoneName == null ?
-                            Objects.equals(this.timezoneName, location.timezoneName) :
-                            this.timezoneName.equalsIgnoreCase(location.timezoneName) && this.locationType == null || location.locationType == null ?
-                                Objects.equals(this.locationType, location.locationType) :
-                                this.locationType.equalsIgnoreCase(location.locationType) && this.locationKind == null ||
-                                    location.locationKind == null ? Objects.equals(this.locationKind, location.locationKind) :
-                                    this.locationKind.equalsIgnoreCase(location.locationKind) && Objects.equals(this.nation, location.nation) &&
-                                        this.stateInitial == null || location.stateInitial == null ?
-                                        Objects.equals(this.stateInitial, location.stateInitial) :
-                                        this.stateInitial.equalsIgnoreCase(location.stateInitial) && this.countyName == null ||
-                                            location.countyName == null ? Objects.equals(this.countyName, location.countyName) :
-                                            this.countyName.equalsIgnoreCase(location.countyName) && this.nearestCity == null ||
-                                                location.nearestCity == null ? Objects.equals(this.nearestCity, location.nearestCity) :
-                                                this.nearestCity.equalsIgnoreCase(location.nearestCity) && this.horizontalDatum == null ||
-                                                    location.horizontalDatum == null ?
-                                                    Objects.equals(this.horizontalDatum, location.horizontalDatum) :
-                                                    this.horizontalDatum.equalsIgnoreCase(location.horizontalDatum) &&
-                                                        Objects.equals(this.publishedLongitude, location.publishedLongitude) &&
-                                                        Objects.equals(this.publishedLatitude, location.publishedLatitude) &&
-                                                        this.verticalDatum == null || location.verticalDatum == null ?
-                                                        Objects.equals(this.verticalDatum, location.verticalDatum) :
-                                                        this.verticalDatum.equalsIgnoreCase(location.verticalDatum) &&
-                                                            Objects.equals(this.elevation, location.elevation) && this.mapLabel == null ||
-                                                            location.mapLabel == null ? Objects.equals(this.mapLabel, location.mapLabel) :
-                                                            this.mapLabel.equalsIgnoreCase(location.mapLabel) && this.boundingOfficeId == null ||
-                                                                location.boundingOfficeId == null ?
-                                                                Objects.equals(this.boundingOfficeId, location.boundingOfficeId) :
-                                                                this.boundingOfficeId.equalsIgnoreCase(location.boundingOfficeId) &&
-                                                                    this.officeId == null || location.officeId == null ?
-                                                                    Objects.equals(this.officeId, location.officeId) :
-                                                                    this.officeId.equalsIgnoreCase(location.officeId);
+        return this.officeId == null || location.officeId == null ? Objects.equals(this.officeId, location.officeId) : this.officeId.equalsIgnoreCase(location.officeId)
+                && this.name == null || location.name == null ? Objects.equals(this.name, location.name) : this.name.equalsIgnoreCase(location.name)
+                && Objects.equals(this.latitude, location.latitude)
+                && Objects.equals(this.longitude, location.longitude)
+                && Objects.equals(this.active, location.active)
+                && this.publicName == null || location.publicName == null ? Objects.equals(this.publicName, location.publicName) : this.publicName.equalsIgnoreCase(location.publicName)
+                && this.longName == null || location.longName == null ? Objects.equals(this.longName, location.longName) : this.longName.equalsIgnoreCase(location.longName)
+                && this.description == null || location.description == null ? Objects.equals(this.description, location.description) : this.description.equalsIgnoreCase(location.description)
+                && this.timezoneName == null || location.timezoneName == null ? Objects.equals(this.timezoneName, location.timezoneName) : this.timezoneName.equalsIgnoreCase(location.timezoneName)
+                && this.locationType == null || location.locationType == null ? Objects.equals(this.locationType, location.locationType) : this.locationType.equalsIgnoreCase(location.locationType)
+                && this.locationKind == null || location.locationKind == null ? Objects.equals(this.locationKind, location.locationKind) : this.locationKind.equalsIgnoreCase(location.locationKind)
+                && Objects.equals(this.nation, location.nation)
+                && this.stateInitial == null || location.stateInitial == null ? Objects.equals(this.stateInitial, location.stateInitial) : this.stateInitial.equalsIgnoreCase(location.stateInitial)
+                && this.countyName == null || location.countyName == null ? Objects.equals(this.countyName, location.countyName) : this.countyName.equalsIgnoreCase(location.countyName)
+                && this.nearestCity == null || location.nearestCity == null ? Objects.equals(this.nearestCity, location.nearestCity) : this.nearestCity.equalsIgnoreCase(location.nearestCity)
+                && this.horizontalDatum == null || location.horizontalDatum == null ? Objects.equals(this.horizontalDatum, location.horizontalDatum) : this.horizontalDatum.equalsIgnoreCase(location.horizontalDatum)
+                && Objects.equals(this.publishedLongitude, location.publishedLongitude)
+                && Objects.equals(this.publishedLatitude, location.publishedLatitude)
+                && this.verticalDatum == null || location.verticalDatum == null ? Objects.equals(this.verticalDatum, location.verticalDatum) : this.verticalDatum.equalsIgnoreCase(location.verticalDatum)
+                && Objects.equals(this.elevation, location.elevation)
+                && this.mapLabel == null || location.mapLabel == null ? Objects.equals(this.mapLabel, location.mapLabel) : this.mapLabel.equalsIgnoreCase(location.mapLabel)
+                && this.boundingOfficeId == null || location.boundingOfficeId == null ? Objects.equals(this.boundingOfficeId, location.boundingOfficeId) : this.boundingOfficeId.equalsIgnoreCase(location.boundingOfficeId)
+                && this.elevationUnits == null || location.elevationUnits == null ? Objects.equals(this.elevationUnits, location.elevationUnits) : this.elevationUnits.equalsIgnoreCase(location.elevationUnits)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name == null ? 0 : name.toLowerCase(), latitude, longitude, active, publicName == null ? 0 : publicName.toLowerCase(),
-            longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
-            timezoneName == null ? 0 : timezoneName.toLowerCase(), locationType == null ? 0 : locationType.toLowerCase(),
-            locationKind == null ? 0 : locationKind.toLowerCase(), nation, stateInitial == null ? 0 : stateInitial.toLowerCase(),
-            countyName == null ? 0 : countyName.toLowerCase(), nearestCity == null ? 0 : nearestCity.toLowerCase(),
-            horizontalDatum == null ? 0 : horizontalDatum.toLowerCase(), publishedLongitude, publishedLatitude,
-            verticalDatum == null ? 0 : verticalDatum.toLowerCase(), elevation, mapLabel == null ? 0 : mapLabel.toLowerCase(),
-            boundingOfficeId == null ? 0 : boundingOfficeId.toLowerCase(), officeId == null ? 0 : officeId.toLowerCase());
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), name == null ? 0 : name.toLowerCase(),
+                latitude, longitude, active, publicName == null ? 0 : publicName.toLowerCase(),
+                longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
+                timezoneName == null ? 0 : timezoneName.toLowerCase(),
+                locationType == null ? 0 : locationType.toLowerCase(),
+                locationKind == null ? 0 : locationKind.toLowerCase(),
+                nation, stateInitial == null ? 0 : stateInitial.toLowerCase(),
+                countyName == null ? 0 : countyName.toLowerCase(),
+                nearestCity == null ? 0 : nearestCity.toLowerCase(),
+                horizontalDatum == null ? 0 : horizontalDatum.toLowerCase(), publishedLongitude, publishedLatitude,
+                verticalDatum == null ? 0 : verticalDatum.toLowerCase(),
+                elevation, mapLabel == null ? 0 : mapLabel.toLowerCase(),
+                boundingOfficeId == null ? 0 : boundingOfficeId.toLowerCase(),
+                elevationUnits == null ? 0 : elevationUnits.toLowerCase());
     }
 
     @Override
@@ -575,6 +659,7 @@ public class Location {
         StringBuilder sb = new StringBuilder();
         sb.append("class Location {\n");
 
+        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    latitude: ").append(toIndentedString(latitude)).append("\n");
         sb.append("    longitude: ").append(toIndentedString(longitude)).append("\n");
@@ -596,7 +681,7 @@ public class Location {
         sb.append("    elevation: ").append(toIndentedString(elevation)).append("\n");
         sb.append("    mapLabel: ").append(toIndentedString(mapLabel)).append("\n");
         sb.append("    boundingOfficeId: ").append(toIndentedString(boundingOfficeId)).append("\n");
-        sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
+        sb.append("    elevationUnits: ").append(toIndentedString(elevationUnits)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -610,38 +695,5 @@ public class Location {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
-    }
-
-    /**
-     * Gets or Sets nation
-     */
-    public enum NationEnum {
-        US("US"),
-
-        CANADA("CANADA"),
-
-        MEXICO("MEXICO");
-
-        private String value;
-
-        NationEnum(String value) {
-            this.value = value;
-        }
-
-        @JsonCreator
-        public static NationEnum fromValue(String text) {
-            for (NationEnum b : NationEnum.values()) {
-                if (String.valueOf(b.value).equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return String.valueOf(value);
-        }
     }
 }
