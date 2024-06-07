@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
@@ -66,7 +67,7 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
     }
 
     @Override
-    public HttpPostRequest patch() {
+    public HttpPatchRequest patch() {
         return null;
     }
 

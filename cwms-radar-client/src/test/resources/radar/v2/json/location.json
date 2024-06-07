@@ -15,6 +15,7 @@
   "horizontal-datum": "NAD83",
   "vertical-datum": "NGVD29",
   "elevation": 320.04,
+  "elevation-units": "m",
   "bounding-office-id": "SWT",
   "office-id": "SWT"
 }

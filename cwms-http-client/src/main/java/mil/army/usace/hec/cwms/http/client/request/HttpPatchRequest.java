@@ -22,29 +22,10 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.http.client.request;
 
-import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
-import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
-import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
+public interface HttpPatchRequest extends HttpRequestMediaType {
 
-public interface HttpRequestBuilder {
-    HttpRequestBuilder addQueryParameter(String key, String value);
-
-    HttpRequestBuilder addQueryHeader(String key, String value);
-
-    HttpRequestBuilder addEndpointInput(EndpointInput endpointInput);
-
-    HttpPostRequest post();
-
-    HttpPutRequest put();
-
-    HttpPatchRequest patch();
-
-    HttpRequestMediaType delete();
-
-    HttpRequestMediaType get();
+    HttpRequestMediaType withBody(String body);
 
 }
-

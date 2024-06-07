@@ -906,10 +906,10 @@ paths:
             type: string
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
               $ref: '#/components/schemas/Location'
-          application/xml:
+          application/json:
             schema:
               $ref: '#/components/schemas/Location'
         required: true
@@ -1213,7 +1213,7 @@ paths:
             type: string
         - name: format
           in: query
-          description: "(Deprecated in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n1. tab\r\n2. csv\r\n 3. xml\r\n4. json (default)"
+          description: "(CWMS-Data-Format-Deprecated: 2024-11-01 in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n* `tab`\r\n* `csv`\r\n* `xml`\r\n* `json` (default)"
           deprecated: true
           schema:
             type: string
@@ -1224,17 +1224,21 @@ paths:
             '':
               schema:
                 $ref: '#/components/schemas/OfficeFormatV1'
-            application/json;version=2:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Office'
             application/json:
               schema:
+                $ref: '#/components/schemas/Office'
+            application/json;version=1:
+              schema:
                 $ref: '#/components/schemas/OfficeFormatV1'
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/Office'
             application/xml:
               schema:
                 $ref: '#/components/schemas/Office'
+            application/xml;version=1:
+              schema:
+                $ref: '#/components/schemas/OfficeFormatV1'
             application/xml;version=2:
               schema:
                 $ref: '#/components/schemas/Office'
@@ -1278,7 +1282,7 @@ paths:
       parameters:
         - name: format
           in: query
-          description: "(Deprecated in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n\n* `tab`\r\n\n* `csv`\r\n \n* `xml`\r\n\n* `json` (default)"
+          description: "(CWMS-Data-Format-Deprecated: 2024-11-01 in favor of Accept header) Specifies the encoding format of the response. Valid value for the format field for this URI are:\r\n\n* `tab`\r\n\n* `csv`\r\n \n* `xml`\r\n\n* `json` (default)"
           deprecated: true
           schema:
             type: string
@@ -1294,17 +1298,21 @@ paths:
             '':
               schema:
                 $ref: '#/components/schemas/OfficeFormatV1'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Office'
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OfficeFormatV1'
             application/json;version=2:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Office'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OfficeFormatV1'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XMLv1Office'
         '400':
           description: Bad Request
           content:
@@ -1717,7 +1725,7 @@ paths:
             Specifies the unit or unit system of the response. Valid values for the unit field are:
             * `EN`  Specifies English unit system.  Location level values will be in the default English units for their parameters.
             * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
-            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters. The application/json;version=2 format currently only supports SI.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters. 
           schema:
             type: string
         - name: datum
@@ -5275,6 +5283,16 @@ paths:
           description: Posix <a href="regexp.html">regular expression</a> matching against the location bounding office. When this field is used items with no bounding office set will not be present in results.
           schema:
             type: string
+        - name: include-extents
+          in: query
+          description: Whether the returned catalog entries should include timeseries extents. Only valid for TIMESERIES. Default is true.
+          schema:
+            type: boolean
+        - name: exclude-empty
+          in: query
+          description: Specifies whether Timeseries that have empty extents should be excluded from the results.  For purposes of this parameter 'empty' is defined as VERSION_TIME, EARLIEST_TIME, LATEST_TIME and LAST_UPDATE all being null. This parameter does not control whether the extents are returned to the user, only whether matching timeseries are excluded. Only valid for TIMESERIES. Default is true.
+          schema:
+            type: boolean
       responses:
         '200':
           description: A list of elements the data set you've selected.
@@ -5524,10 +5542,10 @@ paths:
         '200':
           description: A list of blobs.
           content:
-            application/json;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Blobs'
-            application/xml;version=2:
+            application/json;version=2:
               schema:
                 $ref: '#/components/schemas/Blobs'
         '400':
@@ -5576,9 +5594,6 @@ paths:
       requestBody:
         content:
           application/json;version=2:
-            schema:
-              $ref: '#/components/schemas/Blob'
-          application/xml;version=2:
             schema:
               $ref: '#/components/schemas/Blob'
         required: true
@@ -7026,11 +7041,13 @@ paths:
         - name: office
           in: query
           description: Specifies the owning office of the property to be retrieved.
+          required: true
           schema:
             type: string
         - name: category-id
           in: query
           description: Specifies the category id of the property to be retrieved.
+          required: true
           schema:
             type: string
         - name: default-value
@@ -7042,7 +7059,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Property'
         '400':
@@ -7092,11 +7109,13 @@ paths:
         - name: office
           in: query
           description: Specifies the owning office of the property to be deleted.
+          required: true
           schema:
             type: string
         - name: category-id
           in: query
           description: Specifies the category id of the property to be deleted.
+          required: true
           schema:
             type: string
       responses:
@@ -7149,7 +7168,7 @@ paths:
             type: string
       requestBody:
         content:
-          application/json;version=2:
+          application/json:
             schema:
               $ref: '#/components/schemas/Property'
         required: true
@@ -7216,7 +7235,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json;version=2:
+            application/json:
               schema:
                 type: array
                 items:
@@ -7260,13 +7279,304 @@ paths:
       operationId: postCwmsDataProperties
       requestBody:
         content:
-          application/json;version=2:
+          application/json:
             schema:
               $ref: '#/components/schemas/Property'
         required: true
       responses:
         '204':
           description: Property successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/embankments/{name}:
+    get:
+      tags:
+        - Embankments
+      summary: Get cwmsData embankments with name
+      description: Returns CWMS Embankment Data
+      operationId: getCwmsDataEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the embankment to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be retrieved.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Embankment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Embankments
+      summary: Delete cwmsData embankments with name
+      description: Delete CWMS Embankment
+      operationId: deleteCwmsDataEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the embankment to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Defaults to "DELETE_KEY"
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '204':
+          description: Embankment successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the embankment was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    patch:
+      tags:
+        - Embankments
+      summary: Patch cwmsData embankments with name
+      description: Rename CWMS Embankment
+      operationId: patchCwmsDataEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'Specifies the new embankment name. '
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Embankment successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/embankments:
+    get:
+      tags:
+        - Embankments
+      summary: Get cwmsData embankments
+      description: Returns matching CWMS Embankment Data for a Reservoir Project.
+      operationId: getCwmsDataEmbankments
+      parameters:
+        - name: office
+          in: query
+          description: Office id for the reservoir project location associated with the embankments.
+          schema:
+            type: string
+        - name: project-id
+          in: query
+          description: Specifies the project-id of the Embankments whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Embankment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Embankments
+      summary: Post cwmsData embankments
+      description: Create CWMS Embankment
+      operationId: postCwmsDataEmbankments
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Embankment'
+        required: true
+      responses:
+        '204':
+          description: Embankment successfully stored to CWMS.
         '400':
           description: Bad Request
           content:
@@ -7335,6 +7645,19 @@ components:
           type: string
           description: When this key expires, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
           format: date-time
+    location_category:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+        description:
+          type: string
+      description: A representation of a location category
     LocationCategory:
       required:
         - office-id
@@ -7348,8 +7671,6 @@ components:
         description:
           type: string
       description: A representation of a location category
-      xml:
-        name: location_category
     AssignedLocation:
       type: object
       properties:
@@ -7363,7 +7684,7 @@ components:
           type: number
         refLocationId:
           type: string
-    LocationGroup:
+    location_group:
       required:
         - office-id
       type: object
@@ -7374,7 +7695,7 @@ components:
         id:
           type: string
         location-category:
-          $ref: '#/components/schemas/LocationCategory'
+          $ref: '#/components/schemas/location_category'
         description:
           type: string
         shared-loc-alias-id:
@@ -7388,8 +7709,31 @@ components:
           items:
             $ref: '#/components/schemas/AssignedLocation'
       description: A representation of a location group
-      xml:
-        name: location_group
+    LocationGroup:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+        location-category:
+          $ref: '#/components/schemas/location_category'
+        description:
+          type: string
+        shared-loc-alias-id:
+          type: string
+        shared-ref-location-id:
+          type: string
+        loc-group-attribute:
+          type: number
+        assigned-locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedLocation'
+      description: A representation of a location group
     LocationGroup_CSV:
       type: object
       description: Single LocationGroup or List of LocationGroups in comma separated format
@@ -7460,60 +7804,44 @@ components:
           type: string
         bounding-office-id:
           type: string
-    State:
+        elevation-units:
+          type: string
+    state:
       type: object
       properties:
-        stateInitial:
+        state-initial:
           type: string
-          xml:
-            name: state-initial
         name:
           type: string
       description: A representation of a state
-      xml:
-        name: state
+    State:
+      type: object
+      properties:
+        state-initial:
+          type: string
+        name:
+          type: string
+      description: A representation of a state
+    county:
+      type: object
+      properties:
+        name:
+          type: string
+        county-id:
+          type: string
+        state-initial:
+          type: string
+      description: A representation of a county
     County:
       type: object
       properties:
         name:
           type: string
-        countyId:
+        county-id:
           type: string
-          xml:
-            name: county-id
-        stateInitial:
+        state-initial:
           type: string
-          xml:
-            name: state-initial
       description: A representation of a county
-      xml:
-        name: county
-    Office:
-      type: object
-      properties:
-        name:
-          type: string
-        longName:
-          type: string
-          xml:
-            name: long-name
-        type:
-          type: string
-          enum:
-            - unknown
-            - corps headquarters
-            - division headquarters
-            - division regional
-            - district
-            - filed operating activity
-        reportsTo:
-          type: string
-          description: Reference to another office, like a division, that this office reports to.
-          xml:
-            name: reports-to
-      description: A representation of a CWMS office
-      xml:
-        name: office
     OfficeFormatV1:
       type: object
       properties:
@@ -7525,11 +7853,47 @@ components:
         offices:
           type: array
           items:
-            $ref: '#/components/schemas/Office'
-    XMLv1Office:
+            $ref: '#/components/schemas/office'
+    office:
       type: object
-      xml:
-        name: offices
+      properties:
+        name:
+          type: string
+        long-name:
+          type: string
+        type:
+          type: string
+          enum:
+            - unknown
+            - corps headquarters
+            - division headquarters
+            - division regional
+            - district
+            - filed operating activity
+        reports-to:
+          type: string
+          description: Reference to another office, like a division, that this office reports to.
+      description: A representation of a CWMS office
+    Office:
+      type: object
+      properties:
+        name:
+          type: string
+        long-name:
+          type: string
+        type:
+          type: string
+          enum:
+            - unknown
+            - corps headquarters
+            - division headquarters
+            - division regional
+            - district
+            - filed operating activity
+        reports-to:
+          type: string
+          description: Reference to another office, like a division, that this office reports to.
+      description: A representation of a CWMS office
     LocationLevel:
       required:
         - location-level-id
@@ -7621,51 +7985,95 @@ components:
         offset-minutes:
           type: integer
       description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
-    LocationLevels:
+    location-levels:
       type: object
       properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
         levels:
           type: array
           description: List of retrieved location levels
-          xml:
-            wrapped: true
           items:
             $ref: '#/components/schemas/LocationLevel'
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
           readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-      xml:
-        name: location-levels
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    LocationLevels:
+      type: object
+      properties:
+        levels:
+          type: array
+          description: List of retrieved location levels
+          items:
+            $ref: '#/components/schemas/LocationLevel'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
     Offset:
       type: object
       properties:
         estimate:
           type: boolean
-          xml:
-            attribute: true
-        toDatum:
+        to-datum:
           type: string
-          xml:
-            name: to-datum
         value:
           type: number
           format: double
-    TimeSeries:
+    TimeSeries.Column:
+      type: object
+      properties:
+        name:
+          type: string
+        ordinal:
+          type: integer
+          format: int32
+        datatype:
+          type: string
+      readOnly: true
+    TimeSeries.Record:
+      type: object
+      properties:
+        date-time:
+          type: integer
+          description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+          format: int64
+        value:
+          type: number
+          description: Requested time-series data value
+          format: double
+        quality-code:
+          type: integer
+          format: int32
+      description: List of retrieved time-series values
+    timeseries:
       required:
         - units
       type: object
@@ -7698,6 +8106,8 @@ components:
               format: int32
             negative:
               type: boolean
+            zero:
+              type: boolean
             units:
               type: array
               items:
@@ -7722,8 +8132,6 @@ components:
                     type: boolean
                   timeBased:
                     type: boolean
-            zero:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -7770,8 +8178,6 @@ components:
             $ref: '#/components/schemas/TimeSeries.Column'
         values:
           type: array
-          xml:
-            wrapped: true
           items:
             type: array
             example:
@@ -7798,46 +8204,14 @@ components:
           description: The version date of the time series trace
           format: date-time
         vertical-datum-info:
-          $ref: '#/components/schemas/VerticalDatumInfo'
-      xml:
-        name: timeseries
-    TimeSeries.Column:
-      type: object
-      properties:
-        name:
-          type: string
-        ordinal:
-          type: integer
-          format: int32
-        datatype:
-          type: string
-      readOnly: true
-    TimeSeries.Record:
-      type: object
-      properties:
-        date-time:
-          type: integer
-          description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
-          format: int64
-        value:
-          type: number
-          description: Requested time-series data value
-          format: double
-        quality-code:
-          type: integer
-          format: int32
-      description: List of retrieved time-series values
-    VerticalDatumInfo:
+          $ref: '#/components/schemas/vertical-datum-info'
+    vertical-datum-info:
       type: object
       properties:
         office:
           type: string
-          xml:
-            attribute: true
         unit:
           type: string
-          xml:
-            attribute: true
         location:
           type: string
         native-datum:
@@ -7847,12 +8221,140 @@ components:
           format: double
         offsets:
           type: array
-          xml:
-            name: offset
           items:
             $ref: '#/components/schemas/Offset'
-      xml:
-        name: vertical-datum-info
+    TimeSeries:
+      required:
+        - units
+      type: object
+      properties:
+        begin:
+          type: string
+          description: The requested start time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        date-version-type:
+          type: string
+          description: Version type specifies the type of timeseries response to be received. Can be max aggregate or single version. Max aggregate cannot be run if version date field is specified.
+          enum:
+            - MAX_AGGREGATE
+            - SINGLE_VERSION
+            - UNVERSIONED
+        end:
+          type: string
+          description: The requested end time of the data, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
+          format: date-time
+          readOnly: true
+        interval:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            zero:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  duration:
+                    type: object
+                    properties:
+                      seconds:
+                        type: integer
+                        format: int64
+                      nano:
+                        type: integer
+                        format: int32
+                      negative:
+                        type: boolean
+                      zero:
+                        type: boolean
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+          description: The interval of the time-series, in ISO-8601 duration format
+          format: Java Duration
+          readOnly: true
+        interval-offset:
+          type: integer
+          description: Offset from top of interval
+          format: int64
+          readOnly: true
+        name:
+          type: string
+          description: Time-series name
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        office-id:
+          type: string
+          description: Office ID that owns the time-series
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        time-zone:
+          type: string
+          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        units:
+          type: string
+          description: The units of the time series data
+        value-columns:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/TimeSeries.Column'
+        values:
+          type: array
+          items:
+            type: array
+            example:
+              - 1509654000000
+              - 54.3
+              - 0
+            items:
+              type: object
+              properties:
+                date-time:
+                  type: integer
+                  description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+                  format: int64
+                value:
+                  type: number
+                  description: Requested time-series data value
+                  format: double
+                quality-code:
+                  type: integer
+                  format: int32
+              description: List of retrieved time-series values
+        version-date:
+          type: string
+          description: The version date of the time series trace
+          format: date-time
+        vertical-datum-info:
+          $ref: '#/components/schemas/vertical-datum-info'
     UnitSystem:
       type: string
       description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to SI.
@@ -8030,6 +8532,19 @@ components:
         quality-code:
           type: integer
           format: int64
+    timeseries-category:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+        description:
+          type: string
+      description: A representation of a TimeSeries category
     TimeSeriesCategory:
       required:
         - office-id
@@ -8043,8 +8558,6 @@ components:
         description:
           type: string
       description: A representation of a TimeSeries category
-      xml:
-        name: timeseries-category
     TimeSeriesIdentifierDescriptor:
       required:
         - office-id
@@ -8065,15 +8578,6 @@ components:
     TimeSeriesIdentifierDescriptors:
       type: object
       properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
         descriptors:
           type: array
           items:
@@ -8082,9 +8586,18 @@ components:
           type: string
           description: The cursor to the next page of data; null if there is no more data
           readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
           readOnly: true
     AssignedTimeSeries:
@@ -8103,7 +8616,7 @@ components:
         attribute:
           type: integer
           format: int32
-    TimeSeriesGroup:
+    timeseries-group:
       required:
         - office-id
       type: object
@@ -8114,7 +8627,7 @@ components:
         id:
           type: string
         time-series-category:
-          $ref: '#/components/schemas/TimeSeriesCategory'
+          $ref: '#/components/schemas/timeseries-category'
         description:
           type: string
         shared-alias-id:
@@ -8126,8 +8639,29 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTimeSeries'
       description: A representation of a timeseries group
-      xml:
-        name: timeseries-group
+    TimeSeriesGroup:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+        time-series-category:
+          $ref: '#/components/schemas/timeseries-category'
+        description:
+          type: string
+        shared-alias-id:
+          type: string
+        shared-ref-ts-id:
+          type: string
+        assigned-time-series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedTimeSeries'
+      description: A representation of a timeseries group
     StoreRule:
       type: string
       enum:
@@ -8174,26 +8708,26 @@ components:
     RatingTemplates:
       type: object
       properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page:
           type: string
           description: The cursor to the current page of data
           readOnly: true
-        total:
+        page-size:
           type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
         templates:
           type: array
           items:
             $ref: '#/components/schemas/RatingTemplate'
-        next-page:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          readOnly: true
-        page-size:
+        total:
           type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
           readOnly: true
     IndependentRoundingSpec:
@@ -8252,26 +8786,26 @@ components:
     RatingSpecs:
       type: object
       properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page:
           type: string
           description: The cursor to the current page of data
           readOnly: true
-        total:
+        page-size:
           type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
         specs:
           type: array
           items:
             $ref: '#/components/schemas/RatingSpec'
-        next-page:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          readOnly: true
-        page-size:
+        total:
           type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
           readOnly: true
     AbstractRatingMetadata:
@@ -8297,7 +8831,7 @@ components:
         description:
           type: string
         vertical-datum-info:
-          $ref: '#/components/schemas/VerticalDatumInfo'
+          $ref: '#/components/schemas/vertical-datum-info'
         rating-type:
           type: string
       description: Rating Metadata
@@ -8335,26 +8869,26 @@ components:
     RatingMetadataList:
       type: object
       properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
         page:
           type: string
           description: The cursor to the current page of data
           readOnly: true
-        total:
+        page-size:
           type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
         rating-metadata:
           type: array
           items:
             $ref: '#/components/schemas/RatingMetadata'
-        next-page:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          readOnly: true
-        page-size:
+        total:
           type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
           readOnly: true
     SourceRating:
@@ -8417,72 +8951,26 @@ components:
       enum:
         - TIMESERIES
         - LOCATIONS
-    Catalog:
-      type: object
-      properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
-        entries:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/CatalogEntry'
-        next-page:
-          type: string
-          description: The cursor to the next page of data; null if there is no more data
-          readOnly: true
-        page-size:
-          type: integer
-          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
-          format: int32
-          readOnly: true
-      xml:
-        name: catalog
     CatalogEntry:
       type: object
       properties:
         office:
           type: string
-          xml:
-            attribute: true
-      xml:
-        name: entry
       oneOf:
         - $ref: '#/components/schemas/LocationCatalogEntry'
         - $ref: '#/components/schemas/TimeseriesCatalogEntry'
-    LocationAlias:
-      type: object
-      properties:
-        name:
-          type: string
-          xml:
-            attribute: true
-        value:
-          type: string
-      xml:
-        name: alias
     LocationCatalogEntry:
       type: object
       properties:
         office:
           type: string
-          xml:
-            attribute: true
         name:
           type: string
-        nearestCity:
+        nearest-city:
           type: string
-        publicName:
+        public-name:
           type: string
-        longName:
+        long-name:
           type: string
         description:
           type: string
@@ -8490,7 +8978,7 @@ components:
           type: string
         type:
           type: string
-        timeZone:
+        time-zone:
           type: string
         latitude:
           type: number
@@ -8498,20 +8986,20 @@ components:
         longitude:
           type: number
           format: double
-        publishedLatitude:
+        published-latitude:
           type: number
           format: double
-        publishedLongitude:
+        published-longitude:
           type: number
           format: double
-        horizontalDatum:
+        horizontal-datum:
           type: string
         elevation:
           type: number
           format: double
         unit:
           type: string
-        verticalDatum:
+        vertical-datum:
           type: string
         nation:
           type: string
@@ -8519,21 +9007,71 @@ components:
           type: string
         county:
           type: string
-        boundingOffice:
+        bounding-office:
           type: string
-        mapLabel:
+        map-label:
           type: string
         active:
           type: boolean
         aliases:
           type: array
-          xml:
-            wrapped: true
           items:
-            $ref: '#/components/schemas/LocationAlias'
-      xml:
-        name: entry
-    TimeSeriesExtents:
+            $ref: '#/components/schemas/alias'
+    TimeseriesCatalogEntry:
+      type: object
+      properties:
+        office:
+          type: string
+        name:
+          type: string
+        units:
+          type: string
+        interval:
+          type: string
+        interval-offset:
+          type: integer
+          description: Offset from top of interval
+          format: int64
+        time-zone:
+          type: string
+          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
+        extents:
+          type: array
+          items:
+            $ref: '#/components/schemas/extents'
+    alias:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    catalog:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    extents:
       type: object
       properties:
         earliest-time:
@@ -8553,42 +9091,31 @@ components:
           description: TimeSeries version to which this extent information applies
           format: date-time
       description: TimeSeries extent information
-      xml:
-        name: extents
-    TimeseriesCatalogEntry:
+    Catalog:
       type: object
       properties:
-        office:
-          type: string
-          xml:
-            attribute: true
-        name:
-          type: string
-          xml:
-            attribute: true
-        units:
-          type: string
-        interval:
-          type: string
-        intervalOffset:
-          type: integer
-          description: Offset from top of interval
-          format: int64
-          xml:
-            name: interval-offset
-        timeZone:
-          type: string
-          description: Only on 21.1.1 Database. The timezone the Interval Offset is from.
-          xml:
-            name: time-zone
-        extents:
+        entries:
           type: array
-          xml:
-            wrapped: true
           items:
-            $ref: '#/components/schemas/TimeSeriesExtents'
-      xml:
-        name: entry
+            $ref: '#/components/schemas/CatalogEntry'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
     Basin:
       required:
         - office-id
@@ -8728,36 +9255,73 @@ components:
           items:
             type: string
             format: byte
-    Blobs:
+    blobs:
       type: object
       properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
         blobs:
           type: array
           description: List of retrieved blobs
-          xml:
-            wrapped: true
           items:
             $ref: '#/components/schemas/Blob'
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
           readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-      xml:
-        name: blobs
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    Blobs:
+      type: object
+      properties:
+        blobs:
+          type: array
+          description: List of retrieved blobs
+          items:
+            $ref: '#/components/schemas/Blob'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    clob:
+      required:
+        - id
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        id:
+          type: string
+        description:
+          type: string
+        value:
+          type: string
     Clob:
       required:
         - id
@@ -8773,38 +9337,58 @@ components:
           type: string
         value:
           type: string
-      xml:
-        name: clob
-    Clobs:
+    clobs:
       type: object
       properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
         clobs:
           type: array
           description: List of retrieved clobs
-          xml:
-            wrapped: true
           items:
-            $ref: '#/components/schemas/Clob'
+            $ref: '#/components/schemas/clob'
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
           readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-      xml:
-        name: clobs
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    Clobs:
+      type: object
+      properties:
+        clobs:
+          type: array
+          description: List of retrieved clobs
+          items:
+            $ref: '#/components/schemas/clob'
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
     Pool:
       type: object
       properties:
@@ -8816,52 +9400,74 @@ components:
           type: string
         implicit:
           type: boolean
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
+        projectId:
+          type: string
         bottomLevelId:
           type: string
         topLevelId:
           type: string
-        projectId:
-          type: string
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
       description: List of retrieved pools
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
           type: string
-    Pools:
+        poolName:
+          type: string
+    pools:
       type: object
       properties:
-        page:
-          type: string
-          description: The cursor to the current page of data
-          readOnly: true
-        total:
-          type: integer
-          description: The total number of records retrieved; null or not present if not supported or unknown
-          format: int32
-          readOnly: true
-        pools:
-          type: array
-          description: List of retrieved pools
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Pool'
         next-page:
           type: string
           description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
           readOnly: true
         page-size:
           type: integer
           description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
           format: int32
           readOnly: true
-      xml:
-        name: pools
+        pools:
+          type: array
+          description: List of retrieved pools
+          items:
+            $ref: '#/components/schemas/Pool'
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    Pools:
+      type: object
+      properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        pools:
+          type: array
+          description: List of retrieved pools
+          items:
+            $ref: '#/components/schemas/Pool'
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
     SpecifiedLevel:
       required:
         - office-id
@@ -8874,41 +9480,29 @@ components:
           type: string
         description:
           type: string
-    ForecastInstance:
+    forecast-instance:
       type: object
       properties:
         spec:
-          $ref: '#/components/schemas/ForecastSpec'
+          $ref: '#/components/schemas/forecast-spec'
         date-time:
           type: string
           format: date-time
-          xml:
-            attribute: true
         issue-date-time:
           type: string
           format: date-time
-          xml:
-            attribute: true
         first-date-time:
           type: string
           format: date-time
-          xml:
-            attribute: true
         last-date-time:
           type: string
           format: date-time
-          xml:
-            attribute: true
         max-age:
           type: integer
           format: int32
-          xml:
-            attribute: true
         notes:
           type: string
           description: Forecast Instance Notes
-          xml:
-            attribute: true
         metadata:
           type: object
           additionalProperties:
@@ -8916,34 +9510,97 @@ components:
         filename:
           type: string
           description: Forecast Filename
-          xml:
-            attribute: true
         file-description:
           type: string
           description: Description of Forecast File
-          xml:
-            attribute: true
         file-media-type:
           type: string
           description: Forecast File Media Type
-          xml:
-            attribute: true
         file-data:
           type: array
           description: Forecast File binary data
-          xml:
-            name: forecast-data
           items:
             type: string
             description: Forecast File binary data
             format: byte
-            xml:
-              name: forecast-data
         file-data-url:
           type: string
           description: Link to Forecast File binary data
-      xml:
-        name: forecast-instance
+    forecast-spec:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        spec-id:
+          type: string
+          description: Forecast Spec ID
+        designator:
+          type: string
+          description: Forecast Designator
+        location-id:
+          type: string
+          description: Location IDs
+        source-entity-id:
+          type: string
+          description: Source Entity ID
+        description:
+          type: string
+          description: Description of Forecast
+        time-series-ids:
+          type: array
+          description: List of Time Series IDs belonging to this Forecast Spec
+          items:
+            type: string
+            description: List of Time Series IDs belonging to this Forecast Spec
+    ForecastInstance:
+      type: object
+      properties:
+        spec:
+          $ref: '#/components/schemas/forecast-spec'
+        date-time:
+          type: string
+          format: date-time
+        issue-date-time:
+          type: string
+          format: date-time
+        first-date-time:
+          type: string
+          format: date-time
+        last-date-time:
+          type: string
+          format: date-time
+        max-age:
+          type: integer
+          format: int32
+        notes:
+          type: string
+          description: Forecast Instance Notes
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        filename:
+          type: string
+          description: Forecast Filename
+        file-description:
+          type: string
+          description: Description of Forecast File
+        file-media-type:
+          type: string
+          description: Forecast File Media Type
+        file-data:
+          type: array
+          description: Forecast File binary data
+          items:
+            type: string
+            description: Forecast File binary data
+            format: byte
+        file-data-url:
+          type: string
+          description: Link to Forecast File binary data
     ForecastSpec:
       required:
         - office-id
@@ -8958,8 +9615,6 @@ components:
         designator:
           type: string
           description: Forecast Designator
-          xml:
-            attribute: true
         location-id:
           type: string
           description: Location IDs
@@ -8969,16 +9624,25 @@ components:
         description:
           type: string
           description: Description of Forecast
-          xml:
-            attribute: true
         time-series-ids:
           type: array
           description: List of Time Series IDs belonging to this Forecast Spec
           items:
             type: string
             description: List of Time Series IDs belonging to this Forecast Spec
-      xml:
-        name: forecast-spec
+    property:
+      type: object
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+        office-id:
+          type: string
+        value:
+          type: string
+        comment:
+          type: string
     Property:
       type: object
       properties:
@@ -8992,8 +9656,49 @@ components:
           type: string
         comment:
           type: string
-      xml:
-        name: property
+    Embankment:
+      type: object
+      properties:
+        upstream-side-slope:
+          type: number
+          format: double
+        downstream-side-slope:
+          type: number
+          format: double
+        structure-length:
+          type: number
+          format: double
+        height-max:
+          type: number
+          format: double
+        top-width:
+          type: number
+          format: double
+        units-id:
+          type: string
+        downstream-prot-type:
+          $ref: '#/components/schemas/LookupType'
+        upstream-prot-type:
+          $ref: '#/components/schemas/LookupType'
+        structure-type:
+          $ref: '#/components/schemas/LookupType'
+        location:
+          $ref: '#/components/schemas/Location'
+        project-id:
+          type: string
+        project-office-id:
+          type: string
+    LookupType:
+      type: object
+      properties:
+        office-id:
+          type: string
+        display-value:
+          type: string
+        tooltip:
+          type: string
+        active:
+          type: boolean
   securitySchemes:
     CwmsAAACacAuth:
       type: apiKey

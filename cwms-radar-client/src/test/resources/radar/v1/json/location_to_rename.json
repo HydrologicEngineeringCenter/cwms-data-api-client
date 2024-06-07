@@ -14,6 +14,7 @@
   "published-longitude": -121.73,
   "horizontal-datum": "NAD83",
   "elevation": 41.3,
+  "elevation-units": "m",
   "vertical-datum": "NGVD29",
   "nation": "US",
   "state-initial": "CA",

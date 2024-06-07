@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
@@ -123,9 +124,9 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public final HttpPostRequest patch() {
+    public final HttpPatchRequest patch() {
         this.method = HttpRequestMethod.PATCH;
-        return new HttpPostRequestImpl();
+        return new HttpPatchRequestImpl();
     }
 
     @Override
@@ -182,6 +183,21 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         public HttpRequestMediaType withBody(String postBody) {
             body = postBody;
             return new HttpRequiredMediaTypeImpl();
+        }
+    }
+
+    private class HttpPatchRequestImpl extends HttpRequiredMediaTypeImpl implements HttpPatchRequest {
+
+        @Override
+        public HttpRequestMediaType withBody(String postBody) {
+            body = postBody;
+            return new HttpRequiredMediaTypeImpl();
+        }
+
+        @Override
+        public HttpRequestExecutor withMediaType(String type) {
+            body = "";
+            return super.withMediaType(type);
         }
     }
 
