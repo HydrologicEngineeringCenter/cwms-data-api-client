@@ -27,14 +27,13 @@ package mil.army.usace.hec.cwms.radar.client.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * LookupType
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-07T14:38:25.006765600-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-10T15:17:37.553488400-07:00[America/Los_Angeles]")
 public class LookupType {
     @JsonProperty("office-id")
     private String officeId = null;
@@ -58,7 +57,6 @@ public class LookupType {
      *
      * @return officeId
      **/
-    @NotNull
 
     public String getOfficeId() {
         return officeId;
@@ -78,7 +76,6 @@ public class LookupType {
      *
      * @return displayValue
      **/
-    @NotNull
 
     public String getDisplayValue() {
         return displayValue;
@@ -98,7 +95,6 @@ public class LookupType {
      *
      * @return tooltip
      **/
-    @NotNull
 
     public String getTooltip() {
         return tooltip;
@@ -118,9 +114,8 @@ public class LookupType {
      *
      * @return active
      **/
-    @NotNull
 
-    public Boolean isisActive() {
+    public Boolean isActive() {
         return active;
     }
 

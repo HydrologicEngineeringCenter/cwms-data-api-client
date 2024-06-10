@@ -28,15 +28,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
  * Location
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-07T14:38:25.006765600-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-10T15:17:37.553488400-07:00[America/Los_Angeles]")
 public class Location {
     @JsonProperty("office-id")
     private String officeId = null;
@@ -190,7 +190,6 @@ public class Location {
      *
      * @return latitude
      **/
-    @NotNull
 
     public Double getLatitude() {
         return latitude;
@@ -210,7 +209,6 @@ public class Location {
      *
      * @return longitude
      **/
-    @NotNull
 
     public Double getLongitude() {
         return longitude;
@@ -230,7 +228,6 @@ public class Location {
      *
      * @return active
      **/
-    @NotNull
 
     public Boolean isActive() {
         return active;
@@ -250,7 +247,6 @@ public class Location {
      *
      * @return publicName
      **/
-    @NotNull
 
     public String getPublicName() {
         return publicName;
@@ -270,7 +266,6 @@ public class Location {
      *
      * @return longName
      **/
-    @NotNull
 
     public String getLongName() {
         return longName;
@@ -290,7 +285,6 @@ public class Location {
      *
      * @return description
      **/
-    @NotNull
 
     public String getDescription() {
         return description;
@@ -310,7 +304,6 @@ public class Location {
      *
      * @return timezoneName
      **/
-    @NotNull
 
     public String getTimezoneName() {
         return timezoneName;
@@ -330,7 +323,6 @@ public class Location {
      *
      * @return locationType
      **/
-    @NotNull
 
     public String getLocationType() {
         return locationType;
@@ -350,7 +342,6 @@ public class Location {
      *
      * @return locationKind
      **/
-    @NotNull
 
     public String getLocationKind() {
         return locationKind;
@@ -370,7 +361,6 @@ public class Location {
      *
      * @return nation
      **/
-    @NotNull
 
     public NationEnum getNation() {
         return nation;
@@ -390,7 +380,6 @@ public class Location {
      *
      * @return stateInitial
      **/
-    @NotNull
 
     public String getStateInitial() {
         return stateInitial;
@@ -410,7 +399,6 @@ public class Location {
      *
      * @return countyName
      **/
-    @NotNull
 
     public String getCountyName() {
         return countyName;
@@ -430,7 +418,6 @@ public class Location {
      *
      * @return nearestCity
      **/
-    @NotNull
 
     public String getNearestCity() {
         return nearestCity;
@@ -450,7 +437,6 @@ public class Location {
      *
      * @return horizontalDatum
      **/
-    @NotNull
 
     public String getHorizontalDatum() {
         return horizontalDatum;
@@ -470,7 +456,6 @@ public class Location {
      *
      * @return publishedLongitude
      **/
-    @NotNull
 
     public Double getPublishedLongitude() {
         return publishedLongitude;
@@ -490,7 +475,6 @@ public class Location {
      *
      * @return publishedLatitude
      **/
-    @NotNull
 
     public Double getPublishedLatitude() {
         return publishedLatitude;
@@ -510,7 +494,6 @@ public class Location {
      *
      * @return verticalDatum
      **/
-    @NotNull
 
     public String getVerticalDatum() {
         return verticalDatum;
@@ -530,7 +513,6 @@ public class Location {
      *
      * @return elevation
      **/
-    @NotNull
 
     public Double getElevation() {
         return elevation;
@@ -550,7 +532,6 @@ public class Location {
      *
      * @return mapLabel
      **/
-    @NotNull
 
     public String getMapLabel() {
         return mapLabel;
@@ -570,7 +551,6 @@ public class Location {
      *
      * @return boundingOfficeId
      **/
-    @NotNull
 
     public String getBoundingOfficeId() {
         return boundingOfficeId;
@@ -590,7 +570,6 @@ public class Location {
      *
      * @return elevationUnits
      **/
-    @NotNull
 
     public String getElevationUnits() {
         return elevationUnits;
@@ -638,16 +617,20 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), name == null ? 0 : name.toLowerCase(),
-                latitude, longitude, active, publicName == null ? 0 : publicName.toLowerCase(),
-                longName == null ? 0 : longName.toLowerCase(), description == null ? 0 : description.toLowerCase(),
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(),
+                name == null ? 0 : name.toLowerCase(), latitude, longitude, active,
+                publicName == null ? 0 : publicName.toLowerCase(),
+                longName == null ? 0 : longName.toLowerCase(),
+                description == null ? 0 : description.toLowerCase(),
                 timezoneName == null ? 0 : timezoneName.toLowerCase(),
                 locationType == null ? 0 : locationType.toLowerCase(),
                 locationKind == null ? 0 : locationKind.toLowerCase(),
-                nation, stateInitial == null ? 0 : stateInitial.toLowerCase(),
+                nation == null ? 0 : nation.value.toLowerCase(),
+                stateInitial == null ? 0 : stateInitial.toLowerCase(),
                 countyName == null ? 0 : countyName.toLowerCase(),
                 nearestCity == null ? 0 : nearestCity.toLowerCase(),
-                horizontalDatum == null ? 0 : horizontalDatum.toLowerCase(), publishedLongitude, publishedLatitude,
+                horizontalDatum == null ? 0 : horizontalDatum.toLowerCase(),
+                publishedLongitude, publishedLatitude,
                 verticalDatum == null ? 0 : verticalDatum.toLowerCase(),
                 elevation, mapLabel == null ? 0 : mapLabel.toLowerCase(),
                 boundingOfficeId == null ? 0 : boundingOfficeId.toLowerCase(),

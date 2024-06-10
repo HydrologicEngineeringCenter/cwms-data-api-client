@@ -25,16 +25,18 @@
 package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+
 import java.time.Instant;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import javax.validation.Valid;
 
 /**
  * BinaryTimeSeriesRow
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-19T14:26:29.428379500-07:00[America/Los_Angeles]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-19T14:26:29.428379500-07:00[America/Los_Angeles]")
 public class BinaryTimeSeriesRow {
     @JsonProperty("date-time")
     private Instant dateTime = null;
