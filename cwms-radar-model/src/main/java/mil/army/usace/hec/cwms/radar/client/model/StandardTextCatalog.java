@@ -26,8 +26,9 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +37,7 @@ import java.util.Objects;
  * StandardTextCatalog
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-15T16:09:12.352841800-08:00[America/Los_Angeles]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-15T16:09:12.352841800-08:00[America/Los_Angeles]")
 public class StandardTextCatalog {
     @JsonProperty("values")
     @Valid

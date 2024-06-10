@@ -26,9 +26,10 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +38,7 @@ import java.util.Objects;
  * ForecastSpec
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-18T23:14:24.845196800-07:00[America/Los_Angeles]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-04-18T23:14:24.845196800-07:00[America/Los_Angeles]")
 public class ForecastSpec {
     @JsonProperty("office-id")
     private String officeId = null;

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,18 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.Valid;
 
 /**
  * LocationCatalog
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-07-22T11:14:35.029-07:00[America/Los_Angeles]")
 public class LocationCatalog {
     @JsonProperty("page")
     private String page = null;
