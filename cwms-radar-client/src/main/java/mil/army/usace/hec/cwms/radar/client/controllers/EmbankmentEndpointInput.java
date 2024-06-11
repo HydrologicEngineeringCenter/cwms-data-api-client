@@ -101,11 +101,18 @@ public final class EmbankmentEndpointInput {
     }
 
     public static final class Post extends EndpointInput {
+        static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
         private final Embankment embankment;
+        private boolean failIfExists = true;
 
         private Post(Embankment embankment) {
             this.embankment = Objects.requireNonNull(embankment,
                     "Cannot access the embankment POST endpoint without a embankment value");
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
         }
 
         Embankment embankment() {
@@ -114,7 +121,8 @@ public final class EmbankmentEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, Boolean.toString(failIfExists))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 

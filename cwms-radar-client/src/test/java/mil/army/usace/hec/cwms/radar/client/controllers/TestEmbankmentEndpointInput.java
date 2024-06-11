@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.EmbankmentEndpointInput.Post.FAIL_IF_EXISTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
@@ -81,9 +82,11 @@ class TestEmbankmentEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/embankment.json");
         Embankment embankment = RadarObjectMapper.mapJsonToObject(collect, Embankment.class);
-        EmbankmentEndpointInput.Post input = EmbankmentEndpointInput.post(embankment);
+        EmbankmentEndpointInput.Post input = EmbankmentEndpointInput.post(embankment)
+                .failIfExists(false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(embankment, input.embankment());
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
