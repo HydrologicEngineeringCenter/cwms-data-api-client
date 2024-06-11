@@ -1,4 +1,4 @@
-name: Deploy cwms-radar-client
+name: Deploy cwms-data-api-client
 on:
   push:
     branches:

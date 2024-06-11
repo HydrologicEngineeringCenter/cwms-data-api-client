@@ -1,4 +1,4 @@
-name: Build cwms-radar-client
+name: Build cwms-data-api-client
 on:
   push:
   pull_request:
