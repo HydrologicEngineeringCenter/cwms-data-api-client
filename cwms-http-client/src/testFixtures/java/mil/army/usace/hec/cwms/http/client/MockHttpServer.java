@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.http.client;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,5 +83,25 @@ public final class MockHttpServer implements AutoCloseable {
     @Override
     public void close() throws Exception {
         mockWebServer.close();
+    }
+
+    public RequestWrapper takeRequest() throws Exception {
+        return new RequestWrapper(mockWebServer.takeRequest());
+    }
+
+    public static final class RequestWrapper {
+        private final RecordedRequest request;
+
+        private RequestWrapper(RecordedRequest request) {
+            this.request = request;
+        }
+
+        public String getPath() {
+            return request.getPath();
+        }
+
+        public String getMethod() {
+            return request.getMethod();
+        }
     }
 }

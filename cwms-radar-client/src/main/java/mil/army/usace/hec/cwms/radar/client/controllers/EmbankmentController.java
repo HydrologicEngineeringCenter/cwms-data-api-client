@@ -80,7 +80,7 @@ public final class EmbankmentController {
 
     public void renameEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.Patch input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, EMBANKMENT_ENDPOINT)
+        new HttpRequestBuilderImpl(apiConnectionInfo, EMBANKMENT_ENDPOINT + "/" + input.embankmentId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()

@@ -111,7 +111,7 @@ class TestEmbankmentController extends TestController {
     }
 
     @Test
-    void testRenameEmbankment() throws IOException {
+    void testRenameEmbankment() throws Exception {
         String collect = readJsonFile("radar/v1/json/embankment.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -120,5 +120,8 @@ class TestEmbankmentController extends TestController {
         EmbankmentEndpointInput.Patch input = EmbankmentEndpointInput.patch(value.getLocation().getName(),
                 "NewName", "SPK");
         assertDoesNotThrow(() -> controller.renameEmbankment(buildConnectionInfo(cookieJarSupplier), input));
+        var requestWrapper = mockHttpServer.takeRequest();
+        assertEquals("PATCH", requestWrapper.getMethod());
+        assertTrue(requestWrapper.getPath().startsWith("/embankments/" + value.getLocation().getName() + "?"));
     }
 }
