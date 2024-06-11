@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
 
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ import java.util.Objects;
  * StandardCatalogEntry
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-13T10:48:01.962877200-08:00[America/Los_Angeles]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-13T10:48:01.962877200-08:00[America/Los_Angeles]")
 public class StandardCatalogEntry {
     @JsonProperty("id")
     private String id = null;

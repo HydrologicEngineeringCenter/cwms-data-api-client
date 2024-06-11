@@ -1,0 +1,9 @@
+{
+  "java11": "true",
+  "java8": "true",
+  "dateLibrary": "java11",
+  "notNullJacksonAnnotation": "false",
+  "modelPackage": "mil.army.usace.hec.cwms.radar.client.model",
+  "jakarta": "true",
+  "useNullableForNotNull": "false"
+}

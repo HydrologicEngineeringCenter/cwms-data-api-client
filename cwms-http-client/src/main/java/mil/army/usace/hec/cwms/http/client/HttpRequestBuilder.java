@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
@@ -39,7 +40,7 @@ public interface HttpRequestBuilder {
 
     HttpPutRequest put();
 
-    HttpPostRequest patch();
+    HttpPatchRequest patch();
 
     HttpRequestMediaType delete();
 
