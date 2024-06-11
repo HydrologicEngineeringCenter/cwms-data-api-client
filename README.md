@@ -1,3 +1,4 @@
+[![Deploy cwms-data-api-client](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/deploy.yml/badge.svg)](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/deploy.yml)[![Build cwms-data-api-client](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/build.yml/badge.svg)](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/build.yml)[![CodeQL](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/HydrologicEngineeringCenter/cwms-data-api-client/actions/workflows/codeql.yml)
 ![BranchCoverage](.github/coveragereport/badge_branchcoverage.svg) ![LineCoverage](.github/coveragereport/badge_linecoverage.svg) ![MethodCoverage](.github/coveragereport/badge_methodcoverage.svg)
 
 ### <span style="color:orange">Notice</span>
