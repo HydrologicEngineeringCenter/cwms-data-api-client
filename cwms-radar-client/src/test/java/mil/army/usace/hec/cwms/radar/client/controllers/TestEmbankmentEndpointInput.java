@@ -104,7 +104,7 @@ class TestEmbankmentEndpointInput {
                 .deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(embankmentId, input.embankmentId());
-        assertEquals(DeleteMethod.ALL.name(), mockHttpRequestBuilder.getQueryParameter(Delete.METHOD_QUERY_PARAMETER));
+        assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder.getQueryParameter(Delete.METHOD_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
