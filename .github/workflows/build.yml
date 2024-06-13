@@ -1,6 +1,5 @@
 name: Build cwms-data-api-client
 on:
-  push:
   pull_request:
     branches:
       - main
@@ -18,6 +17,12 @@ jobs:
           java-version: '21'
           java-package: jdk
           distribution: 'temurin'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4.0.0
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: build and test
         id: thebuild
         run: ./gradlew build --info --init-script init.gradle
@@ -26,6 +31,11 @@ jobs:
         with:
           dotnet-version: 6.x
           dotnet-quality: 'ga'
+      - name: Analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.6
         with:
