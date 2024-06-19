@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 final class RadarEndpointConstants {
 
     static final String ACCEPT_QUERY_HEADER = "accept";
-    static final String ACCEPT_HEADER_V1 = "application/json";
+    static final String ACCEPT_HEADER_V1 = "application/json;version=1";
     static final String ACCEPT_XML_HEADER_V1 = "application/xml";
     static final String ACCEPT_HEADER_V2 = "application/json;version=2";
     static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
