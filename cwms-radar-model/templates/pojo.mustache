@@ -1,9 +1,12 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
-* {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
-*/
+ * {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 {{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}
-public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
+public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{#serializableModel}} implements Serializable{{/serializableModel}} {
+
 {{#vars}}
     {{#isEnum}}
         {{^isContainer}}
@@ -17,46 +20,48 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
             {{/isContainer}}
         {{/items}}
     {{/items.isEnum}}
-    {{#jackson}}
-        @JsonProperty("{{baseName}}"){{#withXml}}
-            {{^isXmlWrapped}}
-                @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-            {{/isXmlWrapped}}
-            {{#isXmlWrapped}}
-                // Is a container wrapped={{isXmlWrapped}}
-                // items.xmlName={{items.xmlName}}
-                @JacksonXmlProperty({{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#items.xmlName}}{{items.xmlName}}{{/items.xmlName}}{{^items.xmlName}}{{items.baseName}}{{/items.xmlName}}")
-                @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, {{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-            {{/isXmlWrapped}}
-        {{/withXml}}{{/jackson}}
-    {{#gson}}
-        @SerializedName("{{baseName}}")
-    {{/gson}}
-    {{#isContainer}}
-        {{#useBeanValidation}}@Valid{{/useBeanValidation}}
-        {{#isListContainer}}
-        private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new ArrayList<>(){{/required}};
-        {{/isListContainer}}
-        {{#isMap}}
-        private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new HashMap<>(){{/required}};
-        {{/isMap}}
-        {{^isListContainer}}{{^isMap}}
-        private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};
-        {{/isMap}}{{/isListContainer}}
-    {{/isContainer}}
-    {{^isContainer}}
-        private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
-    {{/isContainer}}
+{{#jackson}}
+    @JsonProperty("{{baseName}}")
+    {{#withXml}}
+        {{^isXmlWrapped}}
+            @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+        {{/isXmlWrapped}}
+        {{#isXmlWrapped}}
+            // Is a container wrapped={{isXmlWrapped}}
+            // items.xmlName={{items.xmlName}}
+            @JacksonXmlProperty({{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#items.xmlName}}{{items.xmlName}}{{/items.xmlName}}{{^items.xmlName}}{{items.baseName}}{{/items.xmlName}}")
+            @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, {{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+        {{/isXmlWrapped}}
+    {{/withXml}}
+{{/jackson}}
+{{#gson}}
+    @SerializedName("{{baseName}}")
+{{/gson}}
+{{#isContainer}}
+    {{#useBeanValidation}}@Valid{{/useBeanValidation}}
+    {{#isListContainer}}
+    private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new ArrayList<>(){{/required}};
+    {{/isListContainer}}
+    {{#isMap}}
+    private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = new HashMap<>(){{/required}};
+    {{/isMap}}
+    {{^isListContainer}}{{^isMap}}
+    private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};
+    {{/isMap}}{{/isListContainer}}
+{{/isContainer}}
+{{^isContainer}}
+    private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
+{{/isContainer}}
 
 {{/vars}}
 {{#vars}}
     public {{classname}} {{name}}({{{datatypeWithEnum}}} {{name}}) {
-    this.{{name}} = {{name}};
-    return this;
+        this.{{name}} = {{name}};
+        return this;
     }
     {{#isListContainer}}
 
-        public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
+    public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
         {{^required}}
             if (this.{{name}} == null) {
             this.{{name}} = {{{defaultValue}}};
@@ -64,11 +69,11 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
         {{/required}}
         this.{{name}}.add({{name}}Item);
         return this;
-        }
+    }
     {{/isListContainer}}
     {{#isMapContainer}}
 
-        public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.datatypeWithEnum}}} {{name}}Item) {
+    public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.datatypeWithEnum}}} {{name}}Item) {
         {{^required}}
             if (this.{{name}} == null) {
             this.{{name}} = {{{defaultValue}}};
@@ -76,75 +81,55 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
         {{/required}}
         this.{{name}}.put(key, {{name}}Item);
         return this;
-        }
+    }
     {{/isMapContainer}}
 
-    /**
-    {{#description}}
-        * {{{description}}}
-    {{/description}}
-    {{^description}}
-        * Get {{name}}
-    {{/description}}
-    {{#minimum}}
-        * minimum: {{minimum}}
-    {{/minimum}}
-    {{#maximum}}
-        * maximum: {{maximum}}
-    {{/maximum}}
-    * @return {{name}}
-    **/
-    {{#vendorExtensions.extraAnnotation}}
-        {{{vendorExtensions.extraAnnotation}}}
-    {{/vendorExtensions.extraAnnotation}}
-    {{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  public {{{datatypeWithEnum}}} {{#isBoolean}}{{/isBoolean}}{{getter}}() {
-    return {{name}};
+    public {{{datatypeWithEnum}}} {{#isBoolean}}{{/isBoolean}}{{getter}}() {
+        return {{name}};
     }
 
     public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
-    this.{{name}} = {{name}};
+        this.{{name}} = {{name}};
     }
 
 {{/vars}}
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        } {{#hasVars}}
+        return {{#vars}}{{^isString}}Objects.equals(this.{{name}}, {{classVarName}}.{{name}}){{/isString}}{{#isString}}this.{{name}} == null || {{classVarName}}.{{name}} == null?Objects.equals(this.{{name}}, {{classVarName}}.{{name}}):this.{{name}}.equalsIgnoreCase({{classVarName}}.{{name}}){{/isString}}
+        {{#hasMore}} && {{/hasMore}}{{/vars}}{{#parent}} &&
+        super.equals(o){{/parent}};{{/hasVars}}{{^hasVars}}
+        return true;{{/hasVars}}
+    }
 
-@Override
-public boolean equals(java.lang.Object o) {
-if (this == o) {
-return true;
-}
-if (o == null || getClass() != o.getClass()) {
-return false;
-}{{#hasVars}}
-    {{classname}} {{classVarName}} = ({{classname}}) o;
-    return {{#vars}}{{^isString}}Objects.equals(this.{{name}}, {{classVarName}}.{{name}}){{/isString}}{{#isString}}this.{{name}} == null || {{classVarName}}.{{name}} == null?Objects.equals(this.{{name}}, {{classVarName}}.{{name}}):this.{{name}}.equalsIgnoreCase({{classVarName}}.{{name}}){{/isString}}
-    {{#hasMore}} && {{/hasMore}}{{/vars}}{{#parent}} &&
-    super.equals(o){{/parent}};{{/hasVars}}{{^hasVars}}
-    return true;{{/hasVars}}
-}
+    @Override
+    public int hashCode() {
+        return Objects.hash({{#vars}}{{^isString}}{{name}}{{/isString}}{{#isString}}{{name}}==null?0:{{name}}.toLowerCase(){{/isString}}{{#hasMore}}, {{/hasMore}}{{/vars}}{{#parent}}{{#hasVars}}, {{/hasVars}}super.hashCode(){{/parent}});
+    }
 
-@Override
-public int hashCode() {
-return Objects.hash({{#vars}}{{^isString}}{{name}}{{/isString}}{{#isString}}{{name}}==null?0:{{name}}.toLowerCase(){{/isString}}{{#hasMore}}, {{/hasMore}}{{/vars}}{{#parent}}{{#hasVars}}, {{/hasVars}}super.hashCode(){{/parent}});
-}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class {{classname}} {\n");
+        {{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
+        {{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
+        {{/vars}}sb.append("}");
+        return sb.toString();
+    }
 
-@Override
-public String toString() {
-StringBuilder sb = new StringBuilder();
-sb.append("class {{classname}} {\n");
-{{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
-{{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
-{{/vars}}sb.append("}");
-return sb.toString();
-}
-
-/**
-* Convert the given object to string with each line indented by 4 spaces
-* (except the first line).
-*/
-private String toIndentedString(java.lang.Object o) {
-if (o == null) {
-return "null";
-}
-return o.toString().replace("\n", "\n    ");
-}
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }

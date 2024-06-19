@@ -24,16 +24,19 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.Embankment;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.junit.jupiter.api.Assertions.*;
+import mil.army.usace.hec.cwms.radar.client.model.Embankment;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import org.junit.jupiter.api.Test;
 
 class TestEmbankmentController extends TestController {
 
@@ -48,15 +51,15 @@ class TestEmbankmentController extends TestController {
         Embankment value = values.get(0);
         assertEquals("PROJECT-EMBANKMENT_LOC", value.getLocation().getName());
         assertEquals("SWT", value.getLocation().getOfficeId());
-        assertEquals("PROJECT", value.getProjectId());
-        assertEquals("SWT", value.getProjectOfficeId());
+        assertEquals("PROJECT", value.getProjectId().getName());
+        assertEquals("SWT", value.getProjectId().getOfficeId());
         assertEquals(15.0, value.getUpstreamSideSlope(), 0.0);
         assertEquals(90.0, value.getDownstreamSideSlope(), 0.0);
-        assertEquals(5.0, value.getHeightMax(), 0.0);
+        assertEquals(5.0, value.getMaxHeight(), 0.0);
         assertEquals(20.0, value.getTopWidth(), 0.0);
-        assertEquals("m", value.getUnitsId());
-        assertNotNull(value.getDownstreamProtType());
-        assertNotNull(value.getUpstreamProtType());
+        assertEquals("m", value.getLengthUnits());
+        assertNotNull(value.getDownstreamProtectionType());
+        assertNotNull(value.getUpstreamProtectionType());
         assertNotNull(value.getStructureType());
         assertEquals(25.0, value.getStructureLength(), 0.0);
         assertNotNull(value.getLocation());
@@ -71,15 +74,15 @@ class TestEmbankmentController extends TestController {
         Embankment value = new EmbankmentController().retrieveEmbankment(buildConnectionInfo(), input);
         assertEquals("PROJECT-EMBANKMENT_LOC", value.getLocation().getName());
         assertEquals("SWT", value.getLocation().getOfficeId());
-        assertEquals("PROJECT", value.getProjectId());
-        assertEquals("SWT", value.getProjectOfficeId());
+        assertEquals("PROJECT", value.getProjectId().getName());
+        assertEquals("SWT", value.getProjectId().getOfficeId());
         assertEquals(15.0, value.getUpstreamSideSlope(), 0.0);
         assertEquals(90.0, value.getDownstreamSideSlope(), 0.0);
-        assertEquals(5.0, value.getHeightMax(), 0.0);
+        assertEquals(5.0, value.getMaxHeight(), 0.0);
         assertEquals(20.0, value.getTopWidth(), 0.0);
-        assertEquals("m", value.getUnitsId());
-        assertNotNull(value.getDownstreamProtType());
-        assertNotNull(value.getUpstreamProtType());
+        assertEquals("m", value.getLengthUnits());
+        assertNotNull(value.getDownstreamProtectionType());
+        assertNotNull(value.getUpstreamProtectionType());
         assertNotNull(value.getStructureType());
         assertEquals(25.0, value.getStructureLength(), 0.0);
         assertNotNull(value.getLocation());

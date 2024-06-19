@@ -26,18 +26,25 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.Objects;
 
 /**
  * Embankment
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-07T14:38:25.006765600-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-06-28T08:16:15.026792-07:00[America/Los_Angeles]")
 public class Embankment {
+
+    @JsonProperty("project-id")
+    private CwmsId projectId = null;
+
+    @JsonProperty("location")
+    private Location location = null;
+
+    @JsonProperty("structure-type")
+    private LookupType structureType = null;
+
     @JsonProperty("upstream-side-slope")
     private Double upstreamSideSlope = null;
 
@@ -47,32 +54,80 @@ public class Embankment {
     @JsonProperty("structure-length")
     private Double structureLength = null;
 
-    @JsonProperty("height-max")
-    private Double heightMax = null;
+    @JsonProperty("max-height")
+    private Double maxHeight = null;
 
     @JsonProperty("top-width")
     private Double topWidth = null;
 
-    @JsonProperty("units-id")
-    private String unitsId = null;
+    @JsonProperty("length-units")
+    private String lengthUnits = null;
 
-    @JsonProperty("downstream-prot-type")
-    private LookupType downstreamProtType = null;
+    @JsonProperty("downstream-protection-type")
+    private LookupType downstreamProtectionType = null;
 
-    @JsonProperty("upstream-prot-type")
-    private LookupType upstreamProtType = null;
+    @JsonProperty("upstream-protection-type")
+    private LookupType upstreamProtectionType = null;
 
-    @JsonProperty("structure-type")
-    private LookupType structureType = null;
+    public Embankment projectId(CwmsId projectId) {
+        this.projectId = projectId;
+        return this;
+    }
 
-    @JsonProperty("location")
-    private Location location = null;
+    /**
+     * Get projectId
+     *
+     * @return projectId
+     **/
 
-    @JsonProperty("project-id")
-    private String projectId = null;
+    @Valid
+    public CwmsId getProjectId() {
+        return projectId;
+    }
 
-    @JsonProperty("project-office-id")
-    private String projectOfficeId = null;
+    public void setProjectId(CwmsId projectId) {
+        this.projectId = projectId;
+    }
+
+    public Embankment location(Location location) {
+        this.location = location;
+        return this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return location
+     **/
+
+    @Valid
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Embankment structureType(LookupType structureType) {
+        this.structureType = structureType;
+        return this;
+    }
+
+    /**
+     * Get structureType
+     *
+     * @return structureType
+     **/
+
+    @Valid
+    public LookupType getStructureType() {
+        return structureType;
+    }
+
+    public void setStructureType(LookupType structureType) {
+        this.structureType = structureType;
+    }
 
     public Embankment upstreamSideSlope(Double upstreamSideSlope) {
         this.upstreamSideSlope = upstreamSideSlope;
@@ -84,7 +139,6 @@ public class Embankment {
      *
      * @return upstreamSideSlope
      **/
-    @NotNull
 
     public Double getUpstreamSideSlope() {
         return upstreamSideSlope;
@@ -104,7 +158,6 @@ public class Embankment {
      *
      * @return downstreamSideSlope
      **/
-    @NotNull
 
     public Double getDownstreamSideSlope() {
         return downstreamSideSlope;
@@ -124,7 +177,6 @@ public class Embankment {
      *
      * @return structureLength
      **/
-    @NotNull
 
     public Double getStructureLength() {
         return structureLength;
@@ -134,24 +186,23 @@ public class Embankment {
         this.structureLength = structureLength;
     }
 
-    public Embankment heightMax(Double heightMax) {
-        this.heightMax = heightMax;
+    public Embankment maxHeight(Double maxHeight) {
+        this.maxHeight = maxHeight;
         return this;
     }
 
     /**
-     * Get heightMax
+     * Get maxHeight
      *
-     * @return heightMax
+     * @return maxHeight
      **/
-    @NotNull
 
-    public Double getHeightMax() {
-        return heightMax;
+    public Double getMaxHeight() {
+        return maxHeight;
     }
 
-    public void setHeightMax(Double heightMax) {
-        this.heightMax = heightMax;
+    public void setMaxHeight(Double maxHeight) {
+        this.maxHeight = maxHeight;
     }
 
     public Embankment topWidth(Double topWidth) {
@@ -164,7 +215,6 @@ public class Embankment {
      *
      * @return topWidth
      **/
-    @NotNull
 
     public Double getTopWidth() {
         return topWidth;
@@ -174,148 +224,63 @@ public class Embankment {
         this.topWidth = topWidth;
     }
 
-    public Embankment unitsId(String unitsId) {
-        this.unitsId = unitsId;
+    public Embankment lengthUnits(String lengthUnits) {
+        this.lengthUnits = lengthUnits;
         return this;
     }
 
     /**
-     * Get unitsId
+     * Get lengthUnits
      *
-     * @return unitsId
+     * @return lengthUnits
      **/
-    @NotNull
 
-    public String getUnitsId() {
-        return unitsId;
+    public String getLengthUnits() {
+        return lengthUnits;
     }
 
-    public void setUnitsId(String unitsId) {
-        this.unitsId = unitsId;
+    public void setLengthUnits(String lengthUnits) {
+        this.lengthUnits = lengthUnits;
     }
 
-    public Embankment downstreamProtType(LookupType downstreamProtType) {
-        this.downstreamProtType = downstreamProtType;
+    public Embankment downstreamProtectionType(LookupType downstreamProtectionType) {
+        this.downstreamProtectionType = downstreamProtectionType;
         return this;
     }
 
     /**
-     * Get downstreamProtType
+     * Get downstreamProtectionType
      *
-     * @return downstreamProtType
+     * @return downstreamProtectionType
      **/
-    @NotNull
 
     @Valid
-    public LookupType getDownstreamProtType() {
-        return downstreamProtType;
+    public LookupType getDownstreamProtectionType() {
+        return downstreamProtectionType;
     }
 
-    public void setDownstreamProtType(LookupType downstreamProtType) {
-        this.downstreamProtType = downstreamProtType;
+    public void setDownstreamProtectionType(LookupType downstreamProtectionType) {
+        this.downstreamProtectionType = downstreamProtectionType;
     }
 
-    public Embankment upstreamProtType(LookupType upstreamProtType) {
-        this.upstreamProtType = upstreamProtType;
+    public Embankment upstreamProtectionType(LookupType upstreamProtectionType) {
+        this.upstreamProtectionType = upstreamProtectionType;
         return this;
     }
 
     /**
-     * Get upstreamProtType
+     * Get upstreamProtectionType
      *
-     * @return upstreamProtType
+     * @return upstreamProtectionType
      **/
-    @NotNull
 
     @Valid
-    public LookupType getUpstreamProtType() {
-        return upstreamProtType;
+    public LookupType getUpstreamProtectionType() {
+        return upstreamProtectionType;
     }
 
-    public void setUpstreamProtType(LookupType upstreamProtType) {
-        this.upstreamProtType = upstreamProtType;
-    }
-
-    public Embankment structureType(LookupType structureType) {
-        this.structureType = structureType;
-        return this;
-    }
-
-    /**
-     * Get structureType
-     *
-     * @return structureType
-     **/
-    @NotNull
-
-    @Valid
-    public LookupType getStructureType() {
-        return structureType;
-    }
-
-    public void setStructureType(LookupType structureType) {
-        this.structureType = structureType;
-    }
-
-    public Embankment location(Location location) {
-        this.location = location;
-        return this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return location
-     **/
-    @NotNull
-
-    @Valid
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Embankment projectId(String projectId) {
-        this.projectId = projectId;
-        return this;
-    }
-
-    /**
-     * Get projectId
-     *
-     * @return projectId
-     **/
-    @NotNull
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public Embankment projectOfficeId(String projectOfficeId) {
-        this.projectOfficeId = projectOfficeId;
-        return this;
-    }
-
-    /**
-     * Get projectOfficeId
-     *
-     * @return projectOfficeId
-     **/
-    @NotNull
-
-    public String getProjectOfficeId() {
-        return projectOfficeId;
-    }
-
-    public void setProjectOfficeId(String projectOfficeId) {
-        this.projectOfficeId = projectOfficeId;
+    public void setUpstreamProtectionType(LookupType upstreamProtectionType) {
+        this.upstreamProtectionType = upstreamProtectionType;
     }
 
 
@@ -328,24 +293,27 @@ public class Embankment {
             return false;
         }
         Embankment embankment = (Embankment) o;
-        return Objects.equals(this.upstreamSideSlope, embankment.upstreamSideSlope)
-                && Objects.equals(this.downstreamSideSlope, embankment.downstreamSideSlope)
-                && Objects.equals(this.structureLength, embankment.structureLength)
-                && Objects.equals(this.heightMax, embankment.heightMax)
-                && Objects.equals(this.topWidth, embankment.topWidth)
-                && this.unitsId == null || embankment.unitsId == null ? Objects.equals(this.unitsId, embankment.unitsId) : this.unitsId.equalsIgnoreCase(embankment.unitsId)
-                && Objects.equals(this.downstreamProtType, embankment.downstreamProtType)
-                && Objects.equals(this.upstreamProtType, embankment.upstreamProtType)
-                && Objects.equals(this.structureType, embankment.structureType)
-                && Objects.equals(this.location, embankment.location)
-                && this.projectId == null || embankment.projectId == null ? Objects.equals(this.projectId, embankment.projectId) : this.projectId.equalsIgnoreCase(embankment.projectId)
-                && this.projectOfficeId == null || embankment.projectOfficeId == null ? Objects.equals(this.projectOfficeId, embankment.projectOfficeId) : this.projectOfficeId.equalsIgnoreCase(embankment.projectOfficeId)
-                ;
+        return Objects.equals(this.projectId, embankment.projectId)
+            && Objects.equals(this.location, embankment.location)
+            && Objects.equals(this.structureType, embankment.structureType)
+            && Objects.equals(this.upstreamSideSlope, embankment.upstreamSideSlope)
+            && Objects.equals(this.downstreamSideSlope, embankment.downstreamSideSlope)
+            && Objects.equals(this.structureLength, embankment.structureLength)
+            && Objects.equals(this.maxHeight, embankment.maxHeight)
+            && Objects.equals(this.topWidth, embankment.topWidth)
+            && this.lengthUnits == null || embankment.lengthUnits == null ?
+            Objects.equals(this.lengthUnits, embankment.lengthUnits) :
+            this.lengthUnits.equalsIgnoreCase(embankment.lengthUnits)
+                && Objects.equals(this.downstreamProtectionType, embankment.downstreamProtectionType)
+                && Objects.equals(this.upstreamProtectionType, embankment.upstreamProtectionType)
+            ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(upstreamSideSlope, downstreamSideSlope, structureLength, heightMax, topWidth, unitsId == null ? 0 : unitsId.toLowerCase(), downstreamProtType, upstreamProtType, structureType, location, projectId == null ? 0 : projectId.toLowerCase(), projectOfficeId == null ? 0 : projectOfficeId.toLowerCase());
+        return Objects.hash(projectId, location, structureType, upstreamSideSlope, downstreamSideSlope, structureLength,
+            maxHeight, topWidth, lengthUnits == null ? 0 : lengthUnits.toLowerCase(), downstreamProtectionType,
+            upstreamProtectionType);
     }
 
     @Override
@@ -353,18 +321,17 @@ public class Embankment {
         StringBuilder sb = new StringBuilder();
         sb.append("class Embankment {\n");
 
+        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
+        sb.append("    location: ").append(toIndentedString(location)).append("\n");
+        sb.append("    structureType: ").append(toIndentedString(structureType)).append("\n");
         sb.append("    upstreamSideSlope: ").append(toIndentedString(upstreamSideSlope)).append("\n");
         sb.append("    downstreamSideSlope: ").append(toIndentedString(downstreamSideSlope)).append("\n");
         sb.append("    structureLength: ").append(toIndentedString(structureLength)).append("\n");
-        sb.append("    heightMax: ").append(toIndentedString(heightMax)).append("\n");
+        sb.append("    maxHeight: ").append(toIndentedString(maxHeight)).append("\n");
         sb.append("    topWidth: ").append(toIndentedString(topWidth)).append("\n");
-        sb.append("    unitsId: ").append(toIndentedString(unitsId)).append("\n");
-        sb.append("    downstreamProtType: ").append(toIndentedString(downstreamProtType)).append("\n");
-        sb.append("    upstreamProtType: ").append(toIndentedString(upstreamProtType)).append("\n");
-        sb.append("    structureType: ").append(toIndentedString(structureType)).append("\n");
-        sb.append("    location: ").append(toIndentedString(location)).append("\n");
-        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-        sb.append("    projectOfficeId: ").append(toIndentedString(projectOfficeId)).append("\n");
+        sb.append("    lengthUnits: ").append(toIndentedString(lengthUnits)).append("\n");
+        sb.append("    downstreamProtectionType: ").append(toIndentedString(downstreamProtectionType)).append("\n");
+        sb.append("    upstreamProtectionType: ").append(toIndentedString(upstreamProtectionType)).append("\n");
         sb.append("}");
         return sb.toString();
     }
