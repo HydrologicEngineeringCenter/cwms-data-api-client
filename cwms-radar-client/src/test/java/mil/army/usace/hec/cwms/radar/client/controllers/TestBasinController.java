@@ -76,10 +76,10 @@ class TestBasinController extends TestController {
         assertDoesNotThrow(() -> controller.storeBasin(buildConnectionInfo(cookieJarSupplier), input));
     }
 
-    @Disabled("This test will delete the basin from the server, but is timing out!")
     @Test
     void testDeleteBasin() throws IOException {
         String collect = readJsonFile("radar/v1/json/basin.json");
+        mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Basin basin = RadarObjectMapper.mapJsonToObject(collect, Basin.class);
