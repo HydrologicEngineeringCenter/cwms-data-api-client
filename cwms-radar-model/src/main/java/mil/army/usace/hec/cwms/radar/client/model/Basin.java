@@ -2,17 +2,15 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
-
-import javax.annotation.Generated;
+import jakarta.validation.Valid;
 import java.util.Objects;
 
 /**
  * Basin
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2024-06-26T15:27:00.000-05:00")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
+        date = "2024-06-27T10:32:01.636615300-07:00[America/Los_Angeles]")
 public class Basin {
     @JsonProperty("basin-id")
     private CwmsId basinId = null;
@@ -35,6 +33,26 @@ public class Basin {
     @JsonProperty("primary-stream-id")
     private CwmsId primaryStreamId = null;
 
+    public Basin basinId(CwmsId basinId) {
+        this.basinId = basinId;
+        return this;
+    }
+
+    /**
+     * Get basinId
+     *
+     * @return basinId
+     **/
+
+    @Valid
+    public CwmsId getBasinId() {
+        return basinId;
+    }
+
+    public void setBasinId(CwmsId basinId) {
+        this.basinId = basinId;
+    }
+
     public Basin sortOrder(Double sortOrder) {
         this.sortOrder = sortOrder;
         return this;
@@ -44,8 +62,7 @@ public class Basin {
      * Get sortOrder
      *
      * @return sortOrder
-     */
-    @NotNull
+     **/
 
     public Double getSortOrder() {
         return sortOrder;
@@ -64,8 +81,7 @@ public class Basin {
      * Get totalDrainageArea
      *
      * @return totalDrainageArea
-     */
-    @NotNull
+     **/
 
     public Double getTotalDrainageArea() {
         return totalDrainageArea;
@@ -84,8 +100,7 @@ public class Basin {
      * Get contributingDrainageArea
      *
      * @return contributingDrainageArea
-     */
-    @NotNull
+     **/
 
     public Double getContributingDrainageArea() {
         return contributingDrainageArea;
@@ -93,6 +108,26 @@ public class Basin {
 
     public void setContributingDrainageArea(Double contributingDrainageArea) {
         this.contributingDrainageArea = contributingDrainageArea;
+    }
+
+    public Basin parentBasinId(CwmsId parentBasinId) {
+        this.parentBasinId = parentBasinId;
+        return this;
+    }
+
+    /**
+     * Get parentBasinId
+     *
+     * @return parentBasinId
+     **/
+
+    @Valid
+    public CwmsId getParentBasinId() {
+        return parentBasinId;
+    }
+
+    public void setParentBasinId(CwmsId parentBasinId) {
+        this.parentBasinId = parentBasinId;
     }
 
     public Basin areaUnit(String areaUnit) {
@@ -104,8 +139,7 @@ public class Basin {
      * Get areaUnit
      *
      * @return areaUnit
-     */
-    @NotNull
+     **/
 
     public String getAreaUnit() {
         return areaUnit;
@@ -115,48 +149,26 @@ public class Basin {
         this.areaUnit = areaUnit;
     }
 
-    /**
-     * Get basinId
-     *
-     * @return
-     */
-    @NotNull
-
-    public CwmsId getBasinId() {
-        return basinId;
-    }
-
-    public void setBasinId(String name, String office) {
-        this.basinId = new CwmsId.Builder(name, office);
-    }
-
-    /**
-     * Get parentBasinId
-     *
-     * @return
-     */
-
-    public CwmsId getParentBasinId() {
-        return parentBasinId;
-    }
-
-    public void setParentBasinId(String name, String office) {
-        this.parentBasinId = new CwmsId.Builder(name, office);
+    public Basin primaryStreamId(CwmsId primaryStreamId) {
+        this.primaryStreamId = primaryStreamId;
+        return this;
     }
 
     /**
      * Get primaryStreamId
      *
-     * @return
-     */
+     * @return primaryStreamId
+     **/
 
+    @Valid
     public CwmsId getPrimaryStreamId() {
         return primaryStreamId;
     }
 
-    public void setPrimaryStreamId(String name, String office) {
-        this.primaryStreamId = new CwmsId.Builder(name, office);
+    public void setPrimaryStreamId(CwmsId primaryStreamId) {
+        this.primaryStreamId = primaryStreamId;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -167,21 +179,22 @@ public class Basin {
             return false;
         }
         Basin basin = (Basin) o;
-        return Objects.equals(this.sortOrder, basin.sortOrder) &&
-                Objects.equals(this.totalDrainageArea, basin.totalDrainageArea) &&
-                Objects.equals(this.contributingDrainageArea, basin.contributingDrainageArea) &&
-                Objects.equals(this.areaUnit, basin.areaUnit) &&
-                Objects.equals(this.primaryStreamId.getName(), basin.primaryStreamId.getName()) &&
-                Objects.equals(this.primaryStreamId.getOfficeId(), basin.primaryStreamId.getOfficeId()) &&
-                Objects.equals(this.parentBasinId.getName(), basin.parentBasinId.getName()) &&
-                Objects.equals(this.parentBasinId.getOfficeId(), basin.parentBasinId.getOfficeId()) &&
-                Objects.equals(this.basinId.getName(), basin.basinId.getName()) &&
-                Objects.equals(this.basinId.getOfficeId(), basin.basinId.getOfficeId());
+        return Objects.equals(this.basinId, basin.basinId)
+                && Objects.equals(this.sortOrder, basin.sortOrder)
+                && Objects.equals(this.totalDrainageArea, basin.totalDrainageArea)
+                && Objects.equals(this.contributingDrainageArea, basin.contributingDrainageArea)
+                && Objects.equals(this.parentBasinId, basin.parentBasinId)
+                && this.areaUnit == null || basin.areaUnit == null
+                ? Objects.equals(this.areaUnit, basin.areaUnit) : this.areaUnit.equalsIgnoreCase(basin.areaUnit)
+                && Objects.equals(this.primaryStreamId, basin.primaryStreamId)
+                ;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sortOrder, totalDrainageArea, contributingDrainageArea, areaUnit, primaryStreamId, primaryStreamOfficeId);
+        return Objects.hash(basinId, sortOrder, totalDrainageArea, contributingDrainageArea, parentBasinId,
+                areaUnit == null ? 0 : areaUnit.toLowerCase(), primaryStreamId);
     }
 
     @Override
@@ -189,12 +202,13 @@ public class Basin {
         StringBuilder sb = new StringBuilder();
         sb.append("class Basin {\n");
 
+        sb.append("    basinId: ").append(toIndentedString(basinId)).append("\n");
         sb.append("    sortOrder: ").append(toIndentedString(sortOrder)).append("\n");
         sb.append("    totalDrainageArea: ").append(toIndentedString(totalDrainageArea)).append("\n");
         sb.append("    contributingDrainageArea: ").append(toIndentedString(contributingDrainageArea)).append("\n");
+        sb.append("    parentBasinId: ").append(toIndentedString(parentBasinId)).append("\n");
         sb.append("    areaUnit: ").append(toIndentedString(areaUnit)).append("\n");
-        sb.append("    primaryStreamId: ").append(toIndentedString(primaryStreamId.getName())).append("\n");
-        sb.append("    OfficeId: ").append(toIndentedString(basinId.getOffice())).append("\n");
+        sb.append("    primaryStreamId: ").append(toIndentedString(primaryStreamId)).append("\n");
         sb.append("}");
         return sb.toString();
     }

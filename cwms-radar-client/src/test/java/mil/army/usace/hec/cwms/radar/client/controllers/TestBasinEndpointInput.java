@@ -3,10 +3,9 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import mil.army.usace.hec.cwms.radar.client.model.Basin;
 import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import org.junit.jupiter.api.Test;
 import mil.army.usace.hec.cwms.radar.client.controllers.BasinEndpointInput.GetAll;
-
 import java.io.IOException;
+import org.junit.jupiter.api.Test;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
