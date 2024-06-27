@@ -6,8 +6,6 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.Basin;
 import java.io.IOException;
 import java.util.List;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -85,8 +83,8 @@ class TestBasinController extends TestController {
         Basin basin = RadarObjectMapper.mapJsonToObject(collect, Basin.class);
         BasinController controller = new BasinController();
         controller.storeBasin(buildConnectionInfo(cookieJarSupplier), BasinEndpointInput.post(basin));
-        BasinEndpointInput.Delete input = BasinEndpointInput.delete(basin.getBasinId().getName(), basin.getBasinId().getOfficeId());
-        input.setDeleteMethod(DeleteMethod.ALL);
+        BasinEndpointInput.Delete input = BasinEndpointInput.delete(basin.getBasinId().getName(),
+                basin.getBasinId().getOfficeId(), DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteBasin(buildConnectionInfo(cookieJarSupplier), input));
     }
 
@@ -97,7 +95,8 @@ class TestBasinController extends TestController {
         mockHttpServer.start();
         Basin value = RadarObjectMapper.mapJsonToObject(collect, Basin.class);
         BasinController controller = new BasinController();
-        BasinEndpointInput.Patch input = BasinEndpointInput.patch(value.getBasinId().getName(), "NEW-BASIN", value.getBasinId().getOfficeId());
+        BasinEndpointInput.Patch input = BasinEndpointInput.patch(value.getBasinId().getName(), "NEW-BASIN",
+                value.getBasinId().getOfficeId());
         assertDoesNotThrow(() -> controller.renameBasin(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper requestWrapper = mockHttpServer.takeRequest();
         assertEquals("PATCH", requestWrapper.getMethod());

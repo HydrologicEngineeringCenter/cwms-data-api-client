@@ -27,8 +27,8 @@ public final class BasinEndpointInput {
         return new Post(basin);
     }
 
-    public static Delete delete(String basinId, String officeId) {
-        return new Delete(basinId, officeId);
+    public static Delete delete(String basinId, String officeId, DeleteMethod deleteMethod) {
+        return new Delete(basinId, officeId, deleteMethod);
     }
 
     public static Patch patch(String oldBasinId, String newBasinId, String officeId) {
@@ -47,7 +47,7 @@ public final class BasinEndpointInput {
         }
 
         @Override
-        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(PROJECT_ID_QUERY_PARAMETER, projectId)
                     .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
@@ -59,17 +59,17 @@ public final class BasinEndpointInput {
         private final String officeId;
         private final String basinId;
 
-        public GetOne(String basinId, String officeId) {
+        private GetOne(String basinId, String officeId) {
             this.basinId = Objects.requireNonNull(basinId, "Basin Id required for getOne basin endpoint");
             this.officeId = Objects.requireNonNull(officeId, "Basin office Id required for getOne basin endpoint");
         }
 
-        public String basinId() {
+        String basinId() {
             return basinId;
         }
 
         @Override
-        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
@@ -78,17 +78,17 @@ public final class BasinEndpointInput {
     public static final class Post extends EndpointInput {
         private final Basin basin;
 
-        public Post(Basin basin) {
+        private Post(Basin basin) {
             this.basin = Objects.requireNonNull(basin,
                     "Cannot access the basin POST endpoint without a basin value");
         }
 
-        public Basin basin() {
+        Basin basin() {
             return basin;
         }
 
         @Override
-        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
@@ -98,23 +98,20 @@ public final class BasinEndpointInput {
         static final String METHOD_QUERY_PARAMETER = "method";
         private final String basinId;
         private final String officeId;
-        private DeleteMethod deleteMethod;
+        private final DeleteMethod deleteMethod;
 
-        public Delete(String basinId, String officeId) {
+        private Delete(String basinId, String officeId, DeleteMethod deleteMethod) {
             this.basinId = Objects.requireNonNull(basinId, "Cannot access the basin DELETE endpoint without a basin id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the embankment DELETE endpoint without an office id");
-        }
-
-        public void setDeleteMethod(DeleteMethod deleteMethod) {
             this.deleteMethod = deleteMethod;
         }
 
-        public String basinId() {
+        String basinId() {
             return basinId;
         }
 
         @Override
-        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
@@ -134,12 +131,12 @@ public final class BasinEndpointInput {
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the basin PATCH endpoint without an office id");
         }
 
-        public String oldBasinId() {
+        String oldBasinId() {
             return oldBasinId;
         }
 
         @Override
-        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(NAME_QUERY_PARAMETER, newBasinId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);

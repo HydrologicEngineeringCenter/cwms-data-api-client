@@ -53,8 +53,7 @@ class TestBasinEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String basinId = "BAS";
         String office = "SPK";
-        BasinEndpointInput.Delete input = BasinEndpointInput.delete(basinId, office);
-        input.setDeleteMethod(DeleteMethod.ALL);
+        BasinEndpointInput.Delete input = BasinEndpointInput.delete(basinId, office, DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(basinId, input.basinId());
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder.getQueryParameter(BasinEndpointInput.Delete.METHOD_QUERY_PARAMETER));
@@ -64,8 +63,8 @@ class TestBasinEndpointInput {
 
     @Test
     void testDeleteNulls() {
-        assertThrows(NullPointerException.class, () -> BasinEndpointInput.delete(null, ""));
-        assertThrows(NullPointerException.class, () -> BasinEndpointInput.delete("", null));
+        assertThrows(NullPointerException.class, () -> BasinEndpointInput.delete(null, "", DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> BasinEndpointInput.delete("", null, DeleteMethod.ALL));
     }
 
     @Test
