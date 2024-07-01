@@ -27,7 +27,7 @@ jobs:
           dotnet-version: 6.x
           dotnet-quality: 'ga'
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.6
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.7
         with:
           reports: cwms-aaa-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-http-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.xml
           targetdir: .github/coveragereport
