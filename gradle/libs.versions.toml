@@ -15,7 +15,7 @@ jwt = "4.4.0"
 okhttp = "4.12.0"
 
 #Test Dependencies
-junit = "5.10.2"
+junit = "5.10.3"
 
 [libraries]
 #HEC Dependencies
