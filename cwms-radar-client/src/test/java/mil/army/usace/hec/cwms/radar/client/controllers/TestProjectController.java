@@ -12,66 +12,83 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class TestProjectController extends TestController
-{
+class TestProjectController extends TestController {
 
-	@Test
-	void testRetrieveProjects() throws IOException
-	{
-		String collect = readJsonFile("radar/v2/json/projects.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		ProjectController controller = new ProjectController();
+    public static final String PROJECT_ID = "ProjectLocationId";
 
-		ProjectEndpointInput.GetAll input = ProjectEndpointInput.getAll()
-				.officeId("SWT")
-				.projectIdMask("BUFF.Stage;Flow.WCDS.Production");
+    public static final String MASK = "ProjectLocationId";
+    public static final String OFFICE = "SWT";
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		Projects projects = controller.retrieveProjects(apiConnectionInfo, input);
-		assertNotNull(projects);
-	}
+    @Test
+    void testRetrieveProject() throws IOException {
+        String collect = readJsonFile("radar/v2/json/project.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        ProjectController controller = new ProjectController();
 
-	@Test
-	void testRetrieveProject() throws IOException{
-		String collect = readJsonFile("radar/v2/json/project.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		ProjectController controller = new ProjectController();
+        ProjectEndpointInput.GetOne input = ProjectEndpointInput.getOne(PROJECT_ID, OFFICE);
 
-		ProjectEndpointInput.GetOne input = ProjectEndpointInput.getOne("BUFF.Stage;Flow.WCDS.Production", "SWT");
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        Project project = controller.retrieveProject(apiConnectionInfo, input);
+        assertNotNull(project);
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		Project project = controller.retrieveProject(apiConnectionInfo, input);
-		assertNotNull(project);
+    }
 
-	}
+    @Test
+    void testRetrieveProjects() throws IOException {
+        String collect = readJsonFile("radar/v2/json/projects.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        ProjectController controller = new ProjectController();
 
-	@Test
-	void testPost() throws IOException{
-		String collect = readJsonFile("radar/v2/json/project.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
-		ProjectController controller = new ProjectController();
+        ProjectEndpointInput.GetAll input = ProjectEndpointInput.getAll()
+                .officeId(OFFICE)
+                .projectIdMask(MASK);
 
-		ProjectEndpointInput.Post input = ProjectEndpointInput.post(project);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        Projects projects = controller.retrieveProjects(apiConnectionInfo, input);
+        assertNotNull(projects);
+    }
 
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		assertDoesNotThrow(() -> controller.storeProject(apiConnectionInfo, input));
-	}
+    @Test
+    void testPost() throws IOException {
+        String collect = readJsonFile("radar/v2/json/project.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
+        ProjectController controller = new ProjectController();
 
-	@Test
-	void testDelete() throws IOException{
-		String collect = readJsonFile("radar/v2/json/project.json");
-		mockHttpServer.enqueue(collect);
-		mockHttpServer.start();
-		ProjectController controller = new ProjectController();
+        ProjectEndpointInput.Post input = ProjectEndpointInput.post(project);
 
-		ProjectEndpointInput.Delete input = ProjectEndpointInput.delete("BUFF.Stage;Flow.WCDS.Production", "SWT", DeleteMethod.ALL);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.storeProject(apiConnectionInfo, input));
+    }
 
-		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-		assertDoesNotThrow(() -> controller.deleteProject(apiConnectionInfo, input));
-	}
+    @Test
+    void testUpdate() throws IOException {
+        String collect = readJsonFile("radar/v2/json/project.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
+        ProjectController controller = new ProjectController();
+
+        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch(project);
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.updateProject(apiConnectionInfo, input));
+    }
+
+    @Test
+    void testDelete() throws IOException {
+        String collect = readJsonFile("radar/v2/json/project.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        ProjectController controller = new ProjectController();
+
+        ProjectEndpointInput.Delete input = ProjectEndpointInput.delete(PROJECT_ID, OFFICE, DeleteMethod.ALL);
+
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        assertDoesNotThrow(() -> controller.deleteProject(apiConnectionInfo, input));
+    }
 }

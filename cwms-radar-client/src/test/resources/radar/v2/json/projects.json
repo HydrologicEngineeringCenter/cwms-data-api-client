@@ -1,0 +1,67 @@
+{
+  "next-page" : "VTFCTGZIeFVaWE4wSUZCeWIycGxZM1F5T1E9PXx8Mzd8fDEw",
+  "page" : "VlRGQ1RHWkllRlZhV0U0d1NVWkNlV0l5Y0d4Wk0xRjRUMUU5UFh4OE16ZDhmREV3fHwzN3x8MTA=",
+  "page-size" : 10,
+  "projects" : [ {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project20",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project21",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project22",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project23",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project24",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project25",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project26",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project27",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project28",
+      "timezone-name" : "UTC"
+    }
+  }, {
+    "location" : {
+      "office-id" : "SPK",
+      "name" : "Test Project29",
+      "timezone-name" : "UTC"
+    }
+  } ],
+  "total" : 37
+}
