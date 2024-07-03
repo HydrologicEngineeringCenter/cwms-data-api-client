@@ -1,7 +1,9 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
+import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -10,8 +12,6 @@ import mil.army.usace.hec.cwms.radar.client.model.Project;
 import mil.army.usace.hec.cwms.radar.client.model.Projects;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class ProjectController {
     private static final String PROJECT_ENDPOINT = "projects";

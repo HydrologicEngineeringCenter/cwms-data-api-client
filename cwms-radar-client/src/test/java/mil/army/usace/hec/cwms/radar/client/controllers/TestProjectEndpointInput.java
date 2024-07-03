@@ -1,18 +1,18 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
-import mil.army.usace.hec.cwms.radar.client.model.Project;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RatingTemplateEndpointInput.DELETE_METHOD_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RatingTemplateEndpointInput.OFFICE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.IOException;
+import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
+import mil.army.usace.hec.cwms.radar.client.model.Project;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import org.junit.jupiter.api.Test;
 
 class TestProjectEndpointInput {
 

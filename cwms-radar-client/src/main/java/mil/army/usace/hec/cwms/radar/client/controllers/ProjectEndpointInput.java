@@ -1,15 +1,15 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Objects;
 import java.util.Optional;
-
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.Project;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class ProjectEndpointInput {
     static final String OFFICE_QUERY_PARAMETER = "office";

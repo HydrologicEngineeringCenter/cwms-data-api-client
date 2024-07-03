@@ -1,16 +1,15 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.Project;
 import mil.army.usace.hec.cwms.radar.client.model.Projects;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TestProjectController extends TestController {
 
