@@ -52,7 +52,7 @@ class TestProjectEndpointInput {
                 .pageSize(pageSize);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(officeId, mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.OFFICE_QUERY_PARAMETER));
-        assertEquals(idMask, mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.ID_MASK));
+        assertEquals(idMask, mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.GetAll.ID_MASK));
         assertEquals(page, mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.GetAll.PAGE_QUERY_PARAMETER));
         assertEquals(Integer.toString(pageSize), mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.GetAll.PAGE_SIZE_QUERY_PARAMETER));
 

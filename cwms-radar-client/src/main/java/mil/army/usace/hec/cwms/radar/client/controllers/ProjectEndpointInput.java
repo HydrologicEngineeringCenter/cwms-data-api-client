@@ -13,9 +13,6 @@ import mil.army.usace.hec.cwms.radar.client.model.Project;
 
 public final class ProjectEndpointInput {
     static final String OFFICE_QUERY_PARAMETER = "office";
-    static final String ID_MASK = "id-mask";
-
-    static final String NAME_QUERY_PARAMETER = "name";
 
     private ProjectEndpointInput() {
         throw new AssertionError("factory class");
@@ -67,6 +64,7 @@ public final class ProjectEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
         static final String PAGE_QUERY_PARAMETER = "page";
+        static final String ID_MASK = "id-mask";
         private String officeId;
         private String projectIdMask;
         private String page;
@@ -109,7 +107,6 @@ public final class ProjectEndpointInput {
     }
 
     public static final class Patch extends EndpointInput {
-
         private final Project project;
 
         private Patch(Project project) {
@@ -122,8 +119,7 @@ public final class ProjectEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, project.getLocation().getName())
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, project.getLocation().getOfficeId())
+            return httpRequestBuilder
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
@@ -148,6 +144,7 @@ public final class ProjectEndpointInput {
 
     public static final class Delete extends EndpointInput {
         static final String DELETE_METHOD_QUERY_PARAMETER = "method";
+        static final String NAME_QUERY_PARAMETER = "name";
         private final String projectId;
         private final String office;
         private final DeleteMethod deleteMethod;
