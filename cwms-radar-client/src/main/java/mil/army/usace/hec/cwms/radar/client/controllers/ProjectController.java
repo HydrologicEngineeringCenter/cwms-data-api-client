@@ -1,6 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
@@ -20,10 +20,10 @@ public final class ProjectController {
             throws IOException {
         String endpoint = PROJECT_ENDPOINT + "/" + input.projectId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), Project.class);
         }
@@ -32,10 +32,10 @@ public final class ProjectController {
     public Projects retrieveProjects(ApiConnectionInfo apiConnectionInfo, ProjectEndpointInput.GetAll input)
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, PROJECT_ENDPOINT)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), Projects.class);
         }
@@ -44,11 +44,11 @@ public final class ProjectController {
     public void storeProject(ApiConnectionInfo apiConnectionInfo, ProjectEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.project());
         new HttpRequestBuilderImpl(apiConnectionInfo, PROJECT_ENDPOINT)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
@@ -58,11 +58,11 @@ public final class ProjectController {
         String body = RadarObjectMapper.mapObjectToJson(project);
         String endpoint = PROJECT_ENDPOINT + "/" + project.getLocation().getName();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
@@ -70,10 +70,10 @@ public final class ProjectController {
     public void deleteProject(ApiConnectionInfo apiConnectionInfo, ProjectEndpointInput.Delete input) throws IOException {
         String endpoint = PROJECT_ENDPOINT + "/" + input.projectId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
