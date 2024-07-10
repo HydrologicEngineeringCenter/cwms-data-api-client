@@ -2632,7 +2632,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
   /cwms-data/timeseries/binary:
     get:
       tags:
@@ -2995,7 +2995,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
   /cwms-data/timeseries/category/{category-id}:
     get:
       tags:
@@ -7273,7 +7273,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented
-      security: [ ]
+      security: []
   /cwms-data/projects/{name}:
     get:
       tags:
@@ -7333,7 +7333,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: [ ]
+      security: []
     delete:
       tags:
         - Projects
@@ -7390,8 +7390,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Projects
@@ -7443,8 +7443,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/projects:
     get:
       tags:
@@ -7513,7 +7513,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
-      security: [ ]
+      security: []
     post:
       tags:
         - Projects
@@ -7558,8 +7558,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/properties/{name}:
     get:
       tags:
@@ -7628,7 +7628,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
         - Properties
@@ -7688,8 +7688,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Properties
@@ -7742,8 +7742,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/properties:
     get:
       tags:
@@ -7806,7 +7806,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Properties
@@ -7853,8 +7853,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/lookup-types:
     get:
       tags:
@@ -7920,7 +7920,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - LookupTypes
@@ -7980,8 +7980,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/lookup-types/{name}:
     delete:
       tags:
@@ -8047,8 +8047,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - LookupTypes
@@ -8113,8 +8113,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/embankments/{name}:
     get:
       tags:
@@ -8179,7 +8179,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
         - Embankments
@@ -8238,8 +8238,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Embankments
@@ -8298,8 +8298,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/embankments:
     get:
       tags:
@@ -8363,7 +8363,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Embankments
@@ -8416,8 +8416,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/turbines/{name}:
     get:
       tags:
@@ -8478,7 +8478,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     delete:
       tags:
         - Turbines
@@ -8537,8 +8537,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     patch:
       tags:
         - Turbines
@@ -8597,8 +8597,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/turbines:
     get:
       tags:
@@ -8660,7 +8660,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: [ ]
+      security: []
     post:
       tags:
         - Turbines
@@ -8716,8 +8716,72 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/project-lock-rights:
+    get:
+      tags:
+        - Project Lock Revoker Rights
+      summary: Get cwmsData projectLockRights
+      description: 'Get a list of project lock revoker rights '
+      operationId: getCwmsDataProjectLockRights
+      parameters:
+        - name: project-mask
+          in: query
+          description: Specifies the project mask to be used to filter the lock revoker rights. Defaults to '*'
+          schema:
+            type: string
+        - name: application-mask
+          in: query
+          description: Specifies the application mask to be used to filter the lock revoker rights. Defaults to '*'
+          schema:
+            type: string
+        - name: office-mask
+          in: query
+          description: Specifies the office mask to be used to filter the lock revoker rights. Supports '*' but is typically a single office.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LockRevokerRights'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
 components:
   schemas:
     CdaError:
@@ -10891,6 +10955,20 @@ components:
           $ref: '#/components/schemas/CwmsId'
         location:
           $ref: '#/components/schemas/Location'
+    LockRevokerRights:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        project-id:
+          type: string
+        application-id:
+          type: string
+        user-id:
+          type: string
   securitySchemes:
     CwmsAAACacAuth:
       type: apiKey
