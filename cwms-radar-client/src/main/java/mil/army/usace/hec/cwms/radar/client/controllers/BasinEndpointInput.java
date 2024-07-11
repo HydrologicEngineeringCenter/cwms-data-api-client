@@ -42,8 +42,8 @@ public final class BasinEndpointInput {
         private final String officeId;
 
         private GetAll(String projectId, String officeId) {
-            this.projectId = Objects.requireNonNull(projectId, "Project Id required for getAll basin endpoint");
-            this.officeId = Objects.requireNonNull(officeId, "Project office Id required for getAll basin endpoint");
+            this.projectId = projectId;
+            this.officeId = officeId;
         }
 
         @Override
