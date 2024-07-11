@@ -1,5 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,4 +29,20 @@ public class TestProjectLockRevokerRightsController extends TestController {
         assertNotNull(lockRevokerRights);
         assertFalse(lockRevokerRights.isEmpty());
     }
+
+    @Test
+    void testUpdateLockRevokerRights() throws IOException {
+        String sessionOffice = "SWT";
+        String officeMask = "SWT";
+        String projMask = "SomeProject";
+        String appMask = "MockREGI";
+        String user = "aUser";
+        mockHttpServer.enqueue(200,"");
+        mockHttpServer.start();
+        ProjectLockRevokerRightsInput.Update input = ProjectLockRevokerRightsInput.update(sessionOffice, officeMask, projMask, appMask, user, true);
+        ProjectLockRevokerRightsController controller = new ProjectLockRevokerRightsController();
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo(cookieJarSupplier);
+        assertDoesNotThrow(() -> controller.updateLockRevokerRights(apiConnectionInfo, input));
+    }
+
 }

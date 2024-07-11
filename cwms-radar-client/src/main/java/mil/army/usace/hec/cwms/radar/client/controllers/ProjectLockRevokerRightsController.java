@@ -36,5 +36,16 @@ public class ProjectLockRevokerRightsController {
         }
     }
 
+    public void updateLockRevokerRights(ApiConnectionInfo apiConnectionInfo, ProjectLockRevokerRightsInput.Update input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "update")
+                .addEndpointInput(input)
+                .post()
+                .withBody("")
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close()
+                ;
+    }
 
 }
