@@ -18,7 +18,7 @@ class TestBasinEndpointInput {
     @Test
     void testGetAllQueryRequestDefault() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = BasinEndpointInput.getAll("PROJ", "SPK");
+        GetAll input = BasinEndpointInput.getAll().officeId("SPK").projectId("PROJ");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals("PROJ", mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
