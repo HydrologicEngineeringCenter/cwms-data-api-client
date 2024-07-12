@@ -125,6 +125,6 @@ class TestEmbankmentController extends TestController {
         assertDoesNotThrow(() -> controller.renameEmbankment(buildConnectionInfo(cookieJarSupplier), input));
         var requestWrapper = mockHttpServer.takeRequest();
         assertEquals("PATCH", requestWrapper.getMethod());
-        assertTrue(requestWrapper.getPath().startsWith("/embankments/" + value.getLocation().getName() + "?"));
+        assertTrue(requestWrapper.getPath().startsWith("/projects/embankments/" + value.getLocation().getName() + "?"));
     }
 }

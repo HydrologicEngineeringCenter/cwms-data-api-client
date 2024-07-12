@@ -24,6 +24,11 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -31,14 +36,8 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.Embankment;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-import java.io.IOException;
-import java.util.List;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-
 public final class EmbankmentController {
-    private static final String EMBANKMENT_ENDPOINT = "embankments";
+    private static final String EMBANKMENT_ENDPOINT = "projects/embankments";
 
     public Embankment retrieveEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.GetOne input)
             throws IOException {

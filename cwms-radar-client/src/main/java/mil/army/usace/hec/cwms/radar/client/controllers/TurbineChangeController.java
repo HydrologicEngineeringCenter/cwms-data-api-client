@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static java.lang.String.format;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
@@ -34,41 +35,31 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.radar.client.model.Turbine;
+import mil.army.usace.hec.cwms.radar.client.model.TurbineChange;
 
-public final class TurbineController {
+public final class TurbineChangeController {
 
-    private static final String TURBINE_ENDPOINT = "projects/turbines";
+    private static final String TURBINE_ENDPOINT = "projects/%s/%s/turbine-changes";
 
-    public Turbine retrieveTurbine(ApiConnectionInfo apiConnectionInfo, TurbineEndpointInput.GetOne input)
+    public List<TurbineChange> retrieveTurbineChanges(ApiConnectionInfo apiConnectionInfo,
+        TurbineChangeEndpointInput.GetAll input)
         throws IOException {
-        String endpoint = TURBINE_ENDPOINT + "/" + input.turbineId();
+        String endpoint = format(TURBINE_ENDPOINT, input.officeId(), input.projectId());
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .get()
             .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapJsonToObject(response.getBody(), Turbine.class);
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TurbineChange.class);
         }
     }
 
-    public List<Turbine> retrieveTurbines(ApiConnectionInfo apiConnectionInfo, TurbineEndpointInput.GetAll input)
+    public void storeTurbineChanges(ApiConnectionInfo apiConnectionInfo, TurbineChangeEndpointInput.Post input)
         throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TURBINE_ENDPOINT)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-            .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
-        try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Turbine.class);
-        }
-    }
-
-    public void storeTurbine(ApiConnectionInfo apiConnectionInfo, TurbineEndpointInput.Post input)
-        throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.turbine());
-        new HttpRequestBuilderImpl(apiConnectionInfo, TURBINE_ENDPOINT)
+        String endpoint = format(TURBINE_ENDPOINT, input.officeId(), input.projectId());
+        String body = RadarObjectMapper.mapObjectToJson(input.changes());
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .post()
@@ -78,20 +69,9 @@ public final class TurbineController {
             .close();
     }
 
-    public void renameTurbine(ApiConnectionInfo apiConnectionInfo, TurbineEndpointInput.Patch input)
+    public void deleteTurbineChanges(ApiConnectionInfo apiConnectionInfo, TurbineChangeEndpointInput.Delete input)
         throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, TURBINE_ENDPOINT + "/" + input.turbineId())
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-            .addEndpointInput(input)
-            .patch()
-            .withMediaType(ACCEPT_HEADER_V1)
-            .execute()
-            .close();
-    }
-
-    public void deleteTurbine(ApiConnectionInfo apiConnectionInfo, TurbineEndpointInput.Delete input)
-        throws IOException {
-        String endpoint = TURBINE_ENDPOINT + "/" + input.turbineId();
+        String endpoint = format(TURBINE_ENDPOINT, input.officeId(), input.projectId());
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
