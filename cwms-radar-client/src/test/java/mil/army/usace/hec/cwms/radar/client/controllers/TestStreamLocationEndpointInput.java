@@ -45,12 +45,14 @@ class TestStreamLocationEndpointInput {
         StreamLocationEndpointInput.GetAll input = StreamLocationEndpointInput.getAll()
                 .withOfficeIdMask("SPK")
                 .withStreamIdMask("STREAM_ID_MASK")
+                .withStreamLocationIdMask("STREAM_LOC_MASK")
                 .withStationUnits("ft")
                 .withStageUnits("ft")
                 .withAreaUnits("mi2");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.OFFICE_MASK_QUERY_PARAMETER));
         assertEquals("STREAM_ID_MASK", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.STREAM_ID_MASK_QUERY_PARAMETER));
+        assertEquals("STREAM_LOC_MASK", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.NAME_MASK_QUERY_PARAMETER));
         assertEquals("ft", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.STATION_UNITS_QUERY_PARAMETER));
         assertEquals("ft", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.STAGE_UNITS_QUERY_PARAMETER));
         assertEquals("mi2", mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.GetAll.AREA_UNITS_QUERY_PARAMETER));
