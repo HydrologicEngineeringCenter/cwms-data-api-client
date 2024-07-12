@@ -31,8 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mil.army.usace.hec.cwms.radar.client.model.StreamLocation;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -88,7 +86,6 @@ class TestStreamLocationController extends TestController {
 
     @Test
     void testStoreStreamLocation() throws IOException {
-        Logger.getLogger("").setLevel(Level.ALL);
         String collect = readJsonFile("radar/v1/json/stream_location.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
