@@ -62,11 +62,13 @@ public final class StreamLocationEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String OFFICE_MASK_QUERY_PARAMETER = "office-mask";
         static final String STREAM_ID_MASK_QUERY_PARAMETER = "stream-id-mask";
+        static final String NAME_MASK_QUERY_PARAMETER = "name-mask";
         static final String STATION_UNITS_QUERY_PARAMETER = "station-unit";
         static final String STAGE_UNITS_QUERY_PARAMETER = "stage-unit";
         static final String AREA_UNITS_QUERY_PARAMETER = "area-unit";
         private String officeIdMask;
         private String streamIdMask;
+        private String streamLocationIdMask;
         private String stationUnits;
         private String stageUnits;
         private String areaUnits;
@@ -81,6 +83,11 @@ public final class StreamLocationEndpointInput {
 
         public GetAll withStreamIdMask(String streamId) {
             this.streamIdMask = streamId;
+            return this;
+        }
+
+        public GetAll withStreamLocationIdMask(String streamLocationIdMask) {
+            this.streamLocationIdMask = streamLocationIdMask;
             return this;
         }
 
@@ -103,6 +110,7 @@ public final class StreamLocationEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeIdMask)
                     .addQueryParameter(STREAM_ID_MASK_QUERY_PARAMETER, streamIdMask)
+                    .addQueryParameter(NAME_MASK_QUERY_PARAMETER, streamLocationIdMask)
                     .addQueryParameter(STATION_UNITS_QUERY_PARAMETER, stationUnits)
                     .addQueryParameter(STAGE_UNITS_QUERY_PARAMETER, stageUnits)
                     .addQueryParameter(AREA_UNITS_QUERY_PARAMETER, areaUnits)
@@ -211,8 +219,6 @@ public final class StreamLocationEndpointInput {
     }
 
     public static final class Patch extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String NAME_QUERY_PARAMETER = "name";
         private final StreamLocation streamLocation;
 
         private Patch(StreamLocation streamLocation) {
