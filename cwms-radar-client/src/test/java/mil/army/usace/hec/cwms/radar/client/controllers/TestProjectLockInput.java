@@ -37,5 +37,30 @@ class TestProjectLockInput {
         assertDoesNotThrow(() -> ProjectLockInput.getAll(officeMask, projMask, null));
     }
 
+    @Test
+    void testGetOneQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+
+        String office = "SWT";
+        String projectId = "SomeProject";
+        String appId = "MockREGI";
+        ProjectLockInput.GetOne input = ProjectLockInput.getOne(office, projectId, appId);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.OFFICE));
+        assertEquals(appId, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.APPLICATION_ID));
+
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testGetOneQueryRequestNulls() {
+        String office = "SWT";
+        String proj = "SomeProject";
+        String app = "MockREGI";
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.getOne(null, proj, app));
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.getOne(office, null, app));
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.getOne(office, proj, null));
+    }
+
 
 }

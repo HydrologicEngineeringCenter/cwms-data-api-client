@@ -35,4 +35,25 @@ public class ProjectLockController {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), ProjectLock.class);
         }
     }
+
+    /**
+     * Retrieves a ProjectLock object based on the provided API connection information and input parameters.
+     *
+     * @param apiConnectionInfo The API connection information.
+     * @param input             The input parameters for retrieving the project lock.
+     * @return The retrieved ProjectLock object.
+     * @throws IOException If an I/O error occurs during the operation.
+     */
+    public ProjectLock retrieveProjectLock(ApiConnectionInfo apiConnectionInfo, ProjectLockInput.GetOne input)
+            throws IOException {
+        String endpoint = PATH + "/" + input.projectId();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), ProjectLock.class);
+        }
+    }
 }
