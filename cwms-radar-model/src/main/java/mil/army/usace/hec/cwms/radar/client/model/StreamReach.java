@@ -23,6 +23,7 @@
  */
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -53,6 +54,7 @@ public class StreamReach {
     @JsonProperty("id")
     private CwmsId id = null;
 
+    @JsonIgnore
     public String getOfficeId() {
         String retVal = null;
         if(id != null)

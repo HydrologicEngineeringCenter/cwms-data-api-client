@@ -23,6 +23,7 @@
  */
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -68,7 +69,7 @@ public class StreamLocationNode {
     }
 
     //helper methods to extract from stream node
-
+    @JsonIgnore
     public String getOfficeId() {
         String retVal = null;
         if(id != null)
@@ -78,6 +79,7 @@ public class StreamLocationNode {
         return retVal;
     }
 
+    @JsonIgnore
     public CwmsId getStreamId() {
         CwmsId retVal = null;
         if(streamNode != null)
@@ -87,6 +89,7 @@ public class StreamLocationNode {
         return retVal;
     }
 
+    @JsonIgnore
     public Bank getBank() {
         Bank retVal = null;
         if(streamNode != null)
@@ -96,6 +99,7 @@ public class StreamLocationNode {
         return retVal;
     }
 
+    @JsonIgnore
     public Double getStation() {
         Double retVal = null;
         if(streamNode != null)
@@ -105,6 +109,7 @@ public class StreamLocationNode {
         return retVal;
     }
 
+    @JsonIgnore
     public String getStationUnits() {
         String retVal = null;
         if(streamNode != null)

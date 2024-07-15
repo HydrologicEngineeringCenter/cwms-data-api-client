@@ -104,7 +104,7 @@ class TestStreamLocationController extends TestController {
         StreamLocation value = RadarObjectMapper.mapJsonToObject(collect, StreamLocation.class);
         StreamLocationController controller = new StreamLocationController();
         controller.storeStreamLocation(buildConnectionInfo(cookieJarSupplier), StreamLocationEndpointInput.post(value));
-        StreamLocationEndpointInput.Delete input = StreamLocationEndpointInput.delete("SPK", "StreamLoc123");
+        StreamLocationEndpointInput.Delete input = StreamLocationEndpointInput.delete("SPK", "ImOnThisStream", "StreamLoc123");
         assertDoesNotThrow(() -> controller.deleteStreamLocation(buildConnectionInfo(cookieJarSupplier), input));
     }
 
