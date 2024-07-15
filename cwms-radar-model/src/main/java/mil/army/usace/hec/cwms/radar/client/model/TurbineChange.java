@@ -27,8 +27,8 @@ package mil.army.usace.hec.cwms.radar.client.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,10 +43,10 @@ public class TurbineChange {
     private CwmsId projectId = null;
 
     @JsonProperty("change-date")
-    private Date changeDate = null;
+    private Instant changeDate = null;
 
     @JsonProperty("protected")
-    private Boolean _protected = null;
+    private Boolean isProtected = null;
 
     @JsonProperty("discharge-computation-type")
     private LookupType dischargeComputationType = null;
@@ -92,30 +92,30 @@ public class TurbineChange {
         this.projectId = projectId;
     }
 
-    public TurbineChange changeDate(Date changeDate) {
+    public TurbineChange changeDate(Instant changeDate) {
         this.changeDate = changeDate;
         return this;
     }
 
-    public Date getChangeDate() {
+    public Instant getChangeDate() {
         return changeDate;
     }
 
-    public void setChangeDate(Date changeDate) {
+    public void setChangeDate(Instant changeDate) {
         this.changeDate = changeDate;
     }
 
-    public TurbineChange _protected(Boolean _protected) {
-        this._protected = _protected;
+    public TurbineChange isProtected(Boolean isProtected) {
+        this.isProtected = isProtected;
         return this;
     }
 
     public Boolean isProtected() {
-        return _protected;
+        return isProtected;
     }
 
     public void setProtected(Boolean _protected) {
-        this._protected = _protected;
+        this.isProtected = _protected;
     }
 
     public TurbineChange dischargeComputationType(LookupType dischargeComputationType) {
@@ -267,7 +267,7 @@ public class TurbineChange {
         TurbineChange turbineChange = (TurbineChange) o;
         return Objects.equals(this.projectId, turbineChange.projectId)
             && Objects.equals(this.changeDate, turbineChange.changeDate)
-            && Objects.equals(this._protected, turbineChange._protected)
+            && Objects.equals(this.isProtected, turbineChange.isProtected)
             && Objects.equals(this.dischargeComputationType, turbineChange.dischargeComputationType)
             && Objects.equals(this.reasonType, turbineChange.reasonType)
             && this.notes == null || turbineChange.notes == null ? Objects.equals(this.notes, turbineChange.notes) :
@@ -288,7 +288,7 @@ public class TurbineChange {
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectId, changeDate, _protected, dischargeComputationType, reasonType,
+        return Objects.hash(projectId, changeDate, isProtected, dischargeComputationType, reasonType,
             notes == null ? 0 : notes.toLowerCase(), newTotalDischargeOverride, oldTotalDischargeOverride,
             dischargeUnits == null ? 0 : dischargeUnits.toLowerCase(), poolElevation, tailwaterElevation,
             elevationUnits == null ? 0 : elevationUnits.toLowerCase(), settings);
@@ -301,7 +301,7 @@ public class TurbineChange {
 
         sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    changeDate: ").append(toIndentedString(changeDate)).append("\n");
-        sb.append("    _protected: ").append(toIndentedString(_protected)).append("\n");
+        sb.append("    _protected: ").append(toIndentedString(isProtected)).append("\n");
         sb.append("    dischargeComputationType: ").append(toIndentedString(dischargeComputationType)).append("\n");
         sb.append("    reasonType: ").append(toIndentedString(reasonType)).append("\n");
         sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
