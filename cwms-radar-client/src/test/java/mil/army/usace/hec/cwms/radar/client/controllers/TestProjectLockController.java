@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.radar.client.model.ProjectLock;
+import mil.army.usace.hec.cwms.radar.client.model.ProjectLockId;
 import org.junit.jupiter.api.Test;
 
 
@@ -45,6 +46,33 @@ public class TestProjectLockController extends TestController {
         assertEquals("SPK", prjLock.getOfficeId());
         assertEquals("ProjectId0", prjLock.getProjectId());
         assertEquals("ApplicationId", prjLock.getApplicationId());
+
+    }
+
+    @Test
+    void testRequestLock() throws IOException {
+        String collect = readJsonFile("radar/v1/json/project_lock_id.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+
+        ProjectLockController controller = new ProjectLockController();
+
+        String office = "SWT";
+        String projectId = "SomeProject";
+        String appId = "MockREGI";
+        ProjectLock lock = new ProjectLock()
+                .officeId(office)
+                .projectId(projectId)
+                .applicationId(appId)
+                ;
+
+        ProjectLockInput.LockRequest input = ProjectLockInput.lockRequest(lock);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        ProjectLockId prjLockId = controller.requestLock(apiConnectionInfo, input);
+        assertNotNull(prjLockId);
+        String id = prjLockId.getId();
+        assertNotNull(id);
+        assertFalse(id.isEmpty());
 
     }
 

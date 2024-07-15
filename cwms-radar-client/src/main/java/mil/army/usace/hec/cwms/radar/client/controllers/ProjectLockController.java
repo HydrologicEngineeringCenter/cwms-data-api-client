@@ -1,7 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +9,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.ProjectLock;
+import mil.army.usace.hec.cwms.radar.client.model.ProjectLockId;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 public class ProjectLockController {
@@ -27,7 +27,6 @@ public class ProjectLockController {
             throws IOException {
 
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, PATH)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -48,12 +47,32 @@ public class ProjectLockController {
             throws IOException {
         String endpoint = PATH + "/" + input.projectId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), ProjectLock.class);
+        }
+    }
+
+    /**
+     * Requests a lock for a project based on the provided API connection information and lock request input.
+     *
+     * @param apiConnectionInfo The API connection information.
+     * @param input             The lock request input parameters.
+     * @return The ProjectLockId representing the requested lock.
+     * @throws IOException If an I/O error occurs during the operation.
+     */
+    public ProjectLockId requestLock(ApiConnectionInfo apiConnectionInfo, ProjectLockInput.LockRequest input)
+            throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.projectLock());
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, PATH)
+                .addEndpointInput(input)
+                .post()
+                .withBody(body)
+                .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), ProjectLockId.class);
         }
     }
 }

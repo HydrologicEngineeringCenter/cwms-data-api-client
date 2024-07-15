@@ -6,6 +6,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.ProjectLock;
 
 
 public final class ProjectLockInput {
@@ -26,6 +27,10 @@ public final class ProjectLockInput {
 
     public static ProjectLockInput.GetOne getOne(String officeId,  String projectId, String applicationId) {
         return new ProjectLockInput.GetOne(officeId, projectId, applicationId);
+    }
+
+    public static ProjectLockInput.LockRequest lockRequest(ProjectLock lock) {
+        return new ProjectLockInput.LockRequest(lock);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -71,6 +76,41 @@ public final class ProjectLockInput {
         public String projectId() {
             return projectId;
         }
+    }
+
+    public static final class LockRequest extends EndpointInput {
+        public static final String REVOKE_EXISTING = "revoke-existing";
+        public static final String REVOKE_TIMEOUT = "revoke-timeout";
+        private final ProjectLock lock;
+        private boolean revokeExisting = false;
+        private int revokeTimeout = 10;
+
+        private LockRequest(ProjectLock lock) {
+            this.lock = Objects.requireNonNull(lock, "Cannot retrieve a ProjectLock without a ProjectLock.");
+        }
+
+        public LockRequest revokeExisting(boolean revokeExisting) {
+            this.revokeExisting = revokeExisting;
+            return this;
+        }
+
+        public LockRequest revokeTimeout(int revokeTimeout) {
+            this.revokeTimeout = revokeTimeout;
+            return this;
+        }
+
+        public ProjectLock projectLock() {
+            return lock;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+
+            return httpRequestBuilder.addQueryParameter(REVOKE_EXISTING, String.valueOf(revokeExisting))
+                    .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+
     }
 
 
