@@ -108,11 +108,6 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApiKey'
       responses:
         '201':
           description: Created
@@ -2414,11 +2409,6 @@ paths:
       parameters:
         - name: name
           in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries
-          in: path
           description: The time series identifier to be deleted
           required: true
           schema:
@@ -2499,11 +2489,6 @@ paths:
       operationId: patchCwmsDataTimeseriesTextWithName
       parameters:
         - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries
           in: path
           description: The id of the text timeseries to be updated
           required: true
@@ -2778,11 +2763,6 @@ paths:
       parameters:
         - name: name
           in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries
-          in: path
           description: The time series identifier to be deleted
           required: true
           schema:
@@ -2862,11 +2842,6 @@ paths:
       operationId: patchCwmsDataTimeseriesBinaryWithName
       parameters:
         - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries
           in: path
           description: The id of the binary timeseries to be updated
           required: true
@@ -3909,7 +3884,7 @@ paths:
             type: string
         - name: trim
           in: query
-          description: Specifies whether to trim missing values from the beginning and end of the retrieved values. Only supported for:application/json;version=2 and application/xml;version=2. Default is false.
+          description: Specifies whether to trim missing values from the beginning and end of the retrieved values. Only supported for:application/json;version=2 and application/xml;version=2. Default is true.
           schema:
             type: boolean
         - name: format
@@ -5391,12 +5366,6 @@ paths:
             application/vnd.named+pg+json:
               schema:
                 $ref: '#/components/schemas/Basin'
-            application/json;version=1:
-              schema:
-                $ref: '#/components/schemas/Basin'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Basin'
         '400':
           description: Bad Request
           content:
@@ -5430,126 +5399,6 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-    delete:
-      tags:
-        - Basins
-      summary: Delete cwmsData basins with basinId
-      description: Renames CWMS Basin
-      operationId: deleteCwmsDataBasinsWithBasinId
-      parameters:
-        - name: basin-id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the basin to be renamed.
-          required: true
-          schema:
-            type: string
-        - name: delete-mode
-          in: query
-          description: Specifies the delete method used.
-          required: true
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided combination of parameters did not find a basin.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
-    patch:
-      tags:
-        - Basins
-      summary: Patch cwmsData basins with basinId
-      description: Renames CWMS Basin
-      operationId: patchCwmsDataBasinsWithBasinId
-      parameters:
-        - name: basin-id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: newBasinId
-          in: query
-          description: Specifies the new name of the basin to be renamed.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the basin to be renamed.
-          required: true
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided combination of parameters did not find a basin.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
   /cwms-data/basins:
     get:
       tags:
@@ -5578,12 +5427,6 @@ paths:
             application/vnd.named+pg+json:
               schema:
                 $ref: '#/components/schemas/Basin'
-            application/json;version=1:
-              schema:
-                $ref: '#/components/schemas/Basin'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Basin'
         '400':
           description: Bad Request
           content:
@@ -5617,100 +5460,6 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
-    post:
-      tags:
-        - Basins
-      summary: Post cwmsData basins
-      description: Creates CWMS Basin
-      operationId: postCwmsDataBasins
-      parameters:
-        - name: newBasinId
-          in: query
-          description: Specifies the new name of the basin to be created.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the basin to be created.
-          required: true
-          schema:
-            type: string
-        - name: parentBasin
-          in: query
-          description: Specifies the parent basin of the basin to be created.
-          schema:
-            type: string
-        - name: sortOrder
-          in: query
-          description: Specifies the sort order of the basin to be created.
-          required: true
-          schema:
-            type: number
-        - name: totalDrainageArea
-          in: query
-          description: Specifies the total drainage area of the basin to be created.
-          required: true
-          schema:
-            type: number
-        - name: contributingDrainageArea
-          in: query
-          description: Specifies the contributing drainage area of the basin to be created.
-          required: true
-          schema:
-            type: number
-        - name: unit
-          in: query
-          description: |-
-            Specifies the unit  of the input area. Valid values for the unit field are:
-            * m2 
-            * km2 
-            * ft2 
-            * mi2 
-            * acre
-          schema:
-            type: string
-        - name: primaryStreamId
-          in: query
-          description: Specifies the primary stream id of the basin to be created.
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided combination of parameters did not find a basin.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security:
-        - CwmsAAACacAuth: [ ]
-        - ApiKey: [ ]
   /cwms-data/blobs/{blob-id}:
     get:
       tags:
@@ -7274,6 +7023,844 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
+  /cwms-data/projects/embankments/{name}:
+    get:
+      tags:
+        - Embankments
+      summary: Get cwmsData projects embankments with name
+      description: Returns CWMS Embankment Data
+      operationId: getCwmsDataProjectsEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the embankment to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be retrieved.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Embankment'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Embankment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Embankments
+      summary: Delete cwmsData projects embankments with name
+      description: Delete CWMS Embankment
+      operationId: deleteCwmsDataProjectsEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the embankment to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Defaults to "DELETE_KEY"
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '204':
+          description: Embankment successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the embankment was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Embankments
+      summary: Patch cwmsData projects embankments with name
+      description: Rename CWMS Embankment
+      operationId: patchCwmsDataProjectsEmbankmentsWithName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'Specifies the new embankment name. '
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the embankment to be renamed.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Embankment successfully renamed in CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/embankments:
+    get:
+      tags:
+        - Embankments
+      summary: Get cwmsData projects embankments
+      description: Returns matching CWMS Embankment Data for a Reservoir Project.
+      operationId: getCwmsDataProjectsEmbankments
+      parameters:
+        - name: office
+          in: query
+          description: Office id for the reservoir project location associated with the embankments.
+          schema:
+            type: string
+        - name: project-id
+          in: query
+          description: Specifies the project-id of the Embankments whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Embankment'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Embankment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Embankments
+      summary: Post cwmsData projects embankments
+      description: Create CWMS Embankment
+      operationId: postCwmsDataProjectsEmbankments
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/Embankment'
+        required: true
+      responses:
+        '204':
+          description: Embankment successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/turbines/{name}:
+    get:
+      tags:
+        - Turbines
+      summary: Get cwmsData projects turbines with name
+      description: Returns CWMS Turbine Data
+      operationId: getCwmsDataProjectsTurbinesWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the turbine to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the turbine to be retrieved.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/Turbine'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Turbine'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    delete:
+      tags:
+        - Turbines
+      summary: Delete cwmsData projects turbines with name
+      description: Delete CWMS Turbine
+      operationId: deleteCwmsDataProjectsTurbinesWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the turbine to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the turbine to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Defaults to "DELETE_KEY"
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '204':
+          description: Turbine successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the turbine was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Turbines
+      summary: Patch cwmsData projects turbines with name
+      description: Rename CWMS Turbine
+      operationId: patchCwmsDataProjectsTurbinesWithName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'Specifies the new turbine name. '
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the turbine to be renamed.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Turbine successfully renamed in to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/projects/turbines:
+    get:
+      tags:
+        - Turbines
+      summary: Get cwmsData projects turbines
+      description: Returns matching CWMS Turbine Data for a Reservoir Project.
+      operationId: getCwmsDataProjectsTurbines
+      parameters:
+        - name: office
+          in: query
+          description: Office id for the reservoir project location associated with the turbines.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: query
+          description: Specifies the project-id of the Turbines whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Turbine'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Turbine'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Turbines
+      summary: Post cwmsData projects turbines
+      description: Create CWMS Turbine
+      operationId: postCwmsDataProjectsTurbines
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/Turbine'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Turbine'
+        required: true
+      responses:
+        '204':
+          description: Turbine successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/projects/{office}/{name}/turbine-changes:
+    get:
+      tags:
+        - Turbines
+      summary: Get cwmsData projects with office with name turbineChanges
+      description: Returns matching CWMS Turbine Change Data for a Reservoir Project.
+      operationId: getCwmsDataProjectsWithOfficeWithNameTurbineChanges
+      parameters:
+        - name: office
+          in: path
+          description: Office id for the reservoir project location associated with the turbine changes.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Specifies the name of project of the Turbine changes whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window.
+          required: true
+          schema:
+            type: string
+        - name: start-time-inclusive
+          in: query
+          description: A flag specifying whether any data at the start time should be retrieved ('True') or only data <b><em>after</em></b> the start time ('False').  Default value is True
+          schema:
+            type: boolean
+        - name: end-time-inclusive
+          in: query
+          description: A flag ('True'/'False') specifying whether any data at the end time should be retrieved ('True') or only data <b><em>before</em></b> the end time ('False'). Default value is False
+          schema:
+            type: boolean
+        - name: unit-system
+          in: query
+          description: Unit System desired in response. Can be SI (International Scientific) or EN (Imperial.) If unspecified, defaults to EN.
+          schema:
+            $ref: '#/components/schemas/UnitSystem'
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 500.A page cursor will not be returned by this DTO. Instead, the next page can be determined by querying the next set of changes using the last returned change date and using start-time-inclusive=false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TurbineChange'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Turbines
+      summary: Post cwmsData projects with office with name turbineChanges
+      description: Create CWMS Turbine Changes
+      operationId: postCwmsDataProjectsWithOfficeWithNameTurbineChanges
+      parameters:
+        - name: office
+          in: path
+          description: Office id for the reservoir project location associated with the turbine changes.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Specifies the name of project of the Turbine changes whose data is to stored.
+          required: true
+          schema:
+            type: string
+        - name: override-protection
+          in: query
+          description: A flag ('True'/'False') specifying whether to delete protected data. Default is False
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/TurbineChange'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TurbineChange'
+        required: true
+      responses:
+        '204':
+          description: Turbine successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Project Id or Turbine location Ids not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    delete:
+      tags:
+        - Turbines
+      summary: Delete cwmsData projects with office with name turbineChanges
+      description: Delete CWMS Turbine Changes
+      operationId: deleteCwmsDataProjectsWithOfficeWithNameTurbineChanges
+      parameters:
+        - name: office
+          in: path
+          description: Specifies the owning office of the project for changes to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: Specifies the name of project for the turbine changes to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window.
+          required: true
+          schema:
+            type: string
+        - name: override-protection
+          in: query
+          description: A flag ('True'/'False') specifying whether to delete protected data. Default is False
+          schema:
+            type: boolean
+      responses:
+        '204':
+          description: Turbine successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the project was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/projects/{name}:
     get:
       tags:
@@ -7298,7 +7885,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/json;version=1:
               schema:
                 $ref: '#/components/schemas/Project'
         '400':
@@ -7408,6 +7995,9 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+          application/json;version=1:
             schema:
               $ref: '#/components/schemas/Project'
         required: true
@@ -7522,6 +8112,9 @@ paths:
       operationId: postCwmsDataProjects
       requestBody:
         content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/Project'
           application/json:
             schema:
               $ref: '#/components/schemas/Project'
@@ -8115,609 +8708,6 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/embankments/{name}:
-    get:
-      tags:
-        - Embankments
-      summary: Get cwmsData embankments with name
-      description: Returns CWMS Embankment Data
-      operationId: getCwmsDataEmbankmentsWithName
-      parameters:
-        - name: name
-          in: path
-          description: Specifies the name of the embankment to be retrieved.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the embankment to be retrieved.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;version=1:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Embankment'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Embankment'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security: []
-    delete:
-      tags:
-        - Embankments
-      summary: Delete cwmsData embankments with name
-      description: Delete CWMS Embankment
-      operationId: deleteCwmsDataEmbankmentsWithName
-      parameters:
-        - name: name
-          in: path
-          description: Specifies the name of the embankment to be deleted.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the embankment to be deleted.
-          required: true
-          schema:
-            type: string
-        - name: method
-          in: query
-          description: Specifies the delete method used. Defaults to "DELETE_KEY"
-          schema:
-            $ref: '#/components/schemas/DeleteMethod'
-      responses:
-        '204':
-          description: Embankment successfully deleted from CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Based on the combination of inputs provided the embankment was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-    patch:
-      tags:
-        - Embankments
-      summary: Patch cwmsData embankments with name
-      description: Rename CWMS Embankment
-      operationId: patchCwmsDataEmbankmentsWithName
-      parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: 'Specifies the new embankment name. '
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the embankment to be renamed.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Embankment successfully renamed in CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-  /cwms-data/embankments:
-    get:
-      tags:
-        - Embankments
-      summary: Get cwmsData embankments
-      description: Returns matching CWMS Embankment Data for a Reservoir Project.
-      operationId: getCwmsDataEmbankments
-      parameters:
-        - name: office
-          in: query
-          description: Office id for the reservoir project location associated with the embankments.
-          schema:
-            type: string
-        - name: project-id
-          in: query
-          description: Specifies the project-id of the Embankments whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;version=1:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Embankment'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Embankment'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security: []
-    post:
-      tags:
-        - Embankments
-      summary: Post cwmsData embankments
-      description: Create CWMS Embankment
-      operationId: postCwmsDataEmbankments
-      parameters:
-        - name: fail-if-exists
-          in: query
-          description: 'Create will fail if provided ID already exists. Default: true'
-          schema:
-            type: boolean
-      requestBody:
-        content:
-          application/json;version=1:
-            schema:
-              $ref: '#/components/schemas/Embankment'
-        required: true
-      responses:
-        '204':
-          description: Embankment successfully stored to CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-  /cwms-data/turbines/{name}:
-    get:
-      tags:
-        - Turbines
-      summary: Get cwmsData turbines with name
-      description: Returns CWMS Turbine Data
-      operationId: getCwmsDataTurbinesWithName
-      parameters:
-        - name: name
-          in: path
-          description: Specifies the name of the turbine to be retrieved.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the turbine to be retrieved.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;version=1:
-              schema:
-                $ref: '#/components/schemas/Turbine'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Turbine'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security: []
-    delete:
-      tags:
-        - Turbines
-      summary: Delete cwmsData turbines with name
-      description: Delete CWMS Turbine
-      operationId: deleteCwmsDataTurbinesWithName
-      parameters:
-        - name: name
-          in: path
-          description: Specifies the name of the turbine to be deleted.
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the turbine to be deleted.
-          required: true
-          schema:
-            type: string
-        - name: method
-          in: query
-          description: Specifies the delete method used. Defaults to "DELETE_KEY"
-          schema:
-            $ref: '#/components/schemas/DeleteMethod'
-      responses:
-        '204':
-          description: Turbine successfully deleted from CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Based on the combination of inputs provided the turbine was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-    patch:
-      tags:
-        - Turbines
-      summary: Patch cwmsData turbines with name
-      description: Rename CWMS Turbine
-      operationId: patchCwmsDataTurbinesWithName
-      parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: 'Specifies the new turbine name. '
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: Specifies the owning office of the turbine to be renamed.
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Turbine successfully renamed in to CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-  /cwms-data/turbines:
-    get:
-      tags:
-        - Turbines
-      summary: Get cwmsData turbines
-      description: Returns matching CWMS Turbine Data for a Reservoir Project.
-      operationId: getCwmsDataTurbines
-      parameters:
-        - name: office
-          in: query
-          description: Office id for the reservoir project location associated with the turbines.
-          schema:
-            type: string
-        - name: project-id
-          in: query
-          description: Specifies the project-id of the Turbines whose data is to be included in the response.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;version=1:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Turbine'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Turbine'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security: []
-    post:
-      tags:
-        - Turbines
-      summary: Post cwmsData turbines
-      description: Create CWMS Turbine
-      operationId: postCwmsDataTurbines
-      parameters:
-        - name: fail-if-exists
-          in: query
-          description: 'Create will fail if provided ID already exists. Default: true'
-          schema:
-            type: boolean
-      requestBody:
-        content:
-          application/json;version=1:
-            schema:
-              $ref: '#/components/schemas/Turbine'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Turbine'
-        required: true
-      responses:
-        '204':
-          description: Turbine successfully stored to CWMS.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
   /cwms-data/project-lock-rights:
     get:
       tags:
@@ -8818,8 +8808,6 @@ components:
           description: When this key expires, in ISO-8601 format with offset and timezone ('yyyy-MM-dd'T'HH:mm:ssZ'['VV']'')
           format: date-time
     location_category:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -8831,8 +8819,6 @@ components:
           type: string
       description: A representation of a location category
     LocationCategory:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -8857,8 +8843,6 @@ components:
         refLocationId:
           type: string
     location_group:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -8882,8 +8866,6 @@ components:
             $ref: '#/components/schemas/AssignedLocation'
       description: A representation of a location group
     LocationGroup:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -8919,7 +8901,6 @@ components:
     Location:
       required:
         - name
-        - office-id
       type: object
       properties:
         office-id:
@@ -9069,7 +9050,6 @@ components:
     LocationLevel:
       required:
         - location-level-id
-        - office-id
       type: object
       properties:
         office-id:
@@ -9273,21 +9253,15 @@ components:
             seconds:
               type: integer
               format: int64
-            zero:
-              type: boolean
             nano:
               type: integer
               format: int32
-            negative:
-              type: boolean
-            positive:
-              type: boolean
             units:
               type: array
               items:
                 type: object
                 properties:
-                  durationEstimated:
+                  dateBased:
                     type: boolean
                   duration:
                     type: object
@@ -9295,19 +9269,21 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      zero:
-                        type: boolean
                       nano:
                         type: integer
                         format: int32
+                      zero:
+                        type: boolean
                       negative:
                         type: boolean
-                      positive:
-                        type: boolean
+                  durationEstimated:
+                    type: boolean
                   timeBased:
                     type: boolean
-                  dateBased:
-                    type: boolean
+            zero:
+              type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -9427,21 +9403,15 @@ components:
             seconds:
               type: integer
               format: int64
-            zero:
-              type: boolean
             nano:
               type: integer
               format: int32
-            negative:
-              type: boolean
-            positive:
-              type: boolean
             units:
               type: array
               items:
                 type: object
                 properties:
-                  durationEstimated:
+                  dateBased:
                     type: boolean
                   duration:
                     type: object
@@ -9449,19 +9419,21 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      zero:
-                        type: boolean
                       nano:
                         type: integer
                         format: int32
+                      zero:
+                        type: boolean
                       negative:
                         type: boolean
-                      positive:
-                        type: boolean
+                  durationEstimated:
+                    type: boolean
                   timeBased:
                     type: boolean
-                  dateBased:
-                    type: boolean
+            zero:
+              type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -9574,8 +9546,6 @@ components:
           type: string
           format: date-time
     StandardTextId:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9627,8 +9597,6 @@ components:
         value-url:
           type: string
     TextTimeSeries:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9657,8 +9625,6 @@ components:
           items:
             $ref: '#/components/schemas/RegularTextTimeSeriesRow'
     BinaryTimeSeries:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9713,8 +9679,6 @@ components:
           type: integer
           format: int64
     timeseries-category:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9726,8 +9690,6 @@ components:
           type: string
       description: A representation of a TimeSeries category
     TimeSeriesCategory:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9739,8 +9701,6 @@ components:
           type: string
       description: A representation of a TimeSeries category
     TimeSeriesIdentifierDescriptor:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9797,8 +9757,6 @@ components:
           type: integer
           format: int32
     timeseries-group:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9820,8 +9778,6 @@ components:
             $ref: '#/components/schemas/AssignedTimeSeries'
       description: A representation of a timeseries group
     TimeSeriesGroup:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9862,8 +9818,6 @@ components:
         out-range-high-method:
           type: string
     RatingTemplate:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -9919,8 +9873,6 @@ components:
         value:
           type: string
     RatingSpec:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10299,26 +10251,25 @@ components:
     Basin:
       type: object
       properties:
-        basin-id:
-          $ref: '#/components/schemas/CwmsId'
+        office-id:
+          type: string
+          description: Owning office of object.
+        basin-name:
+          type: string
+        primary-stream:
+          $ref: '#/components/schemas/Stream'
         sort-order:
           type: number
           format: double
-        total-drainage-area:
+        basin-area:
           type: number
           format: double
-        contributing-drainage-area:
+        contributing-area:
           type: number
           format: double
         parent-basin-id:
-          $ref: '#/components/schemas/CwmsId'
-        area-unit:
           type: string
-        primary-stream-id:
-          $ref: '#/components/schemas/CwmsId'
     Stream:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10361,8 +10312,6 @@ components:
           type: number
           format: double
     StreamLocation:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10393,8 +10342,6 @@ components:
           type: number
           format: double
     StreamReach:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10412,17 +10359,9 @@ components:
           type: string
         configuration:
           type: string
-    CwmsId:
-      type: object
-      properties:
-        office-id:
-          type: string
-        name:
-          type: string
     Blob:
       required:
         - id
-        - office-id
       type: object
       properties:
         office-id:
@@ -10494,7 +10433,6 @@ components:
     clob:
       required:
         - id
-        - office-id
       type: object
       properties:
         office-id:
@@ -10509,7 +10447,6 @@ components:
     Clob:
       required:
         - id
-        - office-id
       type: object
       properties:
         office-id:
@@ -10582,13 +10519,13 @@ components:
           type: string
         clobText:
           type: string
-        poolName:
-          $ref: '#/components/schemas/PoolNameType'
         implicit:
           type: boolean
-        topLevelId:
-          type: string
+        poolName:
+          $ref: '#/components/schemas/PoolNameType'
         bottomLevelId:
+          type: string
+        topLevelId:
           type: string
         projectId:
           type: string
@@ -10653,8 +10590,6 @@ components:
           format: int32
           readOnly: true
     SpecifiedLevel:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10711,8 +10646,6 @@ components:
           type: string
           description: Link to Forecast File binary data
     forecast-spec:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10786,8 +10719,6 @@ components:
           type: string
           description: Link to Forecast File binary data
     ForecastSpec:
-      required:
-        - office-id
       type: object
       properties:
         office-id:
@@ -10814,6 +10745,137 @@ components:
           items:
             type: string
             description: List of Time Series IDs belonging to this Forecast Spec
+    CwmsId:
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+    Embankment:
+      required:
+        - location
+        - project-id
+      type: object
+      properties:
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        location:
+          $ref: '#/components/schemas/Location'
+        structure-type:
+          $ref: '#/components/schemas/LookupType'
+        upstream-side-slope:
+          type: number
+          format: double
+        downstream-side-slope:
+          type: number
+          format: double
+        structure-length:
+          type: number
+          format: double
+        max-height:
+          type: number
+          format: double
+        top-width:
+          type: number
+          format: double
+        length-units:
+          type: string
+        downstream-protection-type:
+          $ref: '#/components/schemas/LookupType'
+        upstream-protection-type:
+          $ref: '#/components/schemas/LookupType'
+    LookupType:
+      type: object
+      properties:
+        office-id:
+          type: string
+        display-value:
+          type: string
+        tooltip:
+          type: string
+        active:
+          type: boolean
+    Turbine:
+      required:
+        - location
+        - project-id
+      type: object
+      properties:
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        location:
+          $ref: '#/components/schemas/Location'
+    TurbineChange:
+      required:
+        - change-date
+        - discharge-computation-type
+        - project-id
+        - reason-type
+      type: object
+      properties:
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        change-date:
+          type: string
+          format: date-time
+        protected:
+          type: boolean
+        discharge-computation-type:
+          $ref: '#/components/schemas/LookupType'
+        reason-type:
+          $ref: '#/components/schemas/LookupType'
+        notes:
+          type: string
+        new-total-discharge-override:
+          type: number
+          format: double
+        old-total-discharge-override:
+          type: number
+          format: double
+        discharge-units:
+          type: string
+        pool-elevation:
+          type: number
+          format: double
+        tailwater-elevation:
+          type: number
+          format: double
+        elevation-units:
+          type: string
+        settings:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TurbineSetting'
+    TurbineSetting:
+      required:
+        - discharge-units
+        - generation-units
+        - location-id
+        - new-discharge
+        - old-discharge
+      type: object
+      properties:
+        location-id:
+          $ref: '#/components/schemas/CwmsId'
+        discharge-units:
+          type: string
+        old-discharge:
+          type: number
+          format: double
+        new-discharge:
+          type: number
+          format: double
+        generation-units:
+          type: string
+        scheduled-load:
+          type: number
+          format: double
+        real-power:
+          type: number
+          format: double
     Project:
       type: object
       properties:
@@ -10907,54 +10969,6 @@ components:
           type: string
         comment:
           type: string
-    LookupType:
-      type: object
-      properties:
-        office-id:
-          type: string
-        display-value:
-          type: string
-        tooltip:
-          type: string
-        active:
-          type: boolean
-    Embankment:
-      type: object
-      properties:
-        project-id:
-          $ref: '#/components/schemas/CwmsId'
-        location:
-          $ref: '#/components/schemas/Location'
-        structure-type:
-          $ref: '#/components/schemas/LookupType'
-        upstream-side-slope:
-          type: number
-          format: double
-        downstream-side-slope:
-          type: number
-          format: double
-        structure-length:
-          type: number
-          format: double
-        max-height:
-          type: number
-          format: double
-        top-width:
-          type: number
-          format: double
-        length-units:
-          type: string
-        downstream-protection-type:
-          $ref: '#/components/schemas/LookupType'
-        upstream-protection-type:
-          $ref: '#/components/schemas/LookupType'
-    Turbine:
-      type: object
-      properties:
-        project-id:
-          $ref: '#/components/schemas/CwmsId'
-        location:
-          $ref: '#/components/schemas/Location'
     LockRevokerRights:
       required:
         - office-id

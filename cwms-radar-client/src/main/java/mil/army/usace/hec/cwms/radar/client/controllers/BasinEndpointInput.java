@@ -15,8 +15,8 @@ public final class BasinEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String projectId, String officeId) {
-        return new GetAll(projectId, officeId);
+    public static GetAll getAll() {
+        return new GetAll();
     }
 
     public static GetOne getOne(String basinId, String officeId) {
@@ -38,12 +38,20 @@ public final class BasinEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
-        private final String projectId;
-        private final String officeId;
+        private String projectId;
+        private String officeId;
 
-        private GetAll(String projectId, String officeId) {
-            this.projectId = Objects.requireNonNull(projectId, "Project Id required for getAll basin endpoint");
-            this.officeId = Objects.requireNonNull(officeId, "Project office Id required for getAll basin endpoint");
+        private GetAll() {
+        }
+
+        public GetAll officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        public GetAll projectId(String projectId) {
+            this.projectId = projectId;
+            return this;
         }
 
         @Override

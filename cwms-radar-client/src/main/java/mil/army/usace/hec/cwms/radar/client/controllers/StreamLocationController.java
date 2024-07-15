@@ -24,50 +24,51 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-
-import java.io.IOException;
-import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.radar.client.model.Embankment;
+import mil.army.usace.hec.cwms.radar.client.model.StreamLocation;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-public final class EmbankmentController {
-    private static final String EMBANKMENT_ENDPOINT = "projects/embankments";
+import java.io.IOException;
+import java.util.List;
 
-    public Embankment retrieveEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.GetOne input)
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
+public final class StreamLocationController {
+    private static final String STREAM_LOCATION_ENDPOINT = "stream-locations";
+
+    public StreamLocation retrieveStreamLocation(ApiConnectionInfo apiConnectionInfo, StreamLocationEndpointInput.GetOne input)
             throws IOException {
-        String endpoint = EMBANKMENT_ENDPOINT + "/" + input.embankmentId();
+        String endpoint = STREAM_LOCATION_ENDPOINT + "/" + input.streamLocationId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapJsonToObject(response.getBody(), Embankment.class);
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), StreamLocation.class);
         }
     }
 
-    public List<Embankment> retrieveEmbankments(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.GetAll input)
+    public List<StreamLocation> retrieveStreamLocations(ApiConnectionInfo apiConnectionInfo, StreamLocationEndpointInput.GetAll input)
             throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, EMBANKMENT_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STREAM_LOCATION_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Embankment.class);
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), StreamLocation.class);
         }
     }
 
-    public void storeEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.Post input)
+    public void storeStreamLocation(ApiConnectionInfo apiConnectionInfo, StreamLocationEndpointInput.Post input)
             throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.embankment());
-        new HttpRequestBuilderImpl(apiConnectionInfo, EMBANKMENT_ENDPOINT)
+        String body = RadarObjectMapper.mapObjectToJson(input.streamLocation());
+        new HttpRequestBuilderImpl(apiConnectionInfo, STREAM_LOCATION_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
@@ -77,20 +78,22 @@ public final class EmbankmentController {
                 .close();
     }
 
-    public void renameEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.Patch input)
+    public void updateStreamLocation(ApiConnectionInfo apiConnectionInfo, StreamLocationEndpointInput.Patch input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, EMBANKMENT_ENDPOINT + "/" + input.embankmentId())
+        String body = RadarObjectMapper.mapObjectToJson(input.streamLocation());
+        new HttpRequestBuilderImpl(apiConnectionInfo, STREAM_LOCATION_ENDPOINT + "/" + input.streamLocation().getId().getName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
+                .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
 
-    public void deleteEmbankment(ApiConnectionInfo apiConnectionInfo, EmbankmentEndpointInput.Delete input)
+    public void deleteStreamLocation(ApiConnectionInfo apiConnectionInfo, StreamLocationEndpointInput.Delete input)
             throws IOException {
-        String endpoint = EMBANKMENT_ENDPOINT + "/" + input.embankmentId();
+        String endpoint = STREAM_LOCATION_ENDPOINT + "/" + input.streamLocationId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)

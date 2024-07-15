@@ -107,6 +107,6 @@ class TestTurbineController extends TestController {
         assertDoesNotThrow(() -> controller.renameTurbine(buildConnectionInfo(cookieJarSupplier), input));
         var requestWrapper = mockHttpServer.takeRequest();
         assertEquals("PATCH", requestWrapper.getMethod());
-        assertTrue(requestWrapper.getPath().startsWith("/turbines/" + value.getLocation().getName() + "?"));
+        assertTrue(requestWrapper.getPath().startsWith("/projects/turbines/" + value.getLocation().getName() + "?"));
     }
 }
