@@ -82,7 +82,7 @@ class TestProjectLockInput {
                 .applicationId(appId)
                 ;
 
-        ProjectLockInput.LockRequest input = ProjectLockInput.lockRequest(lock);
+        ProjectLockInput.LockRequest input = ProjectLockInput.requestLock(lock);
         input.addInputParameters(mockHttpRequestBuilder);
 
         assertEquals("false", mockHttpRequestBuilder.getQueryParameter(REVOKE_EXISTING));
@@ -108,7 +108,7 @@ class TestProjectLockInput {
 
     @Test
     void testRequestLockQueryRequestNulls() {
-        assertThrows(NullPointerException.class, () -> ProjectLockInput.lockRequest(null));
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.requestLock(null));
     }
 
     @Test
@@ -120,12 +120,30 @@ class TestProjectLockInput {
         deny.addInputParameters(mockHttpRequestBuilder);
 
         assertEquals(lockId, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.LockRevokeDeny.LOCK_ID));
-
     }
 
     @Test
     void testRequestLockRevokeDenyNull() {
         assertThrows(NullPointerException.class, () -> ProjectLockInput.denyRevoke(null));
+    }
+
+    @Test
+    void testRequestLockReleaseDeny() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+
+        String lockId = "somerandomstring_maybe_guid";
+        String office = "SWT";
+        ProjectLockInput.LockRelease deny = ProjectLockInput.releaseLock(office, lockId);
+        deny.addInputParameters(mockHttpRequestBuilder);
+
+        assertEquals(lockId, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.LockRelease.LOCK_ID));
+        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.OFFICE));
+    }
+
+    @Test
+    void testRequestLockReleaseNull() {
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.releaseLock(null, "asdf"));
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.releaseLock("SWT", null));
     }
 
 

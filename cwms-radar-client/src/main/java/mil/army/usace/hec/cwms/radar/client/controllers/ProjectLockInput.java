@@ -31,12 +31,16 @@ public final class ProjectLockInput {
         return new ProjectLockInput.GetOne(officeId, projectId, applicationId);
     }
 
-    public static ProjectLockInput.LockRequest lockRequest(ProjectLock lock) {
+    public static ProjectLockInput.LockRequest requestLock(ProjectLock lock) {
         return new ProjectLockInput.LockRequest(lock);
     }
 
     public static ProjectLockInput.LockRevokeDeny denyRevoke(String lockId) {
         return new LockRevokeDeny(lockId);
+    }
+
+    public static ProjectLockInput.LockRelease releaseLock(String officeId, String lockId) {
+        return new LockRelease(officeId, lockId);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -131,6 +135,23 @@ public final class ProjectLockInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(LOCK_ID, lockId);
+        }
+    }
+
+    public static final class LockRelease extends EndpointInput {
+        public static final String LOCK_ID = "lock-id";
+        private final String officeId;
+        private final String lockId;
+
+        private LockRelease(String officeId, String lockId) {
+            this.officeId = Objects.requireNonNull(officeId, "Cannot release a lock without an officeId.");
+            this.lockId = Objects.requireNonNull(lockId, "Cannot release a lock without the lock id.");
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE, officeId)
+                    .addQueryParameter(LOCK_ID, lockId);
         }
     }
 
