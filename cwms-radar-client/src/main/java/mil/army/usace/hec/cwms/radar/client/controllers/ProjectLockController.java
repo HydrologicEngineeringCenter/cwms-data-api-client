@@ -93,4 +93,23 @@ public class ProjectLockController {
                 .execute()
                 .close();
     }
+
+    /**
+     * Releases a lock for a specific office and lock ID in the API connection.
+     *
+     * @param apiConnectionInfo The API connection information containing the API root, SSL socket data,
+     *                          cookie jar, interceptors, authenticator, cache supplier, and hostname verifier.
+     * @param input             The input parameters containing the office ID and lock ID.
+     * @throws IOException If an I/O error occurs during the operation.
+     */
+    public void releaseLock(ApiConnectionInfo apiConnectionInfo, ProjectLockInput.LockRelease input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "/release")
+                .addEndpointInput(input)
+                .put()
+                .withBody("") // There is no body - its just a trigger
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
 }

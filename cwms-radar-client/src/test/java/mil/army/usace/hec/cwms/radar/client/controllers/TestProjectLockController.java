@@ -66,7 +66,7 @@ public class TestProjectLockController extends TestController {
                 .applicationId(appId)
                 ;
 
-        ProjectLockInput.LockRequest input = ProjectLockInput.lockRequest(lock);
+        ProjectLockInput.LockRequest input = ProjectLockInput.requestLock(lock);
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         ProjectLockId prjLockId = controller.requestLock(apiConnectionInfo, input);
         assertNotNull(prjLockId);
@@ -87,6 +87,20 @@ public class TestProjectLockController extends TestController {
         ProjectLockInput.LockRevokeDeny input = ProjectLockInput.denyRevoke(lockId);
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         controller.denyLockRevoke(apiConnectionInfo, input);
+    }
+
+    @Test
+    void testLockRelease() throws IOException {
+        mockHttpServer.enqueue(200, "");
+        mockHttpServer.start();
+
+        ProjectLockController controller = new ProjectLockController();
+
+        String lockId = "1232aabbcc";
+        String office = "SWT";
+        ProjectLockInput.LockRelease input = ProjectLockInput.releaseLock(office, lockId);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        controller.releaseLock(apiConnectionInfo, input);
     }
 
 
