@@ -76,4 +76,18 @@ public class TestProjectLockController extends TestController {
 
     }
 
+    @Test
+    void testDenyRevoke() throws IOException {
+        mockHttpServer.enqueue(200, "");
+        mockHttpServer.start();
+
+        ProjectLockController controller = new ProjectLockController();
+
+        String lockId = "1232aabbcc";
+        ProjectLockInput.LockRevokeDeny input = ProjectLockInput.denyRevoke(lockId);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        controller.denyLockRevoke(apiConnectionInfo, input);
+    }
+
+
 }
