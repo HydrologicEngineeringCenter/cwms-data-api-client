@@ -109,17 +109,20 @@ class TestStreamLocationEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String streamLocationId = "STREAM_LOC";
         String office = "SPK";
-        StreamLocationEndpointInput.Delete input = StreamLocationEndpointInput.delete(office, streamLocationId);
+        String streamId = "ImOnThisStream";
+        StreamLocationEndpointInput.Delete input = StreamLocationEndpointInput.delete(office, streamId, streamLocationId);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(streamLocationId, input.streamLocationId());
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
+        assertEquals(streamId, mockHttpRequestBuilder.getQueryParameter(StreamLocationEndpointInput.Delete.STREAM_ID_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testDeleteNulls() {
-        assertThrows(NullPointerException.class, () -> StreamLocationEndpointInput.delete("", null));
-        assertThrows(NullPointerException.class, () -> StreamLocationEndpointInput.delete(null, ""));
+        assertThrows(NullPointerException.class, () -> StreamLocationEndpointInput.delete("", "",null));
+        assertThrows(NullPointerException.class, () -> StreamLocationEndpointInput.delete("", null,""));
+        assertThrows(NullPointerException.class, () -> StreamLocationEndpointInput.delete(null, "",""));
     }
 
     @Test

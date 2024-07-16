@@ -23,6 +23,7 @@
  */
 package mil.army.usace.hec.cwms.radar.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -59,6 +60,7 @@ public class StreamLocation {
     @JsonProperty("stage-units")
     private String stageUnits = null;
 
+    @JsonIgnore
     public String getOfficeId() {
         String retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();
@@ -84,6 +86,7 @@ public class StreamLocation {
         this.streamLocationNode = streamLocationNode;
     }
 
+    @JsonIgnore
     public CwmsId getId() {
         CwmsId retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();
@@ -184,6 +187,7 @@ public class StreamLocation {
         this.stageUnits = stageUnits;
     }
 
+    @JsonIgnore
     public CwmsId getStreamId() {
         CwmsId retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();
@@ -196,6 +200,7 @@ public class StreamLocation {
         return retVal;
     }
 
+    @JsonIgnore
     public String getStationUnits() {
         String retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();
@@ -208,6 +213,7 @@ public class StreamLocation {
         return retVal;
     }
 
+    @JsonIgnore
     public Double getStation() {
         Double retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();
@@ -220,6 +226,7 @@ public class StreamLocation {
         return retVal;
     }
 
+    @JsonIgnore
     public Bank getBank() {
         Bank retVal = null;
         StreamLocationNode streamLocNode = getStreamLocationNode();

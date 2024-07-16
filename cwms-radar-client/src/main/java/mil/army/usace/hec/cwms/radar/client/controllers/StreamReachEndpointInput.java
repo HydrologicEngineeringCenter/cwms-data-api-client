@@ -66,6 +66,9 @@ public final class StreamReachEndpointInput {
         static final String CONFIGURATION_ID_MASK_QUERY_PARAMETER = "configuration-id-mask";
         static final String STATION_UNITS_QUERY_PARAMETER = "station-unit";
         private String officeIdMask;
+        private String streamIdMask;
+        private String reachIdMask;
+        private String configurationIdMask;
         private String stationUnits;
 
         private GetAll() {
@@ -73,6 +76,21 @@ public final class StreamReachEndpointInput {
 
         public GetAll withOfficeIdMask(String officeIdMask) {
             this.officeIdMask = officeIdMask;
+            return this;
+        }
+
+        public GetAll withStreamIdMask(String streamIdMask) {
+            this.streamIdMask = streamIdMask;
+            return this;
+        }
+
+        public GetAll withReachIdMask(String reachIdMask) {
+            this.reachIdMask = reachIdMask;
+            return this;
+        }
+
+        public GetAll withConfigurationIdMask(String configurationIdMask) {
+            this.configurationIdMask = configurationIdMask;
             return this;
         }
 
@@ -84,6 +102,9 @@ public final class StreamReachEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeIdMask)
+                    .addQueryParameter(STREAM_ID_MASK_QUERY_PARAMETER, streamIdMask)
+                    .addQueryParameter(REACH_ID_MASK_QUERY_PARAMETER, reachIdMask)
+                    .addQueryParameter(CONFIGURATION_ID_MASK_QUERY_PARAMETER, configurationIdMask)
                     .addQueryParameter(STATION_UNITS_QUERY_PARAMETER, stationUnits)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }

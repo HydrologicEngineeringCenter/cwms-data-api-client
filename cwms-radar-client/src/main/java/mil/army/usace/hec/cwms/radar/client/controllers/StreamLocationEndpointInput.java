@@ -51,8 +51,8 @@ public final class StreamLocationEndpointInput {
         return new Post(streamLocation);
     }
 
-    public static Delete delete(String officeId, String streamLocationId) {
-        return new Delete(officeId, streamLocationId);
+    public static Delete delete(String officeId, String streamId, String streamLocationId) {
+        return new Delete(officeId, streamId, streamLocationId);
     }
 
     public static Patch patch(StreamLocation streamLocation) {
@@ -199,11 +199,14 @@ public final class StreamLocationEndpointInput {
 
     public static final class Delete extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String STREAM_ID_QUERY_PARAMETER = "stream-id";
         private final String streamLocationId;
         private final String officeId;
+        private final String streamId;
 
-        private Delete(String officeId, String streamLocationId) {
+        private Delete(String officeId, String streamId, String streamLocationId) {
             this.streamLocationId = Objects.requireNonNull(streamLocationId, "Cannot access the stream location DELETE endpoint without an id");
+            this.streamId = Objects.requireNonNull(streamId, "Cannot access the stream location DELETE endpoint without a stream id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the stream location DELETE endpoint without an office id");
         }
 
@@ -214,6 +217,7 @@ public final class StreamLocationEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(STREAM_ID_QUERY_PARAMETER, streamId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
