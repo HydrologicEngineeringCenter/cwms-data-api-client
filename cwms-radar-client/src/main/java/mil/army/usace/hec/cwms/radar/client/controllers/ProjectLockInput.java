@@ -16,7 +16,7 @@ public final class ProjectLockInput {
     static final String PROJECT_MASK = "project-mask";
     static final String APPLICATION_ID = "application-id";
     static final String APPLICATION_MASK = "application-mask";
-
+    static final String REVOKE_TIMEOUT = "revoke-timeout";
 
     private ProjectLockInput() {
         throw new AssertionError("factory class");
@@ -41,6 +41,10 @@ public final class ProjectLockInput {
 
     public static ProjectLockInput.LockRelease releaseLock(String officeId, String lockId) {
         return new LockRelease(officeId, lockId);
+    }
+
+    public static ProjectLockInput.LockRevoke revokeLock(String officeId, String projectId) {
+        return new LockRevoke(officeId, projectId);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -92,7 +96,7 @@ public final class ProjectLockInput {
 
     public static final class LockRequest extends EndpointInput {
         public static final String REVOKE_EXISTING = "revoke-existing";
-        public static final String REVOKE_TIMEOUT = "revoke-timeout";
+
         private final ProjectLock lock;
         private boolean revokeExisting = false;
         private int revokeTimeout = 10;
@@ -152,6 +156,32 @@ public final class ProjectLockInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE, officeId)
                     .addQueryParameter(LOCK_ID, lockId);
+        }
+    }
+
+    public static final class LockRevoke extends EndpointInput {
+        private final String officeId;
+        private final String projectId;
+        private int revokeTimeout = 10;
+
+        private LockRevoke(String officeId, String projectId) {
+            this.officeId = Objects.requireNonNull(officeId, "Cannot revoke a lock without an officeId.");
+            this.projectId = Objects.requireNonNull(projectId, "Cannot revoke a lock without the projectId.");
+        }
+
+        public LockRevoke revokeTimeout(int revokeTimeout) {
+            this.revokeTimeout = revokeTimeout;
+            return this;
+        }
+
+        public String projectId() {
+            return projectId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE, officeId)
+                    .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout));
         }
     }
 

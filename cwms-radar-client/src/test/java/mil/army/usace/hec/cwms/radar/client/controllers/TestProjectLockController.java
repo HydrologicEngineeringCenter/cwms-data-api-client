@@ -103,5 +103,20 @@ public class TestProjectLockController extends TestController {
         controller.releaseLock(apiConnectionInfo, input);
     }
 
+    @Test
+    void testRevoke() throws IOException {
+        mockHttpServer.enqueue(200, "");
+        mockHttpServer.start();
+
+        ProjectLockController controller = new ProjectLockController();
+
+        String office = "SWT";
+        String prj = "SomeProject";
+
+        ProjectLockInput.LockRevoke input = ProjectLockInput.revokeLock(office, prj);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        controller.revokeLock(apiConnectionInfo, input);
+    }
+
 
 }
