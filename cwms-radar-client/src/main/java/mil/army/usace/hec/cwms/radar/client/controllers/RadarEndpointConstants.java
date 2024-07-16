@@ -31,6 +31,7 @@ final class RadarEndpointConstants {
     static final String ACCEPT_XML_HEADER_V1 = "application/xml";
     static final String ACCEPT_HEADER_V2 = "application/json;version=2";
     static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
+    static final String CACHE_CONTROL = "Cache-Control";
 
     private RadarEndpointConstants() {
         throw new AssertionError("Utility class");

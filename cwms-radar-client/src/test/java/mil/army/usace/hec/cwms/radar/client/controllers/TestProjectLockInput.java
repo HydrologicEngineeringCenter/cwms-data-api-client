@@ -4,9 +4,11 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectLockInput.
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectLockInput.LockRequest.REVOKE_TIMEOUT;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.CACHE_CONTROL;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import mil.army.usace.hec.cwms.radar.client.model.ProjectLock;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,7 @@ class TestProjectLockInput {
         assertEquals(appMask, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.APPLICATION_MASK));
 
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertTrue(mockHttpRequestBuilder.getQueryHeader(CACHE_CONTROL).contains("no-cache"));
     }
 
     @Test
@@ -53,6 +56,7 @@ class TestProjectLockInput {
         assertEquals(appId, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.APPLICATION_ID));
 
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertTrue(mockHttpRequestBuilder.getQueryHeader(CACHE_CONTROL).contains("no-cache"));
     }
 
     @Test
@@ -85,12 +89,19 @@ class TestProjectLockInput {
         assertEquals("10", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
 
-        input = input.revokeExisting(true)
-                .revokeTimeout(11);
+        input.revokeTimeout(11)
+                .revokeExisting(true);
         input.addInputParameters(mockHttpRequestBuilder);
 
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REVOKE_EXISTING));
         assertEquals("11", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
+
+        input.revokeExisting(false)
+                .revokeTimeout(12);
+        input.addInputParameters(mockHttpRequestBuilder);
+
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(REVOKE_EXISTING));
+        assertEquals("12", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
 
     }
@@ -98,6 +109,23 @@ class TestProjectLockInput {
     @Test
     void testRequestLockQueryRequestNulls() {
         assertThrows(NullPointerException.class, () -> ProjectLockInput.lockRequest(null));
+    }
+
+    @Test
+    void testRequestLockRevokeDeny() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+
+        String lockId = "somerandomstring_maybe_guid";
+        ProjectLockInput.LockRevokeDeny deny = ProjectLockInput.denyRevoke(lockId);
+        deny.addInputParameters(mockHttpRequestBuilder);
+
+        assertEquals(lockId, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.LockRevokeDeny.LOCK_ID));
+
+    }
+
+    @Test
+    void testRequestLockRevokeDenyNull() {
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.denyRevoke(null));
     }
 
 

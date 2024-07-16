@@ -75,4 +75,22 @@ public class ProjectLockController {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), ProjectLockId.class);
         }
     }
+
+    /**
+     * Denies a lock revoke request for a specific lock ID.
+     *
+     * @param apiConnectionInfo The API connection information.
+     * @param input             The input parameters containing the lock ID to deny the revoke request for.
+     * @throws IOException If an I/O error occurs during the operation.
+     */
+    public void denyLockRevoke(ApiConnectionInfo apiConnectionInfo, ProjectLockInput.LockRevokeDeny input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "/deny")
+                .addEndpointInput(input)
+                .post()
+                .withBody("") // There is no body - its just a trigger
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
 }

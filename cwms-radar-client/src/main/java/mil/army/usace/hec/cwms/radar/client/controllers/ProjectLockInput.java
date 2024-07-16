@@ -2,6 +2,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.CACHE_CONTROL;
 
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
@@ -15,6 +16,7 @@ public final class ProjectLockInput {
     static final String PROJECT_MASK = "project-mask";
     static final String APPLICATION_ID = "application-id";
     static final String APPLICATION_MASK = "application-mask";
+
 
     private ProjectLockInput() {
         throw new AssertionError("factory class");
@@ -31,6 +33,10 @@ public final class ProjectLockInput {
 
     public static ProjectLockInput.LockRequest lockRequest(ProjectLock lock) {
         return new ProjectLockInput.LockRequest(lock);
+    }
+
+    public static ProjectLockInput.LockRevokeDeny denyRevoke(String lockId) {
+        return new LockRevokeDeny(lockId);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -50,6 +56,7 @@ public final class ProjectLockInput {
                     .addQueryParameter(OFFICE_MASK, officeMask)
                     .addQueryParameter(PROJECT_MASK, projectMask)
                     .addQueryParameter(APPLICATION_MASK, applicationMask)
+                    .addQueryHeader(CACHE_CONTROL, "no-cache, no-store") // Always fresh
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
@@ -70,6 +77,7 @@ public final class ProjectLockInput {
             return httpRequestBuilder
                     .addQueryParameter(OFFICE, officeId)
                     .addQueryParameter(APPLICATION_ID, application)
+                    .addQueryHeader(CACHE_CONTROL, "no-cache, no-store") // Always fresh
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 
@@ -105,7 +113,6 @@ public final class ProjectLockInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-
             return httpRequestBuilder.addQueryParameter(REVOKE_EXISTING, String.valueOf(revokeExisting))
                     .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout))
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
@@ -113,6 +120,19 @@ public final class ProjectLockInput {
 
     }
 
+    public static final class LockRevokeDeny extends EndpointInput {
+        public static final String LOCK_ID = "lock-id";
+        private final String lockId;
+
+        private LockRevokeDeny(String lockId) {
+            this.lockId = Objects.requireNonNull(lockId, "Cannot deny a lock revoke request without the lock id.");
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(LOCK_ID, lockId);
+        }
+    }
 
 
 }
