@@ -112,4 +112,22 @@ public class ProjectLockController {
                 .execute()
                 .close();
     }
+
+    /**
+     * Attempt to Revoke a lock for a specific project in the API connection.
+     *
+     * @param apiConnectionInfo The API connection information containing the API root, SSL socket data,
+     *                         cookie jar, interceptors, authenticator, cache supplier, and hostname verifier.
+     * @param input             The input parameters containing the project ID and office ID to revoke the lock for.
+     * @throws IOException If an I/O error occurs during the operation.
+     */
+    public void revokeLock(ApiConnectionInfo apiConnectionInfo, ProjectLockInput.LockRevoke input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "/" + input.projectId())
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
 }

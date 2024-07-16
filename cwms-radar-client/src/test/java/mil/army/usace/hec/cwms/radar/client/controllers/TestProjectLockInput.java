@@ -1,7 +1,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectLockInput.LockRequest.REVOKE_EXISTING;
-import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectLockInput.LockRequest.REVOKE_TIMEOUT;
+import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectLockInput.REVOKE_TIMEOUT;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.CACHE_CONTROL;
@@ -144,6 +144,29 @@ class TestProjectLockInput {
     void testRequestLockReleaseNull() {
         assertThrows(NullPointerException.class, () -> ProjectLockInput.releaseLock(null, "asdf"));
         assertThrows(NullPointerException.class, () -> ProjectLockInput.releaseLock("SWT", null));
+    }
+
+    @Test
+    void testLockRevoke() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+
+        String project = "SomeProject";
+        String office = "SWT";
+        ProjectLockInput.LockRevoke deny = ProjectLockInput.revokeLock(office, project);
+        deny.addInputParameters(mockHttpRequestBuilder);
+
+        assertEquals("10", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
+        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(ProjectLockInput.OFFICE));
+
+        deny.revokeTimeout(11).addInputParameters(mockHttpRequestBuilder);
+
+        assertEquals("11", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
+    }
+
+    @Test
+    void testLockRevokeNull() {
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.revokeLock(null, "asdf"));
+        assertThrows(NullPointerException.class, () -> ProjectLockInput.revokeLock("SWT", null));
     }
 
 
