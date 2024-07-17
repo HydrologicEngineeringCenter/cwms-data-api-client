@@ -1,0 +1,16 @@
+[
+  {
+    "entity-name": "Test User",
+    "parent-location-ref": {
+      "office-id": "SWT",
+      "name": "SACRAMENTO"
+    }
+  },
+  {
+    "entity-name": "Test User 2",
+    "parent-location-ref": {
+      "office-id": "SPK",
+      "name": "TOPEKA"
+    }
+  }
+]
