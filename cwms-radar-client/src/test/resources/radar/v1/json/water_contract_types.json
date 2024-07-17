@@ -1,0 +1,14 @@
+[
+  {
+    "office-id": "SWT",
+    "display-value": "Test Display Value",
+    "tooltip": "Test Tooltip",
+    "active": true
+  },
+  {
+  "office-id": "SPK",
+  "display-value": "Test Display Value 2",
+  "tooltip": "Test Tooltip 2",
+  "active": true
+  }
+]
