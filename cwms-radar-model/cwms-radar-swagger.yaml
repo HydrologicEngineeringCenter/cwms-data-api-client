@@ -9046,6 +9046,190 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-id}/accounting:
+    get:
+      tags:
+        - Pump Accounting
+      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts with contractId accounting
+      description: Get pump accounting entries associated with a water supply contract.
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractIdAccounting
+      parameters:
+        - name: office
+          in: path
+          description: The office ID the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project ID the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-id
+          in: path
+          description: The name of the contract associated with the pump accounting.
+          required: true
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: The start time of the time window for pump accounting entries to retrieve. Defaults to the year 1800.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end time of the time window for pump accounting entries to retrieve. Defaults to the year 3000
+          schema:
+            type: string
+        - name: start-inclusive
+          in: query
+          description: Whether or not the start time is inclusive or not. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: end-inclusive
+          in: query
+          description: Whether or not the end time is inclusive or not. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: ascending
+          in: query
+          description: Whether or not the entries should be returned in ascending order. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: row-limit
+          in: query
+          description: The maximum number of rows to return. Defaults to 0, which means no limit.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterSupplyAccounting'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterSupplyAccounting'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Pump Accounting not found for provided input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    post:
+      tags:
+        - Pump Accounting
+      summary: Post cwmsData projects with office with projectId waterUser with waterUser contracts with contractId accounting
+      description: Create a new pump accounting entry associated with a water supply contract.
+      operationId: postCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractIdAccounting
+      parameters:
+        - name: office
+          in: path
+          description: The office ID the accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-id
+          in: path
+          description: The name of the contract associated with the accounting.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterSupplyAccounting'
+        required: true
+      responses:
+        '204':
+          description: The pump accounting entry was created.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-id}/types:
     get:
       tags:
@@ -12812,9 +12996,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     pools:
       type: object
@@ -13125,6 +13309,37 @@ components:
             - IN
             - OUT
             - BELOW
+    PumpAccounting:
+      required:
+        - flow
+        - pumpLocation
+        - transferDate
+        - transferType
+      type: object
+      properties:
+        pumpLocation:
+          $ref: '#/components/schemas/CwmsId'
+        transferType:
+          $ref: '#/components/schemas/LookupType'
+        flow:
+          type: number
+          format: double
+        transferDate:
+          type: string
+          format: date-time
+        comment:
+          type: string
+    WaterSupplyAccounting:
+      type: object
+      properties:
+        contract-name:
+          type: string
+        water-user:
+          $ref: '#/components/schemas/WaterUser'
+        pump-accounting:
+          type: array
+          items:
+            $ref: '#/components/schemas/PumpAccounting'
     Embankment:
       required:
         - location
