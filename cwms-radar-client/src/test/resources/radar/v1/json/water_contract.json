@@ -2,7 +2,7 @@
   "office-id": "SWT",
   "water-user": {
     "entity-name": "Test User",
-    "parent-location-ref": {
+    "project-id": {
       "office-id": "SWT",
       "name": "SACRAMENTO"
     },
@@ -12,7 +12,7 @@
     "office-id": "SWT",
     "name": "TEST_CONTRACT"
   },
-  "water-contract": {
+  "contract-type": {
     "office-id": "SWT",
     "display-value": "Test Display Value",
     "tooltip": "Test Tooltip",
