@@ -14,11 +14,13 @@ import mil.army.usace.hec.cwms.radar.client.model.WaterUser;
 
 
 public final class WaterUserController {
-    private static final String WATER_USER_ENDPOINT = "projects/{office}/{project-id}/water-user";
+    private static final String ENDPOINT_PREFIX = "projects/";
+    private static final String ENDPOINT_WATER_USER = "/water-user";
 
     public static WaterUser retrieveWaterUser(ApiConnectionInfo apiConnectionInfo,
             WaterUserEndpointInput.GetOne input) throws IOException {
-        String endpoint = WATER_USER_ENDPOINT + "/" + input.waterUserId();
+        String endpoint = ENDPOINT_PREFIX + input.getOfficeId() + "/" + input.getProjectId() + ENDPOINT_WATER_USER
+                + "/" + input.waterUserId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -31,7 +33,8 @@ public final class WaterUserController {
 
     public static List<WaterUser> retrieveWaterUsers(ApiConnectionInfo apiConnectionInfo,
             WaterUserEndpointInput.GetAll input) throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, WATER_USER_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX
+                + input.getOfficeId() + "/" + input.getProjectId() + ENDPOINT_WATER_USER)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -41,9 +44,11 @@ public final class WaterUserController {
         }
     }
 
-    public static void storeWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Post input) throws IOException {
+    public static void storeWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Post input)
+            throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.waterUser());
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_USER_ENDPOINT)
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + input.getOfficeId() + "/"
+                + input.getProjectId() + ENDPOINT_WATER_USER)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
@@ -53,8 +58,10 @@ public final class WaterUserController {
                 .close();
     }
 
-    public static void renameWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Patch input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_USER_ENDPOINT + "/" + input.oldWaterUserId())
+    public static void renameWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Patch input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + input.getOfficeId() + "/"
+                + input.getProjectId() + ENDPOINT_WATER_USER+ "/" + input.oldWaterUserId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -63,8 +70,10 @@ public final class WaterUserController {
                 .close();
     }
 
-    public static void deleteWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Delete input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_USER_ENDPOINT + "/" + input.waterUserId())
+    public static void deleteWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + input.getOfficeId() + "/"
+                + input.getProjectId() + ENDPOINT_WATER_USER+ "/" + input.waterUserId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()
