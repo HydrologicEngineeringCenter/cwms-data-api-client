@@ -1,10 +1,12 @@
 package mil.army.usace.hec.cwms.radar.client.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.Objects;
+
 
 /**
  * PumpAccounting
@@ -14,17 +16,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         date = "2024-07-26T13:57:20.362288900-07:00[America/Los_Angeles]")
 public class PumpAccounting {
 
-    @JsonProperty("pumpLocation")
+    @JsonProperty("pump-location")
     private CwmsId pumpLocation = null;
 
-    @JsonProperty("transferType")
+    @JsonProperty("transfer-type")
     private LookupType transferType = null;
 
     @JsonProperty("flow")
     private Double flow = null;
 
-    @JsonProperty("transferDate")
-    private Date transferDate = null;
+    @JsonProperty("transfer-date")
+    private Instant transferDate = null;
 
     @JsonProperty("comment")
     private String comment = null;
@@ -68,16 +70,16 @@ public class PumpAccounting {
         this.flow = flow;
     }
 
-    public PumpAccounting transferDate(Date transferDate) {
+    public PumpAccounting transferDate(Instant transferDate) {
         this.transferDate = transferDate;
         return this;
     }
 
-    public Date getTransferDate() {
+    public Instant getTransferDate() {
         return transferDate;
     }
 
-    public void setTransferDate(Date transferDate) {
+    public void setTransferDate(Instant transferDate) {
         this.transferDate = transferDate;
     }
 
