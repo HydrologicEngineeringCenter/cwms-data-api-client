@@ -21,13 +21,13 @@ public class WaterSupplyPump {
     * Gets or Sets pumpType
     */
     public enum PumpTypeEnum {
-        IN("PUMP_IN"),
+        IN("IN"),
 
-        OUT("PUMP_OUT"),
+        OUT("OUT"),
 
-        OUT_BELOW("PUMP_OUT_BELOW");
+        OUT_BELOW("BELOW");
 
-        private String value;
+        private final String value;
 
         PumpTypeEnum(String value) {
             this.value = value;

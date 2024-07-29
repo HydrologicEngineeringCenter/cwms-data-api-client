@@ -24,10 +24,10 @@ class TestWaterContractController extends TestController {
         WaterUserContract value = values.get(1);
         assertEquals("TEST_CONTRACT 2", value.getContractId().getName());
         assertEquals("SPK", value.getContractId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getWaterUser().getParentLocationRef().getName());
+        assertEquals("SACRAMENTO", value.getWaterUser().getProjectId().getName());
         assertEquals("Test Water Right", value.getWaterUser().getWaterRight());
         assertEquals("Test User 2", value.getWaterUser().getEntityName());
-        assertEquals(true, value.getWaterContract().isActive());
+        assertEquals(true, value.getContractType().isActive());
         assertEquals("PUMP1", value.getPumpOutLocation().getPumpLocation().getName());
     }
 
@@ -40,10 +40,10 @@ class TestWaterContractController extends TestController {
         WaterUserContract value = new WaterContractController().retrieveWaterContract(buildConnectionInfo(cookieJarSupplier), input);
         assertEquals("TEST_CONTRACT", value.getContractId().getName());
         assertEquals("SWT", value.getContractId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getWaterUser().getParentLocationRef().getName());
+        assertEquals("SACRAMENTO", value.getWaterUser().getProjectId().getName());
         assertEquals("Test Water Right", value.getWaterUser().getWaterRight());
         assertEquals("Test User", value.getWaterUser().getEntityName());
-        assertEquals(true, value.getWaterContract().isActive());
+        assertEquals(true, value.getContractType().isActive());
         assertEquals("PUMP3", value.getPumpInLocation().getPumpLocation().getName());
     }
 

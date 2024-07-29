@@ -23,8 +23,8 @@ public class WaterUserContract {
     @JsonProperty("contract-id")
     private CwmsId contractId = null;
 
-    @JsonProperty("water-contract")
-    private LookupType waterContract = null;
+    @JsonProperty("contract-type")
+    private LookupType contractType = null;
 
     @JsonProperty("contract-effective-date")
     private Date contractEffectiveDate = null;
@@ -98,17 +98,17 @@ public class WaterUserContract {
         this.contractId = contractId;
     }
 
-    public WaterUserContract waterContract(LookupType waterContract) {
-        this.waterContract = waterContract;
+    public WaterUserContract contractType(LookupType contractType) {
+        this.contractType = contractType;
         return this;
     }
 
-    public LookupType getWaterContract() {
-        return waterContract;
+    public LookupType getContractType() {
+        return contractType;
     }
 
-    public void setWaterContract(LookupType waterContract) {
-        this.waterContract = waterContract;
+    public void setContractType(LookupType contractType) {
+        this.contractType = contractType;
     }
 
     public WaterUserContract contractEffectiveDate(Date contractEffectiveDate) {
@@ -267,7 +267,7 @@ public class WaterUserContract {
                 waterUserContract.officeId) : this.officeId.equalsIgnoreCase(waterUserContract.officeId)
                 && Objects.equals(this.waterUser, waterUserContract.waterUser)
                 && Objects.equals(this.contractId, waterUserContract.contractId)
-                && Objects.equals(this.waterContract, waterUserContract.waterContract)
+                && Objects.equals(this.contractType, waterUserContract.contractType)
                 && Objects.equals(this.contractEffectiveDate, waterUserContract.contractEffectiveDate)
                 && Objects.equals(this.contractExpirationDate, waterUserContract.contractExpirationDate)
                 && Objects.equals(this.contractedStorage, waterUserContract.contractedStorage)
@@ -285,7 +285,7 @@ public class WaterUserContract {
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), waterUser, contractId, waterContract,
+        return Objects.hash(officeId == null ? 0 : officeId.toLowerCase(), waterUser, contractId, contractType,
                 contractEffectiveDate, contractExpirationDate, contractedStorage, initialUseAllocation,
                 futureUseAllocation, storageUnitsId == null ? 0 : storageUnitsId.toLowerCase(), futureUsePercentActivated,
                 totalAllocPercentActivated, pumpOutLocation, pumpOutBelowLocation, pumpInLocation);
@@ -299,7 +299,7 @@ public class WaterUserContract {
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    waterUser: ").append(toIndentedString(waterUser)).append("\n");
         sb.append("    contractId: ").append(toIndentedString(contractId)).append("\n");
-        sb.append("    waterContract: ").append(toIndentedString(waterContract)).append("\n");
+        sb.append("    waterContract: ").append(toIndentedString(contractType)).append("\n");
         sb.append("    contractEffectiveDate: ").append(toIndentedString(contractEffectiveDate)).append("\n");
         sb.append("    contractExpirationDate: ").append(toIndentedString(contractExpirationDate)).append("\n");
         sb.append("    contractedStorage: ").append(toIndentedString(contractedStorage)).append("\n");

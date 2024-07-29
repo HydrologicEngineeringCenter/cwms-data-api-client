@@ -3,7 +3,7 @@
     "office-id": "SWT",
     "water-user": {
       "entity-name": "Test User",
-      "parent-location-ref": {
+      "project-id": {
         "office-id": "SWT",
         "name": "SACRAMENTO"
       },
@@ -13,7 +13,7 @@
       "office-id": "SWT",
       "name": "TEST_CONTRACT"
     },
-    "water-contract": {
+    "contract-type": {
       "office-id": "SWT",
       "display-value": "Test Display Value",
       "tooltip": "Test Tooltip",
@@ -116,7 +116,7 @@
     "office-id": "SPK",
     "water-user": {
       "entity-name": "Test User 2",
-      "parent-location-ref": {
+      "project-id": {
         "office-id": "SPK",
         "name": "SACRAMENTO"
       },
@@ -126,7 +126,7 @@
       "office-id": "SPK",
       "name": "TEST_CONTRACT 2"
     },
-    "water-contract": {
+    "contract-type": {
       "office-id": "SPK",
       "display-value": "Test Display Value",
       "tooltip": "Test Tooltip",

@@ -16,13 +16,13 @@ class TestWaterUserController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_users.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll().officeId("SPK").waterUserId("user");
-        List<WaterUser> values = new WaterUserController().retrieveWaterUsers(buildConnectionInfo(cookieJarSupplier), input);
+        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll().officeId("SPK").waterUserId("Test User 2");
+        List<WaterUser> values = WaterUserController.retrieveWaterUsers(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUser value = values.get(1);
         assertEquals("Test User 2", value.getEntityName());
-        assertEquals("SPK", value.getParentLocationRef().getOfficeId());
-        assertEquals("TOPEKA", value.getParentLocationRef().getName());
+        assertEquals("SPK", value.getProjectId().getOfficeId());
+        assertEquals("TOPEKA", value.getProjectId().getName());
     }
 
     @Test
@@ -31,10 +31,10 @@ class TestWaterUserController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne("SPK", "user");
-        WaterUser value = new WaterUserController().retrieveWaterUser(buildConnectionInfo(cookieJarSupplier), input);
+        WaterUser value = WaterUserController.retrieveWaterUser(buildConnectionInfo(cookieJarSupplier), input);
         assertEquals("Test User", value.getEntityName());
-        assertEquals("SWT", value.getParentLocationRef().getOfficeId());
-        assertEquals("SACRAMENTO", value.getParentLocationRef().getName());
+        assertEquals("SWT", value.getProjectId().getOfficeId());
+        assertEquals("SACRAMENTO", value.getProjectId().getName());
     }
 
     @Test
@@ -43,9 +43,8 @@ class TestWaterUserController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         WaterUser waterUser = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
-        WaterUserController controller = new WaterUserController();
         WaterUserEndpointInput.Post input = WaterUserEndpointInput.post(waterUser);
-        assertDoesNotThrow(() -> controller.storeWaterUser(buildConnectionInfo(cookieJarSupplier), input));
+        assertDoesNotThrow(() -> WaterUserController.storeWaterUser(buildConnectionInfo(cookieJarSupplier), input));
     }
 
     @Test
@@ -55,11 +54,10 @@ class TestWaterUserController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         WaterUser user = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
-        WaterUserController controller = new WaterUserController();
-        controller.storeWaterUser(buildConnectionInfo(cookieJarSupplier), WaterUserEndpointInput.post(user));
-        WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(user.getParentLocationRef().getOfficeId(),
+        WaterUserController.storeWaterUser(buildConnectionInfo(cookieJarSupplier), WaterUserEndpointInput.post(user));
+        WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(user.getProjectId().getOfficeId(),
                 user.getEntityName(), DeleteMethod.ALL);
-        assertDoesNotThrow(() -> controller.deleteWaterUser(buildConnectionInfo(cookieJarSupplier), input));
+        assertDoesNotThrow(() -> WaterUserController.deleteWaterUser(buildConnectionInfo(cookieJarSupplier), input));
     }
 
     @Test
@@ -68,10 +66,9 @@ class TestWaterUserController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         WaterUser user = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
-        WaterUserController controller = new WaterUserController();
-        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(user.getParentLocationRef().getOfficeId(),
+        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(user.getProjectId().getOfficeId(),
                 user.getEntityName(), "newName");
-        assertDoesNotThrow(() -> controller.renameWaterUser(buildConnectionInfo(cookieJarSupplier), input));
+        assertDoesNotThrow(() -> WaterUserController.renameWaterUser(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
         assertEquals("PATCH", request.getMethod());
         assertTrue(request.getPath().startsWith("/projects/"));
