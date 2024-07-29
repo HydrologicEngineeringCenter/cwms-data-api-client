@@ -30,8 +30,9 @@ class TestWaterUserEndpointInput {
     void testGetOneQuery() {
         String office = "SPK";
         String userId = "user";
+        String projectId = "SACRAMENTO";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne(office, userId);
+        WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne(office, userId, projectId);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
         assertEquals(userId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.GetOne.USER_ID_QUERY_PARAMETER));
@@ -53,8 +54,9 @@ class TestWaterUserEndpointInput {
     void testDeleteQuery() {
         String office = "SPK";
         String userId = "user";
+        String projectId = "SACRAMENTO";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(office, userId, DeleteMethod.ALL);
+        WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(office, userId, projectId, DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(userId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Delete.USER_ID_QUERY_PARAMETER));
@@ -64,9 +66,10 @@ class TestWaterUserEndpointInput {
 
     @Test
     void testDeleteNulls() {
-        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("", null, DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, "", DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, null, DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("", null, null, DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, "", null, DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, null, "", DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, null, null, DeleteMethod.ALL));
     }
 
     @Test
@@ -74,8 +77,9 @@ class TestWaterUserEndpointInput {
         String oldUserId = "user";
         String newUserId = "newUser";
         String office = "SPK";
+        String projectId = "SACRAMENTO";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(oldUserId, newUserId, office);
+        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(oldUserId, newUserId, projectId, office);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(oldUserId, input.oldWaterUserId());
         assertEquals(newUserId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Patch.NAME_QUERY_PARAMETER));
