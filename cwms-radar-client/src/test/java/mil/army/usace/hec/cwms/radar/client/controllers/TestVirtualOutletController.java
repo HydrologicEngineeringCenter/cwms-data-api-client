@@ -31,7 +31,7 @@ class TestVirtualOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/virtual_outlet.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne("PROJECT-VIRTUAL_OUTLET_LOC", "SPK");
+        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne("PROJECT-VIRTUAL_OUTLET_LOC", "SPK", "BIGH");
         VirtualOutlet value = new VirtualOutletController().retrieveVirtualOutlet(buildConnectionInfo(), input);
         assertEquals("Compound Tainter Gates", value.getVirtualOutletId().getName());
         assertEquals("SPK", value.getVirtualOutletId().getOfficeId());
@@ -56,7 +56,7 @@ class TestVirtualOutletController extends TestController {
         VirtualOutlet outlet = RadarObjectMapper.mapJsonToObject(collect, VirtualOutlet.class);
         VirtualOutletController controller = new VirtualOutletController();
         VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput
-                .patch(outlet.getVirtualOutletId().getName(), "NEW_VIRTUAL_OUTLET_LOC",
+                .patch(outlet.getVirtualOutletId().getName(), "NEW_VIRTUAL_OUTLET_LOC", outlet.getProjectId().getName(),
                         outlet.getVirtualOutletId().getOfficeId());
         assertDoesNotThrow(() -> controller.renameVirtualOutlet(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
@@ -75,7 +75,7 @@ class TestVirtualOutletController extends TestController {
         VirtualOutlet outlet = RadarObjectMapper.mapJsonToObject(collect, VirtualOutlet.class);
         VirtualOutletController controller = new VirtualOutletController();
         VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outlet.getVirtualOutletId().getName(),
-                outlet.getVirtualOutletId().getOfficeId(), DeleteMethod.ALL);
+                outlet.getVirtualOutletId().getOfficeId(), outlet.getProjectId().getName(), DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteVirtualOutlet(buildConnectionInfo(cookieJarSupplier), input));
     }
 }

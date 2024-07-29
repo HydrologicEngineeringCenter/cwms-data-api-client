@@ -30,9 +30,10 @@ class TestVirtualOutletEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String outletName = "OUT";
         String office = "SPK";
-        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne(outletName, office);
+        String project = "PROJ";
+        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne(office, outletName, project);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(outletName, input.outletName());
+        assertEquals(outletName, input.getOutletName());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(VirtualOutletEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
     }
@@ -53,9 +54,11 @@ class TestVirtualOutletEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String outletName = "OUT";
         String office = "SPK";
-        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outletName, office, DeleteMethod.ALL);
+        String project = "PROJ";
+        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outletName, office,
+                project, DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(outletName, input.outletName());
+        assertEquals(outletName, input.getOutletName());
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder
                 .getQueryParameter(VirtualOutletEndpointInput.Delete.DELETE_METHOD_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -69,7 +72,9 @@ class TestVirtualOutletEndpointInput {
         String oldOutletName = "OLD_OUT";
         String newOutletName = "NEW_OUT";
         String office = "SPK";
-        VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput.patch(oldOutletName, newOutletName, office);
+        String project = "PROJ";
+        VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput.patch(oldOutletName, newOutletName,
+                project, office);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(oldOutletName, input.oldOutletName());
         assertEquals(newOutletName, mockHttpRequestBuilder.getQueryParameter(VirtualOutletEndpointInput.Patch.NEW_OUTLET_NAME_QUERY_PARAMETER));

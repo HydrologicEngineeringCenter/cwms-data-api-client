@@ -14,11 +14,11 @@ import mil.army.usace.hec.cwms.radar.client.model.VirtualOutlet;
 
 
 public final class VirtualOutletController {
-    private static final String VIRTUAL_OUTLET_ENDPOINT = "projects/{office}/{project-id}/virtual-outlets";
+    private static final String ENDPOINT_PREFIX = "projects/";
 
     public VirtualOutlet retrieveVirtualOutlet(ApiConnectionInfo apiConnectionInfo,
             VirtualOutletEndpointInput.GetOne input)  throws IOException {
-        String endpoint = VIRTUAL_OUTLET_ENDPOINT + "/" + input.outletName();
+        String endpoint = ENDPOINT_PREFIX + input.getOfficeId() + "/" + input.getProjectId() + "/" + input.getOutletName();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -31,7 +31,7 @@ public final class VirtualOutletController {
 
     public List<VirtualOutlet> retrieveVirtualOutlets(ApiConnectionInfo apiConnectionInfo,
             VirtualOutletEndpointInput.GetAll input) throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, VIRTUAL_OUTLET_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + input.getOfficeId() + "/" + input.getProjectId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -44,7 +44,9 @@ public final class VirtualOutletController {
     public void storeVirtualOutlet(ApiConnectionInfo apiConnectionInfo, VirtualOutletEndpointInput.Post input)
             throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.outletName());
-        new HttpRequestBuilderImpl(apiConnectionInfo, VIRTUAL_OUTLET_ENDPOINT)
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX
+                + input.outletName().getVirtualOutletId().getName() + "/"
+                + input.outletName().getVirtualOutletId().getOfficeId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
@@ -56,7 +58,7 @@ public final class VirtualOutletController {
 
     public void renameVirtualOutlet(ApiConnectionInfo apiConnectionInfo, VirtualOutletEndpointInput.Patch input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, VIRTUAL_OUTLET_ENDPOINT + "/" + input.oldOutletName())
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + input.getOfficeId() + "/" + input.getProjectId() + "/" + input.oldOutletName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -67,7 +69,7 @@ public final class VirtualOutletController {
 
     public void deleteVirtualOutlet(ApiConnectionInfo apiConnectionInfo, VirtualOutletEndpointInput.Delete input)
             throws IOException {
-        String endpoint = VIRTUAL_OUTLET_ENDPOINT + "/" + input.outletName();
+        String endpoint = ENDPOINT_PREFIX + input.getOfficeId() + "/" + input.getProjectId() + "/" + input.getOutletName();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
