@@ -63,6 +63,7 @@ class TestVirtualOutletController extends TestController {
         assertEquals("PATCH", request.getMethod());
         assertTrue(request.getPath()
                 .startsWith("/projects/"));
+        assertTrue(request.getPath().contains("NEW_VIRTUAL_OUTLET_LOC"));
     }
 
     @Test
