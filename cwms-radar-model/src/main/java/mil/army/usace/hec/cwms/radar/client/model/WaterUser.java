@@ -16,8 +16,8 @@ public class WaterUser {
     @JsonProperty("entity-name")
     private String entityName = null;
 
-    @JsonProperty("parent-location-ref")
-    private CwmsId parentLocationRef = null;
+    @JsonProperty("project-id")
+    private CwmsId projectId = null;
 
     @JsonProperty("water-right")
     private String waterRight = null;
@@ -35,17 +35,17 @@ public class WaterUser {
         this.entityName = entityName;
     }
 
-    public WaterUser parentLocationRef(CwmsId parentLocationRef) {
-        this.parentLocationRef = parentLocationRef;
+    public WaterUser projectId(CwmsId projectId) {
+        this.projectId = projectId;
         return this;
     }
 
-    public CwmsId getParentLocationRef() {
-        return parentLocationRef;
+    public CwmsId getProjectId() {
+        return projectId;
     }
 
-    public void setParentLocationRef(CwmsId parentLocationRef) {
-        this.parentLocationRef = parentLocationRef;
+    public void setProjectId(CwmsId projectId) {
+        this.projectId = projectId;
     }
 
     public WaterUser waterRight(String waterRight) {
@@ -72,7 +72,7 @@ public class WaterUser {
         WaterUser waterUser = (WaterUser) o;
         return this.entityName == null || waterUser.entityName == null ? Objects.equals(this.entityName,
                 waterUser.entityName) : this.entityName.equalsIgnoreCase(waterUser.entityName)
-                && Objects.equals(this.parentLocationRef, waterUser.parentLocationRef)
+                && Objects.equals(this.projectId, waterUser.projectId)
                 && this.waterRight == null || waterUser.waterRight == null ? Objects.equals(this.waterRight,
                 waterUser.waterRight) : this.waterRight.equalsIgnoreCase(waterUser.waterRight)
             ;
@@ -80,7 +80,7 @@ public class WaterUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(entityName == null ? 0 : entityName.toLowerCase(), parentLocationRef,
+        return Objects.hash(entityName == null ? 0 : entityName.toLowerCase(), projectId,
                 waterRight == null ? 0 : waterRight.toLowerCase());
     }
 
@@ -90,7 +90,7 @@ public class WaterUser {
         sb.append("class WaterUser {\n");
         
         sb.append("    entityName: ").append(toIndentedString(entityName)).append("\n");
-        sb.append("    parentLocationRef: ").append(toIndentedString(parentLocationRef)).append("\n");
+        sb.append("    parentLocationRef: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    waterRight: ").append(toIndentedString(waterRight)).append("\n");
         sb.append("}");
         return sb.toString();

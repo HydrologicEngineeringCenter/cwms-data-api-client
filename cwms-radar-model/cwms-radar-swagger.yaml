@@ -8516,12 +8516,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: location-id
-          in: query
-          description: Specifies the parent location id of the contract.
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json;version=1:
@@ -8937,12 +8931,6 @@ paths:
         - name: water-user
           in: path
           description: Specifies the water user of the contract.
-          required: true
-          schema:
-            type: string
-        - name: location-id
-          in: query
-          description: Specifies the parent location id of the contract.
           required: true
           schema:
             type: string
@@ -12824,9 +12812,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     pools:
       type: object
@@ -13056,30 +13044,16 @@ components:
           type: string
         active:
           type: boolean
-    WaterSupplyPump:
-      required:
-        - pumpLocation
-        - pumpType
-      type: object
-      properties:
-        pumpLocation:
-          $ref: '#/components/schemas/Location'
-        pumpType:
-          type: string
-          enum:
-            - PUMP_IN
-            - PUMP_OUT
-            - PUMP_OUT_BELOW
     WaterUser:
       required:
         - entity-name
-        - parent-location-ref
+        - project-id
         - water-right
       type: object
       properties:
         entity-name:
           type: string
-        parent-location-ref:
+        project-id:
           $ref: '#/components/schemas/CwmsId'
         water-right:
           type: string
@@ -13088,6 +13062,7 @@ components:
         - contract-effective-date
         - contract-expiration-date
         - contract-id
+        - contract-type
         - contracted-storage
         - future-use-allocation
         - future-use-percent-activated
@@ -13095,7 +13070,6 @@ components:
         - office-id
         - storage-units-id
         - total-alloc-percent-activated
-        - water-contract
         - water-user
       type: object
       properties:
@@ -13106,7 +13080,7 @@ components:
           $ref: '#/components/schemas/WaterUser'
         contract-id:
           $ref: '#/components/schemas/CwmsId'
-        water-contract:
+        contract-type:
           $ref: '#/components/schemas/LookupType'
         contract-effective-date:
           type: string
@@ -13132,11 +13106,25 @@ components:
           type: number
           format: double
         pump-out-location:
-          $ref: '#/components/schemas/WaterSupplyPump'
+          $ref: '#/components/schemas/water_supply_pump'
         pump-out-below-location:
-          $ref: '#/components/schemas/WaterSupplyPump'
+          $ref: '#/components/schemas/water_supply_pump'
         pump-in-location:
-          $ref: '#/components/schemas/WaterSupplyPump'
+          $ref: '#/components/schemas/water_supply_pump'
+    water_supply_pump:
+      required:
+        - pumpLocation
+        - pumpType
+      type: object
+      properties:
+        pumpLocation:
+          $ref: '#/components/schemas/Location'
+        pumpType:
+          type: string
+          enum:
+            - IN
+            - OUT
+            - BELOW
     Embankment:
       required:
         - location
