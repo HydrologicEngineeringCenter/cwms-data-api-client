@@ -18,7 +18,7 @@ class TestVirtualOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/virtual_outlets.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        VirtualOutletEndpointInput.GetAll input = VirtualOutletEndpointInput.getAll().officeId("SPK").projectId("TEST_LOCATION2");
+        VirtualOutletEndpointInput.GetAll input = VirtualOutletEndpointInput.getAll("TEST_LOCATION2").officeId("SPK");
         List<VirtualOutlet> values = new VirtualOutletController().retrieveVirtualOutlets(buildConnectionInfo(), input);
         assertFalse(values.isEmpty());
         VirtualOutlet value = values.get(0);
@@ -31,7 +31,7 @@ class TestVirtualOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/virtual_outlet.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne("PROJECT-VIRTUAL_OUTLET_LOC", "SPK", "BIGH");
+        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne("SPK", "BIGH", "PROJECT-VIRTUAL_OUTLET_LOC");
         VirtualOutlet value = new VirtualOutletController().retrieveVirtualOutlet(buildConnectionInfo(), input);
         assertEquals("Compound Tainter Gates", value.getVirtualOutletId().getName());
         assertEquals("SPK", value.getVirtualOutletId().getOfficeId());
@@ -56,8 +56,8 @@ class TestVirtualOutletController extends TestController {
         VirtualOutlet outlet = RadarObjectMapper.mapJsonToObject(collect, VirtualOutlet.class);
         VirtualOutletController controller = new VirtualOutletController();
         VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput
-                .patch(outlet.getVirtualOutletId().getName(), "NEW_VIRTUAL_OUTLET_LOC", outlet.getProjectId().getName(),
-                        outlet.getVirtualOutletId().getOfficeId());
+                .patch(outlet.getVirtualOutletId().getOfficeId(), outlet.getProjectId().getName(),
+                        outlet.getVirtualOutletId().getName(), "NEW_VIRTUAL_OUTLET_LOC");
         assertDoesNotThrow(() -> controller.renameVirtualOutlet(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
         assertEquals("PATCH", request.getMethod());
@@ -74,8 +74,9 @@ class TestVirtualOutletController extends TestController {
         mockHttpServer.start();
         VirtualOutlet outlet = RadarObjectMapper.mapJsonToObject(collect, VirtualOutlet.class);
         VirtualOutletController controller = new VirtualOutletController();
-        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outlet.getVirtualOutletId().getName(),
-                outlet.getVirtualOutletId().getOfficeId(), outlet.getProjectId().getName(), DeleteMethod.ALL);
+        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outlet.getVirtualOutletId()
+                        .getOfficeId(), outlet.getProjectId().getName(), outlet.getVirtualOutletId().getName())
+                .deleteMethod(DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteVirtualOutlet(buildConnectionInfo(cookieJarSupplier), input));
     }
 }

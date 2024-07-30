@@ -18,10 +18,10 @@ class TestVirtualOutletEndpointInput {
     @Test
     void testGetAllQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = VirtualOutletEndpointInput.getAll().officeId("SPK").projectId("PROJ");
+        GetAll input = VirtualOutletEndpointInput.getAll("PROJ").officeId("SPK");
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
-        assertEquals("PROJ", mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
+        assertEquals("SPK", input.getOfficeId());
+        assertEquals("PROJ", input.getProjectId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -31,11 +31,11 @@ class TestVirtualOutletEndpointInput {
         String outletName = "OUT";
         String office = "SPK";
         String project = "PROJ";
-        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne(office, outletName, project);
+        VirtualOutletEndpointInput.GetOne input = VirtualOutletEndpointInput.getOne(office, project, outletName);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(outletName, input.getOutletName());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(VirtualOutletEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
     }
 
     @Test
@@ -55,15 +55,13 @@ class TestVirtualOutletEndpointInput {
         String outletName = "OUT";
         String office = "SPK";
         String project = "PROJ";
-        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(outletName, office,
-                project, DeleteMethod.ALL);
+        VirtualOutletEndpointInput.Delete input = VirtualOutletEndpointInput.delete(office, project, outletName)
+                .deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(outletName, input.getOutletName());
-        assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder
-                .getQueryParameter(VirtualOutletEndpointInput.Delete.DELETE_METHOD_QUERY_PARAMETER));
+        assertEquals(DeleteMethod.ALL, input.getDeleteMethod());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-        assertEquals(office, mockHttpRequestBuilder
-                .getQueryParameter(VirtualOutletEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
     }
 
     @Test
@@ -73,12 +71,13 @@ class TestVirtualOutletEndpointInput {
         String newOutletName = "NEW_OUT";
         String office = "SPK";
         String project = "PROJ";
-        VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput.patch(oldOutletName, newOutletName,
-                project, office);
+        VirtualOutletEndpointInput.Patch input = VirtualOutletEndpointInput.patch(office, project, oldOutletName,
+                newOutletName);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(oldOutletName, input.oldOutletName());
-        assertEquals(newOutletName, mockHttpRequestBuilder.getQueryParameter(VirtualOutletEndpointInput.Patch.NEW_OUTLET_NAME_QUERY_PARAMETER));
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(VirtualOutletEndpointInput.Patch.OFFICE_QUERY_PARAMETER));
+        assertEquals(newOutletName, mockHttpRequestBuilder
+                .getQueryParameter(VirtualOutletEndpointInput.Patch.NEW_OUTLET_NAME_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
     }
 
 }

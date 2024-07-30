@@ -68,64 +68,64 @@
   {
     "project-id": {
       "office-id": "SPK",
-      "name": "BIGH-TEST12"
+      "name": "BIGH"
     },
     "virtual-outlet-id": {
       "office-id": "SPK",
-      "name": "Compound Tainter Gates"
+      "name": "Compound Conduit Gates"
     },
     "virtual-records": [
       {
         "outlet-id": {
           "office-id": "SPK",
-          "name": "TG1"
+          "name": "CG1"
         },
         "downstream-outlet-ids": [
           {
             "office-id": "SPK",
-            "name": "TG2"
+            "name": "CG2"
           }
         ]
       },
       {
         "outlet-id": {
           "office-id": "SPK",
-          "name": "TG2"
+          "name": "CG2"
         },
         "downstream-outlet-ids": [
           {
             "office-id": "SPK",
-            "name": "TG3"
+            "name": "CG3"
           }
         ]
       },
       {
         "outlet-id": {
           "office-id": "SPK",
-          "name": "TG3"
+          "name": "CG3"
         },
         "downstream-outlet-ids": [
           {
             "office-id": "SPK",
-            "name": "TG4"
+            "name": "CG4"
           },
           {
             "office-id": "SPK",
-            "name": "TG5"
+            "name": "CG5"
           }
         ]
       },
       {
         "outlet-id": {
           "office-id": "SPK",
-          "name": "TG4"
+          "name": "CG4"
         },
         "downstream-outlet-ids": []
       },
       {
         "outlet-id": {
           "office-id": "SPK",
-          "name": "TG5"
+          "name": "CG5"
         },
         "downstream-outlet-ids": []
       }

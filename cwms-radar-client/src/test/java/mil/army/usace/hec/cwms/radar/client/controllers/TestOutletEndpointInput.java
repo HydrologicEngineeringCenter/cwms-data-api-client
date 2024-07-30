@@ -19,7 +19,7 @@ class TestOutletEndpointInput {
     @Test
     void testGetAllQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = OutletEndpointInput.getAll().officeId("SPK").projectId("PROJ-Name");
+        GetAll input = OutletEndpointInput.getAll("PROJ-Name").officeId("SPK");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals("PROJ-Name", mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
@@ -31,7 +31,7 @@ class TestOutletEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String outletName = "OUT";
         String office = "SPK";
-        OutletEndpointInput.GetOne input = OutletEndpointInput.getOne(outletName, office);
+        OutletEndpointInput.GetOne input = OutletEndpointInput.getOne(office, outletName);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(outletName, input.outletName());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -54,13 +54,13 @@ class TestOutletEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String outletName = "OUT";
         String office = "SPK";
-        OutletEndpointInput.Delete input = OutletEndpointInput.delete(outletName, office, DeleteMethod.ALL);
+        OutletEndpointInput.Delete input = OutletEndpointInput.delete(office, outletName).deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(outletName, input.outletName());
         assertEquals(office, mockHttpRequestBuilder
                 .getQueryParameter(OutletEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder
-                .getQueryParameter(OutletEndpointInput.Delete.DELETE_METHOD_QUERY_PARAMETER));
+                .getQueryParameter(OutletEndpointInput.Delete.METHOD_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -70,7 +70,7 @@ class TestOutletEndpointInput {
         String oldOutletName = "OLD_OUT";
         String newOutletName = "NEW_OUT";
         String office = "SPK";
-        OutletEndpointInput.Patch input = OutletEndpointInput.patch(oldOutletName, newOutletName, office);
+        OutletEndpointInput.Patch input = OutletEndpointInput.patch(office, oldOutletName, newOutletName);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(oldOutletName, input.oldOutletName());
         assertEquals(newOutletName, mockHttpRequestBuilder
@@ -81,8 +81,8 @@ class TestOutletEndpointInput {
 
     @Test
     void testDeleteNulls() {
-        assertThrows(NullPointerException.class, () -> OutletEndpointInput.delete(null, "", DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> OutletEndpointInput.delete("", null, DeleteMethod.ALL));
+        assertThrows(NullPointerException.class, () -> OutletEndpointInput.delete(null, ""));
+        assertThrows(NullPointerException.class, () -> OutletEndpointInput.delete("", null));
 
     }
 }

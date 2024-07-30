@@ -17,7 +17,7 @@ class TestOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/outlets.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        OutletEndpointInput.GetAll input = OutletEndpointInput.getAll().officeId("SPK").projectId("TEST_LOCATION2");
+        OutletEndpointInput.GetAll input = OutletEndpointInput.getAll("TEST_LOCATION2").officeId("SPK");
         List<Outlet> values = new OutletController().retrieveOutlets(buildConnectionInfo(), input);
         assertFalse(values.isEmpty());
         Outlet value = values.get(0);
@@ -25,7 +25,7 @@ class TestOutletController extends TestController {
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals("Rating-BIGH-TG1", value.getRatingGroupId().getName());
         value = values.get(1);
-        assertEquals("BIGH-TEST12", value.getProjectId().getName());
+        assertEquals("BIGH-TG2", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals("Rating-BIGH-TG1", value.getRatingGroupId().getName());
     }
@@ -35,7 +35,7 @@ class TestOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/outlet.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        OutletEndpointInput.GetOne input = OutletEndpointInput.getOne("PROJECT-OUTLET_LOC", "SPK");
+        OutletEndpointInput.GetOne input = OutletEndpointInput.getOne("SPK", "PROJECT-OUTLET_LOC");
         Outlet value = new OutletController().retrieveOutlet(buildConnectionInfo(), input);
         assertEquals("BIGH", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
@@ -62,8 +62,8 @@ class TestOutletController extends TestController {
         Outlet outlet = RadarObjectMapper.mapJsonToObject(collect, Outlet.class);
         OutletController controller = new OutletController();
         controller.storeOutlet(buildConnectionInfo(cookieJarSupplier), OutletEndpointInput.post(outlet));
-        OutletEndpointInput.Delete input = OutletEndpointInput.delete("PROJECT-OUTLET_LOC", "SPK",
-                DeleteMethod.ALL);
+        OutletEndpointInput.Delete input = OutletEndpointInput.delete("SPK", "PROJECT-OUTLET_LOC")
+                .deleteMethod(DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteOutlet(buildConnectionInfo(cookieJarSupplier), input));
     }
 
@@ -74,7 +74,7 @@ class TestOutletController extends TestController {
         mockHttpServer.start();
         Outlet outlet = RadarObjectMapper.mapJsonToObject(collect, Outlet.class);
         OutletController controller = new OutletController();
-        OutletEndpointInput.Patch input = OutletEndpointInput.patch("BIGH", "NEW_OUTLET_LOC", "SPK");
+        OutletEndpointInput.Patch input = OutletEndpointInput.patch("SPK", "BIGH", "NEW_OUTLET_LOC");
         assertDoesNotThrow(() -> controller.renameOutlet(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
         assertEquals("PATCH", request.getMethod());
