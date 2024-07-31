@@ -24,18 +24,22 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
-import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.*;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.INCLUDE_ASSIGNED_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.REPLACE_ASSIGNED_LOCS;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.io.IOException;
+import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
+import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
+import org.junit.jupiter.api.Test;
 
 class TestLocationGroupEndpointInput {
 
@@ -47,7 +51,7 @@ class TestLocationGroupEndpointInput {
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
         assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -62,7 +66,7 @@ class TestLocationGroupEndpointInput {
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER));
         assertEquals("Default", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -72,7 +76,7 @@ class TestLocationGroupEndpointInput {
         LocationGroup locationGroup = RadarObjectMapper.mapJsonToObject(collect, LocationGroup.class);
         LocationGroupEndpointInput.Post input = LocationGroupEndpointInput.post(locationGroup);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -84,7 +88,7 @@ class TestLocationGroupEndpointInput {
                 .replaceAssignedLocs(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REPLACE_ASSIGNED_LOCS));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -95,6 +99,6 @@ class TestLocationGroupEndpointInput {
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
         assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
