@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
+
+import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.LocationCategory;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-
-import java.io.IOException;
-import java.util.List;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 
 public final class LocationCategoryController {
 
@@ -55,7 +54,7 @@ public final class LocationCategoryController {
                 LOCATION_CATEGORY + "/" + input.categoryId())
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+            .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationCategory.class);
         }
@@ -77,7 +76,7 @@ public final class LocationCategoryController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+            .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationCategory.class);
         }
@@ -91,7 +90,7 @@ public final class LocationCategoryController {
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V1)
+            .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
@@ -101,7 +100,7 @@ public final class LocationCategoryController {
         new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_CATEGORY + "/" + input.categoryId())
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V1)
+            .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }

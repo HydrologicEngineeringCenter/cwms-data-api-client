@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,19 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.FAIL_IF_EXISTS;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.REPLACE_ASSIGNED_TS_QUERY_PARAMETER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesGroup;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesGroupEndpointInput.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestTimeSeriesGroupEndpointInput {
 
@@ -45,7 +47,7 @@ class TestTimeSeriesGroupEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -54,7 +56,7 @@ class TestTimeSeriesGroupEndpointInput {
         TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll().officeId("SWT");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -66,7 +68,7 @@ class TestTimeSeriesGroupEndpointInput {
                 .failIfExists(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(FAIL_IF_EXISTS));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -78,7 +80,7 @@ class TestTimeSeriesGroupEndpointInput {
                 .replaceAssignedTs(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -88,6 +90,6 @@ class TestTimeSeriesGroupEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

@@ -24,14 +24,13 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
-
-import java.util.Objects;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class LocationGroupEndpointInput {
 
@@ -82,7 +81,7 @@ public final class LocationGroupEndpointInput {
             return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
                     .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 
@@ -115,7 +114,7 @@ public final class LocationGroupEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
                     .addQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER, categoryIdMask)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
     }
@@ -134,7 +133,7 @@ public final class LocationGroupEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
     }
@@ -166,7 +165,7 @@ public final class LocationGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_LOCS, Boolean.toString(replaceAssignedLocs))
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
     }
@@ -192,7 +191,7 @@ public final class LocationGroupEndpointInput {
             return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
                     .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 }

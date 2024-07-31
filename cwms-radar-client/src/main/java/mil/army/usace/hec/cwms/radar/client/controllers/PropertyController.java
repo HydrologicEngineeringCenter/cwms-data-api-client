@@ -24,18 +24,17 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.Property;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-
-import java.io.IOException;
-import java.util.List;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class PropertyController {
 
@@ -44,10 +43,10 @@ public final class PropertyController {
     public List<Property> retrieveProperties(ApiConnectionInfo apiConnectionInfo, PropertyEndpointInput.GetAll input)
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, PROPERTY_ENDPOINT)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+            .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Property.class);
         }
@@ -57,10 +56,10 @@ public final class PropertyController {
             throws IOException {
         String endpoint = PROPERTY_ENDPOINT + "/" + input.propertyId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+            .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), Property.class);
         }
@@ -69,11 +68,11 @@ public final class PropertyController {
     public void storeProperty(ApiConnectionInfo apiConnectionInfo, PropertyEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.property());
         new HttpRequestBuilderImpl(apiConnectionInfo, PROPERTY_ENDPOINT)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V1)
+            .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
@@ -81,10 +80,10 @@ public final class PropertyController {
     public void deleteProperty(ApiConnectionInfo apiConnectionInfo, PropertyEndpointInput.Delete input) throws IOException {
         String endpoint = PROPERTY_ENDPOINT + "/" + input.propertyId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V1)
+            .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
