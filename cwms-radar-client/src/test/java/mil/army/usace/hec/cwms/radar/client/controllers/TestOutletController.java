@@ -25,9 +25,9 @@ class TestOutletController extends TestController {
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals("Rating-BIGH-TG1", value.getRatingGroupId().getName());
         value = values.get(1);
-        assertEquals("BIGH-TG2", value.getProjectId().getName());
+        assertEquals("BIGH", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
-        assertEquals("Rating-BIGH-TG1", value.getRatingGroupId().getName());
+        assertEquals("Rating-BIGH-TG2", value.getRatingGroupId().getName());
     }
 
     @Test
