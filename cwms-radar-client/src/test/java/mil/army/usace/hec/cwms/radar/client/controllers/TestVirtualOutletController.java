@@ -18,7 +18,7 @@ class TestVirtualOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/virtual_outlets.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        VirtualOutletEndpointInput.GetAll input = VirtualOutletEndpointInput.getAll("TEST_LOCATION2").officeId("SPK");
+        VirtualOutletEndpointInput.GetAll input = VirtualOutletEndpointInput.getAll("TEST_LOCATION2", "SPK");
         List<VirtualOutlet> values = new VirtualOutletController().retrieveVirtualOutlets(buildConnectionInfo(), input);
         assertFalse(values.isEmpty());
         VirtualOutlet value = values.get(0);

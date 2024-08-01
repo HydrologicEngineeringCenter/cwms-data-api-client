@@ -38,7 +38,7 @@ public final class OutletEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
-        private String projectId;
+        private final String projectId;
         private String officeId;
 
         private GetAll(String projectId) {
@@ -48,11 +48,6 @@ public final class OutletEndpointInput {
 
         public GetAll officeId(String officeId) {
             this.officeId = officeId;
-            return this;
-        }
-
-        public GetAll projectId(String projectId) {
-            this.projectId = projectId;
             return this;
         }
 
@@ -89,7 +84,7 @@ public final class OutletEndpointInput {
     public static final class Post extends EndpointInput {
         private final Outlet outletName;
         private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
-        private boolean failIfExists;
+        private boolean failIfExists = true;
 
         private Post(Outlet outlet) {
             this.outletName = Objects.requireNonNull(outlet, "Cannot access the outlet POST "

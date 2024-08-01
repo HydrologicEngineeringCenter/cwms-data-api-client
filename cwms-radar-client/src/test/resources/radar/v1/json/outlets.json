@@ -28,15 +28,15 @@
   {
     "project-id": {
       "office-id": "SPK",
-      "name": "BIGH-TG2"
+      "name": "BIGH"
     },
     "location": {
       "office-id": "SPK",
-      "name": "BIGH-TG1",
+      "name": "BIGH-TG2",
       "latitude": 0.0,
       "longitude": 0.0,
       "active": true,
-      "public-name": "BIGH-TG1",
+      "public-name": "BIGH-TG2",
       "timezone-name": "UTC",
       "location-kind": "Outlet",
       "horizontal-datum": "NAD84",
@@ -48,7 +48,7 @@
     },
     "rating-group-id": {
       "office-id": "SPK",
-      "name": "Rating-BIGH-TG1"
+      "name": "Rating-BIGH-TG2"
     }
   }
 ]

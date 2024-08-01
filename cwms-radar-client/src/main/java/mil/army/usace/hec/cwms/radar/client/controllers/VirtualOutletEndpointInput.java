@@ -15,8 +15,8 @@ public final class VirtualOutletEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String projectId) {
-        return new GetAll(projectId);
+    public static GetAll getAll(String projectId, String officeId) {
+        return new GetAll(projectId, officeId);
     }
 
     public static GetOne getOne(String officeId, String projectId, String outletName) {
@@ -37,16 +37,13 @@ public final class VirtualOutletEndpointInput {
 
     public static final class GetAll extends EndpointInput {
         private final String projectId;
-        private String officeId;
+        private final String officeId;
 
-        private GetAll(String projectId) {
+        private GetAll(String projectId, String officeId) {
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the outlet GET "
                     + "endpoint without a project ID");
-        }
-
-        public GetAll officeId(String officeId) {
-            this.officeId = officeId;
-            return this;
+            this.officeId = Objects.requireNonNull(officeId, "Cannot access the outlet GET "
+                    + "endpoint without an office ID");
         }
 
         public String getOfficeId() {
@@ -96,7 +93,7 @@ public final class VirtualOutletEndpointInput {
     public static final class Post extends EndpointInput {
         private final VirtualOutlet outletName;
         private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
-        private boolean failIfExists;
+        private boolean failIfExists = true;
 
         private Post(VirtualOutlet outletName) {
             this.outletName = Objects.requireNonNull(outletName, "Outlet required for outlet POST endpoint");
@@ -168,7 +165,7 @@ public final class VirtualOutletEndpointInput {
         private final String projectId;
         private final String officeId;
 
-        private Patch ( String officeId, String projectId, String oldOutletName, String newOutletName) {
+        private Patch(String officeId, String projectId, String oldOutletName, String newOutletName) {
             this.oldOutletName = Objects.requireNonNull(oldOutletName, "Old outlet name required for patch outlet endpoint");
             this.newOutletName = Objects.requireNonNull(newOutletName, "New outlet name required for patch outlet endpoint");
             this.projectId = Objects.requireNonNull(projectId, "Project ID required for patch outlet endpoint");
