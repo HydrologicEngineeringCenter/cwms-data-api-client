@@ -28,6 +28,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CATEGORY_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CURSOR_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.EXCLUDE_EMPTY_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.GROUP_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.INCLUDE_EXTENTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.LIKE_QUERY_PARAMETER;
@@ -51,7 +52,8 @@ class TestTimeSeriesCatalogEndpointInput {
             .timeSeriesIdFilter("BASE-SUB.Flow-Out.Ave.~1Day.1Day.Test")
             .categoryIdFilter("CAT")
             .groupIdFilter("GROUP")
-            .includeExtents(false);
+            .includeExtents(false)
+            .excludeEmpty(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER));
@@ -61,6 +63,7 @@ class TestTimeSeriesCatalogEndpointInput {
         assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER));
         assertEquals("GROUP", mockHttpRequestBuilder.getQueryParameter(GROUP_LIKE_QUERY_PARAMETER));
         assertEquals("false", mockHttpRequestBuilder.getQueryParameter(INCLUDE_EXTENTS_QUERY_PARAMETER));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(EXCLUDE_EMPTY_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

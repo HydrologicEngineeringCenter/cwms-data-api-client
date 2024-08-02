@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,8 @@ public final class LocationCatalogEndpointInput extends EndpointInput {
     static final String LIKE_QUERY_PARAMETER = "like";
     static final String CATEGORY_LIKE_QUERY_PARAMETER = "location-category-like";
     static final String GROUP_LIKE_QUERY_PARAMETER = "location-group-like";
+    static final String LOCATION_KIND_LIKE_QUERY_PARAMETER = "location-kind-like";
+    static final String LOCATION_TYPE_LIKE_QUERY_PARAMETER = "location-type-like";
 
     private String cursor;
     private Integer pageSize;
@@ -48,6 +50,8 @@ public final class LocationCatalogEndpointInput extends EndpointInput {
     private String locationIdFilter;
     private String categoryIdFilter;
     private String groupIdFilter;
+    private String locationKindLike;
+    private String locationTypeLike;
 
     public LocationCatalogEndpointInput cursor(String cursor) {
         this.cursor = cursor;
@@ -84,16 +88,28 @@ public final class LocationCatalogEndpointInput extends EndpointInput {
         return this;
     }
 
+    public LocationCatalogEndpointInput locationKindLike(String locationKindLike) {
+        this.locationKindLike = locationKindLike;
+        return this;
+    }
+
+    public LocationCatalogEndpointInput locationTypeLike(String locationTypeLike) {
+        this.locationTypeLike = locationTypeLike;
+        return this;
+    }
+
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
         return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                                 .addQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER, unitSystem)
-                                 .addQueryParameter(CURSOR_QUERY_PARAMETER, cursor)
-                                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
-                                 .addQueryParameter(LIKE_QUERY_PARAMETER, locationIdFilter)
-                                 .addQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER, categoryIdFilter)
-                                 .addQueryParameter(GROUP_LIKE_QUERY_PARAMETER, groupIdFilter)
-                                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+            .addQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER, unitSystem)
+            .addQueryParameter(CURSOR_QUERY_PARAMETER, cursor)
+            .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+            .addQueryParameter(LIKE_QUERY_PARAMETER, locationIdFilter)
+            .addQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER, categoryIdFilter)
+            .addQueryParameter(GROUP_LIKE_QUERY_PARAMETER, groupIdFilter)
+            .addQueryParameter(LOCATION_KIND_LIKE_QUERY_PARAMETER, locationKindLike)
+            .addQueryParameter(LOCATION_TYPE_LIKE_QUERY_PARAMETER, locationTypeLike)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }

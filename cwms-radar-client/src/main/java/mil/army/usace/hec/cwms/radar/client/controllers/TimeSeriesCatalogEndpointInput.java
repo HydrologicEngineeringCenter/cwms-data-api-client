@@ -41,6 +41,7 @@ public final class TimeSeriesCatalogEndpointInput extends EndpointInput {
     static final String CATEGORY_LIKE_QUERY_PARAMETER = "timeseries-category-like";
     static final String GROUP_LIKE_QUERY_PARAMETER = "timeseries-group-like";
     static final String INCLUDE_EXTENTS_QUERY_PARAMETER = "include-extents";
+    static final String EXCLUDE_EMPTY_QUERY_PARAMETER = "exclude-empty";
 
     private String cursor;
     private Integer pageSize;
@@ -50,6 +51,7 @@ public final class TimeSeriesCatalogEndpointInput extends EndpointInput {
     private String categoryIdFilter;
     private String groupIdFilter;
     private boolean includeExtents = true;
+    private boolean excludeEmpty = false;
 
     public TimeSeriesCatalogEndpointInput cursor(String cursor) {
         this.cursor = cursor;
@@ -91,6 +93,11 @@ public final class TimeSeriesCatalogEndpointInput extends EndpointInput {
         return this;
     }
 
+    public TimeSeriesCatalogEndpointInput excludeEmpty(boolean excludeEmpty) {
+        this.excludeEmpty = excludeEmpty;
+        return this;
+    }
+
     @Override
     protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
         String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
@@ -102,6 +109,7 @@ public final class TimeSeriesCatalogEndpointInput extends EndpointInput {
             .addQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER, categoryIdFilter)
             .addQueryParameter(GROUP_LIKE_QUERY_PARAMETER, groupIdFilter)
             .addQueryParameter(INCLUDE_EXTENTS_QUERY_PARAMETER, Boolean.toString(includeExtents))
+            .addQueryParameter(EXCLUDE_EMPTY_QUERY_PARAMETER, Boolean.toString(excludeEmpty))
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
     }
 }
