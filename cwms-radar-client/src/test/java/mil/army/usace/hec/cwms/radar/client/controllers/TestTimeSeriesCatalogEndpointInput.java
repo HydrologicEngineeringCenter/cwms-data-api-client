@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CATEGORY_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.CURSOR_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.GROUP_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.INCLUDE_EXTENTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.OFFICE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCatalogEndpointInput.PAGE_SIZE_QUERY_PARAMETER;
@@ -49,7 +50,8 @@ class TestTimeSeriesCatalogEndpointInput {
             .pageSize(5)
             .timeSeriesIdFilter("BASE-SUB.Flow-Out.Ave.~1Day.1Day.Test")
             .categoryIdFilter("CAT")
-            .groupIdFilter("GROUP");
+            .groupIdFilter("GROUP")
+            .includeExtents(false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER));
@@ -58,6 +60,7 @@ class TestTimeSeriesCatalogEndpointInput {
         assertEquals("BASE-SUB.Flow-Out.Ave.~1Day.1Day.Test", mockHttpRequestBuilder.getQueryParameter(LIKE_QUERY_PARAMETER));
         assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER));
         assertEquals("GROUP", mockHttpRequestBuilder.getQueryParameter(GROUP_LIKE_QUERY_PARAMETER));
+        assertEquals("false", mockHttpRequestBuilder.getQueryParameter(INCLUDE_EXTENTS_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
