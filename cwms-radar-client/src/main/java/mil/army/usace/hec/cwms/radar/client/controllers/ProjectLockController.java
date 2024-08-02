@@ -12,7 +12,7 @@ import mil.army.usace.hec.cwms.radar.client.model.ProjectLock;
 import mil.army.usace.hec.cwms.radar.client.model.ProjectLockId;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
-public class ProjectLockController {
+public final class ProjectLockController {
     public static final String PATH = "/project-locks/";
 
     /**

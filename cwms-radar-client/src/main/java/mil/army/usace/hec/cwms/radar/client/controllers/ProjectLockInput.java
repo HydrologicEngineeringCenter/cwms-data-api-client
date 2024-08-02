@@ -99,7 +99,8 @@ public final class ProjectLockInput {
 
         private final ProjectLock lock;
         private boolean revokeExisting = false;
-        private int revokeTimeout = 10;
+        private int revokeTimeoutSeconds = 10;
+
 
         private LockRequest(ProjectLock lock) {
             this.lock = Objects.requireNonNull(lock, "Cannot retrieve a ProjectLock without a ProjectLock.");
@@ -110,8 +111,8 @@ public final class ProjectLockInput {
             return this;
         }
 
-        public LockRequest revokeTimeout(int revokeTimeout) {
-            this.revokeTimeout = revokeTimeout;
+        public LockRequest revokeTimeoutSeconds(int revokeTimeout) {
+            this.revokeTimeoutSeconds = revokeTimeout;
             return this;
         }
 
@@ -122,7 +123,7 @@ public final class ProjectLockInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REVOKE_EXISTING, String.valueOf(revokeExisting))
-                    .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout))
+                    .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeoutSeconds))
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 

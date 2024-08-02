@@ -89,7 +89,7 @@ class TestProjectLockInput {
         assertEquals("10", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
 
-        input.revokeTimeout(11)
+        input.revokeTimeoutSeconds(11)
                 .revokeExisting(true);
         input.addInputParameters(mockHttpRequestBuilder);
 
@@ -97,7 +97,7 @@ class TestProjectLockInput {
         assertEquals("11", mockHttpRequestBuilder.getQueryParameter(REVOKE_TIMEOUT));
 
         input.revokeExisting(false)
-                .revokeTimeout(12);
+                .revokeTimeoutSeconds(12);
         input.addInputParameters(mockHttpRequestBuilder);
 
         assertEquals("false", mockHttpRequestBuilder.getQueryParameter(REVOKE_EXISTING));
