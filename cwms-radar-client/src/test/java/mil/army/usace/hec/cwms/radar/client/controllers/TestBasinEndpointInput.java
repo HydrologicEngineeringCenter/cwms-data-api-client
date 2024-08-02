@@ -18,10 +18,11 @@ class TestBasinEndpointInput {
     @Test
     void testGetAllQueryRequestDefault() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = BasinEndpointInput.getAll().officeId("SPK").projectId("PROJ");
+        GetAll input = BasinEndpointInput.getAll().officeId("SPK").projectId("PROJ").units("m2");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals("PROJ", mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
+        assertEquals("m2", mockHttpRequestBuilder.getQueryParameter(GetAll.UNITS_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -30,10 +31,11 @@ class TestBasinEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String basinId = "BAS";
         String office = "SPK";
-        BasinEndpointInput.GetOne input = BasinEndpointInput.getOne(basinId, office);
+        BasinEndpointInput.GetOne input = BasinEndpointInput.getOne(basinId, office).units("m2");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(basinId, input.basinId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals("m2", mockHttpRequestBuilder.getQueryParameter(BasinEndpointInput.GetOne.UNITS_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(BasinEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
     }
 
