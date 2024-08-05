@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,22 +29,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 //This class is not codegenned as there is no OpenAPI docs for the timezone catalog
 public final class DbTimeZone {
-    @JsonProperty("name")
+    @JsonProperty("time-zone")
     private String name;
-    @JsonProperty("utc-offset")
-    private String utcOffset;
-    @JsonProperty("dst-offset")
-    private String dstOffset;
 
     public String name() {
         return name;
-    }
-
-    public String utcOffset() {
-        return utcOffset;
-    }
-
-    public String dstOffset() {
-        return dstOffset;
     }
 }

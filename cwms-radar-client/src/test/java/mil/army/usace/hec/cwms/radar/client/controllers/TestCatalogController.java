@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.List;
 import mil.army.usace.hec.cwms.radar.client.model.County;
 import mil.army.usace.hec.cwms.radar.client.model.DbTimeZone;
 import mil.army.usace.hec.cwms.radar.client.model.Parameter;
 import mil.army.usace.hec.cwms.radar.client.model.State;
 import mil.army.usace.hec.cwms.radar.client.model.Unit;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class TestCatalogController extends TestController {
 
@@ -58,7 +57,7 @@ final class TestCatalogController extends TestController {
 
     @Test
     void testTimeZoneCatalog() throws Exception {
-        String collect = readJsonFile("radar/v1/xml/timezone_catalog.xml");
+        String collect = readJsonFile("radar/v2/json/time-zones.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         List<DbTimeZone> units = new CatalogController().retrieveTimeZoneCatalog(buildConnectionInfo());
