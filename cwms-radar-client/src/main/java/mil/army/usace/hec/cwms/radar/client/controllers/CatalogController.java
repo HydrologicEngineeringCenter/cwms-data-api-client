@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,10 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+
+import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -36,11 +40,6 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.State;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCatalog;
 import mil.army.usace.hec.cwms.radar.client.model.Unit;
-
-import java.io.IOException;
-import java.util.List;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 
 public final class CatalogController {
 
@@ -103,7 +102,7 @@ public final class CatalogController {
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapXmlToListOfObjects(response.getBody(), DbTimeZone.class, "time-zone");
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), DbTimeZone.class, "time-zones");
         }
     }
 

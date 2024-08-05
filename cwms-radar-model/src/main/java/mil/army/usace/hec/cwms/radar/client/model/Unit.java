@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,47 +24,49 @@
 
 package mil.army.usace.hec.cwms.radar.client.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Objects;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Unit
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-08-05T09:10:22.137035-07:00[America/Los_Angeles]")
+public class Unit {
 
-//This class is not codegenned as there is no OpenAPI docs for the parameter catalog
-public final class Unit {
-    @JsonProperty(value = "abstract-parameter")
-    private String abstractParameter;
-    @JsonProperty(value = "name")
-    private String name;
-    @JsonProperty(value = "unit-system")
-    private String unitSystem;
-    @JsonProperty(value = "long-name")
-    private String longName;
-    @JsonProperty(value = "description")
-    private String description;
-    @JsonProperty(value = "alternate-names")
-    private List<String> alternateNames = new ArrayList<>();
-
-    public String abstractParameter() {
-        return abstractParameter;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return true;
     }
 
-    public String name() {
-        return name;
+    @Override
+    public int hashCode() {
+        return Objects.hash();
     }
 
-    public String unitSystem() {
-        return unitSystem;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Unit {\n");
+
+        sb.append("}");
+        return sb.toString();
     }
 
-    public String longName() {
-        return longName;
-    }
-
-    public String description() {
-        return description;
-    }
-
-    public List<String> alternateNames() {
-        return alternateNames;
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -1425,6 +1425,17 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parameter'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parameter'
         '400':
           description: Bad Request
           content:
@@ -1476,6 +1487,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeZoneIds'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeZoneIds'
         '400':
           description: Bad Request
           content:
@@ -10899,6 +10917,71 @@ components:
           type: string
           description: Reference to another office, like a division, that this office reports to.
       description: A representation of a CWMS office
+    parameter:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        base-parameter:
+          type: string
+        sub-parameter:
+          type: string
+        sub-parameter-description:
+          type: string
+        db-unit-id:
+          type: string
+        unit-long-name:
+          type: string
+        unit-description:
+          type: string
+    Parameter:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        base-parameter:
+          type: string
+        sub-parameter:
+          type: string
+        sub-parameter-description:
+          type: string
+        db-unit-id:
+          type: string
+        unit-long-name:
+          type: string
+        unit-description:
+          type: string
+    time-zone:
+      required:
+        - time-zone
+      type: object
+      properties:
+        time-zone:
+          type: string
+    time-zones:
+      type: object
+      properties:
+        time-zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/time-zone'
+    TimeZoneIds:
+      type: object
+      properties:
+        time-zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/time-zone'
     LocationLevel:
       required:
         - location-level-id
@@ -11106,41 +11189,37 @@ components:
             seconds:
               type: integer
               format: int64
-            zero:
-              type: boolean
             nano:
               type: integer
               format: int32
-            negative:
-              type: boolean
-            positive:
+            zero:
               type: boolean
             units:
               type: array
               items:
                 type: object
                 properties:
-                  durationEstimated:
-                    type: boolean
                   duration:
                     type: object
                     properties:
                       seconds:
                         type: integer
                         format: int64
-                      zero:
-                        type: boolean
                       nano:
                         type: integer
                         format: int32
+                      zero:
+                        type: boolean
                       negative:
                         type: boolean
-                      positive:
-                        type: boolean
-                  timeBased:
+                  durationEstimated:
                     type: boolean
                   dateBased:
                     type: boolean
+                  timeBased:
+                    type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -11260,41 +11339,37 @@ components:
             seconds:
               type: integer
               format: int64
-            zero:
-              type: boolean
             nano:
               type: integer
               format: int32
-            negative:
-              type: boolean
-            positive:
+            zero:
               type: boolean
             units:
               type: array
               items:
                 type: object
                 properties:
-                  durationEstimated:
-                    type: boolean
                   duration:
                     type: object
                     properties:
                       seconds:
                         type: integer
                         format: int64
-                      zero:
-                        type: boolean
                       nano:
                         type: integer
                         format: int32
+                      zero:
+                        type: boolean
                       negative:
                         type: boolean
-                      positive:
-                        type: boolean
-                  timeBased:
+                  durationEstimated:
                     type: boolean
                   dateBased:
                     type: boolean
+                  timeBased:
+                    type: boolean
+            negative:
+              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true

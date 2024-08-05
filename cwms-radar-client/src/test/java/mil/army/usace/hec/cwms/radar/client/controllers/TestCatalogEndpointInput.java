@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,12 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import org.junit.jupiter.api.Test;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.ParameterCatalogEndpointInput.FORMAT_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 final class TestCatalogEndpointInput {
 
@@ -37,7 +38,6 @@ final class TestCatalogEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         ParameterCatalogEndpointInput input = new ParameterCatalogEndpointInput();
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("json", mockHttpRequestBuilder.getQueryParameter(FORMAT_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -46,8 +46,7 @@ final class TestCatalogEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         UnitCatalogEndpointInput input = new UnitCatalogEndpointInput();
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("json", mockHttpRequestBuilder.getQueryParameter(FORMAT_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -55,8 +54,7 @@ final class TestCatalogEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         TimeZoneCatalogEndpointInput input = new TimeZoneCatalogEndpointInput();
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("xml", mockHttpRequestBuilder.getQueryParameter(FORMAT_QUERY_PARAMETER));
-        assertEquals(ACCEPT_XML_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
