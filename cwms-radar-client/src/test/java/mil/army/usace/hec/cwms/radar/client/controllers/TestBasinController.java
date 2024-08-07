@@ -20,8 +20,7 @@ class TestBasinController extends TestController {
         String collect = readJsonFile("radar/v1/json/basins.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        BasinEndpointInput.GetAll input = BasinEndpointInput.getAll().officeId("SPK").projectId("TEST_LOCATION2")
-                .units("m2");
+        BasinEndpointInput.GetAll input = BasinEndpointInput.getAll().officeId("SPK").units("m2");
         List<Basin> values = new BasinController().retrieveBasins(buildConnectionInfo(), input);
         assertFalse(values.isEmpty());
         Basin value = values.get(0);
