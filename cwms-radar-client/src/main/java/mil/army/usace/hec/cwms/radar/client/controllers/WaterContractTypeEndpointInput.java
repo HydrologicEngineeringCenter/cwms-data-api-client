@@ -3,6 +3,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
+import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.LookupType;
@@ -13,8 +14,8 @@ public final class WaterContractTypeEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll() {
-        return new GetAll();
+    public static GetAll getAll(String officeId) {
+        return new GetAll(officeId);
     }
 
     public static Post post(LookupType waterContractType) {
@@ -22,37 +23,38 @@ public final class WaterContractTypeEndpointInput {
     }
 
     public static final class GetAll extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
-        private String projectId;
-        private String officeId;
+        private final String officeId;
 
-        private GetAll() {
+        private GetAll(String officeId) {
+            this.officeId = Objects.requireNonNull(officeId);
         }
 
-        public GetAll officeId(String officeId) {
-            this.officeId = officeId;
-            return this;
-        }
-
-        public GetAll projectId(String projectId) {
-            this.projectId = projectId;
-            return this;
+        String getOfficeId() {
+            return officeId;
         }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(PROJECT_ID_QUERY_PARAMETER, projectId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
     public static final class Post extends EndpointInput {
+        private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
         private final LookupType waterContractType;
+        private boolean failIfExists;
 
         private Post(LookupType waterContractType) {
             this.waterContractType = waterContractType;
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
+        }
+
+        boolean getFailIfExists() {
+            return failIfExists;
         }
 
         LookupType waterContractType() {
@@ -61,7 +63,8 @@ public final class WaterContractTypeEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, failIfExists ? "true" : "false")
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }

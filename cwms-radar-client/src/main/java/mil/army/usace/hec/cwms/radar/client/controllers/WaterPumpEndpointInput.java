@@ -6,7 +6,6 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
-import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 
 
 public class WaterPumpEndpointInput {
@@ -14,31 +13,53 @@ public class WaterPumpEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static Delete delete(String pumpId, String officeId, DeleteMethod deleteMethod) {
-        return new Delete(pumpId, officeId, deleteMethod);
+    public static Delete delete(String officeId, String projectId, String contractName, String waterUser, String pumpId,
+            boolean deleteAccounting) {
+        return new Delete(officeId, projectId, contractName, waterUser, pumpId, deleteAccounting);
     }
 
     public static final class Delete extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
         static final String METHOD_QUERY_PARAMETER = "method";
         private final String pumpId;
         private final String officeId;
-        private final DeleteMethod deleteMethod;
+        private final String waterUser;
+        private final String contractName;
+        private final String projectId;
+        private final boolean deleteAccounting;
 
-        private Delete(String pumpId, String officeId, DeleteMethod deleteMethod) {
+        private Delete(String officeId, String projectId, String contractName, String waterUser, String pumpId, boolean deleteAccounting) {
             this.pumpId = Objects.requireNonNull(pumpId, "Cannot disassociate a pump without a pumpId");
             this.officeId = Objects.requireNonNull(officeId, "Cannot disassociate a pump without an officeId");
-            this.deleteMethod = deleteMethod;
+            this.deleteAccounting = deleteAccounting;
+            this.waterUser = Objects.requireNonNull(waterUser, "Cannot disassociate a pump without a waterUser");
+            this.contractName = Objects.requireNonNull(contractName, "Cannot disassociate a pump without a contractName");
+            this.projectId = Objects.requireNonNull(projectId, "Cannot disassociate a pump without a projectId");
         }
 
         String pumpId() {
             return pumpId;
         }
 
+        String getOfficeId() {
+            return officeId;
+        }
+
+        String getWaterUser() {
+            return waterUser;
+        }
+
+        String getContractName() {
+            return contractName;
+        }
+
+        String getProjectId() {
+            return projectId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
+            return httpRequestBuilder
+                    .addQueryParameter(METHOD_QUERY_PARAMETER, deleteAccounting ? "true" : "false")
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
