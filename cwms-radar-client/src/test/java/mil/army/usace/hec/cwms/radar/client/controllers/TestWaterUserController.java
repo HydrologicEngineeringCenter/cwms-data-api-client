@@ -16,7 +16,7 @@ class TestWaterUserController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_users.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll().officeId("SPK").waterUserId("Test User 2");
+        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll("SPK", "Test User 2");
         List<WaterUser> values = WaterUserController.retrieveWaterUsers(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUser value = values.get(1);

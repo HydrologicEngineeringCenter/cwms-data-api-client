@@ -17,12 +17,12 @@ class TestWaterUserEndpointInput {
     @Test
     void testGetAllQuery() {
         String office = "SPK";
-        String userId = "user";
+        String projectId = "SACRAMENTO";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = WaterUserEndpointInput.getAll().officeId(office).waterUserId(userId);
+        GetAll input = WaterUserEndpointInput.getAll(office, projectId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
-        assertEquals(userId, mockHttpRequestBuilder.getQueryParameter(GetAll.USER_ID_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
+        assertEquals(projectId, input.getProjectId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -34,8 +34,9 @@ class TestWaterUserEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne(office, userId, projectId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
-        assertEquals(userId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.GetOne.USER_ID_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
+        assertEquals(userId, input.waterUserId());
+        assertEquals(projectId, input.getProjectId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -46,7 +47,7 @@ class TestWaterUserEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         WaterUserEndpointInput.Post input = WaterUserEndpointInput.post(waterUser);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(waterUser, input.waterUser());
+        assertEquals(waterUser, input.getWaterUser());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -58,8 +59,9 @@ class TestWaterUserEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(office, userId, projectId, DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
-        assertEquals(userId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Delete.USER_ID_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
+        assertEquals(userId, input.waterUserId());
+        assertEquals(projectId, input.getProjectId());
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Delete.METHOD_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
@@ -79,11 +81,12 @@ class TestWaterUserEndpointInput {
         String office = "SPK";
         String projectId = "SACRAMENTO";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(oldUserId, newUserId, projectId, office);
+        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(office, projectId, oldUserId, newUserId);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(oldUserId, input.oldWaterUserId());
         assertEquals(newUserId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Patch.NAME_QUERY_PARAMETER));
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Patch.OFFICE_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
+        assertEquals(projectId, input.getProjectId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

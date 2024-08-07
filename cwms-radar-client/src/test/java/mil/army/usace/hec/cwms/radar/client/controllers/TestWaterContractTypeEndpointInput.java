@@ -16,12 +16,10 @@ class TestWaterContractTypeEndpointInput {
     @Test
     void testGetAllQuery() {
         String officeId = "SPK";
-        String projectId = "PROJ";
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = WaterContractTypeEndpointInput.getAll().officeId(officeId).projectId(projectId);
+        GetAll input = WaterContractTypeEndpointInput.getAll(officeId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(officeId, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
-        assertEquals(projectId, mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
+        assertEquals(officeId, input.getOfficeId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 

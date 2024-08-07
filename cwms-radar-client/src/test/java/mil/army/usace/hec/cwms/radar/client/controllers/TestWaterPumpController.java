@@ -1,6 +1,5 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.WaterSupplyPump;
 import org.junit.jupiter.api.Test;
@@ -20,10 +19,14 @@ class TestWaterPumpController extends TestController {
         WaterSupplyPump pump = RadarObjectMapper.mapJsonToObject(collect, WaterSupplyPump.class);
         assertFalse(pump.getPumpLocation() == null && pump.getPumpType() == null);
         WaterPumpController controller = new WaterPumpController();
+        String projectId = "PROJECT";
+        String contractName = "CONTRACT";
+        String waterUser = "user";
         controller.disassociateWaterPump(buildConnectionInfo(cookieJarSupplier), WaterPumpEndpointInput.delete(
-                pump.getPumpLocation().getName(), pump.getPumpLocation().getOfficeId(), DeleteMethod.ALL));
-        WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(pump.getPumpLocation().getName(),
-                pump.getPumpLocation().getOfficeId(), DeleteMethod.ALL);
+                pump.getPumpLocation().getOfficeId(), projectId, contractName, pump.getPumpLocation().getName(),
+                waterUser, true));
+        WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(pump.getPumpLocation().getOfficeId(),
+                projectId, contractName, waterUser, pump.getPumpLocation().getName(), true);
         assertDoesNotThrow(() -> controller.disassociateWaterPump(buildConnectionInfo(cookieJarSupplier), input));
     }
 }
