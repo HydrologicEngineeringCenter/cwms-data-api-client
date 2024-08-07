@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEn
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.CURSOR_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.GROUP_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.LOCATION_KIND_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.LOCATION_TYPE_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.OFFICE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.PAGE_SIZE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationCatalogEndpointInput.UNIT_SYSTEM_QUERY_PARAMETER;
@@ -49,7 +51,9 @@ class TestLocationCatalogEndpointInput {
             .pageSize(5)
             .locationIdFilter("BASE-SUB")
             .categoryIdFilter("CAT")
-            .groupIdFilter("GROUP");
+            .groupIdFilter("GROUP")
+            .locationKindLike("PROJECT")
+            .locationTypeLike("RESERVOIR");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(UNIT_SYSTEM_QUERY_PARAMETER));
@@ -58,6 +62,8 @@ class TestLocationCatalogEndpointInput {
         assertEquals("BASE-SUB", mockHttpRequestBuilder.getQueryParameter(LIKE_QUERY_PARAMETER));
         assertEquals("CAT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_LIKE_QUERY_PARAMETER));
         assertEquals("GROUP", mockHttpRequestBuilder.getQueryParameter(GROUP_LIKE_QUERY_PARAMETER));
+        assertEquals("PROJECT", mockHttpRequestBuilder.getQueryParameter(LOCATION_KIND_LIKE_QUERY_PARAMETER));
+        assertEquals("RESERVOIR", mockHttpRequestBuilder.getQueryParameter(LOCATION_TYPE_LIKE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

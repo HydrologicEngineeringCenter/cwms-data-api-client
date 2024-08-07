@@ -54,6 +54,11 @@ public final class BasinEndpointInput {
             return this;
         }
 
+        public GetAll units(String units) {
+            this.units = units;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
