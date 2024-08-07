@@ -37,9 +37,7 @@ public final class BasinEndpointInput {
 
     public static final class GetAll extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
-        static final String UNITS_QUERY_PARAMETER = "units";
-        private String projectId;
+        static final String UNIT_QUERY_PARAMETER = "unit";
         private String officeId;
         private String units;
 
@@ -51,11 +49,6 @@ public final class BasinEndpointInput {
             return this;
         }
 
-        public GetAll projectId(String projectId) {
-            this.projectId = projectId;
-            return this;
-        }
-
         public GetAll units(String units) {
             this.units = units;
             return this;
@@ -63,16 +56,15 @@ public final class BasinEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(PROJECT_ID_QUERY_PARAMETER, projectId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(UNITS_QUERY_PARAMETER, units)
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(UNIT_QUERY_PARAMETER, units)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
     public static final class GetOne extends EndpointInput {
         public static final String OFFICE_QUERY_PARAMETER = "office";
-        public static final String UNITS_QUERY_PARAMETER = "units";
+        public static final String UNIT_QUERY_PARAMETER = "unit";
         private final String officeId;
         private final String basinId;
         private String units;
@@ -94,7 +86,7 @@ public final class BasinEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(UNITS_QUERY_PARAMETER, units)
+                    .addQueryParameter(UNIT_QUERY_PARAMETER, units)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
