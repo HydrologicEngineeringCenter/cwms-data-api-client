@@ -1,8 +1,33 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2024 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
@@ -26,6 +51,10 @@ public final class ProjectEndpointInput {
         return new ProjectEndpointInput.GetAll();
     }
 
+    public static ProjectEndpointInput.ProjectChildLocations projectChildLocations(String office) {
+        return new ProjectEndpointInput.ProjectChildLocations(office);
+    }
+
     public static ProjectEndpointInput.Patch patch(Project project) {
         // update
         return new ProjectEndpointInput.Patch(project);
@@ -34,6 +63,11 @@ public final class ProjectEndpointInput {
     public static ProjectEndpointInput.Post post(Project project) {
         // create
         return new ProjectEndpointInput.Post(project);
+    }
+
+    public static ProjectEndpointInput.StatusUpdate statusUpdate(String office, String projectId,
+        String applicationId) {
+        return new ProjectEndpointInput.StatusUpdate(office, projectId, applicationId);
     }
 
     public static ProjectEndpointInput.Delete delete(String projectId, String office, DeleteMethod deleteMethod) {
@@ -57,7 +91,7 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
@@ -78,10 +112,10 @@ public final class ProjectEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(ID_MASK, projectIdMask)
-                    .addQueryParameter(PAGE_QUERY_PARAMETER, page)
-                    .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryParameter(ID_MASK, projectIdMask)
+                .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+                .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
 
         public ProjectEndpointInput.GetAll officeId(String officeId) {
@@ -106,6 +140,38 @@ public final class ProjectEndpointInput {
 
     }
 
+    public static final class ProjectChildLocations extends EndpointInput {
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String PROJECT_LIKE_QUERY_PARAMETER = "project-like";
+        static final String LOCATION_KIND_LIKE_QUERY_MASK = "location-kind-like";
+        private final String officeId;
+        private String projectIdMask;
+        private String locationKindMask;
+
+        private ProjectChildLocations(String officeId) {
+            this.officeId = Objects.requireNonNull(officeId, "Cannot request project locations without an office");
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(PROJECT_LIKE_QUERY_PARAMETER, projectIdMask)
+                .addQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK, locationKindMask)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
+
+        public ProjectEndpointInput.ProjectChildLocations locationKindMask(String locationKindMask) {
+            this.locationKindMask = locationKindMask;
+            return this;
+        }
+
+        public ProjectEndpointInput.ProjectChildLocations projectIdMask(String projectIdMask) {
+            this.projectIdMask = projectIdMask;
+            return this;
+        }
+
+    }
+
     public static final class Patch extends EndpointInput {
         private final Project project;
 
@@ -120,7 +186,7 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
@@ -138,7 +204,69 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+        }
+    }
+
+    public static final class StatusUpdate extends EndpointInput {
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        static final String APPLICATION_ID_QUERY_PARAMETER = "application-id";
+        static final String SOURCE_ID_QUERY_PARAMETER = "source-id";
+        static final String TIMESERIES_ID_QUERY_PARAMETER = "timeseries-id";
+        static final String BEGIN_QUERY_PARAMETER = "begin";
+        static final String END_QUERY_PARAMETER = "end";
+
+        private final String officeId;
+        private final String projectId;
+        private final String applicationId;
+        private String sourceId;
+        private String timeSeriesId;
+        private Instant begin;
+        private Instant end;
+
+        private StatusUpdate(String officeId, String projectId, String applicationId) {
+            this.officeId = Objects.requireNonNull(officeId, "Cannot post Project status update without an office");
+            this.projectId =
+                Objects.requireNonNull(projectId, "Cannot post Project status update without a Project id");
+            this.applicationId =
+                Objects.requireNonNull(applicationId, "Cannot post Project status update without an application");
+        }
+
+        String projectId() {
+            return projectId;
+        }
+
+        public StatusUpdate sourceId(String sourceId) {
+            this.sourceId = sourceId;
+            return this;
+        }
+
+        public StatusUpdate timeSeriesId(String timeSeriesId) {
+            this.timeSeriesId = timeSeriesId;
+            return this;
+        }
+
+        public StatusUpdate begin(Instant begin) {
+            this.begin = begin;
+            return this;
+        }
+
+        public StatusUpdate end(Instant end) {
+            this.end = end;
+            return this;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(APPLICATION_ID_QUERY_PARAMETER, applicationId)
+                .addQueryParameter(SOURCE_ID_QUERY_PARAMETER, sourceId)
+                .addQueryParameter(TIMESERIES_ID_QUERY_PARAMETER, timeSeriesId)
+                .addQueryParameter(BEGIN_QUERY_PARAMETER,
+                    Optional.ofNullable(begin).map(Instant::toString).orElse(null))
+                .addQueryParameter(END_QUERY_PARAMETER, Optional.ofNullable(end).map(Instant::toString).orElse(null))
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
@@ -162,10 +290,10 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                    .addQueryParameter(DELETE_METHOD_QUERY_PARAMETER, deleteMethod.toString())
-                    .addQueryParameter(NAME_QUERY_PARAMETER, projectId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryParameter(DELETE_METHOD_QUERY_PARAMETER, deleteMethod.toString())
+                .addQueryParameter(NAME_QUERY_PARAMETER, projectId)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
