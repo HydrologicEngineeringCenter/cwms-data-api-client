@@ -97,17 +97,19 @@ class TestProjectController extends TestController {
     }
 
     @Test
-    void testUpdate() throws IOException {
+    void testUpdate() throws Exception {
         String collect = readJsonFile("radar/v1/json/project.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
         ProjectController controller = new ProjectController();
 
-        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch(project);
+        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch("SPK", "OLD", "NEW");
 
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         assertDoesNotThrow(() -> controller.updateProject(apiConnectionInfo, input));
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        assertEquals("/projects/OLD?name=NEW&office=SPK", request.getPath());
+        assertEquals("PATCH", request.getMethod());
     }
 
     @Test

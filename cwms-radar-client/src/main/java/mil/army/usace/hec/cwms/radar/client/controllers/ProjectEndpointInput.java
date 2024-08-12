@@ -55,9 +55,9 @@ public final class ProjectEndpointInput {
         return new GetProjectChildLocations(office);
     }
 
-    public static ProjectEndpointInput.Patch patch(Project project) {
+    public static ProjectEndpointInput.Patch patch(String office, String oldName, String newName) {
         // update
-        return new ProjectEndpointInput.Patch(project);
+        return new ProjectEndpointInput.Patch(office, oldName, newName);
     }
 
     public static ProjectEndpointInput.Post post(Project project) {
@@ -173,19 +173,27 @@ public final class ProjectEndpointInput {
     }
 
     public static final class Patch extends EndpointInput {
-        private final Project project;
+        static final String NAME_QUERY_PARAMETER = "name";
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        private final String office;
+        private final String oldName;
+        private final String newName;
 
-        private Patch(Project project) {
-            this.project = Objects.requireNonNull(project, "Cannot patch Project without Project data");
+        private Patch(String office, String oldName, String newName) {
+            this.office = Objects.requireNonNull(office, "Cannot rename Project without an office");
+            this.oldName = Objects.requireNonNull(oldName, "Cannot rename Project without the original name");
+            this.newName = Objects.requireNonNull(newName, "Cannot rename Project without a new name");
         }
 
-        Project project() {
-            return project;
+        String oldName() {
+            return oldName;
         }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
+                .addQueryParameter(NAME_QUERY_PARAMETER, newName)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.LOCATION_KIND_LIKE_QUERY_MASK;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.PROJECT_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.Patch.NAME_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.APPLICATION_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.BEGIN_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.END_QUERY_PARAMETER;
@@ -192,6 +193,24 @@ class TestProjectEndpointInput {
         assertEquals("T*", mockHttpRequestBuilder.getQueryParameter(PROJECT_LIKE_QUERY_PARAMETER));
         assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPatch() {
+        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch(OFFICE, "OLD", "NEW");
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("OLD", input.oldName());
+        assertEquals(OFFICE, mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("NEW", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPatchNulls() {
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(null, "OLD", "NEW"));
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(OFFICE, null, "NEW"));
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(OFFICE, "OLD", null));
     }
 
 }

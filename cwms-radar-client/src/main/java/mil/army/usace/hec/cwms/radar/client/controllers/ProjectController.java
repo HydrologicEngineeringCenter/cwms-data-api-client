@@ -80,14 +80,12 @@ public final class ProjectController {
     }
 
     public void updateProject(ApiConnectionInfo apiConnectionInfo, ProjectEndpointInput.Patch input) throws IOException {
-        Project project = input.project();
-        String body = RadarObjectMapper.mapObjectToJson(project);
-        String endpoint = PROJECT_ENDPOINT + "/" + project.getLocation().getName();
+        String oldName = input.oldName();
+        String endpoint = PROJECT_ENDPOINT + "/" + oldName;
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
-                .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
