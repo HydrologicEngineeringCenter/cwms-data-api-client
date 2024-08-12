@@ -11,8 +11,7 @@ import java.io.IOException;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestWaterContractEndpointInput {
 
@@ -39,7 +38,7 @@ class TestWaterContractEndpointInput {
         String waterUser = "user";
         WaterContractEndpointInput.GetOne input = WaterContractEndpointInput.getOne(office, contractId, projectId, waterUser);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(contractId, input.waterContractId());
+        assertEquals(contractId, input.getContractName());
         assertEquals(office, input.getOfficeId());
         assertEquals(projectId, input.getProjectId());
         assertEquals(waterUser, input.getWaterUser());
@@ -51,9 +50,12 @@ class TestWaterContractEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/water_contract.json");
         WaterUserContract waterContract = RadarObjectMapper.mapJsonToObject(collect, WaterUserContract.class);
-        WaterContractEndpointInput.Post input = WaterContractEndpointInput.post(waterContract);
+        WaterContractEndpointInput.Post input = WaterContractEndpointInput.post(waterContract)
+                .failIfExists(false).ignoreNulls(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(waterContract, input.getWaterContract());
+        assertTrue(input.getIgnoreNulls());
+        assertFalse(input.getFailIfExists());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -68,7 +70,7 @@ class TestWaterContractEndpointInput {
         WaterContractEndpointInput.Delete input = WaterContractEndpointInput.delete(office, projectId, waterUser,
                 contractId, deleteMethod);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(contractId, input.getWaterContractId());
+        assertEquals(contractId, input.getContractName());
         assertEquals(office, input.getOfficeId());
         assertEquals(deleteMethod.toString(), mockHttpRequestBuilder.getQueryParameter(WaterContractEndpointInput
                 .Delete.METHOD_QUERY_PARAMETER));
@@ -102,7 +104,7 @@ class TestWaterContractEndpointInput {
         WaterContractEndpointInput.Patch input = WaterContractEndpointInput.patch(office, projectId, waterUser,
                 oldContractId, newContractId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(oldContractId, input.getOldWaterContractId());
+        assertEquals(oldContractId, input.getOldWaterContractName());
         assertEquals(newContractId, mockHttpRequestBuilder.getQueryParameter(WaterContractEndpointInput
                 .Patch.NAME_QUERY_PARAMETER));
         assertEquals(office, input.getOfficeId());

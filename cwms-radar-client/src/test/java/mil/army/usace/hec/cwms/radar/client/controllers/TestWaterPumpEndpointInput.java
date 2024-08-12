@@ -1,5 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.WaterSupplyPump.PumpTypeEnum;
 import org.junit.jupiter.api.Test;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
@@ -11,7 +12,7 @@ class TestWaterPumpEndpointInput {
     @Test
     void testDeleteQuery() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        String pumpId = "PUMP";
+        PumpTypeEnum pumpId = PumpTypeEnum.IN;
         String office = "SPK";
         String projectId = "PROJECT";
         String contractName = "CONTRACT";
@@ -19,7 +20,7 @@ class TestWaterPumpEndpointInput {
         WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(office, projectId, contractName, waterUser,
                 pumpId, false);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(pumpId, input.pumpId());
+        assertEquals(pumpId.toString(), input.pumpId().toString());
         assertEquals(office, input.getOfficeId());
         assertEquals(projectId, input.getProjectId());
         assertEquals(contractName, input.getContractName());
@@ -41,7 +42,5 @@ class TestWaterPumpEndpointInput {
                 () -> WaterPumpEndpointInput.delete(null, null, "", null, null, true));
         assertThrows(NullPointerException.class,
                 () -> WaterPumpEndpointInput.delete(null, null, null, "", null, true));
-        assertThrows(NullPointerException.class,
-                () -> WaterPumpEndpointInput.delete(null, null, null, null, "", true));
     }
 }

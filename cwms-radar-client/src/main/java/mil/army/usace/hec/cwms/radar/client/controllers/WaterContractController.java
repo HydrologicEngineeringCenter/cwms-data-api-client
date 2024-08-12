@@ -20,7 +20,7 @@ public final class WaterContractController {
     public WaterUserContract retrieveWaterContract(ApiConnectionInfo apiConnectionInfo,
             WaterContractEndpointInput.GetOne input) throws IOException {
         String endpoint = format(WATER_CONTRACT_ENDPOINT, input.getOfficeId(), input.getProjectId(), input.getWaterUser())
-                + "/" + input.waterContractId();
+                + "/" + input.getContractName();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -61,7 +61,7 @@ public final class WaterContractController {
 
     public void renameWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Patch input) throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getOfficeId(), input.getProjectId(), input.getWaterUser()) + "/" + input.getOldWaterContractId())
+                input.getOfficeId(), input.getProjectId(), input.getWaterUser()) + "/" + input.getOldWaterContractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -72,7 +72,7 @@ public final class WaterContractController {
 
     public void deleteWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Delete input) throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getOfficeId(), input.getProjectId(), input.getWaterUserId()) + "/" + input.getWaterContractId())
+                input.getOfficeId(), input.getProjectId(), input.getWaterUserId()) + "/" + input.getContractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

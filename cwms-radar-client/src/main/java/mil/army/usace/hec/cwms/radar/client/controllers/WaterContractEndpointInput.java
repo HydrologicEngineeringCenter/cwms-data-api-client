@@ -67,20 +67,20 @@ public final class WaterContractEndpointInput {
     }
 
     public static final class GetOne extends EndpointInput {
-        private final String waterContractId;
+        private final String contractName;
         private final String officeId;
         private final String projectId;
         private final String waterUser;
 
-        private GetOne(String officeId, String waterContractId, String projectId, String waterUser) {
-            this.waterContractId = Objects.requireNonNull(waterContractId);
+        private GetOne(String officeId, String contractName, String projectId, String waterUser) {
+            this.contractName = Objects.requireNonNull(contractName);
             this.officeId = Objects.requireNonNull(officeId);
             this.projectId = Objects.requireNonNull(projectId);
             this.waterUser = Objects.requireNonNull(waterUser);
         }
 
-        String waterContractId() {
-            return waterContractId;
+        String getContractName() {
+            return contractName;
         }
 
         String getOfficeId() {
@@ -103,22 +103,22 @@ public final class WaterContractEndpointInput {
 
     public static final class Delete extends EndpointInput {
         static final String METHOD_QUERY_PARAMETER = "method";
-        private final String waterContractId;
+        private final String contractName;
         private final String officeId;
         private final DeleteMethod deleteMethod;
         private final String projectId;
         private final String waterUserId;
 
-        private Delete(String officeId, String projectId, String waterUser, String waterContractId, DeleteMethod deleteMethod) {
-            this.waterContractId = Objects.requireNonNull(waterContractId);
+        private Delete(String officeId, String projectId, String waterUser, String contractName, DeleteMethod deleteMethod) {
+            this.contractName = Objects.requireNonNull(contractName);
             this.officeId = Objects.requireNonNull(officeId);
             this.deleteMethod = Objects.requireNonNull(deleteMethod);
             this.projectId = Objects.requireNonNull(projectId);
             this.waterUserId = Objects.requireNonNull(waterUser);
         }
 
-        String getWaterContractId() {
-            return waterContractId;
+        String getContractName() {
+            return contractName;
         }
 
         String getOfficeId() {
@@ -142,11 +142,33 @@ public final class WaterContractEndpointInput {
     }
 
     public static final class Post extends EndpointInput {
+        private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
+        private static final String IGNORE_NULLS_QUERY_PARAMETER = "ignore-nulls";
         private final WaterUserContract waterContract;
+        private boolean failIfExists = true;
+        private boolean ignoreNulls = false;
 
         private Post(WaterUserContract waterContract) {
             this.waterContract = Objects.requireNonNull(waterContract, "Cannot access the water contract "
                     + "POST endpoint without a water contract value");
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
+        }
+
+        public Post ignoreNulls(boolean ignoreNulls) {
+            this.ignoreNulls = ignoreNulls;
+            return this;
+        }
+
+        public boolean getFailIfExists() {
+            return failIfExists;
+        }
+
+        public boolean getIgnoreNulls() {
+            return ignoreNulls;
         }
 
         WaterUserContract getWaterContract() {
@@ -155,28 +177,30 @@ public final class WaterContractEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, String.valueOf(failIfExists))
+                    .addQueryParameter(IGNORE_NULLS_QUERY_PARAMETER, String.valueOf(ignoreNulls))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
     public static final class Patch extends EndpointInput {
-        private final String oldWaterContractId;
-        private final String newWaterContractId;
+        private final String oldWaterContractName;
+        private final String newWaterContractName;
         static final String NAME_QUERY_PARAMETER = "name";
         private final String projectId;
         private final String waterUser;
         private final String officeId;
 
-        private Patch(String officeId, String projectId, String waterUser, String oldWaterContractId, String newWaterContractId) {
-            this.oldWaterContractId = Objects.requireNonNull(oldWaterContractId);
-            this.newWaterContractId = Objects.requireNonNull(newWaterContractId);
+        private Patch(String officeId, String projectId, String waterUser, String oldWaterContractName, String newWaterContractName) {
+            this.oldWaterContractName = Objects.requireNonNull(oldWaterContractName);
+            this.newWaterContractName = Objects.requireNonNull(newWaterContractName);
             this.officeId = Objects.requireNonNull(officeId);
             this.projectId = Objects.requireNonNull(projectId);
             this.waterUser = Objects.requireNonNull(waterUser);
         }
 
-        String getOldWaterContractId() {
-            return oldWaterContractId;
+        String getOldWaterContractName() {
+            return oldWaterContractName;
         }
 
         String getProjectId() {
@@ -194,7 +218,7 @@ public final class WaterContractEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                    .addQueryParameter(NAME_QUERY_PARAMETER, newWaterContractId)
+                    .addQueryParameter(NAME_QUERY_PARAMETER, newWaterContractName)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

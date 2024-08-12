@@ -46,8 +46,10 @@ class TestWaterUserEndpointInput {
         WaterUser waterUser = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         WaterUserEndpointInput.Post input = WaterUserEndpointInput.post(waterUser);
+        input.failIfExists(false); // Default is true
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(waterUser, input.getWaterUser());
+        assertFalse(input.getFailIfExists());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 

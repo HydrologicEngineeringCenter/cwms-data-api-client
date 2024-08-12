@@ -42,7 +42,7 @@ public final class WaterContractTypeEndpointInput {
     public static final class Post extends EndpointInput {
         private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
         private final LookupType waterContractType;
-        private boolean failIfExists;
+        private boolean failIfExists = true;
 
         private Post(LookupType waterContractType) {
             this.waterContractType = waterContractType;

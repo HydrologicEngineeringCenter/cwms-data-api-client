@@ -92,9 +92,16 @@ public final class WaterUserEndpointInput {
 
     public static final class Post extends EndpointInput {
         private final WaterUser waterUser;
+        private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
+        private boolean failIfExists = true;
 
         private Post(WaterUser waterUser) {
             this.waterUser = Objects.requireNonNull(waterUser, "Water User required for post water user endpoint");
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
         }
 
         WaterUser getWaterUser() {
@@ -109,9 +116,14 @@ public final class WaterUserEndpointInput {
             return waterUser.getProjectId().getName();
         }
 
+        boolean getFailIfExists() {
+            return failIfExists;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, String.valueOf(failIfExists))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 

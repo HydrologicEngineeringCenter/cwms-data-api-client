@@ -10,7 +10,7 @@ import java.io.IOException;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestWaterContractTypeEndpointInput {
     @Test
@@ -29,8 +29,22 @@ class TestWaterContractTypeEndpointInput {
         String collect = readJsonFile("radar/v1/json/water_contract_type.json");
         LookupType waterContractType = RadarObjectMapper.mapJsonToObject(collect, LookupType.class);
         WaterContractTypeEndpointInput.Post input = WaterContractTypeEndpointInput.post(waterContractType);
+        input.failIfExists(false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(waterContractType, input.waterContractType());
+        assertFalse(input.getFailIfExists());
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testFailIfExistsDefault() throws IOException {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        String collect = readJsonFile("radar/v1/json/water_contract_type.json");
+        LookupType waterContractType = RadarObjectMapper.mapJsonToObject(collect, LookupType.class);
+        WaterContractTypeEndpointInput.Post input = WaterContractTypeEndpointInput.post(waterContractType);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(waterContractType, input.waterContractType());
+        assertTrue(input.getFailIfExists());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
