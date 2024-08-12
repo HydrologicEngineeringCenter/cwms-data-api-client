@@ -37,7 +37,7 @@ import mil.army.usace.hec.cwms.radar.client.model.ProjectLockId;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 public final class ProjectLockController {
-    public static final String PATH = "/project-locks";
+    public static final String PATH = "project-locks";
 
     /**
      * Retrieve the project locks.
