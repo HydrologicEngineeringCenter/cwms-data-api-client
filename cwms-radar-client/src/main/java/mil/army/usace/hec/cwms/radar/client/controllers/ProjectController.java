@@ -104,7 +104,7 @@ public final class ProjectController {
     }
 
     public ProjectChildLocations getProjectChildLocations(ApiConnectionInfo apiConnectionInfo,
-        ProjectEndpointInput.ProjectChildLocations input) throws IOException {
+        ProjectEndpointInput.GetProjectChildLocations input) throws IOException {
         String endpoint = PROJECT_ENDPOINT + "/locations";
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)

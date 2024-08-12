@@ -24,8 +24,8 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.ProjectChildLocations.LOCATION_KIND_LIKE_QUERY_MASK;
-import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.ProjectChildLocations.PROJECT_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.LOCATION_KIND_LIKE_QUERY_MASK;
+import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.PROJECT_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.APPLICATION_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.BEGIN_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.END_QUERY_PARAMETER;
@@ -170,20 +170,20 @@ class TestProjectEndpointInput {
     }
 
     @Test
-    void testProjectChildLocationsDefault() {
-        ProjectEndpointInput.ProjectChildLocations input = ProjectEndpointInput.projectChildLocations(OFFICE);
+    void testGetProjectChildLocationsDefault() {
+        ProjectEndpointInput.GetProjectChildLocations input = ProjectEndpointInput.getProjectChildLocations(OFFICE);
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(OFFICE, mockHttpRequestBuilder.getQueryParameter(
-            ProjectEndpointInput.ProjectChildLocations.OFFICE_QUERY_PARAMETER));
+            ProjectEndpointInput.GetProjectChildLocations.OFFICE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(PROJECT_LIKE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
-    void testProjectChildLocations() {
-        ProjectEndpointInput.ProjectChildLocations input = ProjectEndpointInput.projectChildLocations(OFFICE)
+    void testGetProjectChildLocations() {
+        ProjectEndpointInput.GetProjectChildLocations input = ProjectEndpointInput.getProjectChildLocations(OFFICE)
             .projectIdMask("T*")
             .locationKindMask("*");
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();

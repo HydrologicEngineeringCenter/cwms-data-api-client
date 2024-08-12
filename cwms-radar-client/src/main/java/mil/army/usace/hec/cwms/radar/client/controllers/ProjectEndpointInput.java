@@ -51,8 +51,8 @@ public final class ProjectEndpointInput {
         return new ProjectEndpointInput.GetAll();
     }
 
-    public static ProjectEndpointInput.ProjectChildLocations projectChildLocations(String office) {
-        return new ProjectEndpointInput.ProjectChildLocations(office);
+    public static GetProjectChildLocations getProjectChildLocations(String office) {
+        return new GetProjectChildLocations(office);
     }
 
     public static ProjectEndpointInput.Patch patch(Project project) {
@@ -140,7 +140,7 @@ public final class ProjectEndpointInput {
 
     }
 
-    public static final class ProjectChildLocations extends EndpointInput {
+    public static final class GetProjectChildLocations extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String PROJECT_LIKE_QUERY_PARAMETER = "project-like";
         static final String LOCATION_KIND_LIKE_QUERY_MASK = "location-kind-like";
@@ -148,7 +148,7 @@ public final class ProjectEndpointInput {
         private String projectIdMask;
         private String locationKindMask;
 
-        private ProjectChildLocations(String officeId) {
+        private GetProjectChildLocations(String officeId) {
             this.officeId = Objects.requireNonNull(officeId, "Cannot request project locations without an office");
         }
 
@@ -160,12 +160,12 @@ public final class ProjectEndpointInput {
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
 
-        public ProjectEndpointInput.ProjectChildLocations locationKindMask(String locationKindMask) {
+        public GetProjectChildLocations locationKindMask(String locationKindMask) {
             this.locationKindMask = locationKindMask;
             return this;
         }
 
-        public ProjectEndpointInput.ProjectChildLocations projectIdMask(String projectIdMask) {
+        public GetProjectChildLocations projectIdMask(String projectIdMask) {
             this.projectIdMask = projectIdMask;
             return this;
         }

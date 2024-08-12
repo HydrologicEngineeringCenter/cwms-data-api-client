@@ -149,7 +149,7 @@ class TestProjectController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         ProjectController controller = new ProjectController();
-        ProjectEndpointInput.ProjectChildLocations input = ProjectEndpointInput.projectChildLocations("SPK")
+        ProjectEndpointInput.GetProjectChildLocations input = ProjectEndpointInput.getProjectChildLocations("SPK")
             .projectIdMask("T*")
             .locationKindMask("*");
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
