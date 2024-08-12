@@ -12803,6 +12803,8 @@ components:
               items:
                 type: object
                 properties:
+                  dateBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -12817,8 +12819,6 @@ components:
                       zero:
                         type: boolean
                   durationEstimated:
-                    type: boolean
-                  dateBased:
                     type: boolean
                   timeBased:
                     type: boolean
@@ -12953,6 +12953,8 @@ components:
               items:
                 type: object
                 properties:
+                  dateBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -12967,8 +12969,6 @@ components:
                       zero:
                         type: boolean
                   durationEstimated:
-                    type: boolean
-                  dateBased:
                     type: boolean
                   timeBased:
                     type: boolean
@@ -14596,14 +14596,14 @@ components:
             - OUTLET
             - LOCK
             - GATE
-        locations:
+        location-ids:
           type: array
           items:
             $ref: '#/components/schemas/CwmsId'
     ProjectChildLocations:
       type: object
       properties:
-        project:
+        project-id:
           $ref: '#/components/schemas/CwmsId'
         locations-by-kind:
           type: array

@@ -35,27 +35,27 @@ import java.util.Objects;
  * ProjectChildLocations
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-08-09T13:35:57.344193100-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-08-12T08:16:03.445647-07:00[America/Los_Angeles]")
 public class ProjectChildLocations {
 
-    @JsonProperty("project")
-    private CwmsId project = null;
+    @JsonProperty("project-id")
+    private CwmsId projectId = null;
 
     @JsonProperty("locations-by-kind")
     @Valid
     private List<LocationsWithProjectKind> locationsByKind = new ArrayList<>();
 
-    public ProjectChildLocations project(CwmsId project) {
-        this.project = project;
+    public ProjectChildLocations projectId(CwmsId projectId) {
+        this.projectId = projectId;
         return this;
     }
 
-    public CwmsId getProject() {
-        return project;
+    public CwmsId getProjectId() {
+        return projectId;
     }
 
-    public void setProject(CwmsId project) {
-        this.project = project;
+    public void setProjectId(CwmsId projectId) {
+        this.projectId = projectId;
     }
 
     public ProjectChildLocations locationsByKind(List<LocationsWithProjectKind> locationsByKind) {
@@ -88,14 +88,14 @@ public class ProjectChildLocations {
             return false;
         }
         ProjectChildLocations projectChildLocations = (ProjectChildLocations) o;
-        return Objects.equals(this.project, projectChildLocations.project)
+        return Objects.equals(this.projectId, projectChildLocations.projectId)
             && Objects.equals(this.locationsByKind, projectChildLocations.locationsByKind)
             ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(project, locationsByKind);
+        return Objects.hash(projectId, locationsByKind);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class ProjectChildLocations {
         StringBuilder sb = new StringBuilder();
         sb.append("class ProjectChildLocations {\n");
 
-        sb.append("    project: ").append(toIndentedString(project)).append("\n");
+        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    locationsByKind: ").append(toIndentedString(locationsByKind)).append("\n");
         sb.append("}");
         return sb.toString();

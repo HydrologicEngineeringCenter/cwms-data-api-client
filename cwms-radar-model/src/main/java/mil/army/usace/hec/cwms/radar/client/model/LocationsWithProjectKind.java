@@ -37,7 +37,7 @@ import java.util.Objects;
  * LocationsWithProjectKind
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-08-09T13:35:57.344193100-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-08-12T08:16:03.445647-07:00[America/Los_Angeles]")
 public class LocationsWithProjectKind {
 
     /**
@@ -80,9 +80,9 @@ public class LocationsWithProjectKind {
     @JsonProperty("kind")
     private KindEnum kind = null;
 
-    @JsonProperty("locations")
+    @JsonProperty("location-ids")
     @Valid
-    private List<CwmsId> locations = new ArrayList<>();
+    private List<CwmsId> locationIds = new ArrayList<>();
 
     public LocationsWithProjectKind kind(KindEnum kind) {
         this.kind = kind;
@@ -97,25 +97,25 @@ public class LocationsWithProjectKind {
         this.kind = kind;
     }
 
-    public LocationsWithProjectKind locations(List<CwmsId> locations) {
-        this.locations = locations;
+    public LocationsWithProjectKind locationIds(List<CwmsId> locationIds) {
+        this.locationIds = locationIds;
         return this;
     }
 
-    public LocationsWithProjectKind addLocationsItem(CwmsId locationsItem) {
-        if (this.locations == null) {
-            this.locations = new ArrayList<>();
+    public LocationsWithProjectKind addLocationIdsItem(CwmsId locationIdsItem) {
+        if (this.locationIds == null) {
+            this.locationIds = new ArrayList<>();
         }
-        this.locations.add(locationsItem);
+        this.locationIds.add(locationIdsItem);
         return this;
     }
 
-    public List<CwmsId> getLocations() {
-        return locations;
+    public List<CwmsId> getLocationIds() {
+        return locationIds;
     }
 
-    public void setLocations(List<CwmsId> locations) {
-        this.locations = locations;
+    public void setLocationIds(List<CwmsId> locationIds) {
+        this.locationIds = locationIds;
     }
 
     @Override
@@ -130,13 +130,13 @@ public class LocationsWithProjectKind {
         return this.kind == null || locationsWithProjectKind.kind == null ?
             Objects.equals(this.kind, locationsWithProjectKind.kind) :
             this.kind == locationsWithProjectKind.kind
-                && Objects.equals(this.locations, locationsWithProjectKind.locations)
+                && Objects.equals(this.locationIds, locationsWithProjectKind.locationIds)
             ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kind == null ? 0 : kind, locations);
+        return Objects.hash(kind, locationIds);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class LocationsWithProjectKind {
         sb.append("class LocationsWithProjectKind {\n");
 
         sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-        sb.append("    locations: ").append(toIndentedString(locations)).append("\n");
+        sb.append("    locationIds: ").append(toIndentedString(locationIds)).append("\n");
         sb.append("}");
         return sb.toString();
     }

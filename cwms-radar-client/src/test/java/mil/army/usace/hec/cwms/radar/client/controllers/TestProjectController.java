@@ -154,8 +154,8 @@ class TestProjectController extends TestController {
             .locationKindMask("*");
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         ProjectChildLocations projectChildLocations = controller.getProjectChildLocations(apiConnectionInfo, input);
-        assertEquals("TestProject", projectChildLocations.getProject().getName());
-        assertEquals("SPK", projectChildLocations.getProject().getOfficeId());
+        assertEquals("TestProject", projectChildLocations.getProjectId().getName());
+        assertEquals("SPK", projectChildLocations.getProjectId().getOfficeId());
         assertFalse(projectChildLocations.getLocationsByKind().isEmpty());
     }
 }
