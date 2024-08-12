@@ -5372,15 +5372,17 @@ paths:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
+          description: Specifies the owning office of the basin whose data is to be included in the response.
+          required: true
           schema:
             type: string
         - name: unit
           in: query
           description: |-
-            Specifies the unit or unit system of the response. Valid values for the unit field are:
-            * `EN`  Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)
-            * `SI`  Specifies the SI unit system. Basin values will be in the default SI units for their parameters.
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  (default) Specifies English unit system.  Basin area values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
       responses:
@@ -5453,12 +5455,12 @@ paths:
           required: true
           schema:
             type: string
-        - name: delete-mode
+        - name: method
           in: query
           description: Specifies the delete method used.
           required: true
           schema:
-            type: string
+            $ref: '#/components/schemas/DeleteMethod'
       responses:
         '400':
           description: Bad Request
@@ -5479,7 +5481,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: The provided combination of parameters did not find a basin.
+          description: Not Found
           content:
             application/json:
               schema:
@@ -5490,8 +5492,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
@@ -5504,6 +5504,12 @@ paths:
       parameters:
         - name: basin-id
           in: path
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: path
+          description: Specifies the owning office of the basin to be renamed.
           required: true
           schema:
             type: string
@@ -8376,6 +8382,985 @@ paths:
         '501':
           description: Requested format is not implemented
       security: []
+  /cwms-data/projects/status-update/{name}:
+    post:
+      tags:
+        - Projects
+      summary: Post cwmsData projects statusUpdate with name
+      description: Publishes a message on the office's STATUS queue that a project has been updated for a specified application
+      operationId: postCwmsDataProjectsStatusUpdateWithName
+      parameters:
+        - name: name
+          in: path
+          description: The location identifier of the project that has been updated
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: The office generating the message (and owning the project).
+          required: true
+          schema:
+            type: string
+        - name: application-id
+          in: query
+          description: A text string identifying the application for which the update applies.
+          required: true
+          schema:
+            type: string
+        - name: source-id
+          in: query
+          description: An application-defined string of the instance and/or component that generated the message. If NULL or not specified, the generated message will not include this item.
+          schema:
+            type: string
+        - name: timeseries-id
+          in: query
+          description: A time series identifier of the time series associated with the update. If NULL or not specified, the generated message will not include this item.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start time of the updates to the time series. If NULL or not specified, the generated message will not include this item.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end time of the updates to the time series. If NULL or not specified, the generated message will not include this item.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}:
+    get:
+      tags:
+        - Water Contracts
+      summary: Get cwmsData projects with office with projectId waterUser with waterUser
+      description: Gets a specified water user.
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/WaterUserContract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Water Contracts
+      summary: Delete cwmsData projects with office with projectId waterUser with waterUser
+      description: Deletes a water user from CWMS.
+      operationId: deleteCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Default is DELETE_ALL.
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    patch:
+      tags:
+        - Water Contracts
+      summary: Patch cwmsData projects with office with projectId waterUser with waterUser
+      description: Updates a water user in CWMS.
+      operationId: patchCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the new name of the water user entity.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterUser'
+        required: true
+      responses:
+        '204':
+          description: Water user successfully updated in CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/{project-id}/water-user:
+    get:
+      tags:
+        - Water Contracts
+      summary: Get cwmsData projects with office with projectId waterUser
+      description: Gets all water users.
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUser
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the water user is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the water user is associated with.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/WaterUser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Water Contracts
+      summary: Post cwmsData projects with office with projectId waterUser
+      description: Stores a water user to CWMS.
+      operationId: postCwmsDataProjectsWithOfficeWithProjectIdWaterUser
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterUser'
+        required: true
+      responses:
+        '204':
+          description: Water user successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}:
+    get:
+      tags:
+        - Water Contracts
+      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      description: Return a specified water contract
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          description: The name of the contract to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/WaterUserContract'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterUserContract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find any contracts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security: [ ]
+    delete:
+      tags:
+        - Water Contracts
+      summary: Delete cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      description: Delete a specified water contract
+      operationId: deleteCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          description: The name of the contract to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used.
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+    patch:
+      tags:
+        - Water Contracts
+      summary: Patch cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      description: Renames a water contract
+      operationId: patchCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: query
+          description: Specifies the new name of the contract.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterUserContract'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a contract
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts:
+    get:
+      tags:
+        - Water Contracts
+      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts
+      description: Return all water contracts
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
+      parameters:
+        - name: office
+          in: path
+          description: Specifies the office that the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: Specifies the project id of the contract.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: Specifies the water user of the contract.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/WaterUserContract'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterUserContract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find any contracts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security: [ ]
+    post:
+      tags:
+        - Water Contracts
+      summary: Post cwmsData projects with office with projectId waterUser with waterUser contracts
+      description: Create a new water contract
+      operationId: postCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: fail-if-exists
+          in: query
+          description: If true, the contract will not be stored if it already exists.
+          schema:
+            type: boolean
+        - name: ignore-nulls
+          in: query
+          description: If true, null fields will be ignored when storing the contract.
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterUserContract'
+        required: true
+      responses:
+        '204':
+          description: Water contract successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
+    delete:
+      tags:
+        - Water Contracts
+      summary: Delete cwmsData projects with office with projectId waterUser with waterUser contracts with contractName pumps with name
+      description: Disassociate a pump from a contract
+      operationId: deleteCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNamePumpsWithName
+      parameters:
+        - name: office
+          in: path
+          description: The office the project is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The name of the project.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The name of the water user the contract is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          description: The name of the contract the pump is associated with.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          description: The name of the pump to be disassociated from the specified contract.
+          required: true
+          schema:
+            type: string
+        - name: pump-type
+          in: query
+          description: 'The type of pump to be disassociated from the contract. Expected values: IN, OUT, OUT BELOW'
+          required: true
+          schema:
+            $ref: '#/components/schemas/PumpType'
+        - name: method
+          in: query
+          description: Whether to delete the associated accounting data.
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/projects/{office}/contract-types:
+    get:
+      tags:
+        - Water Contracts
+      summary: Get cwmsData projects with office contractTypes
+      description: Get all water contract types
+      operationId: getCwmsDataProjectsWithOfficeContractTypes
+      parameters:
+        - name: office
+          in: path
+          description: The office Id the contract is associated with.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/LookupType'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LookupType'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find any contracts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security: [ ]
+    post:
+      tags:
+        - Water Contracts
+      summary: Post cwmsData projects with office contractTypes
+      description: Create a new water contract type
+      operationId: postCwmsDataProjectsWithOfficeContractTypes
+      parameters:
+        - name: office
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provideddisplay value already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/LookupType'
+        required: true
+      responses:
+        '204':
+          description: Contract type successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented.
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
   /cwms-data/projects/embankments/{name}:
     get:
       tags:
@@ -9405,7 +10390,8 @@ paths:
       parameters:
         - name: office
           in: query
-          description: Office id for the reservoir project location associated with the outlets.  Defaults to the user session id.
+          description: Office id for the reservoir project location associated with the outlets.
+          required: true
           schema:
             type: string
         - name: project-id
@@ -9772,6 +10758,69 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /cwms-data/projects/locations:
+    get:
+      tags:
+        - Projects
+      summary: Get cwmsData projects locations
+      description: Get a list of project child locations
+      operationId: getCwmsDataProjectsLocations
+      parameters:
+        - name: office
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: project-like
+          in: query
+          description: Posix <a href="regexp.html">regular expression</a> matching against the project_id.
+          schema:
+            type: string
+        - name: location-kind-like
+          in: query
+          description: 'Posix <a href="regexp.html">regular expression</a> matching against the location kind.  The pattern will be matched against the valid location-kinds for Project child locations:{"EMBANKMENT", "TURBINE", "OUTLET", "LOCK", "GATE"}. Multiple kinds can be matched by using Regular Expression OR clauses. For example: "(TURBINE|OUTLET)"'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectChildLocations'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
   /cwms-data/projects/{name}:
     get:
       tags:
@@ -10021,6 +11070,12 @@ paths:
       summary: Post cwmsData projects
       description: Create new Project
       operationId: postCwmsDataProjects
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json;version=1:
@@ -10619,6 +11674,553 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /cwms-data/project-locks/{name}:
+    get:
+      tags:
+        - Project Locks
+      summary: Get cwmsData projectLocks with name
+      description: Return a lock if the specified project is locked. Otherwise 404
+      operationId: getCwmsDataProjectLocksWithName
+      parameters:
+        - name: name
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: The office id.
+          required: true
+          schema:
+            type: string
+        - name: application-id
+          in: query
+          description: The application-id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectLock'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: No matching Lock was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    delete:
+      tags:
+        - Project Locks
+      summary: Delete cwmsData projectLocks with name
+      description: Revokes a project lock, if successful the lock is deleted
+      operationId: deleteCwmsDataProjectLocksWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the project-id to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the office of the lock.
+          required: true
+          schema:
+            type: string
+        - name: revoke-timeout
+          in: query
+          description: 'time in seconds to wait for existing lock to be revoked. Default: 10'
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/project-locks:
+    get:
+      tags:
+        - Project Locks
+      summary: Get cwmsData projectLocks
+      description: Get a list of project locks
+      operationId: getCwmsDataProjectLocks
+      parameters:
+        - name: office-mask
+          in: query
+          description: Specifies the office mask to be used to filter the locks. Supports '*' but is typically a single office.
+          required: true
+          schema:
+            type: string
+        - name: project-mask
+          in: query
+          description: Specifies the project mask to be used to filter the locks. Defaults to '*'
+          schema:
+            type: string
+        - name: application-mask
+          in: query
+          description: Specifies the application mask to be used to filter the locks. Defaults to '*'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectLock'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+    post:
+      tags:
+        - Project Locks
+      summary: Post cwmsData projectLocks
+      description: Requests the creation of a new Reservoir Project Lock
+      operationId: postCwmsDataProjectLocks
+      parameters:
+        - name: revoke-existing
+          in: query
+          description: 'If an existing lock is found should a revoke be attempted? Default: false'
+          schema:
+            type: boolean
+        - name: revoke-timeout
+          in: query
+          description: 'time in seconds to wait for existing lock to be revoked. Default: 10'
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Users must provide a Lock object specifying the officeId, projectId and applicationId. Other fields will be ignored.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectLock'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectLockId'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/project-locks/deny:
+    post:
+      tags:
+        - Project Locks
+      summary: Post cwmsData projectLocks deny
+      description: Deny a Lock revoke request.
+      operationId: postCwmsDataProjectLocksDeny
+      parameters:
+        - name: lock-id
+          in: query
+          description: The id of the lock.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/project-locks/release:
+    post:
+      tags:
+        - Project Locks
+      summary: Post cwmsData projectLocks release
+      description: Releases a project lock
+      operationId: postCwmsDataProjectLocksRelease
+      parameters:
+        - name: office
+          in: query
+          description: The user's office.
+          required: true
+          schema:
+            type: string
+        - name: lock-id
+          in: query
+          description: The id of the lock to release.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/project-lock-rights:
+    get:
+      tags:
+        - Project Lock Revoker Rights
+      summary: Get cwmsData projectLockRights
+      description: 'Get a list of project lock revoker rights '
+      operationId: getCwmsDataProjectLockRights
+      parameters:
+        - name: office-mask
+          in: query
+          description: Specifies the office mask to be used to filter the lock revoker rights. Supports '*' but is typically a single office.
+          required: true
+          schema:
+            type: string
+        - name: project-mask
+          in: query
+          description: Specifies the project mask to be used to filter the lock revoker rights. Defaults to '*'
+          schema:
+            type: string
+        - name: application-mask
+          in: query
+          description: Specifies the application mask to be used to filter the lock revoker rights. Defaults to '*'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LockRevokerRights'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: [ ]
+  /cwms-data/project-lock-rights/remove-all:
+    post:
+      tags:
+        - Project Lock Revoker Rights
+      summary: Post cwmsData projectLockRights removeAll
+      description: Revokes a project lock, if successful the lock is deleted
+      operationId: postCwmsDataProjectLockRightsRemoveAll
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the session office.
+          required: true
+          schema:
+            type: string
+        - name: application-id
+          in: query
+          description: Specifies the application id.
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: query
+          description: Specifies the user.
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
+  /cwms-data/project-lock-rights/update:
+    post:
+      tags:
+        - Project Lock Revoker Rights
+      summary: Post cwmsData projectLockRights update
+      description: Update Lock Revoker Rights.
+      operationId: postCwmsDataProjectLockRightsUpdate
+      parameters:
+        - name: office
+          in: query
+          description: Specifies the session office.
+          required: true
+          schema:
+            type: string
+        - name: project-mask
+          in: query
+          description: Specifies the project mask to be used Defaults to '*'
+          schema:
+            type: string
+        - name: application-id
+          in: query
+          description: Specifies the application id.
+          required: true
+          schema:
+            type: string
+        - name: user-id
+          in: query
+          description: Specifies the user.
+          required: true
+          schema:
+            type: string
+        - name: allow
+          in: query
+          description: True to add the user to the allow list, False to add to the deny list
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: [ ]
+        - ApiKey: [ ]
 components:
   schemas:
     CdaError:
@@ -11192,6 +12794,8 @@ components:
             nano:
               type: integer
               format: int32
+            negative:
+              type: boolean
             zero:
               type: boolean
             units:
@@ -11199,6 +12803,8 @@ components:
               items:
                 type: object
                 properties:
+                  dateBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -11208,18 +12814,14 @@ components:
                       nano:
                         type: integer
                         format: int32
-                      zero:
-                        type: boolean
                       negative:
+                        type: boolean
+                      zero:
                         type: boolean
                   durationEstimated:
                     type: boolean
-                  dateBased:
-                    type: boolean
                   timeBased:
                     type: boolean
-            negative:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -11342,6 +12944,8 @@ components:
             nano:
               type: integer
               format: int32
+            negative:
+              type: boolean
             zero:
               type: boolean
             units:
@@ -11349,6 +12953,8 @@ components:
               items:
                 type: object
                 properties:
+                  dateBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -11358,18 +12964,14 @@ components:
                       nano:
                         type: integer
                         format: int32
-                      zero:
-                        type: boolean
                       negative:
+                        type: boolean
+                      zero:
                         type: boolean
                   durationEstimated:
                     type: boolean
-                  dateBased:
-                    type: boolean
                   timeBased:
                     type: boolean
-            negative:
-              type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -12730,6 +14332,108 @@ components:
           items:
             type: string
             description: List of Time Series IDs belonging to this Forecast Spec
+    LookupType:
+      required:
+        - display-value
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        display-value:
+          type: string
+        tooltip:
+          type: string
+        active:
+          type: boolean
+    WaterUser:
+      required:
+        - entity-name
+        - project-id
+        - water-right
+      type: object
+      properties:
+        entity-name:
+          type: string
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        water-right:
+          type: string
+    WaterUserContract:
+      required:
+        - contract-effective-date
+        - contract-expiration-date
+        - contract-id
+        - contract-type
+        - contracted-storage
+        - future-use-allocation
+        - future-use-percent-activated
+        - initial-use-allocation
+        - office-id
+        - storage-units-id
+        - total-alloc-percent-activated
+        - water-user
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        water-user:
+          $ref: '#/components/schemas/WaterUser'
+        contract-id:
+          $ref: '#/components/schemas/CwmsId'
+        contract-type:
+          $ref: '#/components/schemas/LookupType'
+        contract-effective-date:
+          type: string
+          format: date-time
+        contract-expiration-date:
+          type: string
+          format: date-time
+        contracted-storage:
+          type: number
+          format: double
+        initial-use-allocation:
+          type: number
+          format: double
+        future-use-allocation:
+          type: number
+          format: double
+        storage-units-id:
+          type: string
+        future-use-percent-activated:
+          type: number
+          format: double
+        total-alloc-percent-activated:
+          type: number
+          format: double
+        pump-out-location:
+          $ref: '#/components/schemas/water_supply_pump'
+        pump-out-below-location:
+          $ref: '#/components/schemas/water_supply_pump'
+        pump-in-location:
+          $ref: '#/components/schemas/water_supply_pump'
+    water_supply_pump:
+      required:
+        - pumpLocation
+        - pumpType
+      type: object
+      properties:
+        pumpLocation:
+          $ref: '#/components/schemas/Location'
+        pumpType:
+          type: string
+          enum:
+            - IN
+            - OUT
+            - BELOW
+    PumpType:
+      type: string
+      enum:
+        - IN
+        - OUT
+        - BELOW
     Embankment:
       required:
         - location
@@ -12763,21 +14467,6 @@ components:
           $ref: '#/components/schemas/LookupType'
         upstream-protection-type:
           $ref: '#/components/schemas/LookupType'
-    LookupType:
-      required:
-        - display-value
-        - office-id
-      type: object
-      properties:
-        office-id:
-          type: string
-          description: Owning office of object.
-        display-value:
-          type: string
-        tooltip:
-          type: string
-        active:
-          type: boolean
     Turbine:
       required:
         - location
@@ -12896,6 +14585,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CwmsId'
+    LocationsWithProjectKind:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+            - EMBANKMENT
+            - TURBINE
+            - OUTLET
+            - LOCK
+            - GATE
+        location-ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/CwmsId'
+    ProjectChildLocations:
+      type: object
+      properties:
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        locations-by-kind:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationsWithProjectKind'
     Project:
       type: object
       properties:
@@ -12998,6 +14711,48 @@ components:
         value:
           type: string
         comment:
+          type: string
+    ProjectLock:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        project-id:
+          type: string
+        application-id:
+          type: string
+        acquire-time:
+          type: string
+          format: date-time
+        session-user:
+          type: string
+        os-user:
+          type: string
+        session-program:
+          type: string
+        session-machine:
+          type: string
+    ProjectLockId:
+      type: object
+      properties:
+        id:
+          type: string
+    LockRevokerRights:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        project-id:
+          type: string
+        application-id:
+          type: string
+        user-id:
           type: string
   securitySchemes:
     CwmsAAACacAuth:
