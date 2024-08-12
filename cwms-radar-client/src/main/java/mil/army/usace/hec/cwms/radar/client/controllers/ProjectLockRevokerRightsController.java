@@ -37,7 +37,7 @@ import mil.army.usace.hec.cwms.radar.client.model.LockRevokerRights;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 public class ProjectLockRevokerRightsController {
-    public static final String PATH = "/project-lock-rights/";
+    public static final String PATH = "project-lock-rights";
 
     /**
      * Retrieve the lock revoker rights.
@@ -62,7 +62,7 @@ public class ProjectLockRevokerRightsController {
 
     public void updateLockRevokerRights(ApiConnectionInfo apiConnectionInfo, ProjectLockRevokerRightsInput.Update input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "update")
+        new HttpRequestBuilderImpl(apiConnectionInfo, PATH + "/update")
                 .addEndpointInput(input)
                 .post()
                 .withBody("")
