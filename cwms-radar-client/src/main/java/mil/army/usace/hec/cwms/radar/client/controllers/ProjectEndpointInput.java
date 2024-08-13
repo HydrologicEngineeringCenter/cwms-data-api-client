@@ -24,7 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.time.Instant;
@@ -55,9 +55,9 @@ public final class ProjectEndpointInput {
         return new GetProjectChildLocations(office);
     }
 
-    public static ProjectEndpointInput.Patch patch(Project project) {
+    public static ProjectEndpointInput.Patch patch(String office, String oldName, String newName) {
         // update
-        return new ProjectEndpointInput.Patch(project);
+        return new ProjectEndpointInput.Patch(office, oldName, newName);
     }
 
     public static ProjectEndpointInput.Post post(Project project) {
@@ -91,7 +91,7 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -115,7 +115,7 @@ public final class ProjectEndpointInput {
                 .addQueryParameter(ID_MASK, projectIdMask)
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 
         public ProjectEndpointInput.GetAll officeId(String officeId) {
@@ -157,7 +157,7 @@ public final class ProjectEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(PROJECT_LIKE_QUERY_PARAMETER, projectIdMask)
                 .addQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK, locationKindMask)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
 
         public GetProjectChildLocations locationKindMask(String locationKindMask) {
@@ -173,20 +173,28 @@ public final class ProjectEndpointInput {
     }
 
     public static final class Patch extends EndpointInput {
-        private final Project project;
+        static final String NAME_QUERY_PARAMETER = "name";
+        static final String OFFICE_QUERY_PARAMETER = "office";
+        private final String office;
+        private final String oldName;
+        private final String newName;
 
-        private Patch(Project project) {
-            this.project = Objects.requireNonNull(project, "Cannot patch Project without Project data");
+        private Patch(String office, String oldName, String newName) {
+            this.office = Objects.requireNonNull(office, "Cannot rename Project without an office");
+            this.oldName = Objects.requireNonNull(oldName, "Cannot rename Project without the original name");
+            this.newName = Objects.requireNonNull(newName, "Cannot rename Project without a new name");
         }
 
-        Project project() {
-            return project;
+        String oldName() {
+            return oldName;
         }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryParameter(NAME_QUERY_PARAMETER, newName)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -204,7 +212,7 @@ public final class ProjectEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -266,7 +274,7 @@ public final class ProjectEndpointInput {
                 .addQueryParameter(BEGIN_QUERY_PARAMETER,
                     Optional.ofNullable(begin).map(Instant::toString).orElse(null))
                 .addQueryParameter(END_QUERY_PARAMETER, Optional.ofNullable(end).map(Instant::toString).orElse(null))
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -293,7 +301,7 @@ public final class ProjectEndpointInput {
                 .addQueryParameter(DELETE_METHOD_QUERY_PARAMETER, deleteMethod.toString())
                 .addQueryParameter(NAME_QUERY_PARAMETER, projectId)
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 

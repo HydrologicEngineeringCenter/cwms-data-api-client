@@ -76,7 +76,7 @@ class TestProjectLockRevokerRightsInput {
         assertEquals(sessionOffice, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.OFFICE));
         assertEquals(officeMask, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.OFFICE_MASK));
         assertEquals(projMask, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.PROJECT_MASK));
-        assertEquals(appMask, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.APPLICATION_MASK));
+        assertEquals(appMask, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.APPLICATION_ID));
         assertEquals(user, mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.USER));
         assertEquals(String.valueOf(allow), mockHttpRequestBuilder.getQueryParameter(ProjectLockRevokerRightsInput.ALLOW));
 

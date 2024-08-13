@@ -37,6 +37,7 @@ public final class ProjectLockRevokerRightsInput {
     static final String OFFICE = "office";
     static final String PROJECT_MASK = "project-mask";
     static final String APPLICATION_MASK = "application-mask";
+    static final String APPLICATION_ID = "application-id";
     static final String USER = "user-id";
     static final String ALLOW = "allow";
 
@@ -80,15 +81,17 @@ public final class ProjectLockRevokerRightsInput {
         private final String sessionOffice;
         private String officeMask;
         private String projectMask;
-        private final String applicationMask;
+        private final String applicationId;
         private final String user;
         private final boolean allow;
 
-        private Update(String sessionOffice, String officeMask, String projectMask, String applicationMask, String user, boolean allow) {
+        private Update(String sessionOffice, String officeMask, String projectMask, String applicationId, String user,
+            boolean allow) {
             this.sessionOffice = Objects.requireNonNull(sessionOffice, "Cannot update LockRevokerRights without a session office.");
             this.officeMask = officeMask;
             this.projectMask = projectMask;
-            this.applicationMask = Objects.requireNonNull(applicationMask, "Cannot update LockRevokerRights without a application mask.");
+            this.applicationId =
+                Objects.requireNonNull(applicationId, "Cannot update LockRevokerRights without a application id.");
             this.user = Objects.requireNonNull(user, "Cannot update LockRevokerRights without a user.");
             this.allow = allow;
         }
@@ -109,7 +112,7 @@ public final class ProjectLockRevokerRightsInput {
                     .addQueryParameter(OFFICE, sessionOffice)
                     .addQueryParameter(OFFICE_MASK, officeMask)
                     .addQueryParameter(PROJECT_MASK, projectMask)
-                    .addQueryParameter(APPLICATION_MASK, applicationMask)
+                .addQueryParameter(APPLICATION_ID, applicationId)
                     .addQueryParameter(USER, user)
                     .addQueryParameter(ALLOW, String.valueOf(allow))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);

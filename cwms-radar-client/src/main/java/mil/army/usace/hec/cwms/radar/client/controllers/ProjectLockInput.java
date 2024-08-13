@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2024 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
@@ -43,8 +67,8 @@ public final class ProjectLockInput {
         return new LockRelease(officeId, lockId);
     }
 
-    public static ProjectLockInput.LockRevoke revokeLock(String officeId, String projectId) {
-        return new LockRevoke(officeId, projectId);
+    public static ProjectLockInput.LockRevoke revokeLock(String officeId, String projectId, String applicationdId) {
+        return new LockRevoke(officeId, projectId, applicationdId);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -163,11 +187,13 @@ public final class ProjectLockInput {
     public static final class LockRevoke extends EndpointInput {
         private final String officeId;
         private final String projectId;
+        private final String applicationId;
         private int revokeTimeout = 10;
 
-        private LockRevoke(String officeId, String projectId) {
+        private LockRevoke(String officeId, String projectId, String applicationId) {
             this.officeId = Objects.requireNonNull(officeId, "Cannot revoke a lock without an officeId.");
             this.projectId = Objects.requireNonNull(projectId, "Cannot revoke a lock without the projectId.");
+            this.applicationId = Objects.requireNonNull(applicationId, "Cannot revoke a lock without the application.");
         }
 
         public LockRevoke revokeTimeout(int revokeTimeout) {
@@ -182,7 +208,8 @@ public final class ProjectLockInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE, officeId)
-                    .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout));
+                .addQueryParameter(APPLICATION_ID, applicationId)
+                .addQueryParameter(REVOKE_TIMEOUT, String.valueOf(revokeTimeout));
         }
     }
 

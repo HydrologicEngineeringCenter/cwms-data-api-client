@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.radar.client.model.DeleteMethod;
@@ -51,7 +52,7 @@ class TestProjectController extends TestController {
 
     @Test
     void testRetrieveProject() throws IOException {
-        String collect = readJsonFile("radar/v2/json/project.json");
+        String collect = readJsonFile("radar/v1/json/project.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         ProjectController controller = new ProjectController();
@@ -66,7 +67,7 @@ class TestProjectController extends TestController {
 
     @Test
     void testRetrieveProjects() throws IOException {
-        String collect = readJsonFile("radar/v2/json/projects.json");
+        String collect = readJsonFile("radar/v1/json/projects.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         ProjectController controller = new ProjectController();
@@ -83,7 +84,7 @@ class TestProjectController extends TestController {
 
     @Test
     void testPost() throws IOException {
-        String collect = readJsonFile("radar/v2/json/project.json");
+        String collect = readJsonFile("radar/v1/json/project.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
@@ -96,22 +97,24 @@ class TestProjectController extends TestController {
     }
 
     @Test
-    void testUpdate() throws IOException {
-        String collect = readJsonFile("radar/v2/json/project.json");
+    void testUpdate() throws Exception {
+        String collect = readJsonFile("radar/v1/json/project.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
         ProjectController controller = new ProjectController();
 
-        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch(project);
+        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch("SPK", "OLD", "NEW");
 
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
         assertDoesNotThrow(() -> controller.updateProject(apiConnectionInfo, input));
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        assertEquals("/projects/OLD?name=NEW&office=SPK", request.getPath());
+        assertEquals("PATCH", request.getMethod());
     }
 
     @Test
     void testDelete() throws IOException {
-        String collect = readJsonFile("radar/v2/json/project.json");
+        String collect = readJsonFile("radar/v1/json/project.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         ProjectController controller = new ProjectController();
@@ -145,7 +148,7 @@ class TestProjectController extends TestController {
 
     @Test
     void testGetProjectChildLocations() throws Exception {
-        String collect = readJsonFile("radar/v2/json/project_children.json");
+        String collect = readJsonFile("radar/v1/json/project_children_list.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         ProjectController controller = new ProjectController();
@@ -153,9 +156,10 @@ class TestProjectController extends TestController {
             .projectIdMask("T*")
             .locationKindMask("*");
         ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
-        ProjectChildLocations projectChildLocations = controller.getProjectChildLocations(apiConnectionInfo, input);
-        assertEquals("TestProject", projectChildLocations.getProjectId().getName());
-        assertEquals("SPK", projectChildLocations.getProjectId().getOfficeId());
-        assertFalse(projectChildLocations.getLocationsByKind().isEmpty());
+        List<ProjectChildLocations> projectChildLocations =
+            controller.getProjectChildLocations(apiConnectionInfo, input);
+        assertEquals("TestProject1", projectChildLocations.get(0).getProjectId().getName());
+        assertEquals("SPK", projectChildLocations.get(0).getProjectId().getOfficeId());
+        assertFalse(projectChildLocations.get(0).getLocationsByKind().isEmpty());
     }
 }

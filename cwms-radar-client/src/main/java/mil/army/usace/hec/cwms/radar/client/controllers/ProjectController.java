@@ -28,6 +28,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -79,14 +80,12 @@ public final class ProjectController {
     }
 
     public void updateProject(ApiConnectionInfo apiConnectionInfo, ProjectEndpointInput.Patch input) throws IOException {
-        Project project = input.project();
-        String body = RadarObjectMapper.mapObjectToJson(project);
-        String endpoint = PROJECT_ENDPOINT + "/" + project.getLocation().getName();
+        String oldName = input.oldName();
+        String endpoint = PROJECT_ENDPOINT + "/" + oldName;
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
-                .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
@@ -103,7 +102,7 @@ public final class ProjectController {
                 .close();
     }
 
-    public ProjectChildLocations getProjectChildLocations(ApiConnectionInfo apiConnectionInfo,
+    public List<ProjectChildLocations> getProjectChildLocations(ApiConnectionInfo apiConnectionInfo,
         ProjectEndpointInput.GetProjectChildLocations input) throws IOException {
         String endpoint = PROJECT_ENDPOINT + "/locations";
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
@@ -112,7 +111,7 @@ public final class ProjectController {
             .get()
             .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapJsonToObject(response.getBody(), ProjectChildLocations.class);
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), ProjectChildLocations.class);
         }
     }
 

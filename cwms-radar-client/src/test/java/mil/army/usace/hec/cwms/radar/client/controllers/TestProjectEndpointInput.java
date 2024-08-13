@@ -26,12 +26,13 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.LOCATION_KIND_LIKE_QUERY_MASK;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.GetProjectChildLocations.PROJECT_LIKE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.Patch.NAME_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.APPLICATION_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.BEGIN_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.END_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.SOURCE_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.ProjectEndpointInput.StatusUpdate.TIMESERIES_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RatingTemplateEndpointInput.DELETE_METHOD_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RatingTemplateEndpointInput.OFFICE_QUERY_PARAMETER;
@@ -64,7 +65,7 @@ class TestProjectEndpointInput {
             mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
         assertEquals(projectId, input.projectId());
 
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -93,18 +94,18 @@ class TestProjectEndpointInput {
         assertEquals(Integer.toString(pageSize),
             mockHttpRequestBuilder.getQueryParameter(ProjectEndpointInput.GetAll.PAGE_SIZE_QUERY_PARAMETER));
 
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testPostQueryRequest() throws IOException {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        String collect = readJsonFile("radar/v2/json/project.json");
+        String collect = readJsonFile("radar/v1/json/project.json");
         Project project = RadarObjectMapper.mapJsonToObject(collect, Project.class);
         ProjectEndpointInput.Post input = ProjectEndpointInput.post(project);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(project, input.project());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -119,7 +120,7 @@ class TestProjectEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(OFFICE, mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("DELETE_ALL", mockHttpRequestBuilder.getQueryParameter(DELETE_METHOD_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -144,7 +145,7 @@ class TestProjectEndpointInput {
         assertNull(mockHttpRequestBuilder.getQueryParameter(TIMESERIES_ID_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -166,7 +167,7 @@ class TestProjectEndpointInput {
             mockHttpRequestBuilder.getQueryParameter(TIMESERIES_ID_QUERY_PARAMETER));
         assertEquals(begin.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
         assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -178,7 +179,7 @@ class TestProjectEndpointInput {
             ProjectEndpointInput.GetProjectChildLocations.OFFICE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(PROJECT_LIKE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -191,7 +192,25 @@ class TestProjectEndpointInput {
         assertEquals(OFFICE, mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("T*", mockHttpRequestBuilder.getQueryParameter(PROJECT_LIKE_QUERY_PARAMETER));
         assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LOCATION_KIND_LIKE_QUERY_MASK));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPatch() {
+        ProjectEndpointInput.Patch input = ProjectEndpointInput.patch(OFFICE, "OLD", "NEW");
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("OLD", input.oldName());
+        assertEquals(OFFICE, mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("NEW", mockHttpRequestBuilder.getQueryParameter(NAME_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testPatchNulls() {
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(null, "OLD", "NEW"));
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(OFFICE, null, "NEW"));
+        assertThrows(NullPointerException.class, () -> ProjectEndpointInput.patch(OFFICE, "OLD", null));
     }
 
 }
