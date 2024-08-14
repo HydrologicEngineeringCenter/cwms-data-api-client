@@ -42,7 +42,7 @@ public final class WaterUserController {
     }
 
     public static void storeWaterUser(ApiConnectionInfo apiConnectionInfo, WaterUserEndpointInput.Post input) throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.waterUser());
+        String body = RadarObjectMapper.mapObjectToJson(input.getWaterUser());
         new HttpRequestBuilderImpl(apiConnectionInfo, WATER_USER_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)

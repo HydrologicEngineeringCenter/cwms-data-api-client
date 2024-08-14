@@ -18,7 +18,7 @@ public final class WaterContractController {
 
     public WaterUserContract retrieveWaterContract(ApiConnectionInfo apiConnectionInfo,
             WaterContractEndpointInput.GetOne input) throws IOException {
-        String endpoint = WATER_CONTRACT_ENDPOINT + "/" + input.waterContractId();
+        String endpoint = WATER_CONTRACT_ENDPOINT + "/" + input.getContractName();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -42,7 +42,7 @@ public final class WaterContractController {
     }
 
     public void storeWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Post input) throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.waterContract());
+        String body = RadarObjectMapper.mapObjectToJson(input.getWaterContract());
         new HttpRequestBuilderImpl(apiConnectionInfo, WATER_CONTRACT_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -54,7 +54,7 @@ public final class WaterContractController {
     }
 
     public void renameWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Patch input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_CONTRACT_ENDPOINT + "/" + input.oldWaterContractId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_CONTRACT_ENDPOINT + "/" + input.getOldWaterContractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -64,7 +64,7 @@ public final class WaterContractController {
     }
 
     public void deleteWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Delete input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_CONTRACT_ENDPOINT + "/" + input.waterContractId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_CONTRACT_ENDPOINT + "/" + input.getContractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

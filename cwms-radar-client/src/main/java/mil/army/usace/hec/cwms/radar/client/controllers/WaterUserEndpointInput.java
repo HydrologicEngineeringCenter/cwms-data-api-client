@@ -15,87 +15,41 @@ public final class WaterUserEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll() {
-        return new GetAll();
+    public static GetAll getAll(String officeId, String projectId) {
+        return new GetAll(officeId, projectId);
     }
 
-    public static GetOne getOne(String officeId, String waterUserId) {
-        return new GetOne(officeId, waterUserId);
+    public static GetOne getOne(String officeId, String waterUserId, String projectId) {
+        return new GetOne(officeId, waterUserId, projectId);
     }
 
     public static Post post(WaterUser waterUser) {
         return new Post(waterUser);
     }
 
-    public static Delete delete(String officeId, String waterUserId, DeleteMethod deleteMethod) {
-        return new Delete(waterUserId, officeId, deleteMethod);
+    public static Delete delete(String officeId, String waterUserId, String projectId, DeleteMethod deleteMethod) {
+        return new Delete(waterUserId, officeId, projectId, deleteMethod);
     }
 
-    public static Patch patch(String oldWaterUserId, String newWaterUserId, String officeId) {
-        return new Patch(oldWaterUserId, newWaterUserId, officeId);
+    public static Patch patch(String officeId, String projectId, String oldWaterUserId, String newWaterUserId) {
+        return new Patch(officeId, projectId, oldWaterUserId, newWaterUserId);
     }
 
     public static final class GetAll extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String USER_ID_QUERY_PARAMETER = "water-user";
-        private String waterUserId;
-        private String officeId;
-
-        private GetAll() {
-        }
-
-        public GetAll officeId(String officeId) {
-            this.officeId = officeId;
-            return this;
-        }
-
-        public GetAll waterUserId(String waterUserId) {
-            this.waterUserId = waterUserId;
-            return this;
-        }
-
-        @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(USER_ID_QUERY_PARAMETER, waterUserId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
-        }
-    }
-
-    public static final class GetOne extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String USER_ID_QUERY_PARAMETER = "water-user";
-        private final String waterUserId;
         private final String officeId;
+        private final String projectId;
 
-        private GetOne(String officeId, String waterUserId) {
-            this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for "
-                    + "getOne water user endpoint");
-            this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for "
-                    + "getOne water user endpoint");
+        private GetAll(String officeId, String projectId) {
+            this.officeId = Objects.requireNonNull(officeId, "Office Id required for get all water user endpoint");
+            this.projectId = Objects.requireNonNull(projectId, "Project Id required for get all water user endpoint");
         }
 
-        String waterUserId() {
-            return waterUserId;
+        public String getOfficeId() {
+            return officeId;
         }
 
-        @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(USER_ID_QUERY_PARAMETER, waterUserId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
-        }
-    }
-
-    public static final class Post extends EndpointInput {
-        private final WaterUser waterUser;
-
-        private Post(WaterUser waterUser) {
-            this.waterUser = Objects.requireNonNull(waterUser, "Water User required for post water user endpoint");
-        }
-
-        WaterUser waterUser() {
-            return waterUser;
+        public String getProjectId() {
+            return projectId;
         }
 
         @Override
@@ -104,17 +58,86 @@ public final class WaterUserEndpointInput {
         }
     }
 
+    public static final class GetOne extends EndpointInput {
+        private final String waterUserId;
+        private final String officeId;
+        private final String projectId;
+
+        private GetOne(String officeId, String waterUserId, String projectId) {
+            this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for "
+                    + "getOne water user endpoint");
+            this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for "
+                    + "getOne water user endpoint");
+            this.projectId = Objects.requireNonNull(projectId, "Water User project Id required for "
+                    + "getOne water user endpoint");
+        }
+
+        String waterUserId() {
+            return waterUserId;
+        }
+
+        String getOfficeId() {
+            return officeId;
+        }
+
+        String getProjectId() {
+            return projectId;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static final class Post extends EndpointInput {
+        private final WaterUser waterUser;
+        private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
+        private boolean failIfExists = true;
+
+        private Post(WaterUser waterUser) {
+            this.waterUser = Objects.requireNonNull(waterUser, "Water User required for post water user endpoint");
+        }
+
+        public Post failIfExists(boolean failIfExists) {
+            this.failIfExists = failIfExists;
+            return this;
+        }
+
+        WaterUser getWaterUser() {
+            return waterUser;
+        }
+
+        String getOfficeId() {
+            return waterUser.getProjectId().getOfficeId();
+        }
+
+        String getProjectId() {
+            return waterUser.getProjectId().getName();
+        }
+
+        boolean getFailIfExists() {
+            return failIfExists;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, String.valueOf(failIfExists))
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
     public static final class Delete extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
         static final String METHOD_QUERY_PARAMETER = "method";
-        static final String USER_ID_QUERY_PARAMETER = "water-user";
+        private final String projectId;
         private final String waterUserId;
         private final String officeId;
         private final DeleteMethod deleteMethod;
 
-        private Delete(String waterUserId, String officeId, DeleteMethod deleteMethod) {
+        private Delete(String waterUserId, String officeId, String projectId, DeleteMethod deleteMethod) {
             this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for delete water user endpoint");
             this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for delete water user endpoint");
+            this.projectId = Objects.requireNonNull(projectId, "Water User project Id required for delete water user endpoint");
             this.deleteMethod = deleteMethod;
         }
 
@@ -122,26 +145,34 @@ public final class WaterUserEndpointInput {
             return waterUserId;
         }
 
+        String getOfficeId() {
+            return officeId;
+        }
+
+        String getProjectId() {
+            return projectId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(USER_ID_QUERY_PARAMETER, waterUserId)
-                    .addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
+            return httpRequestBuilder.addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
     public static final class Patch extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
         static final String NAME_QUERY_PARAMETER = "name";
+        private final String projectId;
         private final String oldWaterUserId;
         private final String newWaterUserId;
         private final String officeId;
 
-        private Patch(String oldWaterUserId, String newWaterUserId, String officeId) {
+        private Patch(String officeId, String projectId, String oldWaterUserId, String newWaterUserId) {
             this.oldWaterUserId = Objects.requireNonNull(oldWaterUserId, "Old Water User Id required for "
                     + "patch water user endpoint");
             this.newWaterUserId = Objects.requireNonNull(newWaterUserId, "New Water User Id required for "
+                    + "patch water user endpoint");
+            this.projectId = Objects.requireNonNull(projectId, "Water User project Id required for "
                     + "patch water user endpoint");
             this.officeId = officeId;
         }
@@ -150,10 +181,17 @@ public final class WaterUserEndpointInput {
             return oldWaterUserId;
         }
 
+        String getProjectId() {
+            return projectId;
+        }
+
+        String getOfficeId() {
+            return officeId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(NAME_QUERY_PARAMETER, newWaterUserId)
+            return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, newWaterUserId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
