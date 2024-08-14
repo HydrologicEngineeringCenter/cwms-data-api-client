@@ -7,11 +7,12 @@ import mil.army.usace.hec.cwms.radar.client.controllers.WaterPumpAccountingEndpo
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.Instant;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestWaterPumpAccountingEndpointInput {
 
@@ -22,13 +23,25 @@ class TestWaterPumpAccountingEndpointInput {
         String projectId = "PROJECT";
         String waterUserEntityName = "Test User";
         String waterContractName = "TEST_CONTRACT";
-        GetAll input = WaterPumpAccountingEndpointInput.getAll().officeId(office).projectId(projectId)
-                .waterUserId(waterUserEntityName).waterContractName(waterContractName);
+        GetAll input = WaterPumpAccountingEndpointInput.getAll(office, projectId, waterUserEntityName, waterContractName);
+        input.setStartTime(Instant.MIN);
+        input.setEndTime(Instant.MAX);
+        input.setStartInclusive(false);
+        input.setEndInclusive(false);
+        input.setAscending(false);
+        input.setRowLimit(100);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_QUERY_PARAMETER));
-        assertEquals(projectId, mockHttpRequestBuilder.getQueryParameter(GetAll.PROJECT_ID_QUERY_PARAMETER));
-        assertEquals(waterUserEntityName, mockHttpRequestBuilder.getQueryParameter(GetAll.WATER_USER_QUERY_PARAMETER));
-        assertEquals(waterContractName, mockHttpRequestBuilder.getQueryParameter(GetAll.WATER_CONTRACT_QUERY_PARAMETER));
+        assertEquals(office, input.getOfficeId());
+        assertEquals(projectId, input.getProjectId());
+        assertEquals(waterUserEntityName, input.getWaterUserId());
+        assertEquals(waterContractName, input.getWaterContractName());
+        assertFalse(input.isAscending());
+        assertEquals(Instant.MAX, input.getEndTime());
+        assertEquals(Instant.MIN, input.getStartTime());
+        assertEquals(100, input.getRowLimit());
+        assertFalse(input.isAscending());
+        assertFalse(input.isEndInclusive());
+        assertFalse(input.isStartInclusive());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -39,7 +52,7 @@ class TestWaterPumpAccountingEndpointInput {
         WaterSupplyAccounting waterSupplyAccounting = RadarObjectMapper.mapJsonToObject(collect, WaterSupplyAccounting.class);
         Post input = WaterPumpAccountingEndpointInput.post(waterSupplyAccounting);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(waterSupplyAccounting, input.waterSupplyAccounting());
+        assertEquals(waterSupplyAccounting, input.getWaterSupplyAccounting());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

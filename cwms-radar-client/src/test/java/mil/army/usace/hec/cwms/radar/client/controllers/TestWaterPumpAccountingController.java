@@ -17,8 +17,8 @@ class TestWaterPumpAccountingController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_supply_accounting_list.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterPumpAccountingEndpointInput.GetAll input = WaterPumpAccountingEndpointInput.getAll()
-                .officeId("SWT").projectId("SACRAMENTO").waterContractName("TEST_CONTRACT").waterUserId("Test User");
+        WaterPumpAccountingEndpointInput.GetAll input = WaterPumpAccountingEndpointInput
+                .getAll("SWT", "SACREMENTO", "Test User", "TEST_CONTRACT");
         List<WaterSupplyAccounting> values = new WaterPumpAccountingController()
                 .retrieveWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
