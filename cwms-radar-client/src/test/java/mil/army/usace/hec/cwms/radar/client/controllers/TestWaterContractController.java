@@ -18,7 +18,7 @@ class TestWaterContractController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_contracts.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterContractEndpointInput.GetAll input = WaterContractEndpointInput.getAll().officeId("SPK").waterContractId("TEST_LOCATION2");
+        WaterContractEndpointInput.GetAll input = WaterContractEndpointInput.getAll("SPK", "TEST_LOCATION2", "Test User");
         List<WaterUserContract> values = new WaterContractController().retrieveWaterContracts(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUserContract value = values.get(1);
@@ -36,7 +36,7 @@ class TestWaterContractController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_contract.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterContractEndpointInput.GetOne input = WaterContractEndpointInput.getOne("PROJECT-CONTRACT_LOC", "SPK");
+        WaterContractEndpointInput.GetOne input = WaterContractEndpointInput.getOne("SPK", "TEST_CONTRACT", "PROJECT-CONTRACT_LOC", "Test User");
         WaterUserContract value = new WaterContractController().retrieveWaterContract(buildConnectionInfo(cookieJarSupplier), input);
         assertEquals("TEST_CONTRACT", value.getContractId().getName());
         assertEquals("SWT", value.getContractId().getOfficeId());
@@ -68,6 +68,7 @@ class TestWaterContractController extends TestController {
         WaterContractController controller = new WaterContractController();
         controller.storeWaterContract(buildConnectionInfo(cookieJarSupplier), WaterContractEndpointInput.post(contract));
         WaterContractEndpointInput.Delete input = WaterContractEndpointInput.delete(contract.getOfficeId(),
+                contract.getWaterUser().getProjectId().getName(), contract.getWaterUser().getEntityName(),
                 contract.getContractId().getName(), DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteWaterContract(buildConnectionInfo(cookieJarSupplier), input));
     }
@@ -80,6 +81,7 @@ class TestWaterContractController extends TestController {
         WaterUserContract contract = RadarObjectMapper.mapJsonToObject(collect, WaterUserContract.class);
         WaterContractController controller = new WaterContractController();
         WaterContractEndpointInput.Patch input = WaterContractEndpointInput.patch(contract.getOfficeId(),
+                contract.getWaterUser().getProjectId().getName(), contract.getWaterUser().getEntityName(),
                 contract.getContractId().getName(), "NEW_CONTRACT_NAME");
         assertDoesNotThrow(() -> controller.renameWaterContract(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();

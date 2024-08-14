@@ -16,7 +16,7 @@ class TestWaterContractTypeController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_contract_types.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        GetAll input = WaterContractTypeEndpointInput.getAll().officeId("SPK").projectId("PROJ");
+        GetAll input = WaterContractTypeEndpointInput.getAll("SPK");
         List<LookupType> values = new WaterContractTypeController().retrieveWaterContractTypes(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         LookupType value = values.get(0);

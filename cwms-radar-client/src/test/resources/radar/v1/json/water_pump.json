@@ -24,5 +24,5 @@
         "bounding-office-id": "SWT",
         "elevation-units": "m"
     },
-    "pump-type": "PUMP_IN"
+    "pump-type": "IN"
 }

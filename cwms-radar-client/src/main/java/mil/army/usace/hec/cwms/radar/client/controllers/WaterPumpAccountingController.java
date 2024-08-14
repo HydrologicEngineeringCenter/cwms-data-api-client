@@ -31,7 +31,7 @@ public final class WaterPumpAccountingController {
 
     public void storeWaterPumpAccounting(ApiConnectionInfo apiConnectionInfo,
             WaterPumpAccountingEndpointInput.Post input) throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.waterSupplyAccounting());
+        String body = RadarObjectMapper.mapObjectToJson(input.getWaterSupplyAccounting());
         new HttpRequestBuilderImpl(apiConnectionInfo, WATER_PUMP_ACCOUNTING_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)

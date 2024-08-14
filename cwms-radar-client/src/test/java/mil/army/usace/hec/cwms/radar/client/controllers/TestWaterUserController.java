@@ -16,7 +16,7 @@ class TestWaterUserController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_users.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll().officeId("SPK").waterUserId("Test User 2");
+        WaterUserEndpointInput.GetAll input = WaterUserEndpointInput.getAll("SPK", "TOPEKA");
         List<WaterUser> values = WaterUserController.retrieveWaterUsers(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUser value = values.get(1);
@@ -30,7 +30,7 @@ class TestWaterUserController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_user.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne("SPK", "user");
+        WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne("SPK", "user", "SACRAMENTO");
         WaterUser value = WaterUserController.retrieveWaterUser(buildConnectionInfo(cookieJarSupplier), input);
         assertEquals("Test User", value.getEntityName());
         assertEquals("SWT", value.getProjectId().getOfficeId());
@@ -56,7 +56,7 @@ class TestWaterUserController extends TestController {
         WaterUser user = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
         WaterUserController.storeWaterUser(buildConnectionInfo(cookieJarSupplier), WaterUserEndpointInput.post(user));
         WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(user.getProjectId().getOfficeId(),
-                user.getEntityName(), DeleteMethod.ALL);
+                user.getEntityName(), user.getProjectId().getName(), DeleteMethod.ALL);
         assertDoesNotThrow(() -> WaterUserController.deleteWaterUser(buildConnectionInfo(cookieJarSupplier), input));
     }
 
@@ -65,9 +65,10 @@ class TestWaterUserController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_user.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
+        String newName = "newName";
         WaterUser user = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
         WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(user.getProjectId().getOfficeId(),
-                user.getEntityName(), "newName");
+                user.getProjectId().getName(), user.getEntityName(), newName);
         assertDoesNotThrow(() -> WaterUserController.renameWaterUser(buildConnectionInfo(cookieJarSupplier), input));
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
         assertEquals("PATCH", request.getMethod());
