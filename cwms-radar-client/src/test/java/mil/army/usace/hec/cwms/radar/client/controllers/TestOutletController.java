@@ -17,17 +17,19 @@ class TestOutletController extends TestController {
         String collect = readJsonFile("radar/v1/json/outlets.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        OutletEndpointInput.GetAll input = OutletEndpointInput.getAll("TEST_LOCATION2").officeId("SPK");
+        OutletEndpointInput.GetAll input = OutletEndpointInput.getAll("SPK", "TEST_LOCATION2");
         List<Outlet> values = new OutletController().retrieveOutlets(buildConnectionInfo(), input);
         assertFalse(values.isEmpty());
         Outlet value = values.get(0);
         assertEquals("BIGH", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals("Rating-BIGH-TG1", value.getRatingGroupId().getName());
+        assertEquals("Rating-BIGH-TG1.Elev,Opening-Tainter_Gate;Flow.Linear.Production", value.getRatingSpecId());
         value = values.get(1);
         assertEquals("BIGH", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals("Rating-BIGH-TG2", value.getRatingGroupId().getName());
+        assertEquals("Rating-BIGH-TG2.Elev,Opening-Tainter_Gate;Flow.Linear.Production", value.getRatingSpecId());
     }
 
     @Test
@@ -40,6 +42,8 @@ class TestOutletController extends TestController {
         assertEquals("BIGH", value.getProjectId().getName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
         assertEquals(0.0, value.getLocation().getLatitude());
+        assertEquals("Rating-BIGH-TG1.Elev,Opening-Tainter_Gate;Flow-Uncontrolled_Spillway.Linear.Production",
+                value.getRatingSpecId());
     }
 
     @Test

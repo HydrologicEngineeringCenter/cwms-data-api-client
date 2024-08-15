@@ -15,8 +15,8 @@ public final class OutletEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String projectId) {
-        return new GetAll(projectId);
+    public static GetAll getAll(String officeId, String projectId) {
+        return new GetAll(officeId, projectId);
     }
 
     public static GetOne getOne(String officeId, String outletId) {
@@ -39,16 +39,13 @@ public final class OutletEndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
         private final String projectId;
-        private String officeId;
+        private final String officeId;
 
-        private GetAll(String projectId) {
+        private GetAll(String officeId, String projectId) {
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the outlet GET "
                     + "endpoint without a project ID");
-        }
-
-        public GetAll officeId(String officeId) {
-            this.officeId = officeId;
-            return this;
+            this.officeId = Objects.requireNonNull(officeId, "Cannot access the outlet GET "
+                    + "endpoint without an office ID");
         }
 
         @Override
@@ -60,34 +57,39 @@ public final class OutletEndpointInput {
     }
 
     public static final class GetOne extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         public static final String NAME_QUERY_PARAMETER = "name";
         private final String outletName;
         private final String officeId;
 
         private GetOne(String officeId, String outletName) {
-            this.outletName = outletName;
-            this.officeId = officeId;
+            this.outletName = Objects.requireNonNull(outletName, "Cannot access the outlet GET "
+                    + "endpoint without an outlet name");
+            this.officeId = Objects.requireNonNull(officeId, "Cannot access the outlet GET "
+                    + "endpoint without an office ID");
         }
 
-        String outletName() {
+        String getOutletName() {
             return outletName;
+        }
+
+        String getOfficeId() {
+            return officeId;
         }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, outletName)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
     public static final class Post extends EndpointInput {
-        private final Outlet outletName;
+        private final Outlet outlet;
         private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
         private boolean failIfExists = true;
 
         private Post(Outlet outlet) {
-            this.outletName = Objects.requireNonNull(outlet, "Cannot access the outlet POST "
+            this.outlet = Objects.requireNonNull(outlet, "Cannot access the outlet POST "
                     + "endpoint without an outlet");
         }
 
@@ -96,8 +98,8 @@ public final class OutletEndpointInput {
             return this;
         }
 
-        Outlet outlet() {
-            return outletName;
+        Outlet getOutlet() {
+            return outlet;
         }
 
         @Override
@@ -110,10 +112,9 @@ public final class OutletEndpointInput {
     public static final class Delete extends EndpointInput {
         public static final String METHOD_QUERY_PARAMETER = "method";
         public static final String OFFICE_QUERY_PARAMETER = "office";
-        public static final String NAME_QUERY_PARAMETER = "name";
         private final String outletName;
         private final String officeId;
-        private DeleteMethod deleteMethod;
+        private DeleteMethod deleteMethod = DeleteMethod.KEY;
 
         private Delete(String officeId, String outletName) {
             this.outletName = Objects.requireNonNull(outletName, "Cannot access the outlet DELETE "
@@ -127,7 +128,7 @@ public final class OutletEndpointInput {
             return this;
         }
 
-        String outletName() {
+        String getOutletName() {
             return outletName;
         }
 
@@ -155,7 +156,7 @@ public final class OutletEndpointInput {
                     + "endpoint without an office id");
         }
 
-        String oldOutletName() {
+        String getOldOutletName() {
             return oldOutletName;
         }
 

@@ -23,7 +23,8 @@
     "rating-group-id": {
       "office-id": "SPK",
       "name": "Rating-BIGH-TG1"
-    }
+    },
+    "rating-spec-id": "Rating-BIGH-TG1.Elev,Opening-Tainter_Gate;Flow.Linear.Production"
   },
   {
     "project-id": {
@@ -49,6 +50,7 @@
     "rating-group-id": {
       "office-id": "SPK",
       "name": "Rating-BIGH-TG2"
-    }
+    },
+    "rating-spec-id": "Rating-BIGH-TG2.Elev,Opening-Tainter_Gate;Flow.Linear.Production"
   }
 ]
