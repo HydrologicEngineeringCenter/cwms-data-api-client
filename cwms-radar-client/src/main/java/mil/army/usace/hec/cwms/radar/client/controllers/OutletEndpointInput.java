@@ -68,11 +68,11 @@ public final class OutletEndpointInput {
                     + "endpoint without an office ID");
         }
 
-        String getOutletName() {
+        String outletName() {
             return outletName;
         }
 
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 
@@ -98,7 +98,7 @@ public final class OutletEndpointInput {
             return this;
         }
 
-        Outlet getOutlet() {
+        Outlet outlet() {
             return outlet;
         }
 
@@ -128,7 +128,7 @@ public final class OutletEndpointInput {
             return this;
         }
 
-        String getOutletName() {
+        String outletName() {
             return outletName;
         }
 
@@ -156,7 +156,7 @@ public final class OutletEndpointInput {
                     + "endpoint without an office id");
         }
 
-        String getOldOutletName() {
+        String oldOutletName() {
             return oldOutletName;
         }
 

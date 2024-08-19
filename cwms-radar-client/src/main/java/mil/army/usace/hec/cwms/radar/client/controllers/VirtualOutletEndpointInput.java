@@ -46,11 +46,11 @@ public final class VirtualOutletEndpointInput {
                     + "endpoint without an office ID");
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -72,15 +72,15 @@ public final class VirtualOutletEndpointInput {
             this.projectId = Objects.requireNonNull(projectId, "Project Id required for getOne outlet endpoint");
         }
 
-        public String getOutletName() {
+        public String outletName() {
             return outletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -134,19 +134,19 @@ public final class VirtualOutletEndpointInput {
             return this;
         }
 
-        public DeleteMethod getDeleteMethod() {
+        public DeleteMethod deleteMethod() {
             return deleteMethod;
         }
 
-        public String getOutletName() {
+        public String outletName() {
             return outletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -176,11 +176,11 @@ public final class VirtualOutletEndpointInput {
             return oldOutletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 

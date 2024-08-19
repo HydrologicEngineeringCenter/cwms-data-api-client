@@ -33,9 +33,9 @@ class TestOutletEndpointInput {
         String office = "SPK";
         OutletEndpointInput.GetOne input = OutletEndpointInput.getOne(office, outletName);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(outletName, input.getOutletName());
+        assertEquals(outletName, input.outletName());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-        assertEquals(office, input.getOfficeId());
+        assertEquals(office, input.officeId());
     }
 
     @Test
@@ -45,7 +45,7 @@ class TestOutletEndpointInput {
         Outlet outlet = RadarObjectMapper.mapJsonToObject(collect, Outlet.class);
         OutletEndpointInput.Post input = OutletEndpointInput.post(outlet);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(outlet, input.getOutlet());
+        assertEquals(outlet, input.outlet());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -56,7 +56,7 @@ class TestOutletEndpointInput {
         String office = "SPK";
         OutletEndpointInput.Delete input = OutletEndpointInput.delete(office, outletName).deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(outletName, input.getOutletName());
+        assertEquals(outletName, input.outletName());
         assertEquals(office, mockHttpRequestBuilder
                 .getQueryParameter(OutletEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder
@@ -72,7 +72,7 @@ class TestOutletEndpointInput {
         String office = "SPK";
         OutletEndpointInput.Patch input = OutletEndpointInput.patch(office, oldOutletName, newOutletName);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(oldOutletName, input.getOldOutletName());
+        assertEquals(oldOutletName, input.oldOutletName());
         assertEquals(newOutletName, mockHttpRequestBuilder
                 .getQueryParameter(OutletEndpointInput.Patch.NEW_NAME_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(OutletEndpointInput.Patch.OFFICE_QUERY_PARAMETER));

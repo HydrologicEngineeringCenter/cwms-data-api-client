@@ -19,7 +19,7 @@ public final class OutletController {
     public Outlet retrieveOutlet(ApiConnectionInfo apiConnectionInfo, OutletEndpointInput.GetOne input)
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-                OUTLET_ENDPOINT + "/" + input.getOutletName())
+                OUTLET_ENDPOINT + "/" + input.outletName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -42,7 +42,7 @@ public final class OutletController {
     }
 
     public void storeOutlet(ApiConnectionInfo apiConnectionInfo, OutletEndpointInput.Post input) throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.getOutlet());
+        String body = RadarObjectMapper.mapObjectToJson(input.outlet());
         new HttpRequestBuilderImpl(apiConnectionInfo, OUTLET_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -54,7 +54,7 @@ public final class OutletController {
     }
 
     public void renameOutlet(ApiConnectionInfo apiConnectionInfo, OutletEndpointInput.Patch input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, OUTLET_ENDPOINT + "/" + input.getOldOutletName())
+        new HttpRequestBuilderImpl(apiConnectionInfo, OUTLET_ENDPOINT + "/" + input.oldOutletName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -64,7 +64,7 @@ public final class OutletController {
     }
 
     public void deleteOutlet(ApiConnectionInfo apiConnectionInfo, OutletEndpointInput.Delete input) throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, OUTLET_ENDPOINT + "/" + input.getOutletName())
+        new HttpRequestBuilderImpl(apiConnectionInfo, OUTLET_ENDPOINT + "/" + input.outletName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

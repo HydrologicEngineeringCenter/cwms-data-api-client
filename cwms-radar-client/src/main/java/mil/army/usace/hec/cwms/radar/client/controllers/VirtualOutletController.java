@@ -19,8 +19,8 @@ public final class VirtualOutletController {
 
     public VirtualOutlet retrieveVirtualOutlet(ApiConnectionInfo apiConnectionInfo,
             VirtualOutletEndpointInput.GetOne input)  throws IOException {
-        String endpoint = ENDPOINT_PREFIX + "/" + input.getOfficeId() + "/" + input.getProjectId() + "/" + MIDPOINT
-                + "/" + input.getOutletName();
+        String endpoint = ENDPOINT_PREFIX + "/" + input.officeId() + "/" + input.projectId() + "/" + MIDPOINT
+                + "/" + input.outletName();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -34,7 +34,7 @@ public final class VirtualOutletController {
     public List<VirtualOutlet> retrieveVirtualOutlets(ApiConnectionInfo apiConnectionInfo,
             VirtualOutletEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + "/"
-                + input.getOfficeId() + "/" + input.getProjectId() + "/" + MIDPOINT)
+                + input.officeId() + "/" + input.projectId() + "/" + MIDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -59,8 +59,8 @@ public final class VirtualOutletController {
 
     public void renameVirtualOutlet(ApiConnectionInfo apiConnectionInfo, VirtualOutletEndpointInput.Patch input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + "/" + input.getOfficeId() + "/"
-                + input.getProjectId() + "/" + MIDPOINT + "/" + input.oldOutletName())
+        new HttpRequestBuilderImpl(apiConnectionInfo, ENDPOINT_PREFIX + "/" + input.officeId() + "/"
+                + input.projectId() + "/" + MIDPOINT + "/" + input.oldOutletName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -71,8 +71,8 @@ public final class VirtualOutletController {
 
     public void deleteVirtualOutlet(ApiConnectionInfo apiConnectionInfo, VirtualOutletEndpointInput.Delete input)
             throws IOException {
-        String endpoint = ENDPOINT_PREFIX + "/" + input.getOfficeId() + "/" + input.getProjectId() + "/" + MIDPOINT
-                + "/" + input.getOutletName();
+        String endpoint = ENDPOINT_PREFIX + "/" + input.officeId() + "/" + input.projectId() + "/" + MIDPOINT
+                + "/" + input.outletName();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
