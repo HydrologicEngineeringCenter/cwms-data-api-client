@@ -117,12 +117,11 @@ public final class VirtualOutletEndpointInput {
     }
 
     public static final class Delete extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         public static final String DELETE_METHOD_QUERY_PARAMETER = "method";
         private final String officeId;
         private final String projectId;
         private final String outletName;
-        private DeleteMethod deleteMethod;
+        private DeleteMethod deleteMethod = DeleteMethod.KEY;
 
         private Delete(String officeId, String projectId, String outletName) {
             this.officeId = Objects.requireNonNull(officeId, "Office ID required for delete outlet endpoint");
