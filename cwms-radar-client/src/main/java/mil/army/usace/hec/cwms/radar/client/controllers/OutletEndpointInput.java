@@ -58,6 +58,7 @@ public final class OutletEndpointInput {
 
     public static final class GetOne extends EndpointInput {
         public static final String NAME_QUERY_PARAMETER = "name";
+        static final String OFFICE_QUERY_PARAMETER = "office";
         private final String outletName;
         private final String officeId;
 
@@ -79,6 +80,7 @@ public final class OutletEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(NAME_QUERY_PARAMETER, outletName)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
