@@ -18,7 +18,7 @@ class TestVirtualOutletEndpointInput {
     @Test
     void testGetAllQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        GetAll input = VirtualOutletEndpointInput.getAll("PROJ","SPK");
+        GetAll input = VirtualOutletEndpointInput.getAll("SPK", "PROJ");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", input.getOfficeId());
         assertEquals("PROJ", input.getProjectId());

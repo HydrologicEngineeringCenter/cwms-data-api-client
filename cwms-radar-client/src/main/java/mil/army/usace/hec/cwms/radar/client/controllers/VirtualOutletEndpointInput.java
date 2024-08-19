@@ -15,8 +15,8 @@ public final class VirtualOutletEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String projectId, String officeId) {
-        return new GetAll(projectId, officeId);
+    public static GetAll getAll(String officeId, String projectId) {
+        return new GetAll(officeId, projectId);
     }
 
     public static GetOne getOne(String officeId, String projectId, String outletName) {
@@ -39,7 +39,7 @@ public final class VirtualOutletEndpointInput {
         private final String projectId;
         private final String officeId;
 
-        private GetAll(String projectId, String officeId) {
+        private GetAll(String officeId, String projectId) {
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the outlet GET "
                     + "endpoint without a project ID");
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the outlet GET "
