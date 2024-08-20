@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-07-29T13:57:29.992917800-07:00[America/Los_Angeles]")
+        date = "2024-08-15T14:23:52.604927400-07:00[America/Los_Angeles]")
 public class Outlet {
 
     @JsonProperty("project-id")
@@ -21,6 +21,9 @@ public class Outlet {
 
     @JsonProperty("rating-group-id")
     private CwmsId ratingGroupId = null;
+
+    @JsonProperty("rating-spec-id")
+    private String ratingSpecId = null;
 
     @JsonProperty("rating-category-id")
     private CwmsId ratingCategoryId = null;
@@ -64,6 +67,19 @@ public class Outlet {
         this.ratingGroupId = ratingGroupId;
     }
 
+    public Outlet ratingSpecId(String ratingSpecId) {
+        this.ratingSpecId = ratingSpecId;
+        return this;
+    }
+
+    public String getRatingSpecId() {
+        return ratingSpecId;
+    }
+
+    public void setRatingSpecId(String ratingSpecId) {
+        this.ratingSpecId = ratingSpecId;
+    }
+
     public Outlet ratingCategoryId(CwmsId ratingCategoryId) {
         this.ratingCategoryId = ratingCategoryId;
         return this;
@@ -89,13 +105,17 @@ public class Outlet {
         return Objects.equals(this.projectId, outlet.projectId)
                 && Objects.equals(this.location, outlet.location)
                 && Objects.equals(this.ratingGroupId, outlet.ratingGroupId)
+                && this.ratingSpecId == null || outlet.ratingSpecId == null
+                ? Objects.equals(this.ratingSpecId, outlet.ratingSpecId)
+                : this.ratingSpecId.equalsIgnoreCase(outlet.ratingSpecId)
                 && Objects.equals(this.ratingCategoryId, outlet.ratingCategoryId)
                 ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectId, location, ratingGroupId, ratingCategoryId);
+        return Objects.hash(projectId, location, ratingGroupId, ratingSpecId == null
+                ? 0 : ratingSpecId.toLowerCase(), ratingCategoryId);
     }
 
     @Override
@@ -106,6 +126,7 @@ public class Outlet {
         sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    location: ").append(toIndentedString(location)).append("\n");
         sb.append("    ratingGroupId: ").append(toIndentedString(ratingGroupId)).append("\n");
+        sb.append("    ratingSpecId: ").append(toIndentedString(ratingSpecId)).append("\n");
         sb.append("    ratingCategoryId: ").append(toIndentedString(ratingCategoryId)).append("\n");
         sb.append("}");
         return sb.toString();

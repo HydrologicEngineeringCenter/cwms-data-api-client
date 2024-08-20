@@ -15,8 +15,8 @@ public final class VirtualOutletEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String projectId, String officeId) {
-        return new GetAll(projectId, officeId);
+    public static GetAll getAll(String officeId, String projectId) {
+        return new GetAll(officeId, projectId);
     }
 
     public static GetOne getOne(String officeId, String projectId, String outletName) {
@@ -39,18 +39,18 @@ public final class VirtualOutletEndpointInput {
         private final String projectId;
         private final String officeId;
 
-        private GetAll(String projectId, String officeId) {
+        private GetAll(String officeId, String projectId) {
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the outlet GET "
                     + "endpoint without a project ID");
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the outlet GET "
                     + "endpoint without an office ID");
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -61,7 +61,6 @@ public final class VirtualOutletEndpointInput {
     }
 
     public static final class GetOne extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         private final String officeId;
         private final String projectId;
         private final String outletName;
@@ -72,15 +71,15 @@ public final class VirtualOutletEndpointInput {
             this.projectId = Objects.requireNonNull(projectId, "Project Id required for getOne outlet endpoint");
         }
 
-        public String getOutletName() {
+        public String outletName() {
             return outletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -116,12 +115,11 @@ public final class VirtualOutletEndpointInput {
     }
 
     public static final class Delete extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         public static final String DELETE_METHOD_QUERY_PARAMETER = "method";
         private final String officeId;
         private final String projectId;
         private final String outletName;
-        private DeleteMethod deleteMethod;
+        private DeleteMethod deleteMethod = DeleteMethod.KEY;
 
         private Delete(String officeId, String projectId, String outletName) {
             this.officeId = Objects.requireNonNull(officeId, "Office ID required for delete outlet endpoint");
@@ -134,19 +132,19 @@ public final class VirtualOutletEndpointInput {
             return this;
         }
 
-        public DeleteMethod getDeleteMethod() {
+        public DeleteMethod deleteMethod() {
             return deleteMethod;
         }
 
-        public String getOutletName() {
+        public String outletName() {
             return outletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -176,11 +174,11 @@ public final class VirtualOutletEndpointInput {
             return oldOutletName;
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
