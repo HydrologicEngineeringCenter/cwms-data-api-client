@@ -111,7 +111,6 @@ public final class OutletEndpointInput {
 
     public static final class Delete extends EndpointInput {
         public static final String METHOD_QUERY_PARAMETER = "method";
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         private final String outletName;
         private final String officeId;
         private DeleteMethod deleteMethod = DeleteMethod.KEY;
@@ -132,10 +131,13 @@ public final class OutletEndpointInput {
             return outletName;
         }
 
+        String officeId() {
+            return officeId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

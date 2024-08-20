@@ -57,8 +57,7 @@ class TestOutletEndpointInput {
         OutletEndpointInput.Delete input = OutletEndpointInput.delete(office, outletName).deleteMethod(DeleteMethod.ALL);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(outletName, input.outletName());
-        assertEquals(office, mockHttpRequestBuilder
-                .getQueryParameter(OutletEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
+        assertEquals(office, input.officeId());
         assertEquals(DeleteMethod.ALL.toString(), mockHttpRequestBuilder
                 .getQueryParameter(OutletEndpointInput.Delete.METHOD_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));

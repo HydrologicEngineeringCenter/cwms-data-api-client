@@ -61,7 +61,6 @@ public final class VirtualOutletEndpointInput {
     }
 
     public static final class GetOne extends EndpointInput {
-        public static final String OFFICE_QUERY_PARAMETER = "office";
         private final String officeId;
         private final String projectId;
         private final String outletName;
@@ -86,8 +85,7 @@ public final class VirtualOutletEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
