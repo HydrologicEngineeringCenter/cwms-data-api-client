@@ -1,0 +1,118 @@
+[
+  {
+    "time-series-profile": {
+      "location-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location"
+      },
+      "description": "Description",
+      "parameter-list": [
+        "Depth",
+        "Temp-Water"
+      ],
+      "key-parameter": "Depth",
+      "reference-ts-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location.Elev.Inst.1Hour.0.DSS-Obs"
+      }
+    },
+    "time-series-list": [
+      {
+        "parameter": "Depth",
+        "unit": "m",
+        "time-zone": "UTC",
+        "values": [
+          {
+            "date-time": 1612869582120,
+            "value": 1.0,
+            "quality": 0
+          },
+          {
+            "date-time": 1612869582220,
+            "value": 3.0,
+            "quality": 0
+          }
+        ]
+      },
+      {
+        "parameter": "Temp-Water",
+        "unit": "F",
+        "time-zone": "UTC",
+        "values": [
+          {
+            "date-time": 1612869582120,
+            "value": 1.0,
+            "quality": 0
+          },
+          {
+            "date-time": 1612869582220,
+            "value": 3.0,
+            "quality": 0
+          }
+        ]
+      }
+    ],
+    "first-date": 1594296000000,
+    "last-date": 1752062400000,
+    "version": "VERSION",
+    "version-date": 1612869582120
+  },
+  {
+    "time-series-profile": {
+      "location-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location2"
+      },
+      "description": "Description2",
+      "parameter-list": [
+        "Depth",
+        "Temp-Water"
+      ],
+      "key-parameter": "Temp-Water",
+      "reference-ts-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location2.Elev.Inst.1Hour.0.DSS-Obs"
+      }
+    },
+    "time-series-list": [
+      {
+        "parameter": "Depth",
+        "unit": "m",
+        "time-zone": "UTC",
+        "values": [
+          {
+            "date-time": 1612869582120,
+            "value": 1.0,
+            "quality": 0
+          },
+          {
+            "date-time": 1612869582220,
+            "value": 3.0,
+            "quality": 0
+          }
+        ]
+      },
+      {
+        "parameter": "Temp-Water",
+        "unit": "F",
+        "time-zone": "UTC",
+        "values": [
+          {
+            "date-time": 1612669582120,
+            "value": 1.0,
+            "quality": 0
+          },
+          {
+            "date-time": 1612769582220,
+            "value": 3.0,
+            "quality": 0
+          }
+        ]
+      }
+    ],
+    "first-date": 1594297000000,
+    "last-date": 1752062500000,
+    "version": "VERSION2",
+    "version-date": 1612869582120
+  }
+]
