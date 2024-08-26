@@ -14,7 +14,7 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
         date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
-public class TimeSeriesProfileParserColumnar {
+public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
 
     @JsonProperty("location-id")
     private CwmsId locationId = null;

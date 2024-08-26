@@ -12407,7 +12407,7 @@ components:
           type: string
         unit:
           type: string
-        parameterInfoString:
+        parameter-info-string:
           type: string
         type:
           type: string

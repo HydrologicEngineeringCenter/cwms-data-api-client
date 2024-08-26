@@ -16,9 +16,9 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
         date = "2024-08-23T15:45:40.214689900-07:00[America/Los_Angeles]")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
-@JsonSubTypes({@JsonSubTypes.Type(value = TimeSeriesProfileParserIndexed.class, name = "indexed-timeseries-profile-parser"),
-    @JsonSubTypes.Type(value = TimeSeriesProfileParserColumnar.class, name = "columnar-timeseries-profile-parser")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({ @JsonSubTypes.Type(name = "indexed-timeseries-profile-parser", value = TimeSeriesProfileParserIndexed.class),
+        @JsonSubTypes.Type(name = "columnar-timeseries-profile-parser", value = TimeSeriesProfileParserColumnar.class)
 })
 public class TimeSeriesProfileParser {
 

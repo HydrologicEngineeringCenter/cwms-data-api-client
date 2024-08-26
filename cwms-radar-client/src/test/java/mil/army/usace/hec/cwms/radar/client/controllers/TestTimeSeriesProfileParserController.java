@@ -2,6 +2,8 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParser;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParserColumnar;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParserIndexed;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -17,28 +19,31 @@ final class TestTimeSeriesProfileParserController extends TestController {
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetOne input = TimeSeriesProfileParserEndpointInput
                 .getOne("SPK", "Test_TSP_Location", "Depth");
-        TimeSeriesProfileParser value = new TimeSeriesProfileParserController()
+        TimeSeriesProfileParserIndexed value = (TimeSeriesProfileParserIndexed) new TimeSeriesProfileParserController()
                 .retrieveTimeSeriesProfileParser(buildConnectionInfo(), input);
         assertNotNull(value);
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals(",", value.getFieldDelimiter());
     }
 
+    @Test
     void testGetOne_columnar() throws IOException {
         String collect = readJsonFile("radar/v2/json/ts_profile_parser_columnar.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetOne input = TimeSeriesProfileParserEndpointInput
                 .getOne("SPK", "Test_TSP_Location", "Depth");
-        TimeSeriesProfileParser value = new TimeSeriesProfileParserController()
+        TimeSeriesProfileParserColumnar value = (TimeSeriesProfileParserColumnar) new TimeSeriesProfileParserController()
                 .retrieveTimeSeriesProfileParser(buildConnectionInfo(), input);
         assertNotNull(value);
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals(19, value.getTimeEndColumn());
     }
 
     @Test
@@ -55,12 +60,12 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
         value = results.get(1);
         assertEquals("SPK", value.getLocationId().getOfficeId());
-        assertEquals("Temp-Water", value.getKeyParameter());
+        assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
     }
 
     @Test
@@ -77,12 +82,12 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
         value = results.get(1);
         assertEquals("SPK", value.getLocationId().getOfficeId());
-        assertEquals("Temp-Water", value.getKeyParameter());
+        assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals(",", value.getRecordDelimiter());
+        assertEquals("\n", value.getRecordDelimiter());
     }
 
     @Test
