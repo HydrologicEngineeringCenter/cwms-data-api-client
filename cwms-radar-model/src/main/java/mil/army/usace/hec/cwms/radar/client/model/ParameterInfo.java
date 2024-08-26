@@ -15,8 +15,8 @@ import java.util.Objects;
         date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ParameterInfoColumnar.class, name = "ParameterInfoColumnar"),
-    @JsonSubTypes.Type(value = ParameterInfoIndexed.class, name = "ParameterInfoIndexed"),
+    @JsonSubTypes.Type(value = ParameterInfoColumnar.class, name = "columnar-parameter-info"),
+    @JsonSubTypes.Type(value = ParameterInfoIndexed.class, name = "indexed-parameter-info"),
 })
 public class ParameterInfo {
 
