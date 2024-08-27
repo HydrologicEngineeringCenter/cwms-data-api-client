@@ -29,7 +29,7 @@ public class TimeSeriesProfileParser {
     private String keyParameter = null;
 
     @JsonProperty("record-delimiter")
-    private String recordDelimiter = null;
+    private char recordDelimiter = '\0';
 
     @JsonProperty("time-format")
     private String timeFormat = null;
@@ -73,16 +73,16 @@ public class TimeSeriesProfileParser {
         this.keyParameter = keyParameter;
     }
 
-    public TimeSeriesProfileParser recordDelimiter(String recordDelimiter) {
+    public TimeSeriesProfileParser recordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
         return this;
     }
 
-    public String getRecordDelimiter() {
+    public char getRecordDelimiter() {
         return recordDelimiter;
     }
 
-    public void setRecordDelimiter(String recordDelimiter) {
+    public void setRecordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
     }
 
@@ -172,9 +172,9 @@ public class TimeSeriesProfileParser {
                 && this.keyParameter == null || timeSeriesProfileParser.keyParameter == null
                 ? Objects.equals(this.keyParameter, timeSeriesProfileParser.keyParameter)
                 : this.keyParameter.equalsIgnoreCase(timeSeriesProfileParser.keyParameter)
-                && this.recordDelimiter == null || timeSeriesProfileParser.recordDelimiter == null
+                && this.recordDelimiter == '\0' || timeSeriesProfileParser.recordDelimiter == '\0'
                 ? Objects.equals(this.recordDelimiter, timeSeriesProfileParser.recordDelimiter)
-                : this.recordDelimiter.equalsIgnoreCase(timeSeriesProfileParser.recordDelimiter)
+                : this.recordDelimiter == timeSeriesProfileParser.recordDelimiter
                 && this.timeFormat == null || timeSeriesProfileParser.timeFormat == null
                 ? Objects.equals(this.timeFormat, timeSeriesProfileParser.timeFormat)
                 : this.timeFormat.equalsIgnoreCase(timeSeriesProfileParser.timeFormat)
@@ -192,7 +192,7 @@ public class TimeSeriesProfileParser {
     @Override
     public int hashCode() {
         return Objects.hash(locationId, keyParameter == null ? 0 : keyParameter.toLowerCase(),
-                recordDelimiter == null ? 0 : recordDelimiter.toLowerCase(),
+                recordDelimiter == '\0' ? 0 : recordDelimiter,
                 timeFormat == null ? 0 : timeFormat.toLowerCase(),
                 timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList,
                 timeInTwoFields, type == null ? 0 : type.toLowerCase());

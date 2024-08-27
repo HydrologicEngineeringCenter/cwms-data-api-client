@@ -55,7 +55,7 @@ final class TestTimeSeriesProfileParserEndpointInput {
         TimeSeriesProfileParser profileParser = new TimeSeriesProfileParser()
                 .timeZone(timezone)
                 .keyParameter(keyParameter)
-                .recordDelimiter("\n")
+                .recordDelimiter('\n')
                 .timeInTwoFields(true)
                 .locationId(new CwmsId().officeId(office).name(location));
         Post input = TimeSeriesProfileParserEndpointInput.post(profileParser).failIfExists(false);

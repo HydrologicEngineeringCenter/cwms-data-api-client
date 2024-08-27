@@ -23,7 +23,7 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
     private String keyParameter = null;
 
     @JsonProperty("record-delimiter")
-    private String recordDelimiter = null;
+    private char recordDelimiter = '\0';
 
     @JsonProperty("time-format")
     private String timeFormat = null;
@@ -70,16 +70,16 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
         this.keyParameter = keyParameter;
     }
 
-    public TimeSeriesProfileParserColumnar recordDelimiter(String recordDelimiter) {
+    public TimeSeriesProfileParserColumnar recordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
         return this;
     }
 
-    public String getRecordDelimiter() {
+    public char getRecordDelimiter() {
         return recordDelimiter;
     }
 
-    public void setRecordDelimiter(String recordDelimiter) {
+    public void setRecordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
     }
 
@@ -182,9 +182,9 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
                 && this.keyParameter == null || timeSeriesProfileParserColumnar.keyParameter == null
                 ? Objects.equals(this.keyParameter, timeSeriesProfileParserColumnar.keyParameter)
                 : this.keyParameter.equalsIgnoreCase(timeSeriesProfileParserColumnar.keyParameter)
-                && this.recordDelimiter == null || timeSeriesProfileParserColumnar.recordDelimiter == null
+                && this.recordDelimiter == '\0' || timeSeriesProfileParserColumnar.recordDelimiter == '\0'
                 ? Objects.equals(this.recordDelimiter, timeSeriesProfileParserColumnar.recordDelimiter)
-                : this.recordDelimiter.equalsIgnoreCase(timeSeriesProfileParserColumnar.recordDelimiter)
+                : this.recordDelimiter == timeSeriesProfileParserColumnar.recordDelimiter
                 && this.timeFormat == null || timeSeriesProfileParserColumnar.timeFormat == null
                 ? Objects.equals(this.timeFormat, timeSeriesProfileParserColumnar.timeFormat)
                 : this.timeFormat.equalsIgnoreCase(timeSeriesProfileParserColumnar.timeFormat)
@@ -201,7 +201,7 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
     @Override
     public int hashCode() {
         return Objects.hash(locationId, keyParameter == null ? 0 : keyParameter.toLowerCase(),
-                recordDelimiter == null ? 0 : recordDelimiter.toLowerCase(),
+                recordDelimiter == '\0' ? 0 : recordDelimiter,
                 timeFormat == null ? 0 : timeFormat.toLowerCase(),
                 timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList,
                 timeInTwoFields, timeStartColumn, timeEndColumn);
