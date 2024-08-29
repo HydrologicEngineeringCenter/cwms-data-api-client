@@ -2,6 +2,7 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
         date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
+@JsonTypeName("columnar-timeseries-profile-parser")
 public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
 
     @JsonProperty("location-id")
@@ -44,76 +46,93 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
     @JsonProperty("time-end-column")
     private Integer timeEndColumn = null;
 
+    @Override
     public TimeSeriesProfileParserColumnar locationId(CwmsId locationId) {
         this.locationId = locationId;
         return this;
     }
 
+    @Override
     public CwmsId getLocationId() {
         return locationId;
     }
 
+    @Override
     public void setLocationId(CwmsId locationId) {
         this.locationId = locationId;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar keyParameter(String keyParameter) {
         this.keyParameter = keyParameter;
         return this;
     }
 
+    @Override
     public String getKeyParameter() {
         return keyParameter;
     }
 
+    @Override
     public void setKeyParameter(String keyParameter) {
         this.keyParameter = keyParameter;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar recordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
         return this;
     }
 
+    @Override
     public char getRecordDelimiter() {
         return recordDelimiter;
     }
 
+    @Override
     public void setRecordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar timeFormat(String timeFormat) {
         this.timeFormat = timeFormat;
         return this;
     }
 
+    @Override
     public String getTimeFormat() {
         return timeFormat;
     }
 
+    @Override
     public void setTimeFormat(String timeFormat) {
         this.timeFormat = timeFormat;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar timeZone(String timeZone) {
         this.timeZone = timeZone;
         return this;
     }
 
+    @Override
     public String getTimeZone() {
         return timeZone;
     }
 
+    @Override
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar parameterInfoList(List<ParameterInfo> parameterInfoList) {
         this.parameterInfoList = parameterInfoList;
         return this;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar addParameterInfoListItem(ParameterInfo parameterInfoListItem) {
         if (this.parameterInfoList == null) {
             this.parameterInfoList = new ArrayList<>();
@@ -122,23 +141,28 @@ public class TimeSeriesProfileParserColumnar extends TimeSeriesProfileParser {
         return this;
     }
 
+    @Override
     public List<ParameterInfo> getParameterInfoList() {
         return parameterInfoList;
     }
 
+    @Override
     public void setParameterInfoList(List<ParameterInfo> parameterInfoList) {
         this.parameterInfoList = parameterInfoList;
     }
 
+    @Override
     public TimeSeriesProfileParserColumnar timeInTwoFields(Boolean timeInTwoFields) {
         this.timeInTwoFields = timeInTwoFields;
         return this;
     }
 
+    @Override
     public Boolean isTimeInTwoFields() {
         return timeInTwoFields;
     }
 
+    @Override
     public void setTimeInTwoFields(Boolean timeInTwoFields) {
         this.timeInTwoFields = timeInTwoFields;
     }

@@ -1,12 +1,13 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.time.Instant;
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfile;
 
 
 public final class TimeSeriesProfileInstanceEndpointInput {
@@ -22,8 +23,8 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         return new GetOne(officeId, timeseriesId, parameterId, version, unit);
     }
 
-    public static Post post(String profileData, String version) {
-        return new Post(profileData, version);
+    public static Post post(String profileData, TimeSeriesProfile profile, String version) {
+        return new Post(profileData, profile, version);
     }
 
     public static Delete delete(String officeId, String version, String parameterId, String timeseriesId) {
@@ -62,12 +63,12 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeMask)
                 .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationMask)
                 .addQueryParameter(PARAMETER_MASK_QUERY_PARAMETER, parameterMask)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
     public static final class GetOne extends EndpointInput {
-        public static final String OFFICE_ID_QUERY_PARAMETER = "office-id";
+        public static final String OFFICE_QUERY_PARAMETER = "office";
         public static final String PARAMETER_ID_QUERY_PARAMETER = "parameter-id";
         public static final String VERSION_QUERY_PARAMETER = "version";
         public static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
@@ -154,10 +155,10 @@ public final class TimeSeriesProfileInstanceEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_ID_QUERY_PARAMETER, officeId)
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(PARAMETER_ID_QUERY_PARAMETER, parameterId)
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
-                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDate.toString())
+                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
                 .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
                 .addQueryParameter(START_INCLUSIVE_QUERY_PARAMETER, String.valueOf(startInclusive))
@@ -165,9 +166,9 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(PREVIOUS_QUERY_PARAMETER, String.valueOf(previous))
                 .addQueryParameter(NEXT_QUERY_PARAMETER, String.valueOf(next))
                 .addQueryParameter(MAX_VERSION_QUERY_PARAMETER, String.valueOf(maxVersion))
-                .addQueryParameter(START_QUERY_PARAMETER, start.toString())
-                .addQueryParameter(END_QUERY_PARAMETER, end.toString())
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryParameter(START_QUERY_PARAMETER, String.valueOf(start.toEpochMilli()))
+                .addQueryParameter(END_QUERY_PARAMETER, String.valueOf(end.toEpochMilli()))
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
@@ -182,10 +183,12 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         private Instant versionDate;
         private final String profileData;
         private final String version;
+        private final TimeSeriesProfile profile;
 
-        public Post(String profileData, String version) {
+        public Post(String profileData, TimeSeriesProfile profile, String version) {
             this.profileData = Objects.requireNonNull(profileData, "Profile data is required");
             this.version = Objects.requireNonNull(version, "Version is required");
+            this.profile = Objects.requireNonNull(profile, "TimeSeries Profile is required");
         }
 
         public Post method(String method) {
@@ -207,19 +210,23 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return profileData;
         }
 
+        public TimeSeriesProfile profile() {
+            return profile;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(METHOD_QUERY_PARAMETER, method)
                 .addQueryParameter(OVERRIDE_PROTECTION_QUERY_PARAMETER, String.valueOf(overrideProtection))
-                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDate.toString())
+                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(PROFILE_DATA_QUERY_PARAMETER, profileData)
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 
     public static final class Delete extends EndpointInput {
-        public static final String OFFICE_ID_QUERY_PARAMETER = "office-id";
+        public static final String OFFICE_QUERY_PARAMETER = "office";
         public static final String PARAMETER_ID_QUERY_PARAMETER = "parameter-id";
         public static final String VERSION_QUERY_PARAMETER = "version";
         public static final String VERSION_DATE_QUERY_PARAMETER = "version-date";
@@ -268,14 +275,14 @@ public final class TimeSeriesProfileInstanceEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_ID_QUERY_PARAMETER, officeId)
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(PARAMETER_ID_QUERY_PARAMETER, parameterId)
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
-                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDate.toString())
+                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
                 .addQueryParameter(OVERRIDE_PROTECTION_QUERY_PARAMETER, String.valueOf(overrideProtection))
-                .addQueryParameter(DATE_QUERY_PARAMETER, date.toString())
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+                .addQueryParameter(DATE_QUERY_PARAMETER, String.valueOf(date.toEpochMilli()))
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
 }

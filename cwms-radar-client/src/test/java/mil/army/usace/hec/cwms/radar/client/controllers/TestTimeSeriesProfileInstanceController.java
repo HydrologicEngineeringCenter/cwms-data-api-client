@@ -1,5 +1,7 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.CwmsId;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfile;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileInstance;
 import org.junit.jupiter.api.Test;
 
@@ -54,8 +56,13 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         String collect = readJsonFile("radar/v2/json/ts_profile_instance.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
+        TimeSeriesProfile profile = new TimeSeriesProfile()
+                .description("Description")
+                .keyParameter("Depth")
+                .locationId(new CwmsId().officeId("SPK").name("Test_TSP_Location"))
+                .parameterList(List.of("Depth", "Flow"));
         TimeSeriesProfileInstanceEndpointInput.Post input = TimeSeriesProfileInstanceEndpointInput
-                .post("2019/05/15,12:15:45,12.5,18.3", "VERSION")
+                .post("2019/05/15,12:15:45,12.5,18.3", profile, "VERSION")
                 .versionDate(Instant.parse("2019-05-15T12:15:45Z"));
         assertDoesNotThrow(() -> new TimeSeriesProfileInstanceController()
                 .storeTimeSeriesProfileInstance(buildConnectionInfo(), input));
