@@ -2,6 +2,8 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.Objects;
 
 
@@ -11,6 +13,7 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
         date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
+@JsonTypeName("columnar-parameter-info")
 public class ParameterInfoColumnar extends ParameterInfo {
 
     @JsonProperty("start-column")

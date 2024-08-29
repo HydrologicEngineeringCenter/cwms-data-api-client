@@ -25,8 +25,8 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
-        assertEquals(",", value.getFieldDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
+        assertEquals(',', value.getFieldDelimiter());
     }
 
     @Test
@@ -42,7 +42,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
         assertEquals(19, value.getTimeEndColumn());
     }
 
@@ -60,12 +60,12 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
         value = results.get(1);
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
     }
 
     @Test
@@ -82,12 +82,12 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
         value = results.get(1);
         assertEquals("SPK", value.getLocationId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
-        assertEquals("\n", value.getRecordDelimiter());
+        assertEquals('\n', value.getRecordDelimiter());
     }
 
     @Test

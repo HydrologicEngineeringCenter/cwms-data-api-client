@@ -13,7 +13,7 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
         date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ParameterInfoColumnar.class, name = "columnar-parameter-info"),
     @JsonSubTypes.Type(value = ParameterInfoIndexed.class, name = "indexed-parameter-info"),
