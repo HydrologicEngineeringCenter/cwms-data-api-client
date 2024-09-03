@@ -17,7 +17,7 @@ class TestWaterPumpEndpointInput {
         String contractName = "CONTRACT";
         String waterUser = "user";
         String pumpId = "pumpId";
-        WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(office, projectId, contractName, waterUser,
+        WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(office, projectId, waterUser, contractName,
                 pumpId, pumpType, false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(pumpId, input.pumpId());
