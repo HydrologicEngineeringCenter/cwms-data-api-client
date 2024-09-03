@@ -56,7 +56,7 @@ class TestWaterUserController extends TestController {
         WaterUser user = RadarObjectMapper.mapJsonToObject(collect, WaterUser.class);
         WaterUserController.storeWaterUser(buildConnectionInfo(cookieJarSupplier), WaterUserEndpointInput.post(user));
         WaterUserEndpointInput.Delete input = WaterUserEndpointInput.delete(user.getProjectId().getOfficeId(),
-                user.getEntityName(), user.getProjectId().getName(), DeleteMethod.ALL);
+                user.getEntityName(), user.getProjectId().getName()).deleteMethod(DeleteMethod.ALL);
         assertDoesNotThrow(() -> WaterUserController.deleteWaterUser(buildConnectionInfo(cookieJarSupplier), input));
     }
 

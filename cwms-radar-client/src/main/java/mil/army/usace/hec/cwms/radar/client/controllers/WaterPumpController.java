@@ -11,13 +11,13 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 
 public final class WaterPumpController {
-    private static final String ENDPOINT = "projects/%s/%s/water-user/%s/contracts/%s/pumps";
+    private static final String ENDPOINT = "projects/%s/%s/water-user/%s/contracts/%s/pumps/%s";
 
     public void disassociateWaterPump(ApiConnectionInfo apiConnectionInfo, WaterPumpEndpointInput.Delete input)
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-                format(ENDPOINT, input.getOfficeId(), input.getProjectId(),
-                        input.getWaterUser(), input.getContractName()))
+                format(ENDPOINT, input.officeId(), input.projectId(),
+                        input.waterUser(), input.contractName(), input.pumpId()))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

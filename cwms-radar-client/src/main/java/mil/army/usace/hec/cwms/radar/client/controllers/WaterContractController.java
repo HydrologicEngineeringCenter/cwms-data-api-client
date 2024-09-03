@@ -19,8 +19,8 @@ public final class WaterContractController {
 
     public WaterUserContract retrieveWaterContract(ApiConnectionInfo apiConnectionInfo,
             WaterContractEndpointInput.GetOne input) throws IOException {
-        String endpoint = format(WATER_CONTRACT_ENDPOINT, input.getOfficeId(), input.getProjectId(), input.getWaterUser())
-                + "/" + input.getContractName();
+        String endpoint = format(WATER_CONTRACT_ENDPOINT, input.officeId(), input.projectId(), input.waterUser())
+                + "/" + input.contractName();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -34,7 +34,7 @@ public final class WaterContractController {
     public List<WaterUserContract> retrieveWaterContracts(ApiConnectionInfo apiConnectionInfo,
             WaterContractEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getOfficeId(), input.getProjectId(), input.getWaterUser()))
+                input.officeId(), input.projectId(), input.waterUser()))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -45,11 +45,11 @@ public final class WaterContractController {
     }
 
     public void storeWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Post input) throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.getWaterContract());
+        String body = RadarObjectMapper.mapObjectToJson(input.waterContract());
         new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getWaterContract().getContractId().getOfficeId(),
-                input.getWaterContract().getWaterUser().getProjectId().getName(),
-                input.getWaterContract().getWaterUser().getEntityName()))
+                input.waterContract().getContractId().getOfficeId(),
+                input.waterContract().getWaterUser().getProjectId().getName(),
+                input.waterContract().getWaterUser().getEntityName()))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
@@ -61,7 +61,7 @@ public final class WaterContractController {
 
     public void renameWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Patch input) throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getOfficeId(), input.getProjectId(), input.getWaterUser()) + "/" + input.getOldWaterContractName())
+                input.officeId(), input.projectId(), input.waterUser()) + "/" + input.oldWaterContractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .patch()
@@ -72,7 +72,7 @@ public final class WaterContractController {
 
     public void deleteWaterContract(ApiConnectionInfo apiConnectionInfo, WaterContractEndpointInput.Delete input) throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, format(WATER_CONTRACT_ENDPOINT,
-                input.getOfficeId(), input.getProjectId(), input.getWaterUserId()) + "/" + input.getContractName())
+                input.officeId(), input.projectId(), input.waterUserId()) + "/" + input.contractName())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

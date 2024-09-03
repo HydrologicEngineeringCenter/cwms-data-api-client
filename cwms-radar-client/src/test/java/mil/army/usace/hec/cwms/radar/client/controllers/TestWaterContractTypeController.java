@@ -25,6 +25,11 @@ class TestWaterContractTypeController extends TestController {
         assertEquals("SWT", value.getOfficeId());
         assertEquals("Test Tooltip", value.getTooltip());
         assertEquals(true, value.isActive());
+        LookupType value2 = values.get(1);
+        assertEquals("Test Display Value 2", value2.getDisplayValue());
+        assertEquals("SPK", value2.getOfficeId());
+        assertEquals("Test Tooltip 2", value2.getTooltip());
+        assertEquals(true, value2.isActive());
     }
 
     @Test
@@ -36,5 +41,15 @@ class TestWaterContractTypeController extends TestController {
         WaterContractTypeController controller = new WaterContractTypeController();
         WaterContractTypeEndpointInput.Post input = WaterContractTypeEndpointInput.post(waterContractType);
         assertDoesNotThrow(() -> controller.storeWaterContractType(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+    @Test
+    void testStoreNulls() {
+        assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.post(null));
+    }
+
+    @Test
+    void testRetrieveNulls () {
+        assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.getAll(null));
     }
 }

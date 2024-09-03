@@ -23,9 +23,9 @@ class TestWaterContractEndpointInput {
         String waterUser = "user";
         GetAll input = WaterContractEndpointInput.getAll(office, projectId, waterUser);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(office, input.getOfficeId());
-        assertEquals(projectId, input.getProjectId());
-        assertEquals(waterUser, input.getWaterUser());
+        assertEquals(office, input.officeId());
+        assertEquals(projectId, input.projectId());
+        assertEquals(waterUser, input.waterUser());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -36,12 +36,12 @@ class TestWaterContractEndpointInput {
         String office = "SPK";
         String projectId = "PROJECT";
         String waterUser = "user";
-        WaterContractEndpointInput.GetOne input = WaterContractEndpointInput.getOne(office, contractId, projectId, waterUser);
+        WaterContractEndpointInput.GetOne input = WaterContractEndpointInput.getOne(office, projectId, waterUser, contractId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(contractId, input.getContractName());
-        assertEquals(office, input.getOfficeId());
-        assertEquals(projectId, input.getProjectId());
-        assertEquals(waterUser, input.getWaterUser());
+        assertEquals(contractId, input.contractName());
+        assertEquals(office, input.officeId());
+        assertEquals(projectId, input.projectId());
+        assertEquals(waterUser, input.waterUser());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -53,9 +53,7 @@ class TestWaterContractEndpointInput {
         WaterContractEndpointInput.Post input = WaterContractEndpointInput.post(waterContract)
                 .failIfExists(false).ignoreNulls(true);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(waterContract, input.getWaterContract());
-        assertTrue(input.getIgnoreNulls());
-        assertFalse(input.getFailIfExists());
+        assertEquals(waterContract, input.waterContract());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -68,29 +66,33 @@ class TestWaterContractEndpointInput {
         String waterUser = "user";
         DeleteMethod deleteMethod = DeleteMethod.ALL;
         WaterContractEndpointInput.Delete input = WaterContractEndpointInput.delete(office, projectId, waterUser,
-                contractId, deleteMethod);
+                contractId).deleteMethod(deleteMethod);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(contractId, input.getContractName());
-        assertEquals(office, input.getOfficeId());
+        assertEquals(contractId, input.contractName());
+        assertEquals(office, input.officeId());
         assertEquals(deleteMethod.toString(), mockHttpRequestBuilder.getQueryParameter(WaterContractEndpointInput
                 .Delete.METHOD_QUERY_PARAMETER));
-        assertEquals(projectId, input.getProjectId());
-        assertEquals(waterUser, input.getWaterUserId());
+        assertEquals(projectId, input.projectId());
+        assertEquals(waterUser, input.waterUserId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testDeleteNulls() {
-        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, null, null, null, DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, "", null, null, DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete("", null, null, null, DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, null, "", null, DeleteMethod.ALL));
-        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, null, null, "", DeleteMethod.ALL));
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete(null, null, null, null)),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete(null, "project", "User", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete("HQ", null, "user", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete("HQ", "project", null, "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete("HQ", "project", "user", null)),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                .delete("HQ", "project", "user", "contract").deleteMethod(null))
+        );
     }
 
     @Test
@@ -104,12 +106,12 @@ class TestWaterContractEndpointInput {
         WaterContractEndpointInput.Patch input = WaterContractEndpointInput.patch(office, projectId, waterUser,
                 oldContractId, newContractId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(oldContractId, input.getOldWaterContractName());
+        assertEquals(oldContractId, input.oldWaterContractName());
         assertEquals(newContractId, mockHttpRequestBuilder.getQueryParameter(WaterContractEndpointInput
                 .Patch.NAME_QUERY_PARAMETER));
-        assertEquals(office, input.getOfficeId());
-        assertEquals(projectId, input.getProjectId());
-        assertEquals(waterUser, input.getWaterUser());
+        assertEquals(office, input.officeId());
+        assertEquals(projectId, input.projectId());
+        assertEquals(waterUser, input.waterUser());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

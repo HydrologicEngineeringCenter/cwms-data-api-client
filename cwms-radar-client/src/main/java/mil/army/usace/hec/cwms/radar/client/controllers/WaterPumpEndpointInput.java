@@ -14,55 +14,57 @@ public class WaterPumpEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static Delete delete(String officeId, String projectId, String contractName, String waterUser, PumpTypeEnum pumpId,
+    public static Delete delete(String officeId, String projectId, String waterUser, String contractName, String pumpId, PumpTypeEnum pumpType,
             boolean deleteAccounting) {
-        return new Delete(officeId, projectId, contractName, waterUser, pumpId, deleteAccounting);
+        return new Delete(officeId, projectId, waterUser, contractName, pumpId, pumpType, deleteAccounting);
     }
 
     public static final class Delete extends EndpointInput {
         static final String METHOD_QUERY_PARAMETER = "method";
         static final String PUMP_TYPE_QUERY_PARAMETER = "pump-type";
-        private final PumpTypeEnum pumpId;
+        private final PumpTypeEnum pumpType;
+        private final String pumpId;
         private final String officeId;
         private final String waterUser;
         private final String contractName;
         private final String projectId;
         private final boolean deleteAccounting;
 
-        private Delete(String officeId, String projectId, String contractName, String waterUser, PumpTypeEnum pumpId, boolean deleteAccounting) {
-            this.pumpId = Objects.requireNonNull(pumpId, "Cannot disassociate a pump without a pumpId");
+        private Delete(String officeId, String projectId, String waterUser, String contractName, String pumpId, PumpTypeEnum pumpType, boolean deleteAccounting) {
+            this.pumpType = Objects.requireNonNull(pumpType, "Cannot disassociate a pump without a pump type");
             this.officeId = Objects.requireNonNull(officeId, "Cannot disassociate a pump without an officeId");
             this.deleteAccounting = deleteAccounting;
+            this.pumpId = Objects.requireNonNull(pumpId, "Cannot disassociate a pump without a pumpId");
             this.waterUser = Objects.requireNonNull(waterUser, "Cannot disassociate a pump without a waterUser");
             this.contractName = Objects.requireNonNull(contractName, "Cannot disassociate a pump without a contractName");
             this.projectId = Objects.requireNonNull(projectId, "Cannot disassociate a pump without a projectId");
         }
 
-        PumpTypeEnum pumpId() {
-            return pumpId;
-        }
-
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 
-        String getWaterUser() {
+        String waterUser() {
             return waterUser;
         }
 
-        String getContractName() {
+        String contractName() {
             return contractName;
         }
 
-        String getProjectId() {
+        String projectId() {
             return projectId;
+        }
+
+        String pumpId() {
+            return pumpId;
         }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
                     .addQueryParameter(METHOD_QUERY_PARAMETER, deleteAccounting ? "true" : "false")
-                    .addQueryParameter(PUMP_TYPE_QUERY_PARAMETER, pumpId.toString())
+                    .addQueryParameter(PUMP_TYPE_QUERY_PARAMETER, pumpType.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

@@ -22,11 +22,12 @@ class TestWaterPumpController extends TestController {
         String projectId = "PROJECT";
         String contractName = "CONTRACT";
         String waterUser = "user";
+        String pumpId = "pumpId";
         controller.disassociateWaterPump(buildConnectionInfo(cookieJarSupplier), WaterPumpEndpointInput.delete(
                 pump.getPumpLocation().getOfficeId(), projectId, contractName,
-                waterUser, WaterSupplyPump.PumpTypeEnum.IN, false));
+                waterUser, pumpId, WaterSupplyPump.PumpTypeEnum.IN, false));
         WaterPumpEndpointInput.Delete input = WaterPumpEndpointInput.delete(pump.getPumpLocation().getOfficeId(),
-                projectId, contractName, waterUser, WaterSupplyPump.PumpTypeEnum.IN, true);
+                projectId, contractName, waterUser, pumpId, WaterSupplyPump.PumpTypeEnum.IN, true);
         assertDoesNotThrow(() -> controller.disassociateWaterPump(buildConnectionInfo(cookieJarSupplier), input));
     }
 }

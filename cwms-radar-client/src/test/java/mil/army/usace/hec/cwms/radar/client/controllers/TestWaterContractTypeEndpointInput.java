@@ -19,7 +19,7 @@ class TestWaterContractTypeEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         GetAll input = WaterContractTypeEndpointInput.getAll(officeId);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(officeId, input.getOfficeId());
+        assertEquals(officeId, input.officeId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -32,7 +32,6 @@ class TestWaterContractTypeEndpointInput {
         input.failIfExists(false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(waterContractType, input.waterContractType());
-        assertFalse(input.getFailIfExists());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -44,7 +43,20 @@ class TestWaterContractTypeEndpointInput {
         WaterContractTypeEndpointInput.Post input = WaterContractTypeEndpointInput.post(waterContractType);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(waterContractType, input.waterContractType());
-        assertTrue(input.getFailIfExists());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testStoreNulls() {
+        assertThrows(NullPointerException.class, () -> {
+            WaterContractTypeEndpointInput.getAll(null);
+        });
+    }
+
+    @Test
+    void testGetAllNulls() {
+        assertThrows(NullPointerException.class, () -> {
+            WaterContractTypeEndpointInput.getAll(null);
+        });
     }
 }

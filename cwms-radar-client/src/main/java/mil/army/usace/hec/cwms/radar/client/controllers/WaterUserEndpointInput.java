@@ -19,16 +19,16 @@ public final class WaterUserEndpointInput {
         return new GetAll(officeId, projectId);
     }
 
-    public static GetOne getOne(String officeId, String waterUserId, String projectId) {
-        return new GetOne(officeId, waterUserId, projectId);
+    public static GetOne getOne(String officeId, String projectId, String waterUserId) {
+        return new GetOne(officeId, projectId, waterUserId);
     }
 
     public static Post post(WaterUser waterUser) {
         return new Post(waterUser);
     }
 
-    public static Delete delete(String officeId, String waterUserId, String projectId, DeleteMethod deleteMethod) {
-        return new Delete(waterUserId, officeId, projectId, deleteMethod);
+    public static Delete delete(String officeId, String projectId, String waterUserId) {
+        return new Delete(officeId, projectId, waterUserId);
     }
 
     public static Patch patch(String officeId, String projectId, String oldWaterUserId, String newWaterUserId) {
@@ -44,11 +44,11 @@ public final class WaterUserEndpointInput {
             this.projectId = Objects.requireNonNull(projectId, "Project Id required for get all water user endpoint");
         }
 
-        public String getOfficeId() {
+        public String officeId() {
             return officeId;
         }
 
-        public String getProjectId() {
+        public String projectId() {
             return projectId;
         }
 
@@ -63,7 +63,7 @@ public final class WaterUserEndpointInput {
         private final String officeId;
         private final String projectId;
 
-        private GetOne(String officeId, String waterUserId, String projectId) {
+        private GetOne(String officeId, String projectId, String waterUserId) {
             this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for "
                     + "getOne water user endpoint");
             this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for "
@@ -76,11 +76,11 @@ public final class WaterUserEndpointInput {
             return waterUserId;
         }
 
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 
-        String getProjectId() {
+        String projectId() {
             return projectId;
         }
 
@@ -104,21 +104,18 @@ public final class WaterUserEndpointInput {
             return this;
         }
 
-        WaterUser getWaterUser() {
+        WaterUser waterUser() {
             return waterUser;
         }
 
-        String getOfficeId() {
+        String officeId() {
             return waterUser.getProjectId().getOfficeId();
         }
 
-        String getProjectId() {
+        String projectId() {
             return waterUser.getProjectId().getName();
         }
 
-        boolean getFailIfExists() {
-            return failIfExists;
-        }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
@@ -132,24 +129,28 @@ public final class WaterUserEndpointInput {
         private final String projectId;
         private final String waterUserId;
         private final String officeId;
-        private final DeleteMethod deleteMethod;
+        private DeleteMethod deleteMethod = DeleteMethod.ALL;
 
-        private Delete(String waterUserId, String officeId, String projectId, DeleteMethod deleteMethod) {
+        private Delete(String officeId, String projectId, String waterUserId) {
             this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for delete water user endpoint");
             this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for delete water user endpoint");
             this.projectId = Objects.requireNonNull(projectId, "Water User project Id required for delete water user endpoint");
-            this.deleteMethod = deleteMethod;
+        }
+
+        public Delete deleteMethod(DeleteMethod deleteMethod) {
+            this.deleteMethod = Objects.requireNonNull(deleteMethod, "Delete Method required for delete water user endpoint");
+            return this;
         }
 
         String waterUserId() {
             return waterUserId;
         }
 
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 
-        String getProjectId() {
+        String projectId() {
             return projectId;
         }
 
@@ -174,18 +175,19 @@ public final class WaterUserEndpointInput {
                     + "patch water user endpoint");
             this.projectId = Objects.requireNonNull(projectId, "Water User project Id required for "
                     + "patch water user endpoint");
-            this.officeId = officeId;
+            this.officeId = Objects.requireNonNull(officeId, "Water User office Id required for "
+                    + "patch water user endpoint");
         }
 
         String oldWaterUserId() {
             return oldWaterUserId;
         }
 
-        String getProjectId() {
+        String projectId() {
             return projectId;
         }
 
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 

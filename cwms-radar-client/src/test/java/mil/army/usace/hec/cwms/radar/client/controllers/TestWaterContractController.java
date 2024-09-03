@@ -70,7 +70,7 @@ class TestWaterContractController extends TestController {
         WaterContractController controller = new WaterContractController();
         controller.storeWaterContract(buildConnectionInfo(cookieJarSupplier), WaterContractEndpointInput.post(contract));
         WaterContractEndpointInput.Delete input = WaterContractEndpointInput.delete(contract.getOfficeId(), contract.getWaterUser().getProjectId().getName(),
-                contract.getWaterUser().getEntityName(), contract.getContractId().getName(), DeleteMethod.ALL);
+                contract.getWaterUser().getEntityName(), contract.getContractId().getName()).deleteMethod(DeleteMethod.ALL);
         assertDoesNotThrow(() -> controller.deleteWaterContract(buildConnectionInfo(cookieJarSupplier), input));
     }
 

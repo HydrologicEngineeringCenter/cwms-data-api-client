@@ -16,11 +16,10 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 public final class WaterContractTypeController {
     private static final String ENDPOINT = "projects/%s/contract-types";
-    private static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
 
     public List<LookupType> retrieveWaterContractTypes(ApiConnectionInfo apiConnectionInfo,
             WaterContractTypeEndpointInput.GetAll input)  throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, format(ENDPOINT, input.getOfficeId()))
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, format(ENDPOINT, input.officeId()))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
@@ -34,7 +33,6 @@ public final class WaterContractTypeController {
             throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.waterContractType());
         new HttpRequestBuilderImpl(apiConnectionInfo, format(ENDPOINT, input.waterContractType().getOfficeId()))
-                .addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, input.getFailIfExists() ? "true" : "false")
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()

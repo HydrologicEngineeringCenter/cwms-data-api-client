@@ -29,7 +29,7 @@ public final class WaterContractTypeEndpointInput {
             this.officeId = Objects.requireNonNull(officeId);
         }
 
-        String getOfficeId() {
+        String officeId() {
             return officeId;
         }
 
@@ -45,16 +45,12 @@ public final class WaterContractTypeEndpointInput {
         private boolean failIfExists = true;
 
         private Post(LookupType waterContractType) {
-            this.waterContractType = waterContractType;
+            this.waterContractType = Objects.requireNonNull(waterContractType);
         }
 
         public Post failIfExists(boolean failIfExists) {
             this.failIfExists = failIfExists;
             return this;
-        }
-
-        boolean getFailIfExists() {
-            return failIfExists;
         }
 
         LookupType waterContractType() {
