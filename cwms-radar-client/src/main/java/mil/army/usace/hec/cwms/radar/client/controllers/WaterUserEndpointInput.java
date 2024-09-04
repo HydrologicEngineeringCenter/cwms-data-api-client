@@ -44,11 +44,11 @@ public final class WaterUserEndpointInput {
             this.projectId = Objects.requireNonNull(projectId, "Project Id required for get all water user endpoint");
         }
 
-        public String officeId() {
+        String officeId() {
             return officeId;
         }
 
-        public String projectId() {
+        String projectId() {
             return projectId;
         }
 
@@ -129,7 +129,7 @@ public final class WaterUserEndpointInput {
         private final String projectId;
         private final String waterUserId;
         private final String officeId;
-        private DeleteMethod deleteMethod = DeleteMethod.ALL;
+        private DeleteMethod deleteMethod = DeleteMethod.KEY;
 
         private Delete(String officeId, String projectId, String waterUserId) {
             this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for delete water user endpoint");
@@ -138,7 +138,7 @@ public final class WaterUserEndpointInput {
         }
 
         public Delete deleteMethod(DeleteMethod deleteMethod) {
-            this.deleteMethod = Objects.requireNonNull(deleteMethod, "Delete Method required for delete water user endpoint");
+            this.deleteMethod = deleteMethod;
             return this;
         }
 

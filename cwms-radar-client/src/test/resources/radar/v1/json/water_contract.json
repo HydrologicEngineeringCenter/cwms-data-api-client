@@ -1,21 +1,21 @@
 {
   "office-id": "SWT",
   "water-user": {
-    "entity-name": "Test User",
+    "entity-name": "HEC Water User",
     "project-id": {
       "office-id": "SWT",
-      "name": "SACRAMENTO"
+      "name": "Sacramento River"
     },
-    "water-right": "Test Water Right"
+    "water-right": "Guaranteed water rights to 50% of flow"
   },
   "contract-id": {
     "office-id": "SWT",
-    "name": "TEST_CONTRACT"
+    "name": "SAC_HEC_Contract"
   },
   "contract-type": {
     "office-id": "SWT",
-    "display-value": "Test Display Value",
-    "tooltip": "Test Tooltip",
+    "display-value": "Storage",
+    "tooltip": "Storage contract",
     "active": true
   },
   "contract-effective-date": 158000,
@@ -33,11 +33,11 @@
       "latitude": 0,
       "longitude": 0,
       "active": true,
-      "public-name": "Test Public Pump Name",
-      "long-name": "Test Long Name",
-      "description": "Test Description",
+      "public-name": "Pump 1",
+      "long-name": "Primary Pump Out 1",
+      "description": "Pump to remove water",
       "timezone-name": "UTC",
-      "location-type": "Test Location Type",
+      "location-type": "Dam",
       "location-kind": "PUMP",
       "nation": "US",
       "state-initial": "NV",
@@ -48,7 +48,7 @@
       "published-latitude": 0,
       "vertical-datum": "NGVD29",
       "elevation": 150,
-      "map-label": "Test Map Label",
+      "map-label": "SAC PUMP 1",
       "bounding-office-id": "SWT",
       "elevation-units": "m"
     },
@@ -61,11 +61,11 @@
       "latitude": 0,
       "longitude": 0,
       "active": true,
-      "public-name": "Test Public Pump Name",
-      "long-name": "Test Long Name",
-      "description": "Test Description",
+      "public-name": "Pump 2",
+      "long-name": "Primary Pump Out Below",
+      "description": "Pump to remove water below",
       "timezone-name": "UTC",
-      "location-type": "Test Location Type",
+      "location-type": "Dam",
       "location-kind": "PUMP",
       "nation": "US",
       "state-initial": "NV",
@@ -76,7 +76,7 @@
       "published-latitude": 0,
       "vertical-datum": "NGVD29",
       "elevation": 150,
-      "map-label": "Test Map Label",
+      "map-label": "SAC PUMP 2",
       "bounding-office-id": "SWT",
       "elevation-units": "m"
     },
@@ -89,11 +89,11 @@
       "latitude": 0,
       "longitude": 0,
       "active": true,
-      "public-name": "Test Public Pump Name",
-      "long-name": "Test Long Name",
-      "description": "Test Description",
+      "public-name": "Pump 3",
+      "long-name": "Primary Pump In 3",
+      "description": "Pump to bring water in to storage",
       "timezone-name": "UTC",
-      "location-type": "Test Location Type",
+      "location-type": "Dam",
       "location-kind": "PUMP",
       "nation": "US",
       "state-initial": "NV",
@@ -104,7 +104,7 @@
       "published-latitude": 0,
       "vertical-datum": "NGVD29",
       "elevation": 150,
-      "map-label": "Test Map Label",
+      "map-label": "SAC PUMP 3",
       "bounding-office-id": "SWT",
       "elevation-units": "m"
     },

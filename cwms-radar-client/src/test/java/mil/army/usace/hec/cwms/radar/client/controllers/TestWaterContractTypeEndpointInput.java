@@ -48,15 +48,11 @@ class TestWaterContractTypeEndpointInput {
 
     @Test
     void testStoreNulls() {
-        assertThrows(NullPointerException.class, () -> {
-            WaterContractTypeEndpointInput.getAll(null);
-        });
+        assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.post(null));
     }
 
     @Test
     void testGetAllNulls() {
-        assertThrows(NullPointerException.class, () -> {
-            WaterContractTypeEndpointInput.getAll(null);
-        });
+        assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.getAll(null));
     }
 }

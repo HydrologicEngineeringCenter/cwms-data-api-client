@@ -21,15 +21,19 @@ class TestWaterContractTypeController extends TestController {
                 .retrieveWaterContractTypes(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         LookupType value = values.get(0);
-        assertEquals("Test Display Value", value.getDisplayValue());
-        assertEquals("SWT", value.getOfficeId());
-        assertEquals("Test Tooltip", value.getTooltip());
-        assertEquals(true, value.isActive());
+        assertAll(
+                () -> assertEquals("Storage", value.getDisplayValue()),
+                () -> assertEquals("SWT", value.getOfficeId()),
+                () -> assertEquals("Storage contract", value.getTooltip()),
+                () -> assertEquals(true, value.isActive())
+        );
         LookupType value2 = values.get(1);
-        assertEquals("Test Display Value 2", value2.getDisplayValue());
-        assertEquals("SPK", value2.getOfficeId());
-        assertEquals("Test Tooltip 2", value2.getTooltip());
-        assertEquals(true, value2.isActive());
+        assertAll(
+                () -> assertEquals("Conveyance", value2.getDisplayValue()),
+                () -> assertEquals("SPK", value2.getOfficeId()),
+                () -> assertEquals("Conveyance contract", value2.getTooltip()),
+                () -> assertEquals(true, value2.isActive())
+        );
     }
 
     @Test

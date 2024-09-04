@@ -22,13 +22,15 @@ class TestWaterContractController extends TestController {
         List<WaterUserContract> values = new WaterContractController().retrieveWaterContracts(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUserContract value = values.get(1);
-        assertEquals("TEST_CONTRACT 2", value.getContractId().getName());
-        assertEquals("SPK", value.getContractId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getWaterUser().getProjectId().getName());
-        assertEquals("Test Water Right", value.getWaterUser().getWaterRight());
-        assertEquals("Test User 2", value.getWaterUser().getEntityName());
-        assertEquals(true, value.getContractType().isActive());
-        assertEquals("PUMP1", value.getPumpOutLocation().getPumpLocation().getName());
+        assertAll(
+            () -> assertEquals("USACE Water Contract", value.getContractId().getName()),
+            () -> assertEquals("SPK", value.getContractId().getOfficeId()),
+            () -> assertEquals("Yolo County Water Project", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("Rights to 25% of flow", value.getWaterUser().getWaterRight()),
+            () -> assertEquals("USACE Water User", value.getWaterUser().getEntityName()),
+            () -> assertEquals(true, value.getContractType().isActive()),
+            () -> assertEquals("PUMP1", value.getPumpOutLocation().getPumpLocation().getName())
+        );
     }
 
     @Test
@@ -40,13 +42,15 @@ class TestWaterContractController extends TestController {
                 "TEST_CONTRACT", "PROJECT-CONTRACT_LOC", "Test User");
         WaterUserContract value = new WaterContractController()
                 .retrieveWaterContract(buildConnectionInfo(cookieJarSupplier), input);
-        assertEquals("TEST_CONTRACT", value.getContractId().getName());
-        assertEquals("SWT", value.getContractId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getWaterUser().getProjectId().getName());
-        assertEquals("Test Water Right", value.getWaterUser().getWaterRight());
-        assertEquals("Test User", value.getWaterUser().getEntityName());
-        assertEquals(true, value.getContractType().isActive());
-        assertEquals("PUMP3", value.getPumpInLocation().getPumpLocation().getName());
+        assertAll(
+            () -> assertEquals("SAC_HEC_Contract", value.getContractId().getName()),
+            () -> assertEquals("SWT", value.getContractId().getOfficeId()),
+            () -> assertEquals("Sacramento River", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("Guaranteed water rights to 50% of flow", value.getWaterUser().getWaterRight()),
+            () -> assertEquals("HEC Water User", value.getWaterUser().getEntityName()),
+            () -> assertEquals(true, value.getContractType().isActive()),
+            () -> assertEquals("PUMP3", value.getPumpInLocation().getPumpLocation().getName())
+        );
     }
 
     @Test

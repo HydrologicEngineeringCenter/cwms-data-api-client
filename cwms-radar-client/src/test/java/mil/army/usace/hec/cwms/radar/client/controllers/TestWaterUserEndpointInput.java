@@ -68,20 +68,33 @@ class TestWaterUserEndpointInput {
     }
 
     @Test
+    void testPatch() {
+        String oldUserId = "user";
+        String newUserId = "newUser";
+        String office = "SPK";
+        String projectId = "SACRAMENTO";
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(office, projectId, oldUserId, newUserId);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(oldUserId, input.oldWaterUserId());
+        assertEquals(newUserId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Patch.NAME_QUERY_PARAMETER));
+        assertEquals(office, input.officeId());
+        assertEquals(projectId, input.projectId());
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
     void testDeleteNulls() {
         assertAll(
-            () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, null, null)),
             () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete(null, "project", "user")),
             () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("HQ", null, "user")),
-            () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("HQ", "project", null)),
-            () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("HQ", "project", "user").deleteMethod(null))
+            () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.delete("HQ", "project", null))
         );
     }
 
     @Test
     void testPatchNulls() {
         assertAll(
-            () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.patch(null, null, null, null)),
             () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.patch(null, "project", "oldUser", "newUser")),
             () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.patch("HQ", null, "oldUser", "newUser")),
             () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.patch("HQ", "project", null, "newUser")),
@@ -97,35 +110,17 @@ class TestWaterUserEndpointInput {
     @Test
     void testGetOneNulls() {
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne(null, null, null)),
-                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne(null, "user", "project")),
-                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne("HQ", null, "project")),
-                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne("HQ", "user", null))
+                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne(null, "project", "user")),
+                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne("HQ", null, "user")),
+                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getOne("HQ", "project", null))
         );
     }
 
     @Test
     void testGetAllNulls() {
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getAll(null, null)),
                 () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getAll(null, "project")),
                 () -> assertThrows(NullPointerException.class, () -> WaterUserEndpointInput.getAll("HQ", null))
         );
-    }
-
-    @Test
-    void testPatch() {
-        String oldUserId = "user";
-        String newUserId = "newUser";
-        String office = "SPK";
-        String projectId = "SACRAMENTO";
-        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        WaterUserEndpointInput.Patch input = WaterUserEndpointInput.patch(office, projectId, oldUserId, newUserId);
-        input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(oldUserId, input.oldWaterUserId());
-        assertEquals(newUserId, mockHttpRequestBuilder.getQueryParameter(WaterUserEndpointInput.Patch.NAME_QUERY_PARAMETER));
-        assertEquals(office, input.officeId());
-        assertEquals(projectId, input.projectId());
-        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

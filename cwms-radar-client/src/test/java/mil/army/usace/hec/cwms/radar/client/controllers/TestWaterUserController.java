@@ -20,9 +20,9 @@ class TestWaterUserController extends TestController {
         List<WaterUser> values = WaterUserController.retrieveWaterUsers(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterUser value = values.get(1);
-        assertEquals("Test User 2", value.getEntityName());
+        assertEquals("USACE Water User", value.getEntityName());
         assertEquals("SPK", value.getProjectId().getOfficeId());
-        assertEquals("TOPEKA", value.getProjectId().getName());
+        assertEquals("Sacramento River Basin Project", value.getProjectId().getName());
     }
 
     @Test
@@ -32,9 +32,9 @@ class TestWaterUserController extends TestController {
         mockHttpServer.start();
         WaterUserEndpointInput.GetOne input = WaterUserEndpointInput.getOne("SPK", "user", "SACRAMENTO");
         WaterUser value = WaterUserController.retrieveWaterUser(buildConnectionInfo(cookieJarSupplier), input);
-        assertEquals("Test User", value.getEntityName());
+        assertEquals("HEC Water User", value.getEntityName());
         assertEquals("SWT", value.getProjectId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getProjectId().getName());
+        assertEquals("Sacramento River Basin", value.getProjectId().getName());
     }
 
     @Test

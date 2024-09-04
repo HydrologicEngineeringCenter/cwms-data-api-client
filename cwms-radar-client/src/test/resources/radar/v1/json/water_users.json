@@ -1,16 +1,16 @@
 [
   {
-    "entity-name": "Test User",
+    "entity-name": "HEC Water User",
     "project-id": {
       "office-id": "SWT",
-      "name": "SACRAMENTO"
+      "name": "Sonoma County Water Agency"
     }
   },
   {
-    "entity-name": "Test User 2",
+    "entity-name": "USACE Water User",
     "project-id": {
       "office-id": "SPK",
-      "name": "TOPEKA"
+      "name": "Sacramento River Basin Project"
     }
   }
 ]

@@ -1,14 +1,14 @@
 [
   {
     "office-id": "SWT",
-    "display-value": "Test Display Value",
-    "tooltip": "Test Tooltip",
+    "display-value": "Storage",
+    "tooltip": "Storage contract",
     "active": true
   },
   {
   "office-id": "SPK",
-  "display-value": "Test Display Value 2",
-  "tooltip": "Test Tooltip 2",
+  "display-value": "Conveyance",
+  "tooltip": "Conveyance contract",
   "active": true
   }
 ]

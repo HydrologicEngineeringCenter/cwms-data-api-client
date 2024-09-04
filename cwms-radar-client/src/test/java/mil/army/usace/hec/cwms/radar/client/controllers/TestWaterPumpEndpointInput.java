@@ -34,8 +34,6 @@ class TestWaterPumpEndpointInput {
     void testDeleteNulls() {
         assertAll(
             () -> assertThrows(NullPointerException.class,
-                () -> WaterPumpEndpointInput.delete(null, null, null, null, null, null, false)),
-            () -> assertThrows(NullPointerException.class,
                 () -> WaterPumpEndpointInput.delete(null, "project", "user", "contract", "pumpId", PumpTypeEnum.IN,false)),
             () ->assertThrows(NullPointerException.class,
                 () -> WaterPumpEndpointInput.delete("HQ", null, "user", "contract", "pumpId", PumpTypeEnum.IN,true)),

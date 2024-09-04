@@ -78,24 +78,6 @@ class TestWaterContractEndpointInput {
     }
 
     @Test
-    void testDeleteNulls() {
-        assertAll(
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, null, null, null)),
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete(null, "project", "User", "contract")),
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete("HQ", null, "user", "contract")),
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete("HQ", "project", null, "contract")),
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete("HQ", "project", "user", null)),
-            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
-                .delete("HQ", "project", "user", "contract").deleteMethod(null))
-        );
-    }
-
-    @Test
     void testPatch() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String oldContractId = "CONTRACT";
@@ -113,5 +95,54 @@ class TestWaterContractEndpointInput {
         assertEquals(projectId, input.projectId());
         assertEquals(waterUser, input.waterUser());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testDeleteNulls() {
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                    .delete(null, "project", "User", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                    .delete("HQ", null, "user", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                    .delete("HQ", "project", null, "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput
+                    .delete("HQ", "project", "user", null))
+        );
+    }
+
+    @Test
+    void testPatchNulls() {
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.patch(null, "project", "User", "contract", "newContract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.patch("HQ", null, "user", "contract", "newContract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.patch("HQ", "project", null, "contract", "newContract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.patch("HQ", "project", "user", null, "newContract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.patch("HQ", "project", "user", "contract", null))
+        );
+    }
+
+    @Test
+    void testPostNulls() {
+        assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.post(null));
+    }
+
+    @Test
+    void testGetAllNulls() {
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getAll(null, "project", "user")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getAll("HQ", null, "user")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getAll("HQ", "project", null))
+        );
+    }
+
+    @Test
+    void testGetOneNulls() {
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getOne(null, "project", "user", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getOne("HQ", null, "user", "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getOne("HQ", "project", null, "contract")),
+            () -> assertThrows(NullPointerException.class, () -> WaterContractEndpointInput.getOne("HQ", "project", "user", null))
+        );
     }
 }

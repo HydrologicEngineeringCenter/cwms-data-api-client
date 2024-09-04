@@ -2,21 +2,21 @@
   {
     "office-id": "SWT",
     "water-user": {
-      "entity-name": "Test User",
+      "entity-name": "HEC Water User",
       "project-id": {
         "office-id": "SWT",
-        "name": "SACRAMENTO"
+        "name": "Sacramento River Basin"
       },
-      "water-right": "Test Water Right"
+      "water-right": "Water rights to 40% of flow"
     },
     "contract-id": {
       "office-id": "SWT",
-      "name": "TEST_CONTRACT"
+      "name": "HEC Water Contract"
     },
     "contract-type": {
       "office-id": "SWT",
-      "display-value": "Test Display Value",
-      "tooltip": "Test Tooltip",
+      "display-value": "Storage",
+      "tooltip": "Storage contract",
       "active": true
     },
     "contract-effective-date": 158000,
@@ -34,11 +34,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 1",
+        "long-name": "Primary Water Pump 1",
+        "description": "Pump out water from the reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -49,7 +49,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Reservoir Pump 1",
         "bounding-office-id": "SWT",
         "elevation-units": "m"
       },
@@ -62,11 +62,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 2",
+        "long-name": "Primary Water Pump 2",
+        "description": "Pump water out of bottom of reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -77,7 +77,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Reservoir Pump 2",
         "bounding-office-id": "SWT",
         "elevation-units": "m"
       },
@@ -90,11 +90,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 3",
+        "long-name": "Primary Water Pump 3",
+        "description": "Pumps water into the reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -105,7 +105,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Reservoir Pump 3",
         "bounding-office-id": "SWT",
         "elevation-units": "m"
       },
@@ -115,21 +115,21 @@
   {
     "office-id": "SPK",
     "water-user": {
-      "entity-name": "Test User 2",
+      "entity-name": "USACE Water User",
       "project-id": {
         "office-id": "SPK",
-        "name": "SACRAMENTO"
+        "name": "Yolo County Water Project"
       },
-      "water-right": "Test Water Right"
+      "water-right": "Rights to 25% of flow"
     },
     "contract-id": {
       "office-id": "SPK",
-      "name": "TEST_CONTRACT 2"
+      "name": "USACE Water Contract"
     },
     "contract-type": {
       "office-id": "SPK",
-      "display-value": "Test Display Value",
-      "tooltip": "Test Tooltip",
+      "display-value": "Conveyance",
+      "tooltip": "Conveyance contract",
       "active": true
     },
     "contract-effective-date": 158000,
@@ -147,11 +147,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 1",
+        "long-name": "Secondary Water Pump 1",
+        "description": "Secondary pump to remove water from the reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -162,7 +162,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Secondary Reservoir Pump 1",
         "bounding-office-id": "SPK",
         "elevation-units": "m"
       },
@@ -175,11 +175,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 2",
+        "long-name": "Secondary Water Pump 2",
+        "description": "Remove water from the bottom of the reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -190,7 +190,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Reservoir Pump 2",
         "bounding-office-id": "SPK",
         "elevation-units": "m"
       },
@@ -203,11 +203,11 @@
         "latitude": 0,
         "longitude": 0,
         "active": true,
-        "public-name": "Test Public Pump Name",
-        "long-name": "Test Long Name",
-        "description": "Test Description",
+        "public-name": "Pump 3",
+        "long-name": "Secondary Water Pump 3",
+        "description": "Secondary pump to add water to the reservoir",
         "timezone-name": "UTC",
-        "location-type": "Test Location Type",
+        "location-type": "Reservoir",
         "location-kind": "PUMP",
         "nation": "US",
         "state-initial": "NV",
@@ -218,7 +218,7 @@
         "published-latitude": 0,
         "vertical-datum": "NGVD29",
         "elevation": 150,
-        "map-label": "Test Map Label",
+        "map-label": "Reservoir Pump 3",
         "bounding-office-id": "SPK",
         "elevation-units": "m"
       },
