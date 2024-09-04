@@ -129,7 +129,7 @@ public final class WaterUserEndpointInput {
         private final String projectId;
         private final String waterUserId;
         private final String officeId;
-        private DeleteMethod deleteMethod = DeleteMethod.KEY;
+        private DeleteMethod deleteMethod = null;
 
         private Delete(String officeId, String projectId, String waterUserId) {
             this.waterUserId = Objects.requireNonNull(waterUserId, "Water User Id required for delete water user endpoint");
@@ -156,7 +156,8 @@ public final class WaterUserEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(METHOD_QUERY_PARAMETER, deleteMethod.toString())
+            return httpRequestBuilder.addQueryParameter(METHOD_QUERY_PARAMETER,
+                            deleteMethod == null ? null : deleteMethod.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

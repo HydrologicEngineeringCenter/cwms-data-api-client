@@ -104,7 +104,7 @@ public final class WaterContractEndpointInput {
         static final String METHOD_QUERY_PARAMETER = "method";
         private final String contractName;
         private final String officeId;
-        private DeleteMethod deleteMethod = DeleteMethod.KEY;
+        private DeleteMethod deleteMethod = null;
         private final String projectId;
         private final String waterUserId;
 
