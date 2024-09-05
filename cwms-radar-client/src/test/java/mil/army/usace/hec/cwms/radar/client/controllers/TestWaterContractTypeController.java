@@ -48,6 +48,18 @@ class TestWaterContractTypeController extends TestController {
     }
 
     @Test
+    void testDeleteContractType() throws IOException {
+        String collect = readJsonFile("radar/v1/json/water_contract_type.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        WaterContractTypeController controller = new WaterContractTypeController();
+        WaterContractTypeEndpointInput.Delete input = WaterContractTypeEndpointInput.delete("SWT", "Storage");
+        assertDoesNotThrow(() -> controller.deleteWaterContractType(buildConnectionInfo(cookieJarSupplier), input));
+    }
+
+
+    @Test
     void testStoreNulls() {
         assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.post(null));
     }

@@ -41,4 +41,15 @@ public final class WaterContractTypeController {
                 .execute()
                 .close();
     }
+
+    public void deleteWaterContractType(ApiConnectionInfo apiConnectionInfo, WaterContractTypeEndpointInput.Delete input)
+            throws IOException {
+        new HttpRequestBuilderImpl(apiConnectionInfo, format(ENDPOINT, input.officeId()) + "/" + input.displayValue())
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+                .addEndpointInput(input)
+                .delete()
+                .withMediaType(ACCEPT_HEADER_V1)
+                .execute()
+                .close();
+    }
 }
