@@ -1,6 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
@@ -20,10 +20,10 @@ public final class TimeSeriesProfileController {
             TimeSeriesProfileEndpointInput.GetOne input) throws IOException {
         String endpoint = TIME_SERIES_PROFILE + input.parameterId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesProfile.class);
         }
@@ -32,10 +32,10 @@ public final class TimeSeriesProfileController {
     public List<TimeSeriesProfile> retrieveTimeSeriesProfiles(ApiConnectionInfo apiConnectionInfo,
             TimeSeriesProfileEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesProfile.class);
         }
@@ -45,11 +45,11 @@ public final class TimeSeriesProfileController {
             throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.profile());
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
@@ -57,10 +57,10 @@ public final class TimeSeriesProfileController {
     public void deleteTimeSeriesProfile(ApiConnectionInfo apiConnectionInfo, TimeSeriesProfileEndpointInput.Delete input)
             throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE + input.parameterId())
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
+                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }

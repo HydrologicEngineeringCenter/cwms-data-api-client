@@ -1,6 +1,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.time.Instant;
@@ -63,7 +63,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeMask)
                 .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationMask)
                 .addQueryParameter(PARAMETER_MASK_QUERY_PARAMETER, parameterMask)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -168,7 +168,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(MAX_VERSION_QUERY_PARAMETER, String.valueOf(maxVersion))
                 .addQueryParameter(START_QUERY_PARAMETER, String.valueOf(start.toEpochMilli()))
                 .addQueryParameter(END_QUERY_PARAMETER, String.valueOf(end.toEpochMilli()))
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -221,7 +221,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(PROFILE_DATA_QUERY_PARAMETER, profileData)
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -282,7 +282,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
                 .addQueryParameter(OVERRIDE_PROTECTION_QUERY_PARAMETER, String.valueOf(overrideProtection))
                 .addQueryParameter(DATE_QUERY_PARAMETER, String.valueOf(date.toEpochMilli()))
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }

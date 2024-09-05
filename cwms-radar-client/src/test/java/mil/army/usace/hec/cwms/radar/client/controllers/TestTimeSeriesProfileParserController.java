@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 final class TestTimeSeriesProfileParserController extends TestController {
     @Test
     void testGetOne_indexed() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_indexed.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_indexed.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetOne input = TimeSeriesProfileParserEndpointInput
@@ -31,7 +31,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testGetOne_columnar() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_columnar.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_columnar.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetOne input = TimeSeriesProfileParserEndpointInput
@@ -48,7 +48,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testGetAll_indexed() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parsers_indexed.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parsers_indexed.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetAll input = TimeSeriesProfileParserEndpointInput
@@ -70,7 +70,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testGetAll_columnar() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parsers_columnar.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parsers_columnar.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParserEndpointInput.GetAll input = TimeSeriesProfileParserEndpointInput
@@ -92,7 +92,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testStore_indexed() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_indexed.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_indexed.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParser profile = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesProfileParser.class);
@@ -103,7 +103,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testStore_columnar() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_columnar.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_columnar.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileParser profile = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesProfileParser.class);
@@ -114,7 +114,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testDelete_indexed() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_indexed.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_indexed.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -126,7 +126,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
 
     @Test
     void testDelete_columnar() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile_parser_columnar.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile_parser_columnar.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
