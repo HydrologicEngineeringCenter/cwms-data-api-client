@@ -22,7 +22,7 @@ class TestWaterUserController extends TestController {
         WaterUser value = values.get(1);
         assertEquals("Wyneewood", value.getEntityName());
         assertEquals("SWT", value.getProjectId().getOfficeId());
-        assertEquals("AMCD", value.getProjectId().getName());
+        assertEquals("ARBU", value.getProjectId().getName());
     }
 
     @Test
@@ -34,7 +34,7 @@ class TestWaterUserController extends TestController {
         WaterUser value = WaterUserController.retrieveWaterUser(buildConnectionInfo(cookieJarSupplier), input);
         assertEquals("City of Ardmore", value.getEntityName());
         assertEquals("SWT", value.getProjectId().getOfficeId());
-        assertEquals("Ardmore", value.getProjectId().getName());
+        assertEquals("ARBU", value.getProjectId().getName());
     }
 
     @Test

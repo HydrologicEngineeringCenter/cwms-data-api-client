@@ -25,7 +25,7 @@ class TestWaterContractController extends TestController {
         assertAll(
             () -> assertEquals("DA-34-066-CIVENG-65-1272", value.getContractId().getName()),
             () -> assertEquals("SPK", value.getContractId().getOfficeId()),
-            () -> assertEquals("AMCD", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("ARBU", value.getWaterUser().getProjectId().getName()),
             () -> assertEquals("OWRB", value.getWaterUser().getWaterRight()),
             () -> assertEquals("Wyneewood", value.getWaterUser().getEntityName()),
             () -> assertEquals(true, value.getContractType().isActive()),
@@ -45,7 +45,7 @@ class TestWaterContractController extends TestController {
         assertAll(
             () -> assertEquals("Ardmore", value.getContractId().getName()),
             () -> assertEquals("SWT", value.getContractId().getOfficeId()),
-            () -> assertEquals("Ardmore", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("ARBU", value.getWaterUser().getProjectId().getName()),
             () -> assertEquals("OWRB", value.getWaterUser().getWaterRight()),
             () -> assertEquals("City of Ardmore", value.getWaterUser().getEntityName()),
             () -> assertEquals(true, value.getContractType().isActive()),

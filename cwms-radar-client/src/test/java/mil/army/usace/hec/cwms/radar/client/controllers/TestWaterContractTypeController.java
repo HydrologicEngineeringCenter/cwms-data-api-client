@@ -30,7 +30,7 @@ class TestWaterContractTypeController extends TestController {
         LookupType value2 = values.get(1);
         assertAll(
                 () -> assertEquals("Conveyance", value2.getDisplayValue()),
-                () -> assertEquals("SPK", value2.getOfficeId()),
+                () -> assertEquals("SWT", value2.getOfficeId()),
                 () -> assertEquals("Conveyance contract", value2.getTooltip()),
                 () -> assertEquals(true, value2.isActive())
         );

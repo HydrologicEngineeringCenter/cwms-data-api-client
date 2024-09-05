@@ -5,7 +5,7 @@
       "entity-name": "City of Ardmore",
       "project-id": {
         "office-id": "SWT",
-        "name": "Ardmore"
+        "name": "ARBU"
       },
       "water-right": "OWRB"
     },
@@ -118,7 +118,7 @@
       "entity-name": "Wyneewood",
       "project-id": {
         "office-id": "SPK",
-        "name": "AMCD"
+        "name": "ARBU"
       },
       "water-right": "OWRB"
     },
