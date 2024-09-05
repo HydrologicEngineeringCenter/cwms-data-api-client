@@ -1,0 +1,113 @@
+{
+  "office-id": "SWT",
+  "water-user": {
+    "entity-name": "City of Ardmore",
+    "project-id": {
+      "office-id": "SWT",
+      "name": "ARBU"
+    },
+    "water-right": "OWRB"
+  },
+  "contract-id": {
+    "office-id": "SWT",
+    "name": "Ardmore"
+  },
+  "contract-type": {
+    "office-id": "SWT",
+    "display-value": "Conduit",
+    "tooltip": "Conduit contract",
+    "active": true
+  },
+  "contract-effective-date": 158000,
+  "contract-expiration-date": 167000,
+  "contracted-storage": 38590712.7695,
+  "initial-use-allocation": 38590712.7695,
+  "future-use-allocation": 0,
+  "storage-units-id": "m3",
+  "future-use-percent-activated": 0,
+  "total-alloc-percent-activated": 50.0,
+  "pump-out-location": {
+    "pump-location": {
+      "office-id": "SWT",
+      "name": "ARBU-City of Ardmore",
+      "latitude": -97.03,
+      "longitude": 34.44,
+      "active": true,
+      "public-name": "Ardmore",
+      "long-name": "Ardmore Pump 3",
+      "description": "Pump in Ardmore",
+      "timezone-name": "UTC",
+      "location-type": "Water Supply Pump",
+      "location-kind": "PUMP",
+      "nation": "US",
+      "state-initial": "OK",
+      "county-name": "Carter",
+      "nearest-city": "Ardmore",
+      "horizontal-datum": "WGS84",
+      "published-longitude": 34.44,
+      "published-latitude": -97.03,
+      "vertical-datum": "NGVD29",
+      "elevation": 252.0696,
+      "map-label": "Pump 1",
+      "bounding-office-id": "SWT",
+      "elevation-units": "m"
+    },
+    "pump-type": "PUMP_OUT"
+  },
+  "pump-out-below-location": {
+    "pump-location": {
+      "office-id": "SWT",
+      "name": "ARBU-Wyneewood, OK",
+      "latitude": 34.44,
+      "longitude": -97.03,
+      "active": true,
+      "public-name": "AFP",
+      "long-name": "Primary Water Pump 2",
+      "description": "Pump water out of bottom of reservoir",
+      "timezone-name": "UTC",
+      "location-type": "Water Supply Pump",
+      "location-kind": "PUMP",
+      "nation": "US",
+      "state-initial": "OK",
+      "county-name": "Carter",
+      "nearest-city": "Wyneewood",
+      "horizontal-datum": "WGS84",
+      "published-longitude": -97.03,
+      "published-latitude": 34.44,
+      "vertical-datum": "NGVD29",
+      "elevation": 252.0696,
+      "map-label": "Water Pump 2",
+      "bounding-office-id": "SWT",
+      "elevation-units": "m"
+    },
+    "pump-type": "PUMP_OUT_BELOW"
+  },
+  "pump-in-location": {
+    "pump-location": {
+      "office-id": "SWT",
+      "name": "ARBU-Hobart, OK",
+      "latitude": 35.5383,
+      "longitude": 99.1667,
+      "active": true,
+      "public-name": "FSMCD",
+      "long-name": "Wyneedwood Pump 3",
+      "description": "Pumps water into the reservoir",
+      "timezone-name": "UTC",
+      "location-type": "Water Supply Pump",
+      "location-kind": "PUMP",
+      "nation": "US",
+      "state-initial": "OK",
+      "county-name": "Carter",
+      "nearest-city": "Hobart",
+      "horizontal-datum": "WGS84",
+      "published-longitude": 99.1667,
+      "published-latitude": 35.5383,
+      "vertical-datum": "NGVD29",
+      "elevation": 486.8266,
+      "map-label": "Reservoir Pump 3",
+      "bounding-office-id": "SWT",
+      "elevation-units": "m"
+    },
+    "pump-type": "PUMP_IN"
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "pump-location": {
+        "office-id": "SWT",
+        "name": "ARBU-City of Ardmore",
+        "latitude": -97.03,
+        "longitude": 34.44,
+        "active": true,
+        "public-name": "Ardmore",
+        "long-name": "Ardmore Pump 3",
+        "description": "Pump in Ardmore",
+        "timezone-name": "UTC",
+        "location-type": "Water Supply Pump",
+        "location-kind": "PUMP",
+        "nation": "US",
+        "state-initial": "OK",
+        "county-name": "Clark",
+        "nearest-city": "Ardmore",
+        "horizontal-datum": "WGS84",
+        "published-longitude": 34.44,
+        "published-latitude": -97.03,
+        "vertical-datum": "NGVD29",
+        "elevation": 252.0696,
+        "map-label": "ARBU Pump 3",
+        "bounding-office-id": "SWT",
+        "elevation-units": "m"
+    },
+    "pump-type": "PUMP_IN"
+}

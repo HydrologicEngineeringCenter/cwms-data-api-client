@@ -1,0 +1,14 @@
+[
+  {
+    "office-id": "SWT",
+    "display-value": "Storage",
+    "tooltip": "Storage contract",
+    "active": true
+  },
+  {
+  "office-id": "SWT",
+  "display-value": "Conveyance",
+  "tooltip": "Conveyance contract",
+  "active": true
+  }
+]
