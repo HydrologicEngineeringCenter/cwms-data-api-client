@@ -13,7 +13,7 @@ final class TestTimeSeriesProfileController extends TestController {
 
     @Test
     void testGetOne() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileEndpointInput.GetOne input = TimeSeriesProfileEndpointInput
@@ -29,7 +29,7 @@ final class TestTimeSeriesProfileController extends TestController {
 
     @Test
     void testGetAll() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profiles.json");
+        String collect = readJsonFile("radar/v1/json/ts_profiles.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfileEndpointInput.GetAll input = TimeSeriesProfileEndpointInput
@@ -51,7 +51,7 @@ final class TestTimeSeriesProfileController extends TestController {
 
     @Test
     void testStore() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesProfile profile = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesProfile.class);
@@ -61,7 +61,7 @@ final class TestTimeSeriesProfileController extends TestController {
 
     @Test
     void testDelete() throws IOException {
-        String collect = readJsonFile("radar/v2/json/ts_profile.json");
+        String collect = readJsonFile("radar/v1/json/ts_profile.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();

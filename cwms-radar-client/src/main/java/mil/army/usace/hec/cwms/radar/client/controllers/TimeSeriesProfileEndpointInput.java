@@ -1,11 +1,12 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfile;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.*;
 
 
 public class TimeSeriesProfileEndpointInput {
@@ -62,7 +63,7 @@ public class TimeSeriesProfileEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeMask)
                     .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationMask)
                     .addQueryParameter(PARAMETER_MASK_QUERY_PARAMETER, parameterMask)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -87,7 +88,7 @@ public class TimeSeriesProfileEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_ID_QUERY_PARAMETER, officeId)
                     .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -112,7 +113,7 @@ public class TimeSeriesProfileEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, String.valueOf(failIfExists))
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -137,7 +138,7 @@ public class TimeSeriesProfileEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }

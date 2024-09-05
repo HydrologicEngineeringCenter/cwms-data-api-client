@@ -8,7 +8,7 @@ import mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesProfileEndpoin
 import mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesProfileEndpointInput.Delete;
 import mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesProfileEndpointInput.Post;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +26,7 @@ final class TestTimeSeriesProfileEndpointInput {
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_MASK_QUERY_PARAMETER));
         assertEquals(locationMask, mockHttpRequestBuilder.getQueryParameter(GetAll.LOCATION_MASK_QUERY_PARAMETER));
         assertEquals(parameterMask, mockHttpRequestBuilder.getQueryParameter(GetAll.PARAMETER_MASK_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -40,7 +40,7 @@ final class TestTimeSeriesProfileEndpointInput {
         assertEquals(location, mockHttpRequestBuilder.getQueryParameter(GetOne.LOCATION_ID_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetOne.OFFICE_ID_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -55,7 +55,7 @@ final class TestTimeSeriesProfileEndpointInput {
         assertEquals(profile, input.profile());
         assertFalse(Boolean.parseBoolean(mockHttpRequestBuilder
                 .getQueryParameter(Post.FAIL_IF_EXISTS_QUERY_PARAMETER)));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -69,7 +69,7 @@ final class TestTimeSeriesProfileEndpointInput {
         assertEquals(location, mockHttpRequestBuilder.getQueryParameter(Delete.LOCATION_ID_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test

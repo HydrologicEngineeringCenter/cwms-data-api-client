@@ -27,7 +27,7 @@ final class TestTimeSeriesProfileParserEndpointInput {
         assertEquals(locationMask, mockHttpRequestBuilder.getQueryParameter(GetAll.LOCATION_MASK_QUERY_PARAMETER));
         assertEquals(officeMask, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_MASK_QUERY_PARAMETER));
         assertEquals(parameterMask, mockHttpRequestBuilder.getQueryParameter(GetAll.PARAMETER_MASK_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -41,7 +41,7 @@ final class TestTimeSeriesProfileParserEndpointInput {
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetOne.OFFICE_QUERY_PARAMETER));
         assertEquals(location, mockHttpRequestBuilder.getQueryParameter(GetOne.LOCATION_ID_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -61,7 +61,7 @@ final class TestTimeSeriesProfileParserEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(profileParser, input.profileParser());
         assertFalse(Boolean.parseBoolean(mockHttpRequestBuilder.getQueryParameter(Post.FAIL_IF_EXISTS_QUERY_PARAMETER)));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -75,7 +75,7 @@ final class TestTimeSeriesProfileParserEndpointInput {
         assertEquals(location, mockHttpRequestBuilder.getQueryParameter(Delete.LOCATION_ID_QUERY_PARAMETER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
