@@ -23,13 +23,13 @@ class TestWaterContractController extends TestController {
         assertFalse(values.isEmpty());
         WaterUserContract value = values.get(1);
         assertAll(
-            () -> assertEquals("USACE Water Contract", value.getContractId().getName()),
+            () -> assertEquals("DA-34-066-CIVENG-65-1272", value.getContractId().getName()),
             () -> assertEquals("SPK", value.getContractId().getOfficeId()),
-            () -> assertEquals("Yolo County Water Project", value.getWaterUser().getProjectId().getName()),
-            () -> assertEquals("Rights to 25% of flow", value.getWaterUser().getWaterRight()),
-            () -> assertEquals("USACE Water User", value.getWaterUser().getEntityName()),
+            () -> assertEquals("AMCD", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("OWRB", value.getWaterUser().getWaterRight()),
+            () -> assertEquals("Wyneewood", value.getWaterUser().getEntityName()),
             () -> assertEquals(true, value.getContractType().isActive()),
-            () -> assertEquals("PUMP1", value.getPumpOutLocation().getPumpLocation().getName())
+            () -> assertEquals("ARBU-Wyneewood, OK", value.getPumpOutLocation().getPumpLocation().getName())
         );
     }
 
@@ -43,13 +43,13 @@ class TestWaterContractController extends TestController {
         WaterUserContract value = new WaterContractController()
                 .retrieveWaterContract(buildConnectionInfo(cookieJarSupplier), input);
         assertAll(
-            () -> assertEquals("SAC_HEC_Contract", value.getContractId().getName()),
+            () -> assertEquals("Ardmore", value.getContractId().getName()),
             () -> assertEquals("SWT", value.getContractId().getOfficeId()),
-            () -> assertEquals("Sacramento River", value.getWaterUser().getProjectId().getName()),
-            () -> assertEquals("Guaranteed water rights to 50% of flow", value.getWaterUser().getWaterRight()),
-            () -> assertEquals("HEC Water User", value.getWaterUser().getEntityName()),
+            () -> assertEquals("Ardmore", value.getWaterUser().getProjectId().getName()),
+            () -> assertEquals("OWRB", value.getWaterUser().getWaterRight()),
+            () -> assertEquals("City of Ardmore", value.getWaterUser().getEntityName()),
             () -> assertEquals(true, value.getContractType().isActive()),
-            () -> assertEquals("PUMP3", value.getPumpInLocation().getPumpLocation().getName())
+            () -> assertEquals("ARBU-Hobart, OK", value.getPumpInLocation().getPumpLocation().getName())
         );
     }
 

@@ -1,16 +1,16 @@
 [
   {
-    "entity-name": "HEC Water User",
+    "entity-name": "City of Ardmore",
     "project-id": {
       "office-id": "SWT",
-      "name": "Sonoma County Water Agency"
+      "name": "Ardmore"
     }
   },
   {
-    "entity-name": "USACE Water User",
+    "entity-name": "Wyneewood",
     "project-id": {
-      "office-id": "SPK",
-      "name": "Sacramento River Basin Project"
+      "office-id": "SWT",
+      "name": "AMCD"
     }
   }
 ]
