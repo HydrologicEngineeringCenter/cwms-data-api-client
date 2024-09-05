@@ -44,9 +44,6 @@ public class TimeSeriesProfileParser {
     @JsonProperty("time-in-two-fields")
     private Boolean timeInTwoFields = null;
 
-    @JsonProperty("type")
-    private String type = null;
-
     public TimeSeriesProfileParser locationId(CwmsId locationId) {
         this.locationId = locationId;
         return this;
@@ -146,19 +143,6 @@ public class TimeSeriesProfileParser {
         this.timeInTwoFields = timeInTwoFields;
     }
 
-    public TimeSeriesProfileParser type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -183,9 +167,6 @@ public class TimeSeriesProfileParser {
                 : this.timeZone.equalsIgnoreCase(timeSeriesProfileParser.timeZone)
                 && Objects.equals(this.parameterInfoList, timeSeriesProfileParser.parameterInfoList)
                 && Objects.equals(this.timeInTwoFields, timeSeriesProfileParser.timeInTwoFields)
-                && this.type == null || timeSeriesProfileParser.type == null
-                ? Objects.equals(this.type, timeSeriesProfileParser.type)
-                : this.type.equalsIgnoreCase(timeSeriesProfileParser.type)
                 ;
     }
 
@@ -195,7 +176,7 @@ public class TimeSeriesProfileParser {
                 recordDelimiter == '\0' ? 0 : recordDelimiter,
                 timeFormat == null ? 0 : timeFormat.toLowerCase(),
                 timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList,
-                timeInTwoFields, type == null ? 0 : type.toLowerCase());
+                timeInTwoFields);
     }
 
     @Override
@@ -210,7 +191,6 @@ public class TimeSeriesProfileParser {
         sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
         sb.append("    parameterInfoList: ").append(toIndentedString(parameterInfoList)).append("\n");
         sb.append("    timeInTwoFields: ").append(toIndentedString(timeInTwoFields)).append("\n");
-        sb.append("    type: ").append(toIndentedString(type)).append("\n");
         sb.append("}");
         return sb.toString();
     }
