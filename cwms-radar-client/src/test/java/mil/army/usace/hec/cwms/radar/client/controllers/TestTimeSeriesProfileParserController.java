@@ -91,6 +91,28 @@ final class TestTimeSeriesProfileParserController extends TestController {
     }
 
     @Test
+    void testGetAll_mixed() throws IOException {
+        String collect = readJsonFile("radar/v1/json/ts_profile_parsers_mixed.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        TimeSeriesProfileParserEndpointInput.GetAll input = TimeSeriesProfileParserEndpointInput
+                .getAll();
+        TimeSeriesProfileParserController controller = new TimeSeriesProfileParserController();
+        List<TimeSeriesProfileParser> results = controller.retrieveTimeSeriesProfileParsers(buildConnectionInfo(), input);
+        assertNotNull(results);
+        TimeSeriesProfileParser value = results.get(0);
+        assertEquals("SPK", value.getLocationId().getOfficeId());
+        assertEquals("Depth", value.getKeyParameter());
+        assertEquals("UTC", value.getTimeZone());
+        assertEquals('\n', value.getRecordDelimiter());
+        value = results.get(1);
+        assertEquals("SPK", value.getLocationId().getOfficeId());
+        assertEquals("Depth", value.getKeyParameter());
+        assertEquals("UTC", value.getTimeZone());
+        assertEquals('\n', value.getRecordDelimiter());
+    }
+
+    @Test
     void testStore_indexed() throws IOException {
         String collect = readJsonFile("radar/v1/json/ts_profile_parser_indexed.json" );
         mockHttpServer.enqueue(collect);

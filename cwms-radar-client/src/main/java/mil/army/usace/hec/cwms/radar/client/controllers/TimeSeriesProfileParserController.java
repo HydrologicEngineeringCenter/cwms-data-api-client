@@ -5,15 +5,12 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParser;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParserColumnar;
-import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParserIndexed;
 
 
 public class TimeSeriesProfileParserController {
@@ -41,17 +38,7 @@ public class TimeSeriesProfileParserController {
                 .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             String responseBody = response.getBody();
-            try {
-                return RadarObjectMapper.mapJsonToListOfObjects(responseBody, TimeSeriesProfileParserColumnar.class)
-                        .stream()
-                        .map(TimeSeriesProfileParserColumnar.class::cast)
-                        .collect(Collectors.toList());
-            } catch (Exception e) {
-                return RadarObjectMapper.mapJsonToListOfObjects(responseBody, TimeSeriesProfileParserIndexed.class)
-                        .stream()
-                        .map(TimeSeriesProfileParserIndexed.class::cast)
-                        .collect(Collectors.toList());
-            }
+            return RadarObjectMapper.mapJsonToListOfObjects(responseBody, TimeSeriesProfileParser.class);
         }
     }
 
