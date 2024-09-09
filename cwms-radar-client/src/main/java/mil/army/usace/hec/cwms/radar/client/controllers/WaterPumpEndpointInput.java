@@ -20,7 +20,7 @@ public class WaterPumpEndpointInput {
     }
 
     public static final class Delete extends EndpointInput {
-        static final String METHOD_QUERY_PARAMETER = "method";
+        static final String DELETE_ACCOUNTING_QUERY_PARAMETER = "delete-accounting";
         static final String PUMP_TYPE_QUERY_PARAMETER = "pump-type";
         private final PumpTypeEnum pumpType;
         private final String pumpId;
@@ -63,7 +63,7 @@ public class WaterPumpEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder
-                    .addQueryParameter(METHOD_QUERY_PARAMETER, deleteAccounting ? "true" : "false")
+                    .addQueryParameter(DELETE_ACCOUNTING_QUERY_PARAMETER, deleteAccounting ? "true" : "false")
                     .addQueryParameter(PUMP_TYPE_QUERY_PARAMETER, pumpType.toString())
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }

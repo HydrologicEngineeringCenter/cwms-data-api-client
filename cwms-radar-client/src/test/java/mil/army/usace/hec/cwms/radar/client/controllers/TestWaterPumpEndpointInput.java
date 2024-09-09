@@ -26,7 +26,7 @@ class TestWaterPumpEndpointInput {
         assertEquals(contractName, input.contractName());
         assertEquals(waterUser, input.waterUser());
         assertEquals(String.valueOf(false), mockHttpRequestBuilder
-                .getQueryParameter(WaterPumpEndpointInput.Delete.METHOD_QUERY_PARAMETER));
+                .getQueryParameter(WaterPumpEndpointInput.Delete.DELETE_ACCOUNTING_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
