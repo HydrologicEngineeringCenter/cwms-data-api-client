@@ -89,8 +89,8 @@ public final class GateChangeEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(BEGIN, DateTimeFormatter.ISO_INSTANT.format(beginDate))
-                                     .addQueryParameter(END, DateTimeFormatter.ISO_INSTANT.format(endDate))
+            return httpRequestBuilder.addQueryParameter(BEGIN, beginDate.toString())
+                                     .addQueryParameter(END, endDate.toString())
                                      .addQueryParameter(START_INCLUSIVE, Boolean.toString(startInclusive))
                                      .addQueryParameter(END_INCLUSIVE, Boolean.toString(endInclusive))
                                      .addQueryParameter(UNIT_SYSTEM, unitSystem)
