@@ -2,20 +2,15 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
-
 /**
- * TimeValuePair
+ * TimeSeriesData
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-08-23T14:33:50.088073-07:00[America/Los_Angeles]")
-public class TimeValuePair {
-
-    @JsonProperty("date-time")
-    private OffsetDateTime dateTime = null;
+        date = "2024-09-19T12:32:49.455402100-07:00[America/Los_Angeles]")
+public class TimeSeriesData {
 
     @JsonProperty("value")
     private Double value = null;
@@ -23,20 +18,7 @@ public class TimeValuePair {
     @JsonProperty("quality")
     private Integer quality = null;
 
-    public TimeValuePair dateTime(OffsetDateTime dateTime) {
-        this.dateTime = dateTime;
-        return this;
-    }
-
-    public OffsetDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(OffsetDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public TimeValuePair value(Double value) {
+    public TimeSeriesData value(Double value) {
         this.value = value;
         return this;
     }
@@ -49,7 +31,7 @@ public class TimeValuePair {
         this.value = value;
     }
 
-    public TimeValuePair quality(Integer quality) {
+    public TimeSeriesData quality(Integer quality) {
         this.quality = quality;
         return this;
     }
@@ -70,24 +52,22 @@ public class TimeValuePair {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TimeValuePair timeValuePair = (TimeValuePair) o;
-        return Objects.equals(this.dateTime, timeValuePair.dateTime)
-                && Objects.equals(this.value, timeValuePair.value)
-                && Objects.equals(this.quality, timeValuePair.quality)
+        TimeSeriesData timeSeriesData = (TimeSeriesData) o;
+        return Objects.equals(this.value, timeSeriesData.value)
+                && Objects.equals(this.quality, timeSeriesData.quality)
                 ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateTime, value, quality);
+        return Objects.hash(value, quality);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class TimeValuePair {\n");
+        sb.append("class TimeSeriesData {\n");
 
-        sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");
         sb.append("    value: ").append(toIndentedString(value)).append("\n");
         sb.append("    quality: ").append(toIndentedString(quality)).append("\n");
         sb.append("}");

@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * TimeSeriesProfileParserIndexed
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
+        date = "2024-09-19T12:32:49.455402100-07:00[America/Los_Angeles]")
 @JsonTypeName("indexed-timeseries-profile-parser")
 public class TimeSeriesProfileParserIndexed extends TimeSeriesProfileParser {
 
@@ -41,98 +40,81 @@ public class TimeSeriesProfileParserIndexed extends TimeSeriesProfileParser {
     private Boolean timeInTwoFields = null;
 
     @JsonProperty("field-delimiter")
-    private char fieldDelimiter = '\0';
+    private String fieldDelimiter = null;
 
     @JsonProperty("time-field")
     private Integer timeField = null;
 
-    @Override
     public TimeSeriesProfileParserIndexed locationId(CwmsId locationId) {
         this.locationId = locationId;
         return this;
     }
 
-    @Override
     public CwmsId getLocationId() {
         return locationId;
     }
 
-    @Override
     public void setLocationId(CwmsId locationId) {
         this.locationId = locationId;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed keyParameter(String keyParameter) {
         this.keyParameter = keyParameter;
         return this;
     }
 
-    @Override
     public String getKeyParameter() {
         return keyParameter;
     }
 
-    @Override
     public void setKeyParameter(String keyParameter) {
         this.keyParameter = keyParameter;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed recordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
         return this;
     }
 
-    @Override
     public char getRecordDelimiter() {
         return recordDelimiter;
     }
 
-    @Override
     public void setRecordDelimiter(char recordDelimiter) {
         this.recordDelimiter = recordDelimiter;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed timeFormat(String timeFormat) {
         this.timeFormat = timeFormat;
         return this;
     }
 
-    @Override
     public String getTimeFormat() {
         return timeFormat;
     }
 
-    @Override
     public void setTimeFormat(String timeFormat) {
         this.timeFormat = timeFormat;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed timeZone(String timeZone) {
         this.timeZone = timeZone;
         return this;
     }
 
-    @Override
     public String getTimeZone() {
         return timeZone;
     }
 
-    @Override
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed parameterInfoList(List<ParameterInfo> parameterInfoList) {
         this.parameterInfoList = parameterInfoList;
         return this;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed addParameterInfoListItem(ParameterInfo parameterInfoListItem) {
         if (this.parameterInfoList == null) {
             this.parameterInfoList = new ArrayList<>();
@@ -141,42 +123,37 @@ public class TimeSeriesProfileParserIndexed extends TimeSeriesProfileParser {
         return this;
     }
 
-    @Override
     public List<ParameterInfo> getParameterInfoList() {
         return parameterInfoList;
     }
 
-    @Override
     public void setParameterInfoList(List<ParameterInfo> parameterInfoList) {
         this.parameterInfoList = parameterInfoList;
     }
 
-    @Override
     public TimeSeriesProfileParserIndexed timeInTwoFields(Boolean timeInTwoFields) {
         this.timeInTwoFields = timeInTwoFields;
         return this;
     }
 
-    @Override
     public Boolean isTimeInTwoFields() {
         return timeInTwoFields;
     }
 
-    @Override
     public void setTimeInTwoFields(Boolean timeInTwoFields) {
         this.timeInTwoFields = timeInTwoFields;
     }
 
-    public TimeSeriesProfileParserIndexed fieldDelimiter(char fieldDelimiter) {
+    public TimeSeriesProfileParserIndexed fieldDelimiter(String fieldDelimiter) {
         this.fieldDelimiter = fieldDelimiter;
         return this;
     }
 
-    public char getFieldDelimiter() {
+    public String getFieldDelimiter() {
         return fieldDelimiter;
     }
 
-    public void setFieldDelimiter(char fieldDelimiter) {
+    public void setFieldDelimiter(String fieldDelimiter) {
         this.fieldDelimiter = fieldDelimiter;
     }
 
@@ -217,9 +194,9 @@ public class TimeSeriesProfileParserIndexed extends TimeSeriesProfileParser {
                 : this.timeZone.equalsIgnoreCase(timeSeriesProfileParserIndexed.timeZone)
                 && Objects.equals(this.parameterInfoList, timeSeriesProfileParserIndexed.parameterInfoList)
                 && Objects.equals(this.timeInTwoFields, timeSeriesProfileParserIndexed.timeInTwoFields)
-                && this.fieldDelimiter == '\0' || timeSeriesProfileParserIndexed.fieldDelimiter == '\0'
+                && this.fieldDelimiter == null || timeSeriesProfileParserIndexed.fieldDelimiter == null
                 ? Objects.equals(this.fieldDelimiter, timeSeriesProfileParserIndexed.fieldDelimiter)
-                : this.fieldDelimiter == timeSeriesProfileParserIndexed.fieldDelimiter
+                : this.fieldDelimiter.equalsIgnoreCase(timeSeriesProfileParserIndexed.fieldDelimiter)
                 && Objects.equals(this.timeField, timeSeriesProfileParserIndexed.timeField)
                 ;
     }
@@ -228,9 +205,8 @@ public class TimeSeriesProfileParserIndexed extends TimeSeriesProfileParser {
     public int hashCode() {
         return Objects.hash(locationId, keyParameter == null ? 0 : keyParameter.toLowerCase(),
                 recordDelimiter == '\0' ? 0 : recordDelimiter,
-                timeFormat == null ? 0 : timeFormat.toLowerCase(),
-                timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList, timeInTwoFields,
-                fieldDelimiter == '\0' ? 0 : fieldDelimiter, timeField);
+                timeFormat == null ? 0 : timeFormat.toLowerCase(), timeZone == null ? 0 : timeZone.toLowerCase(),
+                parameterInfoList, timeInTwoFields, fieldDelimiter == null ? 0 : fieldDelimiter.toLowerCase(), timeField);
     }
 
     @Override

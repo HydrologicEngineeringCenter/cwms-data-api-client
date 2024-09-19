@@ -4,6 +4,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
@@ -19,7 +20,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         return new GetAll();
     }
 
-    public static GetOne getOne(String officeId, String timeseriesId, String parameterId, String version, String unit) {
+    public static GetOne getOne(String officeId, String timeseriesId, String parameterId, String version, List<String> unit) {
         return new GetOne(officeId, timeseriesId, parameterId, version, unit);
     }
 
@@ -35,9 +36,11 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         public static final String OFFICE_MASK_QUERY_PARAMETER = "office-mask";
         public static final String LOCATION_MASK_QUERY_PARAMETER = "location-mask";
         public static final String PARAMETER_MASK_QUERY_PARAMETER = "parameter-id-mask";
+        public static final String VERSION_QUERY_PARAMETER = "version";
         private String officeMask;
         private String locationMask;
         private String parameterMask;
+        private String versionMask;
 
         private GetAll() {
 
@@ -58,11 +61,17 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return this;
         }
 
+        public GetAll versionMask(String versionMask) {
+            this.versionMask = versionMask;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeMask)
                 .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationMask)
                 .addQueryParameter(PARAMETER_MASK_QUERY_PARAMETER, parameterMask)
+                .addQueryParameter(VERSION_QUERY_PARAMETER, versionMask)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
@@ -81,12 +90,14 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         public static final String MAX_VERSION_QUERY_PARAMETER = "max-version";
         public static final String START_QUERY_PARAMETER = "start";
         public static final String END_QUERY_PARAMETER = "end";
+        public static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
+        public static final String PAGE_QUERY_PARAMETER = "page";
         private final String officeId;
         private final String parameterId;
         private final String version;
         private Instant versionDate = Instant.now();
         private String timezone = "UTC";
-        private final String unit;
+        private final List<String> unit;
         private boolean startInclusive = true;
         private boolean endInclusive = true;
         private boolean previous = true;
@@ -95,8 +106,10 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         private Instant start = Instant.now();
         private Instant end = Instant.now();
         private final String timeseriesId;
+        private String page;
+        private int pageSize;
 
-        private GetOne(String officeId, String timeseriesId, String parameterId, String version, String unit) {
+        private GetOne(String officeId, String timeseriesId, String parameterId, String version, List<String> unit) {
             this.officeId = Objects.requireNonNull(officeId, "Office is required");
             this.timeseriesId = Objects.requireNonNull(timeseriesId, "Timeseries ID is required");
             this.parameterId = Objects.requireNonNull(parameterId, "Parameter ID is required");
@@ -149,6 +162,16 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return this;
         }
 
+        public GetOne page(String page) {
+            this.page = page;
+            return this;
+        }
+
+        public GetOne pageSize(int pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
         public String timeseriesId() {
             return timeseriesId;
         }
@@ -160,7 +183,9 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
                 .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
-                .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                .addQueryParameter(UNIT_QUERY_PARAMETER, unit.toString())
+                .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, String.valueOf(pageSize))
+                .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(START_INCLUSIVE_QUERY_PARAMETER, String.valueOf(startInclusive))
                 .addQueryParameter(END_INCLUSIVE_QUERY_PARAMETER, String.valueOf(endInclusive))
                 .addQueryParameter(PREVIOUS_QUERY_PARAMETER, String.valueOf(previous))

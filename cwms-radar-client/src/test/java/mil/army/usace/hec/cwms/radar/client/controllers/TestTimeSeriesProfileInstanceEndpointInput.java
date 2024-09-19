@@ -40,7 +40,9 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         String office = "SPK";
         String timeSeriesId = "SPK.LOC.Temp-Water";
         String version = "1";
-        String unit = "F";
+        int pageSize = 12;
+        String page = "CWMSTESTPAGE";
+        List<String> unit = List.of("F", "m");
         String parameter = "Temp-Water";
         boolean startInclusive = true;
         boolean endInclusive = true;
@@ -53,9 +55,12 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         Instant versionDate = Instant.now();
         GetOne input = TimeSeriesProfileInstanceEndpointInput.getOne(office, timeSeriesId, parameter, version, unit)
                 .startInclusive(startInclusive).endInclusive(endInclusive).start(start).end(end).next(next)
-                .previous(previous).maxVersion(maxVersion).timezone(timezone).versionDate(versionDate);
+                .previous(previous).maxVersion(maxVersion).timezone(timezone).versionDate(versionDate)
+                .page(page).pageSize(pageSize);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(page, mockHttpRequestBuilder.getQueryParameter(GetOne.PAGE_QUERY_PARAMETER));
+        assertEquals(pageSize, Integer.parseInt(mockHttpRequestBuilder.getQueryParameter(GetOne.PAGE_SIZE_QUERY_PARAMETER)));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetOne.OFFICE_QUERY_PARAMETER));
         assertEquals(timeSeriesId, input.timeseriesId());
         assertEquals(parameter, mockHttpRequestBuilder.getQueryParameter(GetOne.PARAMETER_ID_QUERY_PARAMETER));
@@ -74,7 +79,7 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
                 .getQueryParameter(GetOne.MAX_VERSION_QUERY_PARAMETER));
         assertEquals(String.valueOf(versionDate.toEpochMilli()), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.VERSION_DATE_QUERY_PARAMETER));
-        assertEquals(unit, mockHttpRequestBuilder.getQueryParameter(GetOne.UNIT_QUERY_PARAMETER));
+        assertEquals(unit.toString(), mockHttpRequestBuilder.getQueryParameter(GetOne.UNIT_QUERY_PARAMETER));
     }
 
     @Test

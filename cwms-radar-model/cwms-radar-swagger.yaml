@@ -3000,10 +3000,7 @@ paths:
         '200':
           description: A TimeSeriesProfileParser object
           content:
-            application/json;version=2:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesProfileParser'
-            application/xml;version=2:
+            application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileParser'
         '400':
@@ -3127,12 +3124,9 @@ paths:
         '200':
           description: A TimeSeriesProfileParser object
           content:
-            application/json;version=2:
+            application/json;version=1:
               schema:
-                $ref: '#/components/schemas/TimeSeriesProfileParser'
-            application/xml;version=2:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesProfileParser'
+                $ref: '#/components/schemas/TimeSeriesProfileParsers'
         '400':
           description: Bad Request
           content:
@@ -3179,10 +3173,7 @@ paths:
             type: boolean
       requestBody:
         content:
-          application/json;version=2:
-            schema:
-              $ref: '#/components/schemas/TimeSeriesProfileParserColumnar'
-          application/xml;version=2:
+          application/json;version=1:
             schema:
               $ref: '#/components/schemas/TimeSeriesProfileParserColumnar'
         required: true
@@ -3247,7 +3238,7 @@ paths:
         '200':
           description: A TimeSeriesProfileParser object
           content:
-            application/json;version=2:
+            application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfile'
             application/xml;version=2:
@@ -3366,16 +3357,26 @@ paths:
           description: The key parameter mask for the time series profile. Default is *
           schema:
             type: string
+        - name: page
+          in: query
+          description: The page cursor. Default is null
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: The page size. Default is 1000
+          schema:
+            type: string
       responses:
         '200':
           description: A TimeSeriesProfile object
           content:
-            application/json;version=2:
+            application/json;version=1:
               schema:
-                $ref: '#/components/schemas/TimeSeriesProfile'
+                $ref: '#/components/schemas/TimeSeriesProfileList'
             application/xml;version=2:
               schema:
-                $ref: '#/components/schemas/TimeSeriesProfile'
+                $ref: '#/components/schemas/TimeSeriesProfileList'
         '400':
           description: Invalid input
           content:
@@ -3466,7 +3467,7 @@ paths:
       parameters:
         - name: timeseries-id
           in: path
-          description: The time series ID of the time series profile instance. Default is null
+          description: The time series ID of the time series profile instance.
           required: true
           schema:
             type: string
@@ -3504,7 +3505,7 @@ paths:
           description: The unit of the time series profile instance.
           required: true
           schema:
-            type: string
+            type: array
         - name: start-inclusive
           in: query
           description: The start inclusive of the time series profile instance. Default is true
@@ -3542,11 +3543,22 @@ paths:
           schema:
             type: string
             format: date-time
+        - name: page
+          in: query
+          description: The page of the time series profile instance.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: The page size of the time series profile instance. Default is 500
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: A TimeSeriesProfileParser object
           content:
-            application/json;version=2:
+            application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
             application/xml;version=2:
@@ -3700,7 +3712,7 @@ paths:
         '200':
           description: A TimeSeriesProfileInstance object
           content:
-            application/json;version=2:
+            application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
             application/xml;version=2:
@@ -13710,15 +13722,15 @@ components:
     AssignedLocation:
       type: object
       properties:
-        locationId:
+        location-id:
           type: string
-        officeId:
+        office-id:
           type: string
-        aliasId:
+        alias-id:
           type: string
         attribute:
           type: number
-        refLocationId:
+        ref-location-id:
           type: string
     location_group:
       required:
@@ -14705,6 +14717,13 @@ components:
           type: string
         time-field:
           type: integer
+    TimeSeriesProfileParsers:
+      type: object
+      properties:
+        parsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSeriesProfileParser'
     TimeSeriesProfile:
       type: object
       properties:
@@ -14715,60 +14734,125 @@ components:
           description: Description
         parameter-list:
           type: array
-          description: Parameter List
+          description: Dependent Parameters
           items:
             type: string
-            description: Parameter List
+            description: Dependent Parameters
         key-parameter:
           type: string
-          description: Key Parameter
+          description: Independent Parameter
         reference-ts-id:
           $ref: '#/components/schemas/CwmsId'
-    ProfileTimeSeries:
+    TimeSeriesProfileList:
+      type: object
+      properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        profile-list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeSeriesProfile'
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+    DataColumnInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        ordinal:
+          type: integer
+          format: int32
+        datatype:
+          type: string
+    ParameterColumnInfo:
       type: object
       properties:
         parameter:
           type: string
+        ordinal:
+          type: integer
+          format: int32
         unit:
           type: string
-        time-zone:
-          type: string
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeValuePair'
-    TimeSeriesProfileInstance:
+    TimeSeriesData:
       type: object
       properties:
-        time-series-profile:
-          $ref: '#/components/schemas/TimeSeriesProfile'
-        time-series-list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProfileTimeSeries'
-        version:
-          type: string
-        version-date:
-          type: string
-          format: date-time
-        first-date:
-          type: string
-          format: date-time
-        last-date:
-          type: string
-          format: date-time
-    TimeValuePair:
-      type: object
-      properties:
-        date-time:
-          type: string
-          format: date-time
         value:
           type: number
           format: double
         quality:
           type: integer
           format: int32
+    TimeSeriesProfileInstance:
+      type: object
+      properties:
+        data-columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataColumnInfo'
+        first-date:
+          type: string
+          format: date-time
+        last-date:
+          type: string
+          format: date-time
+        location-time-zone:
+          type: string
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-first-date:
+          type: string
+          format: date-time
+        page-last-date:
+          type: string
+          format: date-time
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        parameter-columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterColumnInfo'
+        time-series-list:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/TimeSeriesData'
+        time-series-profile:
+          $ref: '#/components/schemas/TimeSeriesProfile'
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        version:
+          type: string
+        version-date:
+          type: string
+          format: date-time
     StoreRule:
       type: string
       enum:

@@ -26,7 +26,7 @@ final class TestTimeSeriesProfileParserController extends TestController {
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("UTC", value.getTimeZone());
         assertEquals('\n', value.getRecordDelimiter());
-        assertEquals(',', value.getFieldDelimiter());
+        assertEquals(',', value.getFieldDelimiter().toCharArray()[0]);
     }
 
     @Test
