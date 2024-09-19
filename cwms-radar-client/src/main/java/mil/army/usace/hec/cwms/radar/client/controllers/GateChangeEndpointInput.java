@@ -37,26 +37,30 @@ public final class GateChangeEndpointInput {
 
 
     public static final class GetAll extends EndpointInput {
-        private static final String BEGIN = "begin";
-        private static final String END = "end";
-        private static final String START_INCLUSIVE = "start-time-inclusive";
-        private static final String END_INCLUSIVE = "end-time-inclusive";
-        private static final String UNIT_SYSTEM = "unit-system";
-        private static final String PAGE_SIZE = "page-size";
+        static final int DEFAULT_PAGE_SIZE = 500;
+        static final boolean DEFAULT_START_INCLUSIVE = true;
+        static final boolean DEFAULT_END_INCLUSIVE = true;
+        static final String DEFAULT_UNIT_SYSTEM = "SI";
+        static final String BEGIN = "begin";
+        static final String END = "end";
+        static final String START_INCLUSIVE = "start-time-inclusive";
+        static final String END_INCLUSIVE = "end-time-inclusive";
+        static final String UNIT_SYSTEM = "unit-system";
+        static final String PAGE_SIZE = "page-size";
         private final String officeId;
         private final String projectId;
         private final Instant beginDate;
         private final Instant endDate;
-        private boolean startInclusive = true;
-        private boolean endInclusive = true;
-        private String unitSystem;
-        private int pageSize;
+        private boolean startInclusive = DEFAULT_START_INCLUSIVE;
+        private boolean endInclusive = DEFAULT_END_INCLUSIVE;
+        private String unitSystem = DEFAULT_UNIT_SYSTEM;
+        private int pageSize = DEFAULT_PAGE_SIZE;
 
         public GetAll(String officeId, String projectId, Instant beginDate, Instant endDate) {
-            this.officeId = officeId;
-            this.projectId = projectId;
-            this.beginDate = beginDate;
-            this.endDate = endDate;
+            this.officeId = Objects.requireNonNull(officeId, "Office ID is required to be non-null");
+            this.projectId = Objects.requireNonNull(projectId, "Project ID is required to be non-null");
+            this.beginDate = Objects.requireNonNull(beginDate, "Begin Date is required to be non-null");
+            this.endDate = Objects.requireNonNull(endDate, "End Date is required to be non-null");
         }
 
         String officeId() {
@@ -99,7 +103,8 @@ public final class GateChangeEndpointInput {
     }
 
     public static final class Post extends EndpointInput {
-        private static final String FAIL_IF_EXISTS = "fail-if-exists";
+        static final boolean DEFAULT_FAIL_IF_EXISTS = true;
+        static final String FAIL_IF_EXISTS = "fail-if-exists";
         private boolean failIfExists = true;
         private final Set<GateChange> changes = new HashSet<>();
 
@@ -124,20 +129,21 @@ public final class GateChangeEndpointInput {
     }
 
     public static final class Delete extends EndpointInput {
-        private static final String BEGIN = "begin";
-        private static final String END = "end";
-        private static final String OVERRIDE_PROTECTION = "override-protection";
+        static final boolean DEFAULT_OVERRIDE_PROTECTION = false;
+        static final String BEGIN = "begin";
+        static final String END = "end";
+        static final String OVERRIDE_PROTECTION = "override-protection";
         private final String officeId;
         private final String projectId;
         private final Instant beginDate;
         private final Instant endDate;
-        private boolean overrideProtection = false;
+        private boolean overrideProtection = DEFAULT_OVERRIDE_PROTECTION;
 
         public Delete(String officeId, String projectId, Instant beginDate, Instant endDate) {
-            this.officeId = officeId;
-            this.projectId = projectId;
-            this.beginDate = beginDate;
-            this.endDate = endDate;
+            this.officeId = Objects.requireNonNull(officeId, "Office ID is required to be non-null");
+            this.projectId = Objects.requireNonNull(projectId, "Project ID is required to be non-null");
+            this.beginDate = Objects.requireNonNull(beginDate, "Begin Date is required to be non-null");
+            this.endDate = Objects.requireNonNull(endDate, "End Date is required to be non-null");
         }
 
         String officeId() {

@@ -20,8 +20,8 @@ import java.util.Set;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 
 public class GateChangeController {
-    private static final String GATE_CHANGE_PATH = "/projects/{%s}/{%s}/gate-changes";
-    private static final String GATE_CHANGE_CREATE_PATH = "/projects/gate-changes";
+    static final String GATE_CHANGE_PATH = "/projects/{%s}/{%s}/gate-changes";
+    static final String GATE_CHANGE_CREATE_PATH = "/projects/gate-changes";
 
     public Set<GateChange> retrieveGateChanges(ApiConnectionInfo apiConnectionInfo, GateChangeEndpointInput.GetAll input)
             throws IOException {
