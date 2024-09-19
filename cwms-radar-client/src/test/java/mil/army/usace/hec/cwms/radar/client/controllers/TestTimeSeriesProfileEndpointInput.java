@@ -21,11 +21,13 @@ final class TestTimeSeriesProfileEndpointInput {
         String locationMask = "*LOC*";
         String parameterMask = "*PAR*";
         GetAll input = TimeSeriesProfileEndpointInput.getAll();
-        input.locationMask(locationMask).officeMask(office).parameterMask(parameterMask);
+        input.locationMask(locationMask).officeMask(office).parameterMask(parameterMask).page("CWMSTESTPAGE").pageSize(12);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_MASK_QUERY_PARAMETER));
         assertEquals(locationMask, mockHttpRequestBuilder.getQueryParameter(GetAll.LOCATION_MASK_QUERY_PARAMETER));
         assertEquals(parameterMask, mockHttpRequestBuilder.getQueryParameter(GetAll.PARAMETER_MASK_QUERY_PARAMETER));
+        assertEquals("CWMSTESTPAGE", mockHttpRequestBuilder.getQueryParameter(GetAll.PAGE_QUERY_PARAMETER));
+        assertEquals("12", mockHttpRequestBuilder.getQueryParameter(GetAll.PAGE_SIZE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 

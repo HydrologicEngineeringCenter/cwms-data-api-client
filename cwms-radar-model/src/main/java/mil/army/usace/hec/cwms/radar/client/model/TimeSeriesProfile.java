@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * TimeSeriesProfile
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-08-23T10:53:54.959292200-07:00[America/Los_Angeles]")
+        date = "2024-09-19T12:32:49.455402100-07:00[America/Los_Angeles]")
 public class TimeSeriesProfile {
 
     @JsonProperty("location-id")

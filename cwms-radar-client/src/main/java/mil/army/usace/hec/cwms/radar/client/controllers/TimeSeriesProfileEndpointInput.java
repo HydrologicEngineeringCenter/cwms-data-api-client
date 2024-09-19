@@ -35,6 +35,10 @@ public class TimeSeriesProfileEndpointInput {
         public static final String OFFICE_MASK_QUERY_PARAMETER = "office-mask";
         public static final String LOCATION_MASK_QUERY_PARAMETER = "location-mask";
         public static final String PARAMETER_MASK_QUERY_PARAMETER = "parameter-id-mask";
+        public static final String PAGE_QUERY_PARAMETER = "page";
+        public static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
+        private String page;
+        private int pageSize;
         private String officeMask;
         private String locationMask;
         private String parameterMask;
@@ -58,11 +62,23 @@ public class TimeSeriesProfileEndpointInput {
             return this;
         }
 
+        public GetAll page(String page) {
+            this.page = page;
+            return this;
+        }
+
+        public GetAll pageSize(int pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_MASK_QUERY_PARAMETER, officeMask)
                     .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationMask)
                     .addQueryParameter(PARAMETER_MASK_QUERY_PARAMETER, parameterMask)
+                    .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+                    .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, String.valueOf(pageSize))
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

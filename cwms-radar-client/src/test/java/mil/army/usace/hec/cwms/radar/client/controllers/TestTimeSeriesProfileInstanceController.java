@@ -18,15 +18,19 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_profile_instance.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
+        List<String> parameterList = List.of("m", "F");
         TimeSeriesProfileInstanceEndpointInput.GetOne input = TimeSeriesProfileInstanceEndpointInput
-                .getOne("SPK", "Test_TSP_Location", "Depth", "VERSION", "m,F");
+                .getOne("SWT", "Test_TSP_Location", "Depth", "DSS-Obs",
+                        parameterList).page("CWMSTESTPAGE").pageSize(50);
         TimeSeriesProfileInstance value = new TimeSeriesProfileInstanceController()
                 .retrieveTimeSeriesProfileInstance(buildConnectionInfo(), input);
         assertNotNull(value);
-        assertEquals("VERSION", value.getVersion());
+        assertEquals("DSS-Obs", value.getVersion());
+        assertEquals("CWMSTESTPAGE", value.getPage());
+        assertEquals(50, value.getPageSize());
         assertEquals("Depth", value.getTimeSeriesProfile().getKeyParameter());
         assertEquals("Description", value.getTimeSeriesProfile().getDescription());
-        assertEquals("SPK", value.getTimeSeriesProfile().getLocationId().getOfficeId());
+        assertEquals("SWT", value.getTimeSeriesProfile().getLocationId().getOfficeId());
     }
 
     @Test
@@ -40,15 +44,15 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         List<TimeSeriesProfileInstance> results = controller.retrieveTimeSeriesProfileInstances(buildConnectionInfo(), input);
         assertNotNull(results);
         TimeSeriesProfileInstance value = results.get(0);
-        assertEquals("VERSION", value.getVersion());
+        assertEquals("DSS-Obs", value.getVersion());
+        assertEquals("Temp", value.getTimeSeriesProfile().getKeyParameter());
+        assertEquals("Description 2", value.getTimeSeriesProfile().getDescription());
+        assertEquals("SWT", value.getTimeSeriesProfile().getLocationId().getOfficeId());
+        value = results.get(1);
+        assertEquals("DSS-Obs", value.getVersion());
         assertEquals("Depth", value.getTimeSeriesProfile().getKeyParameter());
         assertEquals("Description", value.getTimeSeriesProfile().getDescription());
-        assertEquals("SPK", value.getTimeSeriesProfile().getLocationId().getOfficeId());
-        value = results.get(1);
-        assertEquals("VERSION2", value.getVersion());
-        assertEquals("Temp-Water", value.getTimeSeriesProfile().getKeyParameter());
-        assertEquals("Description2", value.getTimeSeriesProfile().getDescription());
-        assertEquals("SPK", value.getTimeSeriesProfile().getLocationId().getOfficeId());
+        assertEquals("SWT", value.getTimeSeriesProfile().getLocationId().getOfficeId());
     }
 
     @Test

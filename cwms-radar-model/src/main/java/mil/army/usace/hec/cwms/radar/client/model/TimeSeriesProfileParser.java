@@ -9,16 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * TimeSeriesProfileParser
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-08-23T15:45:40.214689900-07:00[America/Los_Angeles]")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+        date = "2024-09-19T12:32:49.455402100-07:00[America/Los_Angeles]")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
 @JsonSubTypes({ @JsonSubTypes.Type(name = "indexed-timeseries-profile-parser", value = TimeSeriesProfileParserIndexed.class),
-        @JsonSubTypes.Type(name = "columnar-timeseries-profile-parser", value = TimeSeriesProfileParserColumnar.class)
+    @JsonSubTypes.Type(name = "columnar-timeseries-profile-parser", value = TimeSeriesProfileParserColumnar.class)
 })
 public class TimeSeriesProfileParser {
 
@@ -43,6 +42,9 @@ public class TimeSeriesProfileParser {
 
     @JsonProperty("time-in-two-fields")
     private Boolean timeInTwoFields = null;
+
+    @JsonProperty("type")
+    private String type = null;
 
     public TimeSeriesProfileParser locationId(CwmsId locationId) {
         this.locationId = locationId;
@@ -143,6 +145,19 @@ public class TimeSeriesProfileParser {
         this.timeInTwoFields = timeInTwoFields;
     }
 
+    public TimeSeriesProfileParser type(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -167,6 +182,9 @@ public class TimeSeriesProfileParser {
                 : this.timeZone.equalsIgnoreCase(timeSeriesProfileParser.timeZone)
                 && Objects.equals(this.parameterInfoList, timeSeriesProfileParser.parameterInfoList)
                 && Objects.equals(this.timeInTwoFields, timeSeriesProfileParser.timeInTwoFields)
+                && this.type == null || timeSeriesProfileParser.type == null
+                ? Objects.equals(this.type, timeSeriesProfileParser.type)
+                : this.type.equalsIgnoreCase(timeSeriesProfileParser.type)
                 ;
     }
 
@@ -175,8 +193,8 @@ public class TimeSeriesProfileParser {
         return Objects.hash(locationId, keyParameter == null ? 0 : keyParameter.toLowerCase(),
                 recordDelimiter == '\0' ? 0 : recordDelimiter,
                 timeFormat == null ? 0 : timeFormat.toLowerCase(),
-                timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList,
-                timeInTwoFields);
+                timeZone == null ? 0 : timeZone.toLowerCase(), parameterInfoList, timeInTwoFields,
+                type == null ? 0 : type.toLowerCase());
     }
 
     @Override
@@ -191,6 +209,7 @@ public class TimeSeriesProfileParser {
         sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
         sb.append("    parameterInfoList: ").append(toIndentedString(parameterInfoList)).append("\n");
         sb.append("    timeInTwoFields: ").append(toIndentedString(timeInTwoFields)).append("\n");
+        sb.append("    type: ").append(toIndentedString(type)).append("\n");
         sb.append("}");
         return sb.toString();
     }
