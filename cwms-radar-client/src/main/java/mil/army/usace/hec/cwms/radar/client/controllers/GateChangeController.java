@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public class GateChangeController {
     static final String GATE_CHANGE_PATH = "projects/%s/%s/gate-changes";
@@ -28,6 +29,7 @@ public class GateChangeController {
             throws IOException {
         String endpoint = format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+                .addQueryParameter(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -38,9 +40,9 @@ public class GateChangeController {
 
     public void storeGateChange(ApiConnectionInfo apiConnectionInfo, GateChangeEndpointInput.Post input)
             throws IOException {
-        String endpoint = GATE_CHANGE_CREATE_PATH;
         String body = RadarObjectMapper.mapObjectToJson(input.gateChanges());
-        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+        new HttpRequestBuilderImpl(apiConnectionInfo, GATE_CHANGE_CREATE_PATH)
+                .addQueryParameter(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)

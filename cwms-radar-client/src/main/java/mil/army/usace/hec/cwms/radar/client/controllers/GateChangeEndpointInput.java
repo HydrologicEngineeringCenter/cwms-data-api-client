@@ -12,7 +12,6 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.GateChange;
 
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -56,7 +55,7 @@ public final class GateChangeEndpointInput {
         private String unitSystem = DEFAULT_UNIT_SYSTEM;
         private int pageSize = DEFAULT_PAGE_SIZE;
 
-        public GetAll(String officeId, String projectId, Instant beginDate, Instant endDate) {
+        private GetAll(String officeId, String projectId, Instant beginDate, Instant endDate) {
             this.officeId = Objects.requireNonNull(officeId, "Office ID is required to be non-null");
             this.projectId = Objects.requireNonNull(projectId, "Project ID is required to be non-null");
             this.beginDate = Objects.requireNonNull(beginDate, "Begin Date is required to be non-null");
@@ -108,7 +107,7 @@ public final class GateChangeEndpointInput {
         private boolean failIfExists = true;
         private final Set<GateChange> changes = new HashSet<>();
 
-        public Post(Set<GateChange> changes) {
+        private Post(Set<GateChange> changes) {
             super();
             changes.addAll(Objects.requireNonNull(changes, "Set of changes is required to be non-null"));
         }
@@ -139,7 +138,7 @@ public final class GateChangeEndpointInput {
         private final Instant endDate;
         private boolean overrideProtection = DEFAULT_OVERRIDE_PROTECTION;
 
-        public Delete(String officeId, String projectId, Instant beginDate, Instant endDate) {
+        private Delete(String officeId, String projectId, Instant beginDate, Instant endDate) {
             this.officeId = Objects.requireNonNull(officeId, "Office ID is required to be non-null");
             this.projectId = Objects.requireNonNull(projectId, "Project ID is required to be non-null");
             this.beginDate = Objects.requireNonNull(beginDate, "Begin Date is required to be non-null");
