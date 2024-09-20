@@ -79,7 +79,8 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
                 .getQueryParameter(GetOne.MAX_VERSION_QUERY_PARAMETER));
         assertEquals(String.valueOf(versionDate.toEpochMilli()), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.VERSION_DATE_QUERY_PARAMETER));
-        assertEquals(unit.toString(), mockHttpRequestBuilder.getQueryParameter(GetOne.UNIT_QUERY_PARAMETER));
+        assertEquals(unit.stream().map(Object::toString).reduce((a, b) -> a + "," + b).orElse(""),
+                mockHttpRequestBuilder.getQueryParameter(GetOne.UNIT_QUERY_PARAMETER));
     }
 
     @Test

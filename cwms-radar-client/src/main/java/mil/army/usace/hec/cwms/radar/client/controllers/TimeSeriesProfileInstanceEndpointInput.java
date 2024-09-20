@@ -107,7 +107,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         private Instant end = Instant.now();
         private final String timeseriesId;
         private String page;
-        private int pageSize;
+        private int pageSize = 1000;
 
         private GetOne(String officeId, String timeseriesId, String parameterId, String version, List<String> unit) {
             this.officeId = Objects.requireNonNull(officeId, "Office is required");
@@ -183,7 +183,7 @@ public final class TimeSeriesProfileInstanceEndpointInput {
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
                 .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
-                .addQueryParameter(UNIT_QUERY_PARAMETER, unit.toString())
+                .addQueryParameter(UNIT_QUERY_PARAMETER, unit.stream().map(Object::toString).reduce((a, b) -> a + "," + b).orElse(""))
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, String.valueOf(pageSize))
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(START_INCLUSIVE_QUERY_PARAMETER, String.valueOf(startInclusive))
