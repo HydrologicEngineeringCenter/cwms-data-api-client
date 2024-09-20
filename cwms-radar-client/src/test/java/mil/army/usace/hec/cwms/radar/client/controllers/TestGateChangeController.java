@@ -22,6 +22,8 @@ class TestGateChangeController extends TestController {
     private static final String JSON_FILE = "radar/v1/json/gate_changes.json";
     private static final String OFFICE_ID = "SPK";
     private static final String PROJECT_ID = "BIGH";
+    private static final String EXPECTED_CHANGE_PATH = "/" + String.format(GateChangeController.GATE_CHANGE_PATH, OFFICE_ID, PROJECT_ID);
+    private static final String EXPECTED_CREATE_CHANGE_PATH = "/" + GateChangeController.GATE_CHANGE_CREATE_PATH;
     private static final Instant START = ZonedDateTime.of(2024, 9, 17, 0, 0, 0, 0, ZoneId.of("UTC"))
                                                       .toInstant();
     private static final Instant END = START.plus(15, ChronoUnit.MINUTES);
@@ -48,27 +50,36 @@ class TestGateChangeController extends TestController {
         assertEquals(expectedChanges, retrievedChanges);
 
         MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
-        assertTrue(request.getPath().startsWith(String.format(GateChangeController.GATE_CHANGE_PATH, OFFICE_ID, PROJECT_ID)));
+        assertTrue(request.getPath().startsWith(EXPECTED_CHANGE_PATH));
         assertEquals("GET", request.getMethod());
     }
 
     @Test
-    void testStoreGateChange() throws IOException {
+    void testStoreGateChange() throws Exception {
         String collect = readJsonFile(JSON_FILE);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         Set<GateChange> changes = RadarObjectMapper.mapJsonToSetOfObjects(collect, GateChange.class);
         GateChangeEndpointInput.Post input = GateChangeEndpointInput.post(changes)
                                                                     .failIfExists(FAIL_IF_EXISTS);
-        assertDoesNotThrow(() -> new GateChangeController().storeGateChange(buildConnectionInfo(), input));
+        assertDoesNotThrow(() -> new GateChangeController().storeGateChange(buildConnectionInfo(cookieJarSupplier), input));
+
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        assertTrue(request.getPath().startsWith(EXPECTED_CREATE_CHANGE_PATH));
+        assertEquals("POST", request.getMethod());
     }
 
     @Test
-    void testDeleteGateChanges() throws IOException {
+    void testDeleteGateChanges() throws Exception {
         String collect = readJsonFile(JSON_FILE);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        GateChangeEndpointInput.Delete input = GateChangeEndpointInput.delete(OFFICE_ID, PROJECT_ID, START, END);
+        GateChangeEndpointInput.Delete input = GateChangeEndpointInput.delete(OFFICE_ID, PROJECT_ID, START, END)
+                                                                      .overrideProtection(OVERRIDE_PROTECTION);
         assertDoesNotThrow(() -> new GateChangeController().deleteGateChanges(buildConnectionInfo(), input));
+
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        assertTrue(request.getPath().startsWith(EXPECTED_CHANGE_PATH));
+        assertEquals("DELETE", request.getMethod());
     }
 }
