@@ -5,12 +5,10 @@ import mil.army.usace.hec.cwms.radar.client.model.GateChange;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

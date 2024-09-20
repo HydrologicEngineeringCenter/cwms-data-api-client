@@ -7,6 +7,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static java.lang.String.format;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -20,12 +21,12 @@ import java.util.Set;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 
 public class GateChangeController {
-    static final String GATE_CHANGE_PATH = "projects/{%s}/{%s}/gate-changes";
+    static final String GATE_CHANGE_PATH = "projects/%s/%s/gate-changes";
     static final String GATE_CHANGE_CREATE_PATH = "projects/gate-changes";
 
     public Set<GateChange> retrieveGateChanges(ApiConnectionInfo apiConnectionInfo, GateChangeEndpointInput.GetAll input)
             throws IOException {
-        String endpoint = String.format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
+        String endpoint = format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .get()
@@ -50,7 +51,7 @@ public class GateChangeController {
 
     public void deleteGateChanges(ApiConnectionInfo apiConnectionInfo, GateChangeEndpointInput.Delete input)
             throws IOException {
-        String endpoint = String.format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
+        String endpoint = format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .delete()
