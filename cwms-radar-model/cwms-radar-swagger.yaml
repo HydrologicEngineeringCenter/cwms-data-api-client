@@ -15733,9 +15733,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     pools:
       type: object

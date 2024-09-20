@@ -18,7 +18,7 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_profile_instance.json" );
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        List<String> parameterList = List.of("m", "F");
+        List<String> parameterList = List.of("F", "m");
         TimeSeriesProfileInstanceEndpointInput.GetOne input = TimeSeriesProfileInstanceEndpointInput
                 .getOne("SWT", "Test_TSP_Location", "Depth", "DSS-Obs",
                         parameterList).page("CWMSTESTPAGE").pageSize(50);
@@ -31,6 +31,8 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         assertEquals("Depth", value.getTimeSeriesProfile().getKeyParameter());
         assertEquals("Description", value.getTimeSeriesProfile().getDescription());
         assertEquals("SWT", value.getTimeSeriesProfile().getLocationId().getOfficeId());
+        assertEquals(parameterList.get(0), value.getParameterColumns().get(0).getUnit());
+        assertEquals(parameterList.get(1), value.getParameterColumns().get(1).getUnit());
     }
 
     @Test
