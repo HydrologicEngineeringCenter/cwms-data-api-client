@@ -3502,7 +3502,7 @@ paths:
             format: date-time
         - name: unit
           in: query
-          description: The unit of the time series profile instance.
+          description: The units of the time series profile instance.
           required: true
           schema:
             type: array
@@ -15733,9 +15733,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     pools:
       type: object

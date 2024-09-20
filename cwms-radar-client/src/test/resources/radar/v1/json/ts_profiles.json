@@ -1,34 +1,39 @@
-[
-  {
-    "location-id": {
-      "office-id": "SPK",
-      "name": "Test_TSP_Location"
+{
+  "page": "NDU1MTA2NHx8RGVwdGh8fDI=",
+  "page-size": 1000,
+  "profile-list": [
+    {
+      "location-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location"
+      },
+      "description": "Test Description",
+      "parameter-list": [
+        "Depth",
+        "Temp-Water"
+      ],
+      "key-parameter": "Depth",
+      "reference-ts-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location.Elev.Inst.1Hour.0.DSS-Obs"
+      }
     },
-    "description": "Test Description",
-    "parameter-list": [
-      "Depth",
-      "Temp-Water"
-    ],
-    "key-parameter": "Depth",
-    "reference-ts-id": {
-      "office-id": "SPK",
-      "name": "Test_TSP_Reference"
+    {
+      "location-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location2"
+      },
+      "description": "Test Description 2",
+      "parameter-list": [
+        "Depth",
+        "Temp-Water"
+      ],
+      "key-parameter": "Temp-Water",
+      "reference-ts-id": {
+        "office-id": "SPK",
+        "name": "Test_TSP_Location2.Elev.Inst.1Hour.0.DSS-Obs"
+      }
     }
-  },
-  {
-    "location-id": {
-      "office-id": "SPK",
-      "name": "Test_TSP_Location2"
-    },
-    "description": "Test Description2",
-    "parameter-list": [
-      "Depth",
-      "Temp-Water"
-    ],
-    "key-parameter": "Temp-Water",
-    "reference-ts-id": {
-      "office-id": "SPK",
-      "name": "Test_TSP_Reference2"
-    }
-  }
-]
+  ],
+  "total": 2
+}

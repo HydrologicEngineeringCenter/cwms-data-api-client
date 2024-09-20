@@ -54,7 +54,7 @@ public class TimeSeriesProfileInstance {
     @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     @JsonProperty("time-series-list")
     @Valid
-    private Map<String, List<TimeSeriesData>> timeSeriesList = null;
+    private Map<Long, List<TimeSeriesData>> timeSeriesList = null;
 
     @JsonProperty("time-series-profile")
     private TimeSeriesProfile timeSeriesProfile = null;
@@ -214,12 +214,12 @@ public class TimeSeriesProfileInstance {
         this.parameterColumns = parameterColumns;
     }
 
-    public TimeSeriesProfileInstance timeSeriesList(Map<String, List<TimeSeriesData>> timeSeriesList) {
+    public TimeSeriesProfileInstance timeSeriesList(Map<Long, List<TimeSeriesData>> timeSeriesList) {
         this.timeSeriesList = timeSeriesList;
         return this;
     }
 
-    public TimeSeriesProfileInstance putTimeSeriesListItem(String key, List<TimeSeriesData> timeSeriesListItem) {
+    public TimeSeriesProfileInstance putTimeSeriesListItem(Long key, List<TimeSeriesData> timeSeriesListItem) {
         if (this.timeSeriesList == null) {
             this.timeSeriesList = new HashMap<>();
         }
@@ -227,11 +227,11 @@ public class TimeSeriesProfileInstance {
         return this;
     }
 
-    public Map<String, List<TimeSeriesData>> getTimeSeriesList() {
+    public Map<Long, List<TimeSeriesData>> getTimeSeriesList() {
         return timeSeriesList;
     }
 
-    public void setTimeSeriesList(Map<String, List<TimeSeriesData>> timeSeriesList) {
+    public void setTimeSeriesList(Map<Long, List<TimeSeriesData>> timeSeriesList) {
         this.timeSeriesList = timeSeriesList;
     }
 
