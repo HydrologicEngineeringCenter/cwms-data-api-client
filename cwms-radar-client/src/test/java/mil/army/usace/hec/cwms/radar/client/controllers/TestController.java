@@ -50,6 +50,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyStore;
+import java.util.Arrays;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 abstract class TestController {
@@ -57,6 +59,7 @@ abstract class TestController {
     private static final boolean USE_MOCK = true;
     private static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
     private static PreferencesBackedCookieStore preferencesBackedCookieStore;
+    private static final List<String> SESSION_COOKIES = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
     MockHttpServer mockHttpServer;
     static CookieJarFactory.CookieJarSupplier cookieJarSupplier;
 
@@ -89,8 +92,7 @@ abstract class TestController {
         CookieJarFactory.CookieJarSupplier cookieJarSupplier = CookieJarFactory.preferenceBackedCookieJar(preferencesBackedCookieStore);
         MockHttpServer mockHttpServer = MockHttpServer.create();
         if (cookieJarSupplier.isCookieExpired(getCwmsAAABaseUrl(mockHttpServer), "JSESSIONIDSSO")) {
-            mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_banner_agreement.html"));
-            mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_login.json"));
+            mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_login.json"), SESSION_COOKIES);
             ApiConnectionInfo apiConnectionInfo = buildCwmsAAALoginConnectionInfo(cookieJarSupplier, mockHttpServer);
             new CwmsLoginController().login(apiConnectionInfo);
         }
@@ -130,7 +132,7 @@ abstract class TestController {
         return new ApiConnectionInfoBuilder(baseUrl)
             .withCookieAuthenticator(() -> {
                 mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_banner_agreement.html"));
-                mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_login.json"));
+                mockHttpServer.enqueue(readJsonFile("cwms_aaa/cwms_aaa_login.json"), SESSION_COOKIES);
                 return new CwmsAuthCookieCallback(new ApiConnectionInfoBuilder(baseUrl)
                     .withCookieJarSupplier(cookieJarSupplier)
                     .withSslSocketData(sslSocketData)
