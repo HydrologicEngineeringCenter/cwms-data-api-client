@@ -2,10 +2,10 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfile;
+import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileList;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,19 +34,19 @@ final class TestTimeSeriesProfileController extends TestController {
         mockHttpServer.start();
         TimeSeriesProfileEndpointInput.GetAll input = TimeSeriesProfileEndpointInput
                 .getAll();
-        List<TimeSeriesProfile> values = new TimeSeriesProfileController()
+        TimeSeriesProfileList values = new TimeSeriesProfileController()
                 .retrieveTimeSeriesProfiles(buildConnectionInfo(), input);
         assertNotNull(values);
-        TimeSeriesProfile value = values.get(0);
-        assertEquals("Test_TSP_Reference", value.getReferenceTsId().getName());
+        TimeSeriesProfile value = values.getProfileList().get(0);
+        assertEquals("Test_TSP_Location.Elev.Inst.1Hour.0.DSS-Obs", value.getReferenceTsId().getName());
         assertEquals("SPK", value.getReferenceTsId().getOfficeId());
         assertEquals("Depth", value.getKeyParameter());
         assertEquals("Test Description", value.getDescription());
-        value = values.get(1);
-        assertEquals("Test_TSP_Reference2", value.getReferenceTsId().getName());
+        value = values.getProfileList().get(1);
+        assertEquals("Test_TSP_Location2.Elev.Inst.1Hour.0.DSS-Obs", value.getReferenceTsId().getName());
         assertEquals("SPK", value.getReferenceTsId().getOfficeId());
         assertEquals("Temp-Water", value.getKeyParameter());
-        assertEquals("Test Description2", value.getDescription());
+        assertEquals("Test Description 2", value.getDescription());
     }
 
     @Test
