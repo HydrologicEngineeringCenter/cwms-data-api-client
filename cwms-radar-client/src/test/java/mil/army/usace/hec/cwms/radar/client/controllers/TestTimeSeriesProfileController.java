@@ -47,6 +47,8 @@ final class TestTimeSeriesProfileController extends TestController {
         assertEquals("SPK", value.getReferenceTsId().getOfficeId());
         assertEquals("Temp-Water", value.getKeyParameter());
         assertEquals("Test Description 2", value.getDescription());
+        assertEquals(1000, values.getPageSize());
+        assertNotNull(values.getNextPage());
     }
 
     @Test

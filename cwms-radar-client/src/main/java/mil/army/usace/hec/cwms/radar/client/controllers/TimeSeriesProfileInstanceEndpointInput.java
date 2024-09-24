@@ -95,13 +95,13 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         private final String officeId;
         private final String parameterId;
         private final String version;
-        private Instant versionDate = Instant.now();
+        private Instant versionDate = null;
         private String timezone = "UTC";
         private final List<String> unit;
         private boolean startInclusive = true;
         private boolean endInclusive = true;
-        private boolean previous = true;
-        private boolean next = true;
+        private boolean previous = false;
+        private boolean next = false;
         private boolean maxVersion = false;
         private Instant start = Instant.now();
         private Instant end = Instant.now();
@@ -181,9 +181,11 @@ public final class TimeSeriesProfileInstanceEndpointInput {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(PARAMETER_ID_QUERY_PARAMETER, parameterId)
                 .addQueryParameter(VERSION_QUERY_PARAMETER, version)
-                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, String.valueOf(versionDate.toEpochMilli()))
+                .addQueryParameter(VERSION_DATE_QUERY_PARAMETER, versionDate == null ? null
+                        : String.valueOf(versionDate.toEpochMilli()))
                 .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
-                .addQueryParameter(UNIT_QUERY_PARAMETER, unit.stream().map(Object::toString).reduce((a, b) -> a + "," + b).orElse(""))
+                .addQueryParameter(UNIT_QUERY_PARAMETER,
+                        unit.stream().map(Object::toString).reduce((a, b) -> a + "," + b).orElse(""))
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, String.valueOf(pageSize))
                 .addQueryParameter(PAGE_QUERY_PARAMETER, page)
                 .addQueryParameter(START_INCLUSIVE_QUERY_PARAMETER, String.valueOf(startInclusive))
