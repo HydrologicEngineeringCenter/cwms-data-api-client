@@ -22,6 +22,10 @@ public final class WaterContractTypeEndpointInput {
         return new Post(waterContractType);
     }
 
+    public static Delete delete(String officeId, String displayValue) {
+        return new Delete(officeId, displayValue);
+    }
+
     public static final class GetAll extends EndpointInput {
         private final String officeId;
 
@@ -61,6 +65,29 @@ public final class WaterContractTypeEndpointInput {
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS_QUERY_PARAMETER, failIfExists ? "true" : "false")
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+    }
+
+    public static final class Delete extends EndpointInput {
+        private final String officeId;
+        private final String displayValue;
+
+        private Delete(String officeId, String displayValue) {
+            this.officeId = Objects.requireNonNull(officeId);
+            this.displayValue = Objects.requireNonNull(displayValue);
+        }
+
+        String officeId() {
+            return officeId;
+        }
+
+        String displayValue() {
+            return displayValue;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }

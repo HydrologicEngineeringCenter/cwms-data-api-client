@@ -47,6 +47,18 @@ class TestWaterContractTypeEndpointInput {
     }
 
     @Test
+    void testDeleteQuery() {
+        String officeId = "SPK";
+        String displayValue = "Storage";
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        WaterContractTypeEndpointInput.Delete input = WaterContractTypeEndpointInput.delete(officeId, displayValue);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(officeId, input.officeId());
+        assertEquals(displayValue, input.displayValue());
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
     void testStoreNulls() {
         assertThrows(NullPointerException.class, () -> WaterContractTypeEndpointInput.post(null));
     }
