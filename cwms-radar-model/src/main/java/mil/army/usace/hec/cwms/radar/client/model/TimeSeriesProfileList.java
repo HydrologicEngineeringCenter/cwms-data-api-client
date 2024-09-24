@@ -21,12 +21,15 @@ public class TimeSeriesProfileList {
     private final int pageSize;
     @JsonProperty("total")
     private final int total;
+    @JsonProperty("next-page")
+    private final String nextPage;
 
     private TimeSeriesProfileList(Builder builder) {
         this.page = builder.page;
         this.pageSize = builder.pageSize;
         this.total = builder.total;
         this.profileList = builder.timeSeriesProfileList;
+        this.nextPage = builder.nextPage;
     }
 
     public List<TimeSeriesProfile> getProfileList() {
@@ -45,6 +48,10 @@ public class TimeSeriesProfileList {
         return this.total;
     }
 
+    public String getNextPage() {
+        return this.nextPage;
+    }
+
     public static class Builder {
         @JsonProperty("page")
         private String page;
@@ -54,6 +61,8 @@ public class TimeSeriesProfileList {
         private int total;
         @JsonProperty("profile-list")
         private List<TimeSeriesProfile> timeSeriesProfileList;
+        @JsonProperty("next-page")
+        private String nextPage;
 
         public Builder page(String page) {
             this.page = page;
@@ -67,6 +76,11 @@ public class TimeSeriesProfileList {
 
         public Builder total(int total) {
             this.total = total;
+            return this;
+        }
+
+        public Builder nextPage(String nextPage) {
+            this.nextPage = nextPage;
             return this;
         }
 
