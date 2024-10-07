@@ -10,9 +10,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.GateChange;
-
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -105,11 +103,11 @@ public final class GateChangeEndpointInput {
         static final boolean DEFAULT_FAIL_IF_EXISTS = true;
         static final String FAIL_IF_EXISTS = "fail-if-exists";
         private boolean failIfExists = true;
-        private final Set<GateChange> changes = new HashSet<>();
+        private final Set<GateChange> changes;
 
         private Post(Set<GateChange> changes) {
             super();
-            changes.addAll(Objects.requireNonNull(changes, "Set of changes is required to be non-null"));
+            this.changes = Objects.requireNonNull(changes, "Set of changes is required to be non-null");
         }
 
         public Post failIfExists(boolean failIfExists) {
