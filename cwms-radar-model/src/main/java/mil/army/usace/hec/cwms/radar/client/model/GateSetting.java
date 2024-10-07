@@ -2,14 +2,20 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.Objects;
 
 /**
  * GateSetting
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-09-13T14:48:14.242374800-07:00[America/Los_Angeles]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
+        date = "2024-09-13T14:48:14.242374800-07:00[America/Los_Angeles]")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+@JsonSubTypes({@JsonSubTypes.Type(value = GateChange.class, name = "gate-change")})
+@JsonTypeName("gate-setting")
 public class GateSetting {
 
     @JsonProperty("location-id")
@@ -26,6 +32,9 @@ public class GateSetting {
 
     @JsonProperty("invert-elevation")
     private Double invertElevation = null;
+
+    @JsonProperty("type")
+    protected String type = null;
 
     public GateSetting locationId(CwmsId locationId) {
         this.locationId = locationId;
@@ -92,6 +101,14 @@ public class GateSetting {
         this.invertElevation = invertElevation;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,16 +119,25 @@ public class GateSetting {
         } 
         GateSetting gateSetting = (GateSetting) o;
         return Objects.equals(this.locationId, gateSetting.locationId)
-         && Objects.equals(this.opening, gateSetting.opening)
-         && this.openingParameter == null || gateSetting.openingParameter == null?Objects.equals(this.openingParameter, gateSetting.openingParameter):this.openingParameter.equalsIgnoreCase(gateSetting.openingParameter)
-         && this.openingUnits == null || gateSetting.openingUnits == null?Objects.equals(this.openingUnits, gateSetting.openingUnits):this.openingUnits.equalsIgnoreCase(gateSetting.openingUnits)
-         && Objects.equals(this.invertElevation, gateSetting.invertElevation)
+            && Objects.equals(this.opening, gateSetting.opening)
+            && this.openingParameter == null || gateSetting.openingParameter == null
+                ? Objects.equals(this.openingParameter, gateSetting.openingParameter)
+                : this.openingParameter.equalsIgnoreCase(gateSetting.openingParameter)
+            && this.openingUnits == null || gateSetting.openingUnits == null
+                ? Objects.equals(this.openingUnits, gateSetting.openingUnits)
+                : this.openingUnits.equalsIgnoreCase(gateSetting.openingUnits)
+            && Objects.equals(this.invertElevation, gateSetting.invertElevation)
+            && this.type == null || gateSetting.type == null
+                ? Objects.equals(this.type, gateSetting.type)
+                : this.type.equalsIgnoreCase(gateSetting.type)
         ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locationId, opening, openingParameter==null?0:openingParameter.toLowerCase(), openingUnits==null?0:openingUnits.toLowerCase(), invertElevation);
+        return Objects.hash(locationId, opening, openingParameter == null
+                ? 0 : openingParameter.toLowerCase(), openingUnits == null
+                ? 0 : openingUnits.toLowerCase(), invertElevation);
     }
 
     @Override
@@ -124,6 +150,7 @@ public class GateSetting {
         sb.append("    openingParameter: ").append(toIndentedString(openingParameter)).append("\n");
         sb.append("    openingUnits: ").append(toIndentedString(openingUnits)).append("\n");
         sb.append("    invertElevation: ").append(toIndentedString(invertElevation)).append("\n");
+        sb.append("    type: ").append(toIndentedString(type)).append("\n");
         sb.append("}");
         return sb.toString();
     }

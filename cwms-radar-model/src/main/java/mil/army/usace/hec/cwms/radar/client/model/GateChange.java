@@ -2,8 +2,9 @@ package mil.army.usace.hec.cwms.radar.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.validation.Valid;
-
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,11 @@ import java.util.Objects;
  * GateChange
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-09-13T14:48:14.242374800-07:00[America/Los_Angeles]")
-public class GateChange {
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
+        date = "2024-10-07T08:49:56.962587500-07:00[America/Los_Angeles]")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+@JsonTypeName("gate-change")
+public class GateChange extends GateSetting {
 
     @JsonProperty("project-id")
     private CwmsId projectId = null;
@@ -39,6 +43,9 @@ public class GateChange {
 
     @JsonProperty("notes")
     private String notes = null;
+
+    @JsonProperty("type")
+    protected String type = "gate-change";
 
     @JsonProperty("new-total-discharge-override")
     private Double newTotalDischargeOverride = null;
@@ -234,9 +241,9 @@ public class GateChange {
     }
 
     public GateChange addSettingsItem(GateSetting settingsItem) {
-            if (this.settings == null) {
+        if (this.settings == null) {
             this.settings = new ArrayList<>();
-            }
+        }
         this.settings.add(settingsItem);
         return this;
     }
@@ -250,41 +257,62 @@ public class GateChange {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
-        } 
+        }
         GateChange gateChange = (GateChange) o;
         return Objects.equals(this.projectId, gateChange.projectId)
-         && Objects.equals(this.changeDate, gateChange.changeDate)
-         && Objects.equals(this.referenceElevation, gateChange.referenceElevation)
-         && Objects.equals(this.poolElevation, gateChange.poolElevation)
-         && Objects.equals(this._protected, gateChange._protected)
-         && Objects.equals(this.dischargeComputationType, gateChange.dischargeComputationType)
-         && Objects.equals(this.reasonType, gateChange.reasonType)
-         && this.notes == null || gateChange.notes == null?Objects.equals(this.notes, gateChange.notes):this.notes.equalsIgnoreCase(gateChange.notes)
-         && Objects.equals(this.newTotalDischargeOverride, gateChange.newTotalDischargeOverride)
-         && Objects.equals(this.oldTotalDischargeOverride, gateChange.oldTotalDischargeOverride)
-         && this.dischargeUnits == null || gateChange.dischargeUnits == null?Objects.equals(this.dischargeUnits, gateChange.dischargeUnits):this.dischargeUnits.equalsIgnoreCase(gateChange.dischargeUnits)
-         && Objects.equals(this.tailwaterElevation, gateChange.tailwaterElevation)
-         && this.elevationUnits == null || gateChange.elevationUnits == null?Objects.equals(this.elevationUnits, gateChange.elevationUnits):this.elevationUnits.equalsIgnoreCase(gateChange.elevationUnits)
-         && Objects.equals(this.settings, gateChange.settings)
-        ;
+                && Objects.equals(this.changeDate, gateChange.changeDate)
+                && Objects.equals(this.referenceElevation, gateChange.referenceElevation)
+                && Objects.equals(this.poolElevation, gateChange.poolElevation)
+                && Objects.equals(this._protected, gateChange._protected)
+                && Objects.equals(this.dischargeComputationType, gateChange.dischargeComputationType)
+                && Objects.equals(this.reasonType, gateChange.reasonType)
+                && this.notes == null || gateChange.notes == null ? Objects.equals(this.notes, gateChange.notes)
+                : this.notes.equalsIgnoreCase(gateChange.notes)
+                && Objects.equals(this.newTotalDischargeOverride, gateChange.newTotalDischargeOverride)
+                && Objects.equals(this.oldTotalDischargeOverride, gateChange.oldTotalDischargeOverride)
+                && this.dischargeUnits == null || gateChange.dischargeUnits == null
+                ? Objects.equals(this.dischargeUnits, gateChange.dischargeUnits)
+                : this.dischargeUnits.equalsIgnoreCase(gateChange.dischargeUnits)
+                && Objects.equals(this.tailwaterElevation, gateChange.tailwaterElevation)
+                && this.elevationUnits == null || gateChange.elevationUnits == null
+                ? Objects.equals(this.elevationUnits, gateChange.elevationUnits)
+                : this.elevationUnits.equalsIgnoreCase(gateChange.elevationUnits)
+                && Objects.equals(this.settings, gateChange.settings)
+                && this.type == null || gateChange.type == null
+                ? Objects.equals(this.type, gateChange.type)
+                : this.type.equalsIgnoreCase(gateChange.type)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectId, changeDate, referenceElevation, poolElevation, _protected, dischargeComputationType, reasonType, notes==null?0:notes.toLowerCase(), newTotalDischargeOverride, oldTotalDischargeOverride, dischargeUnits==null?0:dischargeUnits.toLowerCase(), tailwaterElevation, elevationUnits==null?0:elevationUnits.toLowerCase(), settings);
+        return Objects.hash(projectId, changeDate, referenceElevation, poolElevation, _protected,
+                dischargeComputationType, reasonType, notes == null ? 0 : notes.toLowerCase(), newTotalDischargeOverride,
+                oldTotalDischargeOverride, dischargeUnits == null ? 0 : dischargeUnits.toLowerCase(), tailwaterElevation,
+                elevationUnits == null ? 0 : elevationUnits.toLowerCase(), settings, type == null ? 0 : type.toLowerCase());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class GateChange {\n");
-        
+
         sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
         sb.append("    changeDate: ").append(toIndentedString(changeDate)).append("\n");
         sb.append("    referenceElevation: ").append(toIndentedString(referenceElevation)).append("\n");
@@ -299,6 +327,7 @@ public class GateChange {
         sb.append("    tailwaterElevation: ").append(toIndentedString(tailwaterElevation)).append("\n");
         sb.append("    elevationUnits: ").append(toIndentedString(elevationUnits)).append("\n");
         sb.append("    settings: ").append(toIndentedString(settings)).append("\n");
+        sb.append("    type: ").append(toIndentedString(type)).append("\n");
         sb.append("}");
         return sb.toString();
     }

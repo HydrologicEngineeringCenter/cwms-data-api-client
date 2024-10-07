@@ -7,17 +7,16 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static java.lang.String.format;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.GateChange;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
-
 import java.io.IOException;
 import java.util.Set;
 
+import static java.lang.String.format;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
@@ -29,7 +28,7 @@ public class GateChangeController {
             throws IOException {
         String endpoint = format(GATE_CHANGE_PATH, input.officeId(), input.projectId());
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .addQueryParameter(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -42,7 +41,7 @@ public class GateChangeController {
             throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.gateChanges());
         new HttpRequestBuilderImpl(apiConnectionInfo, GATE_CHANGE_CREATE_PATH)
-                .addQueryParameter(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
