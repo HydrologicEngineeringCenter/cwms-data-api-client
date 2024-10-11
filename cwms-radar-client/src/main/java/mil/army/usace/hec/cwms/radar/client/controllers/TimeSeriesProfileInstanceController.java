@@ -14,11 +14,12 @@ import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileInstance;
 
 
 public final class TimeSeriesProfileInstanceController {
-    private static final String TIME_SERIES_PROFILE_INSTANCE = "timeseries/instance/";
+    private static final String TIME_SERIES_PROFILE_INSTANCE = "timeseries/profile-instance/";
 
     public TimeSeriesProfileInstance retrieveTimeSeriesProfileInstance(ApiConnectionInfo apiConnectionInfo,
             TimeSeriesProfileInstanceEndpointInput.GetOne input) throws IOException {
-        String endpoint = TIME_SERIES_PROFILE_INSTANCE + input.timeseriesId();
+        String endpoint = TIME_SERIES_PROFILE_INSTANCE + input.locationId() + "/" + input.parameterId()
+                + "/" + input.version();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -56,7 +57,8 @@ public final class TimeSeriesProfileInstanceController {
 
     public void deleteTimeSeriesProfileInstance(ApiConnectionInfo apiConnectionInfo, TimeSeriesProfileInstanceEndpointInput.Delete input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE_INSTANCE + input.timeseriesId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE_INSTANCE + input.locationId()
+                + "/" + input.parameterId() + "/" + input.version())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

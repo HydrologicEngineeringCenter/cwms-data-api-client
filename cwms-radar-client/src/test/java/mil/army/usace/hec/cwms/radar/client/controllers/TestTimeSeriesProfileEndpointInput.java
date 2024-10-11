@@ -39,7 +39,7 @@ final class TestTimeSeriesProfileEndpointInput {
         String parameter = "PAR";
         GetOne input = TimeSeriesProfileEndpointInput.getOne(office, location, parameter);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(location, mockHttpRequestBuilder.getQueryParameter(GetOne.LOCATION_ID_QUERY_PARAMETER));
+        assertEquals(location, input.locationId());
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetOne.OFFICE_ID_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -68,7 +68,7 @@ final class TestTimeSeriesProfileEndpointInput {
         String parameter = "PAR";
         Delete input = TimeSeriesProfileEndpointInput.delete(office, location, parameter);
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals(location, mockHttpRequestBuilder.getQueryParameter(Delete.LOCATION_ID_QUERY_PARAMETER));
+        assertEquals(location, input.locationId());
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(Delete.OFFICE_QUERY_PARAMETER));
         assertEquals(parameter, input.parameterId());
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
