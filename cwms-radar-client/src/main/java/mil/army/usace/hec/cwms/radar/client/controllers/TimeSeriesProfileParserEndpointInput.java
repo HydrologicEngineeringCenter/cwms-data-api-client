@@ -69,7 +69,6 @@ public class TimeSeriesProfileParserEndpointInput {
 
     public static final class GetOne extends EndpointInput {
         public static final String OFFICE_QUERY_PARAMETER = "office";
-        public static final String LOCATION_ID_QUERY_PARAMETER = "location-id";
         private final String officeId;
         private final String locationId;
         private final String parameterId;
@@ -80,6 +79,10 @@ public class TimeSeriesProfileParserEndpointInput {
             this.parameterId = Objects.requireNonNull(parameterId, "Parameter ID cannot be null");
         }
 
+        public String locationId() {
+            return locationId;
+        }
+
         public String parameterId() {
             return parameterId;
         }
@@ -87,7 +90,6 @@ public class TimeSeriesProfileParserEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
@@ -123,7 +125,6 @@ public class TimeSeriesProfileParserEndpointInput {
 
     public static final class Delete extends EndpointInput {
         public static final String OFFICE_QUERY_PARAMETER = "office";
-        public static final String LOCATION_ID_QUERY_PARAMETER = "location-id";
         private final String officeId;
         private final String locationId;
         private final String parameterId;
@@ -138,10 +139,13 @@ public class TimeSeriesProfileParserEndpointInput {
             return parameterId;
         }
 
+        public String locationId() {
+            return locationId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

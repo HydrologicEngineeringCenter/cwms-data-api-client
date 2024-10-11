@@ -38,7 +38,7 @@ public class TimeSeriesProfileEndpointInput {
         public static final String PAGE_QUERY_PARAMETER = "page";
         public static final String PAGE_SIZE_QUERY_PARAMETER = "page-size";
         private String page;
-        private int pageSize;
+        private int pageSize = 500;
         private String officeMask;
         private String locationMask;
         private String parameterMask;
@@ -85,7 +85,6 @@ public class TimeSeriesProfileEndpointInput {
 
     public static final class GetOne extends EndpointInput {
         public static final String OFFICE_ID_QUERY_PARAMETER = "office";
-        public static final String LOCATION_ID_QUERY_PARAMETER = "location-id";
         private final String officeId;
         private final String locationId;
         private final String parameterId;
@@ -100,10 +99,13 @@ public class TimeSeriesProfileEndpointInput {
             return parameterId;
         }
 
+        public String locationId() {
+            return locationId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_ID_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
@@ -135,7 +137,6 @@ public class TimeSeriesProfileEndpointInput {
 
     public static final class Delete extends EndpointInput {
         public static final String OFFICE_QUERY_PARAMETER = "office";
-        public static final String LOCATION_ID_QUERY_PARAMETER = "location-id";
         private final String officeId;
         private final String locationId;
         private final String parameterId;
@@ -150,10 +151,13 @@ public class TimeSeriesProfileEndpointInput {
             return parameterId;
         }
 
+        public String locationId() {
+            return locationId;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                    .addQueryParameter(LOCATION_ID_QUERY_PARAMETER, locationId)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

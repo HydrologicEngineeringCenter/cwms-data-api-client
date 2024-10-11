@@ -14,11 +14,11 @@ import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesProfileParser;
 
 
 public class TimeSeriesProfileParserController {
-    private static final String TIME_SERIES_PROFILE_PARSER = "timeseries/parser/";
+    private static final String TIME_SERIES_PROFILE_PARSER = "timeseries/profile-parser/";
 
     public TimeSeriesProfileParser retrieveTimeSeriesProfileParser(ApiConnectionInfo apiConnectionInfo,
             TimeSeriesProfileParserEndpointInput.GetOne input) throws IOException {
-        String endpoint = TIME_SERIES_PROFILE_PARSER + input.parameterId();
+        String endpoint = TIME_SERIES_PROFILE_PARSER + input.locationId() + "/" + input.parameterId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -57,7 +57,7 @@ public class TimeSeriesProfileParserController {
 
     public void deleteTimeSeriesProfileParser(ApiConnectionInfo apiConnectionInfo, TimeSeriesProfileParserEndpointInput.Delete input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE_PARSER + input.parameterId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE_PARSER + input.locationId() + "/" + input.parameterId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

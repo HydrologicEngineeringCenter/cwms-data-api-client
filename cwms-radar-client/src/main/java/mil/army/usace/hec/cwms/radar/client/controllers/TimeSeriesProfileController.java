@@ -18,7 +18,7 @@ public final class TimeSeriesProfileController {
 
     public TimeSeriesProfile retrieveTimeSeriesProfile(ApiConnectionInfo apiConnectionInfo,
             TimeSeriesProfileEndpointInput.GetOne input) throws IOException {
-        String endpoint = TIME_SERIES_PROFILE + input.parameterId();
+        String endpoint = TIME_SERIES_PROFILE + input.locationId() + "/" + input.parameterId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
@@ -56,7 +56,7 @@ public final class TimeSeriesProfileController {
 
     public void deleteTimeSeriesProfile(ApiConnectionInfo apiConnectionInfo, TimeSeriesProfileEndpointInput.Delete input)
             throws IOException {
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE + input.parameterId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE + input.locationId() + "/" + input.parameterId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .delete()

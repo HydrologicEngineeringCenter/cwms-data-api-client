@@ -62,22 +62,22 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         assertEquals(page, mockHttpRequestBuilder.getQueryParameter(GetOne.PAGE_QUERY_PARAMETER));
         assertEquals(pageSize, Integer.parseInt(mockHttpRequestBuilder.getQueryParameter(GetOne.PAGE_SIZE_QUERY_PARAMETER)));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(GetOne.OFFICE_QUERY_PARAMETER));
-        assertEquals(timeSeriesId, input.timeseriesId());
-        assertEquals(parameter, mockHttpRequestBuilder.getQueryParameter(GetOne.PARAMETER_ID_QUERY_PARAMETER));
-        assertEquals(version, mockHttpRequestBuilder.getQueryParameter(GetOne.VERSION_QUERY_PARAMETER));
+        assertEquals(timeSeriesId, input.locationId());
+        assertEquals(parameter, input.parameterId());
+        assertEquals(version, input.version());
         assertEquals(Boolean.toString(startInclusive), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.START_INCLUSIVE_QUERY_PARAMETER));
         assertEquals(Boolean.toString(endInclusive), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.END_INCLUSIVE_QUERY_PARAMETER));
-        assertEquals(String.valueOf(start.toEpochMilli()), mockHttpRequestBuilder.getQueryParameter(GetOne.START_QUERY_PARAMETER));
-        assertEquals(String.valueOf(end.toEpochMilli()), mockHttpRequestBuilder.getQueryParameter(GetOne.END_QUERY_PARAMETER));
+        assertEquals(start.toString(), mockHttpRequestBuilder.getQueryParameter(GetOne.START_QUERY_PARAMETER));
+        assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(GetOne.END_QUERY_PARAMETER));
         assertEquals(Boolean.toString(next), mockHttpRequestBuilder.getQueryParameter(GetOne.NEXT_QUERY_PARAMETER));
         assertEquals(Boolean.toString(previous), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.PREVIOUS_QUERY_PARAMETER));
         assertEquals(timezone, mockHttpRequestBuilder.getQueryParameter(GetOne.TIMEZONE_QUERY_PARAMETER));
         assertEquals(Boolean.toString(maxVersion), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.MAX_VERSION_QUERY_PARAMETER));
-        assertEquals(String.valueOf(versionDate.toEpochMilli()), mockHttpRequestBuilder
+        assertEquals(versionDate.toString(), mockHttpRequestBuilder
                 .getQueryParameter(GetOne.VERSION_DATE_QUERY_PARAMETER));
         assertEquals(unit.stream().map(Object::toString).reduce((a, b) -> a + "," + b).orElse(""),
                 mockHttpRequestBuilder.getQueryParameter(GetOne.UNIT_QUERY_PARAMETER));
@@ -102,7 +102,7 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         assertEquals(RadarObjectMapper.mapObjectToJson(profile), RadarObjectMapper.mapObjectToJson(input.profile()));
         assertEquals(version, mockHttpRequestBuilder.getQueryParameter(Post.VERSION_QUERY_PARAMETER));
         assertEquals(method, mockHttpRequestBuilder.getQueryParameter(Post.METHOD_QUERY_PARAMETER));
-        assertEquals(String.valueOf(versionDate.toEpochMilli()), mockHttpRequestBuilder.getQueryParameter(Post.VERSION_DATE_QUERY_PARAMETER));
+        assertEquals(String.valueOf(versionDate), mockHttpRequestBuilder.getQueryParameter(Post.VERSION_DATE_QUERY_PARAMETER));
         assertEquals(Boolean.toString(overrideProtection), mockHttpRequestBuilder.getQueryParameter(Post.OVERRIDE_PROTECTION_QUERY_PARAMETER));
     }
 
@@ -111,24 +111,24 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String office = "SPK";
         String version = "1";
-        String timeSeriesId = "SPK.LOC.Temp-Water";
+        String locationId = "LOC";
         String parameter = "Temp-Water";
         boolean overrideProtection = true;
         Instant versionDate = Instant.now();
         Instant date = Instant.now();
         String timezone = "PST";
-        Delete input = TimeSeriesProfileInstanceEndpointInput.delete(office, version, parameter, timeSeriesId)
+        Delete input = TimeSeriesProfileInstanceEndpointInput.delete(office, version, parameter, locationId)
                 .date(date).timezone(timezone).versionDate(versionDate).overrideProtection(overrideProtection);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals(office, mockHttpRequestBuilder.getQueryParameter(Delete.OFFICE_QUERY_PARAMETER));
-        assertEquals(version, mockHttpRequestBuilder.getQueryParameter(Delete.VERSION_QUERY_PARAMETER));
-        assertEquals(timeSeriesId, input.timeseriesId());
-        assertEquals(String.valueOf(date.toEpochMilli()), mockHttpRequestBuilder.getQueryParameter(Delete.DATE_QUERY_PARAMETER));
+        assertEquals(version, input.version());
+        assertEquals(locationId, input.locationId());
+        assertEquals(date.toString(), mockHttpRequestBuilder.getQueryParameter(Delete.DATE_QUERY_PARAMETER));
         assertEquals(timezone, mockHttpRequestBuilder.getQueryParameter(Delete.TIMEZONE_QUERY_PARAMETER));
-        assertEquals(String.valueOf(versionDate.toEpochMilli()), mockHttpRequestBuilder.getQueryParameter(Delete.VERSION_DATE_QUERY_PARAMETER));
+        assertEquals(versionDate.toString(), mockHttpRequestBuilder.getQueryParameter(Delete.VERSION_DATE_QUERY_PARAMETER));
         assertEquals(Boolean.toString(overrideProtection), mockHttpRequestBuilder.getQueryParameter(Delete.OVERRIDE_PROTECTION_QUERY_PARAMETER));
-        assertEquals(parameter, mockHttpRequestBuilder.getQueryParameter(Delete.PARAMETER_ID_QUERY_PARAMETER));
+        assertEquals(parameter, input.parameterId());
     }
 
     @Test
