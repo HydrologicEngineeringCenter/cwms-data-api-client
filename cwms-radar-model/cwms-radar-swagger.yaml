@@ -3214,14 +3214,19 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
+  /cwms-data/timeseries/identifier-descriptor/{name}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Get cwmsData timeseries identifierDescriptor with name
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
         - name: timeseries-id
           in: path
           description: Specifies the identifier of the timeseries to be included in the response.
@@ -3277,10 +3282,15 @@ paths:
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Delete cwmsData timeseries identifierDescriptor with name
       description: Deletes requested timeseries identifier
-      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
         - name: timeseries-id
           in: path
           description: 'The timeseries-id of the timeseries to be deleted. '
@@ -3336,17 +3346,12 @@ paths:
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
-      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Patch cwmsData timeseries identifierDescriptor with name
+      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
-        - name: timeseries-id
+        - name: name
           in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries-id
-          in: query
-          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
+          description: The timeseries id
           required: true
           schema:
             type: string
@@ -3354,6 +3359,11 @@ paths:
           in: query
           description: Specifies the owning office of the timeseries identifier to be updated
           required: true
+          schema:
+            type: string
+        - name: timeseries-id
+          in: query
+          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
           schema:
             type: string
         - name: interval-offset
@@ -14424,9 +14434,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     pools:
       type: object
@@ -14893,6 +14903,8 @@ components:
           $ref: '#/components/schemas/LookupType'
         notes:
           type: string
+        type:
+          type: string
         new-total-discharge-override:
           type: number
           format: double
@@ -14911,6 +14923,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GateSetting'
+      discriminator:
+        propertyName: type
     GateSetting:
       required:
         - invert-elevation
@@ -14918,7 +14932,6 @@ components:
         - opening
         - opening-parameter
         - opening-units
-        - type
       type: object
       properties:
         location-id:
