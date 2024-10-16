@@ -15,7 +15,7 @@ import mil.army.usace.hec.cwms.radar.client.model.WaterSupplyAccounting;
 
 public final class WaterPumpAccountingController {
     private static final String WATER_PUMP_ACCOUNTING_ENDPOINT
-            = "/projects/{office}/{project-id}/water-user/{water-user}/contract/{contract-id}/accounting";
+            = "/projects/{office}/water-user/{water-user}/contract/{contract-name}/accounting";
 
     public List<WaterSupplyAccounting> retrieveWaterPumpAccounting(ApiConnectionInfo apiConnectionInfo,
             WaterPumpAccountingEndpointInput.GetAll input) throws IOException {

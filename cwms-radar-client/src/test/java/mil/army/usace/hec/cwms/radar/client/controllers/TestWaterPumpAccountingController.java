@@ -18,7 +18,7 @@ class TestWaterPumpAccountingController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         WaterPumpAccountingEndpointInput.GetAll input = WaterPumpAccountingEndpointInput
-                .getAll("SWT", "SACREMENTO", "Test User", "TEST_CONTRACT");
+                .getAll("SWT", "SACRAMENTO", "Test User", "TEST_CONTRACT");
         List<WaterSupplyAccounting> values = new WaterPumpAccountingController()
                 .retrieveWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
