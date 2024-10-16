@@ -1,14 +1,14 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.time.Instant;
+import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.WaterSupplyAccounting;
 
-import java.time.Instant;
-import java.util.Objects;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 
 public final class WaterPumpAccountingEndpointInput {
     private WaterPumpAccountingEndpointInput() {
@@ -26,8 +26,8 @@ public final class WaterPumpAccountingEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String START_TIME_QUERY_PARAMETER = "start";
         static final String END_TIME_QUERY_PARAMETER = "end";
-        static final String START_INCLUSIVE_QUERY_PARAMETER = "start-inclusive";
-        static final String END_INCLUSIVE_QUERY_PARAMETER = "end-inclusive";
+        static final String START_INCLUSIVE_QUERY_PARAMETER = "start-time-inclusive";
+        static final String END_INCLUSIVE_QUERY_PARAMETER = "end-time-inclusive";
         static final String ASCENDING_QUERY_PARAMETER = "ascending";
         static final String ROW_LIMIT_QUERY_PARAMETER = "row-limit";
         private final String waterUserId;
@@ -138,8 +138,8 @@ public final class WaterPumpAccountingEndpointInput {
         private final WaterSupplyAccounting waterSupplyAccounting;
 
         private Post(WaterSupplyAccounting waterSupplyAccounting) {
-            this.waterSupplyAccounting = Objects.requireNonNull(waterSupplyAccounting, "Cannot access the" +
-                    " water supply accounting POST endpoint without providing water supply accounting");
+            this.waterSupplyAccounting = Objects.requireNonNull(waterSupplyAccounting, "Cannot access the"
+                + " water supply accounting POST endpoint without providing water supply accounting");
         }
 
         WaterSupplyAccounting getWaterSupplyAccounting() {
