@@ -2971,253 +2971,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security: []
-  /cwms-data/timeseries/parser/{parameter-id}:
-    get:
-      tags:
-        - TimeSeries
-      summary: Get a TimeSeriesProfileParser by ID
-      operationId: getCwmsDataTimeseriesParserWithParameterId
-      parameters:
-        - name: parameter-id
-          in: path
-          description: The ID of the TimeSeriesProfileParser
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: The office associated with the TimeSeriesProfile
-          required: true
-          schema:
-            type: string
-        - name: location-id
-          in: query
-          description: The location ID associated with the TimeSeriesProfile
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: A TimeSeriesProfileParser object
-          content:
-            application/json;version=1:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesProfileParser'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security: []
-    delete:
-      tags:
-        - TimeSeries
-      summary: Delete a TimeSeriesProfileParser by ID
-      operationId: deleteCwmsDataTimeseriesParserWithParameterId
-      parameters:
-        - name: parameter-id
-          in: path
-          description: The parameter ID of the TimeSeriesProfileParser parameter
-          required: true
-          schema:
-            type: string
-        - name: office
-          in: query
-          description: The office associated with the TimeSeriesProfile
-          required: true
-          schema:
-            type: string
-        - name: location-id
-          in: query
-          description: The location ID associated with the TimeSeriesProfile
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: The TimeSeriesProfileParser was successfully deleted
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided ID did not find a TimeSeriesProfileParser object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-  /cwms-data/timeseries/parser:
-    get:
-      tags:
-        - TimeSeries
-      summary: Get a TimeSeriesProfileParser by ID
-      operationId: getCwmsDataTimeseriesParser
-      parameters:
-        - name: parameter-id-mask
-          in: query
-          description: The ID mask of the TimeSeriesProfileParser parameter. Default is *
-          schema:
-            type: string
-        - name: office-mask
-          in: query
-          description: The office mask associated with the TimeSeriesProfile. Default is *
-          schema:
-            type: string
-        - name: location-mask
-          in: query
-          description: The location ID mask associated with the TimeSeriesProfile. Default is *
-          schema:
-            type: string
-      responses:
-        '200':
-          description: A TimeSeriesProfileParser object
-          content:
-            application/json;version=1:
-              schema:
-                $ref: '#/components/schemas/TimeSeriesProfileParsers'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
-      security: []
-    post:
-      tags:
-        - TimeSeries
-      summary: Parse TimeSeriesProfileData into a new Time Series Profile
-      operationId: postCwmsDataTimeseriesParser
-      parameters:
-        - name: fail-if-exists
-          in: query
-          description: If true, the parser will fail to save if the TimeSeriesProfileParser already exists
-          schema:
-            type: boolean
-      requestBody:
-        content:
-          application/json;version=1:
-            schema:
-              $ref: '#/components/schemas/TimeSeriesProfileParserColumnar'
-        required: true
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-        '500':
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
-  /cwms-data/timeseries/profile/{parameter-id}:
+  /cwms-data/timeseries/profile/{location-id}/{parameter-id}:
     get:
       tags:
         - TimeSeries
       summary: Get a time series profile
-      operationId: getCwmsDataTimeseriesProfileWithParameterId
+      operationId: getCwmsDataTimeseriesProfileWithLocationIdWithParameterId
       parameters:
+        - name: location-id
+          in: path
+          description: The location ID associated with the time series profile
+          required: true
+          schema:
+            type: string
         - name: parameter-id
           in: path
           description: The key parameter ID associated with the time series profile
@@ -3229,11 +2995,6 @@ paths:
           description: The office ID associated with the time series profile
           schema:
             type: string
-        - name: location-id
-          in: query
-          description: The location ID associated with the time series profile
-          schema:
-            type: string
       responses:
         '200':
           description: A TimeSeriesProfileParser object
@@ -3241,7 +3002,7 @@ paths:
             application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfile'
-            application/xml;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfile'
         '400':
@@ -3263,7 +3024,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: Not Found
+          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
           content:
             application/json:
               schema:
@@ -3274,13 +3035,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
       security: []
     delete:
       tags:
         - TimeSeries
       summary: Update a time series profile
-      operationId: deleteCwmsDataTimeseriesProfileWithParameterId
+      operationId: deleteCwmsDataTimeseriesProfileWithLocationIdWithParameterId
       parameters:
+        - name: location-id
+          in: path
+          description: The location ID associated with the time series profile
+          required: true
+          schema:
+            type: string
         - name: parameter-id
           in: path
           description: The key parameter associated with the time series profile
@@ -3290,11 +3059,6 @@ paths:
         - name: office
           in: query
           description: The office associated with the time series profile
-          schema:
-            type: string
-        - name: location-id
-          in: query
-          description: The location ID associated with the time series profile
           schema:
             type: string
       responses:
@@ -3364,7 +3128,7 @@ paths:
             type: string
         - name: page-size
           in: query
-          description: The page size. Default is 1000
+          description: The page size. Default is 500
           schema:
             type: string
       responses:
@@ -3374,7 +3138,7 @@ paths:
             application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileList'
-            application/xml;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileList'
         '400':
@@ -3407,12 +3171,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
       security: []
     post:
       tags:
         - TimeSeries
-      summary: Create a new time series profile
-      operationId: postCwmsDataTimeseriesProfile
+      summary: Parse TimeSeriesProfileData into a new Time Series Profile
+      operationId: postCwmsDataTimeseriesParser
       parameters:
         - name: fail-if-exists
           in: query
@@ -3458,16 +3224,281 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/instance/{timeseries-id}:
+  /cwms-data/timeseries/profile-parser/{location-id}/{parameter-id}:
     get:
       tags:
         - TimeSeries
-      summary: Get all time series profile instances
-      operationId: getCwmsDataTimeseriesInstanceWithTimeseriesId
+      summary: Get a TimeSeriesProfileParser by ID
+      operationId: getCwmsDataTimeseriesProfileParserWithLocationIdWithParameterId
       parameters:
-        - name: timeseries-id
+        - name: location-id
           in: path
-          description: The time series ID of the time series profile instance.
+          description: The location ID associated with the TimeSeriesProfile
+          required: true
+          schema:
+            type: string
+        - name: parameter-id
+          in: path
+          description: The ID of the TimeSeriesProfileParser
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: The office associated with the TimeSeriesProfile
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A TimeSeriesProfileParser object
+          content:
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesProfileParser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesProfileParser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    delete:
+      tags:
+        - TimeSeries
+      summary: Delete a TimeSeriesProfileParser by ID
+      operationId: deleteCwmsDataTimeseriesProfileParserWithLocationIdWithParameterId
+      parameters:
+        - name: location-id
+          in: path
+          description: The location ID associated with the TimeSeriesProfile
+          required: true
+          schema:
+            type: string
+        - name: parameter-id
+          in: path
+          description: The parameter ID of the TimeSeriesProfileParser parameter
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: The office associated with the TimeSeriesProfile
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: The TimeSeriesProfileParser was successfully deleted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided ID did not find a TimeSeriesProfileParser object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/timeseries/profile-parser:
+    get:
+      tags:
+        - TimeSeries
+      summary: Get a TimeSeriesProfileParser by ID
+      operationId: getCwmsDataTimeseriesProfileParser
+      parameters:
+        - name: parameter-id-mask
+          in: query
+          description: The ID mask of the TimeSeriesProfileParser parameter. Default is *
+          schema:
+            type: string
+        - name: office-mask
+          in: query
+          description: The office mask associated with the TimeSeriesProfile. Default is *
+          schema:
+            type: string
+        - name: location-mask
+          in: query
+          description: The location ID mask associated with the TimeSeriesProfile. Default is *
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A TimeSeriesProfileParser object
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeSeriesProfileParser'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeSeriesProfileParser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    post:
+      tags:
+        - TimeSeries
+      summary: Parse TimeSeriesProfileData into a new Time Series Profile
+      operationId: postCwmsDataTimeseriesProfileParser
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: If true, the parser will fail to save if the TimeSeriesProfileParser already exists
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesProfileParserIndexed'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesProfileParserColumnar'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/timeseries/profile-instance/{location-id}/{parameter-id}/{version}:
+    get:
+      tags:
+        - TimeSeries
+      summary: Get all time series profile instances that match the provided masks. This endpoint will return a list of time series profile instances without the associated data. Data for an instance can be retrieved using the singular retrieval endpoint.
+      operationId: getCwmsDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
+      parameters:
+        - name: location-id
+          in: path
+          description: The location ID of the time series profile instance.
+          required: true
+          schema:
+            type: string
+        - name: parameter-id
+          in: path
+          description: The key parameter of the time series profile instance.
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          description: The version of the time series profile instance.
           required: true
           schema:
             type: string
@@ -3477,58 +3508,46 @@ paths:
           required: true
           schema:
             type: string
-        - name: parameter-id
-          in: query
-          description: The key parameter of the time series profile instance.
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: query
-          description: The version of the time series profile instance.
-          required: true
-          schema:
-            type: string
         - name: timezone
           in: query
-          description: The timezone of the time series profile instance. Default is UTC
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
         - name: version-date
           in: query
-          description: The version date of the time series profile instance. Default is current time
+          description: The version date of the time series profile instance. Default is the min or max version date, depending on the maxVersion
           schema:
             type: string
             format: date-time
         - name: unit
           in: query
-          description: The units of the time series profile instance.
+          description: The units of the time series profile instance. Provided as a list separated by ','
           required: true
           schema:
-            type: array
-        - name: start-inclusive
+            type: string
+        - name: start-time-inclusive
           in: query
           description: The start inclusive of the time series profile instance. Default is true
           schema:
             type: boolean
-        - name: end-inclusive
+        - name: end-time-inclusive
           in: query
           description: The end inclusive of the time series profile instance. Default is true
           schema:
             type: boolean
         - name: previous
           in: query
-          description: The previous of the time series profile instance. Default is false
+          description: Whether to include the previous  time window of the time series profile instance. Default is false
           schema:
             type: boolean
         - name: next
           in: query
-          description: The next of the time series profile instance. Default is false
+          description: Whether to include the next time window of the time series profile instance. Default is false
           schema:
             type: boolean
         - name: max-version
           in: query
-          description: Whether the provided version is the max version of the time series profile instance. Default is false
+          description: Whether to use the max version date of the time series profile instance. Default is false. If no version date is provided, and maxVersion is false, the min version date will be used.
           schema:
             type: boolean
         - name: start
@@ -3561,7 +3580,7 @@ paths:
             application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
-            application/xml;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
         '400':
@@ -3599,11 +3618,23 @@ paths:
       tags:
         - TimeSeries
       summary: Get all time series profile instances
-      operationId: deleteCwmsDataTimeseriesInstanceWithTimeseriesId
+      operationId: deleteCwmsDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
       parameters:
-        - name: timeseries-id
+        - name: location-id
           in: path
-          description: The time series ID of the time series profile instance. Default is null
+          description: The location ID of the time series profile instance.
+          required: true
+          schema:
+            type: string
+        - name: parameter-id
+          in: path
+          description: The key parameter of the time series profile instance.
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          description: The version of the time series profile instance.
           required: true
           schema:
             type: string
@@ -3613,35 +3644,25 @@ paths:
           required: true
           schema:
             type: string
-        - name: version
-          in: query
-          description: The version of the time series profile instance.
-          required: true
-          schema:
-            type: string
         - name: timezone
           in: query
-          description: The timezone of the time series profile instance. Default is UTC
+          description: Specifies the time zone of the values of the begin and end fields. If this field is not specified, the default time zone of UTC shall be used.
           schema:
             type: string
         - name: version-date
           in: query
-          description: The version date of the time series profile instance. Default is current time
+          description: The version date of the time series profile instance.
+          required: true
           schema:
             type: string
             format: date-time
         - name: date
           in: query
-          description: The first date of the time series profile instance. Default is current time
-          schema:
-            type: string
-            format: date-time
-        - name: parameter-id
-          in: query
-          description: The key parameter of the time series profile instance.
+          description: The first date of the time series profile instance.
           required: true
           schema:
             type: string
+            format: date-time
         - name: override-protection
           in: query
           description: Override protection for the time series profile instance. Default is true
@@ -3681,12 +3702,12 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/instance:
+  /cwms-data/timeseries/profile-instance:
     get:
       tags:
         - TimeSeries
-      summary: Get all time series profile instances
-      operationId: getCwmsDataTimeseriesInstance
+      summary: Get all time series profile instances. Masks can be provided to filter the results.
+      operationId: getCwmsDataTimeseriesProfileInstance
       parameters:
         - name: office-mask
           in: query
@@ -3715,7 +3736,7 @@ paths:
             application/json;version=1:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
-            application/xml;version=2:
+            application/json:
               schema:
                 $ref: '#/components/schemas/TimeSeriesProfileInstance'
         '400':
@@ -3753,7 +3774,7 @@ paths:
       tags:
         - TimeSeries
       summary: Create a new time series profile instance
-      operationId: postCwmsDataTimeseriesInstance
+      operationId: postCwmsDataTimeseriesProfileInstance
       parameters:
         - name: method
           in: query
@@ -3767,7 +3788,8 @@ paths:
             type: boolean
         - name: version-date
           in: query
-          description: The version date of the time series profile instance. Default is the current date and time
+          description: The version date of the time series profile instance.
+          required: true
           schema:
             type: integer
             format: int64
@@ -14610,120 +14632,6 @@ components:
           description: Owning office of object.
         name:
           type: string
-    ParameterInfo:
-      required:
-        - type
-      type: object
-      properties:
-        parameter:
-          type: string
-        unit:
-          type: string
-        parameter-info-string:
-          type: string
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    ParameterInfoColumnar:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/ParameterInfo'
-        - type: object
-          properties:
-            start-column:
-              type: integer
-              format: int32
-            end-column:
-              type: integer
-              format: int32
-    ParameterInfoIndexed:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/ParameterInfo'
-        - type: object
-          properties:
-            index:
-              type: integer
-              format: int32
-    TimeSeriesProfileParser:
-      required:
-        - type
-      type: object
-      properties:
-        location-id:
-          $ref: '#/components/schemas/CwmsId'
-        key-parameter:
-          type: string
-        record-delimiter:
-          type: string
-        time-format:
-          type: string
-        time-zone:
-          type: string
-        parameter-info-list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ParameterInfo'
-        time-in-two-fields:
-          type: boolean
-        type:
-          type: string
-      discriminator:
-        propertyName: type
-    TimeSeriesProfileParserColumnar:
-      type: object
-      properties:
-        location-id:
-          $ref: '#/components/schemas/CwmsId'
-        key-parameter:
-          type: string
-        record-delimiter:
-          type: string
-        time-format:
-          type: string
-        time-zone:
-          type: string
-        parameter-info-list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ParameterInfo'
-        time-in-two-fields:
-          type: boolean
-        time-start-column:
-          type: integer
-        time-end-column:
-          type: integer
-    TimeSeriesProfileParserIndexed:
-      type: object
-      properties:
-        location-id:
-          $ref: '#/components/schemas/CwmsId'
-        key-parameter:
-          type: string
-        record-delimiter:
-          type: string
-        time-format:
-          type: string
-        time-zone:
-          type: string
-        parameter-info-list:
-          type: array
-          items:
-            $ref: '#/components/schemas/ParameterInfo'
-        time-in-two-fields:
-          type: boolean
-        field-delimiter:
-          type: string
-        time-field:
-          type: integer
-    TimeSeriesProfileParsers:
-      type: object
-      properties:
-        parsers:
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeSeriesProfileParser'
     TimeSeriesProfile:
       type: object
       properties:
@@ -14768,6 +14676,91 @@ components:
           description: The total number of records retrieved; null or not present if not supported or unknown
           format: int32
           readOnly: true
+    ParameterInfo:
+      required:
+        - type
+      type: object
+      properties:
+        parameter:
+          type: string
+        unit:
+          type: string
+        parameter-info-string:
+          type: string
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ParameterInfoColumnar:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ParameterInfo'
+        - type: object
+          properties:
+            start-column:
+              type: integer
+              format: int32
+            end-column:
+              type: integer
+              format: int32
+    ParameterInfoIndexed:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ParameterInfo'
+        - type: object
+          properties:
+            index:
+              type: integer
+              format: int32
+    TimeSeriesProfileParser:
+      type: object
+      properties:
+        location-id:
+          $ref: '#/components/schemas/CwmsId'
+        key-parameter:
+          type: string
+        record-delimiter:
+          type: string
+        time-format:
+          type: string
+        time-zone:
+          type: string
+        parameter-info-list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterInfo'
+        time-in-two-fields:
+          type: boolean
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    TimeSeriesProfileParserColumnar:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TimeSeriesProfileParser'
+        - type: object
+          properties:
+            time-start-column:
+              type: integer
+              format: int32
+            time-end-column:
+              type: integer
+              format: int32
+    TimeSeriesProfileParserIndexed:
+      required:
+        - field-delimiter
+        - time-field
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TimeSeriesProfileParser'
+        - type: object
+          properties:
+            field-delimiter:
+              type: string
+            time-field:
+              type: integer
+              format: int64
     DataColumnInfo:
       type: object
       properties:
