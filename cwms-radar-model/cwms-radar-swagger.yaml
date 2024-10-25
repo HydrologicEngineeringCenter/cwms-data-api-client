@@ -3214,19 +3214,14 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/identifier-descriptor/{name}:
+  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor with name
+      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithName
+      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
         - name: timeseries-id
           in: path
           description: Specifies the identifier of the timeseries to be included in the response.
@@ -3282,15 +3277,10 @@ paths:
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete cwmsData timeseries identifierDescriptor with name
+      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
       description: Deletes requested timeseries identifier
-      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithName
+      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
         - name: timeseries-id
           in: path
           description: 'The timeseries-id of the timeseries to be deleted. '
@@ -3346,12 +3336,17 @@ paths:
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch cwmsData timeseries identifierDescriptor with name
-      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithName
+      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
+      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
       parameters:
-        - name: name
+        - name: timeseries-id
           in: path
-          description: The timeseries id
+          required: true
+          schema:
+            type: string
+        - name: timeseries-id
+          in: query
+          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
           required: true
           schema:
             type: string
@@ -3359,11 +3354,6 @@ paths:
           in: query
           description: Specifies the owning office of the timeseries identifier to be updated
           required: true
-          schema:
-            type: string
-        - name: timeseries-id
-          in: query
-          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
           schema:
             type: string
         - name: interval-offset
@@ -8527,9 +8517,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     delete:
       tags:
         - Water Contracts
@@ -8726,9 +8714,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     post:
       tags:
         - Water Contracts
@@ -8869,9 +8855,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented.
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     delete:
       tags:
         - Water Contracts
@@ -9307,9 +9291,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented.
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     post:
       tags:
         - Water Contracts
@@ -9996,6 +9978,327 @@ paths:
       responses:
         '204':
           description: Turbine successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/projects/locks/{name}:
+    get:
+      tags:
+        - Locks
+      summary: Get cwmsData projects locks with name
+      description: Returns CWMS Lock Data
+      operationId: getCwmsDataProjectsLocksWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the lock to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the lock to be retrieved.
+          required: true
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: |-
+            Specifies the unit system to be used in the response. Valid values are: 
+            * `SI` - Metric units. 
+            * `EN` - Imperial units. 
+            Defaults to SI.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lock'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lock'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    delete:
+      tags:
+        - Locks
+      summary: Delete cwmsData projects locks with name
+      description: Delete CWMS Lock
+      operationId: deleteCwmsDataProjectsLocksWithName
+      parameters:
+        - name: name
+          in: path
+          description: Specifies the name of the lock to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the lock to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: method
+          in: query
+          description: Specifies the delete method used. Defaults to "DELETE_KEY"
+          schema:
+            $ref: '#/components/schemas/DeleteMethod'
+      responses:
+        '204':
+          description: Lock successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Based on the combination of inputs provided the lock was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+    patch:
+      tags:
+        - Locks
+      summary: Patch cwmsData projects locks with name
+      description: Rename CWMS Lock
+      operationId: patchCwmsDataProjectsLocksWithName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Specifies the new lock name.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the lock to be renamed.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Lock successfully renamed in CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/projects/locks:
+    get:
+      tags:
+        - Locks
+      summary: Get cwmsData projects locks
+      description: Returns matching CWMS Lock Data for a Reservoir Project.
+      operationId: getCwmsDataProjectsLocks
+      parameters:
+        - name: office
+          in: query
+          description: Office id for the reservoir project location associated with the locks.
+          schema:
+            type: string
+        - name: project-id
+          in: query
+          description: Specifies the project-id of the Locks whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: |-
+            Specifies the unit system to be used in the response. Valid values are: 
+            * `SI` - Metric units. 
+            * `EN` - Imperial units. 
+            Defaults to SI.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lock'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lock'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Locks
+      summary: Post cwmsData projects locks
+      description: Create CWMS Lock
+      operationId: postCwmsDataProjectsLocks
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/Lock'
+        required: true
+      responses:
+        '204':
+          description: Lock successfully stored to CWMS.
         '400':
           description: Bad Request
           content:
@@ -11493,9 +11796,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     delete:
       tags:
         - Properties
@@ -11673,9 +11974,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     post:
       tags:
         - Properties
@@ -12047,9 +12346,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     delete:
       tags:
         - Project Locks
@@ -12170,9 +12467,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
     post:
       tags:
         - Project Locks
@@ -12403,9 +12698,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security:
-        - CwmsAAACacAuth: []
-        - ApiKey: []
+      security: []
   /cwms-data/project-lock-rights/remove-all:
     post:
       tags:
@@ -13537,8 +13830,10 @@ components:
           type: integer
           format: int32
         binary-value:
-          type: string
-          format: byte
+          type: array
+          items:
+            type: string
+            format: byte
         value-url:
           type: string
         quality-code:
@@ -14275,8 +14570,10 @@ components:
         media-type-id:
           type: string
         value:
-          type: string
-          format: byte
+          type: array
+          items:
+            type: string
+            format: byte
     blobs:
       type: object
       properties:
@@ -14539,9 +14836,12 @@ components:
           type: string
           description: Forecast File Media Type
         file-data:
-          type: string
+          type: array
           description: Forecast File binary data
-          format: byte
+          items:
+            type: string
+            description: Forecast File binary data
+            format: byte
         file-data-url:
           type: string
           description: Link to Forecast File binary data
@@ -14611,9 +14911,12 @@ components:
           type: string
           description: Forecast File Media Type
         file-data:
-          type: string
+          type: array
           description: Forecast File binary data
-          format: byte
+          items:
+            type: string
+            description: Forecast File binary data
+            format: byte
         file-data-url:
           type: string
           description: Link to Forecast File binary data
@@ -14791,6 +15094,54 @@ components:
           $ref: '#/components/schemas/CwmsId'
         location:
           $ref: '#/components/schemas/Location'
+    Lock:
+      required:
+        - location
+        - project-id
+      type: object
+      properties:
+        project-id:
+          $ref: '#/components/schemas/CwmsId'
+        location:
+          $ref: '#/components/schemas/Location'
+        chamber-type:
+          $ref: '#/components/schemas/LookupType'
+        lock-width:
+          type: number
+          format: double
+        lock-length:
+          type: number
+          format: double
+        normal-lock-lift:
+          type: number
+          format: double
+        maximum-lock-lift:
+          type: number
+          format: double
+        units:
+          type: string
+        volume-units:
+          type: string
+        volume-per-lockage:
+          type: number
+          format: double
+        minimum-draft:
+          type: number
+          format: double
+        high-water-upper-pool-location-level:
+          $ref: '#/components/schemas/LocationLevel'
+        low-water-lower-pool-location-level:
+          $ref: '#/components/schemas/LocationLevel'
+        high-water-lower-pool-location-level:
+          $ref: '#/components/schemas/LocationLevel'
+        low-water-upper-pool-location-level:
+          $ref: '#/components/schemas/LocationLevel'
+        high-water-upper-pool-warning-level:
+          type: integer
+          format: int32
+        high-water-lower-pool-warning-level:
+          type: integer
+          format: int32
     TurbineChange:
       required:
         - change-date
@@ -14903,8 +15254,6 @@ components:
           $ref: '#/components/schemas/LookupType'
         notes:
           type: string
-        type:
-          type: string
         new-total-discharge-override:
           type: number
           format: double
@@ -14923,8 +15272,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GateSetting'
-      discriminator:
-        propertyName: type
     GateSetting:
       required:
         - invert-elevation
@@ -14946,10 +15293,6 @@ components:
         invert-elevation:
           type: number
           format: double
-        type:
-          type: string
-      discriminator:
-        propertyName: type
     VirtualOutlet:
       required:
         - project-id
