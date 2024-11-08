@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
-
 /**
  * Lock
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-10-25T15:11:50.243105800-07:00[America/Los_Angeles]")
-public class Lock {
+        date = "2024-11-08T14:48:35.102974200-08:00[America/Los_Angeles]")
+public final class Lock {
 
     @JsonProperty("project-id")
     private CwmsId projectId = null;
@@ -34,8 +33,8 @@ public class Lock {
     @JsonProperty("maximum-lock-lift")
     private Double maximumLockLift = null;
 
-    @JsonProperty("units")
-    private String units = null;
+    @JsonProperty("length-units")
+    private String lengthUnits = null;
 
     @JsonProperty("volume-units")
     private String volumeUnits = null;
@@ -47,22 +46,25 @@ public class Lock {
     private Double minimumDraft = null;
 
     @JsonProperty("high-water-upper-pool-location-level")
-    private LocationLevel highWaterUpperPoolLocationLevel = null;
+    private LockLocationLevelRef highWaterUpperPoolLocationLevel = null;
 
     @JsonProperty("low-water-lower-pool-location-level")
-    private LocationLevel lowWaterLowerPoolLocationLevel = null;
+    private LockLocationLevelRef lowWaterLowerPoolLocationLevel = null;
 
     @JsonProperty("high-water-lower-pool-location-level")
-    private LocationLevel highWaterLowerPoolLocationLevel = null;
+    private LockLocationLevelRef highWaterLowerPoolLocationLevel = null;
 
     @JsonProperty("low-water-upper-pool-location-level")
-    private LocationLevel lowWaterUpperPoolLocationLevel = null;
+    private LockLocationLevelRef lowWaterUpperPoolLocationLevel = null;
 
     @JsonProperty("high-water-upper-pool-warning-level")
-    private Integer highWaterUpperPoolWarningLevel = null;
+    private Double highWaterUpperPoolWarningLevel = null;
 
     @JsonProperty("high-water-lower-pool-warning-level")
-    private Integer highWaterLowerPoolWarningLevel = null;
+    private Double highWaterLowerPoolWarningLevel = null;
+
+    @JsonProperty("elevation-units")
+    private String elevationUnits = null;
 
     public Lock projectId(CwmsId projectId) {
         this.projectId = projectId;
@@ -155,17 +157,17 @@ public class Lock {
         this.maximumLockLift = maximumLockLift;
     }
 
-    public Lock units(String units) {
-        this.units = units;
+    public Lock lengthUnits(String lengthUnits) {
+        this.lengthUnits = lengthUnits;
         return this;
     }
 
-    public String getUnits() {
-        return units;
+    public String getLengthUnits() {
+        return lengthUnits;
     }
 
-    public void setUnits(String units) {
-        this.units = units;
+    public void setLengthUnits(String lengthUnits) {
+        this.lengthUnits = lengthUnits;
     }
 
     public Lock volumeUnits(String volumeUnits) {
@@ -207,82 +209,95 @@ public class Lock {
         this.minimumDraft = minimumDraft;
     }
 
-    public Lock highWaterUpperPoolLocationLevel(LocationLevel highWaterUpperPoolLocationLevel) {
+    public Lock highWaterUpperPoolLocationLevel(LockLocationLevelRef highWaterUpperPoolLocationLevel) {
         this.highWaterUpperPoolLocationLevel = highWaterUpperPoolLocationLevel;
         return this;
     }
 
-    public LocationLevel getHighWaterUpperPoolLocationLevel() {
+    public LockLocationLevelRef getHighWaterUpperPoolLocationLevel() {
         return highWaterUpperPoolLocationLevel;
     }
 
-    public void setHighWaterUpperPoolLocationLevel(LocationLevel highWaterUpperPoolLocationLevel) {
+    public void setHighWaterUpperPoolLocationLevel(LockLocationLevelRef highWaterUpperPoolLocationLevel) {
         this.highWaterUpperPoolLocationLevel = highWaterUpperPoolLocationLevel;
     }
 
-    public Lock lowWaterLowerPoolLocationLevel(LocationLevel lowWaterLowerPoolLocationLevel) {
+    public Lock lowWaterLowerPoolLocationLevel(LockLocationLevelRef lowWaterLowerPoolLocationLevel) {
         this.lowWaterLowerPoolLocationLevel = lowWaterLowerPoolLocationLevel;
         return this;
     }
 
-    public LocationLevel getLowWaterLowerPoolLocationLevel() {
+    public LockLocationLevelRef getLowWaterLowerPoolLocationLevel() {
         return lowWaterLowerPoolLocationLevel;
     }
 
-    public void setLowWaterLowerPoolLocationLevel(LocationLevel lowWaterLowerPoolLocationLevel) {
+    public void setLowWaterLowerPoolLocationLevel(LockLocationLevelRef lowWaterLowerPoolLocationLevel) {
         this.lowWaterLowerPoolLocationLevel = lowWaterLowerPoolLocationLevel;
     }
 
-    public Lock highWaterLowerPoolLocationLevel(LocationLevel highWaterLowerPoolLocationLevel) {
+    public Lock highWaterLowerPoolLocationLevel(LockLocationLevelRef highWaterLowerPoolLocationLevel) {
         this.highWaterLowerPoolLocationLevel = highWaterLowerPoolLocationLevel;
         return this;
     }
 
-    public LocationLevel getHighWaterLowerPoolLocationLevel() {
+    public LockLocationLevelRef getHighWaterLowerPoolLocationLevel() {
         return highWaterLowerPoolLocationLevel;
     }
 
-    public void setHighWaterLowerPoolLocationLevel(LocationLevel highWaterLowerPoolLocationLevel) {
+    public void setHighWaterLowerPoolLocationLevel(LockLocationLevelRef highWaterLowerPoolLocationLevel) {
         this.highWaterLowerPoolLocationLevel = highWaterLowerPoolLocationLevel;
     }
 
-    public Lock lowWaterUpperPoolLocationLevel(LocationLevel lowWaterUpperPoolLocationLevel) {
+    public Lock lowWaterUpperPoolLocationLevel(LockLocationLevelRef lowWaterUpperPoolLocationLevel) {
         this.lowWaterUpperPoolLocationLevel = lowWaterUpperPoolLocationLevel;
         return this;
     }
 
-    public LocationLevel getLowWaterUpperPoolLocationLevel() {
+    public LockLocationLevelRef getLowWaterUpperPoolLocationLevel() {
         return lowWaterUpperPoolLocationLevel;
     }
 
-    public void setLowWaterUpperPoolLocationLevel(LocationLevel lowWaterUpperPoolLocationLevel) {
+    public void setLowWaterUpperPoolLocationLevel(LockLocationLevelRef lowWaterUpperPoolLocationLevel) {
         this.lowWaterUpperPoolLocationLevel = lowWaterUpperPoolLocationLevel;
     }
 
-    public Lock highWaterUpperPoolWarningLevel(Integer highWaterUpperPoolWarningLevel) {
+    public Lock highWaterUpperPoolWarningLevel(Double highWaterUpperPoolWarningLevel) {
         this.highWaterUpperPoolWarningLevel = highWaterUpperPoolWarningLevel;
         return this;
     }
 
-    public Integer getHighWaterUpperPoolWarningLevel() {
+    public Double getHighWaterUpperPoolWarningLevel() {
         return highWaterUpperPoolWarningLevel;
     }
 
-    public void setHighWaterUpperPoolWarningLevel(Integer highWaterUpperPoolWarningLevel) {
+    public void setHighWaterUpperPoolWarningLevel(Double highWaterUpperPoolWarningLevel) {
         this.highWaterUpperPoolWarningLevel = highWaterUpperPoolWarningLevel;
     }
 
-    public Lock highWaterLowerPoolWarningLevel(Integer highWaterLowerPoolWarningLevel) {
+    public Lock highWaterLowerPoolWarningLevel(Double highWaterLowerPoolWarningLevel) {
         this.highWaterLowerPoolWarningLevel = highWaterLowerPoolWarningLevel;
         return this;
     }
 
-    public Integer getHighWaterLowerPoolWarningLevel() {
+    public Double getHighWaterLowerPoolWarningLevel() {
         return highWaterLowerPoolWarningLevel;
     }
 
-    public void setHighWaterLowerPoolWarningLevel(Integer highWaterLowerPoolWarningLevel) {
+    public void setHighWaterLowerPoolWarningLevel(Double highWaterLowerPoolWarningLevel) {
         this.highWaterLowerPoolWarningLevel = highWaterLowerPoolWarningLevel;
+    }
+
+    public Lock elevationUnits(String elevationUnits) {
+        this.elevationUnits = elevationUnits;
+        return this;
+    }
+
+    public String getElevationUnits() {
+        return elevationUnits;
+    }
+
+    public void setElevationUnits(String elevationUnits) {
+        this.elevationUnits = elevationUnits;
     }
 
     @Override
@@ -301,10 +316,12 @@ public class Lock {
                 && Objects.equals(this.lockLength, lock.lockLength)
                 && Objects.equals(this.normalLockLift, lock.normalLockLift)
                 && Objects.equals(this.maximumLockLift, lock.maximumLockLift)
-                && this.units == null || lock.units == null
-                ? Objects.equals(this.units, lock.units) : this.units.equalsIgnoreCase(lock.units)
+                && this.lengthUnits == null || lock.lengthUnits == null
+                ? Objects.equals(this.lengthUnits, lock.lengthUnits)
+                : this.lengthUnits.equalsIgnoreCase(lock.lengthUnits)
                 && this.volumeUnits == null || lock.volumeUnits == null
-                ? Objects.equals(this.volumeUnits, lock.volumeUnits) : this.volumeUnits.equalsIgnoreCase(lock.volumeUnits)
+                ? Objects.equals(this.volumeUnits, lock.volumeUnits)
+                : this.volumeUnits.equalsIgnoreCase(lock.volumeUnits)
                 && Objects.equals(this.volumePerLockage, lock.volumePerLockage)
                 && Objects.equals(this.minimumDraft, lock.minimumDraft)
                 && Objects.equals(this.highWaterUpperPoolLocationLevel, lock.highWaterUpperPoolLocationLevel)
@@ -313,16 +330,20 @@ public class Lock {
                 && Objects.equals(this.lowWaterUpperPoolLocationLevel, lock.lowWaterUpperPoolLocationLevel)
                 && Objects.equals(this.highWaterUpperPoolWarningLevel, lock.highWaterUpperPoolWarningLevel)
                 && Objects.equals(this.highWaterLowerPoolWarningLevel, lock.highWaterLowerPoolWarningLevel)
+                && this.elevationUnits == null || lock.elevationUnits == null
+                ? Objects.equals(this.elevationUnits, lock.elevationUnits)
+                : this.elevationUnits.equalsIgnoreCase(lock.elevationUnits)
                 ;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(projectId, location, chamberType, lockWidth, lockLength, normalLockLift, maximumLockLift,
-                units == null ? 0 : units.toLowerCase(), volumeUnits == null ? 0 : volumeUnits.toLowerCase(),
+                lengthUnits == null ? 0 : lengthUnits.toLowerCase(),
+                volumeUnits == null ? 0 : volumeUnits.toLowerCase(),
                 volumePerLockage, minimumDraft, highWaterUpperPoolLocationLevel, lowWaterLowerPoolLocationLevel,
                 highWaterLowerPoolLocationLevel, lowWaterUpperPoolLocationLevel, highWaterUpperPoolWarningLevel,
-                highWaterLowerPoolWarningLevel);
+                highWaterLowerPoolWarningLevel, elevationUnits == null ? 0 : elevationUnits.toLowerCase());
     }
 
     @Override
@@ -337,7 +358,7 @@ public class Lock {
         sb.append("    lockLength: ").append(toIndentedString(lockLength)).append("\n");
         sb.append("    normalLockLift: ").append(toIndentedString(normalLockLift)).append("\n");
         sb.append("    maximumLockLift: ").append(toIndentedString(maximumLockLift)).append("\n");
-        sb.append("    units: ").append(toIndentedString(units)).append("\n");
+        sb.append("    lengthUnits: ").append(toIndentedString(lengthUnits)).append("\n");
         sb.append("    volumeUnits: ").append(toIndentedString(volumeUnits)).append("\n");
         sb.append("    volumePerLockage: ").append(toIndentedString(volumePerLockage)).append("\n");
         sb.append("    minimumDraft: ").append(toIndentedString(minimumDraft)).append("\n");
@@ -347,6 +368,7 @@ public class Lock {
         sb.append("    lowWaterUpperPoolLocationLevel: ").append(toIndentedString(lowWaterUpperPoolLocationLevel)).append("\n");
         sb.append("    highWaterUpperPoolWarningLevel: ").append(toIndentedString(highWaterUpperPoolWarningLevel)).append("\n");
         sb.append("    highWaterLowerPoolWarningLevel: ").append(toIndentedString(highWaterLowerPoolWarningLevel)).append("\n");
+        sb.append("    elevationUnits: ").append(toIndentedString(elevationUnits)).append("\n");
         sb.append("}");
         return sb.toString();
     }

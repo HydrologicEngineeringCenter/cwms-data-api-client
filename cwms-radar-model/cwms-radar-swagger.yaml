@@ -10216,21 +10216,13 @@ paths:
         - name: office
           in: query
           description: Office id for the reservoir project location associated with the locks.
+          required: true
           schema:
             type: string
         - name: project-id
           in: query
           description: Specifies the project-id of the Locks whose data is to be included in the response.
           required: true
-          schema:
-            type: string
-        - name: unit
-          in: query
-          description: |-
-            Specifies the unit system to be used in the response. Valid values are: 
-            * `SI` - Metric units. 
-            * `EN` - Imperial units. 
-            Defaults to SI.
           schema:
             type: string
       responses:
@@ -13830,10 +13822,8 @@ components:
           type: integer
           format: int32
         binary-value:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
         value-url:
           type: string
         quality-code:
@@ -14570,10 +14560,8 @@ components:
         media-type-id:
           type: string
         value:
-          type: array
-          items:
-            type: string
-            format: byte
+          type: string
+          format: byte
     blobs:
       type: object
       properties:
@@ -14731,9 +14719,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     pools:
       type: object
@@ -14836,12 +14824,9 @@ components:
           type: string
           description: Forecast File Media Type
         file-data:
-          type: array
+          type: string
           description: Forecast File binary data
-          items:
-            type: string
-            description: Forecast File binary data
-            format: byte
+          format: byte
         file-data-url:
           type: string
           description: Link to Forecast File binary data
@@ -14911,12 +14896,9 @@ components:
           type: string
           description: Forecast File Media Type
         file-data:
-          type: array
+          type: string
           description: Forecast File binary data
-          items:
-            type: string
-            description: Forecast File binary data
-            format: byte
+          format: byte
         file-data-url:
           type: string
           description: Link to Forecast File binary data
@@ -15118,7 +15100,7 @@ components:
         maximum-lock-lift:
           type: number
           format: double
-        units:
+        length-units:
           type: string
         volume-units:
           type: string
@@ -15129,19 +15111,29 @@ components:
           type: number
           format: double
         high-water-upper-pool-location-level:
-          $ref: '#/components/schemas/LocationLevel'
+          $ref: '#/components/schemas/LockLocationLevelRef'
         low-water-lower-pool-location-level:
-          $ref: '#/components/schemas/LocationLevel'
+          $ref: '#/components/schemas/LockLocationLevelRef'
         high-water-lower-pool-location-level:
-          $ref: '#/components/schemas/LocationLevel'
+          $ref: '#/components/schemas/LockLocationLevelRef'
         low-water-upper-pool-location-level:
-          $ref: '#/components/schemas/LocationLevel'
+          $ref: '#/components/schemas/LockLocationLevelRef'
         high-water-upper-pool-warning-level:
-          type: integer
-          format: int32
+          type: number
+          format: double
         high-water-lower-pool-warning-level:
-          type: integer
-          format: int32
+          type: number
+          format: double
+        elevation-units:
+          type: string
+    LockLocationLevelRef:
+      type: object
+      properties:
+        level-link:
+          type: string
+        level-value:
+          type: number
+          format: double
     TurbineChange:
       required:
         - change-date

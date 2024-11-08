@@ -14,7 +14,7 @@ import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
 
 public final class LockController {
-    private static final String LOCK_ENDPOINT = "projects/lock";
+    private static final String LOCK_ENDPOINT = "projects/locks";
 
     public Lock retrieveLock(ApiConnectionInfo apiConnectionInfo, LockEndpointInput.GetOne input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCK_ENDPOINT + "/" + input.lockName())

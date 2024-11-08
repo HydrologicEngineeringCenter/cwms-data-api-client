@@ -13,13 +13,12 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.re
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TestLockEndpointInput {
+final class TestLockEndpointInput {
 	@Test
 	void testGetAllQueryRequest() {
 		MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-		LockEndpointInput.GetAll input = LockEndpointInput.getAll("LRL", "PROJECT").unit("SI");
+		LockEndpointInput.GetAll input = LockEndpointInput.getAll("LRL", "PROJECT");
 		input.addInputParameters(mockHttpRequestBuilder);
-		assertEquals("SI", mockHttpRequestBuilder.getQueryParameter(LockEndpointInput.GetAll.UNIT_QUERY_PARAMETER));
 		assertEquals("LRL", mockHttpRequestBuilder.getQueryParameter(LockEndpointInput.GetAll.OFFICE_QUERY_PARAMETER));
 		assertEquals("PROJECT", mockHttpRequestBuilder.getQueryParameter(LockEndpointInput.GetAll.PROJECT_ID_QUERY_PARAMETER));
 		assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));

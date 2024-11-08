@@ -38,11 +38,8 @@ public final class LockEndpointInput {
     public static final class GetAll extends EndpointInput {
         static final String OFFICE_QUERY_PARAMETER = "office";
         static final String PROJECT_ID_QUERY_PARAMETER = "project-id";
-        static final String UNIT_QUERY_PARAMETER = "unit";
-
         private final String projectId;
         private final String officeId;
-        private String unit = "SI";
 
         private GetAll(String officeId, String projectId) {
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the lock GET "
@@ -51,20 +48,11 @@ public final class LockEndpointInput {
                     + "endpoint without an office ID");
         }
 
-        public GetAll unit(String unit) {
-            this.unit = unit;
-            return this;
-        }
-
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             httpRequestBuilder.addQueryParameter(PROJECT_ID_QUERY_PARAMETER, projectId)
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
-            if (unit != null) {
-                httpRequestBuilder.addQueryParameter(UNIT_QUERY_PARAMETER, unit);
-            }
             return httpRequestBuilder;
         }
     }
@@ -75,7 +63,7 @@ public final class LockEndpointInput {
 
         private final String lockName;
         private final String officeId;
-		private String unit;
+        private String unit;
 
         private GetOne(String officeId, String lockName) {
             this.lockName = Objects.requireNonNull(lockName, "Cannot access the lock GET "
@@ -84,10 +72,10 @@ public final class LockEndpointInput {
                     + "endpoint without an office ID");
         }
 
-		public GetOne unit(String unit) {
-			this.unit = unit;
-			return this;
-		}
+        public GetOne unit(String unit) {
+            this.unit = unit;
+            return this;
+        }
 
         String lockName() {
             return lockName;
@@ -96,7 +84,7 @@ public final class LockEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-				.addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

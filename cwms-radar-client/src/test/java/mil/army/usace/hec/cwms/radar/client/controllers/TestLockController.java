@@ -20,16 +20,21 @@ class TestLockController extends TestController {
 		String collect = readJsonFile("radar/v1/json/locks.json");
 		mockHttpServer.enqueue(collect);
 		mockHttpServer.start();
-		LockEndpointInput.GetAll input = LockEndpointInput.getAll("LRL", "PROJECT").unit("ft");
+		LockEndpointInput.GetAll input = LockEndpointInput.getAll("LRL", "PROJECT");
 		List<Lock> values = new LockController().retrieveLocks(buildConnectionInfo(), input);
 		assertFalse(values.isEmpty());
 		assertEquals(2, values.size());
 		Lock value = values.get(0);
-		assertEquals("LRD", value.getProjectId().getOfficeId());
-		assertEquals("LRL", value.getLocation().getOfficeId());
+		assertEquals("SPK", value.getProjectId().getOfficeId());
+		assertEquals("SPK", value.getLocation().getOfficeId());
 		assertEquals("PROJECT", value.getProjectId().getName());
 		assertEquals("ft3", value.getVolumeUnits());
-		assertEquals("ft", value.getUnits());
+		assertEquals("ft", value.getLengthUnits());
+		assertEquals("ft", value.getElevationUnits());
+		assertEquals("Single Chamber", value.getChamberType().getDisplayValue());
+		assertEquals("/locks/TEST_LOCATION2.Elev-Inoperable.Inst.0.High Water Upper Pool?office=SPK",
+				value.getHighWaterUpperPoolLocationLevel().getLevelLink());
+		assertEquals(2.96, value.getHighWaterUpperPoolLocationLevel().getLevelValue());
 	}
 
 	@Test
@@ -37,14 +42,19 @@ class TestLockController extends TestController {
 		String collect = readJsonFile("radar/v1/json/lock.json");
 		mockHttpServer.enqueue(collect);
 		mockHttpServer.start();
-		LockEndpointInput.GetOne input = LockEndpointInput.getOne("LRL", "TEST_LOCATION2").unit("ft");
+		LockEndpointInput.GetOne input = LockEndpointInput.getOne("SPK", "TEST_LOCATION2").unit("ft");
 		Lock value = new LockController().retrieveLock(buildConnectionInfo(), input);
 		assertNotNull(value);
-		assertEquals("LRD", value.getProjectId().getOfficeId());
+		assertEquals("SPK", value.getProjectId().getOfficeId());
 		assertEquals("PROJECT", value.getProjectId().getName());
-		assertEquals("LRL", value.getLocation().getOfficeId());
+		assertEquals("SPK", value.getLocation().getOfficeId());
 		assertEquals("ft3", value.getVolumeUnits());
-		assertEquals("ft", value.getUnits());
+		assertEquals("ft", value.getLengthUnits());
+		assertEquals("ft", value.getElevationUnits());
+		assertEquals("Single Chamber", value.getChamberType().getDisplayValue());
+		assertEquals("/locks/TEST_LOCATION2.Elev-Inoperable.Inst.0.High Water Upper Pool?office=SPK",
+				value.getHighWaterUpperPoolLocationLevel().getLevelLink());
+		assertEquals(2.96, value.getHighWaterUpperPoolLocationLevel().getLevelValue());
 	}
 
 	@Test
@@ -68,7 +78,7 @@ class TestLockController extends TestController {
 		assertDoesNotThrow(() -> controller.renameLock(buildConnectionInfo(cookieJarSupplier), input));
 		MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
 		assertEquals("PATCH", request.getMethod());
-		assertEquals("/projects/lock/TEST_LOCATION2?name=TEST_LOCATION3&office=LRL", request.getPath());
+		assertEquals("/projects/locks/TEST_LOCATION2?name=TEST_LOCATION3&office=LRL", request.getPath());
 	}
 
 	@Test
