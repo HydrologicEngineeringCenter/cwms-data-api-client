@@ -32,7 +32,7 @@ class TestLockController extends TestController {
 		assertEquals("ft", value.getLengthUnits());
 		assertEquals("ft", value.getElevationUnits());
 		assertEquals("Single Chamber", value.getChamberType().getDisplayValue());
-		assertEquals("/locks/TEST_LOCATION2.Elev-Inoperable.Inst.0.High Water Upper Pool?office=SPK",
+		assertEquals("/locks/TEST_LOCATION2.Elev-Closure.Inst.0.High Water Upper Pool?office=SPK",
 				value.getHighWaterUpperPoolLocationLevel().getLevelLink());
 		assertEquals(2.96, value.getHighWaterUpperPoolLocationLevel().getLevelValue());
 	}
@@ -52,7 +52,7 @@ class TestLockController extends TestController {
 		assertEquals("ft", value.getLengthUnits());
 		assertEquals("ft", value.getElevationUnits());
 		assertEquals("Single Chamber", value.getChamberType().getDisplayValue());
-		assertEquals("/locks/TEST_LOCATION2.Elev-Inoperable.Inst.0.High Water Upper Pool?office=SPK",
+		assertEquals("/locks/TEST_LOCATION2.Elev-Closure.Inst.0.High Water Upper Pool?office=SPK",
 				value.getHighWaterUpperPoolLocationLevel().getLevelLink());
 		assertEquals(2.96, value.getHighWaterUpperPoolLocationLevel().getLevelValue());
 	}
