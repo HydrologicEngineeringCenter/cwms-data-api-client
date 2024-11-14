@@ -105,7 +105,7 @@ class TestTimeSeriesGroupController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("QA Category2", timeSeriesGroup);
+        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("SWT", "QA Category2", timeSeriesGroup);
         assertDoesNotThrow(() -> new TimeSeriesGroupController().updateGroup(buildConnectionInfo(), input));
     }
 
