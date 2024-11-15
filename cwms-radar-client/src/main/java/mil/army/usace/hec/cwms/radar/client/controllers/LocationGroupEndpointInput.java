@@ -60,12 +60,12 @@ public final class LocationGroupEndpointInput {
         return new Post(locationGroup);
     }
 
-    public static Patch patch(String office, String originalGroupId, LocationGroup locationGroup) {
-        return new Patch(office, originalGroupId, locationGroup);
+    public static Patch patch(String userOffice, String originalGroupId, LocationGroup locationGroup) {
+        return new Patch(userOffice, originalGroupId, locationGroup);
     }
 
-    public static Delete delete(String categoryId, String groupId, String officeId) {
-        return new Delete(categoryId, groupId, officeId);
+    public static Delete delete(String categoryId, String groupId, String groupOfficeId) {
+        return new Delete(categoryId, groupId, groupOfficeId);
     }
 
     public static final class GetOne extends EndpointInput {
@@ -156,12 +156,12 @@ public final class LocationGroupEndpointInput {
         private final LocationGroup locationGroup;
         private final String originalGroupId;
         private boolean replaceAssignedLocs = false;
-        private final String office;
+        private final String userOffice;
 
-        private Patch(String office, String originalGroupId, LocationGroup locationGroup) {
+        private Patch(String userOffice, String originalGroupId, LocationGroup locationGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a location group without an original group id");
             this.locationGroup = Objects.requireNonNull(locationGroup, "Cannot update a location group without a data object");
-            this.office = Objects.requireNonNull(office, "Cannot update a location group without an office id");
+            this.userOffice = Objects.requireNonNull(userOffice, "Cannot update a location group without an operating office id");
         }
 
         String originalGroupId() {
@@ -180,7 +180,7 @@ public final class LocationGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_LOCS, Boolean.toString(replaceAssignedLocs))
-                .addQueryParameter(OFFICE_QUERY_PARAMETER, office)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, userOffice)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
@@ -189,14 +189,14 @@ public final class LocationGroupEndpointInput {
     public static final class Delete extends EndpointInput {
 
         private final String groupId;
-        private final String officeId;
+        private final String groupOfficeId;
         private final String categoryId;
         private boolean cascadeDelete = false;
 
-        private Delete(String categoryId, String groupId, String officeId) {
+        private Delete(String categoryId, String groupId, String groupOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a location group without a category id");
             this.groupId = Objects.requireNonNull(groupId, "Cannot delete a location group without a group id");
-            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a location group without an office id");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a location group without an office id");
         }
 
         String groupId() {
@@ -211,7 +211,7 @@ public final class LocationGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                     .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);

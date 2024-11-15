@@ -60,12 +60,12 @@ public final class TimeSeriesGroupEndpointInput {
         return new Post(timeSeriesGroup);
     }
 
-    public static Patch patch(String office, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
-        return new Patch(office, originalGroupId, timeSeriesGroup);
+    public static Patch patch(String userOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        return new Patch(userOffice, originalGroupId, timeSeriesGroup);
     }
 
-    public static Delete delete(String categoryId, String groupId, String officeId) {
-        return new Delete(categoryId, groupId, officeId);
+    public static Delete delete(String categoryId, String groupId, String groupOffice) {
+        return new Delete(categoryId, groupId, groupOffice);
     }
 
     public static final class GetAll extends EndpointInput {
@@ -192,12 +192,12 @@ public final class TimeSeriesGroupEndpointInput {
         private final TimeSeriesGroup timeSeriesGroup;
         private final String originalGroupId;
         private boolean replaceAssignedTs = false;
-        private final String officeId;
+        private final String userOffice;
 
-        private Patch(String office, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        private Patch(String userOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot update a time series group without a group data object");
-            this.officeId = Objects.requireNonNull(office, "Cannot update a time series group without specifying the office");
+            this.userOffice = Objects.requireNonNull(userOffice, "Cannot update a time series group without specifying the operating office");
         }
 
         TimeSeriesGroup timeSeriesGroup() {
@@ -216,7 +216,7 @@ public final class TimeSeriesGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER, Boolean.toString(replaceAssignedTs))
-                .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, userOffice)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
@@ -224,12 +224,12 @@ public final class TimeSeriesGroupEndpointInput {
     public static final class Delete extends EndpointInput {
         private final String timeSeriesGroupId;
         private final String categoryId;
-        private final String officeId;
+        private final String groupOfficeId;
 
-        private Delete(String categoryId, String timeSeriesGroupId, String officeId) {
+        private Delete(String categoryId, String timeSeriesGroupId, String groupOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series group without specifying the category)");
             this.timeSeriesGroupId = Objects.requireNonNull(timeSeriesGroupId, "Cannot delete a time series group that is not defined");
-            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a time series group without specifying the office");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a time series group without specifying the office");
         }
 
         String timeSeriesGroupId() {
@@ -238,7 +238,7 @@ public final class TimeSeriesGroupEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
