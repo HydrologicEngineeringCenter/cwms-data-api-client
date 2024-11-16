@@ -52,16 +52,16 @@ public final class TimeSeriesGroupEndpointInput {
         return new GetAll();
     }
 
-    public static GetOne getOne(String categoryId, String groupId, String officeId) {
-        return new GetOne(categoryId, groupId, officeId);
+    public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
+        return new GetOne(categoryId, groupId, officeId, groupOfficeId, categoryOfficeId);
     }
 
     public static Post post(TimeSeriesGroup timeSeriesGroup) {
         return new Post(timeSeriesGroup);
     }
 
-    public static Patch patch(String userOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
-        return new Patch(userOffice, originalGroupId, timeSeriesGroup);
+    public static Patch patch(String groupOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        return new Patch(groupOffice, originalGroupId, timeSeriesGroup);
     }
 
     public static Delete delete(String categoryId, String groupId, String groupOffice) {
@@ -128,27 +128,19 @@ public final class TimeSeriesGroupEndpointInput {
         private final String categoryId;
         private final String groupId;
         private final String officeId;
-        private String categoryOffice;
-        private String groupOffice;
+        private final String categoryOffice;
+        private final String groupOffice;
 
-        private GetOne(String categoryId, String groupId, String officeId) {
+        private GetOne(String categoryId, String groupId, String officeId, String groupOffice, String categoryOffice) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category");
             this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office");
+            this.categoryOffice = Objects.requireNonNull(categoryOffice, "Cannot retrieve a time series group without specifying a category office");
+            this.groupOffice = Objects.requireNonNull(groupOffice, "Cannot retrieve a time series group without specifying a group office");
         }
 
         String getGroupId() {
             return groupId;
-        }
-
-        public GetOne categoryOffice(String categoryOffice) {
-            this.categoryOffice = categoryOffice;
-            return this;
-        }
-
-        public GetOne groupOffice(String groupOffice) {
-            this.groupOffice = groupOffice;
-            return this;
         }
 
 
@@ -192,12 +184,12 @@ public final class TimeSeriesGroupEndpointInput {
         private final TimeSeriesGroup timeSeriesGroup;
         private final String originalGroupId;
         private boolean replaceAssignedTs = false;
-        private final String userOffice;
+        private final String groupOffice;
 
-        private Patch(String userOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
+        private Patch(String groupOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot update a time series group without a group data object");
-            this.userOffice = Objects.requireNonNull(userOffice, "Cannot update a time series group without specifying the operating office");
+            this.groupOffice = Objects.requireNonNull(groupOffice, "Cannot update a time series group without specifying the operating office");
         }
 
         TimeSeriesGroup timeSeriesGroup() {
@@ -216,7 +208,7 @@ public final class TimeSeriesGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER, Boolean.toString(replaceAssignedTs))
-                .addQueryParameter(OFFICE_QUERY_PARAMETER, userOffice)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOffice)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }

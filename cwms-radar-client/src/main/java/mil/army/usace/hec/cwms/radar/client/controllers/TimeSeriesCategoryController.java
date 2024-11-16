@@ -24,6 +24,10 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
+
+import java.io.IOException;
+import java.util.List;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
@@ -31,10 +35,6 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.radar.client.model.TimeSeriesCategory;
 
-import java.io.IOException;
-import java.util.List;
-
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 
 public final class TimeSeriesCategoryController {
 
@@ -48,7 +48,7 @@ public final class TimeSeriesCategoryController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+                .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesCategory.class);
         }
@@ -62,7 +62,7 @@ public final class TimeSeriesCategoryController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_CATEGORY_ENDPOINT)
                 .addEndpointInput(input)
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+                .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesCategory.class);
         }
@@ -77,7 +77,7 @@ public final class TimeSeriesCategoryController {
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-                .withMediaType(ACCEPT_HEADER_V1)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
@@ -88,7 +88,7 @@ public final class TimeSeriesCategoryController {
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V1)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }

@@ -49,12 +49,11 @@ class TestTimeSeriesGroupEndpointInput {
     void testGetOne() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         TimeSeriesGroupEndpointInput.GetOne input = TimeSeriesGroupEndpointInput
-            .getOne("category-id", "group-id", "SWT")
-                .groupOffice("SWT").categoryOffice("SWT");
+            .getOne("category-id", "group-id", "SWT", "SWT", "CWMS");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_QUERY_PARAMETER));
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER));
+        assertEquals("CWMS", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
