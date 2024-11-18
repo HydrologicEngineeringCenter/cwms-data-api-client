@@ -60,8 +60,8 @@ public final class LocationGroupEndpointInput {
         return new Post(locationGroup);
     }
 
-    public static Patch patch(String userOffice, String originalGroupId, LocationGroup locationGroup) {
-        return new Patch(userOffice, originalGroupId, locationGroup);
+    public static Patch patch(String groupOfficeId, String originalGroupId, LocationGroup locationGroup) {
+        return new Patch(groupOfficeId, originalGroupId, locationGroup);
     }
 
     public static Delete delete(String categoryId, String groupId, String groupOfficeId) {
@@ -156,12 +156,12 @@ public final class LocationGroupEndpointInput {
         private final LocationGroup locationGroup;
         private final String originalGroupId;
         private boolean replaceAssignedLocs = false;
-        private final String userOffice;
+        private final String groupOfficeId;
 
-        private Patch(String userOffice, String originalGroupId, LocationGroup locationGroup) {
+        private Patch(String groupOfficeId, String originalGroupId, LocationGroup locationGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a location group without an original group id");
             this.locationGroup = Objects.requireNonNull(locationGroup, "Cannot update a location group without a data object");
-            this.userOffice = Objects.requireNonNull(userOffice, "Cannot update a location group without an operating office id");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot update a location group without an operating office id");
         }
 
         String originalGroupId() {
@@ -180,7 +180,7 @@ public final class LocationGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_LOCS, Boolean.toString(replaceAssignedLocs))
-                .addQueryParameter(OFFICE_QUERY_PARAMETER, userOffice)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
