@@ -43,7 +43,7 @@ class TestLocationGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/location_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("CWMS Mobile Location Listings", "Lakes", "SWT");
+        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("CWMS Mobile Location Listings", "Lakes", "SWT", "SWT", "SWT");
         LocationGroup locationGroup = new LocationGroupController().retrieveLocationGroup(buildConnectionInfo(), input);
         assertNotNull(locationGroup);
         assertEquals("SWT", locationGroup.getOfficeId());
@@ -68,7 +68,7 @@ class TestLocationGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/location_group_nodatafound.json");
         mockHttpServer.enqueue(404, collect);
         mockHttpServer.start();
-        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("NotReal", "Bogus", "SWT");
+        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("NotReal", "Bogus", "SWT", "SWT", "SWT");
         assertThrows(NoDataFoundException.class, () -> new LocationGroupController().retrieveLocationGroup(buildConnectionInfo(), input));
     }
 
@@ -140,7 +140,7 @@ class TestLocationGroupController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         LocationGroup locationGroup = RadarObjectMapper.mapJsonToObject(collect, LocationGroup.class);
-        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch(locationGroup.getId() + "1", locationGroup);
+        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch("SWT", locationGroup.getId() + "1", locationGroup);
         assertDoesNotThrow(() -> new LocationGroupController().updateLocationGroup(buildConnectionInfo(), input));
     }
 

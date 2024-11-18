@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
+import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.CASCADE_DELETE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.FAIL_IF_EXISTS_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TimeSeriesCategoryEndpointInput.OFFICE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,8 +81,9 @@ class TestTimeSeriesCategoryEndpointInput {
     @Test
     void testDelete() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesCategoryEndpointInput.Delete input = TimeSeriesCategoryEndpointInput.delete("category-id", "SWT");
+        TimeSeriesCategoryEndpointInput.Delete input = TimeSeriesCategoryEndpointInput.delete("category-id", "SWT").cascadeDelete(true);
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(CASCADE_DELETE_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }

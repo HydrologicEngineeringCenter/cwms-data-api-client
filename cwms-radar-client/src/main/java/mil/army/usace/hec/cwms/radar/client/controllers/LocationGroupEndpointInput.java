@@ -34,15 +34,22 @@ import mil.army.usace.hec.cwms.radar.client.model.LocationGroup;
 
 public final class LocationGroupEndpointInput {
 
+    private LocationGroupEndpointInput() {
+        throw new AssertionError("factory class");
+    }
+
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String GROUP_ID_QUERY_PARAMETER = "group-id";
     static final String CATEGORY_ID_LIKE_QUERY_PARAMETER = "location-category-like";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String REPLACE_ASSIGNED_LOCS = "replace-assigned-locs";
+    static final String GROUP_OFFICE_ID_QUERY_PARAMETER = "group-office-id";
+    static final String CATEGORY_OFFICE_ID_QUERY_PARAMETER = "category-office-id";
+    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
-    public static GetOne getOne(String categoryId, String groupId, String officeId) {
-        return new GetOne(categoryId, groupId, officeId);
+    public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
+        return new GetOne(categoryId, groupId, officeId, groupOfficeId, categoryOfficeId);
     }
 
     public static GetAll getAll() {
@@ -53,23 +60,27 @@ public final class LocationGroupEndpointInput {
         return new Post(locationGroup);
     }
 
-    public static Patch patch(String originalGroupId, LocationGroup locationGroup) {
-        return new Patch(originalGroupId, locationGroup);
+    public static Patch patch(String groupOfficeId, String originalGroupId, LocationGroup locationGroup) {
+        return new Patch(groupOfficeId, originalGroupId, locationGroup);
     }
 
-    public static Delete delete(String categoryId, String groupId, String officeId) {
-        return new Delete(categoryId, groupId, officeId);
+    public static Delete delete(String categoryId, String groupId, String groupOfficeId) {
+        return new Delete(categoryId, groupId, groupOfficeId);
     }
 
     public static final class GetOne extends EndpointInput {
         private final String groupId;
         private final String officeId;
         private final String categoryId;
+        private final String groupOfficeId;
+        private final String categoryOfficeId;
 
-        private GetOne(String categoryId, String groupId, String officeId) {
+        private GetOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a location group without a category id");
             this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a location group without a group id");
             this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a location group without an office id");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot retrieve a location group without a group office id");
+            this.categoryOfficeId = Objects.requireNonNull(categoryOfficeId, "Cannot retrieve a location group without a category office id");
         }
 
         String groupId() {
@@ -81,6 +92,8 @@ public final class LocationGroupEndpointInput {
             return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
                     .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryParameter(GROUP_OFFICE_ID_QUERY_PARAMETER, groupOfficeId)
+                    .addQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER, categoryOfficeId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
@@ -142,11 +155,13 @@ public final class LocationGroupEndpointInput {
 
         private final LocationGroup locationGroup;
         private final String originalGroupId;
-        private boolean replaceAssignedLocs;
+        private boolean replaceAssignedLocs = false;
+        private final String groupOfficeId;
 
-        private Patch(String originalGroupId, LocationGroup locationGroup) {
+        private Patch(String groupOfficeId, String originalGroupId, LocationGroup locationGroup) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a location group without an original group id");
             this.locationGroup = Objects.requireNonNull(locationGroup, "Cannot update a location group without a data object");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot update a location group without an operating office id");
         }
 
         String originalGroupId() {
@@ -165,6 +180,7 @@ public final class LocationGroupEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_LOCS, Boolean.toString(replaceAssignedLocs))
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
@@ -173,24 +189,31 @@ public final class LocationGroupEndpointInput {
     public static final class Delete extends EndpointInput {
 
         private final String groupId;
-        private final String officeId;
+        private final String groupOfficeId;
         private final String categoryId;
+        private boolean cascadeDelete = false;
 
-        private Delete(String categoryId, String groupId, String officeId) {
+        private Delete(String categoryId, String groupId, String groupOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a location group without a category id");
             this.groupId = Objects.requireNonNull(groupId, "Cannot delete a location group without a group id");
-            this.officeId = Objects.requireNonNull(officeId, "Cannot delete a location group without an office id");
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a location group without an office id");
         }
 
         String groupId() {
             return groupId;
         }
 
+        public Delete cascadeDelete(boolean cascadeDelete) {
+            this.cascadeDelete = cascadeDelete;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(GROUP_ID_QUERY_PARAMETER, groupId)
-                    .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }

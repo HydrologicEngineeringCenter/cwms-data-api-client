@@ -24,9 +24,12 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CASCADE_DELETE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_LIKE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_OFFICE_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_OFFICE_ID_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.INCLUDE_ASSIGNED_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.OFFICE_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.REPLACE_ASSIGNED_LOCS;
@@ -46,9 +49,11 @@ class TestLocationGroupEndpointInput {
     @Test
     void testQueryRequest() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("CWMS Mobile Location Listings", "Lakes", "SWT");
+        LocationGroupEndpointInput.GetOne input = LocationGroupEndpointInput.getOne("CWMS Mobile Location Listings", "Lakes", "SWT", "SWT", "SWT");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_ID_QUERY_PARAMETER));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER));
         assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
         assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -84,21 +89,23 @@ class TestLocationGroupEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/location_group.json");
         LocationGroup locationGroup = RadarObjectMapper.mapJsonToObject(collect, LocationGroup.class);
-        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch(locationGroup.getId() + "1", locationGroup)
+        LocationGroupEndpointInput.Patch input = LocationGroupEndpointInput.patch("SWT", locationGroup.getId() + "1", locationGroup)
                 .replaceAssignedLocs(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(REPLACE_ASSIGNED_LOCS));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
     void testDelete() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        LocationGroupEndpointInput.Delete input = LocationGroupEndpointInput.delete("CWMS Mobile Location Listings", "Lakes", "SWT");
+        LocationGroupEndpointInput.Delete input = LocationGroupEndpointInput.delete("CWMS Mobile Location Listings", "Lakes", "SWT").cascadeDelete(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("Lakes", mockHttpRequestBuilder.getQueryParameter(GROUP_ID_QUERY_PARAMETER));
         assertEquals("CWMS Mobile Location Listings", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
+        assertEquals("true", mockHttpRequestBuilder.getQueryParameter(CASCADE_DELETE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
