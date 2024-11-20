@@ -105,6 +105,7 @@ public final class LocationGroupEndpointInput {
         private String categoryOfficeId;
         private boolean includeAssigned = false;
         private String categoryIdMask;
+        private String categoryOfficeId;
 
         private GetAll() {
 
@@ -112,6 +113,11 @@ public final class LocationGroupEndpointInput {
 
         public GetAll locationOfficeId(String locationOfficeId) {
             this.locationOfficeId = locationOfficeId;
+            return this;
+        }
+
+        public GetAll categoryOfficeId(String categoryOfficeId) {
+            this.categoryOfficeId = categoryOfficeId;
             return this;
         }
 
@@ -142,6 +148,7 @@ public final class LocationGroupEndpointInput {
                     .addQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER, categoryOfficeId)
                     .addQueryParameter(LOCATION_OFFICE_ID_QUERY_PARAMETER, locationOfficeId)
                     .addQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER, categoryIdMask)
+                    .addQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER, categoryOfficeId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
 
