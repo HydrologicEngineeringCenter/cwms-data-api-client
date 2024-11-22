@@ -1,23 +1,24 @@
 package mil.army.usace.hec.cwms.radar.client.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import jakarta.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * TimeSeriesProfileParser
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-        date = "2024-09-19T12:32:49.455402100-07:00[America/Los_Angeles]")
+        date = "2024-11-22T14:32:40.588746100-08:00[America/Los_Angeles]")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
-@JsonSubTypes({ @JsonSubTypes.Type(name = "indexed-timeseries-profile-parser", value = TimeSeriesProfileParserIndexed.class),
-    @JsonSubTypes.Type(name = "columnar-timeseries-profile-parser", value = TimeSeriesProfileParserColumnar.class)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = TimeSeriesProfileParserIndexed.class, name = "indexed-timeseries-profile-parser"),
+        @JsonSubTypes.Type(value = TimeSeriesProfileParserColumnar.class, name = "columnar-timeseries-profile-parser"),
 })
 public class TimeSeriesProfileParser {
 

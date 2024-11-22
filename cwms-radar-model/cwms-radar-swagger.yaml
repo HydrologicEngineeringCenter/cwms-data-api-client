@@ -483,6 +483,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: group-office-id
+          in: query
+          description: Specifies the owning office of the location group whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: category-office-id
+          in: query
+          description: Specifies the owning office of the category the location group belongs to whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
         - name: category-id
           in: query
           description: Specifies the category containing the location group whose data is to be included in the response.
@@ -560,7 +572,7 @@ paths:
             type: string
         - name: cascade-delete
           in: query
-          description: 'Specifies whether to specifies whether to unassign any location assignments. Default: false'
+          description: 'Specifies whether to unassign any location assignments. Default: false'
           schema:
             type: boolean
       responses:
@@ -601,7 +613,7 @@ paths:
       tags:
         - Location Groups
       summary: Patch cwmsData location group with groupId
-      description: Update existing LocationGroup
+      description: Update existing LocationGroup. Allows for renaming group, assigning new locations, and unassigning all locations from the group.
       operationId: patchCwmsDataLocationGroupWithGroupId
       parameters:
         - name: group-id
@@ -616,7 +628,7 @@ paths:
             type: boolean
         - name: office
           in: query
-          description: Specifies the owning office of the location group to be updated
+          description: Specifies the office of the user making the request. This is the office that the location, group, and category belong to. If the group and/or category belong to the CWMS office, this only identifies the location.
           required: true
           schema:
             type: string
@@ -670,7 +682,7 @@ paths:
       parameters:
         - name: office
           in: query
-          description: Specifies the owning office of the location group(s) whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
+          description: Specifies the owning office of the location group whose data is to be included in the response. If this field is not specified, matching location groups information from all offices shall be returned.
           schema:
             type: string
         - name: include-assigned
@@ -681,6 +693,18 @@ paths:
         - name: location-category-like
           in: query
           description: Posix <a href="regexp.html">regular expression</a> matching against the location category id
+          schema:
+            type: string
+        - name: category-office-id
+          in: query
+          description: Specifies the owning office of the category the location group belongs to whose data is to be included in the response.
+          required: true
+          schema:
+            type: string
+        - name: location-office-id
+          in: query
+          description: Specifies the owning office of the location assigned to the location group whose data is to be included in the response.
+          required: true
           schema:
             type: string
       responses:
@@ -1425,6 +1449,17 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json;version=2:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parameter'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parameter'
         '400':
           description: Bad Request
           content:
@@ -1476,6 +1511,13 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeZoneIds'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeZoneIds'
         '400':
           description: Bad Request
           content:
@@ -1747,12 +1789,12 @@ paths:
             type: string
         - name: begin
           in: query
-          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time.
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, no beginning time will be used.
           schema:
             type: string
         - name: end
           in: query
-          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, no end time will be used.
           schema:
             type: string
         - name: timezone
@@ -3024,7 +3066,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: The provided combination of parameters did not find a TimeSeriesProfileParser object
+          description: Not Found
           content:
             application/json:
               schema:
@@ -3035,13 +3077,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
       security: []
     delete:
       tags:
         - TimeSeries
-      summary: Update a time series profile
+      summary: Delete a time series profile
       operationId: deleteCwmsDataTimeseriesProfileWithLocationIdWithParameterId
       parameters:
         - name: location-id
@@ -3103,7 +3143,7 @@ paths:
     get:
       tags:
         - TimeSeries
-      summary: Get a time series profile
+      summary: Get a catalog of time series profiles
       operationId: getCwmsDataTimeseriesProfile
       parameters:
         - name: office-mask
@@ -3171,14 +3211,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
       security: []
     post:
       tags:
         - TimeSeries
-      summary: Parse TimeSeriesProfileData into a new Time Series Profile
-      operationId: postCwmsDataTimeseriesParser
+      summary: Create a new time series profile
+      operationId: postCwmsDataTimeseriesProfile
       parameters:
         - name: fail-if-exists
           in: query
@@ -3228,7 +3266,7 @@ paths:
     get:
       tags:
         - TimeSeries
-      summary: Get a TimeSeriesProfileParser by ID
+      summary: Get a TimeSeriesProfile Parser by ID
       operationId: getCwmsDataTimeseriesProfileParserWithLocationIdWithParameterId
       parameters:
         - name: location-id
@@ -3295,7 +3333,7 @@ paths:
     delete:
       tags:
         - TimeSeries
-      summary: Delete a TimeSeriesProfileParser by ID
+      summary: Delete a TimeSeriesProfile Parser by ID
       operationId: deleteCwmsDataTimeseriesProfileParserWithLocationIdWithParameterId
       parameters:
         - name: location-id
@@ -3358,7 +3396,7 @@ paths:
     get:
       tags:
         - TimeSeries
-      summary: Get a TimeSeriesProfileParser by ID
+      summary: Retrieve a list of TimeSeries Profile Parsers that match the provided mask parameters
       operationId: getCwmsDataTimeseriesProfileParser
       parameters:
         - name: parameter-id-mask
@@ -3426,7 +3464,7 @@ paths:
     post:
       tags:
         - TimeSeries
-      summary: Parse TimeSeriesProfileData into a new Time Series Profile
+      summary: Store a TimeSeriesProfile Parser
       operationId: postCwmsDataTimeseriesProfileParser
       parameters:
         - name: fail-if-exists
@@ -3481,7 +3519,7 @@ paths:
     get:
       tags:
         - TimeSeries
-      summary: Get all time series profile instances that match the provided masks. This endpoint will return a list of time series profile instances without the associated data. Data for an instance can be retrieved using the singular retrieval endpoint.
+      summary: Get a time series profile instance that matches the provided parameters.
       operationId: getCwmsDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
       parameters:
         - name: location-id
@@ -3515,7 +3553,7 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: The version date of the time series profile instance. Default is the min or max version date, depending on the maxVersion
+          description: The version date of the time series profile instance. Accepts ISO8601 formats. Default is the min or max version date, depending on the maxVersion
           schema:
             type: string
             format: date-time
@@ -3617,7 +3655,7 @@ paths:
     delete:
       tags:
         - TimeSeries
-      summary: Get all time series profile instances
+      summary: Delete a time series profile instance
       operationId: deleteCwmsDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
       parameters:
         - name: location-id
@@ -3651,7 +3689,7 @@ paths:
             type: string
         - name: version-date
           in: query
-          description: The version date of the time series profile instance.
+          description: The version date of the time series profile instance. Accepts ISO8601 format.
           required: true
           schema:
             type: string
@@ -3706,7 +3744,7 @@ paths:
     get:
       tags:
         - TimeSeries
-      summary: Get all time series profile instances. Masks can be provided to filter the results.
+      summary: Get all time series profile instances that match the provided masks. This endpoint will return a list of time series profile instances without the associated data. Data for an instance can be retrieved using the singular retrieval endpoint.
       operationId: getCwmsDataTimeseriesProfileInstance
       parameters:
         - name: office-mask
@@ -3773,7 +3811,7 @@ paths:
     post:
       tags:
         - TimeSeries
-      summary: Create a new time series profile instance
+      summary: Create a new time series profile instance by parsing provided data
       operationId: postCwmsDataTimeseriesProfileInstance
       parameters:
         - name: method
@@ -3788,11 +3826,11 @@ paths:
             type: boolean
         - name: version-date
           in: query
-          description: The version date of the time series profile instance.
+          description: The version date of the time series profile instance. Accepts ISO8601 format.
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: date-time
         - name: profile-data
           in: query
           description: The profile data of the time series profile instance
@@ -4073,14 +4111,19 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/identifier-descriptor/{timeseries-id}:
+  /cwms-data/timeseries/identifier-descriptor/{name}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Get cwmsData timeseries identifierDescriptor with name
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: getCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
         - name: timeseries-id
           in: path
           description: Specifies the identifier of the timeseries to be included in the response.
@@ -4136,10 +4179,15 @@ paths:
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete cwmsData timeseries identifierDescriptor with timeseriesId
+      summary: Delete cwmsData timeseries identifierDescriptor with name
       description: Deletes requested timeseries identifier
-      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      operationId: deleteCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
         - name: timeseries-id
           in: path
           description: 'The timeseries-id of the timeseries to be deleted. '
@@ -4195,17 +4243,12 @@ paths:
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch cwmsData timeseries identifierDescriptor with timeseriesId
-      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithTimeseriesId
+      summary: Patch cwmsData timeseries identifierDescriptor with name
+      operationId: patchCwmsDataTimeseriesIdentifierDescriptorWithName
       parameters:
-        - name: timeseries-id
+        - name: name
           in: path
-          required: true
-          schema:
-            type: string
-        - name: timeseries-id
-          in: query
-          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
+          description: The timeseries id
           required: true
           schema:
             type: string
@@ -4213,6 +4256,11 @@ paths:
           in: query
           description: Specifies the owning office of the timeseries identifier to be updated
           required: true
+          schema:
+            type: string
+        - name: timeseries-id
+          in: query
+          description: A new timeseries-id.  If specified a rename operation will be performed and snap-forward, snap-backward, and active must not be provided
           schema:
             type: string
         - name: interval-offset
@@ -4416,6 +4464,18 @@ paths:
           required: true
           schema:
             type: string
+        - name: category-office-id
+          in: query
+          description: Specifies the owning office of the timeseries group category
+          required: true
+          schema:
+            type: string
+        - name: group-office-id
+          in: query
+          description: Specifies the owning office of the timeseries group
+          required: true
+          schema:
+            type: string
         - name: category-id
           in: query
           description: Specifies the category containing the timeseries group whose data is to be included in the response.
@@ -4523,7 +4583,7 @@ paths:
       tags:
         - Timeseries Groups
       summary: Patch cwmsData timeseries group with groupId
-      description: Update existing TimeSeriesGroup
+      description: Update existing TimeSeriesGroup. Allows for renaming of the group, assigning new time series, and unassigning all time series from the group.
       operationId: patchCwmsDataTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
@@ -4538,7 +4598,7 @@ paths:
             type: boolean
         - name: office
           in: query
-          description: Specifies the owning office of the time series group to be updated
+          description: Specifies the office of the user making the request. This is the office that the timeseries, group, and category belong to. If the group and/or category belong to the CWMS office, this only identifies the timeseries.
           required: true
           schema:
             type: string
@@ -4603,6 +4663,11 @@ paths:
         - name: timeseries-category-like
           in: query
           description: Posix <a href="regexp.html">regular expression</a> matching against the timeseries category id
+          schema:
+            type: string
+        - name: category-office-id
+          in: query
+          description: Specifies the owning office of the timeseries group category
           schema:
             type: string
         - name: timeseries-group-like
@@ -6226,15 +6291,17 @@ paths:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the basin whose data is to be included in the response. If this field is not specified, matching basin information from all offices shall be returned.
+          description: Specifies the owning office of the basin whose data is to be included in the response.
+          required: true
           schema:
             type: string
         - name: unit
           in: query
           description: |-
-            Specifies the unit or unit system of the response. Valid values for the unit field are:
-            * `EN`  Specifies English unit system. Basin values will be in the default English units for their parameters. (This is default if no value is entered)
-            * `SI`  Specifies the SI unit system. Basin values will be in the default SI units for their parameters.
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  (default) Specifies English unit system.  Basin area values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
       responses:
@@ -6302,12 +6369,12 @@ paths:
           required: true
           schema:
             type: string
-        - name: delete-mode
+        - name: method
           in: query
           description: Specifies the delete method used.
           required: true
           schema:
-            type: string
+            $ref: '#/components/schemas/DeleteMethod'
       responses:
         '400':
           description: Bad Request
@@ -6328,7 +6395,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
         '404':
-          description: The provided combination of parameters did not find a basin.
+          description: Not Found
           content:
             application/json:
               schema:
@@ -6339,8 +6406,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-        '501':
-          description: Requested format is not implemented
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
@@ -7655,6 +7720,276 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/measurements:
+    get:
+      tags:
+        - Measurements
+      summary: Get cwmsData measurements
+      description: Returns matching measurement data.
+      operationId: getCwmsDataMeasurements
+      parameters:
+        - name: office-mask
+          in: query
+          description: Office id mask for filtering measurements. Use null to retrieve measurements for all offices.
+          schema:
+            type: string
+        - name: id-mask
+          in: query
+          description: Location id mask for filtering measurements. Use null to retrieve measurements for all locations.
+          schema:
+            type: string
+        - name: min-number
+          in: query
+          description: Minimum measurement number-id for filtering measurements.
+          schema:
+            type: string
+        - name: max-number
+          in: query
+          description: Maximum measurement number-id for filtering measurements.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'. A null value is treated as an unbounded start.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.A null value is treated as an unbounded end.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: This field specifies a default timezone to be used if the format of the beginand end parameters do not include offset or time zone information. Defaults to UTC.
+          schema:
+            type: string
+        - name: min-height
+          in: query
+          description: Minimum height for filtering measurements.
+          schema:
+            type: string
+        - name: max-height
+          in: query
+          description: Maximum height for filtering measurements.
+          schema:
+            type: string
+        - name: min-flow
+          in: query
+          description: Minimum flow for filtering measurements.
+          schema:
+            type: string
+        - name: max-flow
+          in: query
+          description: Maximum flow for filtering measurements.
+          schema:
+            type: string
+        - name: agency
+          in: query
+          description: Agencies for filtering measurements.
+          schema:
+            type: string
+        - name: quality
+          in: query
+          description: Quality for filtering measurements.
+          schema:
+            type: string
+        - name: unit-system
+          in: query
+          description: |-
+            Specifies the unit system of the response. Valid values for the unit field are: 
+            * `EN`  Specifies English unit system.  Location values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location values will be in the default SI units for their parameters. If not specified, EN is used.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measurement'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Measurement'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security: []
+    post:
+      tags:
+        - Measurements
+      summary: Post cwmsData measurements
+      description: Create new measurement(s).
+      operationId: postCwmsDataMeasurements
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided Measurement(s) already exist. Default: true'
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Measurement'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Measurement'
+        required: true
+      responses:
+        '204':
+          description: Measurement(s) successfully stored.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
+  /cwms-data/measurements/{location-id}:
+    delete:
+      tags:
+        - Measurements
+      summary: Delete cwmsData measurements with locationId
+      description: Delete an existing measurement.
+      operationId: deleteCwmsDataMeasurementsWithLocationId
+      parameters:
+        - name: location-id
+          in: path
+          description: Specifies the location-id of the measurement(s) to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the office of the measurements to delete
+          required: true
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: This field specifies a default timezone to be used if the format of the beginand end parameters do not include offset or time zone information. Defaults to UTC.
+          schema:
+            type: string
+        - name: min-number
+          in: query
+          description: Specifies the min number-id of the measurement to delete.
+          schema:
+            type: string
+        - name: max-number
+          in: query
+          description: Specifies the max number-id of the measurement to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Measurement successfully deleted.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Measurement not found.
           content:
             application/json:
               schema:
@@ -9376,7 +9711,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     delete:
       tags:
         - Water Contracts
@@ -9573,7 +9910,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     post:
       tags:
         - Water Contracts
@@ -9714,7 +10053,9 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented.
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     delete:
       tags:
         - Water Contracts
@@ -10011,6 +10352,202 @@ paths:
       security:
         - CwmsAAACacAuth: []
         - ApiKey: []
+  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/accounting:
+    get:
+      tags:
+        - Pump Accounting
+      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts with contractName accounting
+      description: Get pump accounting entries associated with a water supply contract.
+      operationId: getCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
+      parameters:
+        - name: office
+          in: path
+          description: The office ID of the project the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          description: The project ID the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the pump accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          description: The name of the contract associated with the pump accounting.
+          required: true
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: The start time of the time window for pump accounting entries to retrieve. The format for this field is ISO 8601 extended, with optional offset and timezone
+          required: true
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end time of the time window for pump accounting entries to retrieve.
+          required: true
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: This field specifies a default timezone to be used if the format of the end or begin parameters do not include offset or time zone information. Defaults to UTC.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: The unit of the flow rate of the accounting entries to retrieve. Defaults to 'cms'.
+          schema:
+            type: string
+        - name: start-time-inclusive
+          in: query
+          description: Whether or not the start time is inclusive or not. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: end-time-inclusive
+          in: query
+          description: Whether or not the end time is inclusive or not. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: ascending
+          in: query
+          description: Whether or not the entries should be returned in ascending order. Defaults to TRUE.
+          schema:
+            type: boolean
+        - name: row-limit
+          in: query
+          description: The maximum number of rows to return. Defaults to 0, which means no limit.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=1:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterSupplyAccounting'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterSupplyAccounting'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Pump Accounting not found for provided input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security: []
+    post:
+      tags:
+        - Pump Accounting
+      summary: Post cwmsData projects with office with projectId waterUser with waterUser contracts with contractName accounting
+      description: Create a new pump accounting entry associated with a water supply contract.
+      operationId: postCwmsDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
+      parameters:
+        - name: office
+          in: path
+          description: The office ID the accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: water-user
+          in: path
+          description: The water user the accounting is associated with.
+          required: true
+          schema:
+            type: string
+        - name: contract-name
+          in: path
+          description: The name of the contract associated with the accounting.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/WaterSupplyAccounting'
+        required: true
+      responses:
+        '204':
+          description: The pump accounting entry was created.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
     delete:
       tags:
@@ -10150,7 +10687,9 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: Requested format is not implemented.
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     post:
       tags:
         - Water Contracts
@@ -11080,7 +11619,7 @@ paths:
             type: string
         - name: project-id
           in: query
-          description: Specifies the project-id of the Locks whose data is to be included in the response.
+          description: Specifies the project ID of the Locks whose data is to be included in the response.
           required: true
           schema:
             type: string
@@ -11608,7 +12147,8 @@ paths:
       parameters:
         - name: office
           in: query
-          description: Office id for the reservoir project location associated with the outlets.  Defaults to the user session id.
+          description: Office id for the reservoir project location associated with the outlets.
+          required: true
           schema:
             type: string
         - name: project-id
@@ -12646,7 +13186,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     delete:
       tags:
         - Properties
@@ -12824,7 +13366,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     post:
       tags:
         - Properties
@@ -13196,7 +13740,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     delete:
       tags:
         - Project Locks
@@ -13317,7 +13863,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
     post:
       tags:
         - Project Locks
@@ -13548,7 +14096,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CdaError'
-      security: []
+      security:
+        - CwmsAAACacAuth: []
+        - ApiKey: []
   /cwms-data/project-lock-rights/remove-all:
     post:
       tags:
@@ -13978,6 +14528,71 @@ components:
           type: string
           description: Reference to another office, like a division, that this office reports to.
       description: A representation of a CWMS office
+    parameter:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        base-parameter:
+          type: string
+        sub-parameter:
+          type: string
+        sub-parameter-description:
+          type: string
+        db-unit-id:
+          type: string
+        unit-long-name:
+          type: string
+        unit-description:
+          type: string
+    Parameter:
+      required:
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        name:
+          type: string
+        base-parameter:
+          type: string
+        sub-parameter:
+          type: string
+        sub-parameter-description:
+          type: string
+        db-unit-id:
+          type: string
+        unit-long-name:
+          type: string
+        unit-description:
+          type: string
+    time-zone:
+      required:
+        - time-zone
+      type: object
+      properties:
+        time-zone:
+          type: string
+    time-zones:
+      type: object
+      properties:
+        time-zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/time-zone'
+    TimeZoneIds:
+      type: object
+      properties:
+        time-zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/time-zone'
     LocationLevel:
       required:
         - location-level-id
@@ -14268,6 +14883,7 @@ components:
           type: array
           items:
             type: array
+            description: Time is Milliseconds since the UNIX Epoch. Value is Double (for missing data you can use null, or -Float.MAX_VALUE (-340282346638528859811704183484516925440), quality is an integer.) If you are using missing data set the quality to 5.Failure to do this may result in silently ignoring that value on not storing a placeholder which can be important in irregular and psuedo regular timeseries.
             example:
               - 1509654000000
               - 54.3
@@ -14422,6 +15038,7 @@ components:
           type: array
           items:
             type: array
+            description: Time is Milliseconds since the UNIX Epoch. Value is Double (for missing data you can use null, or -Float.MAX_VALUE (-340282346638528859811704183484516925440), quality is an integer.) If you are using missing data set the quality to 5.Failure to do this may result in silently ignoring that value on not storing a placeholder which can be important in irregular and psuedo regular timeseries.
             example:
               - 1509654000000
               - 54.3
@@ -14685,7 +15302,7 @@ components:
           type: string
         unit:
           type: string
-        parameter-info-string:
+        parameterInfoString:
           type: string
         type:
           type: string
@@ -15550,6 +16167,126 @@ components:
           $ref: '#/components/schemas/CwmsId'
         stream-node:
           $ref: '#/components/schemas/StreamNode'
+    Measurement:
+      required:
+        - id
+        - instant
+        - number
+      type: object
+      properties:
+        height-unit:
+          type: string
+        flow-unit:
+          type: string
+        temp-unit:
+          type: string
+        velocity-unit:
+          type: string
+        area-unit:
+          type: string
+        used:
+          type: boolean
+        agency:
+          type: string
+        party:
+          type: string
+        wm-comments:
+          type: string
+        instant:
+          type: string
+          format: date-time
+        id:
+          $ref: '#/components/schemas/CwmsId'
+        number:
+          type: string
+        streamflow-measurement:
+          $ref: '#/components/schemas/StreamflowMeasurement'
+        supplemental-streamflow-measurement:
+          $ref: '#/components/schemas/SupplementalStreamflowMeasurement'
+        usgs-measurement:
+          $ref: '#/components/schemas/UsgsMeasurement'
+    StreamflowMeasurement:
+      type: object
+      properties:
+        gage-height:
+          type: number
+          format: double
+        flow:
+          type: number
+          format: double
+        quality:
+          type: string
+    SupplementalStreamflowMeasurement:
+      type: object
+      properties:
+        channel-flow:
+          type: number
+          format: double
+        overbank-flow:
+          type: number
+          format: double
+        overbank-max-depth:
+          type: number
+          format: double
+        channel-max-depth:
+          type: number
+          format: double
+        avg-velocity:
+          type: number
+          format: double
+        surface-velocity:
+          type: number
+          format: double
+        max-velocity:
+          type: number
+          format: double
+        effective-flow-area:
+          type: number
+          format: double
+        cross-sectional-area:
+          type: number
+          format: double
+        mean-gage:
+          type: number
+          format: double
+        top-width:
+          type: number
+          format: double
+        main-channel-area:
+          type: number
+          format: double
+        overbank-area:
+          type: number
+          format: double
+    UsgsMeasurement:
+      type: object
+      properties:
+        remarks:
+          type: string
+        current-rating:
+          type: string
+        control-condition:
+          type: string
+        shift-used:
+          type: number
+          format: double
+        percent-difference:
+          type: number
+          format: double
+        flow-adjustment:
+          type: string
+        delta-height:
+          type: number
+          format: double
+        delta-time:
+          type: number
+          format: double
+        air-temp:
+          type: number
+          format: double
+        water-temp:
+          type: number
+          format: double
     Blob:
       required:
         - id
@@ -16034,6 +16771,55 @@ components:
             - IN
             - OUT
             - BELOW
+    PumpLocation:
+      type: object
+      properties:
+        pump-in:
+          $ref: '#/components/schemas/CwmsId'
+        pump-out:
+          $ref: '#/components/schemas/CwmsId'
+        pump-below:
+          $ref: '#/components/schemas/CwmsId'
+    PumpTransfer:
+      required:
+        - comment
+        - flow
+        - pump-type
+        - transfer-type-display
+      type: object
+      properties:
+        pump-type:
+          type: string
+          enum:
+            - IN
+            - OUT
+            - BELOW
+        transfer-type-display:
+          type: string
+        flow:
+          type: number
+          format: double
+        comment:
+          type: string
+    WaterSupplyAccounting:
+      required:
+        - contract-name
+        - pump-locations
+        - water-user
+      type: object
+      properties:
+        contract-name:
+          type: string
+        water-user:
+          $ref: '#/components/schemas/WaterUser'
+        pump-locations:
+          $ref: '#/components/schemas/PumpLocation'
+        data-columns:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/PumpTransfer'
     PumpType:
       type: string
       enum:
@@ -16222,6 +17008,8 @@ components:
           $ref: '#/components/schemas/Location'
         rating-group-id:
           $ref: '#/components/schemas/CwmsId'
+        rating-spec-id:
+          type: string
         rating-category-id:
           $ref: '#/components/schemas/CwmsId'
     GateChange:
@@ -16251,6 +17039,8 @@ components:
           $ref: '#/components/schemas/LookupType'
         notes:
           type: string
+        type:
+          type: string
         new-total-discharge-override:
           type: number
           format: double
@@ -16269,6 +17059,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GateSetting'
+      discriminator:
+        propertyName: type
     GateSetting:
       required:
         - invert-elevation
@@ -16290,6 +17082,10 @@ components:
         invert-elevation:
           type: number
           format: double
+        type:
+          type: string
+      discriminator:
+        propertyName: type
     VirtualOutlet:
       required:
         - project-id
