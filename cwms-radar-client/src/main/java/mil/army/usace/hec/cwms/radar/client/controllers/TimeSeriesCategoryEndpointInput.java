@@ -125,7 +125,7 @@ public final class TimeSeriesCategoryEndpointInput {
     public static final class Delete extends EndpointInput {
         private final String categoryId;
         private final String officeId;
-        private boolean cascadeDelete;
+        private boolean cascadeDelete = false;
 
         private Delete(String categoryId, String officeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series category without a category id");

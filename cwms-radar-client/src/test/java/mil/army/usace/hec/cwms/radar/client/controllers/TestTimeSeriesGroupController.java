@@ -42,11 +42,12 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput.GetOne input = TimeSeriesGroupEndpointInput.getOne("QA Category", "Radar Test", "SWT");
+        TimeSeriesGroupEndpointInput.GetOne input = TimeSeriesGroupEndpointInput.getOne("QA Category", "Radar Test", "SWT", "SWT", "SWT");
         TimeSeriesGroup timeSeriesGroup = new TimeSeriesGroupController().retrieveTimeSeriesGroup(buildConnectionInfo(), input);
         assertEquals("Radar Test", timeSeriesGroup.getId());
         assertEquals("description123", timeSeriesGroup.getDescription());
         assertEquals("SWT", timeSeriesGroup.getOfficeId());
+        assertEquals("SWT", timeSeriesGroup.getTimeSeriesCategory().getOfficeId());
         assertEquals("TestAlias", timeSeriesGroup.getSharedAliasId());
         assertEquals("ADDI.Flow.Inst.1Hour.0.Ccp-Rev", timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
@@ -105,7 +106,7 @@ class TestTimeSeriesGroupController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("QA Category2", timeSeriesGroup);
+        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("SWT", "QA Category2", timeSeriesGroup);
         assertDoesNotThrow(() -> new TimeSeriesGroupController().updateGroup(buildConnectionInfo(), input));
     }
 
