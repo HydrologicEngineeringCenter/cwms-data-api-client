@@ -20,23 +20,21 @@ class TestWaterPumpAccountingController extends TestController {
         Instant startTime = Instant.ofEpochMilli(10000012648000L);
         Instant endTime = Instant.ofEpochSecond(10000016484000L);
         WaterPumpAccountingEndpointInput.GetAll input = WaterPumpAccountingEndpointInput
-                .getAll("SWT", "SACRAMENTO", "Test User", "TEST_CONTRACT", startTime, endTime);
+                .getAll("SPK", "SACRAMENTO", "California Department of Water Resources", "Sac. River Contract", startTime, endTime);
         List<WaterSupplyAccounting> values = new WaterPumpAccountingController()
                 .retrieveWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
         WaterSupplyAccounting value = values.get(0);
-        assertEquals("TEST_CONTRACT", value.getContractName());
-        assertEquals("SWT", value.getWaterUser().getProjectId().getOfficeId());
-        assertEquals("SACRAMENTO", value.getWaterUser().getProjectId().getName());
-        assertEquals("Test Water Right", value.getWaterUser().getWaterRight());
-        assertEquals("PUMP3", value.getPumpAccounting().get(0).getPumpLocation().getName());
-        assertEquals("PUMP1", value.getPumpAccounting().get(1).getPumpLocation().getName());
-        assertEquals("Test Transfer Type", value.getPumpAccounting().get(0).getTransferType().getDisplayValue());
-        assertEquals(1.0, value.getPumpAccounting().get(0).getFlow());
-        assertEquals(2.0, value.getPumpAccounting().get(1).getFlow());
-        assertEquals("Test Comment 2", value.getPumpAccounting().get(1).getComment());
-        assertEquals(Instant.ofEpochMilli(10000012648000L), value.getPumpAccounting().get(0).getTransferDate());
-        assertEquals(Instant.ofEpochMilli(10000016484000L), value.getPumpAccounting().get(1).getTransferDate());
+        assertEquals("Sac. River Contract", value.getContractName());
+        assertEquals("SPK", value.getWaterUser().getProjectId().getOfficeId());
+        assertEquals("Sacramento River Delta", value.getWaterUser().getProjectId().getName());
+        assertEquals("State of California Water Rights Permit #12345", value.getWaterUser().getWaterRight());
+        assertEquals("Sacramento River Delta-Dam Water Pump 3", value.getPumpLocations().getPumpBelow().getName());
+        assertEquals("Sacramento River Delta-Dam Water Pump 1", value.getPumpLocations().getPumpIn().getName());
+        assertEquals("Pipeline", value.getPumpAccounting().get(Instant.parse("2022-11-20T21:17:28Z")).get(0).getTransferTypeDisplay());
+        assertEquals(1.0, value.getPumpAccounting().get(Instant.parse("2022-11-20T21:17:28Z")).get(0).getFlow());
+        assertEquals(2.0, value.getPumpAccounting().get(Instant.parse("2022-11-20T21:17:28Z")).get(1).getFlow());
+        assertEquals("Added water to the system", value.getPumpAccounting().get(Instant.parse("2022-11-20T21:17:28Z")).get(0).getComment());
     }
 
     @Test
