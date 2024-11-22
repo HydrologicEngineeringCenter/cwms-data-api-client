@@ -79,7 +79,7 @@ class TestLocationGroupController extends TestController {
         mockHttpServer.start();
         LocationGroupEndpointInput.GetAll input = LocationGroupEndpointInput.getAll()
                 .includeAssigned(true)
-                .officeId("CWMS");
+                .locationOfficeId("CWMS");
         List<LocationGroup> locationGroups = new LocationGroupController().retrieveLocationGroups(buildConnectionInfo(), input);
 
         assertEquals(3, locationGroups.size());
@@ -106,7 +106,7 @@ class TestLocationGroupController extends TestController {
         mockHttpServer.start();
         LocationGroupEndpointInput.GetAll input = LocationGroupEndpointInput.getAll()
                 .includeAssigned(false)
-                .officeId("CWMS");
+                .locationOfficeId("CWMS");
         List<LocationGroup> locationGroups = new LocationGroupController().retrieveLocationGroups(buildConnectionInfo(), input);
 
         assertEquals(823, locationGroups.size());
