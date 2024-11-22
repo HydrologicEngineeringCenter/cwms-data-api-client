@@ -24,15 +24,7 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CASCADE_DELETE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_LIKE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.CATEGORY_OFFICE_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.GROUP_OFFICE_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.INCLUDE_ASSIGNED_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.REPLACE_ASSIGNED_LOCS;
+import static mil.army.usace.hec.cwms.radar.client.controllers.LocationGroupEndpointInput.*;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.radar.client.controllers.TestController.readJsonFile;
@@ -63,12 +55,13 @@ class TestLocationGroupEndpointInput {
     void testGetAll() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         LocationGroupEndpointInput.GetAll input = LocationGroupEndpointInput.getAll()
-                .officeId("SWT")
+                .locationOfficeId("SWT")
                 .includeAssigned(true)
-                .categoryIdMask("Default")
-                .categoryOfficeId("SWT");
+                .categoryIdMask("Default").categoryOfficeId("SWT").groupOfficeId("SWT");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(LOCATION_OFFICE_ID_QUERY_PARAMETER));
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER));
         assertEquals("Default", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));

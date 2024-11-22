@@ -16814,7 +16814,7 @@ components:
           $ref: '#/components/schemas/WaterUser'
         pump-locations:
           $ref: '#/components/schemas/PumpLocation'
-        data-columns:
+        pump-accounting:
           type: object
           additionalProperties:
             type: array

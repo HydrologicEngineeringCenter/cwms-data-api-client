@@ -45,6 +45,7 @@ public final class LocationGroupEndpointInput {
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String REPLACE_ASSIGNED_LOCS = "replace-assigned-locs";
     static final String GROUP_OFFICE_ID_QUERY_PARAMETER = "group-office-id";
+    static final String LOCATION_OFFICE_ID_QUERY_PARAMETER = "location-office-id";
     static final String CATEGORY_OFFICE_ID_QUERY_PARAMETER = "category-office-id";
     static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
@@ -99,22 +100,18 @@ public final class LocationGroupEndpointInput {
     }
 
     public static final class GetAll extends EndpointInput {
-        private String officeId;
+        private String locationOfficeId;
+        private String groupOfficeId;
+        private String categoryOfficeId;
         private boolean includeAssigned = false;
         private String categoryIdMask;
-        private String categoryOfficeId;
 
         private GetAll() {
 
         }
 
-        public GetAll officeId(String officeId) {
-            this.officeId = officeId;
-            return this;
-        }
-
-        public GetAll categoryOfficeId(String categoryOfficeId) {
-            this.categoryOfficeId = categoryOfficeId;
+        public GetAll locationOfficeId(String locationOfficeId) {
+            this.locationOfficeId = locationOfficeId;
             return this;
         }
 
@@ -128,10 +125,22 @@ public final class LocationGroupEndpointInput {
             return this;
         }
 
+        public GetAll groupOfficeId(String groupOfficeId) {
+            this.groupOfficeId = groupOfficeId;
+            return this;
+        }
+
+        public GetAll categoryOfficeId(String categoryOfficeId) {
+            this.categoryOfficeId = categoryOfficeId;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
+                    .addQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER, categoryOfficeId)
+                    .addQueryParameter(LOCATION_OFFICE_ID_QUERY_PARAMETER, locationOfficeId)
                     .addQueryParameter(CATEGORY_ID_LIKE_QUERY_PARAMETER, categoryIdMask)
                     .addQueryParameter(CATEGORY_OFFICE_ID_QUERY_PARAMETER, categoryOfficeId)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
