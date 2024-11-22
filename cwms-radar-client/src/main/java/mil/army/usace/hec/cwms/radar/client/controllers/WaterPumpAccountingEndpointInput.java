@@ -15,8 +15,9 @@ public final class WaterPumpAccountingEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll(String officeId, String projectId, String waterUserId, String waterContractName) {
-        return new GetAll(officeId, projectId, waterUserId, waterContractName);
+    public static GetAll getAll(String officeId, String projectId, String waterUserId, String waterContractName,
+            Instant startTime, Instant endTime) {
+        return new GetAll(officeId, projectId, waterUserId, waterContractName, startTime, endTime);
     }
 
     public static Post post(WaterSupplyAccounting waterSupplyAccounting) {
@@ -30,18 +31,21 @@ public final class WaterPumpAccountingEndpointInput {
         static final String END_INCLUSIVE_QUERY_PARAMETER = "end-time-inclusive";
         static final String ASCENDING_QUERY_PARAMETER = "ascending";
         static final String ROW_LIMIT_QUERY_PARAMETER = "row-limit";
+        static final String TIMEZONE_QUERY_PARAMETER = "timezone";
         private final String waterUserId;
         private final String waterContractName;
         private final String projectId;
         private final String officeId;
-        private Instant startTime = Instant.ofEpochSecond(-5364662400L);
-        private Instant endTime = Instant.ofEpochSecond(32503680000L);
+        private Instant startTime;
+        private Instant endTime;
         private boolean startInclusive = true;
         private boolean endInclusive = true;
         private boolean ascending = true;
         private int rowLimit = 0;
+        private String timeZone;
 
-        private GetAll(String officeId, String projectId, String waterUserId, String waterContractName) {
+        private GetAll(String officeId, String projectId, String waterUserId, String waterContractName,
+                Instant startTime, Instant endTime) {
             this.officeId = Objects.requireNonNull(officeId, "Cannot access the water pump accounting GET "
                     + "endpoint without providing office id");
             this.projectId = Objects.requireNonNull(projectId, "Cannot access the water pump accounting GET "
@@ -50,16 +54,10 @@ public final class WaterPumpAccountingEndpointInput {
                     + "GET endpoint without providing water user id");
             this.waterContractName = Objects.requireNonNull(waterContractName, "Cannot access the water pump "
                     + "accounting GET endpoint without providing water contract name");
-        }
-
-        public GetAll setStartTime(Instant startTime) {
-            this.startTime = Objects.requireNonNull(startTime, "Cannot set the start time to null");
-            return this;
-        }
-
-        public GetAll setEndTime(Instant endTime) {
-            this.endTime = Objects.requireNonNull(endTime, "Cannot set the end time to null");
-            return this;
+            this.startTime = Objects.requireNonNull(startTime, "Cannot access the water pump accounting GET "
+                    + "endpoint without providing start time");
+            this.endTime = Objects.requireNonNull(endTime, "Cannot access the water pump accounting GET "
+                    + "endpoint without providing end time");
         }
 
         public GetAll setStartInclusive(boolean startInclusive) {
@@ -79,6 +77,11 @@ public final class WaterPumpAccountingEndpointInput {
 
         public GetAll setRowLimit(int rowLimit) {
             this.rowLimit = rowLimit;
+            return this;
+        }
+
+        public GetAll setTimeZone(String timeZone) {
+            this.timeZone = timeZone;
             return this;
         }
 
@@ -122,6 +125,10 @@ public final class WaterPumpAccountingEndpointInput {
             return rowLimit;
         }
 
+        public String getTimeZone() {
+            return timeZone;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(START_TIME_QUERY_PARAMETER, startTime.toString())
@@ -130,6 +137,7 @@ public final class WaterPumpAccountingEndpointInput {
                     .addQueryParameter(END_INCLUSIVE_QUERY_PARAMETER, endInclusive ? "true" : "false")
                     .addQueryParameter(ASCENDING_QUERY_PARAMETER, ascending ? "true" : "false")
                     .addQueryParameter(ROW_LIMIT_QUERY_PARAMETER, String.valueOf(rowLimit))
+                    .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timeZone)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }

@@ -17,8 +17,10 @@ class TestWaterPumpAccountingController extends TestController {
         String collect = readJsonFile("radar/v1/json/water_supply_accounting_list.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
+        Instant startTime = Instant.ofEpochMilli(10000012648000L);
+        Instant endTime = Instant.ofEpochSecond(10000016484000L);
         WaterPumpAccountingEndpointInput.GetAll input = WaterPumpAccountingEndpointInput
-                .getAll("SWT", "SACRAMENTO", "Test User", "TEST_CONTRACT");
+                .getAll("SWT", "SACRAMENTO", "Test User", "TEST_CONTRACT", startTime, endTime);
         List<WaterSupplyAccounting> values = new WaterPumpAccountingController()
                 .retrieveWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input);
         assertFalse(values.isEmpty());
@@ -33,6 +35,7 @@ class TestWaterPumpAccountingController extends TestController {
         assertEquals(1.0, value.getPumpAccounting().get(0).getFlow());
         assertEquals(2.0, value.getPumpAccounting().get(1).getFlow());
         assertEquals("Test Comment 2", value.getPumpAccounting().get(1).getComment());
+        assertEquals(Instant.ofEpochMilli(10000012648000L), value.getPumpAccounting().get(0).getTransferDate());
         assertEquals(Instant.ofEpochMilli(10000016484000L), value.getPumpAccounting().get(1).getTransferDate());
     }
 
