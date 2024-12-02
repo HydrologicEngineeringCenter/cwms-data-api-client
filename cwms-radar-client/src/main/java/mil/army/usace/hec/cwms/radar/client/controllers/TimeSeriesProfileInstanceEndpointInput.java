@@ -20,8 +20,8 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         return new GetAll();
     }
 
-    public static GetOne getOne(String officeId, String locationId, String parameterId, String version, List<String> unit) {
-        return new GetOne(officeId, locationId, parameterId, version, unit);
+    public static GetOne getOne(String officeId, String locationId, String parameterId, String version, List<String> unit, Instant start, Instant end) {
+        return new GetOne(officeId, locationId, parameterId, version, unit, start, end);
     }
 
     public static Post post(String profileData, TimeSeriesProfile profile, String version) {
@@ -101,19 +101,20 @@ public final class TimeSeriesProfileInstanceEndpointInput {
         private boolean previous = false;
         private boolean next = false;
         private boolean maxVersion = false;
-        private Instant start = Instant.now();
-        private Instant end = Instant.now();
+        private final Instant start;
+        private final Instant end;
         private final String locationId;
         private String page;
         private int pageSize = 500;
 
-        private GetOne(String officeId, String locationId, String parameterId, String version, List<String> unit) {
+        private GetOne(String officeId, String locationId, String parameterId, String version, List<String> unit, Instant start, Instant end) {
             this.officeId = Objects.requireNonNull(officeId, "Office is required");
             this.locationId = Objects.requireNonNull(locationId, "Location ID is required");
             this.parameterId = Objects.requireNonNull(parameterId, "Parameter ID is required");
             this.version = Objects.requireNonNull(version, "Version is required");
             this.unit = Objects.requireNonNull(unit,"Unit is required");
-
+            this.start = Objects.requireNonNull(start, "Start is required");
+            this.end = Objects.requireNonNull(end, "End is required");
         }
 
         public GetOne versionDate(Instant versionDate) {
@@ -148,16 +149,6 @@ public final class TimeSeriesProfileInstanceEndpointInput {
 
         public GetOne maxVersion(boolean maxVersion) {
             this.maxVersion = maxVersion;
-            return this;
-        }
-
-        public GetOne start(Instant start) {
-            this.start = start;
-            return this;
-        }
-
-        public GetOne end(Instant end) {
-            this.end = end;
             return this;
         }
 
