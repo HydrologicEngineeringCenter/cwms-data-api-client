@@ -25,9 +25,11 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         String locationMask = "*LOC*";
         String officeMask = "SPK";
         String parameterMask = "*PAR*";
-        GetAll input = TimeSeriesProfileInstanceEndpointInput.getAll()
+        String versionMask = "1";
+        GetAll input = TimeSeriesProfileInstanceEndpointInput.getAll().versionMask(versionMask)
                 .locationMask(locationMask).officeMask(officeMask).parameterMask(parameterMask);
         input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(versionMask, mockHttpRequestBuilder.getQueryParameter(GetAll.VERSION_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
         assertEquals(locationMask, mockHttpRequestBuilder.getQueryParameter(GetAll.LOCATION_MASK_QUERY_PARAMETER));
         assertEquals(officeMask, mockHttpRequestBuilder.getQueryParameter(GetAll.OFFICE_MASK_QUERY_PARAMETER));
@@ -53,8 +55,8 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
         String timezone = "PST";
         boolean maxVersion = true;
         Instant versionDate = Instant.now();
-        GetOne input = TimeSeriesProfileInstanceEndpointInput.getOne(office, timeSeriesId, parameter, version, unit)
-                .startInclusive(startInclusive).endInclusive(endInclusive).start(start).end(end).next(next)
+        GetOne input = TimeSeriesProfileInstanceEndpointInput.getOne(office, timeSeriesId, parameter, version, unit, start, end)
+                .startInclusive(startInclusive).endInclusive(endInclusive).next(next)
                 .previous(previous).maxVersion(maxVersion).timezone(timezone).versionDate(versionDate)
                 .page(page).pageSize(pageSize);
         input.addInputParameters(mockHttpRequestBuilder);
@@ -98,7 +100,7 @@ final class TestTimeSeriesProfileInstanceEndpointInput {
                 .method(method).versionDate(versionDate).overrideProtection(overrideProtection);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-        assertEquals(profileData, mockHttpRequestBuilder.getQueryParameter(Post.PROFILE_DATA_QUERY_PARAMETER));
+        assertEquals(profileData, input.profileData());
         assertEquals(RadarObjectMapper.mapObjectToJson(profile), RadarObjectMapper.mapObjectToJson(input.profile()));
         assertEquals(version, mockHttpRequestBuilder.getQueryParameter(Post.VERSION_QUERY_PARAMETER));
         assertEquals(method, mockHttpRequestBuilder.getQueryParameter(Post.METHOD_QUERY_PARAMETER));

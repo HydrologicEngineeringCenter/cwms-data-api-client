@@ -19,9 +19,12 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         List<String> parameterList = List.of("F", "m");
+        Instant firstDate = Instant.ofEpochMilli(1594296000000L);
+        Instant lastDate = Instant.ofEpochMilli(1752062400000L);
         TimeSeriesProfileInstanceEndpointInput.GetOne input = TimeSeriesProfileInstanceEndpointInput
                 .getOne("SWT", "Test_TSP_Location", "Depth", "DSS-Obs",
-                        parameterList).page("CWMSTESTPAGE").pageSize(50);
+                        parameterList, firstDate, lastDate)
+                .page("CWMSTESTPAGE").pageSize(50);
         TimeSeriesProfileInstance value = new TimeSeriesProfileInstanceController()
                 .retrieveTimeSeriesProfileInstance(buildConnectionInfo(), input);
         assertNotNull(value);
@@ -31,6 +34,8 @@ final class TestTimeSeriesProfileInstanceController extends TestController {
         assertEquals("Depth", value.getTimeSeriesProfile().getKeyParameter());
         assertEquals("Description", value.getTimeSeriesProfile().getDescription());
         assertEquals("SWT", value.getTimeSeriesProfile().getLocationId().getOfficeId());
+        assertEquals(firstDate, value.getFirstDate().toInstant());
+        assertEquals(lastDate, value.getLastDate().toInstant());
         assertEquals(parameterList.get(0), value.getParameterColumns().get(0).getUnit());
         assertEquals(parameterList.get(1), value.getParameterColumns().get(1).getUnit());
     }
