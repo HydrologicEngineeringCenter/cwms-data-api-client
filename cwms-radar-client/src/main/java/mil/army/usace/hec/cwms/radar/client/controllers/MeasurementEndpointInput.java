@@ -27,7 +27,6 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.radar.client.model.Measurement;
@@ -180,12 +179,6 @@ public final class MeasurementEndpointInput {
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
-
-    private static <T> String getNullableFieldString(T field)
-    {
-        return Optional.ofNullable(field).map(Object::toString).orElse(null);
-    }
-
 
     public static final class Post extends EndpointInput {
         static final String FAIL_IF_EXISTS_QUERY_PARAMETER = "fail-if-exists";
