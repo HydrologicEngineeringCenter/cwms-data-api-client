@@ -24,7 +24,14 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import java.util.Optional;
+
 public abstract class EndpointInput {
 
     protected abstract HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder);
+
+    protected static <T> String getNullableFieldString(T field)
+    {
+        return Optional.ofNullable(field).map(Object::toString).orElse(null);
+    }
 }
