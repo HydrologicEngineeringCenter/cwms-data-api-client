@@ -3590,13 +3590,15 @@ paths:
             type: boolean
         - name: start
           in: query
-          description: The start of the time series profile instance. Default is the year 1800
+          description: The start of the time series profile instance.
+          required: true
           schema:
             type: string
             format: date-time
         - name: end
           in: query
-          description: The end of the time series profile instance. Default is the year 3000
+          description: The end of the time series profile instance.
+          required: true
           schema:
             type: string
             format: date-time
@@ -16463,9 +16465,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     pools:
       type: object
