@@ -37,38 +37,12 @@ import java.util.Objects;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-10-14T13:21:38.937-07:00[America/Los_Angeles]")
-public class TimeSeriesExtents {
-    @JsonProperty("earliest-time")
-    private ZonedDateTime earliestTime = null;
-
+public class TimeSeriesExtents extends TimeExtents {
     @JsonProperty("last-update")
     private ZonedDateTime lastUpdate = null;
 
-    @JsonProperty("latest-time")
-    private ZonedDateTime latestTime = null;
-
     @JsonProperty("version-time")
     private ZonedDateTime versionTime = null;
-
-    public TimeSeriesExtents earliestTime(ZonedDateTime earliestTime) {
-        this.earliestTime = earliestTime;
-        return this;
-    }
-
-    /**
-     * Earliest value in the timeseries
-     *
-     * @return earliestTime
-     **/
-
-    @Valid
-    public ZonedDateTime getEarliestTime() {
-        return earliestTime;
-    }
-
-    public void setEarliestTime(ZonedDateTime earliestTime) {
-        this.earliestTime = earliestTime;
-    }
 
     public TimeSeriesExtents lastUpdate(ZonedDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
@@ -88,26 +62,6 @@ public class TimeSeriesExtents {
 
     public void setLastUpdate(ZonedDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    public TimeSeriesExtents latestTime(ZonedDateTime latestTime) {
-        this.latestTime = latestTime;
-        return this;
-    }
-
-    /**
-     * Latest value in the timeseries
-     *
-     * @return latestTime
-     **/
-
-    @Valid
-    public ZonedDateTime getLatestTime() {
-        return latestTime;
-    }
-
-    public void setLatestTime(ZonedDateTime latestTime) {
-        this.latestTime = latestTime;
     }
 
     public TimeSeriesExtents versionTime(ZonedDateTime versionTime) {
@@ -140,16 +94,14 @@ public class TimeSeriesExtents {
             return false;
         }
         TimeSeriesExtents timeSeriesExtents = (TimeSeriesExtents) o;
-        return Objects.equals(this.earliestTime, timeSeriesExtents.earliestTime)
+        return super.equals(o)
             && Objects.equals(this.lastUpdate, timeSeriesExtents.lastUpdate)
-            && Objects.equals(this.latestTime, timeSeriesExtents.latestTime)
-            && Objects.equals(this.versionTime, timeSeriesExtents.versionTime)
-            ;
+            && Objects.equals(this.versionTime, timeSeriesExtents.versionTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(earliestTime, lastUpdate, latestTime, versionTime);
+        return Objects.hash(super.hashCode(), lastUpdate, versionTime);
     }
 
     @Override
@@ -157,9 +109,9 @@ public class TimeSeriesExtents {
         StringBuilder sb = new StringBuilder();
         sb.append("class TimeSeriesExtents {\n");
 
-        sb.append("    earliestTime: ").append(toIndentedString(earliestTime)).append("\n");
+        sb.append("    earliestTime: ").append(toIndentedString(getEarliestTime())).append("\n");
         sb.append("    lastUpdate: ").append(toIndentedString(lastUpdate)).append("\n");
-        sb.append("    latestTime: ").append(toIndentedString(latestTime)).append("\n");
+        sb.append("    latestTime: ").append(toIndentedString(getLatestTime())).append("\n");
         sb.append("    versionTime: ").append(toIndentedString(versionTime)).append("\n");
         sb.append("}");
         return sb.toString();
