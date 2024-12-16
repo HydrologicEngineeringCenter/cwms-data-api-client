@@ -23,6 +23,7 @@
  */
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import mil.army.usace.hec.cwms.radar.client.model.CwmsIdTimeExtentsEntry;
 import mil.army.usace.hec.cwms.radar.client.model.Measurement;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -128,5 +129,35 @@ class TestMeasurementController extends TestController {
 
         assertDoesNotThrow(() -> controller.deleteMeasurement(buildConnectionInfo(cookieJarSupplier), deleteInput),
                 "Deleting measurement should not throw an exception");
+    }
+
+    @Test
+    void testRetrieveAllTimeExtents() throws IOException {
+        String collect = readJsonFile("radar/v1/json/measurement-time-extents.json");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+
+        MeasurementTimeExtentsEndpointInput.GetAll input = MeasurementTimeExtentsEndpointInput.getAll()
+                .withOfficeIdMask("SPK");
+
+        List<CwmsIdTimeExtentsEntry> expectedTimeExtents = RadarObjectMapper.mapJsonToListOfObjects(collect, CwmsIdTimeExtentsEntry.class);
+        MeasurementController controller = new MeasurementController();
+        List<CwmsIdTimeExtentsEntry> timeExtents = null;
+        try {
+            timeExtents = controller.retrieveAllMeasurementTimeExtents(buildConnectionInfo(), input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(timeExtents, "Time extents list should not be null");
+        assertFalse(timeExtents.isEmpty(), "Time extents list should not be empty");
+        assertEquals(2, timeExtents.size(), "There should be exactly 2 time extents");
+
+        for(int i=0; i < timeExtents.size(); i++)
+        {
+            CwmsIdTimeExtentsEntry actual = timeExtents.get(i);
+            CwmsIdTimeExtentsEntry expected = expectedTimeExtents.get(i);
+            assertEquals(expected, actual, "Time extents mismatch");
+        }
     }
 }

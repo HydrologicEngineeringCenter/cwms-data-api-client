@@ -27,6 +27,7 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.radar.client.model.CwmsIdTimeExtentsEntry;
 import mil.army.usace.hec.cwms.radar.client.model.Measurement;
 import mil.army.usace.hec.cwms.radar.client.model.RadarObjectMapper;
 
@@ -39,6 +40,7 @@ import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointCons
 public final class MeasurementController {
 
     private static final String MEASUREMENT_ENDPOINT = "measurements";
+    private static final String MEASUREMENT_TIME_EXTENTS_ENDPOINT = MEASUREMENT_ENDPOINT + "/time-extents";
 
     public List<Measurement> retrieveMeasurements(ApiConnectionInfo apiConnectionInfo, MeasurementEndpointInput.GetAll input)
             throws IOException {
@@ -73,5 +75,17 @@ public final class MeasurementController {
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
+    }
+
+    public List<CwmsIdTimeExtentsEntry> retrieveAllMeasurementTimeExtents(ApiConnectionInfo apiConnectionInfo, MeasurementTimeExtentsEndpointInput.GetAll input)
+            throws IOException {
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, MEASUREMENT_TIME_EXTENTS_ENDPOINT)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
+                .addEndpointInput(input)
+                .get()
+                .withMediaType(ACCEPT_HEADER_V1);
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), CwmsIdTimeExtentsEntry.class);
+        }
     }
 }
