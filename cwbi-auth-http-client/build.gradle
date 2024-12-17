@@ -30,7 +30,6 @@ plugins {
 
 dependencies {
     api(project(":cwms-http-client"))
-    api(project(":cwms-radar-model"))
 
     implementation(libs.jackson.databind)
 
@@ -49,14 +48,5 @@ publishing {
             artifactId = "cwbi-auth-http-client"
             from components.java
         }
-    }
-}
-
-repositories {
-
-    maven {
-        name = "hec"
-        url = 'https://www.hec.usace.army.mil/nexus/repository/maven-public'
-
     }
 }
