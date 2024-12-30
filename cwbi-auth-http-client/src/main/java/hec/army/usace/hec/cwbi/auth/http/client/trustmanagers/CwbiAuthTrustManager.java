@@ -23,14 +23,10 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client.trustmanagers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -45,6 +41,7 @@ public final class CwbiAuthTrustManager implements X509TrustManager {
 
     private static final Logger LOGGER = Logger.getLogger(CwbiAuthTrustManager.class.getName());
     public static final String TOKEN_URL = "https://auth.corps.cloud/auth/realms/water/protocol/openid-connect/token";
+    public static final String TOKEN_TEST_URL = "https://identity-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/token";
     private final TrustManagerFactory trustManagerFactory;
 
     private static final X509TrustManager INSTANCE = buildTrustManager();
@@ -60,17 +57,12 @@ public final class CwbiAuthTrustManager implements X509TrustManager {
      */
     private static X509TrustManager buildTrustManager() {
         X509TrustManager retVal = null;
-        try (InputStream trustedCertificateAsInputStream = CwbiAuthTrustManager.class.getResourceAsStream("cwbiAuthServer.pem")) {
-            KeyStore ts = KeyStore.getInstance("JKS");
-            ts.load(null, null);
-            Certificate trustedCertificate = CertificateFactory.getInstance("X.509").generateCertificate(trustedCertificateAsInputStream);
-            ts.setCertificateEntry("cwbi-auth-server-root-certificate", trustedCertificate);
-            ((X509Certificate) trustedCertificate).checkValidity();
+        try {
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX");
-            trustManagerFactory.init(ts);
+            trustManagerFactory.init((KeyStore) null);
             retVal = new CwbiAuthTrustManager(trustManagerFactory);
-        } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException | IOException e) {
-            LOGGER.log(Level.SEVERE, "Unable to authenticate with CWBI Auth server", e);
+        } catch (NoSuchAlgorithmException | KeyStoreException e) {
+            LOGGER.log(Level.SEVERE, "Unable to initialize CWBI Auth Trust Manager", e);
         }
         return retVal;
     }

@@ -23,6 +23,7 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_TEST_URL;
 import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,14 +36,14 @@ class TestCwbiAuthUtil {
 
     @Test
     void testBuildTokenProvider() throws IOException {
-        CwbiAuthTokenProvider tokenProvider = (CwbiAuthTokenProvider) CwbiAuthUtil.buildCwbiAuthTokenProvider("cumulus", getTestKeyManager());
+        CwbiAuthTokenProvider tokenProvider = (CwbiAuthTokenProvider) CwbiAuthUtil.buildCwbiAuthTokenProvider(TOKEN_URL, "cumulus", getTestKeyManager());
         assertEquals(TOKEN_URL, tokenProvider.getUrl());
         assertEquals("cumulus", tokenProvider.getClientId());
     }
 
     @Test
     void testNulls() {
-        assertThrows(NullPointerException.class, () -> CwbiAuthUtil.buildCwbiAuthTokenProvider("cumulus", null));
+        assertThrows(NullPointerException.class, () -> CwbiAuthUtil.buildCwbiAuthTokenProvider(TOKEN_TEST_URL, "cumulus", null));
     }
 
     private KeyManager getTestKeyManager() {

@@ -23,17 +23,19 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-
-import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_URL;
-
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
 public final class CwbiAuthUtil {
+
+    private static final Map<String, OAuth2TokenProvider> TOKEN_PROVIDER_CACHE = new ConcurrentHashMap<>();
 
     private CwbiAuthUtil() {
         throw new AssertionError("Utility class");
@@ -41,14 +43,34 @@ public final class CwbiAuthUtil {
 
     /**
      * Builds CumulusTokenProvider for retrieving and refreshing tokens for cumulus authentication.
-     * @param keyManager - KeyManager for client
-     * @return OAuth2TokenProvider - CumulusTokenProvider
+     * Caches the TokenProvider instance per KeyCloak token URL to prevent redundant creation.
+     * Ensures thread safety and propagates IOException.
+     *
+     * @param tokenUrl  - KeyCloak token URL
+     * @param clientId  - Client ID for authentication
+     * @param keyManager - KeyManager for client SSL
+     * @return OAuth2TokenProvider - Cached or newly created TokenProvider
      * @throws IOException - thrown if failed to build CumulusTokenProvider
      */
-    public static OAuth2TokenProvider buildCwbiAuthTokenProvider(String clientId, KeyManager keyManager) throws IOException {
-        SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
-            Collections.singletonList(Objects.requireNonNull(keyManager, "Missing required KeyManager")));
-        return new CwbiAuthTokenProvider(TOKEN_URL, clientId, sslSocketFactory);
-    }
+    public static OAuth2TokenProvider buildCwbiAuthTokenProvider(String tokenUrl, String clientId, KeyManager keyManager) throws IOException {
+        Objects.requireNonNull(tokenUrl, "Missing required tokenUrl");
+        Objects.requireNonNull(clientId, "Missing required clientId");
+        Objects.requireNonNull(keyManager, "Missing required KeyManager");
 
+        try {
+            return TOKEN_PROVIDER_CACHE.computeIfAbsent(tokenUrl, url -> {
+                try {
+                    SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
+                            Collections.singletonList(keyManager));
+                    return new CwbiAuthTokenProvider(url, clientId, sslSocketFactory);
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        } catch (UncheckedIOException e) {
+            throw e.getCause();
+        }
+    }
 }
+
+
