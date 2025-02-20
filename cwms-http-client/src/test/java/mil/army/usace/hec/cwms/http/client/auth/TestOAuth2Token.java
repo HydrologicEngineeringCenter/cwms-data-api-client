@@ -42,11 +42,12 @@ class TestOAuth2Token {
         ObjectMapper om = new ObjectMapper();
         String json = readJsonFile();
         OAuth2Token token = om.readValue(json, OAuth2Token.class);
-        assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", token.getAccessToken());
+        assertEquals("eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJleHAiOjE2NjMyMDA0ODgsImlhdCI6MTY2MzE5OTg4OCwianRpIjoiM2JiNmZkMDItNTYzZi00ZWE0LTgzYzUtY2JlM2IzNTJjZmU4IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvcnBzLmNsb3VkL2F1dGgvcmVhbG1zL3dhdGVyIiwiYXVkIjpbImdyYWZhbmEiLCJ3b3JrZm9yY2UiLCJhY2NvdW50Il0sInN1YiI6IjUwMzUwMzZiLTFhNTItNGExNS1hNmFlLTRkNDk4ZTBlNTc1NSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImN1bXVsdXMiLCJzZXNzaW9uX3N0YXRlIjoiYmRmNTdlNDktOTY0Ny00N2UzLWI5ZDYtMjBlYjAxNTBhMWZiIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdhdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImdyYWZhbmEiOnsicm9sZXMiOlsidmlld2VyIl19LCJjdW11bHVzIjp7InJvbGVzIjpbInB1YmxpYy5wdWJsaWMiXX0sIndvcmtmb3JjZSI6eyJyb2xlcyI6WyJwdWJsaWMucHVibGljIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0LnVzZXIubmFtZSIsImdpdmVuX25hbWUiOiIiLCJmYW1pbHlfbmFtZSI6IiJ9.", token.getAccessToken());
         assertEquals("Bearer", token.getTokenType());
         assertEquals(3600, token.getExpiresIn());
         assertEquals("IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk", token.getRefreshToken());
         assertEquals("create", token.getScope());
+        assertEquals("test.user.name", token.getClaimAsString("preferred_username").orElse(""));
     }
 
     @Test

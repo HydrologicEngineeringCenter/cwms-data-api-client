@@ -23,6 +23,10 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_TEST_URL;
+import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_URL;
+import java.util.Collections;
+import javax.net.ssl.KeyManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
@@ -39,8 +43,13 @@ import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -82,28 +91,24 @@ class TestCwbiTokenProvider {
         mockHttpServer.start();
     }
 
-    private OAuth2TokenProvider getTestTokenProvider() {
-        OAuth2Token oAuth2Token = new OAuth2Token();
-        String token =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVXNlciIsImlzcyI6IlNpbXBsZSBTb2x1dGlvbiIsInVzZXJuYW1lIjoiVGVzdFVzZXIifQ.jQUKIOxN0KGbIGJx8SU3WfSVPNASOnRtt3DcoMVBeThcWGzEBAnwlHHYRvbzuas-sOeWSvOwrnsvpQ5tywAfWA";
-        oAuth2Token.setAccessToken(token);
-        oAuth2Token.setTokenType("Bearer");
-        oAuth2Token.setExpiresIn(3600);
-        return new OAuth2TokenProvider() {
-            @Override
-            public OAuth2Token getToken() {
-                return oAuth2Token;
-            }
+    @Test
+    void testBuildTokenProvider() throws IOException {
+        SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
+                Collections.singletonList(getTestKeyManager()));
+        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(TOKEN_URL, "cumulus", sslSocketFactory);
+        assertEquals(TOKEN_URL, tokenProvider.getUrl());
+        assertEquals("cumulus", tokenProvider.getClientId());
+    }
 
-            @Override
-            public OAuth2Token refreshToken() {
-                return oAuth2Token;
-            }
+    @Test
+    void testNulls() {
+        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, "cumulus", null));
+        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, null, getTestSslSocketFactory()));
+        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(null, "cumulus", getTestSslSocketFactory()));
+    }
 
-            @Override
-            public OAuth2Token newToken() {
-                return oAuth2Token;
-            }
+    private KeyManager getTestKeyManager() {
+        return new KeyManager() {
         };
     }
 
@@ -119,6 +124,25 @@ class TestCwbiTokenProvider {
         assertEquals(3600, token.getExpiresIn());
         assertEquals("IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk", token.getRefreshToken());
         assertEquals("create", token.getScope());
+    }
+
+    @Test
+    void testClear() throws IOException {
+        String resource = "oauth2token.json";
+        launchMockServerWithResource(resource);
+        String url = buildConnectionInfo().getApiRoot();
+        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
+        OAuth2Token token = new OAuth2Token();
+        token.setAccessToken("abc123");
+        token.setTokenType("Bearer");
+        token.setExpiresIn(3600);
+        token.setRefreshToken("123abc");
+        tokenProvider.setOAuth2Token(token);
+        OAuth2Token token1 = tokenProvider.getToken();
+        OAuth2Token token2 = tokenProvider.getToken();
+        assertSame(token1, token2);
+        tokenProvider.clear();
+        assertNotSame(token1, tokenProvider.getToken());
     }
 
     @Test

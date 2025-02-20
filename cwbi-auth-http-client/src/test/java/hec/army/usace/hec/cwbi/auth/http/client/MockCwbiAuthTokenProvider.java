@@ -49,6 +49,11 @@ public class MockCwbiAuthTokenProvider implements OAuth2TokenProvider {
     }
 
     @Override
+    public void clear() {
+        oauth2Token = null;
+    }
+
+    @Override
     public OAuth2Token getToken() throws IOException {
         if (oauth2Token == null) {
             oauth2Token = newToken();

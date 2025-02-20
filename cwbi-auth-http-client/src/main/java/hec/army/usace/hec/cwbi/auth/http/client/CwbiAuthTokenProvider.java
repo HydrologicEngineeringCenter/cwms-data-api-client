@@ -24,6 +24,7 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
+import java.util.Objects;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
@@ -38,18 +39,23 @@ public final class CwbiAuthTokenProvider implements OAuth2TokenProvider {
     /**
      * Provider for OAuth2Tokens.
      *
-     * @param url - URL we are fetching token from
+     * @param tokenUrl - URL we are fetching token from
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
      */
-    public CwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
-        this.url = url;
-        this.clientId = clientId;
-        this.sslSocketFactory = sslSocketFactory;
+    public CwbiAuthTokenProvider(String tokenUrl, String clientId, SSLSocketFactory sslSocketFactory) {
+        this.url = Objects.requireNonNull(tokenUrl, "Missing required tokenUrl");
+        this.clientId = Objects.requireNonNull(clientId, "Missing required clientId");
+        this.sslSocketFactory =Objects.requireNonNull(sslSocketFactory, "Missing required KeyManager");
     }
 
     @Override
-    public OAuth2Token getToken() throws IOException {
+    public synchronized void clear() {
+        oauth2Token = null;
+    }
+
+    @Override
+    public synchronized OAuth2Token getToken() throws IOException {
         if (oauth2Token == null) {
             oauth2Token = newToken();
         }
@@ -66,7 +72,7 @@ public final class CwbiAuthTokenProvider implements OAuth2TokenProvider {
     }
 
     @Override
-    public OAuth2Token refreshToken() throws IOException {
+    public synchronized OAuth2Token refreshToken() throws IOException {
         OAuth2Token token = new RefreshTokenRequestBuilder()
             .withRefreshToken(oauth2Token.getRefreshToken())
             .withUrl(url)

@@ -104,8 +104,11 @@ class TestOAuth2TokenAuthenticator {
             @Override
             public OAuth2Token getToken() {
                 OAuth2Token token = super.getToken();
-                token.setAccessToken(EXPIRED_ACCESS_TOKEN);
-                token.setRefreshToken(EXPIRED_ACCESS_TOKEN);
+                if(token != null)
+                {
+                    token.setAccessToken(EXPIRED_ACCESS_TOKEN);
+                    token.setRefreshToken(EXPIRED_ACCESS_TOKEN);
+                }
                 return token;
             }
 
@@ -224,13 +227,18 @@ class TestOAuth2TokenAuthenticator {
     }
 
     private static class MyOAuth2TokenProvider implements OAuth2TokenProvider {
+        OAuth2Token token;
+        @Override
+        public void clear() {
+            token = null;
+        }
+
         @Override
         public OAuth2Token getToken() {
-            OAuth2Token token = new OAuth2Token();
-            token.setTokenType("Bearer");
-            token.setAccessToken(ACCESS_TOKEN);
-            token.setExpiresIn(3600);
-            token.setRefreshToken(ACCESS_TOKEN);
+            if(token == null)
+            {
+                token = newToken();
+            }
             return token;
         }
 
@@ -253,6 +261,5 @@ class TestOAuth2TokenAuthenticator {
             token.setRefreshToken(ACCESS_TOKEN);
             return token;
         }
-
     }
 }

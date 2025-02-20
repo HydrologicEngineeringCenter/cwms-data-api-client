@@ -28,6 +28,8 @@ import java.io.IOException;
 
 public interface OAuth2TokenProvider {
 
+    void clear();
+
     OAuth2Token getToken() throws IOException;
 
     OAuth2Token refreshToken() throws IOException;

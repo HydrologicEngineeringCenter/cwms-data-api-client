@@ -69,13 +69,18 @@ class TestOAuth2TokenInterceptor {
     private OAuth2TokenProvider getTestTokenProvider() {
 
         return new OAuth2TokenProvider() {
+            OAuth2Token token;
+            @Override
+            public void clear() {
+                token = null;
+            }
+
             @Override
             public OAuth2Token getToken() {
-                OAuth2Token token = new OAuth2Token();
-                token.setTokenType("Bearer");
-                token.setAccessToken(ACCESS_TOKEN);
-                token.setExpiresIn(3600);
-                token.setRefreshToken(ACCESS_TOKEN);
+                if(token == null)
+                {
+                    token = newToken();
+                }
                 return token;
             }
 
@@ -90,7 +95,7 @@ class TestOAuth2TokenInterceptor {
             }
 
             @Override
-            public OAuth2Token newToken() throws IOException {
+            public OAuth2Token newToken() {
                 OAuth2Token token = new OAuth2Token();
                 token.setTokenType("Bearer");
                 token.setAccessToken(ACCESS_TOKEN);
