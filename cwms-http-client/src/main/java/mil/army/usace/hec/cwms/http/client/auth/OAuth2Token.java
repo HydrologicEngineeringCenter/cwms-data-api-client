@@ -24,9 +24,13 @@
 
 package mil.army.usace.hec.cwms.http.client.auth;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OAuth2Token {
@@ -59,6 +63,12 @@ public class OAuth2Token {
 
     public String getAccessToken() {
         return accessToken;
+    }
+
+    @JsonIgnore
+    public Optional<String> getClaimAsString(String claim) {
+        return Optional.ofNullable(JWT.decode(accessToken).getClaim(claim))
+                .map(Claim::asString);
     }
 
     public void setAccessToken(String accessToken) {

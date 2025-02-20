@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.cert.X509Certificate;
@@ -205,27 +204,35 @@ class TestApiConnectionInfo {
     }
 
     private OAuth2TokenProvider getTestTokenProvider() {
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(3600);
-        token.setScope("create");
         return new OAuth2TokenProvider() {
+            OAuth2Token token = new OAuth2Token();
+            @Override
+            public void clear() {
+                token = null;
+            }
+
             @Override
             public OAuth2Token getToken() {
+                if(token == null) {
+                    token = newToken();
+                }
                 return token;
             }
 
             @Override
             public OAuth2Token refreshToken() {
-                return token;
+                return getToken();
             }
 
             @Override
-            public OAuth2Token newToken() throws IOException {
+            public OAuth2Token newToken() {
+                token = new OAuth2Token();
+                token.setAccessToken("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3");
+                token.setTokenType("Bearer");
+                token.setExpiresIn(3600);
+                token.setScope("create");
                 return token;
             }
-
         };
     }
 
@@ -239,45 +246,39 @@ class TestApiConnectionInfo {
         ApiConnectionInfoBuilder builder = new ApiConnectionInfoBuilder("")
             .withCookieAuthenticator(() -> null)
             .withAuthorizationKeyProvider(() -> null);
-        assertThrows(IllegalArgumentException.class, () -> builder.build());
+        assertThrows(IllegalArgumentException.class, builder::build);
         ApiConnectionInfoBuilder builder2 = new ApiConnectionInfoBuilder("")
             .withCookieAuthenticator(() -> null)
-            .withTokenProvider(new OAuth2TokenProvider() {
-                @Override
-                public OAuth2Token getToken() throws IOException {
-                    return null;
-                }
-
-                @Override
-                public OAuth2Token refreshToken() throws IOException {
-                    return null;
-                }
-
-                @Override
-                public OAuth2Token newToken() throws IOException {
-                    return null;
-                }
-            });
-        assertThrows(IllegalArgumentException.class, () -> builder2.build());
+            .withTokenProvider(buildNulledTokenProvider());
+        assertThrows(IllegalArgumentException.class, builder2::build);
         ApiConnectionInfoBuilder builder3 = new ApiConnectionInfoBuilder("")
             .withAuthorizationKeyProvider(() -> null)
-            .withTokenProvider(new OAuth2TokenProvider() {
-                @Override
-                public OAuth2Token getToken() throws IOException {
-                    return null;
-                }
+            .withTokenProvider(buildNulledTokenProvider());
+        assertThrows(IllegalArgumentException.class, builder3::build);
+    }
 
-                @Override
-                public OAuth2Token refreshToken() throws IOException {
-                    return null;
-                }
+    private static OAuth2TokenProvider buildNulledTokenProvider() {
+        return new OAuth2TokenProvider() {
+            @Override
+            public void clear() {
 
-                @Override
-                public OAuth2Token newToken() throws IOException {
-                    return null;
-                }
-            });
-        assertThrows(IllegalArgumentException.class, () -> builder3.build());
+            }
+
+            @Override
+            public OAuth2Token getToken() {
+                return null;
+            }
+
+            @Override
+            public OAuth2Token refreshToken() {
+                return null;
+            }
+
+            @Override
+            public OAuth2Token newToken() {
+                return null;
+            }
+        };
     }
 
 }
