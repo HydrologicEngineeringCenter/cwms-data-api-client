@@ -96,7 +96,7 @@ class TestDirectGrantX509TokenRequestBuilder {
         }
     }
 
-    private SSLSocketFactory getTestSslSocketFactory() {
+    static SSLSocketFactory getTestSslSocketFactory() {
         return new SSLSocketFactory() {
             @Override
             public String[] getDefaultCipherSuites() {

@@ -58,7 +58,7 @@ public final class CwbiAuthTrustManager implements X509TrustManager {
     private static X509TrustManager buildTrustManager() {
         X509TrustManager retVal = null;
         try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX");
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init((KeyStore) null);
             retVal = new CwbiAuthTrustManager(trustManagerFactory);
         } catch (NoSuchAlgorithmException | KeyStoreException e) {

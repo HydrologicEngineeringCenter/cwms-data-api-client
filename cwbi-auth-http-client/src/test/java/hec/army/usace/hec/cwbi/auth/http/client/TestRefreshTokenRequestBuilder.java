@@ -23,9 +23,12 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import static hec.army.usace.hec.cwbi.auth.http.client.TestDirectGrantX509TokenRequestBuilder.getTestSslSocketFactory;
+import javax.net.ssl.SSLSocketFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
@@ -41,18 +44,23 @@ import org.junit.jupiter.api.Test;
 class TestRefreshTokenRequestBuilder {
 
     @Test
-    void testDirectGrantX509TokenRequestBuilder() throws IOException {
+    void testRefreshTokenRequestBuilder() throws IOException {
         MockWebServer mockWebServer = new MockWebServer();
         try {
             String body = readJsonFile();
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
+            RefreshTokenRequestBuilder builder = new RefreshTokenRequestBuilder()
+                    .withSSlSocketFactory(sslSocketFactory);
+            assertSame(sslSocketFactory, builder.getSslSocketFactory().orElse(null));
             OAuth2Token token = new RefreshTokenRequestBuilder()
-                .withRefreshToken("abcdefghijklmnopqrstuvwxyz0123456789")
-                .withUrl(baseUrl)
-                .withClientId("cumulus")
-                .fetchToken();
+                    .withSSlSocketFactory(sslSocketFactory)
+                    .withRefreshToken("abcdefghijklmnopqrstuvwxyz0123456789")
+                    .withUrl(baseUrl)
+                    .withClientId("cumulus")
+                    .fetchToken();
             assertNotNull(token);
             assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", token.getAccessToken());
             assertEquals("Bearer", token.getTokenType());
