@@ -74,6 +74,7 @@ public final class CwbiAuthTokenProvider implements OAuth2TokenProvider {
     @Override
     public synchronized OAuth2Token refreshToken() throws IOException {
         OAuth2Token token = new RefreshTokenRequestBuilder()
+            .withSSlSocketFactory(sslSocketFactory)
             .withRefreshToken(oauth2Token.getRefreshToken())
             .withUrl(url)
             .withClientId(clientId)
