@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,7 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_TEST_URL;
 import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_URL;
-import java.util.Collections;
-import javax.net.ssl.KeyManager;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -36,14 +31,17 @@ import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLSocketFactory;
-import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,7 +49,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestCwbiTokenProvider {
+class TestDiscoveredCwbiTokenProvider {
 
     static MockHttpServer mockHttpServer;
 
@@ -89,19 +87,21 @@ class TestCwbiTokenProvider {
     }
 
     @Test
-    void testBuildTokenProvider() throws IOException {
+    void testBuildTokenProvider() throws Exception {
         SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
                 Collections.singletonList(getTestKeyManager()));
-        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(TOKEN_URL, "cumulus", sslSocketFactory);
+        ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+        MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(apiConnectionInfo, TOKEN_URL);
+        DiscoveredCwbiAuthTokenProvider tokenProvider = new DiscoveredCwbiAuthTokenProvider("cumulus", sslSocketFactory, tokenUrlDiscoveryService);
         assertEquals(TOKEN_URL, tokenProvider.getUrl());
         assertEquals("cumulus", tokenProvider.getClientId());
     }
 
     @Test
     void testNulls() {
-        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, "cumulus", null));
-        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, null, getTestSslSocketFactory()));
-        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(null, "cumulus", getTestSslSocketFactory()));
+        assertThrows(NullPointerException.class, () -> new DiscoveredCwbiAuthTokenProvider("cumulus", getTestSslSocketFactory(), null));
+        assertThrows(NullPointerException.class, () -> new DiscoveredCwbiAuthTokenProvider("cumulus", null, new MockTokenUrlDiscoveryService(buildConnectionInfo(), TOKEN_URL)));
+        assertThrows(NullPointerException.class, () -> new DiscoveredCwbiAuthTokenProvider(null, getTestSslSocketFactory(), new MockTokenUrlDiscoveryService(buildConnectionInfo(), TOKEN_URL)));
     }
 
     private KeyManager getTestKeyManager() {
@@ -113,8 +113,9 @@ class TestCwbiTokenProvider {
     void testGetToken() throws IOException {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
-        String url = buildConnectionInfo().getApiRoot();
-        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
+        String tokenUrl = buildConnectionInfo().getApiRoot();
+        MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(buildConnectionInfo(), tokenUrl);
+        DiscoveredCwbiAuthTokenProvider tokenProvider = new DiscoveredCwbiAuthTokenProvider("cumulus", getTestSslSocketFactory(), tokenUrlDiscoveryService);
         OAuth2Token token = tokenProvider.getToken();
         assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", token.getAccessToken());
         assertEquals("Bearer", token.getTokenType());
@@ -127,8 +128,9 @@ class TestCwbiTokenProvider {
     void testClear() throws IOException {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
-        String url = buildConnectionInfo().getApiRoot();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
+        String tokenUrl = buildConnectionInfo().getApiRoot();
+        MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(buildConnectionInfo(), tokenUrl);
+        MockDiscoveredCwbiAuthTokenProvider tokenProvider = new MockDiscoveredCwbiAuthTokenProvider("cumulus", getTestSslSocketFactory(), tokenUrlDiscoveryService);
         OAuth2Token token = new OAuth2Token();
         token.setAccessToken("abc123");
         token.setTokenType("Bearer");
@@ -146,8 +148,9 @@ class TestCwbiTokenProvider {
     void testRefreshToken() throws IOException {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
-        String url = buildConnectionInfo().getApiRoot();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
+        String tokenUrl = buildConnectionInfo().getApiRoot();
+        MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(buildConnectionInfo(), tokenUrl);
+        MockDiscoveredCwbiAuthTokenProvider tokenProvider = new MockDiscoveredCwbiAuthTokenProvider("cumulus", getTestSslSocketFactory(), tokenUrlDiscoveryService);
         OAuth2Token token = new OAuth2Token();
         token.setAccessToken("abc123");
         token.setTokenType("Bearer");
@@ -166,7 +169,8 @@ class TestCwbiTokenProvider {
     @Test
     void testConstructor() {
         SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider("test.com", "clientId", sslSocketFactory);
+        MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(buildConnectionInfo(), "test.com");
+        MockDiscoveredCwbiAuthTokenProvider tokenProvider = new MockDiscoveredCwbiAuthTokenProvider("clientId", sslSocketFactory, tokenUrlDiscoveryService);
         assertEquals("test.com", tokenProvider.getUrl());
         assertEquals("clientId", tokenProvider.getClientId());
         assertEquals(sslSocketFactory, tokenProvider.getSslSocketFactory());
@@ -209,5 +213,19 @@ class TestCwbiTokenProvider {
                 return null;
             }
         };
+    }
+
+    private static class MockTokenUrlDiscoveryService extends TokenUrlDiscoveryService {
+        private final String tokenUrl;
+
+        private MockTokenUrlDiscoveryService(ApiConnectionInfo apiConnectionInfo, String tokenUrl) {
+            super(apiConnectionInfo);
+            this.tokenUrl = tokenUrl;
+        }
+
+        @Override
+        protected String retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo) {
+            return this.tokenUrl;
+        }
     }
 }

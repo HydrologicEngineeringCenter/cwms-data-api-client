@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,24 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.util.Objects;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
+public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
-    private final String url;
+    private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
 
     /**
      * Provider for OAuth2Tokens.
      *
-     * @param url - URL we are fetching token from
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
+     * @param tokenUrlDiscoveryService - service to discover the token URL
      */
-    public MockCwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
+    public MockDiscoveredCwbiAuthTokenProvider(String clientId, SSLSocketFactory sslSocketFactory, TokenUrlDiscoveryService tokenUrlDiscoveryService) {
         super(clientId, sslSocketFactory);
-        this.url = url;
+        this.tokenUrlDiscoveryService = Objects.requireNonNull(tokenUrlDiscoveryService, "Missing required tokenUrlDiscoveryService");
     }
 
     //used to manually set token for testing
@@ -50,6 +51,6 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
     //package scoped for testing
     @Override
     String getUrl() {
-        return url;
+        return tokenUrlDiscoveryService.discoverTokenUrl();
     }
 }
