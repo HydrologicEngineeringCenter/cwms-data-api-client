@@ -30,6 +30,7 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
     private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
+    private String url;
 
     /**
      * Provider for OAuth2Tokens.
@@ -50,7 +51,11 @@ public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBa
 
     //package scoped for testing
     @Override
-    String getUrl() {
-        return tokenUrlDiscoveryService.discoverTokenUrl();
+    synchronized String getUrl() {
+        if(url == null)
+        {
+            url = tokenUrlDiscoveryService.discoverTokenUrl();
+        }
+        return url;
     }
 }

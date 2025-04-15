@@ -23,25 +23,6 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import java.util.Objects;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-
-public abstract class TokenUrlDiscoveryService {
-
-    private final ApiConnectionInfo apiConnectionInfo;
-
-    protected TokenUrlDiscoveryService(ApiConnectionInfo apiConnectionInfo)
-    {
-        this.apiConnectionInfo = Objects.requireNonNull(apiConnectionInfo, "apiConnectionInfo must not be null");
-    }
-    protected abstract String retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo);
-
-    public final String discoverTokenUrl() {
-        return retrieveTokenUrl(apiConnectionInfo);
-    }
-
-    //package scoped for testing
-    ApiConnectionInfo getApiConnectionInfo() {
-        return apiConnectionInfo;
-    }
+public interface TokenUrlDiscoveryService {
+    String discoverTokenUrl();
 }
