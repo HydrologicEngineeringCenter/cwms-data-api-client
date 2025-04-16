@@ -23,36 +23,8 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
-import java.util.Objects;
-import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
 
-public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
-
-    private final SSLSocketFactory sslSocketFactory;
-    private final String url;
-
-    /**
-     * Provider for OAuth2Tokens.
-     *
-     * @param tokenUrl - URL we are fetching token from
-     * @param clientId - client name
-     * @param sslSocketFactory - ssl socket factory
-     */
-    public CwbiAuthTokenProvider(String tokenUrl, String clientId, SSLSocketFactory sslSocketFactory) {
-        super(clientId);
-        this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
-        this.url = Objects.requireNonNull(tokenUrl, "Missing required tokenUrl");
-    }
-
-    @Override
-    ApiConnectionInfo getUrl() {
-        return new ApiConnectionInfoBuilder(url)
-                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
-                .build();
-    }
-
+public interface TokenUrlDiscoveryService {
+    ApiConnectionInfo discoverTokenUrl();
 }

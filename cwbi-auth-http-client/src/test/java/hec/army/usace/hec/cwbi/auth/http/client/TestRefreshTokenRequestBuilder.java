@@ -24,7 +24,10 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import static hec.army.usace.hec.cwbi.auth.http.client.TestDirectGrantX509TokenRequestBuilder.getTestSslSocketFactory;
-import javax.net.ssl.SSLSocketFactory;
+import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -45,35 +48,34 @@ class TestRefreshTokenRequestBuilder {
 
     @Test
     void testRefreshTokenRequestBuilder() throws IOException {
-        MockWebServer mockWebServer = new MockWebServer();
-        try {
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
             String body = readJsonFile();
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
-            RefreshTokenRequestBuilder builder = new RefreshTokenRequestBuilder()
-                    .withSSlSocketFactory(sslSocketFactory);
-            assertSame(sslSocketFactory, builder.getSslSocketFactory().orElse(null));
-            OAuth2Token token = new RefreshTokenRequestBuilder()
-                    .withSSlSocketFactory(sslSocketFactory)
-                    .withRefreshToken("abcdefghijklmnopqrstuvwxyz0123456789")
-                    .withUrl(baseUrl)
+            ApiConnectionInfo url = new ApiConnectionInfoBuilder(baseUrl)
+                    .withSslSocketData(sslSocketData)
+                    .build();
+            TokenRequestFluentBuilder refreshBuilder = new RefreshTokenRequestBuilder()
+                    .withRefreshToken("abcdefghijklmnopqrstuvwxyz0123456789");
+            OAuth2Token token = refreshBuilder
+                    .withUrl(url)
                     .withClientId("cumulus")
                     .fetchToken();
             assertNotNull(token);
+            assertSame(url, ((RefreshTokenRequestBuilder.RefreshTokenRequestExecutor)refreshBuilder).getUrl());
             assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", token.getAccessToken());
             assertEquals("Bearer", token.getTokenType());
             assertEquals(3600, token.getExpiresIn());
             assertEquals("create", token.getScope());
             assertEquals("IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk", token.getRefreshToken());
-        } finally {
-            mockWebServer.shutdown();
         }
     }
 
     @Test
     void testRetrieveTokenMissingParams() {
+        SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
         assertThrows(NullPointerException.class, () -> {
             new RefreshTokenRequestBuilder()
                 .withRefreshToken("testToken")
@@ -83,7 +85,9 @@ class TestRefreshTokenRequestBuilder {
         assertThrows(NullPointerException.class, () -> {
             OAuth2Token token = new RefreshTokenRequestBuilder()
                 .withRefreshToken("testToken")
-                .withUrl("https://test.com")
+                .withUrl(new ApiConnectionInfoBuilder("https://test.com")
+                    .withSslSocketData(sslSocketData)
+                    .build())
                 .withClientId(null)
                 .fetchToken();
             assertNull(token);
@@ -93,7 +97,9 @@ class TestRefreshTokenRequestBuilder {
         assertThrows(NullPointerException.class, () -> {
             OAuth2Token token = new RefreshTokenRequestBuilder()
                 .withRefreshToken(null)
-                .withUrl("https://test.com")
+                .withUrl(new ApiConnectionInfoBuilder("https://test.com")
+                        .withSslSocketData(sslSocketData)
+                        .build())
                 .withClientId("cumulus")
                 .fetchToken();
             assertNull(token);

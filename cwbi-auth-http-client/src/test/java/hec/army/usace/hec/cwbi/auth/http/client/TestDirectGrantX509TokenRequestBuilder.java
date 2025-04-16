@@ -23,6 +23,9 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -46,43 +49,36 @@ class TestDirectGrantX509TokenRequestBuilder {
     @Test
     void testRetrieveTokenMissingParams() {
 
+        SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
         assertThrows(NullPointerException.class, () -> {
             OAuth2Token token = new DirectGrantX509TokenRequestBuilder()
-                .withSSlSocketFactory(null)
-                .withUrl("https://test.com")
-                .withClientId("cumulus")
+                .withUrl(new ApiConnectionInfoBuilder("https://test.com")
+                        .withSslSocketData(sslSocketData)
+                        .build())
+                .withClientId(null)
                 .fetchToken();
             assertNull(token);
         });
 
         assertThrows(NullPointerException.class, () -> {
             new DirectGrantX509TokenRequestBuilder()
-                .withSSlSocketFactory(getTestSslSocketFactory())
                 .withUrl(null);
         });
-
-        assertThrows(NullPointerException.class, () -> {
-            OAuth2Token token = new DirectGrantX509TokenRequestBuilder()
-                .withSSlSocketFactory(getTestSslSocketFactory())
-                .withUrl("https://test.com")
-                .withClientId(null)
-                .fetchToken();
-            assertNull(token);
-        });
-
     }
 
     @Test
     void testDirectGrantX509TokenRequestBuilder() throws IOException {
-        MockWebServer mockWebServer = new MockWebServer();
-        try {
+
+        try (MockWebServer mockWebServer = new MockWebServer()) {
+            SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
             String body = readJsonFile();
             mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
             mockWebServer.start();
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             OAuth2Token token = new DirectGrantX509TokenRequestBuilder()
-                .withSSlSocketFactory(getTestSslSocketFactory())
-                .withUrl(baseUrl)
+                .withUrl(new ApiConnectionInfoBuilder(baseUrl)
+                        .withSslSocketData(sslSocketData)
+                        .build())
                 .withClientId("cumulus")
                 .fetchToken();
             assertNotNull(token);
@@ -91,8 +87,6 @@ class TestDirectGrantX509TokenRequestBuilder {
             assertEquals(3600, token.getExpiresIn());
             assertEquals("create", token.getScope());
             assertEquals("IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk", token.getRefreshToken());
-        } finally {
-            mockWebServer.shutdown();
         }
     }
 

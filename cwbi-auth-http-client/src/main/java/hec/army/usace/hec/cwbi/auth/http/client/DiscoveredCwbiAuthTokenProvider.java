@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,27 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import javax.net.ssl.SSLSocketFactory;
+import java.util.Objects;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
-public interface DirectGrantX509TokenRequestFluentBuilder {
+public final class DiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase
+{
+    private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
+    private ApiConnectionInfo url;
 
-    TokenRequestFluentBuilder withSSlSocketFactory(SSLSocketFactory sslSocketFactory);
+    public DiscoveredCwbiAuthTokenProvider(String clientId, TokenUrlDiscoveryService tokenUrlDiscoveryService)
+    {
+        super(clientId);
+        this.tokenUrlDiscoveryService = Objects.requireNonNull(tokenUrlDiscoveryService, "Missing required tokenUrlDiscoveryService");
+    }
+
+    @Override
+    synchronized ApiConnectionInfo getUrl()
+    {
+        if(url == null)
+        {
+            url = tokenUrlDiscoveryService.discoverTokenUrl();
+        }
+        return url;
+    }
 }

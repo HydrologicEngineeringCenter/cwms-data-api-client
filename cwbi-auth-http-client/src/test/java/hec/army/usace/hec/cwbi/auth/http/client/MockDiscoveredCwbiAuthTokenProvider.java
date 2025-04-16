@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,47 +23,43 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import java.io.IOException;
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
+public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
-    static final String MEDIA_TYPE = "application/x-www-form-urlencoded";
+    private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
     private ApiConnectionInfo url;
-    private String clientId;
 
-    abstract OAuth2Token retrieveToken() throws IOException;
+    /**
+     * Provider for OAuth2Tokens.
+     *
+     * @param clientId - client name
+     * @param tokenUrlDiscoveryService - service to discover the token URL
+     */
+    public MockDiscoveredCwbiAuthTokenProvider(String clientId, TokenUrlDiscoveryService tokenUrlDiscoveryService) {
+        super(clientId);
+        this.tokenUrlDiscoveryService = Objects.requireNonNull(tokenUrlDiscoveryService, "Missing required tokenUrlDiscoveryService");
+    }
 
-    ApiConnectionInfo getUrl() {
+    //used to manually set token for testing
+    void setOAuth2Token(OAuth2Token token) {
+        oauth2Token = token;
+    }
+
+    //package scoped for testing
+    @Override
+    synchronized ApiConnectionInfo getUrl() {
+        if(url == null)
+        {
+            url = tokenUrlDiscoveryService.discoverTokenUrl();
+        }
         return url;
     }
 
-    String getClientId() {
-        return clientId;
-    }
-
-    @Override
-    public RequestClientId withUrl(ApiConnectionInfo url) {
-        this.url = Objects.requireNonNull(url, "Missing required URL");
-        return new RequestClientIdImpl();
-    }
-
-    private class RequestClientIdImpl implements RequestClientId {
-
-        @Override
-        public TokenRequestExecutor withClientId(String clientIdString) {
-            clientId = Objects.requireNonNull(clientIdString, "Missing required Client ID");
-            return new TokenRequestExecutorImpl();
-        }
-    }
-
-    private class TokenRequestExecutorImpl implements TokenRequestExecutor {
-
-        @Override
-        public OAuth2Token fetchToken() throws IOException {
-            return retrieveToken();
-        }
+    //package scoped for testing
+    TokenUrlDiscoveryService getDiscoveryService() {
+        return tokenUrlDiscoveryService;
     }
 }
