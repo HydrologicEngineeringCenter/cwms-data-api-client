@@ -25,22 +25,19 @@ package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
 import java.util.Objects;
-import javax.net.ssl.SSLSocketFactory;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
 abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
-
-    private final SSLSocketFactory sslSocketFactory;
     protected OAuth2Token oauth2Token;
     protected final String clientId;
 
-    protected CwbiAuthTokenProviderBase(String clientId, SSLSocketFactory sslSocketFactory) {
+    protected CwbiAuthTokenProviderBase(String clientId) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required clientId");
-        this.sslSocketFactory =Objects.requireNonNull(sslSocketFactory, "Missing required KeyManager");
     }
 
-    abstract String getUrl();
+    abstract ApiConnectionInfo getUrl();
 
     @Override
     public synchronized void clear() {
@@ -58,7 +55,6 @@ abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
     @Override
     public OAuth2Token newToken() throws IOException {
         return new DirectGrantX509TokenRequestBuilder()
-                .withSSlSocketFactory(sslSocketFactory)
                 .withUrl(getUrl())
                 .withClientId(clientId)
                 .fetchToken();
@@ -67,7 +63,6 @@ abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
     @Override
     public synchronized OAuth2Token refreshToken() throws IOException {
         OAuth2Token token = new RefreshTokenRequestBuilder()
-                .withSSlSocketFactory(sslSocketFactory)
                 .withRefreshToken(oauth2Token.getRefreshToken())
                 .withUrl(getUrl())
                 .withClientId(clientId)
@@ -79,10 +74,5 @@ abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
     //package scoped for testing
     String getClientId() {
         return clientId;
-    }
-
-    //package scoped for testing
-    SSLSocketFactory getSslSocketFactory() {
-        return sslSocketFactory;
     }
 }

@@ -24,21 +24,21 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.util.Objects;
-import javax.net.ssl.SSLSocketFactory;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public final class DiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase
 {
     private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
-    private String url;
+    private ApiConnectionInfo url;
 
-    public DiscoveredCwbiAuthTokenProvider(String clientId, SSLSocketFactory sslSocketFactory, TokenUrlDiscoveryService tokenUrlDiscoveryService)
+    public DiscoveredCwbiAuthTokenProvider(String clientId, TokenUrlDiscoveryService tokenUrlDiscoveryService)
     {
-        super(clientId, sslSocketFactory);
+        super(clientId);
         this.tokenUrlDiscoveryService = Objects.requireNonNull(tokenUrlDiscoveryService, "Missing required tokenUrlDiscoveryService");
     }
 
     @Override
-    synchronized String getUrl()
+    synchronized ApiConnectionInfo getUrl()
     {
         if(url == null)
         {

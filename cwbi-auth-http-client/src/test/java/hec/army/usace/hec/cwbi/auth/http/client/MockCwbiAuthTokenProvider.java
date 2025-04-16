@@ -23,12 +23,18 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
+import java.util.Objects;
 import javax.net.ssl.SSLSocketFactory;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
 public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
     private final String url;
+    private final SSLSocketFactory sslSocketFactory;
 
     /**
      * Provider for OAuth2Tokens.
@@ -38,7 +44,8 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
      * @param sslSocketFactory - ssl socket factory
      */
     public MockCwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
-        super(clientId, sslSocketFactory);
+        super(clientId);
+        this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
         this.url = url;
     }
 
@@ -47,9 +54,15 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
         oauth2Token = token;
     }
 
-    //package scoped for testing
     @Override
-    String getUrl() {
-        return url;
+    ApiConnectionInfo getUrl() {
+        return new ApiConnectionInfoBuilder(url)
+                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
+                .build();
+    }
+
+    //package scoped for testing
+    SSLSocketFactory getSslSocketFactory() {
+        return sslSocketFactory;
     }
 }

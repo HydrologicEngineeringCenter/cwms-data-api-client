@@ -23,7 +23,9 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+
 public interface TokenRequestFluentBuilder {
 
-    RequestClientId withUrl(String url);
+    RequestClientId withUrl(ApiConnectionInfo url);
 }

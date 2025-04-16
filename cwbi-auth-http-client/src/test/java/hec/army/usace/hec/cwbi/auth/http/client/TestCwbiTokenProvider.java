@@ -93,7 +93,7 @@ class TestCwbiTokenProvider {
         SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
                 Collections.singletonList(getTestKeyManager()));
         CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(TOKEN_URL, "cumulus", sslSocketFactory);
-        assertEquals(TOKEN_URL, tokenProvider.getUrl());
+        assertEquals(TOKEN_URL, tokenProvider.getUrl().getApiRoot());
         assertEquals("cumulus", tokenProvider.getClientId());
     }
 
@@ -167,7 +167,7 @@ class TestCwbiTokenProvider {
     void testConstructor() {
         SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
         MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider("test.com", "clientId", sslSocketFactory);
-        assertEquals("test.com", tokenProvider.getUrl());
+        assertEquals("test.com", tokenProvider.getUrl().getApiRoot());
         assertEquals("clientId", tokenProvider.getClientId());
         assertEquals(sslSocketFactory, tokenProvider.getSslSocketFactory());
     }

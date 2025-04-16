@@ -24,23 +24,22 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.util.Objects;
-import javax.net.ssl.SSLSocketFactory;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
 public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
     private final TokenUrlDiscoveryService tokenUrlDiscoveryService;
-    private String url;
+    private ApiConnectionInfo url;
 
     /**
      * Provider for OAuth2Tokens.
      *
      * @param clientId - client name
-     * @param sslSocketFactory - ssl socket factory
      * @param tokenUrlDiscoveryService - service to discover the token URL
      */
-    public MockDiscoveredCwbiAuthTokenProvider(String clientId, SSLSocketFactory sslSocketFactory, TokenUrlDiscoveryService tokenUrlDiscoveryService) {
-        super(clientId, sslSocketFactory);
+    public MockDiscoveredCwbiAuthTokenProvider(String clientId, TokenUrlDiscoveryService tokenUrlDiscoveryService) {
+        super(clientId);
         this.tokenUrlDiscoveryService = Objects.requireNonNull(tokenUrlDiscoveryService, "Missing required tokenUrlDiscoveryService");
     }
 
@@ -51,11 +50,16 @@ public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBa
 
     //package scoped for testing
     @Override
-    synchronized String getUrl() {
+    synchronized ApiConnectionInfo getUrl() {
         if(url == null)
         {
             url = tokenUrlDiscoveryService.discoverTokenUrl();
         }
         return url;
+    }
+
+    //package scoped for testing
+    TokenUrlDiscoveryService getDiscoveryService() {
+        return tokenUrlDiscoveryService;
     }
 }

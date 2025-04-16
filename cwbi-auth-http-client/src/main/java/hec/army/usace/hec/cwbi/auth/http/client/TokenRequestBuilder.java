@@ -25,17 +25,18 @@ package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
 import java.util.Objects;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
 abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
 
     static final String MEDIA_TYPE = "application/x-www-form-urlencoded";
-    private String url;
+    private ApiConnectionInfo url;
     private String clientId;
 
     abstract OAuth2Token retrieveToken() throws IOException;
 
-    String getUrl() {
+    ApiConnectionInfo getUrl() {
         return url;
     }
 
@@ -44,7 +45,7 @@ abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
     }
 
     @Override
-    public RequestClientId withUrl(String url) {
+    public RequestClientId withUrl(ApiConnectionInfo url) {
         this.url = Objects.requireNonNull(url, "Missing required URL");
         return new RequestClientIdImpl();
     }
