@@ -37,7 +37,7 @@ abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
         this.clientId = Objects.requireNonNull(clientId, "Missing required clientId");
     }
 
-    abstract ApiConnectionInfo getUrl();
+    abstract ApiConnectionInfo getUrl() throws IOException;
 
     @Override
     public synchronized void clear() {
