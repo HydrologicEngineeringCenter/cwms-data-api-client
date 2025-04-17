@@ -90,7 +90,7 @@ class TestDiscoveredCwbiTokenProvider {
     }
 
     @Test
-    void testBuildTokenProvider() {
+    void testBuildTokenProvider() throws IOException {
         ApiConnectionInfo tokenUrl = buildConnectionInfo();
         MockTokenUrlDiscoveryService tokenUrlDiscoveryService = new MockTokenUrlDiscoveryService(tokenUrl);
         DiscoveredCwbiAuthTokenProvider tokenProvider = new DiscoveredCwbiAuthTokenProvider("cumulus", tokenUrlDiscoveryService);
@@ -162,7 +162,7 @@ class TestDiscoveredCwbiTokenProvider {
     }
 
     @Test
-    void testConstructor() {
+    void testConstructor() throws IOException {
         SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
         ApiConnectionInfo tokenUrl = new ApiConnectionInfoBuilder("test.com")
                 .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))

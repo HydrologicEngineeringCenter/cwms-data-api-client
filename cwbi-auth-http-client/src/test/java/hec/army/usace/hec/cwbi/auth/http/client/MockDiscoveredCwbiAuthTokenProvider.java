@@ -23,6 +23,7 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.io.IOException;
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
@@ -50,7 +51,7 @@ public class MockDiscoveredCwbiAuthTokenProvider extends CwbiAuthTokenProviderBa
 
     //package scoped for testing
     @Override
-    synchronized ApiConnectionInfo getUrl() {
+    synchronized ApiConnectionInfo getUrl() throws IOException {
         if(url == null)
         {
             url = tokenUrlDiscoveryService.discoverTokenUrl();

@@ -23,8 +23,9 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public interface TokenUrlDiscoveryService {
-    ApiConnectionInfo discoverTokenUrl();
+    ApiConnectionInfo discoverTokenUrl() throws IOException;
 }
