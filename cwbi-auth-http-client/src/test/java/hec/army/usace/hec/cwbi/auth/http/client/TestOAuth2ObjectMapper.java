@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,32 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package hec.army.usace.hec.cwbi.auth.http.client;
 
-plugins {
-    id "cwms-data-api-client.java-conventions"
-    id "cwms-data-api-client.deps-conventions"
-    id "cwms-data-api-client.publishing-conventions"
-}
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
-dependencies {
-    api(project(":cwms-http-client"))
-    api(project(":cwbi-auth-http-client"))
-    api(project(":cwms-radar-model"))
+final class TestOAuth2ObjectMapper {
 
-    implementation(libs.swagger.parser)
+    @Test
+    void testGetValueForKey() throws IOException {
+        String json = "{\"id\":\"95e7713a-ccd6-432d-b2f0-972422511171\"}";
+        String expectedValue = "95e7713a-ccd6-432d-b2f0-972422511171";
+        String actualValue = OAuth2ObjectMapper.getValueForKey(json, "id");
+        assertEquals(expectedValue, actualValue);
 
-    testImplementation(testFixtures(project(":cwms-http-client")))
-    testImplementation(project(":cwms-aaa-client"))
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.junit.jupiter)
-}
-
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId = "cwms-data-api-client"
-            from components.java
-        }
+        assertThrows(IOException.class, () -> OAuth2ObjectMapper.getValueForKey(json, "non_existent_key"));
     }
 }

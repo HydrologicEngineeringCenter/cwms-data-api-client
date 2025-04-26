@@ -54,13 +54,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.Preferences;
 
-abstract class TestController {
+public abstract class TestController {
 
     private static final boolean USE_MOCK = true;
     private static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
     private static PreferencesBackedCookieStore preferencesBackedCookieStore;
     private static final List<String> SESSION_COOKIES = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
-    MockHttpServer mockHttpServer;
+    protected MockHttpServer mockHttpServer;
     static CookieJarFactory.CookieJarSupplier cookieJarSupplier;
 
     @BeforeAll
@@ -81,7 +81,7 @@ abstract class TestController {
         }
     }
 
-    ApiConnectionInfo buildConnectionInfo() {
+    protected ApiConnectionInfo buildConnectionInfo() {
         String baseUrl = getRadarBaseUrl();
         return new ApiConnectionInfoBuilder(baseUrl).build();
     }
@@ -163,7 +163,7 @@ abstract class TestController {
         }
     }
 
-    static String readJsonFile(String jsonPath) throws IOException {
+    protected static String readJsonFile(String jsonPath) throws IOException {
         URL resource = TestController.class.getClassLoader().getResource(jsonPath);
         if (resource == null) {
             throw new IOException("Resource not found: " + jsonPath);
