@@ -10,14 +10,14 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 public abstract class OpenIdTokenController {
 
-    static final String ACCEPT_HEADER_V1 = "application/json;version=1";
+    static final String ACCEPT_HEADER = "application/json";
     private static final String TOKEN_ENDPOINT_KEY = "token_endpoint";
     protected abstract String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException;
     public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
         String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder(wellKnownEndpoint).build())
                 .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+                .withMediaType(ACCEPT_HEADER);
         try (HttpRequestResponse response = executor.execute()) {
             String tokenEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), TOKEN_ENDPOINT_KEY);
             return new ApiConnectionInfoBuilder(tokenEndpoint)
