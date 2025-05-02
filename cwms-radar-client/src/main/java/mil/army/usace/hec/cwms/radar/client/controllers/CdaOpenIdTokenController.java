@@ -31,7 +31,7 @@ import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public final class CdaOpenIdTokenController extends OpenIdTokenController {
-    private static final String SWAGGER_DOC_ENDPOINT = "cwms-data/swagger-docs";
+    private static final String SWAGGER_DOC_ENDPOINT = "swagger-docs";
 
     @Override
     protected String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
