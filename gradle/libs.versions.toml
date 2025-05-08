@@ -32,6 +32,7 @@ service-annotations = { module = "mil.army.usace.hec:service-annotations", versi
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 jackson-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
+jackson-yaml = {module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger-annotations" }
 validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "validation-api" }
 annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "annotation-api" }

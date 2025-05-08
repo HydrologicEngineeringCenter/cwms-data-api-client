@@ -39,6 +39,7 @@ dependencies {
     testImplementation(project(":cwms-aaa-client"))
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.jackson.yaml)
 }
 
 

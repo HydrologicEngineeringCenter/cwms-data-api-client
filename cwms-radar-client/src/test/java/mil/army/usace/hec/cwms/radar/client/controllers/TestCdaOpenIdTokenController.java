@@ -37,7 +37,7 @@ final class TestCdaOpenIdTokenController extends TestController {
     @Test
     void testRetrieveTokenUrl() throws Exception {
         SSLSocketFactory mockSslSocketFactory = Mockito.mock(SSLSocketFactory.class);
-        String resource = readJsonFile("radar/v1/json/swagger_doc.json");
+        String resource = readSwaggerYamlAsJson();
         String openIdConfig = "radar/v1/json/openIdConfig.json";
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = (ObjectNode) mapper.readTree(resource);

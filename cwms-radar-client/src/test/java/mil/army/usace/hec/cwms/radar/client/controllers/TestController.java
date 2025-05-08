@@ -24,6 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import mil.army.usace.hec.cwms.aaa.client.CwmsAuthCookieCallback;
 import mil.army.usace.hec.cwms.aaa.client.CwmsLoginController;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -170,6 +173,15 @@ public abstract class TestController {
         }
         Path path = new File(resource.getFile()).toPath();
         return String.join("\n", Files.readAllLines(path));
+    }
+
+    protected static String readSwaggerYamlAsJson() throws IOException {
+        String module = System.getProperty("user.dir");
+        String yamlPath = module + "/../cwms-radar-model/cwms-radar-swagger.yaml";
+        Path path = new File(yamlPath).toPath();
+        ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+        JsonNode yamlTree = yamlMapper.readTree(path.toFile());
+        return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(yamlTree);
     }
 
     private static KeyManager getKeyManagerFromJreKeyStore() throws Exception {

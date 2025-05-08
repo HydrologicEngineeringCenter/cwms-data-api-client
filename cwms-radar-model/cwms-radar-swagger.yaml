@@ -2,12 +2,14 @@ openapi: 3.0.1
 info:
   title: CWMS Data API
   description: CWMS REST API for Data Retrieval
-  version: 2024.12.13-develop
+  version: 2025.03.20-security-update-tomcat
+servers:
+  - url: /cwms-data
 paths:
-  /cwms-data:
+  /:
     get:
-      summary: Get cwmsData
-      operationId: getSpkData
+      summary: Get
+      operationId: get
       responses:
         '400':
           description: Bad Request
@@ -40,15 +42,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/auth/keys/{key-name}:
+        - OpenIDConnect: []
+  /auth/keys/{key-name}:
     get:
       tags:
         - Authorization
-      summary: Get cwmsData auth keys with keyName
+      summary: Get auth keys with keyName
       description: View specific key
-      operationId: getSpkDataAuthKeysWithKeyName
+      operationId: getAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -94,14 +96,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Authorization
-      summary: Delete cwmsData auth keys with keyName
+      summary: Delete auth keys with keyName
       description: Delete API key for a user
-      operationId: deleteSpkDataAuthKeysWithKeyName
+      operationId: deleteAuthKeysWithKeyName
       parameters:
         - name: key-name
           in: path
@@ -146,15 +148,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/auth/keys:
+        - OpenIDConnect: []
+  /auth/keys:
     get:
       tags:
         - Authorization
-      summary: Get cwmsData auth keys
+      summary: Get auth keys
       description: View all keys for the current user
-      operationId: getSpkDataAuthKeys
+      operationId: getAuthKeys
       responses:
         '201':
           description: Created
@@ -195,14 +197,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Authorization
-      summary: Post cwmsData auth keys
+      summary: Post auth keys
       description: Create a new API Key for user. The randomly generated key is returned to the caller. A provided key will be ignored.
-      operationId: postSpkDataAuthKeys
+      operationId: postAuthKeys
       requestBody:
         content:
           application/json:
@@ -246,15 +248,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/location/category/{category-id}:
+        - OpenIDConnect: []
+  /location/category/{category-id}:
     get:
       tags:
         - Location Categories
-      summary: Get cwmsData location category with categoryId
+      summary: Get location category with categoryId
       description: Retrieves requested Location Category
-      operationId: getSpkDataLocationCategoryWithCategoryId
+      operationId: getLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -306,14 +308,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Location Categories
-      summary: Delete cwmsData location category with categoryId
+      summary: Delete location category with categoryId
       description: Deletes requested location category
-      operationId: deleteSpkDataLocationCategoryWithCategoryId
+      operationId: deleteLocationCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -364,15 +366,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/location/category:
+        - OpenIDConnect: []
+  /location/category:
     get:
       tags:
         - Location Categories
-      summary: Get cwmsData location category
+      summary: Get location category
       description: Returns CWMS Location Category Data
-      operationId: getSpkDataLocationCategory
+      operationId: getLocationCategory
       parameters:
         - name: office
           in: query
@@ -419,14 +421,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Location Categories
-      summary: Post cwmsData location category
+      summary: Post location category
       description: Create new LocationCategory
-      operationId: postSpkDataLocationCategory
+      operationId: postLocationCategory
       requestBody:
         content:
           application/json:
@@ -465,15 +467,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/location/group/{group-id}:
+        - OpenIDConnect: []
+  /location/group/{group-id}:
     get:
       tags:
         - Location Groups
-      summary: Get cwmsData location group with groupId
+      summary: Get location group with groupId
       description: Retrieves requested Location Group
-      operationId: getSpkDataLocationGroupWithGroupId
+      operationId: getLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -549,14 +551,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Location Groups
-      summary: Delete cwmsData location group with groupId
+      summary: Delete location group with groupId
       description: Deletes requested location group
-      operationId: deleteSpkDataLocationGroupWithGroupId
+      operationId: deleteLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -613,14 +615,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Location Groups
-      summary: Patch cwmsData location group with groupId
+      summary: Patch location group with groupId
       description: Update existing LocationGroup. Allows for renaming group, assigning new locations, and unassigning all locations from the group.
-      operationId: patchSpkDataLocationGroupWithGroupId
+      operationId: patchLocationGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -676,15 +678,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/location/group:
+        - OpenIDConnect: []
+  /location/group:
     get:
       tags:
         - Location Groups
-      summary: Get cwmsData location group
+      summary: Get location group
       description: Returns CWMS Location Groups Data
-      operationId: getSpkDataLocationGroup
+      operationId: getLocationGroup
       parameters:
         - name: office
           in: query
@@ -758,14 +760,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Location Groups
-      summary: Post cwmsData location group
+      summary: Post location group
       description: Create new LocationGroup
-      operationId: postSpkDataLocationGroup
+      operationId: postLocationGroup
       requestBody:
         content:
           application/json:
@@ -804,15 +806,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/locations/{location-id}:
+        - OpenIDConnect: []
+  /locations/{location-id}:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations with locationId
+      summary: Get locations with locationId
       description: Returns CWMS Location Data
-      operationId: getSpkDataLocationsWithLocationId
+      operationId: getLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -875,14 +877,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Locations
-      summary: Delete cwmsData locations with locationId
+      summary: Delete locations with locationId
       description: Delete CWMS Location
-      operationId: deleteSpkDataLocationsWithLocationId
+      operationId: deleteLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -926,14 +928,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Locations
-      summary: Patch cwmsData locations with locationId
+      summary: Patch locations with locationId
       description: Update CWMS Location
-      operationId: patchSpkDataLocationsWithLocationId
+      operationId: patchLocationsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -981,15 +983,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/locations:
+        - OpenIDConnect: []
+  /locations:
     get:
       tags:
         - Locations
-      summary: Get cwmsData locations
+      summary: Get locations
       description: Returns CWMS Location Data.  The Catalog end-point is also capable of retrieving lists of locations and can filter on additional fields.
-      operationId: getSpkDataLocations
+      operationId: getLocations
       parameters:
         - name: names
           in: query
@@ -1093,14 +1095,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Locations
-      summary: Post cwmsData locations
+      summary: Post locations
       description: Create new CWMS Location
-      operationId: postSpkDataLocations
+      operationId: postLocations
       requestBody:
         content:
           application/json:
@@ -1142,14 +1144,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/states:
+        - OpenIDConnect: []
+  /states:
     get:
       tags:
         - States
-      summary: Get cwmsData states
-      operationId: getSpkDataStates
+      summary: Get states
+      operationId: getStates
       responses:
         '200':
           description: A list of states.
@@ -1190,14 +1192,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/counties:
+        - OpenIDConnect: []
+  /counties:
     get:
       tags:
         - Counties
-      summary: Get cwmsData counties
-      operationId: getSpkDataCounties
+      summary: Get counties
+      operationId: getCounties
       responses:
         '200':
           description: A list of counties.
@@ -1238,14 +1240,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/offices/{office}:
+        - OpenIDConnect: []
+  /offices/{office}:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices with office
-      operationId: getSpkDataOfficesWithOffice
+      summary: Get offices with office
+      operationId: getOfficesWithOffice
       parameters:
         - name: office
           in: path
@@ -1315,14 +1317,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/offices:
+        - OpenIDConnect: []
+  /offices:
     get:
       tags:
         - Offices
-      summary: Get cwmsData offices
-      operationId: getSpkDataOffices
+      summary: Get offices
+      operationId: getOffices
       parameters:
         - name: format
           in: query
@@ -1388,14 +1390,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/units:
+        - OpenIDConnect: []
+  /units:
     get:
       tags:
         - Units
-      summary: Get cwmsData units
-      operationId: getSpkDataUnits
+      summary: Get units
+      operationId: getUnits
       parameters:
         - name: format
           in: query
@@ -1443,14 +1445,14 @@ paths:
         '501':
           description: The format requested is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/parameters:
+        - OpenIDConnect: []
+  /parameters:
     get:
       tags:
         - Parameters
-      summary: Get cwmsData parameters
-      operationId: getSpkDataParameters
+      summary: Get parameters
+      operationId: getParameters
       parameters:
         - name: format
           in: query
@@ -1513,14 +1515,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timezones:
+        - OpenIDConnect: []
+  /timezones:
     get:
       tags:
         - TimeZones
-      summary: Get cwmsData timezones
-      operationId: getSpkDataTimezones
+      summary: Get timezones
+      operationId: getTimezones
       parameters:
         - name: format
           in: query
@@ -1575,15 +1577,15 @@ paths:
         '501':
           description: The format requested is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/levels/{level-id}:
+        - OpenIDConnect: []
+  /levels/{level-id}:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels with levelId
+      summary: Get levels with levelId
       description: Retrieves requested Location Level
-      operationId: getSpkDataLevelsWithLevelId
+      operationId: getLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1614,7 +1616,7 @@ paths:
             Specifies the unit or unit system of the response. Valid values for the unit field are:
             * `EN`  Specifies English unit system.  Location level values will be in the default English units for their parameters.
             * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
-            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters. 
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
       responses:
@@ -1655,14 +1657,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData levels with levelId
+      summary: Delete levels with levelId
       description: Delete CWMS Location Level
-      operationId: deleteSpkDataLevelsWithLevelId
+      operationId: deleteLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1722,14 +1724,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData levels with levelId
+      summary: Patch levels with levelId
       description: Update CWMS Location Level
-      operationId: patchSpkDataLevelsWithLevelId
+      operationId: patchLevelsWithLevelId
       parameters:
         - name: level-id
           in: path
@@ -1783,14 +1785,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/levels:
+        - OpenIDConnect: []
+  /levels:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels
-      operationId: getSpkDataLevels
+      summary: Get levels
+      operationId: getLevels
       parameters:
         - name: level-id-mask
           in: query
@@ -1901,14 +1903,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Levels
-      summary: Post cwmsData levels
+      summary: Post levels
       description: Create new CWMS Location Level
-      operationId: postSpkDataLevels
+      operationId: postLevels
       requestBody:
         content:
           application/json:
@@ -1950,15 +1952,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/levels/{level-id}/timeseries:
+        - OpenIDConnect: []
+  /levels/{level-id}/timeseries:
     get:
       tags:
         - Levels
-      summary: Get cwmsData levels with levelId timeseries
+      summary: Get levels with levelId timeseries
       description: Retrieves requested Location Level
-      operationId: getSpkDataLevelsWithLevelIdTimeseries
+      operationId: getLevelsWithLevelIdTimeseries
       parameters:
         - name: level-id
           in: path
@@ -2050,15 +2052,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/recent:
+        - OpenIDConnect: []
+  /timeseries/recent:
     get:
       tags:
         - TimeSeries
-      summary: Get cwmsData timeseries recent
+      summary: Get timeseries recent
       description: Returns CWMS Timeseries Groups Data
-      operationId: getSpkDataTimeseriesRecent
+      operationId: getTimeseriesRecent
       parameters:
         - name: office
           in: query
@@ -2127,15 +2129,15 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/standard-text-id/{standard-text-id}:
+        - OpenIDConnect: []
+  /standard-text-id/{standard-text-id}:
     get:
       tags:
         - Standard Text
-      summary: Get cwmsData standardTextId with standardTextId
+      summary: Get standardTextId with standardTextId
       description: Retrieve a single Standard Text value
-      operationId: getSpkDataStandardTextIdWithStandardTextId
+      operationId: getStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -2187,14 +2189,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Standard Text
-      summary: Delete cwmsData standardTextId with standardTextId
+      summary: Delete standardTextId with standardTextId
       description: Delete a single Standard Text value
-      operationId: deleteSpkDataStandardTextIdWithStandardTextId
+      operationId: deleteStandardTextIdWithStandardTextId
       parameters:
         - name: standard-text-id
           in: path
@@ -2246,15 +2248,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/standard-text-id:
+        - OpenIDConnect: []
+  /standard-text-id:
     get:
       tags:
         - Standard Text
-      summary: Get cwmsData standardTextId
+      summary: Get standardTextId
       description: Retrieve a Standard Text catalog
-      operationId: getSpkDataStandardTextId
+      operationId: getStandardTextId
       parameters:
         - name: office-mask
           in: query
@@ -2304,14 +2306,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Standard Text
-      summary: Post cwmsData standardTextId
+      summary: Post standardTextId
       description: Create new Standard Text
-      operationId: postSpkDataStandardTextId
+      operationId: postStandardTextId
       parameters:
         - name: fail-if-exists
           in: query
@@ -2356,14 +2358,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/text:
+        - OpenIDConnect: []
+  /timeseries/text:
     get:
       tags:
         - Text-TimeSeries
       summary: Retrieve text time series values for a provided time window and date version.If individual values exceed 64 kilobytes, a URL to a separate download is provided instead of being included in the returned payload from this request.
-      operationId: getSpkDataTimeseriesText
+      operationId: getTimeseriesText
       parameters:
         - name: office
           in: query
@@ -2432,14 +2434,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Text-TimeSeries
-      summary: Post cwmsData timeseries text
+      summary: Post timeseries text
       description: Create new TextTimeSeries
-      operationId: postSpkDataTimeseriesText
+      operationId: postTimeseriesText
       parameters:
         - name: replace-all
           in: query
@@ -2484,15 +2486,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/text/{name}:
+        - OpenIDConnect: []
+  /timeseries/text/{name}:
     delete:
       tags:
         - Text-TimeSeries
-      summary: Delete cwmsData timeseries text with name
+      summary: Delete timeseries text with name
       description: Deletes requested text timeseries id
-      operationId: deleteSpkDataTimeseriesTextWithName
+      operationId: deleteTimeseriesTextWithName
       parameters:
         - name: name
           in: path
@@ -2566,14 +2568,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Text-TimeSeries
-      summary: Patch cwmsData timeseries text with name
+      summary: Patch timeseries text with name
       description: Updates a text timeseries
-      operationId: patchSpkDataTimeseriesTextWithName
+      operationId: patchTimeseriesTextWithName
       parameters:
         - name: name
           in: path
@@ -2624,14 +2626,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/text/{name}/value:
+        - OpenIDConnect: []
+  /timeseries/text/{name}/value:
     get:
       tags:
         - Text-TimeSeries
-      summary: Get cwmsData timeseries text with name value
-      operationId: getSpkDataTimeseriesTextWithNameValue
+      summary: Get timeseries text with name value
+      operationId: getTimeseriesTextWithNameValue
       parameters:
         - name: name
           in: path
@@ -2705,14 +2707,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/binary:
+        - OpenIDConnect: []
+  /timeseries/binary:
     get:
       tags:
         - Binary-TimeSeries
       summary: Retrieve binary time series values for a provided time window and date version.If individual values exceed 64 kilobytes, a URL to a separate download is provided instead of being included in the returned payload from this request.
-      operationId: getSpkDataTimeseriesBinary
+      operationId: getTimeseriesBinary
       parameters:
         - name: office
           in: query
@@ -2791,14 +2793,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Binary-TimeSeries
-      summary: Post cwmsData timeseries binary
+      summary: Post timeseries binary
       description: Create new BinaryTimeSeries
-      operationId: postSpkDataTimeseriesBinary
+      operationId: postTimeseriesBinary
       parameters:
         - name: replace-all
           in: query
@@ -2842,15 +2844,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/binary/{name}:
+        - OpenIDConnect: []
+  /timeseries/binary/{name}:
     delete:
       tags:
         - Binary-TimeSeries
-      summary: Delete cwmsData timeseries binary with name
+      summary: Delete timeseries binary with name
       description: Deletes requested binary timeseries id
-      operationId: deleteSpkDataTimeseriesBinaryWithName
+      operationId: deleteTimeseriesBinaryWithName
       parameters:
         - name: name
           in: path
@@ -2923,14 +2925,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Binary-TimeSeries
-      summary: Patch cwmsData timeseries binary with name
+      summary: Patch timeseries binary with name
       description: Updates a binary timeseries
-      operationId: patchSpkDataTimeseriesBinaryWithName
+      operationId: patchTimeseriesBinaryWithName
       parameters:
         - name: name
           in: path
@@ -2980,14 +2982,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/binary/{name}/value:
+        - OpenIDConnect: []
+  /timeseries/binary/{name}/value:
     get:
       tags:
         - Binary-TimeSeries
-      summary: Get cwmsData timeseries binary with name value
-      operationId: getSpkDataTimeseriesBinaryWithNameValue
+      summary: Get timeseries binary with name value
+      operationId: getTimeseriesBinaryWithNameValue
       parameters:
         - name: name
           in: path
@@ -3062,14 +3064,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile/{location-id}/{parameter-id}:
+        - OpenIDConnect: []
+  /timeseries/profile/{location-id}/{parameter-id}:
     get:
       tags:
         - TimeSeries
       summary: Get a time series profile
-      operationId: getSpkDataTimeseriesProfileWithLocationIdWithParameterId
+      operationId: getTimeseriesProfileWithLocationIdWithParameterId
       parameters:
         - name: location-id
           in: path
@@ -3129,13 +3131,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - TimeSeries
       summary: Delete a time series profile
-      operationId: deleteSpkDataTimeseriesProfileWithLocationIdWithParameterId
+      operationId: deleteTimeseriesProfileWithLocationIdWithParameterId
       parameters:
         - name: location-id
           in: path
@@ -3190,14 +3192,14 @@ paths:
         '501':
           description: Internal server error
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile:
+        - OpenIDConnect: []
+  /timeseries/profile:
     get:
       tags:
         - TimeSeries
       summary: Get a catalog of time series profiles
-      operationId: getSpkDataTimeseriesProfile
+      operationId: getTimeseriesProfile
       parameters:
         - name: office-mask
           in: query
@@ -3265,13 +3267,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries
       summary: Create a new time series profile
-      operationId: postSpkDataTimeseriesProfile
+      operationId: postTimeseriesProfile
       parameters:
         - name: fail-if-exists
           in: query
@@ -3315,14 +3317,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile-parser/{location-id}/{parameter-id}:
+        - OpenIDConnect: []
+  /timeseries/profile-parser/{location-id}/{parameter-id}:
     get:
       tags:
         - TimeSeries
       summary: Get a TimeSeriesProfile Parser by ID
-      operationId: getSpkDataTimeseriesProfileParserWithLocationIdWithParameterId
+      operationId: getTimeseriesProfileParserWithLocationIdWithParameterId
       parameters:
         - name: location-id
           in: path
@@ -3385,13 +3387,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - TimeSeries
       summary: Delete a TimeSeriesProfile Parser by ID
-      operationId: deleteSpkDataTimeseriesProfileParserWithLocationIdWithParameterId
+      operationId: deleteTimeseriesProfileParserWithLocationIdWithParameterId
       parameters:
         - name: location-id
           in: path
@@ -3447,14 +3449,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile-parser:
+        - OpenIDConnect: []
+  /timeseries/profile-parser:
     get:
       tags:
         - TimeSeries
       summary: Retrieve a list of TimeSeries Profile Parsers that match the provided mask parameters
-      operationId: getSpkDataTimeseriesProfileParser
+      operationId: getTimeseriesProfileParser
       parameters:
         - name: parameter-id-mask
           in: query
@@ -3518,13 +3520,13 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries
       summary: Store a TimeSeriesProfile Parser
-      operationId: postSpkDataTimeseriesProfileParser
+      operationId: postTimeseriesProfileParser
       parameters:
         - name: fail-if-exists
           in: query
@@ -3572,14 +3574,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile-instance/{location-id}/{parameter-id}/{version}:
+        - OpenIDConnect: []
+  /timeseries/profile-instance/{location-id}/{parameter-id}/{version}:
     get:
       tags:
         - TimeSeries
       summary: Get a time series profile instance that matches the provided parameters.
-      operationId: getSpkDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
+      operationId: getTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
       parameters:
         - name: location-id
           in: path
@@ -3713,13 +3715,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - TimeSeries
       summary: Delete a time series profile instance
-      operationId: deleteSpkDataTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
+      operationId: deleteTimeseriesProfileInstanceWithLocationIdWithParameterIdWithVersion
       parameters:
         - name: location-id
           in: path
@@ -3801,14 +3803,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/profile-instance:
+        - OpenIDConnect: []
+  /timeseries/profile-instance:
     get:
       tags:
         - TimeSeries
       summary: Get all time series profile instances that match the provided masks. This endpoint will return a list of time series profile instances without the associated data. Data for an instance can be retrieved using the singular retrieval endpoint.
-      operationId: getSpkDataTimeseriesProfileInstance
+      operationId: getTimeseriesProfileInstance
       parameters:
         - name: office-mask
           in: query
@@ -3871,13 +3873,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries
       summary: Create a new time series profile instance by parsing provided data
-      operationId: postSpkDataTimeseriesProfileInstance
+      operationId: postTimeseriesProfileInstance
       parameters:
         - name: method
           in: query
@@ -3949,15 +3951,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/category/{category-id}:
+        - OpenIDConnect: []
+  /timeseries/category/{category-id}:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get cwmsData timeseries category with categoryId
+      summary: Get timeseries category with categoryId
       description: Retrieves requested timeseries category
-      operationId: getSpkDataTimeseriesCategoryWithCategoryId
+      operationId: getTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -4011,14 +4013,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - TimeSeries Categories
-      summary: Delete cwmsData timeseries category with categoryId
+      summary: Delete timeseries category with categoryId
       description: Deletes requested time series category
-      operationId: deleteSpkDataTimeseriesCategoryWithCategoryId
+      operationId: deleteTimeseriesCategoryWithCategoryId
       parameters:
         - name: category-id
           in: path
@@ -4069,15 +4071,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/category:
+        - OpenIDConnect: []
+  /timeseries/category:
     get:
       tags:
         - TimeSeries Categories
-      summary: Get cwmsData timeseries category
+      summary: Get timeseries category
       description: Returns CWMS timeseries category Data
-      operationId: getSpkDataTimeseriesCategory
+      operationId: getTimeseriesCategory
       parameters:
         - name: office
           in: query
@@ -4126,14 +4128,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries Categories
-      summary: Post cwmsData timeseries category
+      summary: Post timeseries category
       description: Create new TimeSeriesCategory
-      operationId: postSpkDataTimeseriesCategory
+      operationId: postTimeseriesCategory
       parameters:
         - name: fail-if-exists
           in: query
@@ -4178,15 +4180,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/identifier-descriptor/{name}:
+        - OpenIDConnect: []
+  /timeseries/identifier-descriptor/{name}:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor with name
+      summary: Get timeseries identifierDescriptor with name
       description: Retrieves requested timeseries identifier descriptor
-      operationId: getSpkDataTimeseriesIdentifierDescriptorWithName
+      operationId: getTimeseriesIdentifierDescriptorWithName
       parameters:
         - name: name
           in: path
@@ -4245,14 +4247,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - TimeSeries Identifier
-      summary: Delete cwmsData timeseries identifierDescriptor with name
+      summary: Delete timeseries identifierDescriptor with name
       description: Deletes requested timeseries identifier
-      operationId: deleteSpkDataTimeseriesIdentifierDescriptorWithName
+      operationId: deleteTimeseriesIdentifierDescriptorWithName
       parameters:
         - name: name
           in: path
@@ -4309,13 +4311,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - TimeSeries Identifier
-      summary: Patch cwmsData timeseries identifierDescriptor with name
-      operationId: patchSpkDataTimeseriesIdentifierDescriptorWithName
+      summary: Patch timeseries identifierDescriptor with name
+      operationId: patchTimeseriesIdentifierDescriptorWithName
       parameters:
         - name: name
           in: path
@@ -4389,15 +4391,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/identifier-descriptor:
+        - OpenIDConnect: []
+  /timeseries/identifier-descriptor:
     get:
       tags:
         - TimeSeries Identifier
-      summary: Get cwmsData timeseries identifierDescriptor
+      summary: Get timeseries identifierDescriptor
       description: Returns CWMS timeseries identifier descriptorData
-      operationId: getSpkDataTimeseriesIdentifierDescriptor
+      operationId: getTimeseriesIdentifierDescriptor
       parameters:
         - name: office
           in: query
@@ -4460,14 +4462,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries Identifier
-      summary: Post cwmsData timeseries identifierDescriptor
+      summary: Post timeseries identifierDescriptor
       description: Create new TimeSeriesIdentifierDescriptor
-      operationId: postSpkDataTimeseriesIdentifierDescriptor
+      operationId: postTimeseriesIdentifierDescriptor
       parameters:
         - name: fail-if-exists
           in: query
@@ -4515,15 +4517,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/group/{group-id}:
+        - OpenIDConnect: []
+  /timeseries/group/{group-id}:
     get:
       tags:
         - Timeseries Groups
-      summary: Get cwmsData timeseries group with groupId
+      summary: Get timeseries group with groupId
       description: Retrieves requested timeseries group
-      operationId: getSpkDataTimeseriesGroupWithGroupId
+      operationId: getTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -4593,14 +4595,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Timeseries Groups
-      summary: Delete cwmsData timeseries group with groupId
+      summary: Delete timeseries group with groupId
       description: Deletes requested time series group
-      operationId: deleteSpkDataTimeseriesGroupWithGroupId
+      operationId: deleteTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -4652,14 +4654,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Timeseries Groups
-      summary: Patch cwmsData timeseries group with groupId
+      summary: Patch timeseries group with groupId
       description: Update existing TimeSeriesGroup. Allows for renaming of the group, assigning new time series, and unassigning all time series from the group.
-      operationId: patchSpkDataTimeseriesGroupWithGroupId
+      operationId: patchTimeseriesGroupWithGroupId
       parameters:
         - name: group-id
           in: path
@@ -4715,15 +4717,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/group:
+        - OpenIDConnect: []
+  /timeseries/group:
     get:
       tags:
         - Timeseries Groups
-      summary: Get cwmsData timeseries group
+      summary: Get timeseries group
       description: Returns CWMS Timeseries Groups Data
-      operationId: getSpkDataTimeseriesGroup
+      operationId: getTimeseriesGroup
       parameters:
         - name: office
           in: query
@@ -4792,14 +4794,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Timeseries Groups
-      summary: Post cwmsData timeseries group
+      summary: Post timeseries group
       description: Create new TimeSeriesGroup
-      operationId: postSpkDataTimeseriesGroup
+      operationId: postTimeseriesGroup
       parameters:
         - name: fail-if-exists
           in: query
@@ -4844,14 +4846,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries:
+        - OpenIDConnect: []
+  /timeseries:
     get:
       tags:
         - TimeSeries
-      summary: Get cwmsData timeseries
-      operationId: getSpkDataTimeseries
+      summary: Get timeseries
+      operationId: getTimeseries
       parameters:
         - name: name
           in: query
@@ -4980,14 +4982,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - TimeSeries
-      summary: Post cwmsData timeseries
+      summary: Post timeseries
       description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
-      operationId: postSpkDataTimeseries
+      operationId: postTimeseries
       parameters:
         - name: timezone
           in: query
@@ -5091,14 +5093,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/timeseries/{timeseries}:
+        - OpenIDConnect: []
+  /timeseries/{timeseries}:
     delete:
       tags:
         - TimeSeries
-      summary: Delete cwmsData timeseries with timeseries
-      operationId: deleteSpkDataTimeseriesWithTimeseries
+      summary: Delete timeseries with timeseries
+      operationId: deleteTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -5186,14 +5188,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - TimeSeries
-      summary: Patch cwmsData timeseries with timeseries
+      summary: Patch timeseries with timeseries
       description: Update a TimeSeries with provided values
-      operationId: patchSpkDataTimeseriesWithTimeseries
+      operationId: patchTimeseriesWithTimeseries
       parameters:
         - name: timeseries
           in: path
@@ -5303,14 +5305,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/template/{template-id}:
+        - OpenIDConnect: []
+  /ratings/template/{template-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template with templateId
-      operationId: getSpkDataRatingsTemplateWithTemplateId
+      summary: Get ratings template with templateId
+      operationId: getRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -5364,14 +5366,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings template with templateId
+      summary: Delete ratings template with templateId
       description: Deletes requested rating specification
-      operationId: deleteSpkDataRatingsTemplateWithTemplateId
+      operationId: deleteRatingsTemplateWithTemplateId
       parameters:
         - name: template-id
           in: path
@@ -5423,14 +5425,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/template:
+        - OpenIDConnect: []
+  /ratings/template:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings template
-      operationId: getSpkDataRatingsTemplate
+      summary: Get ratings template
+      operationId: getRatingsTemplate
       parameters:
         - name: office
           in: query
@@ -5491,14 +5493,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings template
+      summary: Post ratings template
       description: Create new Rating Template
-      operationId: postSpkDataRatingsTemplate
+      operationId: postRatingsTemplate
       parameters:
         - name: fail-if-exists
           in: query
@@ -5543,14 +5545,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/spec/{rating-id}:
+        - OpenIDConnect: []
+  /ratings/spec/{rating-id}:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec with ratingId
-      operationId: getSpkDataRatingsSpecWithRatingId
+      summary: Get ratings spec with ratingId
+      operationId: getRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -5602,14 +5604,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings spec with ratingId
+      summary: Delete ratings spec with ratingId
       description: Deletes requested rating specification
-      operationId: deleteSpkDataRatingsSpecWithRatingId
+      operationId: deleteRatingsSpecWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -5661,14 +5663,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/spec:
+        - OpenIDConnect: []
+  /ratings/spec:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings spec
-      operationId: getSpkDataRatingsSpec
+      summary: Get ratings spec
+      operationId: getRatingsSpec
       parameters:
         - name: office
           in: query
@@ -5729,14 +5731,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings spec
+      summary: Post ratings spec
       description: Create new Rating Specification
-      operationId: postSpkDataRatingsSpec
+      operationId: postRatingsSpec
       parameters:
         - name: fail-if-exists
           in: query
@@ -5781,14 +5783,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/metadata:
+        - OpenIDConnect: []
+  /ratings/metadata:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings metadata
-      operationId: getSpkDataRatingsMetadata
+      summary: Get ratings metadata
+      operationId: getRatingsMetadata
       parameters:
         - name: office
           in: query
@@ -5864,15 +5866,78 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings/{rating-id}:
+        - OpenIDConnect: []
+  /ratings/{rating-id}/latest:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings with ratingId
+      summary: Get ratings with ratingId latest
       description: Returns CWMS Rating Data
-      operationId: getSpkDataRatingsWithRatingId
+      operationId: getRatingsWithRatingIdLatest
+      parameters:
+        - name: rating-id
+          in: path
+          description: 'The rating-id of the effective dates to be retrieve. '
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the ratingset to be included in the response.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/Unit'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/Unit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - OpenIDConnect: []
+  /ratings/{rating-id}:
+    get:
+      tags:
+        - Ratings
+      summary: Get ratings with ratingId
+      description: Returns CWMS Rating Data
+      operationId: getRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -5947,13 +6012,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Ratings
-      summary: Delete cwmsData ratings with ratingId
-      operationId: deleteSpkDataRatingsWithRatingId
+      summary: Delete ratings with ratingId
+      operationId: deleteRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -6016,14 +6081,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Ratings
-      summary: Patch cwmsData ratings with ratingId
+      summary: Patch ratings with ratingId
       description: Update a RatingSet
-      operationId: patchSpkDataRatingsWithRatingId
+      operationId: patchRatingsWithRatingId
       parameters:
         - name: rating-id
           in: path
@@ -6076,14 +6141,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/ratings:
+        - OpenIDConnect: []
+  /ratings:
     get:
       tags:
         - Ratings
-      summary: Get cwmsData ratings
-      operationId: getSpkDataRatings
+      summary: Get ratings
+      operationId: getRatings
       parameters:
         - name: name
           in: query
@@ -6186,14 +6251,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Ratings
-      summary: Post cwmsData ratings
+      summary: Post ratings
       description: Create new RatingSet
-      operationId: postSpkDataRatings
+      operationId: postRatings
       parameters:
         - name: store-template
           in: query
@@ -6241,14 +6306,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/catalog/{dataset}:
+        - OpenIDConnect: []
+  /catalog/{dataset}:
     get:
       tags:
         - Catalog
-      summary: Get cwmsData catalog with dataset
-      operationId: getSpkDataCatalogWithDataset
+      summary: Get catalog with dataset
+      operationId: getCatalogWithDataset
       parameters:
         - name: dataset
           in: path
@@ -6368,15 +6433,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/basins/{name}:
+        - OpenIDConnect: []
+  /basins/{name}:
     get:
       tags:
         - Basins
-      summary: Get cwmsData basins with name
+      summary: Get basins with name
       description: Returns CWMS Basin Data
-      operationId: getSpkDataBasinsWithName
+      operationId: getBasinsWithName
       parameters:
         - name: name
           in: path
@@ -6445,14 +6510,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Basins
-      summary: Delete cwmsData basins with name
+      summary: Delete basins with name
       description: Renames CWMS Basin
-      operationId: deleteSpkDataBasinsWithName
+      operationId: deleteBasinsWithName
       parameters:
         - name: name
           in: path
@@ -6504,14 +6569,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Basins
-      summary: Patch cwmsData basins with name
+      summary: Patch basins with name
       description: Renames CWMS Basin
-      operationId: patchSpkDataBasinsWithName
+      operationId: patchBasinsWithName
       parameters:
         - name: name
           in: path
@@ -6564,15 +6629,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/basins:
+        - OpenIDConnect: []
+  /basins:
     get:
       tags:
         - Basins
-      summary: Get cwmsData basins
+      summary: Get basins
       description: Returns CWMS Basin Data
-      operationId: getSpkDataBasins
+      operationId: getBasins
       parameters:
         - name: office
           in: query
@@ -6633,14 +6698,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Basins
-      summary: Post cwmsData basins
+      summary: Post basins
       description: Creates CWMS Basin
-      operationId: postSpkDataBasins
+      operationId: postBasins
       responses:
         '204':
           description: Basin successfully stored to CWMS.
@@ -6677,15 +6742,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/streams/{name}:
+        - OpenIDConnect: []
+  /streams/{name}:
     get:
       tags:
         - Streams
-      summary: Get cwmsData streams with name
+      summary: Get streams with name
       description: Returns CWMS Stream Data
-      operationId: getSpkDataStreamsWithName
+      operationId: getStreamsWithName
       parameters:
         - name: name
           in: path
@@ -6749,14 +6814,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Streams
-      summary: Delete cwmsData streams with name
+      summary: Delete streams with name
       description: Delete CWMS Stream
-      operationId: deleteSpkDataStreamsWithName
+      operationId: deleteStreamsWithName
       parameters:
         - name: name
           in: path
@@ -6809,14 +6874,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Streams
-      summary: Patch cwmsData streams with name
+      summary: Patch streams with name
       description: Rename CWMS Stream
-      operationId: patchSpkDataStreamsWithName
+      operationId: patchStreamsWithName
       parameters:
         - name: name
           in: path
@@ -6869,15 +6934,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/streams:
+        - OpenIDConnect: []
+  /streams:
     get:
       tags:
         - Streams
-      summary: Get cwmsData streams
+      summary: Get streams
       description: Returns matching CWMS Stream Data for a Reservoir Project.
-      operationId: getSpkDataStreams
+      operationId: getStreams
       parameters:
         - name: office-mask
           in: query
@@ -6949,14 +7014,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Streams
-      summary: Post cwmsData streams
+      summary: Post streams
       description: Create CWMS Stream
-      operationId: postSpkDataStreams
+      operationId: postStreams
       parameters:
         - name: fail-if-exists
           in: query
@@ -7003,15 +7068,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-locations/{office}/{name}/downstream-locations:
+        - OpenIDConnect: []
+  /stream-locations/{office}/{name}/downstream-locations:
     get:
       tags:
         - StreamLocations
-      summary: Get cwmsData streamLocations with office with name downstreamLocations
+      summary: Get streamLocations with office with name downstreamLocations
       description: Returns matching downstream stream locations.
-      operationId: getSpkDataStreamLocationsWithOfficeWithNameDownstreamLocations
+      operationId: getStreamLocationsWithOfficeWithNameDownstreamLocations
       parameters:
         - name: office
           in: path
@@ -7090,15 +7155,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-locations/{office}/{name}/upstream-locations:
+        - OpenIDConnect: []
+  /stream-locations/{office}/{name}/upstream-locations:
     get:
       tags:
         - StreamLocations
-      summary: Get cwmsData streamLocations with office with name upstreamLocations
+      summary: Get streamLocations with office with name upstreamLocations
       description: Returns matching upstream stream locations.
-      operationId: getSpkDataStreamLocationsWithOfficeWithNameUpstreamLocations
+      operationId: getStreamLocationsWithOfficeWithNameUpstreamLocations
       parameters:
         - name: office
           in: path
@@ -7177,15 +7242,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-locations/{name}:
+        - OpenIDConnect: []
+  /stream-locations/{name}:
     get:
       tags:
         - StreamLocations
-      summary: Get cwmsData streamLocations with name
+      summary: Get streamLocations with name
       description: Returns CWMS Stream Location Data
-      operationId: getSpkDataStreamLocationsWithName
+      operationId: getStreamLocationsWithName
       parameters:
         - name: name
           in: path
@@ -7265,14 +7330,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - StreamLocations
-      summary: Delete cwmsData streamLocations with name
+      summary: Delete streamLocations with name
       description: Delete CWMS Stream Location
-      operationId: deleteSpkDataStreamLocationsWithName
+      operationId: deleteStreamLocationsWithName
       parameters:
         - name: name
           in: path
@@ -7326,14 +7391,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - StreamLocations
-      summary: Patch cwmsData streamLocations with name
+      summary: Patch streamLocations with name
       description: Update CWMS Stream Location
-      operationId: patchSpkDataStreamLocationsWithName
+      operationId: patchStreamLocationsWithName
       parameters:
         - name: name
           in: path
@@ -7380,15 +7445,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-locations:
+        - OpenIDConnect: []
+  /stream-locations:
     get:
       tags:
         - StreamLocations
-      summary: Get cwmsData streamLocations
+      summary: Get streamLocations
       description: Returns matching CWMS Stream Location Data for a Reservoir Project.
-      operationId: getSpkDataStreamLocations
+      operationId: getStreamLocations
       parameters:
         - name: office-mask
           in: query
@@ -7465,14 +7530,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - StreamLocations
-      summary: Post cwmsData streamLocations
+      summary: Post streamLocations
       description: Create CWMS Stream Location
-      operationId: postSpkDataStreamLocations
+      operationId: postStreamLocations
       parameters:
         - name: fail-if-exists
           in: query
@@ -7519,15 +7584,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-reaches/{name}:
+        - OpenIDConnect: []
+  /stream-reaches/{name}:
     get:
       tags:
         - StreamReaches
-      summary: Get cwmsData streamReaches with name
+      summary: Get streamReaches with name
       description: Returns CWMS Stream Reach Data
-      operationId: getSpkDataStreamReachesWithName
+      operationId: getStreamReachesWithName
       parameters:
         - name: name
           in: path
@@ -7597,14 +7662,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - StreamReaches
-      summary: Delete cwmsData streamReaches with name
+      summary: Delete streamReaches with name
       description: Delete CWMS Stream Reach
-      operationId: deleteSpkDataStreamReachesWithName
+      operationId: deleteStreamReachesWithName
       parameters:
         - name: name
           in: path
@@ -7652,14 +7717,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - StreamReaches
-      summary: Patch cwmsData streamReaches with name
+      summary: Patch streamReaches with name
       description: Rename CWMS Stream Reach
-      operationId: patchSpkDataStreamReachesWithName
+      operationId: patchStreamReachesWithName
       parameters:
         - name: name
           in: path
@@ -7712,15 +7777,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/stream-reaches:
+        - OpenIDConnect: []
+  /stream-reaches:
     get:
       tags:
         - StreamReaches
-      summary: Get cwmsData streamReaches
+      summary: Get streamReaches
       description: Returns matching CWMS Stream Reach Data for a Reservoir Project.
-      operationId: getSpkDataStreamReaches
+      operationId: getStreamReaches
       parameters:
         - name: office-mask
           in: query
@@ -7792,14 +7857,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - StreamReaches
-      summary: Post cwmsData streamReaches
+      summary: Post streamReaches
       description: Create CWMS Stream Reach
-      operationId: postSpkDataStreamReaches
+      operationId: postStreamReaches
       parameters:
         - name: fail-if-exists
           in: query
@@ -7846,15 +7911,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/measurements/time-extents:
+        - OpenIDConnect: []
+  /measurements/time-extents:
     get:
       tags:
         - StreamLocations
-      summary: Get cwmsData measurements timeExtents
+      summary: Get measurements timeExtents
       description: Returns matching downstream stream locations.
-      operationId: getSpkDataMeasurementsTimeExtents
+      operationId: getMeasurementsTimeExtents
       parameters:
         - name: office-mask
           in: query
@@ -7901,15 +7966,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/measurements:
+        - OpenIDConnect: []
+  /measurements:
     get:
       tags:
         - Measurements
-      summary: Get cwmsData measurements
+      summary: Get measurements
       description: Returns matching measurement data.
-      operationId: getSpkDataMeasurements
+      operationId: getMeasurements
       parameters:
         - name: office-mask
           in: query
@@ -8029,14 +8094,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Measurements
-      summary: Post cwmsData measurements
+      summary: Post measurements
       description: Create new measurement(s).
-      operationId: postSpkDataMeasurements
+      operationId: postMeasurements
       parameters:
         - name: fail-if-exists
           in: query
@@ -8090,15 +8155,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/measurements/{location-id}:
+        - OpenIDConnect: []
+  /measurements/{location-id}:
     delete:
       tags:
         - Measurements
-      summary: Delete cwmsData measurements with locationId
+      summary: Delete measurements with locationId
       description: Delete an existing measurement.
-      operationId: deleteSpkDataMeasurementsWithLocationId
+      operationId: deleteMeasurementsWithLocationId
       parameters:
         - name: location-id
           in: path
@@ -8173,14 +8238,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/blobs/{blob-id}:
+        - OpenIDConnect: []
+  /blobs/{blob-id}:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs with blobId
-      operationId: getSpkDataBlobsWithBlobId
+      summary: Get blobs with blobId
+      operationId: getBlobsWithBlobId
       parameters:
         - name: blob-id
           in: path
@@ -8224,14 +8289,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/blobs:
+        - OpenIDConnect: []
+  /blobs:
     get:
       tags:
         - Blob
-      summary: Get cwmsData blobs
-      operationId: getSpkDataBlobs
+      summary: Get blobs
+      operationId: getBlobs
       parameters:
         - name: office
           in: query
@@ -8295,14 +8360,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Blob
-      summary: Post cwmsData blobs
+      summary: Post blobs
       description: Create new Blob
-      operationId: postSpkDataBlobs
+      operationId: postBlobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -8347,15 +8412,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/clobs/{clob-id}:
+        - OpenIDConnect: []
+  /clobs/{clob-id}:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs with clobId
+      summary: Get clobs with clobId
       description: Get a single clob.  If the accept header is set to text/plain, the raw value is returned as the response body. Responses to text/plain requests are streamed and support the Range header.  When the accept header is set to application/json;version=2 the clob will be returned as a serialized Clob object with fields for office-id, id, description and value.
-      operationId: getSpkDataClobsWithClobId
+      operationId: getClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -8413,14 +8478,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Clob
-      summary: Delete cwmsData clobs with clobId
+      summary: Delete clobs with clobId
       description: Delete clob
-      operationId: deleteSpkDataClobsWithClobId
+      operationId: deleteClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -8466,14 +8531,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Clob
-      summary: Patch cwmsData clobs with clobId
+      summary: Patch clobs with clobId
       description: Update clob
-      operationId: patchSpkDataClobsWithClobId
+      operationId: patchClobsWithClobId
       parameters:
         - name: clob-id
           in: path
@@ -8527,14 +8592,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/clobs:
+        - OpenIDConnect: []
+  /clobs:
     get:
       tags:
         - Clob
-      summary: Get cwmsData clobs
-      operationId: getSpkDataClobs
+      summary: Get clobs
+      operationId: getClobs
       parameters:
         - name: office
           in: query
@@ -8603,14 +8668,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Clob
-      summary: Post cwmsData clobs
+      summary: Post clobs
       description: Create new Clob
-      operationId: postSpkDataClobs
+      operationId: postClobs
       parameters:
         - name: fail-if-exists
           in: query
@@ -8658,15 +8723,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/pools/{pool-id}:
+        - OpenIDConnect: []
+  /pools/{pool-id}:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools with poolId
+      summary: Get pools with poolId
       description: Retrieves requested Pool
-      operationId: getSpkDataPoolsWithPoolId
+      operationId: getPoolsWithPoolId
       parameters:
         - name: pool-id
           in: path
@@ -8746,15 +8811,15 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/pools:
+        - OpenIDConnect: []
+  /pools:
     get:
       tags:
         - Pools
-      summary: Get cwmsData pools
+      summary: Get pools
       description: Returns Pools Data
-      operationId: getSpkDataPools
+      operationId: getPools
       parameters:
         - name: office
           in: query
@@ -8842,14 +8907,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/specified-levels:
+        - OpenIDConnect: []
+  /specified-levels:
     get:
       tags:
         - Levels
-      summary: Get cwmsData specifiedLevels
-      operationId: getSpkDataSpecifiedLevels
+      summary: Get specifiedLevels
+      operationId: getSpecifiedLevels
       parameters:
         - name: office
           in: query
@@ -8899,14 +8964,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Levels
-      summary: Post cwmsData specifiedLevels
+      summary: Post specifiedLevels
       description: Create new SpecifiedLevel
-      operationId: postSpkDataSpecifiedLevels
+      operationId: postSpecifiedLevels
       parameters:
         - name: fail-if-exists
           in: query
@@ -8951,15 +9016,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/specified-levels/{specified-level-id}:
+        - OpenIDConnect: []
+  /specified-levels/{specified-level-id}:
     delete:
       tags:
         - Levels
-      summary: Delete cwmsData specifiedLevels with specifiedLevelId
+      summary: Delete specifiedLevels with specifiedLevelId
       description: Deletes requested specified level id
-      operationId: deleteSpkDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: deleteSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -9005,14 +9070,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Levels
-      summary: Patch cwmsData specifiedLevels with specifiedLevelId
+      summary: Patch specifiedLevels with specifiedLevelId
       description: Renames the requested specified level id
-      operationId: patchSpkDataSpecifiedLevelsWithSpecifiedLevelId
+      operationId: patchSpecifiedLevelsWithSpecifiedLevelId
       parameters:
         - name: specified-level-id
           in: path
@@ -9063,15 +9128,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/forecast-instance/{name}:
+        - OpenIDConnect: []
+  /forecast-instance/{name}:
     get:
       tags:
         - Forecast
-      summary: Get cwmsData forecastInstance with name
+      summary: Get forecastInstance with name
       description: Used to get all forecast instances for a given forecast spec
-      operationId: getSpkDataForecastInstanceWithName
+      operationId: getForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -9143,14 +9208,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Forecast
-      summary: Delete cwmsData forecastInstance with name
+      summary: Delete forecastInstance with name
       description: Used to delete forecast instance data based on unique fields
-      operationId: deleteSpkDataForecastInstanceWithName
+      operationId: deleteForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -9214,14 +9279,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Forecast
-      summary: Patch cwmsData forecastInstance with name
+      summary: Patch forecastInstance with name
       description: Update a forecast instance with new max age, notes, forecast fileand forecast info key/value pairs.
-      operationId: patchSpkDataForecastInstanceWithName
+      operationId: patchForecastInstanceWithName
       parameters:
         - name: name
           in: path
@@ -9267,15 +9332,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/forecast-instance:
+        - OpenIDConnect: []
+  /forecast-instance:
     get:
       tags:
         - Forecast
-      summary: Get cwmsData forecastInstance
+      summary: Get forecastInstance
       description: Used to get all forecast instances for a given forecast spec
-      operationId: getSpkDataForecastInstance
+      operationId: getForecastInstance
       parameters:
         - name: office
           in: query
@@ -9332,14 +9397,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Forecast
-      summary: Post cwmsData forecastInstance
+      summary: Post forecastInstance
       description: Used to create and save a forecast instance
-      operationId: postSpkDataForecastInstance
+      operationId: postForecastInstance
       requestBody:
         content:
           application/json;version=2:
@@ -9378,15 +9443,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/forecast-spec/{name}:
+        - OpenIDConnect: []
+  /forecast-spec/{name}:
     get:
       tags:
         - Forecast
-      summary: Get cwmsData forecastSpec with name
+      summary: Get forecastSpec with name
       description: Used to query a single forecast spec record
-      operationId: getSpkDataForecastSpecWithName
+      operationId: getForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -9446,14 +9511,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Forecast
-      summary: Delete cwmsData forecastSpec with name
+      summary: Delete forecastSpec with name
       description: Used to delete forecast spec data based on unique fields
-      operationId: deleteSpkDataForecastSpecWithName
+      operationId: deleteForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -9510,14 +9575,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Forecast
-      summary: Patch cwmsData forecastSpec with name
+      summary: Patch forecastSpec with name
       description: Update a forecast spec with provided values
-      operationId: patchSpkDataForecastSpecWithName
+      operationId: patchForecastSpecWithName
       parameters:
         - name: name
           in: path
@@ -9563,15 +9628,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/forecast-spec:
+        - OpenIDConnect: []
+  /forecast-spec:
     get:
       tags:
         - Forecast
-      summary: Get cwmsData forecastSpec
+      summary: Get forecastSpec
       description: Used to query multiple forecast specs
-      operationId: getSpkDataForecastSpec
+      operationId: getForecastSpec
       parameters:
         - name: office
           in: query
@@ -9633,14 +9698,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Forecast
-      summary: Post cwmsData forecastSpec
+      summary: Post forecastSpec
       description: Used to create and save forecast spec data
-      operationId: postSpkDataForecastSpec
+      operationId: postForecastSpec
       requestBody:
         content:
           application/json;version=2:
@@ -9679,15 +9744,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/forecast-instance/{name}/file-data:
+        - OpenIDConnect: []
+  /forecast-instance/{name}/file-data:
     get:
       tags:
         - Forecast
-      summary: Get cwmsData forecastInstance with name fileData
+      summary: Get forecastInstance with name fileData
       description: Used to download forecast file for the given parameters
-      operationId: getSpkDataForecastInstanceWithNameFileData
+      operationId: getForecastInstanceWithNameFileData
       parameters:
         - name: name
           in: path
@@ -9760,15 +9825,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/status-update/{name}:
+        - OpenIDConnect: []
+  /projects/status-update/{name}:
     post:
       tags:
         - Projects
-      summary: Post cwmsData projects statusUpdate with name
+      summary: Post projects statusUpdate with name
       description: Publishes a message on the office's STATUS queue that a project has been updated for a specified application
-      operationId: postSpkDataProjectsStatusUpdateWithName
+      operationId: postProjectsStatusUpdateWithName
       parameters:
         - name: name
           in: path
@@ -9842,15 +9907,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user/{water-user}:
     get:
       tags:
         - Water Contracts
-      summary: Get cwmsData projects with office with projectId waterUser with waterUser
+      summary: Get projects with office with projectId waterUser with waterUser
       description: Gets a specified water user.
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      operationId: getProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
       parameters:
         - name: office
           in: path
@@ -9908,14 +9973,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Water Contracts
-      summary: Delete cwmsData projects with office with projectId waterUser with waterUser
+      summary: Delete projects with office with projectId waterUser with waterUser
       description: Deletes a water user from CWMS.
-      operationId: deleteSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      operationId: deleteProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
       parameters:
         - name: office
           in: path
@@ -9972,14 +10037,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Water Contracts
-      summary: Patch cwmsData projects with office with projectId waterUser with waterUser
+      summary: Patch projects with office with projectId waterUser with waterUser
       description: Updates a water user in CWMS.
-      operationId: patchSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
+      operationId: patchProjectsWithOfficeWithProjectIdWaterUserWithWaterUser
       parameters:
         - name: office
           in: path
@@ -10047,15 +10112,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user:
     get:
       tags:
         - Water Contracts
-      summary: Get cwmsData projects with office with projectId waterUser
+      summary: Get projects with office with projectId waterUser
       description: Gets all water users.
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdWaterUser
+      operationId: getProjectsWithOfficeWithProjectIdWaterUser
       parameters:
         - name: office
           in: path
@@ -10107,14 +10172,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Water Contracts
-      summary: Post cwmsData projects with office with projectId waterUser
+      summary: Post projects with office with projectId waterUser
       description: Stores a water user to CWMS.
-      operationId: postSpkDataProjectsWithOfficeWithProjectIdWaterUser
+      operationId: postProjectsWithOfficeWithProjectIdWaterUser
       parameters:
         - name: office
           in: path
@@ -10173,15 +10238,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}:
     get:
       tags:
         - Water Contracts
-      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      summary: Get projects with office with projectId waterUser with waterUser contracts with contractName
       description: Return a specified water contract
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      operationId: getProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
       parameters:
         - name: office
           in: path
@@ -10250,14 +10315,14 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Water Contracts
-      summary: Delete cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      summary: Delete projects with office with projectId waterUser with waterUser contracts with contractName
       description: Delete a specified water contract
-      operationId: deleteSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      operationId: deleteProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
       parameters:
         - name: office
           in: path
@@ -10320,14 +10385,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Water Contracts
-      summary: Patch cwmsData projects with office with projectId waterUser with waterUser contracts with contractName
+      summary: Patch projects with office with projectId waterUser with waterUser contracts with contractName
       description: Renames a water contract
-      operationId: patchSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
+      operationId: patchProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractName
       parameters:
         - name: office
           in: path
@@ -10398,15 +10463,15 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user/{water-user}/contracts:
     get:
       tags:
         - Water Contracts
-      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts
+      summary: Get projects with office with projectId waterUser with waterUser contracts
       description: Return all water contracts
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
+      operationId: getProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
       parameters:
         - name: office
           in: path
@@ -10469,14 +10534,14 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Water Contracts
-      summary: Post cwmsData projects with office with projectId waterUser with waterUser contracts
+      summary: Post projects with office with projectId waterUser with waterUser contracts
       description: Create a new water contract
-      operationId: postSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
+      operationId: postProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContracts
       parameters:
         - name: office
           in: path
@@ -10548,15 +10613,15 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/accounting:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/accounting:
     get:
       tags:
         - Pump Accounting
-      summary: Get cwmsData projects with office with projectId waterUser with waterUser contracts with contractName accounting
+      summary: Get projects with office with projectId waterUser with waterUser contracts with contractName accounting
       description: Get pump accounting entries associated with a water supply contract.
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
+      operationId: getProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
       parameters:
         - name: office
           in: path
@@ -10672,14 +10737,14 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Pump Accounting
-      summary: Post cwmsData projects with office with projectId waterUser with waterUser contracts with contractName accounting
+      summary: Post projects with office with projectId waterUser with waterUser contracts with contractName accounting
       description: Create a new pump accounting entry associated with a water supply contract.
-      operationId: postSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
+      operationId: postProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNameAccounting
       parameters:
         - name: office
           in: path
@@ -10746,15 +10811,15 @@ paths:
         '501':
           description: Requested format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
     delete:
       tags:
         - Water Contracts
-      summary: Delete cwmsData projects with office with projectId waterUser with waterUser contracts with contractName pumps with name
+      summary: Delete projects with office with projectId waterUser with waterUser contracts with contractName pumps with name
       description: Disassociate a pump from a contract
-      operationId: deleteSpkDataProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNamePumpsWithName
+      operationId: deleteProjectsWithOfficeWithProjectIdWaterUserWithWaterUserContractsWithContractNamePumpsWithName
       parameters:
         - name: office
           in: path
@@ -10829,15 +10894,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/contract-types:
+        - OpenIDConnect: []
+  /projects/{office}/contract-types:
     get:
       tags:
         - Water Contracts
-      summary: Get cwmsData projects with office contractTypes
+      summary: Get projects with office contractTypes
       description: Get all water contract types
-      operationId: getSpkDataProjectsWithOfficeContractTypes
+      operationId: getProjectsWithOfficeContractTypes
       parameters:
         - name: office
           in: path
@@ -10888,14 +10953,14 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Water Contracts
-      summary: Post cwmsData projects with office contractTypes
+      summary: Post projects with office contractTypes
       description: Create a new water contract type
-      operationId: postSpkDataProjectsWithOfficeContractTypes
+      operationId: postProjectsWithOfficeContractTypes
       parameters:
         - name: office
           in: path
@@ -10949,15 +11014,15 @@ paths:
         '501':
           description: Requested format is not implemented.
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/contract-types/{display-value}:
+        - OpenIDConnect: []
+  /projects/{office}/contract-types/{display-value}:
     delete:
       tags:
         - Water Contracts
-      summary: Delete cwmsData projects with office contractTypes with displayValue
+      summary: Delete projects with office contractTypes with displayValue
       description: Delete a water contract type
-      operationId: deleteSpkDataProjectsWithOfficeContractTypesWithDisplayValue
+      operationId: deleteProjectsWithOfficeContractTypesWithDisplayValue
       parameters:
         - name: office
           in: path
@@ -11003,15 +11068,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/embankments/{name}:
+        - OpenIDConnect: []
+  /projects/embankments/{name}:
     get:
       tags:
         - Embankments
-      summary: Get cwmsData projects embankments with name
+      summary: Get projects embankments with name
       description: Returns CWMS Embankment Data
-      operationId: getSpkDataProjectsEmbankmentsWithName
+      operationId: getProjectsEmbankmentsWithName
       parameters:
         - name: name
           in: path
@@ -11070,14 +11135,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Embankments
-      summary: Delete cwmsData projects embankments with name
+      summary: Delete projects embankments with name
       description: Delete CWMS Embankment
-      operationId: deleteSpkDataProjectsEmbankmentsWithName
+      operationId: deleteProjectsEmbankmentsWithName
       parameters:
         - name: name
           in: path
@@ -11130,14 +11195,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Embankments
-      summary: Patch cwmsData projects embankments with name
+      summary: Patch projects embankments with name
       description: Rename CWMS Embankment
-      operationId: patchSpkDataProjectsEmbankmentsWithName
+      operationId: patchProjectsEmbankmentsWithName
       parameters:
         - name: name
           in: path
@@ -11190,15 +11255,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/embankments:
+        - OpenIDConnect: []
+  /projects/embankments:
     get:
       tags:
         - Embankments
-      summary: Get cwmsData projects embankments
+      summary: Get projects embankments
       description: Returns matching CWMS Embankment Data for a Reservoir Project.
-      operationId: getSpkDataProjectsEmbankments
+      operationId: getProjectsEmbankments
       parameters:
         - name: office
           in: query
@@ -11256,14 +11321,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Embankments
-      summary: Post cwmsData projects embankments
+      summary: Post projects embankments
       description: Create CWMS Embankment
-      operationId: postSpkDataProjectsEmbankments
+      operationId: postProjectsEmbankments
       parameters:
         - name: fail-if-exists
           in: query
@@ -11310,15 +11375,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/turbines/{name}:
+        - OpenIDConnect: []
+  /projects/turbines/{name}:
     get:
       tags:
         - Turbines
-      summary: Get cwmsData projects turbines with name
+      summary: Get projects turbines with name
       description: Returns CWMS Turbine Data
-      operationId: getSpkDataProjectsTurbinesWithName
+      operationId: getProjectsTurbinesWithName
       parameters:
         - name: name
           in: path
@@ -11373,14 +11438,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Turbines
-      summary: Delete cwmsData projects turbines with name
+      summary: Delete projects turbines with name
       description: Delete CWMS Turbine
-      operationId: deleteSpkDataProjectsTurbinesWithName
+      operationId: deleteProjectsTurbinesWithName
       parameters:
         - name: name
           in: path
@@ -11433,14 +11498,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Turbines
-      summary: Patch cwmsData projects turbines with name
+      summary: Patch projects turbines with name
       description: Rename CWMS Turbine
-      operationId: patchSpkDataProjectsTurbinesWithName
+      operationId: patchProjectsTurbinesWithName
       parameters:
         - name: name
           in: path
@@ -11493,15 +11558,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/turbines:
+        - OpenIDConnect: []
+  /projects/turbines:
     get:
       tags:
         - Turbines
-      summary: Get cwmsData projects turbines
+      summary: Get projects turbines
       description: Returns matching CWMS Turbine Data for a Reservoir Project.
-      operationId: getSpkDataProjectsTurbines
+      operationId: getProjectsTurbines
       parameters:
         - name: office
           in: query
@@ -11558,14 +11623,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Turbines
-      summary: Post cwmsData projects turbines
+      summary: Post projects turbines
       description: Create CWMS Turbine
-      operationId: postSpkDataProjectsTurbines
+      operationId: postProjectsTurbines
       parameters:
         - name: fail-if-exists
           in: query
@@ -11615,15 +11680,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/locks/{name}:
+        - OpenIDConnect: []
+  /projects/locks/{name}:
     get:
       tags:
         - Locks
-      summary: Get cwmsData projects locks with name
+      summary: Get projects locks with name
       description: Returns CWMS Lock Data
-      operationId: getSpkDataProjectsLocksWithName
+      operationId: getProjectsLocksWithName
       parameters:
         - name: name
           in: path
@@ -11691,14 +11756,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Locks
-      summary: Delete cwmsData projects locks with name
+      summary: Delete projects locks with name
       description: Delete CWMS Lock
-      operationId: deleteSpkDataProjectsLocksWithName
+      operationId: deleteProjectsLocksWithName
       parameters:
         - name: name
           in: path
@@ -11751,14 +11816,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Locks
-      summary: Patch cwmsData projects locks with name
+      summary: Patch projects locks with name
       description: Rename CWMS Lock
-      operationId: patchSpkDataProjectsLocksWithName
+      operationId: patchProjectsLocksWithName
       parameters:
         - name: name
           in: path
@@ -11811,15 +11876,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/locks:
+        - OpenIDConnect: []
+  /projects/locks:
     get:
       tags:
         - Locks
-      summary: Get cwmsData projects locks
+      summary: Get projects locks
       description: Returns matching CWMS Lock Data for a Reservoir Project.
-      operationId: getSpkDataProjectsLocks
+      operationId: getProjectsLocks
       parameters:
         - name: office
           in: query
@@ -11878,14 +11943,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Locks
-      summary: Post cwmsData projects locks
+      summary: Post projects locks
       description: Create CWMS Lock
-      operationId: postSpkDataProjectsLocks
+      operationId: postProjectsLocks
       parameters:
         - name: fail-if-exists
           in: query
@@ -11932,15 +11997,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{name}/turbine-changes:
+        - OpenIDConnect: []
+  /projects/{office}/{name}/turbine-changes:
     get:
       tags:
         - Turbines
-      summary: Get cwmsData projects with office with name turbineChanges
+      summary: Get projects with office with name turbineChanges
       description: Returns matching CWMS Turbine Change Data for a Reservoir Project.
-      operationId: getSpkDataProjectsWithOfficeWithNameTurbineChanges
+      operationId: getProjectsWithOfficeWithNameTurbineChanges
       parameters:
         - name: office
           in: path
@@ -12027,14 +12092,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Turbines
-      summary: Post cwmsData projects with office with name turbineChanges
+      summary: Post projects with office with name turbineChanges
       description: Create CWMS Turbine Changes
-      operationId: postSpkDataProjectsWithOfficeWithNameTurbineChanges
+      operationId: postProjectsWithOfficeWithNameTurbineChanges
       parameters:
         - name: office
           in: path
@@ -12096,14 +12161,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Turbines
-      summary: Delete cwmsData projects with office with name turbineChanges
+      summary: Delete projects with office with name turbineChanges
       description: Delete CWMS Turbine Changes
-      operationId: deleteSpkDataProjectsWithOfficeWithNameTurbineChanges
+      operationId: deleteProjectsWithOfficeWithNameTurbineChanges
       parameters:
         - name: office
           in: path
@@ -12168,15 +12233,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/outlets/{name}:
+        - OpenIDConnect: []
+  /projects/outlets/{name}:
     get:
       tags:
         - Outlets
-      summary: Get cwmsData projects outlets with name
+      summary: Get projects outlets with name
       description: Returns CWMS Outlet Data
-      operationId: getSpkDataProjectsOutletsWithName
+      operationId: getProjectsOutletsWithName
       parameters:
         - name: name
           in: path
@@ -12231,14 +12296,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Outlets
-      summary: Delete cwmsData projects outlets with name
+      summary: Delete projects outlets with name
       description: Delete CWMS Outlet
-      operationId: deleteSpkDataProjectsOutletsWithName
+      operationId: deleteProjectsOutletsWithName
       parameters:
         - name: name
           in: path
@@ -12291,14 +12356,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Outlets
-      summary: Patch cwmsData projects outlets with name
+      summary: Patch projects outlets with name
       description: Rename CWMS Outlet
-      operationId: patchSpkDataProjectsOutletsWithName
+      operationId: patchProjectsOutletsWithName
       parameters:
         - name: name
           in: path
@@ -12351,15 +12416,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/outlets:
+        - OpenIDConnect: []
+  /projects/outlets:
     get:
       tags:
         - Outlets
-      summary: Get cwmsData projects outlets
+      summary: Get projects outlets
       description: Returns matching CWMS Outlet Data for a Reservoir Project.
-      operationId: getSpkDataProjectsOutlets
+      operationId: getProjectsOutlets
       parameters:
         - name: office
           in: query
@@ -12418,14 +12483,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Outlets
-      summary: Post cwmsData projects outlets
+      summary: Post projects outlets
       description: Create CWMS Outlet
-      operationId: postSpkDataProjectsOutlets
+      operationId: postProjectsOutlets
       parameters:
         - name: fail-if-exists
           in: query
@@ -12475,15 +12540,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/gate-changes:
+        - OpenIDConnect: []
+  /projects/gate-changes:
     post:
       tags:
         - Outlets
-      summary: Post cwmsData projects gateChanges
+      summary: Post projects gateChanges
       description: Create CWMS Gate Changes
-      operationId: postSpkDataProjectsGateChanges
+      operationId: postProjectsGateChanges
       parameters:
         - name: fail-if-exists
           in: query
@@ -12537,15 +12602,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/gate-changes:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/gate-changes:
     get:
       tags:
         - Outlets
-      summary: Get cwmsData projects with office with projectId gateChanges
+      summary: Get projects with office with projectId gateChanges
       description: Returns matching CWMS gate change data for a Reservoir Project.
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdGateChanges
+      operationId: getProjectsWithOfficeWithProjectIdGateChanges
       parameters:
         - name: office
           in: path
@@ -12637,14 +12702,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Outlets
-      summary: Delete cwmsData projects with office with projectId gateChanges
+      summary: Delete projects with office with projectId gateChanges
       description: Deletes matching CWMS gate change data for a Reservoir Project.
-      operationId: deleteSpkDataProjectsWithOfficeWithProjectIdGateChanges
+      operationId: deleteProjectsWithOfficeWithProjectIdGateChanges
       parameters:
         - name: office
           in: path
@@ -12709,15 +12774,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/virtual-outlets/{name}:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/virtual-outlets/{name}:
     get:
       tags:
         - Outlets
-      summary: Get cwmsData projects with office with projectId virtualOutlets with name
+      summary: Get projects with office with projectId virtualOutlets with name
       description: Returns CWMS Virtual Outlet Data
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdVirtualOutletsWithName
+      operationId: getProjectsWithOfficeWithProjectIdVirtualOutletsWithName
       parameters:
         - name: office
           in: path
@@ -12778,14 +12843,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Outlets
-      summary: Delete cwmsData projects with office with projectId virtualOutlets with name
+      summary: Delete projects with office with projectId virtualOutlets with name
       description: Delete CWMS Virtual Outlet
-      operationId: deleteSpkDataProjectsWithOfficeWithProjectIdVirtualOutletsWithName
+      operationId: deleteProjectsWithOfficeWithProjectIdVirtualOutletsWithName
       parameters:
         - name: office
           in: path
@@ -12844,15 +12909,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{office}/{project-id}/virtual-outlets:
+        - OpenIDConnect: []
+  /projects/{office}/{project-id}/virtual-outlets:
     get:
       tags:
         - Outlets
-      summary: Get cwmsData projects with office with projectId virtualOutlets
+      summary: Get projects with office with projectId virtualOutlets
       description: Returns matching CWMS Virtual Outlet Data for a Reservoir Project.
-      operationId: getSpkDataProjectsWithOfficeWithProjectIdVirtualOutlets
+      operationId: getProjectsWithOfficeWithProjectIdVirtualOutlets
       parameters:
         - name: office
           in: path
@@ -12911,15 +12976,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/virtual-outlets:
+        - OpenIDConnect: []
+  /projects/virtual-outlets:
     post:
       tags:
         - Outlets
-      summary: Post cwmsData projects virtualOutlets
+      summary: Post projects virtualOutlets
       description: Create CWMS Virtual Outlet
-      operationId: postSpkDataProjectsVirtualOutlets
+      operationId: postProjectsVirtualOutlets
       parameters:
         - name: fail-if-exists
           in: query
@@ -12969,15 +13034,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/locations:
+        - OpenIDConnect: []
+  /projects/locations:
     get:
       tags:
         - Projects
-      summary: Get cwmsData projects locations
+      summary: Get projects locations
       description: Get a list of project child locations
-      operationId: getSpkDataProjectsLocations
+      operationId: getProjectsLocations
       parameters:
         - name: office
           in: query
@@ -13034,15 +13099,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects/{name}:
+        - OpenIDConnect: []
+  /projects/{name}:
     get:
       tags:
         - Projects
-      summary: Get cwmsData projects with name
+      summary: Get projects with name
       description: Retrieves requested Project
-      operationId: getSpkDataProjectsWithName
+      operationId: getProjectsWithName
       parameters:
         - name: name
           in: path
@@ -13096,14 +13161,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Projects
-      summary: Delete cwmsData projects with name
+      summary: Delete projects with name
       description: Deletes requested reservoir project
-      operationId: deleteSpkDataProjectsWithName
+      operationId: deleteProjectsWithName
       parameters:
         - name: name
           in: path
@@ -13154,14 +13219,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Projects
-      summary: Patch cwmsData projects with name
+      summary: Patch projects with name
       description: Rename a project
-      operationId: patchSpkDataProjectsWithName
+      operationId: patchProjectsWithName
       parameters:
         - name: name
           in: path
@@ -13220,15 +13285,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/projects:
+        - OpenIDConnect: []
+  /projects:
     get:
       tags:
         - Projects
-      summary: Get cwmsData projects
+      summary: Get projects
       description: Returns Projects Data
-      operationId: getSpkDataProjects
+      operationId: getProjects
       parameters:
         - name: office
           in: query
@@ -13291,14 +13356,14 @@ paths:
         '501':
           description: request format is not implemented
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Projects
-      summary: Post cwmsData projects
+      summary: Post projects
       description: Create new Project
-      operationId: postSpkDataProjects
+      operationId: postProjects
       parameters:
         - name: fail-if-exists
           in: query
@@ -13346,15 +13411,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/properties/{name}:
+        - OpenIDConnect: []
+  /properties/{name}:
     get:
       tags:
         - Properties
-      summary: Get cwmsData properties with name
+      summary: Get properties with name
       description: Returns CWMS Property Data
-      operationId: getSpkDataPropertiesWithName
+      operationId: getPropertiesWithName
       parameters:
         - name: name
           in: path
@@ -13417,14 +13482,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Properties
-      summary: Delete cwmsData properties with name
+      summary: Delete properties with name
       description: Delete CWMS Property
-      operationId: deleteSpkDataPropertiesWithName
+      operationId: deletePropertiesWithName
       parameters:
         - name: name
           in: path
@@ -13478,14 +13543,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - Properties
-      summary: Patch cwmsData properties with name
+      summary: Patch properties with name
       description: Update CWMS Property
-      operationId: patchSpkDataPropertiesWithName
+      operationId: patchPropertiesWithName
       parameters:
         - name: name
           in: path
@@ -13532,15 +13597,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/properties:
+        - OpenIDConnect: []
+  /properties:
     get:
       tags:
         - Properties
-      summary: Get cwmsData properties
+      summary: Get properties
       description: Returns matching CWMS Property Data.
-      operationId: getSpkDataProperties
+      operationId: getProperties
       parameters:
         - name: office-mask
           in: query
@@ -13597,14 +13662,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Properties
-      summary: Post cwmsData properties
+      summary: Post properties
       description: Create CWMS Property
-      operationId: postSpkDataProperties
+      operationId: postProperties
       requestBody:
         content:
           application/json:
@@ -13645,15 +13710,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/lookup-types:
+        - OpenIDConnect: []
+  /lookup-types:
     get:
       tags:
         - LookupTypes
-      summary: Get cwmsData lookupTypes
+      summary: Get lookupTypes
       description: Returns matching CWMS Lookup Type Data.
-      operationId: getSpkDataLookupTypes
+      operationId: getLookupTypes
       parameters:
         - name: category
           in: query
@@ -13713,14 +13778,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - LookupTypes
-      summary: Post cwmsData lookupTypes
+      summary: Post lookupTypes
       description: Create CWMS Lookup Type
-      operationId: postSpkDataLookupTypes
+      operationId: postLookupTypes
       parameters:
         - name: category
           in: query
@@ -13774,15 +13839,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/lookup-types/{name}:
+        - OpenIDConnect: []
+  /lookup-types/{name}:
     delete:
       tags:
         - LookupTypes
-      summary: Delete cwmsData lookupTypes with name
+      summary: Delete lookupTypes with name
       description: Delete CWMS Lookup Type
-      operationId: deleteSpkDataLookupTypesWithName
+      operationId: deleteLookupTypesWithName
       parameters:
         - name: name
           in: path
@@ -13841,14 +13906,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     patch:
       tags:
         - LookupTypes
-      summary: Patch cwmsData lookupTypes with name
+      summary: Patch lookupTypes with name
       description: Update CWMS Lookup Type
-      operationId: patchSpkDataLookupTypesWithName
+      operationId: patchLookupTypesWithName
       parameters:
         - name: name
           in: path
@@ -13907,15 +13972,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-locks/{name}:
+        - OpenIDConnect: []
+  /project-locks/{name}:
     get:
       tags:
         - Project Locks
-      summary: Get cwmsData projectLocks with name
+      summary: Get projectLocks with name
       description: Return a lock if the specified project is locked. Otherwise 404
-      operationId: getSpkDataProjectLocksWithName
+      operationId: getProjectLocksWithName
       parameters:
         - name: name
           in: path
@@ -13973,14 +14038,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     delete:
       tags:
         - Project Locks
-      summary: Delete cwmsData projectLocks with name
+      summary: Delete projectLocks with name
       description: Revokes a project lock, if successful the lock is deleted
-      operationId: deleteSpkDataProjectLocksWithName
+      operationId: deleteProjectLocksWithName
       parameters:
         - name: name
           in: path
@@ -14032,15 +14097,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-locks:
+        - OpenIDConnect: []
+  /project-locks:
     get:
       tags:
         - Project Locks
-      summary: Get cwmsData projectLocks
+      summary: Get projectLocks
       description: Get a list of project locks
-      operationId: getSpkDataProjectLocks
+      operationId: getProjectLocks
       parameters:
         - name: office-mask
           in: query
@@ -14096,14 +14161,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
     post:
       tags:
         - Project Locks
-      summary: Post cwmsData projectLocks
+      summary: Post projectLocks
       description: Requests the creation of a new Reservoir Project Lock
-      operationId: postSpkDataProjectLocks
+      operationId: postProjectLocks
       parameters:
         - name: revoke-existing
           in: query
@@ -14161,15 +14226,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-locks/deny:
+        - OpenIDConnect: []
+  /project-locks/deny:
     post:
       tags:
         - Project Locks
-      summary: Post cwmsData projectLocks deny
+      summary: Post projectLocks deny
       description: Deny a Lock revoke request.
-      operationId: postSpkDataProjectLocksDeny
+      operationId: postProjectLocksDeny
       parameters:
         - name: lock-id
           in: query
@@ -14209,15 +14274,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-locks/release:
+        - OpenIDConnect: []
+  /project-locks/release:
     post:
       tags:
         - Project Locks
-      summary: Post cwmsData projectLocks release
+      summary: Post projectLocks release
       description: Releases a project lock
-      operationId: postSpkDataProjectLocksRelease
+      operationId: postProjectLocksRelease
       parameters:
         - name: office
           in: query
@@ -14263,15 +14328,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-lock-rights:
+        - OpenIDConnect: []
+  /project-lock-rights:
     get:
       tags:
         - Project Lock Revoker Rights
-      summary: Get cwmsData projectLockRights
+      summary: Get projectLockRights
       description: 'Get a list of project lock revoker rights '
-      operationId: getSpkDataProjectLockRights
+      operationId: getProjectLockRights
       parameters:
         - name: office-mask
           in: query
@@ -14329,15 +14394,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-lock-rights/remove-all:
+        - OpenIDConnect: []
+  /project-lock-rights/remove-all:
     post:
       tags:
         - Project Lock Revoker Rights
-      summary: Post cwmsData projectLockRights removeAll
+      summary: Post projectLockRights removeAll
       description: Revokes a project lock, if successful the lock is deleted
-      operationId: postSpkDataProjectLockRightsRemoveAll
+      operationId: postProjectLockRightsRemoveAll
       parameters:
         - name: office
           in: query
@@ -14389,15 +14454,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
-  /cwms-data/project-lock-rights/update:
+        - OpenIDConnect: []
+  /project-lock-rights/update:
     post:
       tags:
         - Project Lock Revoker Rights
-      summary: Post cwmsData projectLockRights update
+      summary: Post projectLockRights update
       description: Update Lock Revoker Rights.
-      operationId: postSpkDataProjectLockRightsUpdate
+      operationId: postProjectLockRightsUpdate
       parameters:
         - name: office
           in: query
@@ -14460,8 +14525,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CdaError'
       security:
-        - CwmsAAACacAuth: []
         - ApiKey: []
+        - OpenIDConnect: []
 components:
   schemas:
     CdaError:
@@ -15057,9 +15122,9 @@ components:
                         type: boolean
                       negative:
                         type: boolean
-                  dateBased:
-                    type: boolean
                   durationEstimated:
+                    type: boolean
+                  dateBased:
                     type: boolean
                   timeBased:
                     type: boolean
@@ -15208,9 +15273,9 @@ components:
                         type: boolean
                       negative:
                         type: boolean
-                  dateBased:
-                    type: boolean
                   durationEstimated:
+                    type: boolean
+                  dateBased:
                     type: boolean
                   timeBased:
                     type: boolean
@@ -15770,8 +15835,6 @@ components:
           type: string
         timeseriesId:
           type: string
-        tsCode:
-          type: number
         aliasId:
           type: string
         refTsId:
@@ -16706,9 +16769,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     pools:
       type: object
@@ -17524,13 +17587,91 @@ components:
         user-id:
           type: string
   securitySchemes:
-    CwmsAAACacAuth:
-      type: apiKey
-      description: Auth handler running on same tomcat instance as the data api.
-      name: JSESSIONIDSSO
-      in: cookie
     ApiKey:
       type: apiKey
       description: 'Key value as generated from the /auth/keys endpoint. NOTE: you MUST manually prefix your key with ''apikey '' (without the single quotes).'
       name: Authorization
       in: header
+      scheme: apikey
+    OpenIDConnect:
+      type: openIdConnect
+      name: Authorization
+      in: header
+      flows:
+        implicit:
+          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            preferred_username: ''
+            x509_presented: ''
+            roles: ''
+            acr: ''
+            cacUID: ''
+            groups: ''
+            microprofile-jwt: ''
+            phone: ''
+            offline_access: ''
+            email: ''
+            profile: ''
+            web-origins: ''
+            subjectDN: ''
+            address: ''
+        password:
+          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            preferred_username: ''
+            x509_presented: ''
+            roles: ''
+            acr: ''
+            cacUID: ''
+            groups: ''
+            microprofile-jwt: ''
+            phone: ''
+            offline_access: ''
+            email: ''
+            profile: ''
+            web-origins: ''
+            subjectDN: ''
+            address: ''
+        clientCredentials:
+          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            preferred_username: ''
+            x509_presented: ''
+            roles: ''
+            acr: ''
+            cacUID: ''
+            groups: ''
+            microprofile-jwt: ''
+            phone: ''
+            offline_access: ''
+            email: ''
+            profile: ''
+            web-origins: ''
+            subjectDN: ''
+            address: ''
+        authorizationCode:
+          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            preferred_username: ''
+            x509_presented: ''
+            roles: ''
+            acr: ''
+            cacUID: ''
+            groups: ''
+            microprofile-jwt: ''
+            phone: ''
+            offline_access: ''
+            email: ''
+            profile: ''
+            web-origins: ''
+            subjectDN: ''
+            address: ''
+      openIdConnectUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/.well-known/openid-configuration
