@@ -38,6 +38,8 @@ dependencies {
     testImplementation(platform(libs.okhttp.bom))
     testImplementation(libs.okhttp)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
     testRuntimeOnly(libs.junit.engine)
 }
 

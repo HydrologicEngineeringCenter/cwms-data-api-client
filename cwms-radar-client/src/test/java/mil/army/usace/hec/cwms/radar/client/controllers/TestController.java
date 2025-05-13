@@ -24,6 +24,9 @@
 
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import mil.army.usace.hec.cwms.aaa.client.CwmsAuthCookieCallback;
 import mil.army.usace.hec.cwms.aaa.client.CwmsLoginController;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -54,13 +57,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.Preferences;
 
-abstract class TestController {
+public abstract class TestController {
 
     private static final boolean USE_MOCK = true;
     private static final String TOMCAT_SERVER = System.getProperty("tomcat.test.url", "https://");
     private static PreferencesBackedCookieStore preferencesBackedCookieStore;
     private static final List<String> SESSION_COOKIES = Arrays.asList("JSESSIONID=53693739C7450D5D5261ED35E2093458", "JSESSIONIDSSO=8AAF8621FD4748C050814BE6D6AFDAFC");
-    MockHttpServer mockHttpServer;
+    protected MockHttpServer mockHttpServer;
     static CookieJarFactory.CookieJarSupplier cookieJarSupplier;
 
     @BeforeAll
@@ -81,7 +84,7 @@ abstract class TestController {
         }
     }
 
-    ApiConnectionInfo buildConnectionInfo() {
+    protected ApiConnectionInfo buildConnectionInfo() {
         String baseUrl = getRadarBaseUrl();
         return new ApiConnectionInfoBuilder(baseUrl).build();
     }
@@ -163,13 +166,22 @@ abstract class TestController {
         }
     }
 
-    static String readJsonFile(String jsonPath) throws IOException {
+    protected static String readJsonFile(String jsonPath) throws IOException {
         URL resource = TestController.class.getClassLoader().getResource(jsonPath);
         if (resource == null) {
             throw new IOException("Resource not found: " + jsonPath);
         }
         Path path = new File(resource.getFile()).toPath();
         return String.join("\n", Files.readAllLines(path));
+    }
+
+    protected static String readSwaggerYamlAsJson() throws IOException {
+        String module = System.getProperty("user.dir");
+        String yamlPath = module + "/../cwms-radar-model/cwms-radar-swagger.yaml";
+        Path path = new File(yamlPath).toPath();
+        ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+        JsonNode yamlTree = yamlMapper.readTree(path.toFile());
+        return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(yamlTree);
     }
 
     private static KeyManager getKeyManagerFromJreKeyStore() throws Exception {
