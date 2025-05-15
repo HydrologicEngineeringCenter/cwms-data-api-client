@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,20 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
+import static java.util.stream.Collectors.toSet;
+
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+import javax.net.ssl.SSLHandshakeException;
 import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
@@ -41,21 +55,6 @@ import okhttp3.ResponseBody;
 import usace.metrics.noop.NoOpTimer;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.Timer;
-
-import javax.net.ssl.SSLHandshakeException;
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
-
-import static java.util.stream.Collectors.toSet;
 
 public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
@@ -153,18 +152,18 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                     .addPathSegments(endpoint)
                     .build();
         }
-        MediaType type = MediaType.parse(mediaType);
-        if (type == null) {
-            throw new IOException("Invalid Media Type: " + mediaType);
-        }
         HttpUrl.Builder urlBuilder = resolve.newBuilder();
         queryParameters.forEach(urlBuilder::addQueryParameter);
         Request.Builder requestBuilder = new Request.Builder();
         RequestBody requestBody = null;
         if (body != null) {
             requestBody = RequestBody.create(body, null);
+            MediaType type = MediaType.parse(mediaType);
+            if (type == null) {
+                throw new IOException("Invalid Media Type: " + mediaType);
+            }
+            requestBuilder.header("Content-Type", type.toString());
         }
-        requestBuilder.header("Content-Type", type.toString());
         requestBuilder.url(urlBuilder.build());
         requestBuilder.method(method.getName(), requestBody);
         queryHeaders.forEach(requestBuilder::addHeader);
