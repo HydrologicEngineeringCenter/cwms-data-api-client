@@ -15,7 +15,10 @@ public abstract class OpenIdTokenController {
     protected abstract String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException;
     public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
         String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder(wellKnownEndpoint).build())
+        ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
+                .withSslSocketData(sslSocketData)
+                .build();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
                 .get()
                 .withMediaType(ACCEPT_HEADER);
         try (HttpRequestResponse response = executor.execute()) {
