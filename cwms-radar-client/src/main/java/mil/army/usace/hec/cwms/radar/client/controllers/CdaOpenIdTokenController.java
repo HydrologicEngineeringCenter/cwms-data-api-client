@@ -37,6 +37,9 @@ public final class CdaOpenIdTokenController extends OpenIdTokenController {
     protected String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
         String url = apiConnectionInfo.getApiRoot() + "/" + SWAGGER_DOC_ENDPOINT;
         OpenAPI openAPI = new OpenAPIV3Parser().read(url);
+        if(openAPI == null) {
+            throw new IOException("Failed to parse OpenAPI spec from " + url);
+        }
         SecurityScheme openIdScheme = openAPI.getComponents()
                 .getSecuritySchemes()
                 .get("OpenIDConnect");
