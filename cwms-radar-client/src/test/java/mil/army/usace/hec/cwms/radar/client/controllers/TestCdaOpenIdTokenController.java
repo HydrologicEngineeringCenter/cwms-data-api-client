@@ -26,10 +26,12 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
+import java.io.IOException;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -52,5 +54,25 @@ final class TestCdaOpenIdTokenController extends TestController {
         SslSocketData sslSocketData = new SslSocketData(mockSslSocketFactory, CwbiAuthTrustManager.getTrustManager());
         ApiConnectionInfo tokenUrl = new CdaOpenIdTokenController().retrieveTokenUrl(buildConnectionInfo(), sslSocketData);
         assertEquals("https://api.example.com/auth/realms/cwbi/protocol/openid-connect/token", tokenUrl.getApiRoot());
+    }
+
+    @Test
+    void testRetrieveTokenUrlNoSpec() throws Exception {
+        SSLSocketFactory mockSslSocketFactory = Mockito.mock(SSLSocketFactory.class);
+        String resource = "{\"spec\": \"none\"}";
+        String openIdConfig = "radar/v1/json/openIdConfig.json";
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = (ObjectNode) mapper.readTree(resource);
+        ApiConnectionInfo webServiceUrl = buildConnectionInfo();
+        ObjectNode components = node.with("components");
+        ObjectNode securitySchemes = components.with("securitySchemes");
+        ObjectNode openIdConnect = securitySchemes.with("OpenIDConnect");
+        openIdConnect.remove("openIdConnectUrl");
+        openIdConnect.put("openIdConnectUrl", webServiceUrl.getApiRoot() + "/.well-known/openid-configuration");
+        String updatedIdpConfig = mapper.writeValueAsString(node);
+        mockHttpServer.enqueue(updatedIdpConfig);
+        mockHttpServer.enqueue(readJsonFile(openIdConfig));
+        SslSocketData sslSocketData = new SslSocketData(mockSslSocketFactory, CwbiAuthTrustManager.getTrustManager());
+        assertThrows(IOException.class, () -> new CdaOpenIdTokenController().retrieveTokenUrl(buildConnectionInfo(), sslSocketData));
     }
 }
