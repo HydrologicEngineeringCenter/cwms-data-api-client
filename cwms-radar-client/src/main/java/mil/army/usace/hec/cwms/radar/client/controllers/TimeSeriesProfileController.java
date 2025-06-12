@@ -2,9 +2,6 @@ package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_QUERY_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.FALSE;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.NEW_LRTS_ID_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.USE_NEW_LRTS_ID;
 
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -24,7 +21,6 @@ public final class TimeSeriesProfileController {
         String endpoint = TIME_SERIES_PROFILE + input.locationId() + "/" + input.parameterId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -37,7 +33,6 @@ public final class TimeSeriesProfileController {
             TimeSeriesProfileEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .addEndpointInput(input)
                 .get()
                 .withMediaType(ACCEPT_HEADER_V1);
@@ -51,7 +46,6 @@ public final class TimeSeriesProfileController {
         String body = RadarObjectMapper.mapObjectToJson(input.profile());
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
@@ -64,7 +58,6 @@ public final class TimeSeriesProfileController {
             throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_PROFILE + input.locationId() + "/" + input.parameterId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .addEndpointInput(input)
                 .delete()
                 .withMediaType(ACCEPT_HEADER_V1)

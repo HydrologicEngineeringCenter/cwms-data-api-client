@@ -25,9 +25,6 @@
 package mil.army.usace.hec.cwms.radar.client.controllers;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_JSON;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.FALSE;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.NEW_LRTS_ID_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.USE_NEW_LRTS_ID;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +46,6 @@ public final class TimeSeriesGroupController {
         TimeSeriesGroup retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .get()
             .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
@@ -64,7 +60,6 @@ public final class TimeSeriesGroupController {
         List<TimeSeriesGroup> retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .get()
             .withMediaType(ACCEPT_HEADER_JSON);
         try (HttpRequestResponse response = executor.execute()) {
@@ -78,7 +73,6 @@ public final class TimeSeriesGroupController {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .post()
                 .withBody(body)
             .withMediaType(ACCEPT_HEADER_JSON)
@@ -91,7 +85,6 @@ public final class TimeSeriesGroupController {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
         new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT + "/" + input.originalLocationId())
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .patch()
                 .withBody(body)
             .withMediaType(ACCEPT_HEADER_JSON)
@@ -104,7 +97,6 @@ public final class TimeSeriesGroupController {
         String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.timeSeriesGroupId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .delete()
             .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()

@@ -39,9 +39,6 @@ import java.util.Set;
 
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.ACCEPT_HEADER_V2;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.FALSE;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.NEW_LRTS_ID_HEADER;
-import static mil.army.usace.hec.cwms.radar.client.controllers.RadarEndpointConstants.USE_NEW_LRTS_ID;
 
 public final class LevelController {
 
@@ -52,7 +49,6 @@ public final class LevelController {
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
@@ -65,7 +61,6 @@ public final class LevelController {
         String body = RadarObjectMapper.mapObjectToJson(input.specifiedLevel());
         new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .post()
                 .withBody(body)
                 .withMediaType(ACCEPT_HEADER_V2)
@@ -77,7 +72,6 @@ public final class LevelController {
             throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT + "/" + input.originalId())
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .patch()
                 .withBody("")
                 .withMediaType(ACCEPT_HEADER_V2)
@@ -89,7 +83,6 @@ public final class LevelController {
             throws IOException {
         new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT + "/" + input.specifiedLevel())
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .delete()
                 .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
@@ -101,7 +94,6 @@ public final class LevelController {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
@@ -113,7 +105,6 @@ public final class LevelController {
         throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
             .addEndpointInput(input)
-            .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
             .get()
             .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
@@ -125,7 +116,6 @@ public final class LevelController {
         String body = RadarObjectMapper.mapObjectToJson(input.level());
         new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
             .addEndpointInput(input)
-            .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
             .post()
             .withBody(body)
             .withMediaType(ACCEPT_HEADER_V1)
@@ -137,7 +127,6 @@ public final class LevelController {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .delete()
                 .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
@@ -149,7 +138,6 @@ public final class LevelController {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId() + "/timeseries";
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .addQueryHeader(NEW_LRTS_ID_HEADER, System.getProperty(USE_NEW_LRTS_ID, FALSE))
                 .get()
                 .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
