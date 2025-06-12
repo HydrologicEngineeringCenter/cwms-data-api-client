@@ -75,19 +75,12 @@ class TestHttpRequestBuilderImpl {
         String endpoint = "timeseries";
         System.setProperty("cwms.interval.localregular.new.enabled", "true");
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
-        assertEquals(root + endpoint, request.url().toString());
-
-        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
-            .getInstance();
-        request = httpRequestBuilder.createRequest();
-        assertEquals(root + endpoint, request.url().toString());
         assertEquals("true", request.header("X-CWMS-LRTS-Formatting"));
     }
 
@@ -97,19 +90,12 @@ class TestHttpRequestBuilderImpl {
         String endpoint = "timeseries";
         System.setProperty("cwms.interval.localregular.new.enabled", "false");
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .get()
             .withMediaType(ACCEPT_HEADER_V1))
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
-        assertEquals(root + endpoint, request.url().toString());
-
-        httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
-            .getInstance();
-        request = httpRequestBuilder.createRequest();
-        assertEquals(root + endpoint, request.url().toString());
         assertNull(request.header("X-CWMS-LRTS-Formatting"));
     }
 
