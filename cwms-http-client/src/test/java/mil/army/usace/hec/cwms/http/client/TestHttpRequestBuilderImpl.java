@@ -70,6 +70,36 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpRequestBuilderCreateGetRequestLRTSInterval() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        System.setProperty("cwms.interval.localregular.new.enabled", "true");
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
+        assertEquals("true", request.header("X-CWMS-LRTS-Formatting"));
+    }
+
+    @Test
+    void testHttpRequestBuilderCreateGetRequestLegacyLRTSInterval() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        System.setProperty("cwms.interval.localregular.new.enabled", "false");
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .get()
+            .withMediaType(ACCEPT_HEADER_V1))
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
+        assertNull(request.header("X-CWMS-LRTS-Formatting"));
+    }
+
+    @Test
     void testHttpRequestBuilderCreatePatchRequest() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
