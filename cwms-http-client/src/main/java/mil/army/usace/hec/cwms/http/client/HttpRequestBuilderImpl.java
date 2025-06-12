@@ -75,7 +75,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         if (url == null) {
             throw new ServerNotFoundException("Invalid HTTP URL: " + apiRoot, apiRoot);
         }
-        if (System.getProperty("cwms.interval.localregular.new.enabled").equalsIgnoreCase("true")) {
+        if (System.getProperty("cwms.interval.localregular.new.enabled", "false").equalsIgnoreCase("true")) {
             this.queryHeaders.put("X-CWMS-LRTS-Formatting", "true");
         }
         this.httpUrl = url;
