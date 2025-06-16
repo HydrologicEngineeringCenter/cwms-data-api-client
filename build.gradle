@@ -1,5 +1,5 @@
 plugins {
-    id "com.palantir.git-version" version "3.1.0"
+    id "com.palantir.git-version" version "3.3.0"
 }
 
 def versionLabel(gitInfo) {
