@@ -29,7 +29,7 @@ jobs:
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
         with:
-          reports: cwms-aaa-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-http-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-radar-client/build/reports/jacoco/test/jacocoTestReport.xml
+          reports: cwms-aaa-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-http-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-data-api-client/build/reports/jacoco/test/jacocoTestReport.xml
           targetdir: .github/coveragereport
           reporttypes: Html;MarkdownSummaryGithub;Badges
       - name: Upload coverage report artifact
