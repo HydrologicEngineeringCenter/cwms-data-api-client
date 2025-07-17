@@ -1,8 +1,8 @@
 rootProject.name = 'CWMS Data API Client'
 
 include ":cwms-http-client"
-include ":cwms-radar-client"
-include ":cwms-radar-model"
+include ":cwms-data-api-client"
+include ":cwms-data-api-model"
 include ":cwms-aaa-client"
 include ":cwbi-auth-http-client"
 

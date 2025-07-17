@@ -12,11 +12,11 @@ rename effort.
 # cwms-http-client
 An HTTP client API for performing REST calls as well as adding authentication and HTTPS support.
 
-# cwms-radar-client
+# cwms-data-api-client
 
 Client Side libraries to assist with Accessing CWMS Data API.
 
-# cwms-radar-model
+# cwms-data-api-model
 
 Data objects serialized from CWMS Data API for client use.
 
@@ -28,8 +28,8 @@ Client API access for the CWMS_AAA web app used to authenticate calls to CWMS Da
 Artifacts are deployed to [HEC Nexus](https://www.hec.usace.army.mil/nexus) with browsable links below:
 
 - [cwms-http-client](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-http-client)
-- [cwms-radar-client](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-radar-client)
-- [cwms-radar-model](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-radar-model)
+- [cwms-data-api-client](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-data-api-client)
+- [cwms-data-api-model](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-data-api-model)
 - [cwms-aaa-client](https://www.hec.usace.army.mil/nexus/#browse/browse:maven-public:mil%2Farmy%2Fusace%2Fhec%2Fcwms-aaa-client)
 
 # Debug Logging
