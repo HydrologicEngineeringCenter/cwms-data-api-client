@@ -1,0 +1,29 @@
+{
+  "office-to-spec-dates":
+  {
+    "LRL": [
+      {
+        "rating-spec-id": "Milford.Stage;Flow.BASE.PRODUCTION",
+        "effective-dates": [
+          "2020-03-01T00:00:00Z",
+          "2021-03-01T00:00:00Z"
+        ]
+      },
+      {
+        "rating-spec-id": "Milford.Stage;Flow.Logarithmic.USGS-NWIS",
+        "effective-dates": [
+          "2020-03-02T00:00:00Z",
+          "2021-03-02T00:00:00Z"
+        ]
+      }
+    ],
+    "SPK": [
+      {
+        "rating-spec-id": "STJ-St_Joseph-Missouri.Stage;Flow.USGS-BASE.Production",
+        "effective-dates": [
+          "2022-01-01T00:00:00Z"
+        ]
+      }
+    ]
+  }
+}
