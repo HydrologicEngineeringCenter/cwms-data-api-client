@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
+import java.util.Map;
 import mil.army.usace.hec.cwms.data.api.client.model.AbstractRatingMetadata;
 import mil.army.usace.hec.cwms.data.api.client.model.RatingMetadata;
 import mil.army.usace.hec.cwms.data.api.client.model.RatingMetadataList;
@@ -74,6 +75,41 @@ class TestRatingController extends TestController {
 		RatingEndpointInput.Put input = RatingEndpointInput.put(collect);
 		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
 		assertDoesNotThrow(() -> controller.updateRatingSetXml(apiConnectionInfo, input));
+	}
+
+	@Test
+	public void testRatingsEffectiveDates() throws Exception {
+		String collect = readJsonFile("radar/v2/json/rating_effective_dates.json");
+		mockHttpServer.enqueue(collect);
+		mockHttpServer.start();
+		RatingController ratingController = new RatingController();
+		ApiConnectionInfo apiConnectionInfo = buildConnectionInfo();
+		RatingEffectiveDatesEndpointInput.GetAll ratingEffectiveDatesEndPointInput = RatingEffectiveDatesEndpointInput.getAll();
+		RatingEffectiveDatesMap ratingeffectiveDatesMap = ratingController.retrieveRatingEffectiveDates(apiConnectionInfo, ratingEffectiveDatesEndPointInput);
+		assertNotNull(ratingeffectiveDatesMap.getOfficeToSpecDates());
+		Map<String, List<RatingSpecEffectiveDates>> effectiveDates = ratingeffectiveDatesMap.getOfficeToSpecDates();
+		assertFalse(effectiveDates.isEmpty());
+		List<RatingSpecEffectiveDates> lrlEffectiveDates = effectiveDates.get("LRL");
+		List<RatingSpecEffectiveDates> spkEffectiveDates = effectiveDates.get("SPK");
+		RatingSpecEffectiveDates baseProd = lrlEffectiveDates.get(0);
+		assertEquals("Milford.Stage;Flow.BASE.PRODUCTION", baseProd.getRatingSpecId());
+		List<Instant> baseProdEffectiveDates = baseProd.getEffectiveDates();
+		assertEquals(2, baseProdEffectiveDates.size());
+		assertEquals("2020-03-01T00:00:00Z", baseProdEffectiveDates.get(0).toString());
+		assertEquals("2021-03-01T00:00:00Z", baseProdEffectiveDates.get(1).toString());
+
+		RatingSpecEffectiveDates logUsgs = lrlEffectiveDates.get(1);
+		assertEquals("Milford.Stage;Flow.Logarithmic.USGS-NWIS", logUsgs.getRatingSpecId());
+		List<Instant> logUsgsEffectiveDates = logUsgs.getEffectiveDates();
+		assertEquals(2, logUsgsEffectiveDates.size());
+		assertEquals("2020-03-02T00:00:00Z", logUsgsEffectiveDates.get(0).toString());
+		assertEquals("2021-03-02T00:00:00Z", logUsgsEffectiveDates.get(1).toString());
+
+		RatingSpecEffectiveDates stj = spkEffectiveDates.get(0);
+		assertEquals("STJ-St_Joseph-Missouri.Stage;Flow.USGS-BASE.Production", stj.getRatingSpecId());
+		List<Instant> stjEffectiveDates = stj.getEffectiveDates();
+		assertEquals(1, stjEffectiveDates.size());
+		assertEquals("2022-01-01T00:00:00Z", stjEffectiveDates.get(0).toString());
 	}
 
 	@Test

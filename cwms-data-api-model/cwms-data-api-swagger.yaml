@@ -43,7 +43,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /auth/keys/{key-name}:
     get:
       tags:
@@ -97,7 +97,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Authorization
@@ -149,7 +149,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /auth/keys:
     get:
       tags:
@@ -198,7 +198,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Authorization
@@ -249,7 +249,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /location/category/{category-id}:
     get:
       tags:
@@ -309,7 +309,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Location Categories
@@ -367,7 +367,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /location/category:
     get:
       tags:
@@ -422,7 +422,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Location Categories
@@ -468,7 +468,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /location/group/{group-id}:
     get:
       tags:
@@ -552,7 +552,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Location Groups
@@ -616,7 +616,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Location Groups
@@ -679,7 +679,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /location/group:
     get:
       tags:
@@ -761,7 +761,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Location Groups
@@ -807,7 +807,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /locations/{location-id}:
     get:
       tags:
@@ -831,9 +831,8 @@ paths:
           in: query
           description: |-
             Specifies the unit or unit system of the response. Valid values for the unit field are: 
-            * `EN`  Specifies English unit system.  Location values will be in the default English units for their parameters.
+            * `EN`  Specifies English unit system.  Location values will be in the default English units for their parameters. This is the default behavior.
             * `SI`  Specifies the SI unit system.  Location values will be in the default SI units for their parameters.
-            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
       responses:
@@ -878,7 +877,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Locations
@@ -897,6 +896,8 @@ paths:
           schema:
             type: string
       responses:
+        '200':
+          description: Location successfully deleted from CWMS.
         '400':
           description: Bad Request
           content:
@@ -929,7 +930,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Locations
@@ -984,7 +985,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /locations:
     get:
       tags:
@@ -1096,13 +1097,19 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Locations
       summary: Post locations
       description: Create new CWMS Location
       operationId: postLocations
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Specifies whether to fail if the location already exists. Default: true. If true, an error will be returned if the location already exists. If false, the existing location will be updated with the new values.'
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -1145,7 +1152,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /states:
     get:
       tags:
@@ -1193,7 +1200,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /counties:
     get:
       tags:
@@ -1241,7 +1248,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /offices/{office}:
     get:
       tags:
@@ -1318,7 +1325,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /offices:
     get:
       tags:
@@ -1391,7 +1398,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /units:
     get:
       tags:
@@ -1446,7 +1453,7 @@ paths:
           description: The format requested is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /parameters:
     get:
       tags:
@@ -1516,7 +1523,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timezones:
     get:
       tags:
@@ -1578,7 +1585,7 @@ paths:
           description: The format requested is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /levels/{level-id}:
     get:
       tags:
@@ -1658,7 +1665,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Levels
@@ -1725,7 +1732,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Levels
@@ -1747,9 +1754,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/LocationLevel'
-          application/xml:
             schema:
               $ref: '#/components/schemas/LocationLevel'
         required: true
@@ -1786,7 +1790,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /levels:
     get:
       tags:
@@ -1904,7 +1908,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Levels
@@ -1914,9 +1918,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/LocationLevel'
-          application/xml:
             schema:
               $ref: '#/components/schemas/LocationLevel'
         required: true
@@ -1953,7 +1954,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /levels/{level-id}/timeseries:
     get:
       tags:
@@ -1981,12 +1982,12 @@ paths:
             type: string
         - name: begin
           in: query
-          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           schema:
             type: string
         - name: end
           in: query
-          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The format for this field is ISO 8601 extended, with optional timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           schema:
             type: string
         - name: timezone
@@ -2053,7 +2054,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/recent:
     get:
       tags:
@@ -2130,7 +2131,142 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
+  /timeseries/filtered:
+    get:
+      tags:
+        - TimeSeries
+      summary: Get timeseries filtered
+      operationId: getTimeseriesFiltered
+      parameters:
+        - name: name
+          in: query
+          description: Specifies the name of the time series whose data is to be included in the response. A case insensitive comparison is used to match names.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the time series(s) whose data is to be included in the response. Required for:application/json;version=2 and application/xml;version=2. For other formats, if this field is not specified, matching location level information from all offices shall be returned.
+          schema:
+            type: string
+        - name: unit
+          in: query
+          description: |-
+            Specifies the unit or unit system of the response. Valid values for the unit field are: 
+            * `EN`  (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
+            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
+          schema:
+            type: string
+        - name: version-date
+          in: query
+          description: Specifies the version date of a time series trace to be selected. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'. If field is empty, query will return a max aggregate for the timeseries. Only supported for:application/json;version=2 and application/xml;version=2
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: "Specifies the time zone of the values of the begin and end fields (unless otherwise specified).  For application/json;version=2 and application/xml;version=2 the results are returned in UTC.  For other formats this parameter affects the time zone of times in the response. If this field is not specified, the default time zone of UTC shall be used.\r\nIgnored if begin was specified with offset and timezone."
+          schema:
+            type: string
+        - name: trim
+          in: query
+          description: Specifies whether to trim missing values from the beginning and end of the retrieved values. Only supported for:application/json;version=2 and application/xml;version=2. Default is true.
+          schema:
+            type: boolean
+        - name: include-entry-date
+          in: query
+          description: Specifies whether to include the data entry date of each value in the response. Including the data entry date will increase the size of the array containing each data value from three to four, changing the format of the response. Default is false.
+          schema:
+            type: boolean
+        - name: query
+          in: query
+          description: |-
+            Specifies an RSQL-like <a href="rsql.html"> query string to filter the results.  Expressions may reference "value, date_time, quality, data_entry_date".  Example Queries:
+            * `value!=null` Excludes null values
+            * `date_time>2020-04-01T00:00:00Z and date_time<2024-04-01T00:00:00Z` Returns values within a date range.
+            * `data_entry_date=2025-05-15T00:00:00Z` Returns data entered at a specific data_entry_date
+            * `value>=0 and value < 215.0` Returns points when the value is within a specified range.
+            * `value<0 or value > 215.0` Returns points when the value is outside a specified range.
+            * `(value==null or value<0) and date_time>2019-11-01T00:00:00Z and data_entry_date>2024-03-01T00:00:00Z and data_entry_date<2024-04-01T00:00:00Z` Find null or negative values for times after start of pandemic that were entered in March 2024.
+            * `quality=in=(255,256,1023,1024)` Returns points with specific quality codes.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This end point can return large amounts of data as a series of pages. This parameter is used to describes the current location in the response stream.  This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 500.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A list of elements of the data set you've selected.
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/xml;version=2:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+            '':
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+        '400':
+          description: Invalid parameter combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The provided combination of parameters did not find a timeseries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
   /standard-text-id/{standard-text-id}:
     get:
       tags:
@@ -2190,7 +2326,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Standard Text
@@ -2249,7 +2385,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /standard-text-id:
     get:
       tags:
@@ -2307,7 +2443,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Standard Text
@@ -2359,7 +2495,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/text:
     get:
       tags:
@@ -2435,7 +2571,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Text-TimeSeries
@@ -2487,7 +2623,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/text/{name}:
     delete:
       tags:
@@ -2569,7 +2705,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Text-TimeSeries
@@ -2627,7 +2763,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/text/{name}/value:
     get:
       tags:
@@ -2708,7 +2844,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/binary:
     get:
       tags:
@@ -2794,7 +2930,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Binary-TimeSeries
@@ -2845,7 +2981,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/binary/{name}:
     delete:
       tags:
@@ -2926,7 +3062,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Binary-TimeSeries
@@ -2983,7 +3119,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/binary/{name}/value:
     get:
       tags:
@@ -3065,7 +3201,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile/{location-id}/{parameter-id}:
     get:
       tags:
@@ -3132,7 +3268,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - TimeSeries
@@ -3193,7 +3329,7 @@ paths:
           description: Internal server error
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile:
     get:
       tags:
@@ -3268,7 +3404,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries
@@ -3318,7 +3454,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile-parser/{location-id}/{parameter-id}:
     get:
       tags:
@@ -3388,7 +3524,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - TimeSeries
@@ -3450,7 +3586,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile-parser:
     get:
       tags:
@@ -3521,7 +3657,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries
@@ -3575,7 +3711,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile-instance/{location-id}/{parameter-id}/{version}:
     get:
       tags:
@@ -3716,7 +3852,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - TimeSeries
@@ -3804,7 +3940,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/profile-instance:
     get:
       tags:
@@ -3874,7 +4010,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries
@@ -3952,7 +4088,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/category/{category-id}:
     get:
       tags:
@@ -4014,7 +4150,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - TimeSeries Categories
@@ -4072,7 +4208,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/category:
     get:
       tags:
@@ -4129,7 +4265,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries Categories
@@ -4181,7 +4317,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/identifier-descriptor/{name}:
     get:
       tags:
@@ -4248,7 +4384,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - TimeSeries Identifier
@@ -4312,7 +4448,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - TimeSeries Identifier
@@ -4392,7 +4528,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/identifier-descriptor:
     get:
       tags:
@@ -4463,7 +4599,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries Identifier
@@ -4518,7 +4654,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/group/{group-id}:
     get:
       tags:
@@ -4596,7 +4732,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Timeseries Groups
@@ -4655,7 +4791,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Timeseries Groups
@@ -4718,7 +4854,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/group:
     get:
       tags:
@@ -4795,7 +4931,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Timeseries Groups
@@ -4847,7 +4983,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries:
     get:
       tags:
@@ -4857,7 +4993,7 @@ paths:
       parameters:
         - name: name
           in: query
-          description: Specifies the name(s) of the time series whose data is to be included in the response. A case insensitive comparison is used to match names.
+          description: Specifies the name of the time series whose data is to be included in the response. A case insensitive comparison is used to match names.
           required: true
           schema:
             type: string
@@ -4873,11 +5009,21 @@ paths:
             * `EN`  (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.
             * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
             * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
+          deprecated: true
+          schema:
+            type: string
+        - name: units
+          in: query
+          description: |-
+            Specifies the units or unit system of the response. Valid values for the units field are: 
+            * `EN`  (default) Specifies English unit system.  Location level values will be in the default English units for their parameters.
+            * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
+            * `Other`  Any units returned in the response to the units URI request that is appropriate for the requested parameters.
           schema:
             type: string
         - name: version-date
           in: query
-          description: Specifies the version date of a time series trace to be selected. The format for this field is ISO 8601 extended, i.e., 'format', e.g., '2021-06-10T13:00:00-0700' .If field is empty, query will return a max aggregate for the timeseries. Only supported for:application/json;version=2 and application/xml;version=2
+          description: Specifies the version date of a time series trace to be selected. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.If field is empty, query will return a max aggregate for the timeseries. Only supported for:application/json;version=2 and application/xml;version=2
           schema:
             type: string
         - name: datum
@@ -4890,12 +5036,12 @@ paths:
             type: string
         - name: begin
           in: query
-          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: Specifies the start of the time window for data to be included in the response. If this field is not specified, any required time window begins 24 hours prior to the specified or default end time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           schema:
             type: string
         - name: end
           in: query
-          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The format for this field is ISO 8601 extended, with optional timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: Specifies the end of the time window for data to be included in the response. If this field is not specified, any required time window ends at the current time. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           schema:
             type: string
         - name: timezone
@@ -4919,6 +5065,11 @@ paths:
             * `json` (default)
           schema:
             type: string
+        - name: include-entry-date
+          in: query
+          description: Specifies whether to include the data entry date of each value in the response. Including the data entry date will increase the size of the array containing each data value from three to four, changing the format of the response. Default is false.
+          schema:
+            type: boolean
         - name: page
           in: query
           description: This end point can return large amounts of data as a series of pages. This parameter is used to describes the current location in the response stream.  This is an opaque value, and can be obtained from the 'next-page' value in the response.
@@ -4983,12 +5134,12 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - TimeSeries
       summary: Post timeseries
-      description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds '
+      description: 'Used to create and save time-series data. Data to be stored must have time stamps in UTC represented as epoch milliseconds. If data entry date is included in the request, it will be dropped. '
       operationId: postTimeseries
       parameters:
         - name: timezone
@@ -5094,7 +5245,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /timeseries/{timeseries}:
     delete:
       tags:
@@ -5116,13 +5267,13 @@ paths:
             type: string
         - name: begin
           in: query
-          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The start of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
         - name: end
           in: query
-          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The end of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
@@ -5189,7 +5340,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - TimeSeries
@@ -5306,7 +5457,303 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
+  /ratings/rate-values/{office}/{rating-id}:
+    post:
+      tags:
+        - Ratings
+      summary: Post ratings rateValues with office with ratingId
+      description: 'Rates input values using CWMS ratings. The input format `RatingInputValues` includes a two dimensional array with each dimension corresponding to an independent parameter in the rating curve. The output format `RatedOutputTimeSeries` will contain a singular double array corresponding to the dependent parameter of the rating curve. '
+      operationId: postRatingsRateValuesWithOfficeWithRatingId
+      parameters:
+        - name: office
+          in: path
+          description: Office owning the rating
+          required: true
+          schema:
+            type: string
+        - name: rating-id
+          in: path
+          description: Rating Specification identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateInputValues'
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/RateInputValues'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatedOutputValues'
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/RatedOutputValues'
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Client is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The rating curve was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /ratings/rate-ts/{office}/{rating-id}:
+    post:
+      tags:
+        - Ratings
+      summary: Post ratings rateTs with office with ratingId
+      description: 'Rates input values using CWMS ratings. The input format `RateInputTimeSeries` DTO supports an array of CWMS time series ids, each corresponding to an independent parameter in the rating curve.The output format `RatedOutputTimeSeries` will contain a singular double array corresponding to the dependent parameter of the rating curve. '
+      operationId: postRatingsRateTsWithOfficeWithRatingId
+      parameters:
+        - name: office
+          in: path
+          description: Office owning the rating
+          required: true
+          schema:
+            type: string
+        - name: rating-id
+          in: path
+          description: Rating Specification identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateInputTimeSeries'
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/RateInputTimeSeries'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatedOutputTimeSeries'
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/RatedOutputTimeSeries'
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Client is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The rating curve was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /ratings/reverse-rate-values/{office}/{rating-id}:
+    post:
+      tags:
+        - Ratings
+      summary: Post ratings reverseRateValues with office with ratingId
+      description: 'Reverse rates input values using CWMS ratings. The input format `RateInputValues` requires a singular array of doubles corresponding to the dependent parameter in the rating curve. The output format `RatedOutputValues` will contain a singular double array corresponding to the independent parameter of the rating curve. Note: This endpoint only works on monotonically increase/decreasing table ratings with a single independent parameter.'
+      operationId: postRatingsReverseRateValuesWithOfficeWithRatingId
+      parameters:
+        - name: office
+          in: path
+          description: Office owning the rating
+          required: true
+          schema:
+            type: string
+        - name: rating-id
+          in: path
+          description: Rating Specification identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateInputValues'
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/RateInputValues'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatedOutputValues'
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/RatedOutputValues'
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Client is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The rating or input time series were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /ratings/reverse-rate-ts/{office}/{rating-id}:
+    post:
+      tags:
+        - Ratings
+      summary: Post ratings reverseRateTs with office with ratingId
+      description: 'Reverse rates input values using CWMS ratings. The input format `RateInputTimeSeries` requires a singular time series id corresponding to the dependent parameter in the rating curve. The output format `RatedOutputTimeSeries` will contain a singular double array corresponding to the independent parameter of the rating curve. Note: This endpoint only works on monotonically increase/decreasing table ratings with a single independent parameter.'
+      operationId: postRatingsReverseRateTsWithOfficeWithRatingId
+      parameters:
+        - name: office
+          in: path
+          description: Office owning the rating
+          required: true
+          schema:
+            type: string
+        - name: rating-id
+          in: path
+          description: Rating Specification identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateInputTimeSeries'
+          application/json;version=1:
+            schema:
+              $ref: '#/components/schemas/RateInputTimeSeries'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatedOutputTimeSeries'
+            application/json;version=1:
+              schema:
+                $ref: '#/components/schemas/RatedOutputTimeSeries'
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Client is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: The rating or input time series were not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '501':
+          description: Requested format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
   /ratings/template/{template-id}:
     get:
       tags:
@@ -5367,7 +5814,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Ratings
@@ -5426,7 +5873,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings/template:
     get:
       tags:
@@ -5494,7 +5941,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Ratings
@@ -5546,7 +5993,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings/spec/{rating-id}:
     get:
       tags:
@@ -5605,7 +6052,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Ratings
@@ -5664,7 +6111,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings/spec:
     get:
       tags:
@@ -5732,7 +6179,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Ratings
@@ -5784,7 +6231,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings/metadata:
     get:
       tags:
@@ -5867,7 +6314,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings/{rating-id}/latest:
     get:
       tags:
@@ -5930,7 +6377,80 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
+  /ratings/effective-dates:
+    get:
+      tags:
+        - Ratings
+      summary: Get ratings effectiveDates
+      description: Returns mapping of office -> spec id -> effective date-times for all matching offices and spec ids.
+      operationId: getRatingsEffectiveDates
+      parameters:
+        - name: office-mask
+          in: query
+          description: Office Id used to filter the results.
+          schema:
+            type: string
+        - name: rating-id-mask
+          in: query
+          description: Spec Id used to filter the results. Defaults to '*'
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields (unless otherwise specified). If this field is not specified, the default time zone of UTC shall be used.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: The start of the time window
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: The end of the time window
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;version=2:
+              schema:
+                $ref: '#/components/schemas/RatingEffectiveDatesMap'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
   /ratings/{rating-id}:
     get:
       tags:
@@ -6013,7 +6533,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Ratings
@@ -6034,13 +6554,13 @@ paths:
             type: string
         - name: begin
           in: query
-          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The start of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
         - name: end
           in: query
-          description: The end of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The end of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
@@ -6082,7 +6602,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Ratings
@@ -6092,12 +6612,18 @@ paths:
       parameters:
         - name: rating-id
           in: path
+          description: Specifies the rating-id of the rating to be updated.
           required: true
           schema:
             type: string
         - name: store-template
           in: query
           description: 'Also store updates to the rating template. Default: true'
+          schema:
+            type: boolean
+        - name: replace-base-curve
+          in: query
+          description: 'Replace the base curve of USGS stream flow rating. Default: false'
           schema:
             type: boolean
       requestBody:
@@ -6142,7 +6668,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /ratings:
     get:
       tags:
@@ -6166,7 +6692,7 @@ paths:
             Specifies the unit or unit system of the response. Valid values for the unit field are:
             * `EN`  Specifies English unit system.  Rating values will be in the default English units for their parameters.
             * `SI`   Specifies the SI unit system.  Rating values will be in the default SI units for their parameters.
-            * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
+            * `NATIVE`  Specifies the NATIVE units.  Rating values will be in the native units for their parameters.
           schema:
             type: string
         - name: datum
@@ -6252,7 +6778,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Ratings
@@ -6275,6 +6801,8 @@ paths:
               $ref: '#/components/schemas/Unit'
         required: true
       responses:
+        '201':
+          description: Rating Set successfully stored to CWMS.
         '400':
           description: Bad Request
           content:
@@ -6307,7 +6835,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /catalog/{dataset}:
     get:
       tags:
@@ -6392,6 +6920,11 @@ paths:
           description: Posix <a href="regexp.html">regular expression</a> matching against the location type.
           schema:
             type: string
+        - name: include-aliases
+          in: query
+          description: Whether to add aliases to the catalog entries. Default is false. If true, the aliases will be added to the catalog entries in the response.
+          schema:
+            type: boolean
       responses:
         '200':
           description: A list of elements the data set you've selected.
@@ -6434,7 +6967,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /basins/{name}:
     get:
       tags:
@@ -6511,12 +7044,12 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Basins
       summary: Delete basins with name
-      description: Renames CWMS Basin
+      description: Deletes CWMS Basin
       operationId: deleteBasinsWithName
       parameters:
         - name: name
@@ -6527,7 +7060,7 @@ paths:
             type: string
         - name: office
           in: query
-          description: Specifies the owning office of the basin to be renamed.
+          description: Specifies the owning office of the basin to be deleted.
           required: true
           schema:
             type: string
@@ -6570,7 +7103,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Basins
@@ -6630,7 +7163,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /basins:
     get:
       tags:
@@ -6699,7 +7232,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Basins
@@ -6743,7 +7276,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /streams/{name}:
     get:
       tags:
@@ -6815,7 +7348,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Streams
@@ -6841,7 +7374,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Stream successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -6875,7 +7408,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Streams
@@ -6935,7 +7468,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /streams:
     get:
       tags:
@@ -7015,7 +7548,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Streams
@@ -7069,7 +7602,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-locations/{office}/{name}/downstream-locations:
     get:
       tags:
@@ -7156,7 +7689,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-locations/{office}/{name}/upstream-locations:
     get:
       tags:
@@ -7243,7 +7776,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-locations/{name}:
     get:
       tags:
@@ -7331,7 +7864,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - StreamLocations
@@ -7358,7 +7891,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Stream Location successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -7392,7 +7925,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - StreamLocations
@@ -7412,8 +7945,8 @@ paths:
               $ref: '#/components/schemas/StreamLocation'
         required: true
       responses:
-        '204':
-          description: Stream Location successfully updated to CWMS.
+        '200':
+          description: Updated Stream Location
         '400':
           description: Bad Request
           content:
@@ -7446,7 +7979,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-locations:
     get:
       tags:
@@ -7531,7 +8064,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - StreamLocations
@@ -7551,7 +8084,7 @@ paths:
               $ref: '#/components/schemas/StreamLocation'
         required: true
       responses:
-        '204':
+        '201':
           description: Stream Location successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -7585,7 +8118,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-reaches/{name}:
     get:
       tags:
@@ -7663,7 +8196,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - StreamReaches
@@ -7684,7 +8217,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Stream Reach successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -7718,7 +8251,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - StreamReaches
@@ -7744,7 +8277,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Stream Reach successfully renamed in CWMS.
         '400':
           description: Bad Request
@@ -7778,7 +8311,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /stream-reaches:
     get:
       tags:
@@ -7858,7 +8391,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - StreamReaches
@@ -7878,7 +8411,7 @@ paths:
               $ref: '#/components/schemas/StreamReach'
         required: true
       responses:
-        '204':
+        '201':
           description: Stream Reach successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -7912,11 +8445,11 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /measurements/time-extents:
     get:
       tags:
-        - StreamLocations
+        - Measurements
       summary: Get measurements timeExtents
       description: Returns matching downstream stream locations.
       operationId: getMeasurementsTimeExtents
@@ -7967,7 +8500,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /measurements:
     get:
       tags:
@@ -7998,12 +8531,12 @@ paths:
             type: string
         - name: begin
           in: query
-          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'. A null value is treated as an unbounded start.
+          description: The start of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'. A null value is treated as an unbounded start.
           schema:
             type: string
         - name: end
           in: query
-          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.A null value is treated as an unbounded end.
+          description: The end of the time window to delete.The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'. A null value is treated as an unbounded end.
           schema:
             type: string
         - name: timezone
@@ -8095,7 +8628,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Measurements
@@ -8122,7 +8655,7 @@ paths:
                 $ref: '#/components/schemas/Measurement'
         required: true
       responses:
-        '204':
+        '201':
           description: Measurement(s) successfully stored.
         '400':
           description: Bad Request
@@ -8156,7 +8689,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /measurements/{location-id}:
     delete:
       tags:
@@ -8179,13 +8712,13 @@ paths:
             type: string
         - name: begin
           in: query
-          description: The start of the time window to delete. The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The start of the time window to delete. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
         - name: end
           in: query
-          description: The end of the time window to delete.The format for this field is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
+          description: The end of the time window to delete.The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
@@ -8205,7 +8738,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Measurement successfully deleted.
         '400':
           description: Bad Request
@@ -8239,12 +8772,13 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /blobs/{blob-id}:
     get:
       tags:
         - Blob
       summary: Get blobs with blobId
+      description: Returns the binary value of the requested blob as a seekable stream with the appropriate media type.
       operationId: getBlobsWithBlobId
       parameters:
         - name: blob-id
@@ -8290,7 +8824,116 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
+    delete:
+      tags:
+        - Blob
+      summary: Delete blobs with blobId
+      description: Deletes requested blob
+      operationId: deleteBlobsWithBlobId
+      parameters:
+        - name: blob-id
+          in: path
+          description: The blob identifier to be deleted
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the blob to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+    patch:
+      tags:
+        - Blob
+      summary: Patch blobs with blobId
+      description: Update an existing Blob
+      operationId: patchBlobsWithBlobId
+      parameters:
+        - name: blob-id
+          in: path
+          description: The blob identifier to be deleted
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Blob'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blob'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
   /blobs:
     get:
       tags:
@@ -8361,7 +9004,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Blob
@@ -8413,7 +9056,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /clobs/{clob-id}:
     get:
       tags:
@@ -8479,7 +9122,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Clob
@@ -8532,7 +9175,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Clob
@@ -8593,7 +9236,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /clobs:
     get:
       tags:
@@ -8669,7 +9312,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Clob
@@ -8724,7 +9367,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /pools/{pool-id}:
     get:
       tags:
@@ -8812,7 +9455,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /pools:
     get:
       tags:
@@ -8908,7 +9551,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /specified-levels:
     get:
       tags:
@@ -8965,7 +9608,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Levels
@@ -9017,7 +9660,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /specified-levels/{specified-level-id}:
     delete:
       tags:
@@ -9071,7 +9714,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Levels
@@ -9129,7 +9772,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /forecast-instance/{name}:
     get:
       tags:
@@ -9165,7 +9808,6 @@ paths:
         - name: designator
           in: query
           description: Specifies the designator of the forecast spec whose forecast instance data to be included in the response.
-          required: true
           schema:
             type: string
       responses:
@@ -9209,7 +9851,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Forecast
@@ -9244,7 +9886,6 @@ paths:
         - name: designator
           in: query
           description: Specifies the designator of the forecast spec associated with the forecast instance to be deleted.
-          required: true
           schema:
             type: string
       responses:
@@ -9280,7 +9921,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Forecast
@@ -9333,7 +9974,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /forecast-instance:
     get:
       tags:
@@ -9398,7 +10039,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Forecast
@@ -9444,7 +10085,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /forecast-spec/{name}:
     get:
       tags:
@@ -9468,7 +10109,6 @@ paths:
         - name: designator
           in: query
           description: Specifies the designator of the forecast spec whose data to be included in the response.
-          required: true
           schema:
             type: string
       responses:
@@ -9512,7 +10152,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Forecast
@@ -9535,7 +10175,6 @@ paths:
         - name: designator
           in: query
           description: Specifies the designator of the forecast spec whose data is to be deleted.
-          required: true
           schema:
             type: string
         - name: method
@@ -9576,7 +10215,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Forecast
@@ -9629,7 +10268,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /forecast-spec:
     get:
       tags:
@@ -9650,7 +10289,7 @@ paths:
             type: string
         - name: designator-mask
           in: query
-          description: Posix <a href="regexp.html">regular expression</a>  that specifies the designator of the forecast spec whose data to be included in the response.
+          description: 'Posix <a href="regexp.html">regular expression</a>  that specifies the designator of the forecast spec whose data to be included in the response. Default behavior when this parameter is not provided is to search for forecast specifications with a null designator. '
           schema:
             type: string
         - name: source-entity
@@ -9699,7 +10338,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Forecast
@@ -9745,7 +10384,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /forecast-instance/{name}/file-data:
     get:
       tags:
@@ -9781,7 +10420,6 @@ paths:
         - name: designator
           in: query
           description: Specifies the designator of the forecast spec whose forecast instance data to be included in the response.
-          required: true
           schema:
             type: string
       responses:
@@ -9826,7 +10464,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/status-update/{name}:
     post:
       tags:
@@ -9908,7 +10546,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user/{water-user}:
     get:
       tags:
@@ -9974,7 +10612,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Water Contracts
@@ -10038,7 +10676,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Water Contracts
@@ -10077,7 +10715,7 @@ paths:
               $ref: '#/components/schemas/WaterUser'
         required: true
       responses:
-        '204':
+        '200':
           description: Water user successfully updated in CWMS.
         '400':
           description: Bad Request
@@ -10113,7 +10751,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user:
     get:
       tags:
@@ -10173,7 +10811,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Water Contracts
@@ -10203,7 +10841,7 @@ paths:
               $ref: '#/components/schemas/WaterUser'
         required: true
       responses:
-        '204':
+        '201':
           description: Water user successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -10239,7 +10877,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}:
     get:
       tags:
@@ -10316,7 +10954,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Water Contracts
@@ -10386,7 +11024,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Water Contracts
@@ -10430,6 +11068,8 @@ paths:
               $ref: '#/components/schemas/WaterUserContract'
         required: true
       responses:
+        '200':
+          description: Contract successfully renamed in CWMS.
         '400':
           description: Bad Request
           content:
@@ -10464,7 +11104,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user/{water-user}/contracts:
     get:
       tags:
@@ -10535,7 +11175,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Water Contracts
@@ -10614,7 +11254,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/accounting:
     get:
       tags:
@@ -10649,13 +11289,13 @@ paths:
             type: string
         - name: start
           in: query
-          description: The start time of the time window for pump accounting entries to retrieve. The format for this field is ISO 8601 extended, with optional offset and timezone
+          description: The start time of the time window for pump accounting entries to retrieve. The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
         - name: end
           in: query
-          description: The end time of the time window for pump accounting entries to retrieve.
+          description: The end time of the time window for pump accounting entries to retrieve.The <a href="times.html">format for this field</a> is ISO 8601 extended, with optional offset and timezone, i.e., 'YYYY-MM-dd'T'hh:mm:ss[Z'['VV']']', e.g., '2021-06-10T13:00:00-07:00'.
           required: true
           schema:
             type: string
@@ -10738,7 +11378,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Pump Accounting
@@ -10776,7 +11416,7 @@ paths:
               $ref: '#/components/schemas/WaterSupplyAccounting'
         required: true
       responses:
-        '204':
+        '201':
           description: The pump accounting entry was created.
         '400':
           description: Bad Request
@@ -10812,7 +11452,7 @@ paths:
           description: Requested format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
     delete:
       tags:
@@ -10895,7 +11535,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/contract-types:
     get:
       tags:
@@ -10954,7 +11594,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Water Contracts
@@ -10979,7 +11619,7 @@ paths:
               $ref: '#/components/schemas/LookupType'
         required: true
       responses:
-        '204':
+        '201':
           description: Contract type successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -11015,7 +11655,7 @@ paths:
           description: Requested format is not implemented.
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/contract-types/{display-value}:
     delete:
       tags:
@@ -11069,7 +11709,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/embankments/{name}:
     get:
       tags:
@@ -11136,7 +11776,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Embankments
@@ -11162,7 +11802,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Embankment successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -11196,7 +11836,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Embankments
@@ -11256,7 +11896,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/embankments:
     get:
       tags:
@@ -11322,7 +11962,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Embankments
@@ -11376,7 +12016,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/turbines/{name}:
     get:
       tags:
@@ -11439,7 +12079,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Turbines
@@ -11465,7 +12105,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Turbine successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -11499,7 +12139,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Turbines
@@ -11525,7 +12165,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Turbine successfully renamed in to CWMS.
         '400':
           description: Bad Request
@@ -11559,7 +12199,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/turbines:
     get:
       tags:
@@ -11624,7 +12264,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Turbines
@@ -11647,7 +12287,7 @@ paths:
               $ref: '#/components/schemas/Turbine'
         required: true
       responses:
-        '204':
+        '201':
           description: Turbine successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -11681,7 +12321,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/locks/{name}:
     get:
       tags:
@@ -11757,7 +12397,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Locks
@@ -11783,7 +12423,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Lock successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -11817,7 +12457,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Locks
@@ -11843,7 +12483,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Lock successfully renamed in CWMS.
         '400':
           description: Bad Request
@@ -11877,7 +12517,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/locks:
     get:
       tags:
@@ -11944,7 +12584,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Locks
@@ -11964,7 +12604,7 @@ paths:
               $ref: '#/components/schemas/Lock'
         required: true
       responses:
-        '204':
+        '201':
           description: Lock successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -11998,7 +12638,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{name}/turbine-changes:
     get:
       tags:
@@ -12093,7 +12733,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Turbines
@@ -12128,7 +12768,7 @@ paths:
               $ref: '#/components/schemas/TurbineChange'
         required: true
       responses:
-        '204':
+        '201':
           description: Turbine successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -12162,7 +12802,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Turbines
@@ -12200,7 +12840,7 @@ paths:
           schema:
             type: boolean
       responses:
-        '204':
+        '200':
           description: Turbine successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -12234,7 +12874,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/outlets/{name}:
     get:
       tags:
@@ -12297,7 +12937,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Outlets
@@ -12323,7 +12963,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Outlet successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -12357,7 +12997,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Outlets
@@ -12383,7 +13023,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: CWMS Outlet successfully renamed.
         '400':
           description: Bad Request
@@ -12417,7 +13057,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/outlets:
     get:
       tags:
@@ -12484,7 +13124,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Outlets
@@ -12507,7 +13147,7 @@ paths:
               $ref: '#/components/schemas/Outlet'
         required: true
       responses:
-        '204':
+        '201':
           description: Outlet successfully stored to CWMS.
         '400':
           description: Bad Request
@@ -12541,7 +13181,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/gate-changes:
     post:
       tags:
@@ -12603,7 +13243,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/gate-changes:
     get:
       tags:
@@ -12703,7 +13343,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Outlets
@@ -12775,7 +13415,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/virtual-outlets/{name}:
     get:
       tags:
@@ -12844,7 +13484,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Outlets
@@ -12876,7 +13516,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DeleteMethod'
       responses:
-        '204':
+        '200':
           description: Virtual Outlet successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -12910,7 +13550,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{office}/{project-id}/virtual-outlets:
     get:
       tags:
@@ -12977,7 +13617,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/virtual-outlets:
     post:
       tags:
@@ -13035,7 +13675,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/locations:
     get:
       tags:
@@ -13100,7 +13740,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects/{name}:
     get:
       tags:
@@ -13162,7 +13802,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Projects
@@ -13220,7 +13860,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Projects
@@ -13286,7 +13926,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /projects:
     get:
       tags:
@@ -13357,7 +13997,7 @@ paths:
           description: request format is not implemented
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Projects
@@ -13412,7 +14052,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /properties/{name}:
     get:
       tags:
@@ -13483,7 +14123,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Properties
@@ -13510,7 +14150,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Property successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -13544,7 +14184,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - Properties
@@ -13564,8 +14204,8 @@ paths:
               $ref: '#/components/schemas/Property'
         required: true
       responses:
-        '204':
-          description: Property successfully stored to CWMS.
+        '200':
+          description: Property successfully updated in CWMS.
         '400':
           description: Bad Request
           content:
@@ -13598,7 +14238,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /properties:
     get:
       tags:
@@ -13663,7 +14303,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Properties
@@ -13711,7 +14351,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /lookup-types:
     get:
       tags:
@@ -13779,7 +14419,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - LookupTypes
@@ -13840,7 +14480,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /lookup-types/{name}:
     delete:
       tags:
@@ -13873,7 +14513,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           description: Lookup Type successfully deleted from CWMS.
         '400':
           description: Bad Request
@@ -13907,7 +14547,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     patch:
       tags:
         - LookupTypes
@@ -13939,8 +14579,8 @@ paths:
               $ref: '#/components/schemas/LookupType'
         required: true
       responses:
-        '204':
-          description: Lookup Type successfully stored to CWMS.
+        '200':
+          description: Updated Lookup Type
         '400':
           description: Bad Request
           content:
@@ -13973,7 +14613,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-locks/{name}:
     get:
       tags:
@@ -14039,7 +14679,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     delete:
       tags:
         - Project Locks
@@ -14098,7 +14738,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-locks:
     get:
       tags:
@@ -14162,7 +14802,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
     post:
       tags:
         - Project Locks
@@ -14227,7 +14867,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-locks/deny:
     post:
       tags:
@@ -14275,7 +14915,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-locks/release:
     post:
       tags:
@@ -14329,7 +14969,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-lock-rights:
     get:
       tags:
@@ -14395,7 +15035,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-lock-rights/remove-all:
     post:
       tags:
@@ -14455,7 +15095,7 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
   /project-lock-rights/update:
     post:
       tags:
@@ -14526,7 +15166,347 @@ paths:
                 $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
-        - OpenIDConnect: []
+        - CwmsAAACacAuth: []
+  /users/{user-name}:
+    get:
+      tags:
+        - User Management
+      summary: Get users with userName
+      description: View specific user
+      operationId: getUsersWithUserName
+      parameters:
+        - name: user-name
+          in: path
+          description: Specific user to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /users:
+    get:
+      tags:
+        - User Management
+      summary: Get users
+      description: View all users
+      operationId: getUsers
+      parameters:
+        - name: office
+          in: query
+          description: Show only users with active privileges in a given office.Office Identifier 3/4 letter as returned by the office endpoint.
+          allowEmptyValue: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: This end point can return a lot of data, this identifies where in the request you are. This is an opaque value, and can be obtained from the 'next-page' value in the response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /roles:
+    get:
+      tags:
+        - User Management
+      summary: Get roles
+      description: View all roles
+      operationId: getRoles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /user/profile:
+    get:
+      tags:
+        - User Management
+      summary: Get user profile
+      description: View users' own information
+      operationId: getUserProfile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+  /user/{user-name}/roles/{office-id}:
+    post:
+      tags:
+        - User Management
+      summary: Post user with userName roles with officeId
+      description: Add roles to user
+      operationId: postUserWithUserNameRolesWithOfficeId
+      parameters:
+        - name: user-name
+          in: path
+          description: Name of the user to alter
+          required: true
+          schema:
+            type: string
+        - name: office-id
+          in: path
+          description: Office for these roles.Office Identifier 3/4 letter as returned by the office endpoint.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+    delete:
+      tags:
+        - User Management
+      summary: Delete user with userName roles with officeId
+      description: Remove roles from user
+      operationId: deleteUserWithUserNameRolesWithOfficeId
+      parameters:
+        - name: user-name
+          in: path
+          description: Username of the user to alter
+          required: true
+          schema:
+            type: string
+        - name: office-id
+          in: path
+          description: Office for these roles.Office Identifier 3/4 letter as returned by the office endpoint.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
 components:
   schemas:
     CdaError:
@@ -14890,7 +15870,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/time-zone'
-    LocationLevel:
+    ConstantLocationLevel:
       required:
         - location-level-id
         - office-id
@@ -14902,12 +15882,15 @@ components:
         location-level-id:
           type: string
           description: Name of the location level
-        seasonal-time-series-id:
-          type: string
-          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
         specified-level-id:
           type: string
-          description: Generic name of this location level. Common names are 'Top of Dam', 'Streambed', 'Bottom of Dam'.
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+        expiration-date:
+          type: string
+          format: date-time
+        parameter-id:
+          type: string
+          description: Data Type such as Stage, Elevation, or others.
         parameter-type-id:
           type: string
           description: To indicate if single or aggregate value
@@ -14917,13 +15900,12 @@ components:
             - Min
             - Max
             - Total
-        parameter-id:
+        interpolate-string:
           type: string
-          description: Data Type such as Stage, Elevation, or others.
-        constant-value:
-          type: number
-          description: Single value for this location level. Mutually exclusive with seasonableTimeSeriesId and seasonValues.
-          format: double
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
         level-units-id:
           type: string
           description: Units the provided levels are in
@@ -14933,22 +15915,6 @@ components:
           format: date-time
         level-comment:
           type: string
-        interval-origin:
-          type: string
-          description: The start point of provided seasonal values
-          format: date-time
-        interval-months:
-          type: integer
-          format: int32
-        interval-minutes:
-          type: integer
-          format: int32
-        interpolate-string:
-          type: string
-          description: Indicating whether or not to interpolate between seasonal values.
-          enum:
-            - T
-            - F
         duration-id:
           type: string
           description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
@@ -14964,9 +15930,177 @@ components:
           type: string
         attribute-comment:
           type: string
+        constant-value:
+          type: number
+          description: Single value for this location level.
+          format: double
+    LocationLevel:
+      required:
+        - location-level-id
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        location-level-id:
+          type: string
+          description: Name of the location level
+        specified-level-id:
+          type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+        expiration-date:
+          type: string
+          format: date-time
+        parameter-id:
+          type: string
+          description: Data Type such as Stage, Elevation, or others.
+        parameter-type-id:
+          type: string
+          description: To indicate if single or aggregate value
+          enum:
+            - Inst
+            - Ave
+            - Min
+            - Max
+            - Total
+        interpolate-string:
+          type: string
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
+        level-units-id:
+          type: string
+          description: Units the provided levels are in
+        level-date:
+          type: string
+          description: The date/time at which this location level configuration takes effect.
+          format: date-time
+        level-comment:
+          type: string
+        duration-id:
+          type: string
+          description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
+        attribute-value:
+          type: number
+        attribute-units-id:
+          type: string
+        attribute-parameter-type-id:
+          type: string
+        attribute-parameter-id:
+          type: string
+        attribute-duration-id:
+          type: string
+        attribute-comment:
+          type: string
+      readOnly: true
+      oneOf:
+        - $ref: '#/components/schemas/ConstantLocationLevel'
+        - $ref: '#/components/schemas/TimeSeriesLocationLevel'
+        - $ref: '#/components/schemas/SeasonalLocationLevel'
+        - $ref: '#/components/schemas/VirtualLocationLevel'
+    LocationLevelConstituent:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/RATING'
+        - type: object
+          properties:
+            attribute-id:
+              type: string
+            attribute-value:
+              type: number
+              format: double
+            attribute-units:
+              type: string
+    RATING:
+      type: object
+      properties:
+        abbr:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        constituent-list:
+          type: array
+          items:
+            type: string
+      discriminator:
+        propertyName: type
+    SeasonalLocationLevel:
+      required:
+        - location-level-id
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        location-level-id:
+          type: string
+          description: Name of the location level
+        specified-level-id:
+          type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+        expiration-date:
+          type: string
+          format: date-time
+        parameter-id:
+          type: string
+          description: Data Type such as Stage, Elevation, or others.
+        parameter-type-id:
+          type: string
+          description: To indicate if single or aggregate value
+          enum:
+            - Inst
+            - Ave
+            - Min
+            - Max
+            - Total
+        interpolate-string:
+          type: string
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
+        level-units-id:
+          type: string
+          description: Units the provided levels are in
+        level-date:
+          type: string
+          description: The date/time at which this location level configuration takes effect.
+          format: date-time
+        level-comment:
+          type: string
+        duration-id:
+          type: string
+          description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
+        attribute-value:
+          type: number
+        attribute-units-id:
+          type: string
+        attribute-parameter-type-id:
+          type: string
+        attribute-parameter-id:
+          type: string
+        attribute-duration-id:
+          type: string
+        attribute-comment:
+          type: string
+        interval-origin:
+          type: string
+          description: The start point of provided seasonal values
+          format: date-time
+        interval-months:
+          type: integer
+          format: int32
+        interval-minutes:
+          type: integer
+          format: int32
         seasonal-values:
           type: array
-          description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+          description: List of Repeating seasonal values. The values repeat after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
           items:
             $ref: '#/components/schemas/SeasonalValueBean'
     SeasonalValueBean:
@@ -14980,7 +16114,137 @@ components:
           format: int32
         offset-minutes:
           type: integer
-      description: List of Repeating seasonal values. The values repeater after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+      description: List of Repeating seasonal values. The values repeat after the specified interval. A yearly interval seasonable could have 12 different values, one for each month for example. Mutually exclusive with seasonalTimeSeriesId and siParameterUnitsConstantValue
+    TimeSeriesLocationLevel:
+      required:
+        - location-level-id
+        - office-id
+        - seasonal-time-series-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        location-level-id:
+          type: string
+          description: Name of the location level
+        specified-level-id:
+          type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+        expiration-date:
+          type: string
+          format: date-time
+        parameter-id:
+          type: string
+          description: Data Type such as Stage, Elevation, or others.
+        parameter-type-id:
+          type: string
+          description: To indicate if single or aggregate value
+          enum:
+            - Inst
+            - Ave
+            - Min
+            - Max
+            - Total
+        interpolate-string:
+          type: string
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
+        level-units-id:
+          type: string
+          description: Units the provided levels are in
+        level-date:
+          type: string
+          description: The date/time at which this location level configuration takes effect.
+          format: date-time
+        level-comment:
+          type: string
+        duration-id:
+          type: string
+          description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
+        attribute-value:
+          type: number
+        attribute-units-id:
+          type: string
+        attribute-parameter-type-id:
+          type: string
+        attribute-parameter-id:
+          type: string
+        attribute-duration-id:
+          type: string
+        attribute-comment:
+          type: string
+        seasonal-time-series-id:
+          type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+    VirtualLocationLevel:
+      required:
+        - location-level-id
+        - office-id
+      type: object
+      properties:
+        office-id:
+          type: string
+          description: Owning office of object.
+        location-level-id:
+          type: string
+          description: Name of the location level
+        specified-level-id:
+          type: string
+          description: Timeseries ID (e.g. from the times series catalog) to use as the location level. Mutually exclusive with seasonalValues and siParameterUnitsConstantValue
+        expiration-date:
+          type: string
+          format: date-time
+        parameter-id:
+          type: string
+          description: Data Type such as Stage, Elevation, or others.
+        parameter-type-id:
+          type: string
+          description: To indicate if single or aggregate value
+          enum:
+            - Inst
+            - Ave
+            - Min
+            - Max
+            - Total
+        interpolate-string:
+          type: string
+          description: Indicating whether or not to interpolate between seasonal values.
+          enum:
+            - T
+            - F
+        level-units-id:
+          type: string
+          description: Units the provided levels are in
+        level-date:
+          type: string
+          description: The date/time at which this location level configuration takes effect.
+          format: date-time
+        level-comment:
+          type: string
+        duration-id:
+          type: string
+          description: 0 if parameterTypeId is Inst. Otherwise duration indicating the time window of the aggregate value.
+        attribute-value:
+          type: number
+        attribute-units-id:
+          type: string
+        attribute-parameter-type-id:
+          type: string
+        attribute-parameter-id:
+          type: string
+        attribute-duration-id:
+          type: string
+        attribute-comment:
+          type: string
+        constituents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RATING'
+        constituent-connections:
+          type: string
     location-levels:
       type: object
       properties:
@@ -15068,7 +16332,7 @@ components:
         quality-code:
           type: integer
           format: int32
-      description: List of retrieved time-series values
+      description: List of rated time-series values
     timeseries:
       required:
         - units
@@ -15109,6 +16373,8 @@ components:
               items:
                 type: object
                 properties:
+                  timeBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -15125,8 +16391,6 @@ components:
                   durationEstimated:
                     type: boolean
                   dateBased:
-                    type: boolean
-                  timeBased:
                     type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
@@ -15169,6 +16433,7 @@ components:
           description: The units of the time series data
         value-columns:
           type: array
+          description: The columns of the time-series data array returned, this property is used to describe the data structure of the records array. Contains [name, ordinal, datatype]. Name corresponds to the variable described by the data, ordinal is the order of the column in the data value array returned (starts at index 1), and datatype is the class name of the data type for the variable. Since the records array can be of variable length, the column index value is used to identify the position of the data in the array.
           readOnly: true
           items:
             $ref: '#/components/schemas/TimeSeries.Column'
@@ -15195,7 +16460,7 @@ components:
                 quality-code:
                   type: integer
                   format: int32
-              description: List of retrieved time-series values
+              description: List of retrieved time-series values. The values-columns property describes the structure of the data value array. Refer to the value-columns property for more information.
         version-date:
           type: string
           description: The version date of the time series trace
@@ -15260,6 +16525,8 @@ components:
               items:
                 type: object
                 properties:
+                  timeBased:
+                    type: boolean
                   duration:
                     type: object
                     properties:
@@ -15276,8 +16543,6 @@ components:
                   durationEstimated:
                     type: boolean
                   dateBased:
-                    type: boolean
-                  timeBased:
                     type: boolean
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
@@ -15320,6 +16585,7 @@ components:
           description: The units of the time series data
         value-columns:
           type: array
+          description: The columns of the time-series data array returned, this property is used to describe the data structure of the records array. Contains [name, ordinal, datatype]. Name corresponds to the variable described by the data, ordinal is the order of the column in the data value array returned (starts at index 1), and datatype is the class name of the data type for the variable. Since the records array can be of variable length, the column index value is used to identify the position of the data in the array.
           readOnly: true
           items:
             $ref: '#/components/schemas/TimeSeries.Column'
@@ -15346,7 +16612,7 @@ components:
                 quality-code:
                   type: integer
                   format: int32
-              description: List of retrieved time-series values
+              description: List of retrieved time-series values. The values-columns property describes the structure of the data value array. Refer to the value-columns property for more information.
         version-date:
           type: string
           description: The version date of the time series trace
@@ -15888,6 +17154,150 @@ components:
           items:
             $ref: '#/components/schemas/AssignedTimeSeries'
       description: A representation of a timeseries group
+    RateInputValues:
+      required:
+        - input-units
+        - output-unit
+        - values
+      type: object
+      properties:
+        output-unit:
+          type: string
+          description: The units of the output values
+        rating-time:
+          type: integer
+          description: A specific date/time to use as the "current time" of the rating.  No ratings with a create date later than this will be used. Useful for performing historical ratings. If not specified or NULL, the current time is use.
+          format: int64
+        round:
+          type: boolean
+          description: A flag specifying whether to round the rated values according to the rounding spec contained in the rating specification. Defaults to false.
+        values:
+          type: array
+          items:
+            type: array
+            description: The input values. Each value array must be the same length. Must be length 1 for reverse rate.
+            items:
+              type: number
+              description: The input values. Each value array must be the same length. Must be length 1 for reverse rate.
+              format: double
+        value-times:
+          type: array
+          items:
+            type: integer
+            format: int64
+        input-units:
+          type: array
+          items:
+            type: string
+            description: The unit of input values and the desired unit of the output. Length of the array must be equal to the number of input value arrays.
+    RatedOutputValues:
+      required:
+        - rating-id
+        - unit
+        - values
+      type: object
+      properties:
+        rating-id:
+          $ref: '#/components/schemas/CwmsId'
+        unit:
+          type: string
+          description: The unit of the rated output data
+        values:
+          type: array
+          items:
+            type: number
+            description: List of rated values
+            format: double
+    RateInputTimeSeries:
+      required:
+        - end-time
+        - output-unit
+        - start-time
+        - time-series-ids
+      type: object
+      properties:
+        output-unit:
+          type: string
+          description: The units of the output values
+        rating-time:
+          type: integer
+          description: A specific date/time to use as the "current time" of the rating.  No ratings with a create date later than this will be used. Useful for performing historical ratings. If not specified or NULL, the current time is use.
+          format: int64
+        round:
+          type: boolean
+          description: A flag specifying whether to round the rated values according to the rounding spec contained in the rating specification. Defaults to false.
+        time-series-ids:
+          type: array
+          items:
+            type: string
+            description: A collection of time series identifiers of the time series to rate, in position order of the parameters of the rating.Must be size 1 for reverse rate.
+        start-time:
+          type: integer
+          description: The start of the time window to rate.Represents milliseconds since 1970-01-01 (Unix Epoch), always UTC.
+          format: int64
+        end-time:
+          type: integer
+          description: The end of the time window to rate.Represents milliseconds since 1970-01-01 (Unix Epoch), always UTC.
+          format: int64
+        version-date:
+          type: integer
+          description: Specifies the version date of the retrieve time series. Represents milliseconds since 1970-01-01 (Unix Epoch), always UTC.
+          format: int64
+        trim:
+          type: boolean
+          description: Specifies whether to trim missing values from the ends of the retrieved time series. Defaults to false.
+        start-inclusive:
+          type: boolean
+          description: Specifies whether the time window starts on or after the specified time. Defaults to true.
+        end-inclusive:
+          type: boolean
+          description: Specifies whether the time window ends on or before the specified time. Defaults to true;
+        previous:
+          type: boolean
+          description: Specifies whether to retrieve the latest value before the start of the time window. Defaults to false.
+        next:
+          type: boolean
+          description: Specifies whether to retrieve the earliest value after the end of the time window. Defaults to false.
+    RatedOutputTimeSeries:
+      required:
+        - rating-id
+        - unit
+      type: object
+      properties:
+        rating-id:
+          $ref: '#/components/schemas/CwmsId'
+        unit:
+          type: string
+          description: The unit of the rated output data
+        values:
+          type: array
+          items:
+            type: array
+            description: Time is Milliseconds since the UNIX Epoch. Value is Double (for missing data you can use null, or -Float.MAX_VALUE (-340282346638528859811704183484516925440), quality is an integer.) If you are using missing data set the quality to 5.Failure to do this may result in silently ignoring that value on not storing a placeholder which can be important in irregular and psuedo regular timeseries.
+            example:
+              - 1509654000000
+              - 54.3
+              - 0
+            items:
+              type: object
+              properties:
+                date-time:
+                  type: integer
+                  description: Milliseconds since 1970-01-01 (Unix Epoch), always UTC
+                  format: int64
+                value:
+                  type: number
+                  description: Requested time-series data value
+                  format: double
+                quality-code:
+                  type: integer
+                  format: int32
+              description: List of rated time-series values
+        value-columns:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/TimeSeries.Column'
     ParameterSpec:
       type: object
       properties:
@@ -16157,6 +17567,28 @@ components:
                 $ref: '#/components/schemas/SourceRating'
             connections:
               type: string
+    RatingEffectiveDatesMap:
+      type: object
+      properties:
+        office-to-spec-dates:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/RatingSpecEffectiveDates'
+    RatingSpecEffectiveDates:
+      required:
+        - rating-spec-id
+      type: object
+      properties:
+        rating-spec-id:
+          type: string
+        effective-dates:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: date-time
     DatabaseLoadMethod:
       type: string
       enum:
@@ -16277,6 +17709,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeSeriesExtents'
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/alias'
     alias:
       type: object
       properties:
@@ -16769,9 +18205,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        officeId:
-          type: string
         poolName:
+          type: string
+        officeId:
           type: string
     pools:
       type: object
@@ -17586,92 +19022,94 @@ components:
           type: string
         user-id:
           type: string
+    User:
+      required:
+        - email
+        - principal
+        - user-name
+      type: object
+      properties:
+        user-name:
+          type: string
+        principal:
+          type: string
+          description: Unique identifier in the upstream identity management system.
+        cac-auth:
+          type: boolean
+          description: Is the current session based on CAC Authentication
+          readOnly: true
+        email:
+          type: string
+          format: email
+        roles:
+          type: object
+          additionalProperties:
+            type: array
+            description: Assigned user roles per office.
+            items:
+              type: string
+              description: Assigned user roles per office.
+          description: Assigned user roles per office.
+    users:
+      type: object
+      properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        users:
+          type: array
+          description: List of retrieved users
+          items:
+            $ref: '#/components/schemas/User'
+    Users:
+      type: object
+      properties:
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not supported or unknown
+          format: int32
+          readOnly: true
+        users:
+          type: array
+          description: List of retrieved users
+          items:
+            $ref: '#/components/schemas/User'
   securitySchemes:
     ApiKey:
       type: apiKey
       description: 'Key value as generated from the /auth/keys endpoint. NOTE: you MUST manually prefix your key with ''apikey '' (without the single quotes).'
       name: Authorization
       in: header
-      scheme: apikey
-    OpenIDConnect:
-      type: openIdConnect
-      name: Authorization
-      in: header
-      flows:
-        implicit:
-          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
-          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
-          scopes:
-            openid: ''
-            preferred_username: ''
-            x509_presented: ''
-            roles: ''
-            acr: ''
-            cacUID: ''
-            groups: ''
-            microprofile-jwt: ''
-            phone: ''
-            offline_access: ''
-            email: ''
-            profile: ''
-            web-origins: ''
-            subjectDN: ''
-            address: ''
-        password:
-          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
-          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
-          scopes:
-            openid: ''
-            preferred_username: ''
-            x509_presented: ''
-            roles: ''
-            acr: ''
-            cacUID: ''
-            groups: ''
-            microprofile-jwt: ''
-            phone: ''
-            offline_access: ''
-            email: ''
-            profile: ''
-            web-origins: ''
-            subjectDN: ''
-            address: ''
-        clientCredentials:
-          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
-          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
-          scopes:
-            openid: ''
-            preferred_username: ''
-            x509_presented: ''
-            roles: ''
-            acr: ''
-            cacUID: ''
-            groups: ''
-            microprofile-jwt: ''
-            phone: ''
-            offline_access: ''
-            email: ''
-            profile: ''
-            web-origins: ''
-            subjectDN: ''
-            address: ''
-        authorizationCode:
-          authorizationUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/auth
-          tokenUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/protocol/openid-connect/token
-          scopes:
-            openid: ''
-            preferred_username: ''
-            x509_presented: ''
-            roles: ''
-            acr: ''
-            cacUID: ''
-            groups: ''
-            microprofile-jwt: ''
-            phone: ''
-            offline_access: ''
-            email: ''
-            profile: ''
-            web-origins: ''
-            subjectDN: ''
-            address: ''
-      openIdConnectUrl: https://identityc.sec.usace.army.mil/auth/realms/cwbi/.well-known/openid-configuration
+    CwmsAAACacAuth:
+      type: apiKey
+      description: Auth handler running on same tomcat instance as the data api.
+      name: JSESSIONIDSSO
+      in: cookie
