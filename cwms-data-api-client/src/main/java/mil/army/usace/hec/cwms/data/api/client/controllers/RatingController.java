@@ -24,6 +24,7 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_XML_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.RatingEffectiveDatesEndpointInput.EFFECTIVE_DATES_ENDPOINT;
 import mil.army.usace.hec.cwms.data.api.client.model.RatingEffectiveDatesMap;
@@ -64,7 +65,7 @@ public final class RatingController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + EFFECTIVE_DATES_ENDPOINT)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_XML_HEADER_V2);
+            .withMediaType(ACCEPT_HEADER_V2);
         try (HttpRequestResponse response = executor.execute()) {
             String body = response.getBody();
             return RadarObjectMapper.mapJsonToObject(body, RatingEffectiveDatesMap.class);
