@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: setup java
         uses: actions/setup-java@v4
         with:
@@ -27,13 +27,13 @@ jobs:
           dotnet-version: 6.x
           dotnet-quality: 'ga'
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.12
         with:
           reports: cwms-aaa-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-http-client/build/reports/jacoco/test/jacocoTestReport.xml;cwms-data-api-client/build/reports/jacoco/test/jacocoTestReport.xml
           targetdir: .github/coveragereport
           reporttypes: Html;MarkdownSummaryGithub;Badges
       - name: Upload coverage report artifact
-        uses: actions/upload-artifact@v4.4.3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: CoverageReport # Artifact name
           path: .github/coveragereport # Directory containing files to upload
