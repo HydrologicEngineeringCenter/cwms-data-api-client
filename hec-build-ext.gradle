@@ -1,0 +1,17 @@
+/*
+ * Copyright (c) 2024
+ * United States Army Corps of Engineers - Hydrologic Engineering Center (USACE/HEC)
+ * All Rights Reserved.  USACE PROPRIETARY/CONFIDENTIAL.
+ * Source may not be released without written approval from HEC
+ */
+
+includeBuild("$gradle.ext.externalLibDir") {
+    dependencySubstitution {
+        substitute(module("mil.army.usace.hec:cwms-http-client")).using(project(":cwms-http-client"))
+        substitute(module("mil.army.usace.hec:cwms-data-api-client")).using(project(":cwms-data-api-client"))
+        substitute(module("mil.army.usace.hec:cwms-data-api-model")).using(project(":cwms-data-api-model"))
+        substitute(module("mil.army.usace.hec:cwms-aaa-client")).using(project(":cwms-aaa-client"))
+        substitute(module("mil.army.usace.hec:cwbi-auth-http-client")).using(project(":cwbi-auth-http-client"))
+
+    }
+}

@@ -34,7 +34,7 @@ public final class CdaOpenIdTokenController extends OpenIdTokenController {
     private static final String SWAGGER_DOC_ENDPOINT = "swagger-docs";
 
     @Override
-    protected String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
+    public String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
         String url = apiConnectionInfo.getApiRoot() + "/" + SWAGGER_DOC_ENDPOINT;
         OpenAPI openAPI = new OpenAPIV3Parser().read(url);
         if(openAPI == null) {

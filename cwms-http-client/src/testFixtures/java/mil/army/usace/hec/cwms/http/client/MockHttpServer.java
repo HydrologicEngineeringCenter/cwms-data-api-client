@@ -52,6 +52,10 @@ public final class MockHttpServer implements AutoCloseable {
         mockWebServer.enqueue(new MockResponse().setResponseCode(responseCode).setBody(body));
     }
 
+    public void enqueue(MockResponse response) {
+        mockWebServer.enqueue(response);
+    }
+
     public void enqueue(String body, List<String> cookies) {
         MockResponse mockResponse = new MockResponse().setBody(body);
         for (String cookie : cookies) {
@@ -83,6 +87,10 @@ public final class MockHttpServer implements AutoCloseable {
     @Override
     public void close() throws Exception {
         mockWebServer.close();
+    }
+
+    public MockWebServer getMockServer() {
+        return mockWebServer;
     }
 
     public RequestWrapper takeRequest() throws Exception {
