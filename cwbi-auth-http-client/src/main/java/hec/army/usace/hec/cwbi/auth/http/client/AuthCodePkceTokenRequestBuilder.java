@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * 
+ * Copyright (c) 2024 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,22 +27,15 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.awt.Desktop;
@@ -52,7 +45,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder {
+/**
+ * Use Authorization Code + PKCE method to retrieve initial token set.
+ * 
+ * If a desktop is available users's default Browser is opened with the given auth URL
+ * To complete the additional requirements.
+ */
+public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<AuthCodePkceTokenRequestBuilder> {
 
     @Override
     OAuth2Token retrieveToken() throws IOException {
@@ -67,7 +66,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder {
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             final String challenge = b64encoder.encodeToString(md.digest(verifierBytes));
-            HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
+            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);            
             int port = server.getAddress().getPort();
             String host = server.getAddress().getHostName();
             final AtomicReference<String> code = new AtomicReference<>();
@@ -79,33 +78,27 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder {
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     final String query = exchange.getRequestURI().getQuery();
-                    Map<String, List<String>> parameters = new HashMap<>();
-                    for (String pair: query.split("&")) {
-                        String[] kv = pair.split("=");
-                        String parameter = URLDecoder.decode(kv[0], StandardCharsets.UTF_8);
-                        String value = kv.length > 1 ? URLDecoder.decode(kv[1], StandardCharsets.UTF_8) : null;
-                        parameters.computeIfAbsent(parameter, p -> new ArrayList<>()).add(value);
-                    }
-
+                    final QueryParameters parameters = QueryParameters.parse(query);
+                    
                     code.set(parameters.get("code").get(0));
                     state.set(parameters.get("state").get(0));
+                    System.out.println("Got code");
+                    server.stop(0);
                     future.complete(null);
                 }
 
             });
-
-            String formBody = new UrlEncodedFormData()
-                    .addPassword("")
-                    .addGrantType("code")
-                    .addScopes("openid", "profile")
-                    .addClientId(getClientId())
-                    .addUsername("")
-                    .addParameter("code_challenge_method", "S256")
-                    .addParameter("code_challenge", challenge)
-                    .addParameter("redirect_uri", String.format("http://%s:%d", host, port))
-                    .buildEncodedString();
-            String urlStr= String.format("%s/%s", getUrl().getApiRoot(), formBody);
+            final String redirectUri = String.format("http://%s:%d", host, port);
+            final QueryParameters authParameters = QueryParameters.empty()
+                .set("grant_type", "code")
+                .set("client_id", getClientId())
+                .set("scopes", "openid profile")
+                .set("code_challenge_method", "S256")
+                .set("code_challenge", challenge)
+                .set("redirect_uri", redirectUri);
+            String urlStr= String.format("%s?%s", getAuthUrl().getApiRoot(), authParameters.encode());
             // start server to listen
+            server.start();
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
                 Desktop.getDesktop().browse(URI.create(urlStr));
             } else {
@@ -115,11 +108,31 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder {
             future.join();
             System.out.println("Next steps.");
 
-            
+            final UrlEncodedFormData formData = new UrlEncodedFormData();
+            formData.addClientId(getClientId())
+                    .addGrantType("authorization_code")
+                    .addParameter("code_verifier", verifier)
+                    .addScopes("openid", "profile")
+                    .addParameter("redirect_uri", redirectUri)
+                    .addParameter("session_state", state.get())
+                    .addParameter("code", code.get())
+                    .addParameter("response_mode", "fragment")
+                    .addParameter("response_type", "id_token token");
+
+            HttpRequestExecutor executor =
+                new HttpRequestBuilderImpl(getTokenUrl())
+                    .post()
+                    .withBody(formData.buildEncodedString())
+                    .withMediaType(MEDIA_TYPE);
+            try (HttpRequestResponse response = executor.execute()) {
+                String body = response.getBody();
+                if (body != null) {
+                    retVal = OAuth2ObjectMapper.mapJsonToObject(body, OAuth2Token.class);
+                }
+            }
+            return retVal;
         } catch (NoSuchAlgorithmException ex) {
             throw new IOException("Unable to retrieve SecureRandom or Message Digest instance to generate verifier", ex);
         }
-    
-        return retVal;
     }
 }

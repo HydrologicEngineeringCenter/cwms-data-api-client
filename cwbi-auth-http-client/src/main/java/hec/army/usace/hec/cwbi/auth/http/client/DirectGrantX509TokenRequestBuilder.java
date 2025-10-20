@@ -30,7 +30,7 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 import java.io.IOException;
 
-public final class DirectGrantX509TokenRequestBuilder extends TokenRequestBuilder {
+public final class DirectGrantX509TokenRequestBuilder extends TokenRequestBuilder<DirectGrantX509TokenRequestBuilder> {
 
     @Override
     OAuth2Token retrieveToken() throws IOException {

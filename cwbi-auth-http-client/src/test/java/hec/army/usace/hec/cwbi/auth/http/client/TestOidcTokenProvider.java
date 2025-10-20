@@ -44,6 +44,8 @@ import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
+import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -52,12 +54,15 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class TestOidcTokenProvider {
-
+    
     static MockHttpServer mockCdaServer;
     static MockHttpServer mockAuthServer;
 
@@ -92,36 +97,51 @@ class TestOidcTokenProvider {
         return new ApiConnectionInfoBuilder(baseUrl).build();
     }
 
-    protected void enqueueWithResource(MockHttpServer mockHttpServer, String resource) throws IOException {
+    protected String getResource(String resource) throws IOException {
         URL resourceUrl = getClass().getClassLoader().getResource(resource);
         if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
         }
         Path path = new File(resourceUrl.getFile()).toPath();
-        String collect = String.join("\n", Files.readAllLines(path)).replace("PORT", ""+mockHttpServer.getPort());
-        mockHttpServer.enqueue(collect);
+        return String.join("\n", Files.readAllLines(path));
     }
 
     @Test
     void testBuildTokenProvider() throws IOException {
-        enqueueWithResource(mockAuthServer, "openIdConfig2.json");
-        enqueueWithResource(mockAuthServer, "openIdConfig2.json"); // gets called twice, need to correct
         mockAuthServer.getMockServer().setDispatcher(new Dispatcher() {
 
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                System.out.println(request.toString());
-                return new MockResponse().setHeader("Location", request.getHeader("Location"));
+                final HttpUrl url = request.getRequestUrl();
+                final String path = url.encodedPath();
+                System.out.println("Request for: " + url.toString());
+                System.out.println("Path: " + path);
+                
+                try {
+                    if (path.endsWith("openid-configuration")) {
+                        return new MockResponse().setBody(getResource("openIdConfig2.json")
+                                                .replace("PORT", ""+mockAuthServer.getPort()));
+                    }
+                    else if (path.endsWith("/auth")) {
+                        final String query = request.getRequestUrl().query();
+                        final QueryParameters parameters = QueryParameters.parse(query);
+                        final String loc = String.format("%s?code=test&state=a test", parameters.get("redirect_uri").get(0));
+                        return new MockResponse().setResponseCode(302).setHeader("Location", loc);
+                    }
+                    else if (path.endsWith("/token")) {
+                        return new MockResponse().setBody(getResource("oauth2token.json"));
+                    }
+                } catch (IOException ex) {
+                    fail("Couldn't process mocked request", ex);
+                }
+                return new MockResponse().setResponseCode(404).setBody("Request not mocked.");
             }
-            
         });
         
         
-        String wellKnown = "http://localhost:"+mockAuthServer.getPort();
+        String wellKnown = "http://localhost:"+mockAuthServer.getPort()+"/auth/realms/cwbi/.well-known/openid-configuration";
         OidcAuthTokenProvider tokenProvider = new OidcAuthTokenProvider("test", wellKnown);
-        enqueueWithResource(mockAuthServer, "oauth2token.json");
         OAuth2Token token = tokenProvider.getToken();
         assertNotNull(token);        
-    }
-
+    }    
 }

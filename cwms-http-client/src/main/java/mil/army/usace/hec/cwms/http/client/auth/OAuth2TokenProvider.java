@@ -26,6 +26,11 @@ package mil.army.usace.hec.cwms.http.client.auth;
 
 import java.io.IOException;
 
+/**
+ * 
+ * TODO: needs additional support for alternative flows. deciding if attempting to
+ * do in this PR or just create issue and do in followup PR.
+ */
 public interface OAuth2TokenProvider {
 
     void clear();

@@ -22,6 +22,10 @@ configurations.implementation.extendsFrom(configurations.annotationProcessor)
 
 test {
     useJUnitPlatform()
+    // when passing --tests by default it needs to match all in all subjects
+    filter {
+            setFailOnNoMatchingTests(false)
+    }
 }
 
 javadoc {

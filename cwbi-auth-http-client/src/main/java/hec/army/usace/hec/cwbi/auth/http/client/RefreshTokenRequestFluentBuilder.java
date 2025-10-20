@@ -1,5 +1,5 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 public interface RefreshTokenRequestFluentBuilder {
-    TokenRequestFluentBuilder withRefreshToken(String refreshToken);
+    <T> TokenRequestFluentBuilder<T> withRefreshToken(String refreshToken);
 }

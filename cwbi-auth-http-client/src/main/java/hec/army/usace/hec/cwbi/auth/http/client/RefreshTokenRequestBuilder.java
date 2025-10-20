@@ -19,12 +19,14 @@ public final class RefreshTokenRequestBuilder implements RefreshTokenRequestFlue
      * @return Builder for http request
      */
     @Override
-    public TokenRequestFluentBuilder withRefreshToken(String refreshToken) {
+    public <T> TokenRequestFluentBuilder<T> withRefreshToken(String refreshToken) {
         this.refreshToken = Objects.requireNonNull(refreshToken, "Missing required refresh token");
-        return new RefreshTokenRequestExecutor();
+        // NOTE: The executor clearly extends TokenRequestBuilder which implements TokenRequestFluentBuilder so
+        // I'm really confused why we need the cast.
+        return (TokenRequestFluentBuilder<T>) new RefreshTokenRequestExecutor();
     }
 
-    class RefreshTokenRequestExecutor extends TokenRequestBuilder {
+    class RefreshTokenRequestExecutor extends TokenRequestBuilder<RefreshTokenRequestExecutor> {
 
         @Override
         OAuth2Token retrieveToken() throws IOException {

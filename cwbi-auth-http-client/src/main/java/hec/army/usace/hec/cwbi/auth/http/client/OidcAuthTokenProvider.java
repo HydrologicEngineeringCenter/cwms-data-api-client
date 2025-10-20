@@ -9,6 +9,13 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
+/**
+ * Handle generic OIDC auth based on configuration elements in the .well-known/openid-configuration
+ * values.
+ * 
+ * Defaults to using Authorization Code + PKCE.
+ * Support should be provided to support alternative flows as a user-at-login decision point.
+ */
 public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
 
     private final String clientId;
@@ -29,12 +36,15 @@ public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
             }
             
         };
-        ApiConnectionInfo info = new ApiConnectionInfoBuilder(wellKnownUrl).build();/// this is getting really obnoxious to keep typing out.
+        ApiConnectionInfo info = new ApiConnectionInfoBuilder(wellKnownUrl).build();
+        String what = "auth";
         try {
             this.authUrl = controller.retrieveAuthUrl(info, null);
+            what = "token";
             this.tokenUrl = controller.retrieveTokenUrl(info, null);
+            // TODO: process appropriate extensions to determine things like "kc_idp_hint"
         } catch (IOException ex) {
-            throw new CompletionException("Unable to return auth or token URL", ex);
+            throw new CompletionException("Unable to return " + what + " URL", ex);
         }
     }
 
@@ -73,10 +83,13 @@ public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
         synchronized (this) {
             /**
              * It may make sense to allow something to override this usage, however that
-             * *should* be a user setting. So like additional drop down or something.
+             * *should* be a user setting. So like additional drop down or something in the gui.
+             * There are various notes about it in different sections for discussion.
              */
             token = new AuthCodePkceTokenRequestBuilder()
-                    .withUrl(authUrl)
+                    .withAuthUrl(authUrl)
+                    .withTokenUrl(tokenUrl)
+                    .buildRequest()
                     .withClientId(clientId)
                     .fetchToken();
             return token;

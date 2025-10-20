@@ -28,16 +28,40 @@ import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
+abstract class TokenRequestBuilder<T> implements TokenRequestFluentBuilder<TokenRequestBuilder<T>> {
 
     static final String MEDIA_TYPE = "application/x-www-form-urlencoded";
     private ApiConnectionInfo url;
+    private ApiConnectionInfo authUrl;
+    private ApiConnectionInfo tokenUrl;
     private String clientId;
 
     abstract OAuth2Token retrieveToken() throws IOException;
 
+    /**
+     * Method used method the auth and token URL are the same.
+     * @return
+     * @deprecated implementations, even when they are the same, should use the individual auth/token methods.
+     */
+    @Deprecated(forRemoval = true)
     ApiConnectionInfo getUrl() {
         return url;
+    }
+
+    /**
+     * Retrieve the specific Auth endpoint URL.
+     * @return
+     */
+    ApiConnectionInfo getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
+     * Retrieve the specific Token endpiont URL.
+     * @return
+     */
+    ApiConnectionInfo getTokenUrl() {
+        return tokenUrl;
     }
 
     String getClientId() {
@@ -49,6 +73,24 @@ abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
         this.url = Objects.requireNonNull(url, "Missing required URL");
         return new RequestClientIdImpl();
     }
+
+    @Override
+    public RequestClientId buildRequest() {
+        return new RequestClientIdImpl();
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withAuthUrl(ApiConnectionInfo url) {
+        this.authUrl = url;
+        return this;
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withTokenUrl(ApiConnectionInfo url) {
+        this.tokenUrl = url;
+        return this;
+    }
+
 
     private class RequestClientIdImpl implements RequestClientId {
 
