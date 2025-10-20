@@ -29,8 +29,6 @@ public abstract class OpenIdTokenController {
     public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
         if (tokenEndpoint == null) {
             String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo)
-                        // stop gap until source of information is corrected
-                        .replace("identityc","identity");
             
             ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
                     .withSslSocketData(sslSocketData)
@@ -40,8 +38,6 @@ public abstract class OpenIdTokenController {
                     .withMediaType(ACCEPT_HEADER);
             try (HttpRequestResponse response = executor.execute()) {
                 tokenEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), TOKEN_ENDPOINT_KEY)
-                        // stop gap until source of information is corrected
-                        .replace("identityc","identity");
             }
         }
         return new ApiConnectionInfoBuilder(tokenEndpoint)
@@ -53,8 +49,6 @@ public abstract class OpenIdTokenController {
         
         if (authEndpoint == null) {
             String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo)
-                    // stop gap until source of information is corrected
-                    .replace("identityc","identity");
             ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
                     .withSslSocketData(sslSocketData)
                     .build();
@@ -62,9 +56,7 @@ public abstract class OpenIdTokenController {
                     .get()
                     .withMediaType(ACCEPT_HEADER);
             try (HttpRequestResponse response = executor.execute()) {
-                authEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), AUTH_ENDPOINT_KEY)
-                                // stop gap until source of information is corrected
-                                .replace("identityc","identity");
+                authEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), AUTH_ENDPOINT_KEY);
             }
         }
         return new ApiConnectionInfoBuilder(authEndpoint)
