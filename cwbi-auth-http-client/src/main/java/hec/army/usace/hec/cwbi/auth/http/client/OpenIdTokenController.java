@@ -28,7 +28,7 @@ public abstract class OpenIdTokenController {
 
     public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
         if (tokenEndpoint == null) {
-            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo)
+            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
             
             ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
                     .withSslSocketData(sslSocketData)
@@ -37,7 +37,7 @@ public abstract class OpenIdTokenController {
                     .get()
                     .withMediaType(ACCEPT_HEADER);
             try (HttpRequestResponse response = executor.execute()) {
-                tokenEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), TOKEN_ENDPOINT_KEY)
+                tokenEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), TOKEN_ENDPOINT_KEY);
             }
         }
         return new ApiConnectionInfoBuilder(tokenEndpoint)
@@ -48,7 +48,7 @@ public abstract class OpenIdTokenController {
     public final ApiConnectionInfo retrieveAuthUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
         
         if (authEndpoint == null) {
-            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo)
+            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
             ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
                     .withSslSocketData(sslSocketData)
                     .build();
