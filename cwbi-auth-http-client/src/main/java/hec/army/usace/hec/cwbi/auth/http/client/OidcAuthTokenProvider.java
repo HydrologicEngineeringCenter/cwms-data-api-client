@@ -1,8 +1,10 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
 import java.util.concurrent.CompletionException;
+import java.util.function.Consumer;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
@@ -23,6 +25,9 @@ public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
     private final ApiConnectionInfo tokenUrl;
     private final ApiConnectionInfo authUrl;
     private OAuth2Token token = null;
+    // Default to open browser or print to console for usage, but allow overriding for testing and
+    // other usages.
+    private Consumer<URI> authCallback = TokenRequestBuilder.BROWSER_OR_CONSOLE_AUTH_CALLBACK;
 
     public OidcAuthTokenProvider(String clientId, String wellKnownUrl) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
@@ -53,6 +58,16 @@ public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
         synchronized (this) {
             this.token = null;
         }
+    }
+
+    @Override
+    public Consumer<URI> getAuthCallback() {
+        return authCallback;
+    }
+
+    @Override
+    public void setAuthCallback(Consumer<URI> authCallback) {
+        this.authCallback = authCallback;
     }
 
     @Override
@@ -89,6 +104,7 @@ public final class OidcAuthTokenProvider implements OAuth2TokenProvider {
             token = new AuthCodePkceTokenRequestBuilder()
                     .withAuthUrl(authUrl)
                     .withTokenUrl(tokenUrl)
+                    .withAuthCallback(authCallback)
                     .buildRequest()
                     .withClientId(clientId)
                     .fetchToken();

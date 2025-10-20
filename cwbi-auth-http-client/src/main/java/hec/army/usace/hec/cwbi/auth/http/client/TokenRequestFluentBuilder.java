@@ -23,6 +23,9 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.net.URI;
+import java.util.function.Consumer;
+
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public interface TokenRequestFluentBuilder<T> {
@@ -57,4 +60,12 @@ public interface TokenRequestFluentBuilder<T> {
      * @return
      */
     TokenRequestFluentBuilder<T> withTokenUrl(ApiConnectionInfo url);
+
+    /**
+     * For methods where an external step is required to finish authentication
+     * pass in desired operation
+     * @param authCallback
+     * @return
+     */
+    TokenRequestFluentBuilder<T> withAuthCallback(Consumer<URI> authCallback);
 }

@@ -23,18 +23,35 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
+import java.util.function.Consumer;
+
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
 abstract class TokenRequestBuilder<T> implements TokenRequestFluentBuilder<TokenRequestBuilder<T>> {
+    public static final Consumer<URI> BROWSER_OR_CONSOLE_AUTH_CALLBACK = u -> {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(u);
+                } catch (IOException ex) {
+                    throw new RuntimeException("Unable to open browser", ex);
+                }
+            } else {
+                System.out.println(String.format("Paste the following into a browser to continue login: %s", u.toString()));
+            }
+        };
 
     static final String MEDIA_TYPE = "application/x-www-form-urlencoded";
     private ApiConnectionInfo url;
     private ApiConnectionInfo authUrl;
     private ApiConnectionInfo tokenUrl;
     private String clientId;
+    protected Consumer<URI> authCallBack = (u) -> {}; // by default do nothing.
 
     abstract OAuth2Token retrieveToken() throws IOException;
 
@@ -62,6 +79,12 @@ abstract class TokenRequestBuilder<T> implements TokenRequestFluentBuilder<Token
      */
     ApiConnectionInfo getTokenUrl() {
         return tokenUrl;
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withAuthCallback(Consumer<URI> authCallback) {
+        this.authCallBack = authCallback;
+        return this;
     }
 
     String getClientId() {

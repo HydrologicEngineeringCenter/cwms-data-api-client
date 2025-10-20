@@ -30,6 +30,8 @@ import javax.net.ssl.KeyManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -39,11 +41,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
+import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
@@ -107,7 +115,7 @@ class TestOidcTokenProvider {
     }
 
     @Test
-    void testBuildTokenProvider() throws IOException {
+    void testBuildTokenProvider() throws Exception {
         mockAuthServer.getMockServer().setDispatcher(new Dispatcher() {
 
             @Override
@@ -141,7 +149,24 @@ class TestOidcTokenProvider {
         
         String wellKnown = "http://localhost:"+mockAuthServer.getPort()+"/auth/realms/cwbi/.well-known/openid-configuration";
         OidcAuthTokenProvider tokenProvider = new OidcAuthTokenProvider("test", wellKnown);
-        OAuth2Token token = tokenProvider.getToken();
+        tokenProvider.setAuthCallback(u -> {
+            try {
+                HttpRequestExecutor executor =
+                    new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder(u.toString()).build())
+                        .get()
+                        .withMediaType("text/plain");
+                
+                try (HttpRequestResponse response = executor.execute()) {
+                    // redirect should be automatically followed. If changes 
+                    // made that fail this section either enable redirect or handle it.
+                }
+                
+            } catch (IOException ex) {
+                fail("Unable to perform client side of authorization procedure.", ex);
+            }
+            
+        });
+        final OAuth2Token token = tokenProvider.getToken();
         assertNotNull(token);        
     }    
 }

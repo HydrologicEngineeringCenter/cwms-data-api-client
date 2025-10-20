@@ -82,6 +82,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                     
                     code.set(parameters.get("code").get(0));
                     state.set(parameters.get("state").get(0));
+                    exchange.sendResponseHeaders(201, 0);
                     System.out.println("Got code");
                     server.stop(0);
                     future.complete(null);
@@ -99,11 +100,8 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             String urlStr= String.format("%s?%s", getAuthUrl().getApiRoot(), authParameters.encode());
             // start server to listen
             server.start();
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
-                Desktop.getDesktop().browse(URI.create(urlStr));
-            } else {
-                System.out.println(String.format("Paste the following into a browser to continue login: %s", urlStr));
-            }
+            this.authCallBack.accept(URI.create(urlStr));
+            
 
             future.join();
             System.out.println("Next steps.");

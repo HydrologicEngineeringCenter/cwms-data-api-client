@@ -25,6 +25,8 @@
 package mil.army.usace.hec.cwms.http.client.auth;
 
 import java.io.IOException;
+import java.net.URI;
+import java.util.function.Consumer;
 
 /**
  * 
@@ -41,4 +43,16 @@ public interface OAuth2TokenProvider {
 
     OAuth2Token newToken() throws IOException;
 
+    /**
+     * Return auth callback that will be used for this provider.
+     * By default do nothing.
+     * @return
+     */
+    default Consumer<URI> getAuthCallback() {
+        return u -> {}; 
+    }
+
+    default void setAuthCallback(Consumer<URI> authCallback) {
+        /** default do nothing... for now */
+    }
 }
