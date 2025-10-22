@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.function.Consumer;
 
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+
 /**
  * 
  * TODO: needs additional support for alternative flows. deciding if attempting to
@@ -55,4 +57,7 @@ public interface OAuth2TokenProvider {
     default void setAuthCallback(Consumer<URI> authCallback) {
         /** default do nothing... for now */
     }
+
+    ApiConnectionInfo getAuthUrl();
+    ApiConnectionInfo getTokenUrl();
 }

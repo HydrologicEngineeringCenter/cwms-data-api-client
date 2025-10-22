@@ -24,12 +24,19 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
+
+import java.io.IOException;
 import java.util.Objects;
+
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
+import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
+/**
+ * Suitable only for CWBI Keycloaks direct grant setup.
+ */
 public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
     private final SSLSocketFactory sslSocketFactory;
@@ -53,4 +60,19 @@ public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
                 .build();
     }
 
+    @Override
+    public ApiConnectionInfo getAuthUrl() {
+        // This is specific to CWBI Direct Grant so this replacement as-is is fine
+        return new ApiConnectionInfoBuilder(this.tokenUrl.getApiRoot().replace("identity", "identityc"))
+                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
+                .build();
+    }
+
+    @Override
+    public OAuth2Token newToken() throws IOException {
+        return new DirectGrantX509TokenRequestBuilder()
+                .withTokenUrl(getAuthUrl())
+                .buildRequest().withClientId(clientId)
+                .fetchToken();
+    }
 }

@@ -113,4 +113,14 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
 
     }
 
+    @Override
+    public ApiConnectionInfo getAuthUrl() {
+        return authUrl;
+    }
+
+    @Override
+    public ApiConnectionInfo getTokenUrl() {
+        return tokenUrl;
+    }
+
 }

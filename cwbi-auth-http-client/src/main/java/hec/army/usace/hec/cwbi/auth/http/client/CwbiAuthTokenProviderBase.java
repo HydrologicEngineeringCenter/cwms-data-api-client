@@ -46,14 +46,6 @@ abstract class CwbiAuthTokenProviderBase extends OidcAuthTokenProvider {
     }
 
     @Override
-    public OAuth2Token newToken() throws IOException {
-        return new DirectGrantX509TokenRequestBuilder()
-                .withUrl(tokenUrl)
-                .withClientId(clientId)
-                .fetchToken();
-    }
-
-    @Override
     public synchronized OAuth2Token refreshToken() throws IOException {
         OAuth2Token newToken = new RefreshTokenRequestBuilder()
                 .withRefreshToken(token.getRefreshToken())
