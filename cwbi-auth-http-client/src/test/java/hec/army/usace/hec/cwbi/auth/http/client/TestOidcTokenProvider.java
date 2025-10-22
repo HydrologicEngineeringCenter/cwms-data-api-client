@@ -43,6 +43,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
@@ -117,13 +118,13 @@ class TestOidcTokenProvider {
     @Test
     void testBuildTokenProvider() throws Exception {
         mockAuthServer.getMockServer().setDispatcher(new Dispatcher() {
-
+            private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName()+"_dispatcher");
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 final HttpUrl url = request.getRequestUrl();
                 final String path = url.encodedPath();
-                System.out.println("Request for: " + url.toString());
-                System.out.println("Path: " + path);
+                LOGGER.fine("Request for: " + url.toString());
+                LOGGER.fine("Path: " + path);
                 
                 try {
                     if (path.endsWith("openid-configuration")) {

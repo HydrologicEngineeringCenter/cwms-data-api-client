@@ -38,15 +38,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.RecordedRequest;
+
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,34 +83,69 @@ class TestCwbiTokenProvider {
     }
 
     ApiConnectionInfo buildConnectionInfo() {
-        String baseUrl = String.format("http://localhost:%s", mockHttpServer.getPort());
+        String baseUrl = String.format("http://localhost:%s/openid-configuration", mockHttpServer.getPort());
         return new ApiConnectionInfoBuilder(baseUrl).build();
     }
 
-    protected void launchMockServerWithResource(String resource) throws IOException {
+    private String getResource(String resource) throws IOException {
         URL resourceUrl = getClass().getClassLoader().getResource(resource);
         if (resourceUrl == null) {
             throw new IOException("Failed to get resource: " + resource);
         }
         Path path = new File(resourceUrl.getFile()).toPath();
         String collect = String.join("\n", Files.readAllLines(path));
-        mockHttpServer.enqueue(collect);
+        return collect;
+    }
+
+    protected void launchMockServerWithResource(String resource) throws IOException {
+        mockHttpServer.getMockServer().setDispatcher(new Dispatcher() {
+            private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName()+"_dispatcher");
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                final HttpUrl url = request.getRequestUrl();
+                final String path = url.encodedPath();
+                LOGGER.fine("Request for: " + url.toString());
+                LOGGER.fine("Path: " + path);
+
+                try {
+                    if (path.endsWith("openid-configuration")) {
+                        return new MockResponse().setBody(getResource("openIdConfig2.json")
+                                                .replace("PORT", ""+mockHttpServer.getPort()));
+                    }
+                    else if (path.endsWith("/auth")) {
+                        fail("CwbiTokenProvider uses direct grant and should not call the /auth endpoint.");
+                    }
+                    else if (path.endsWith("/token")) {
+                        return new MockResponse().setBody(getResource("oauth2token.json"));
+                    }
+                } catch (IOException ex) {
+                    fail("Couldn't process mocked request", ex);
+                }
+                return new MockResponse().setResponseCode(404).setBody("Request not mocked.");
+            }
+        });
         mockHttpServer.start();
     }
 
     @Test
     void testBuildTokenProvider() throws IOException {
+        String resource = "oauth2token.json";
+        launchMockServerWithResource(resource);
         SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
                 Collections.singletonList(getTestKeyManager()));
-        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(TOKEN_URL, "cumulus", sslSocketFactory);
-        assertEquals(TOKEN_URL, tokenProvider.getUrl().getApiRoot());
+        String url = buildConnectionInfo().getApiRoot();
+        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(url, "cumulus", sslSocketFactory);
+        assertEquals(url, tokenProvider.getUrl().getApiRoot());
         assertEquals("cumulus", tokenProvider.getClientId());
     }
 
     @Test
-    void testNulls() {
-        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, "cumulus", null));
-        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(TOKEN_TEST_URL, null, getTestSslSocketFactory()));
+    void testNulls() throws IOException {
+        String resource = "oauth2token.json";
+        launchMockServerWithResource(resource);
+        String url = buildConnectionInfo().getApiRoot();
+        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(url, "cumulus", null));
+        assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(url, null, getTestSslSocketFactory()));
         assertThrows(NullPointerException.class, () -> new CwbiAuthTokenProvider(null, "cumulus", getTestSslSocketFactory()));
     }
 
@@ -164,10 +209,13 @@ class TestCwbiTokenProvider {
     }
 
     @Test
-    void testConstructor() {
+    void testConstructor() throws IOException {
+        String resource = "oauth2token.json";
+        launchMockServerWithResource(resource);
+        String url = buildConnectionInfo().getApiRoot();
         SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider("test.com", "clientId", sslSocketFactory);
-        assertEquals("test.com", tokenProvider.getUrl().getApiRoot());
+        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "clientId", sslSocketFactory);
+        assertEquals(url, tokenProvider.getUrl().getApiRoot());
         assertEquals("clientId", tokenProvider.getClientId());
         assertEquals(sslSocketFactory, tokenProvider.getSslSocketFactory());
     }

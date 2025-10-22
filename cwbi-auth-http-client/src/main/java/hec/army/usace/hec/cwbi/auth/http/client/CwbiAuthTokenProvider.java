@@ -33,24 +33,22 @@ import mil.army.usace.hec.cwms.http.client.SslSocketData;
 public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
 
     private final SSLSocketFactory sslSocketFactory;
-    private final String url;
 
     /**
      * Provider for OAuth2Tokens.
      *
-     * @param tokenUrl - URL we are fetching token from
+     * @param wellKnownUrl - URL we are retrieving configuration from
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
      */
-    public CwbiAuthTokenProvider(String tokenUrl, String clientId, SSLSocketFactory sslSocketFactory) {
-        super(clientId);
+    public CwbiAuthTokenProvider(String wellKnownUrl, String clientId, SSLSocketFactory sslSocketFactory) {
+        super(clientId, wellKnownUrl);
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
-        this.url = Objects.requireNonNull(tokenUrl, "Missing required tokenUrl");
     }
 
     @Override
     ApiConnectionInfo getUrl() {
-        return new ApiConnectionInfoBuilder(url)
+        return new ApiConnectionInfoBuilder(this.wellKnownUrl)
                 .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
                 .build();
     }

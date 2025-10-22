@@ -44,14 +44,14 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
      * @param sslSocketFactory - ssl socket factory
      */
     public MockCwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
-        super(clientId);
+        super(clientId, url);
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
         this.url = url;
     }
 
     //used to manually set token for testing
     void setOAuth2Token(OAuth2Token token) {
-        oauth2Token = token;
+        this.token = token;
     }
 
     @Override

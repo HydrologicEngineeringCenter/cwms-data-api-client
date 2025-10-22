@@ -24,51 +24,43 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
-abstract class CwbiAuthTokenProviderBase implements OAuth2TokenProvider {
-    protected OAuth2Token oauth2Token;
-    protected final String clientId;
+abstract class CwbiAuthTokenProviderBase extends OidcAuthTokenProvider {
 
-    protected CwbiAuthTokenProviderBase(String clientId) {
-        this.clientId = Objects.requireNonNull(clientId, "Missing required clientId");
+    protected CwbiAuthTokenProviderBase(String clientId, String wellKnownUrl) {
+        super(clientId, wellKnownUrl);
     }
 
     abstract ApiConnectionInfo getUrl() throws IOException;
 
-    @Override
-    public synchronized void clear() {
-        oauth2Token = null;
-    }
 
     @Override
     public synchronized OAuth2Token getToken() throws IOException {
-        if (oauth2Token == null) {
-            oauth2Token = newToken();
+        if (token == null) {
+            token = newToken();
         }
-        return oauth2Token;
+        return token;
     }
 
     @Override
     public OAuth2Token newToken() throws IOException {
         return new DirectGrantX509TokenRequestBuilder()
-                .withUrl(getUrl())
+                .withUrl(tokenUrl)
                 .withClientId(clientId)
                 .fetchToken();
     }
 
     @Override
     public synchronized OAuth2Token refreshToken() throws IOException {
-        OAuth2Token token = new RefreshTokenRequestBuilder()
-                .withRefreshToken(oauth2Token.getRefreshToken())
-                .withUrl(getUrl())
+        OAuth2Token newToken = new RefreshTokenRequestBuilder()
+                .withRefreshToken(token.getRefreshToken())
+                .withUrl(tokenUrl)
                 .withClientId(clientId)
                 .fetchToken();
-        oauth2Token = token;
+        token = newToken;
         return token;
     }
 

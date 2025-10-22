@@ -32,17 +32,17 @@ import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
-import java.awt.Desktop;
-import java.awt.Desktop.Action;
+import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -55,20 +55,21 @@ import com.sun.net.httpserver.HttpServer;
  * To complete the additional requirements.
  */
 public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<AuthCodePkceTokenRequestBuilder> {
-
+    private static final Logger LOGGER = Logger.getLogger(AuthCodePkceTokenRequestBuilder.class.getName());
     @Override
     OAuth2Token retrieveToken() throws IOException {
     
         OAuth2Token retVal = null;
         // https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
         try {
-            byte[] verifierBytes = new byte[128];
+            byte[] verifierBytes = new byte[64];
             SecureRandom.getInstanceStrong().nextBytes(verifierBytes);
             Base64.Encoder b64encoder = Base64.getUrlEncoder().withoutPadding();
             final String verifier = b64encoder.encodeToString(verifierBytes);
+            final String originalState = UUID.randomUUID().toString();
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            final String challenge = b64encoder.encodeToString(md.digest(verifierBytes));
+            final String challenge = b64encoder.encodeToString(md.digest(verifier.getBytes(StandardCharsets.US_ASCII)));
             HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);            
             int port = server.getAddress().getPort();
             String host = server.getAddress().getHostName();
@@ -82,7 +83,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                     Result ret = null;
                     
                     final String query = exchange.getRequestURI().getQuery();
-                    System.out.println("Got auth server response." + query);
+                    LOGGER.finest("Got auth server response." + query);
                     final QueryParameters parameters = QueryParameters.parse(query);
                     if (!parameters.get("error").isEmpty()) {
                         String error = parameters.get("error").get(0);
@@ -91,9 +92,10 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                     } else {
                         String code = parameters.get("code").get(0);
                         String state = parameters.get("state").get(0);
-                        ret = Result.success(code ,state);
+                        String session_state = parameters.get("session_state").get(0);
+                        ret = Result.success(code ,state, session_state);
                     }
-                    System.out.println("Finishing");
+                    LOGGER.finest("Returning result back to thread.");
                     server.stop(0);
                     future.complete(ret);
                 }
@@ -108,17 +110,21 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                 .set("code_challenge_method", "S256")
                 .set("code_challenge", challenge)
                 .set("redirect_uri", redirectUri)
-                .set("kc_idp_hint", "login.gov");
+                .set("state", originalState);
             String urlStr= String.format("%s?%s", getAuthUrl().getApiRoot(), authParameters.encode());
             // start server to listen
             server.start();
-            System.out.println(urlStr);
+            LOGGER.info("Handling Auth Request");
+            LOGGER.finer("Auth Request URL: " + urlStr);
             this.authCallBack.accept(URI.create(urlStr));
             
-            Result result = future.get(1, TimeUnit.MINUTES); // The user is now required to perform manual operations.
-            System.out.println("Next steps.");
+            Result result = future.get(3, TimeUnit.MINUTES); // The user is now required to perform manual operations.
+            LOGGER.info("Retrieving Token.");
             if (result.error != null) {
                 throw new IOException(String.format("Unable to login. %s : %s", result.error, result.errorDescription));
+            }
+            if (!result.state.equals(originalState)) {
+                throw new IOException("Unable to continue login sequence, incorrect state value returned.");
             }
             final UrlEncodedFormData formData = new UrlEncodedFormData();
             formData.addClientId(getClientId())
@@ -126,7 +132,8 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                     .addParameter("code_verifier", verifier)
                     .addScopes("openid", "profile")
                     .addParameter("redirect_uri", redirectUri)
-                    .addParameter("session_state", result.state)
+                    .addParameter("state", result.state)
+                    .addParameter("session_state", result.session_state)
                     .addParameter("code", result.code)
                     .addParameter("response_mode", "fragment")
                     .addParameter("response_type", "id_token token");
@@ -153,23 +160,25 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
     private static class Result {
         public final String code;
         public final String state;
+        public final String session_state;
 
         public final String error;
         public final String errorDescription;
 
-        private Result(String code, String state, String error, String errorDescription) {
+        private Result(String code, String state, String session_state, String error, String errorDescription) {
             this.code = code;
             this.state = state;
+            this.session_state = session_state;
             this.error = error;
             this.errorDescription = errorDescription;
         }
 
-        public static Result success(String code, String state) {
-            return new Result(code, state, null, null);
+        public static Result success(String code, String state, String session_state) {
+            return new Result(code, state, session_state, null, null);
         }
 
         public static Result failure(String error, String errorDescription) {
-            return new Result(null, null, error, errorDescription);
+            return new Result(null, null, null, error, errorDescription);
         }
     };
 }
