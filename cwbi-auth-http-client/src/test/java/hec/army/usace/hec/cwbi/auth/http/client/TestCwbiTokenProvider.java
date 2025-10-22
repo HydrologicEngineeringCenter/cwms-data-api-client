@@ -28,6 +28,7 @@ import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTru
 import java.util.Collections;
 import javax.net.ssl.KeyManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +100,7 @@ class TestCwbiTokenProvider {
 
     protected void launchMockServerWithResource(String resource) throws IOException {
         mockHttpServer.getMockServer().setDispatcher(new Dispatcher() {
-            private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName()+"_dispatcher");
+            private final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName());
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 final HttpUrl url = request.getRequestUrl();
@@ -113,7 +114,8 @@ class TestCwbiTokenProvider {
                                                 .replace("PORT", ""+mockHttpServer.getPort()));
                     }
                     else if (path.endsWith("/auth")) {
-                        fail("CwbiTokenProvider uses direct grant and should not call the /auth endpoint.");
+                        throw new IOException("Endpoint should not be called. Request was " + url.toString());
+                        //fail("CwbiTokenProvider uses direct grant and should not call the /auth endpoint.");
                     }
                     else if (path.endsWith("/token")) {
                         return new MockResponse().setBody(getResource("oauth2token.json"));
@@ -173,13 +175,7 @@ class TestCwbiTokenProvider {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
         String url = buildConnectionInfo().getApiRoot();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("abc123");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(3600);
-        token.setRefreshToken("123abc");
-        tokenProvider.setOAuth2Token(token);
+        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
         OAuth2Token token1 = tokenProvider.getToken();
         OAuth2Token token2 = tokenProvider.getToken();
         assertSame(token1, token2);
@@ -192,13 +188,9 @@ class TestCwbiTokenProvider {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
         String url = buildConnectionInfo().getApiRoot();
-        MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
-        OAuth2Token token = new OAuth2Token();
-        token.setAccessToken("abc123");
-        token.setTokenType("Bearer");
-        token.setExpiresIn(3600);
-        token.setRefreshToken("123abc");
-        tokenProvider.setOAuth2Token(token);
+        CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(url, "cumulus", getTestSslSocketFactory());
+        OAuth2Token token = tokenProvider.getToken();
+        assertNotNull(token, "Failed to retrieve initial token.");
 
         OAuth2Token refreshedToken = tokenProvider.refreshToken();
         assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", refreshedToken.getAccessToken());

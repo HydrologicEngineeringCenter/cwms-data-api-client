@@ -50,7 +50,7 @@ import com.sun.net.httpserver.HttpServer;
 
 /**
  * Use Authorization Code + PKCE method to retrieve initial token set.
- * 
+ *
  * If a desktop is available users's default Browser is opened with the given auth URL
  * To complete the additional requirements.
  */
@@ -58,11 +58,12 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
     private static final Logger LOGGER = Logger.getLogger(AuthCodePkceTokenRequestBuilder.class.getName());
     @Override
     OAuth2Token retrieveToken() throws IOException {
-    
+
         OAuth2Token retVal = null;
+        HttpServer server = null;
         // https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
         try {
-            byte[] verifierBytes = new byte[64];
+            byte[] verifierBytes = new byte[128];
             SecureRandom.getInstanceStrong().nextBytes(verifierBytes);
             Base64.Encoder b64encoder = Base64.getUrlEncoder().withoutPadding();
             final String verifier = b64encoder.encodeToString(verifierBytes);
@@ -70,33 +71,34 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             final String challenge = b64encoder.encodeToString(md.digest(verifier.getBytes(StandardCharsets.US_ASCII)));
-            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);            
+            server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);
             int port = server.getAddress().getPort();
             String host = server.getAddress().getHostName();
 
             final CompletableFuture<Result> future = new CompletableFuture<>();
-            
+
             server.createContext("/", new HttpHandler() {
 
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     Result ret = null;
-                    
+
                     final String query = exchange.getRequestURI().getQuery();
-                    LOGGER.finest("Got auth server response." + query);
+                    LOGGER.fine("Got auth server response." + query);
                     final QueryParameters parameters = QueryParameters.parse(query);
                     if (!parameters.get("error").isEmpty()) {
                         String error = parameters.get("error").get(0);
                         String errorDescription = parameters.get("error_description").get(0);
-                        ret = Result.failure(error, errorDescription);                    
+                        ret = Result.failure(error, errorDescription);
                     } else {
                         String code = parameters.get("code").get(0);
                         String state = parameters.get("state").get(0);
                         String session_state = parameters.get("session_state").get(0);
                         ret = Result.success(code ,state, session_state);
                     }
-                    LOGGER.finest("Returning result back to thread.");
-                    server.stop(0);
+                    LOGGER.fine("Returning result back to thread.");
+                    exchange.sendResponseHeaders(201, 0);
+
                     future.complete(ret);
                 }
 
@@ -117,7 +119,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             LOGGER.info("Handling Auth Request");
             LOGGER.finer("Auth Request URL: " + urlStr);
             this.authCallBack.accept(URI.create(urlStr));
-            
+
             Result result = future.get(3, TimeUnit.MINUTES); // The user is now required to perform manual operations.
             LOGGER.info("Retrieving Token.");
             if (result.error != null) {
@@ -154,6 +156,11 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             throw new IOException("Unable to retrieve SecureRandom or Message Digest instance to generate verifier", ex);
         } catch (InterruptedException | ExecutionException | TimeoutException ex) {
             throw new IOException("Unable to form login sequence.", ex);
+        }
+        finally {
+            if (server != null) {
+                server.stop(0);
+            }
         }
     }
 

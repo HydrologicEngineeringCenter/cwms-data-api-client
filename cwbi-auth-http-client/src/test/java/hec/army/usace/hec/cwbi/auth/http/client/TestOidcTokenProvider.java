@@ -60,18 +60,14 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
 
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 class TestOidcTokenProvider {
-    
+    private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName());
     static MockHttpServer mockCdaServer;
     static MockHttpServer mockAuthServer;
 
@@ -118,12 +114,12 @@ class TestOidcTokenProvider {
     @Test
     void testBuildTokenProvider() throws Exception {
         mockAuthServer.getMockServer().setDispatcher(new Dispatcher() {
-            private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName()+"_dispatcher");
+            private final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName()+"_dispatcher");
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 final HttpUrl url = request.getRequestUrl();
                 final String path = url.encodedPath();
-                LOGGER.fine("Request for: " + url.toString());
+                LOGGER.info("Request for: " + url.toString());
                 LOGGER.fine("Path: " + path);
                 
                 try {
@@ -134,8 +130,12 @@ class TestOidcTokenProvider {
                     else if (path.endsWith("/auth")) {
                         final String query = request.getRequestUrl().query();
                         final QueryParameters parameters = QueryParameters.parse(query);
-                        final String loc = String.format("%s?code=test&state=a test", parameters.get("redirect_uri").get(0));
-                        return new MockResponse().setResponseCode(302).setHeader("Location", loc);
+                        String redirect = parameters.get("redirect_uri").get(0);
+                        String state = parameters.get("state").get(0);
+                        final String loc = String.format("%s?code=test&state=%s&session_state=zzz", redirect, state);
+                        MockResponse response = new MockResponse().setResponseCode(302).setHeader("Location", loc).setBody("hello");
+                        LOGGER.info(response.toString());
+                        return response;
                     }
                     else if (path.endsWith("/token")) {
                         return new MockResponse().setBody(getResource("oauth2token.json"));
@@ -152,6 +152,7 @@ class TestOidcTokenProvider {
         OidcAuthTokenProvider tokenProvider = new OidcAuthTokenProvider("test", wellKnown);
         tokenProvider.setAuthCallback(u -> {
             try {
+                LOGGER.info("Sending " + u.toString());
                 HttpRequestExecutor executor =
                     new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder(u.toString()).build())
                         .get()

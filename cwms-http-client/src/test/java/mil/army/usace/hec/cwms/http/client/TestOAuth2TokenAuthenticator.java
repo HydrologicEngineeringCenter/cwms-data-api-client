@@ -261,5 +261,17 @@ class TestOAuth2TokenAuthenticator {
             token.setRefreshToken(ACCESS_TOKEN);
             return token;
         }
+
+        @Override
+        public ApiConnectionInfo getAuthUrl() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getAuthUrl'");
+        }
+
+        @Override
+        public ApiConnectionInfo getTokenUrl() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getTokenUrl'");
+        }
     }
 }
