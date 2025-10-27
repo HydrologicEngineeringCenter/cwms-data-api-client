@@ -62,7 +62,6 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -70,13 +69,6 @@ class TestOidcTokenProvider {
     private static final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName());
     static MockHttpServer mockCdaServer;
     static MockHttpServer mockAuthServer;
-
-    static ExecutorService executorService;
-
-    @BeforeAll
-    static void setUpExecutorService() {
-        executorService = Executors.newFixedThreadPool(1);
-    }
 
     @BeforeEach
     void setUp() throws IOException {

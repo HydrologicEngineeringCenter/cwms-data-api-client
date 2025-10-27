@@ -83,7 +83,7 @@ public class QueryParameters {
     public static QueryParameters parse(String query) {
         QueryParameters parameters = new QueryParameters();
         for (String pair: query.split("&")) {
-            String[] kv = pair.split("=");
+            String[] kv = pair.split("=", 2); // parameters are *always* seperated by &, but may have embedded =
             if (kv[0].trim().isEmpty()) {
                 continue;
             }

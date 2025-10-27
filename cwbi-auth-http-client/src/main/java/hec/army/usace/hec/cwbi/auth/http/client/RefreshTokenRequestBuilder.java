@@ -1,6 +1,5 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
@@ -19,11 +18,9 @@ public final class RefreshTokenRequestBuilder implements RefreshTokenRequestFlue
      * @return Builder for http request
      */
     @Override
-    public <T> TokenRequestFluentBuilder<T> withRefreshToken(String refreshToken) {
+    public <T> TokenRequestFluentBuilder<? extends TokenRequestFluentBuilder<?>> withRefreshToken(String refreshToken) {
         this.refreshToken = Objects.requireNonNull(refreshToken, "Missing required refresh token");
-        // NOTE: The executor clearly extends TokenRequestBuilder which implements TokenRequestFluentBuilder so
-        // I'm really confused why we need the cast.
-        return (TokenRequestFluentBuilder<T>) new RefreshTokenRequestExecutor();
+        return new RefreshTokenRequestExecutor();
     }
 
     class RefreshTokenRequestExecutor extends TokenRequestBuilder<RefreshTokenRequestExecutor> {

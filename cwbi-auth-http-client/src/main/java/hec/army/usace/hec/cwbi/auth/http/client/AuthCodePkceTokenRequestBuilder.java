@@ -97,7 +97,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                         ret = Result.success(code ,state, session_state);
                     }
                     LOGGER.fine("Returning result back to thread.");
-                    exchange.sendResponseHeaders(201, 0);
+                    exchange.sendResponseHeaders(204, 0);
 
                     future.complete(ret);
                 }
@@ -107,7 +107,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             final QueryParameters authParameters = QueryParameters.empty()
                 .set("grant_type", "code")
                 .set("client_id", getClientId())
-                .set("scopes", "openid profile")
+                .set("scope", "openid profile")
                 .set("response_type", "code")
                 .set("code_challenge_method", "S256")
                 .set("code_challenge", challenge)

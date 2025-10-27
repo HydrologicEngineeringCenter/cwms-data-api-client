@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
-public interface TokenRequestFluentBuilder<T> {
+public interface TokenRequestFluentBuilder<T extends TokenRequestFluentBuilder<T>> {
 
     /**
      * If given auth method uses a single URL.
