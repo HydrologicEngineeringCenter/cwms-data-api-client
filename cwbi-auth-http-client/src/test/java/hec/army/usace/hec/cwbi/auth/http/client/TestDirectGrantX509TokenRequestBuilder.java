@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +39,16 @@ import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Logger;
+
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+
 import org.junit.jupiter.api.Test;
 
 class TestDirectGrantX509TokenRequestBuilder {
@@ -52,7 +59,7 @@ class TestDirectGrantX509TokenRequestBuilder {
         SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
         assertThrows(NullPointerException.class, () -> {
             OAuth2Token token = new DirectGrantX509TokenRequestBuilder()
-                .withUrl(new ApiConnectionInfoBuilder("https://test.com")
+                .withUrl(new ApiConnectionInfoBuilder("https://test.com/openid-configuration")
                         .withSslSocketData(sslSocketData)
                         .build())
                 .withClientId(null)
@@ -72,13 +79,36 @@ class TestDirectGrantX509TokenRequestBuilder {
         try (MockWebServer mockWebServer = new MockWebServer()) {
             SslSocketData sslSocketData = new SslSocketData(getTestSslSocketFactory(), CwbiAuthTrustManager.getTrustManager());
             String body = readJsonFile();
-            mockWebServer.enqueue(new MockResponse().setBody(body).setResponseCode(200));
+            mockWebServer.setDispatcher(new Dispatcher() {
+                private final Logger LOGGER = Logger.getLogger(TestOidcTokenProvider.class.getName());
+                @Override
+                public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                    final HttpUrl url = request.getRequestUrl();
+                    final String path = url.encodedPath();
+                    LOGGER.fine("Request for: " + url.toString());
+                    LOGGER.fine("Path: " + path);
+
+
+                    if (path.endsWith("openid-configuration")) {
+                        fail("Using Direct Grant Request builder directly should not invoke the configuration request");
+                    }
+                    else if (path.endsWith("/auth")) {
+                        fail("CwbiTokenProvider uses direct grant and should not call the /auth endpoint.");
+                    }
+                    else if (path.endsWith("/token")) {
+                        return new MockResponse().setBody(body);
+                    }
+
+                    return new MockResponse().setResponseCode(404).setBody("Request not mocked.");
+                }
+            });
             mockWebServer.start();
-            String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+            String baseUrl = String.format("http://localhost:%s/token", mockWebServer.getPort());
             OAuth2Token token = new DirectGrantX509TokenRequestBuilder()
-                .withUrl(new ApiConnectionInfoBuilder(baseUrl)
+                .withTokenUrl(new ApiConnectionInfoBuilder(baseUrl)
                         .withSslSocketData(sslSocketData)
                         .build())
+                .buildRequest()
                 .withClientId("cumulus")
                 .fetchToken();
             assertNotNull(token);

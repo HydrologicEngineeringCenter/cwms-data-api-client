@@ -23,6 +23,7 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
@@ -30,7 +31,7 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 import java.io.IOException;
 
-public final class DirectGrantX509TokenRequestBuilder extends TokenRequestBuilder {
+public final class DirectGrantX509TokenRequestBuilder extends TokenRequestBuilder<DirectGrantX509TokenRequestBuilder> {
 
     @Override
     OAuth2Token retrieveToken() throws IOException {
@@ -43,7 +44,7 @@ public final class DirectGrantX509TokenRequestBuilder extends TokenRequestBuilde
                 .addUsername("")
                 .buildEncodedString();
         HttpRequestExecutor executor =
-                new HttpRequestBuilderImpl(getUrl())
+                new HttpRequestBuilderImpl(getTokenUrl())
                         .post()
                         .withBody(formBody)
                         .withMediaType(MEDIA_TYPE);

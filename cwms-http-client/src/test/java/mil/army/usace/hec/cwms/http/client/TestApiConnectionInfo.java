@@ -233,6 +233,18 @@ class TestApiConnectionInfo {
                 token.setScope("create");
                 return token;
             }
+
+            @Override
+            public ApiConnectionInfo getAuthUrl() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getAuthUrl'");
+            }
+
+            @Override
+            public ApiConnectionInfo getTokenUrl() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getTokenUrl'");
+            }
         };
     }
 
@@ -277,6 +289,18 @@ class TestApiConnectionInfo {
             @Override
             public OAuth2Token newToken() {
                 return null;
+            }
+
+            @Override
+            public ApiConnectionInfo getAuthUrl() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getAuthUrl'");
+            }
+
+            @Override
+            public ApiConnectionInfo getTokenUrl() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getTokenUrl'");
             }
         };
     }

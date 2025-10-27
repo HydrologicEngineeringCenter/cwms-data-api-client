@@ -38,11 +38,11 @@ public final class SslSocketData {
         this.x509TrustManager = Objects.requireNonNull(x509TrustManager, "Missing required X509TrustManager");
     }
 
-    SSLSocketFactory getSslSocketFactory() {
+    public SSLSocketFactory getSslSocketFactory() {
         return sslSocketFactory;
     }
 
-    X509TrustManager getX509TrustManager() {
+    public X509TrustManager getX509TrustManager() {
         return x509TrustManager;
     }
 }

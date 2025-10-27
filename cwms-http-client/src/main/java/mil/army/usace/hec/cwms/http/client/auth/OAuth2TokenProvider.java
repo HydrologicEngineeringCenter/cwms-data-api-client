@@ -25,7 +25,16 @@
 package mil.army.usace.hec.cwms.http.client.auth;
 
 import java.io.IOException;
+import java.net.URI;
+import java.util.function.Consumer;
 
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+
+/**
+ * 
+ * TODO: needs additional support for alternative flows. deciding if attempting to
+ * do in this PR or just create issue and do in followup PR.
+ */
 public interface OAuth2TokenProvider {
 
     void clear();
@@ -36,4 +45,19 @@ public interface OAuth2TokenProvider {
 
     OAuth2Token newToken() throws IOException;
 
+    /**
+     * Return auth callback that will be used for this provider.
+     * By default do nothing.
+     * @return
+     */
+    default Consumer<URI> getAuthCallback() {
+        return u -> {}; 
+    }
+
+    default void setAuthCallback(Consumer<URI> authCallback) {
+        /** default do nothing... for now */
+    }
+
+    ApiConnectionInfo getAuthUrl();
+    ApiConnectionInfo getTokenUrl();
 }

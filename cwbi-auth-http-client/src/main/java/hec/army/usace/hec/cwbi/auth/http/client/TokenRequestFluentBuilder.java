@@ -23,9 +23,49 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.net.URI;
+import java.util.function.Consumer;
+
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
-public interface TokenRequestFluentBuilder {
+public interface TokenRequestFluentBuilder<T extends TokenRequestFluentBuilder<T>> {
 
+    /**
+     * If given auth method uses a single URL.
+     * @param url
+     * @return
+     * @deprecated even for implementations, like direct grant/resource owner password credentials
+     *             should use the individual endpoints in the appropriate sections to avoid configuration
+     *             details that are too specific but filter up among the usage.
+     */
+    @Deprecated(forRemoval = true)
     RequestClientId withUrl(ApiConnectionInfo url);
+
+    /**
+     * Create object for next step in auth.
+     * @return
+     */
+    RequestClientId buildRequest();
+
+    /**
+     * set specific Auth URL endpoint.
+     * @param url
+     * @return
+     */
+    TokenRequestFluentBuilder<T> withAuthUrl(ApiConnectionInfo url);
+
+    /**
+     * set specific Token URL endpoint.
+     * @param url
+     * @return
+     */
+    TokenRequestFluentBuilder<T> withTokenUrl(ApiConnectionInfo url);
+
+    /**
+     * For methods where an external step is required to finish authentication
+     * pass in desired operation
+     * @param authCallback
+     * @return
+     */
+    TokenRequestFluentBuilder<T> withAuthCallback(Consumer<URI> authCallback);
 }

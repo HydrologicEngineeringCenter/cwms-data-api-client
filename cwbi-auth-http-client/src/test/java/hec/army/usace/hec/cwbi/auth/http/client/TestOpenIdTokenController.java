@@ -51,7 +51,7 @@ final class TestOpenIdTokenController {
             ApiConnectionInfo tokenUrl = new OpenIdTokenController(){
 
                 @Override
-                protected String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) {
+                public String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) {
                     return wellKnownEndpoint;
                 }
             }.retrieveTokenUrl(new ApiConnectionInfoBuilder(baseUrl).build(), sslSocketData);

@@ -23,21 +23,68 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
+import java.util.function.Consumer;
+
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
+abstract class TokenRequestBuilder<T> implements TokenRequestFluentBuilder<TokenRequestBuilder<T>> {
+    public static final Consumer<URI> BROWSER_OR_CONSOLE_AUTH_CALLBACK = u -> {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(u);
+                } catch (IOException ex) {
+                    throw new RuntimeException("Unable to open browser", ex);
+                }
+            } else {
+                System.out.println(String.format("Paste the following into a browser to continue login: %s", u.toString()));
+            }
+        };
 
     static final String MEDIA_TYPE = "application/x-www-form-urlencoded";
     private ApiConnectionInfo url;
+    private ApiConnectionInfo authUrl;
+    private ApiConnectionInfo tokenUrl;
     private String clientId;
+    protected Consumer<URI> authCallBack = (u) -> {}; // by default do nothing.
 
     abstract OAuth2Token retrieveToken() throws IOException;
 
+    /**
+     * Method used method the auth and token URL are the same.
+     * @return
+     * @deprecated implementations, even when they are the same, should use the individual auth/token methods.
+     */
+    @Deprecated(forRemoval = true)
     ApiConnectionInfo getUrl() {
         return url;
+    }
+
+    /**
+     * Retrieve the specific Auth endpoint URL.
+     * @return
+     */
+    ApiConnectionInfo getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
+     * Retrieve the specific Token endpiont URL.
+     * @return
+     */
+    ApiConnectionInfo getTokenUrl() {
+        return tokenUrl;
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withAuthCallback(Consumer<URI> authCallback) {
+        this.authCallBack = authCallback;
+        return this;
     }
 
     String getClientId() {
@@ -49,6 +96,24 @@ abstract class TokenRequestBuilder implements TokenRequestFluentBuilder {
         this.url = Objects.requireNonNull(url, "Missing required URL");
         return new RequestClientIdImpl();
     }
+
+    @Override
+    public RequestClientId buildRequest() {
+        return new RequestClientIdImpl();
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withAuthUrl(ApiConnectionInfo url) {
+        this.authUrl = url;
+        return this;
+    }
+
+    @Override
+    public TokenRequestBuilder<T> withTokenUrl(ApiConnectionInfo url) {
+        this.tokenUrl = url;
+        return this;
+    }
+
 
     private class RequestClientIdImpl implements RequestClientId {
 

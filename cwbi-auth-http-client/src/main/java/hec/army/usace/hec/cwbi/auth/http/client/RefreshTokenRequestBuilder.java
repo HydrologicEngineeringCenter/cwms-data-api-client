@@ -1,6 +1,5 @@
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
@@ -19,12 +18,12 @@ public final class RefreshTokenRequestBuilder implements RefreshTokenRequestFlue
      * @return Builder for http request
      */
     @Override
-    public TokenRequestFluentBuilder withRefreshToken(String refreshToken) {
+    public <T> TokenRequestFluentBuilder<? extends TokenRequestFluentBuilder<?>> withRefreshToken(String refreshToken) {
         this.refreshToken = Objects.requireNonNull(refreshToken, "Missing required refresh token");
         return new RefreshTokenRequestExecutor();
     }
 
-    class RefreshTokenRequestExecutor extends TokenRequestBuilder {
+    class RefreshTokenRequestExecutor extends TokenRequestBuilder<RefreshTokenRequestExecutor> {
 
         @Override
         OAuth2Token retrieveToken() throws IOException {
