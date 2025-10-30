@@ -103,7 +103,7 @@ class TestLocationLevelEndpointInput {
     }
 
     @Test
-    void testDelete() throws Exception {
+    void testDelete() {
         LocationLevelEndpointInput.Delete input = LocationLevelEndpointInput.delete("Test")
                 .officeId("SPK");
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
@@ -116,8 +116,10 @@ class TestLocationLevelEndpointInput {
     void testGetAsTimeSeries() {
         Instant begin = Instant.now();
         Instant end = begin.plus(10, ChronoUnit.DAYS);
-        GetTimeSeries input = getAsTimeSeries("Test", "SPK", begin, end)
-                .interval("1Day");
+        String unit = "ft";
+        String timezone = "UTC";
+        GetTimeSeries input = getAsTimeSeries("Test", "SPK", begin, end, unit)
+                .interval("1Day").timezone(timezone);
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -125,5 +127,7 @@ class TestLocationLevelEndpointInput {
         assertEquals(begin.toString(), mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
         assertEquals(end.toString(), mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
         assertEquals("1Day", mockHttpRequestBuilder.getQueryParameter(INTERVAL_QUERY_PARAMETER));
+        assertEquals(unit, mockHttpRequestBuilder.getQueryParameter(UNIT_QUERY_PARAMETER));
+        assertEquals(timezone, mockHttpRequestBuilder.getQueryParameter(TIMEZONE_QUERY_PARAMETER));
     }
 }
