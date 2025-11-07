@@ -16,6 +16,8 @@
 -                     Ryan Ripken (ryan@rmanet.com)
 - Copyright 2024 GEI Consultants, Inc.
 -                     Devin Reina (dreina@geiconsultants.com)
+- Copyright 2025 Resource Management Associates
+-                     Kayla Arritola (kayla@rmanet.com)
 - _Add the copyright date, your name, and email address here. (PLEASE KEEP THIS LINE)_
 
 ## Note for U.S. Federal Employees
