@@ -178,8 +178,9 @@ class TestLevelController extends TestController {
         LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, LocationLevel.class);
         Instant begin = Instant.parse("2023-06-01T07:00:00Z");
         Instant end = Instant.parse("2023-06-11T07:00:00Z");
-        LocationLevelEndpointInput.GetTimeSeries input = LocationLevelEndpointInput.getAsTimeSeries("level_as_timeseries.Flow.Ave.1Day.Regulating", "SPK", begin, end)
-                .interval("1Hour");
+        String unit = locationLevel.getLevelUnitsId();
+        LocationLevelEndpointInput.GetTimeSeries input = LocationLevelEndpointInput.getAsTimeSeries("level_as_timeseries.Flow.Ave.1Day.Regulating", "SPK", begin, end, unit)
+                .interval("1Hour").timezone("UTC");
         TimeSeries timeSeries = new LevelController().retrieveLevelAsTimeSeries(buildConnectionInfo(), input);
         assertEquals(RadarObjectMapper.mapJsonToObject(collect, TimeSeries.class), timeSeries);
     }

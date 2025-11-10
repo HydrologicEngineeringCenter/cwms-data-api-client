@@ -47,6 +47,7 @@ public final class LocationLevelEndpointInput {
     static final String INTERVAL_QUERY_PARAMETER = "interval";
     static final String UNIT_QUERY_PARAMETER = "unit";
     static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
+    static final String TIMEZONE_QUERY_PARAMETER = "timezone";
 
     private LocationLevelEndpointInput() {
         throw new AssertionError("factory class");
@@ -56,8 +57,8 @@ public final class LocationLevelEndpointInput {
         return new GetOne(levelId, officeId, effectiveDate);
     }
 
-    public static GetTimeSeries getAsTimeSeries(String levelId, String officeId, Instant begin, Instant end) {
-        return new GetTimeSeries(levelId, officeId, begin, end);
+    public static GetTimeSeries getAsTimeSeries(String levelId, String officeId, Instant begin, Instant end, String unit) {
+        return new GetTimeSeries(levelId, officeId, begin, end, unit);
     }
 
     public static GetAll getAll() {
@@ -73,9 +74,9 @@ public final class LocationLevelEndpointInput {
     }
 
     public static final class GetOne extends EndpointInput {
-        private String officeId;
-        private Instant effectiveDate;
-        private String levelId;
+        private final String officeId;
+        private final Instant effectiveDate;
+        private final String levelId;
 
         private GetOne(String levelId, String officeId, Instant effectiveDate) {
             this.officeId = officeId;
@@ -97,21 +98,29 @@ public final class LocationLevelEndpointInput {
     }
 
     public static final class GetTimeSeries extends EndpointInput {
-        private String officeId;
-        private String levelId;
+        private final String officeId;
+        private final String levelId;
         private final Instant begin;
         private final Instant end;
+        private final String unit;
         private String interval;
+        private String timezone;
 
-        private GetTimeSeries(String levelId, String officeId, Instant begin, Instant end) {
+        private GetTimeSeries(String levelId, String officeId, Instant begin, Instant end, String unit) {
             this.officeId = officeId;
             this.levelId = levelId;
             this.begin = begin;
             this.end = end;
+            this.unit = unit;
         }
 
         public GetTimeSeries interval(String interval) {
             this.interval = interval;
+            return this;
+        }
+
+        public GetTimeSeries timezone(String timezone) {
+            this.timezone = timezone;
             return this;
         }
 
@@ -122,6 +131,9 @@ public final class LocationLevelEndpointInput {
                     .addQueryParameter(BEGIN_QUERY_PARAMETER, begin.toString())
                     .addQueryParameter(END_QUERY_PARAMETER, end.toString())
                     .addQueryParameter(INTERVAL_QUERY_PARAMETER, interval)
+                    .addQueryParameter(UNIT_QUERY_PARAMETER, unit)
+                    .addQueryParameter(INTERVAL_QUERY_PARAMETER, interval)
+                    .addQueryParameter(TIMEZONE_QUERY_PARAMETER, timezone)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
 
