@@ -7,5 +7,6 @@
   "constant-value": 145.6944,
   "level-units-id": "m",
   "level-date": "1900-01-01T06:00:00Z",
-  "duration-id": "0"
+  "duration-id": "0",
+  "expiration-date": "2900-01-01T06:00:00Z"
 }

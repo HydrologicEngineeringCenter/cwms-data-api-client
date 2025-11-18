@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,11 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import mil.army.usace.hec.cwms.data.api.client.model.LocationLevel;
-import mil.army.usace.hec.cwms.data.api.client.model.LocationLevels;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.data.api.client.model.SpecifiedLevel;
-import mil.army.usace.hec.cwms.data.api.client.model.TimeSeries;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -38,8 +37,16 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import mil.army.usace.hec.cwms.data.api.client.model.ConstantLocationLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationLevels;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.data.api.client.model.SeasonalLocationLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.SpecifiedLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeries;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesLocationLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.VirtualLocationLevel;
+import org.junit.jupiter.api.Test;
 
 class TestLevelController extends TestController {
 
@@ -114,11 +121,30 @@ class TestLevelController extends TestController {
         assertEquals("Top of Flood", level.get().getSpecifiedLevelId());
         assertEquals(LocationLevel.ParameterTypeIdEnum.INST, level.get().getParameterTypeId());
         assertEquals("Elev", level.get().getParameterId());
-        assertEquals(321.564, level.get().getConstantValue());
+        assertEquals(321.564, ((ConstantLocationLevel) level.get()).getConstantValue());
         assertEquals("m", level.get().getLevelUnitsId());
         ZonedDateTime effectiveDate = ZonedDateTime.of(1900, 1, 1, 5, 0, 0, 0, ZoneId.of("UTC"));
         assertEquals(effectiveDate.toInstant(), level.get().getLevelDate().toInstant());
         assertEquals("0", level.get().getDurationId());
+    }
+
+    @Test
+    void testRetrieveLocationLevelSubtypes() throws IOException {
+        String resource = "radar/v2/json/location_levels.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll()
+            .officeId("LRL");
+        LocationLevels locationLevels = new LevelController().retrieveLocationLevels(buildConnectionInfo(), input);
+        assertTrue(locationLevels.getLevels().stream()
+            .anyMatch(l -> l instanceof VirtualLocationLevel));
+        assertTrue(locationLevels.getLevels().stream()
+            .anyMatch(l -> l instanceof ConstantLocationLevel));
+        assertTrue(locationLevels.getLevels().stream()
+            .anyMatch(l -> l instanceof TimeSeriesLocationLevel));
+        assertTrue(locationLevels.getLevels().stream()
+            .anyMatch(l -> l instanceof SeasonalLocationLevel));
     }
 
     @Test
@@ -135,10 +161,12 @@ class TestLevelController extends TestController {
         assertEquals("Bottom of Inlet", level.getSpecifiedLevelId());
         assertEquals(LocationLevel.ParameterTypeIdEnum.INST, level.getParameterTypeId());
         assertEquals("Elev", level.getParameterId());
-        assertEquals(145.6944, level.getConstantValue());
+        assertEquals(145.6944, ((ConstantLocationLevel) level).getConstantValue());
         assertEquals("m", level.getLevelUnitsId());
         assertEquals(instant, level.getLevelDate().toInstant());
         assertEquals("0", level.getDurationId());
+        Instant expiration = Instant.parse("2900-01-01T06:00:00Z");
+        assertEquals(expiration, level.getExpirationDate().toInstant());
     }
 
     @Test
@@ -175,7 +203,7 @@ class TestLevelController extends TestController {
         String collect = readJsonFile(resource);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, LocationLevel.class);
+        LocationLevel locationLevel = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesLocationLevel.class);
         Instant begin = Instant.parse("2023-06-01T07:00:00Z");
         Instant end = Instant.parse("2023-06-11T07:00:00Z");
         String unit = locationLevel.getLevelUnitsId();

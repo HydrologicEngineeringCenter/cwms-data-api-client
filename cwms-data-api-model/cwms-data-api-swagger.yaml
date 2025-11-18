@@ -2,9 +2,11 @@ openapi: 3.0.1
 info:
   title: CWMS Data API
   description: CWMS REST API for Data Retrieval
-  version: 2025.03.20-security-update-tomcat
+  version: 2025.10.22-testa
 servers:
   - url: /cwms-data
+security:
+  - CdaAccessManager: [ ]
 paths:
   /:
     get:
@@ -44,6 +46,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /auth/keys/{key-name}:
     get:
       tags:
@@ -98,6 +101,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Authorization
@@ -150,6 +154,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /auth/keys:
     get:
       tags:
@@ -199,6 +204,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Authorization
@@ -250,6 +256,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /location/category/{category-id}:
     get:
       tags:
@@ -310,6 +317,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Location Categories
@@ -368,6 +376,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /location/category:
     get:
       tags:
@@ -423,6 +432,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Location Categories
@@ -469,6 +479,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /location/group/{group-id}:
     get:
       tags:
@@ -553,6 +564,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Location Groups
@@ -617,6 +629,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Location Groups
@@ -680,6 +693,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /location/group:
     get:
       tags:
@@ -762,6 +776,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Location Groups
@@ -808,6 +823,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /locations/{location-id}:
     get:
       tags:
@@ -878,6 +894,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Locations
@@ -931,6 +948,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Locations
@@ -986,6 +1004,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /locations:
     get:
       tags:
@@ -1007,7 +1026,7 @@ paths:
         - name: unit
           in: query
           description: |-
-            Specifies the unit or unit system of the response. Valid values for the unit field are:
+            Specifies the unit or unit system of the response. Default is SI. Valid values for the unit field are:
             * `EN`  Specifies English unit system.  Location level values will be in the default English units for their parameters.
             * `SI`  Specifies the SI unit system.  Location level values will be in the default SI units for their parameters.
             * `Other`  Any unit returned in the response to the units URI request that is appropriate for the requested parameters.
@@ -1098,6 +1117,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Locations
@@ -1153,6 +1173,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /states:
     get:
       tags:
@@ -1201,6 +1222,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /counties:
     get:
       tags:
@@ -1249,6 +1271,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /offices/{office}:
     get:
       tags:
@@ -1326,6 +1349,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /offices:
     get:
       tags:
@@ -1399,6 +1423,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /units:
     get:
       tags:
@@ -1454,6 +1479,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /parameters:
     get:
       tags:
@@ -1524,6 +1550,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timezones:
     get:
       tags:
@@ -1586,6 +1613,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /levels/{level-id}:
     get:
       tags:
@@ -1608,10 +1636,15 @@ paths:
             type: string
         - name: effective-date
           in: query
-          description: Specifies the effective date of Location Level to be returned. Expected formats are `YYYY-MM-DDTHH:MM` or `YYYY-MM-DDTHH:MM:SS`
+          description: Specifies the effective date of Location Level to be returned.Expected formats are `YYYY-MM-DDTHH:MM` or `YYYY-MM-DDTHH:MM:SS`
           required: true
           schema:
             type: string
+        - name: use-exact-effective-date
+          in: query
+          description: If true only a level with the exact provided date will be returned. If false The most recent level on or before this time will be returned. The default is false.
+          schema:
+            type: boolean
         - name: timezone
           in: query
           description: Specifies the time zone of the values of the effective date field (unless otherwise specified), as well as the time zone of any times in the response. If this field is not specified, the default time zone of UTC shall be used.
@@ -1666,6 +1699,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Levels
@@ -1733,6 +1767,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Levels
@@ -1791,6 +1826,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /levels:
     get:
       tags:
@@ -1909,6 +1945,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Levels
@@ -1955,6 +1992,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /levels/{level-id}/timeseries:
     get:
       tags:
@@ -2055,6 +2093,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/recent:
     get:
       tags:
@@ -2132,6 +2171,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/filtered:
     get:
       tags:
@@ -2267,6 +2307,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /standard-text-id/{standard-text-id}:
     get:
       tags:
@@ -2327,6 +2368,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Standard Text
@@ -2386,6 +2428,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /standard-text-id:
     get:
       tags:
@@ -2444,6 +2487,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Standard Text
@@ -2496,6 +2540,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/text:
     get:
       tags:
@@ -2572,6 +2617,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Text-TimeSeries
@@ -2624,6 +2670,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/text/{name}:
     delete:
       tags:
@@ -2706,6 +2753,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Text-TimeSeries
@@ -2764,6 +2812,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/text/{name}/value:
     get:
       tags:
@@ -2845,6 +2894,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/binary:
     get:
       tags:
@@ -2931,6 +2981,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Binary-TimeSeries
@@ -2982,6 +3033,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/binary/{name}:
     delete:
       tags:
@@ -3063,6 +3115,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Binary-TimeSeries
@@ -3120,6 +3173,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/binary/{name}/value:
     get:
       tags:
@@ -3202,6 +3256,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile/{location-id}/{parameter-id}:
     get:
       tags:
@@ -3269,6 +3324,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - TimeSeries
@@ -3330,6 +3386,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile:
     get:
       tags:
@@ -3405,6 +3462,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries
@@ -3455,6 +3513,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile-parser/{location-id}/{parameter-id}:
     get:
       tags:
@@ -3525,6 +3584,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - TimeSeries
@@ -3587,6 +3647,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile-parser:
     get:
       tags:
@@ -3658,6 +3719,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries
@@ -3712,6 +3774,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile-instance/{location-id}/{parameter-id}/{version}:
     get:
       tags:
@@ -3853,6 +3916,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - TimeSeries
@@ -3941,6 +4005,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/profile-instance:
     get:
       tags:
@@ -4011,6 +4076,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries
@@ -4089,6 +4155,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/category/{category-id}:
     get:
       tags:
@@ -4151,6 +4218,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - TimeSeries Categories
@@ -4209,6 +4277,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/category:
     get:
       tags:
@@ -4266,6 +4335,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries Categories
@@ -4318,6 +4388,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/identifier-descriptor/{name}:
     get:
       tags:
@@ -4385,6 +4456,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - TimeSeries Identifier
@@ -4449,6 +4521,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - TimeSeries Identifier
@@ -4529,6 +4602,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/identifier-descriptor:
     get:
       tags:
@@ -4600,6 +4674,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries Identifier
@@ -4655,6 +4730,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/group/{group-id}:
     get:
       tags:
@@ -4733,6 +4809,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Timeseries Groups
@@ -4792,6 +4869,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Timeseries Groups
@@ -4855,6 +4933,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/group:
     get:
       tags:
@@ -4932,6 +5011,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Timeseries Groups
@@ -4984,6 +5064,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries:
     get:
       tags:
@@ -5135,6 +5216,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - TimeSeries
@@ -5246,6 +5328,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /timeseries/{timeseries}:
     delete:
       tags:
@@ -5341,6 +5424,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - TimeSeries
@@ -5458,6 +5542,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/rate-values/{office}/{rating-id}:
     post:
       tags:
@@ -5532,6 +5617,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/rate-ts/{office}/{rating-id}:
     post:
       tags:
@@ -5606,6 +5692,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/reverse-rate-values/{office}/{rating-id}:
     post:
       tags:
@@ -5680,6 +5767,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/reverse-rate-ts/{office}/{rating-id}:
     post:
       tags:
@@ -5754,6 +5842,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/template/{template-id}:
     get:
       tags:
@@ -5815,6 +5904,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Ratings
@@ -5874,6 +5964,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/template:
     get:
       tags:
@@ -5942,6 +6033,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Ratings
@@ -5994,6 +6086,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/spec/{rating-id}:
     get:
       tags:
@@ -6053,6 +6146,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Ratings
@@ -6112,6 +6206,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/spec:
     get:
       tags:
@@ -6180,6 +6275,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Ratings
@@ -6232,6 +6328,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/metadata:
     get:
       tags:
@@ -6315,6 +6412,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/{rating-id}/latest:
     get:
       tags:
@@ -6378,6 +6476,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/effective-dates:
     get:
       tags:
@@ -6451,6 +6550,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings/{rating-id}:
     get:
       tags:
@@ -6534,6 +6634,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Ratings
@@ -6603,6 +6704,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Ratings
@@ -6669,6 +6771,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /ratings:
     get:
       tags:
@@ -6779,6 +6882,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Ratings
@@ -6836,6 +6940,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /catalog/{dataset}:
     get:
       tags:
@@ -6915,6 +7020,16 @@ paths:
           description: 'Posix <a href="regexp.html">regular expression</a> matching against the location kind.  The location-kind is typically unset or one of the following: {"SITE", "EMBANKMENT", "OVERFLOW", "TURBINE", "STREAM", "PROJECT", "STREAMGAGE", "BASIN", "OUTLET", "LOCK", "GATE"}.  Multiple kinds can be matched by using Regular Expression OR clauses. For example: "(SITE|STREAM)"'
           schema:
             type: string
+        - name: filter-base-locations
+          in: query
+          description: 'Specifies whether to filter the locations based on the base location. Default: false. If true, only sublocations locations will be returned. If false, all locations will be returned. Only supported for JSON format.'
+          schema:
+            type: boolean
+        - name: negate-location-kind-like
+          in: query
+          description: Whether to use the location kind regular expression to exclude locations with the specified kinds. Default is false.
+          schema:
+            type: string
         - name: location-type-like
           in: query
           description: Posix <a href="regexp.html">regular expression</a> matching against the location type.
@@ -6968,6 +7083,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /basins/{name}:
     get:
       tags:
@@ -7045,6 +7161,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Basins
@@ -7104,6 +7221,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Basins
@@ -7164,6 +7282,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /basins:
     get:
       tags:
@@ -7233,6 +7352,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Basins
@@ -7277,6 +7397,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /streams/{name}:
     get:
       tags:
@@ -7349,6 +7470,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Streams
@@ -7409,6 +7531,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Streams
@@ -7469,6 +7592,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /streams:
     get:
       tags:
@@ -7549,6 +7673,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Streams
@@ -7603,6 +7728,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-locations/{office}/{name}/downstream-locations:
     get:
       tags:
@@ -7690,6 +7816,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-locations/{office}/{name}/upstream-locations:
     get:
       tags:
@@ -7777,6 +7904,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-locations/{name}:
     get:
       tags:
@@ -7865,6 +7993,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - StreamLocations
@@ -7926,6 +8055,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - StreamLocations
@@ -7980,6 +8110,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-locations:
     get:
       tags:
@@ -8065,6 +8196,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - StreamLocations
@@ -8119,6 +8251,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-reaches/{name}:
     get:
       tags:
@@ -8197,6 +8330,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - StreamReaches
@@ -8252,6 +8386,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - StreamReaches
@@ -8312,6 +8447,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /stream-reaches:
     get:
       tags:
@@ -8392,6 +8528,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - StreamReaches
@@ -8446,6 +8583,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /measurements/time-extents:
     get:
       tags:
@@ -8501,6 +8639,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /measurements:
     get:
       tags:
@@ -8629,6 +8768,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Measurements
@@ -8690,6 +8830,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /measurements/{location-id}:
     delete:
       tags:
@@ -8773,6 +8914,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /blobs/{blob-id}:
     get:
       tags:
@@ -8825,6 +8967,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Blob
@@ -8878,6 +9021,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Blob
@@ -8934,6 +9078,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /blobs:
     get:
       tags:
@@ -9005,6 +9150,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Blob
@@ -9057,6 +9203,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /clobs/{clob-id}:
     get:
       tags:
@@ -9123,6 +9270,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Clob
@@ -9176,6 +9324,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Clob
@@ -9237,6 +9386,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /clobs:
     get:
       tags:
@@ -9313,6 +9463,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Clob
@@ -9368,6 +9519,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /pools/{pool-id}:
     get:
       tags:
@@ -9456,6 +9608,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /pools:
     get:
       tags:
@@ -9552,6 +9705,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /specified-levels:
     get:
       tags:
@@ -9609,6 +9763,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Levels
@@ -9661,6 +9816,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /specified-levels/{specified-level-id}:
     delete:
       tags:
@@ -9715,6 +9871,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Levels
@@ -9773,6 +9930,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /forecast-instance/{name}:
     get:
       tags:
@@ -9852,6 +10010,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Forecast
@@ -9922,6 +10081,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Forecast
@@ -9975,6 +10135,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /forecast-instance:
     get:
       tags:
@@ -10040,6 +10201,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Forecast
@@ -10086,6 +10248,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /forecast-spec/{name}:
     get:
       tags:
@@ -10153,6 +10316,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Forecast
@@ -10216,6 +10380,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Forecast
@@ -10269,6 +10434,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /forecast-spec:
     get:
       tags:
@@ -10339,6 +10505,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Forecast
@@ -10385,6 +10552,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /forecast-instance/{name}/file-data:
     get:
       tags:
@@ -10465,6 +10633,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/status-update/{name}:
     post:
       tags:
@@ -10547,6 +10716,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user/{water-user}:
     get:
       tags:
@@ -10613,6 +10783,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Water Contracts
@@ -10677,6 +10848,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Water Contracts
@@ -10752,6 +10924,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user:
     get:
       tags:
@@ -10812,6 +10985,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Water Contracts
@@ -10878,6 +11052,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}:
     get:
       tags:
@@ -10955,6 +11130,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Water Contracts
@@ -11025,6 +11201,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Water Contracts
@@ -11105,6 +11282,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user/{water-user}/contracts:
     get:
       tags:
@@ -11176,6 +11354,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Water Contracts
@@ -11255,6 +11434,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/accounting:
     get:
       tags:
@@ -11379,6 +11559,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Pump Accounting
@@ -11453,6 +11634,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/water-user/{water-user}/contracts/{contract-name}/pumps/{name}:
     delete:
       tags:
@@ -11536,6 +11718,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/contract-types:
     get:
       tags:
@@ -11595,6 +11778,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Water Contracts
@@ -11656,6 +11840,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/contract-types/{display-value}:
     delete:
       tags:
@@ -11710,6 +11895,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/embankments/{name}:
     get:
       tags:
@@ -11777,6 +11963,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Embankments
@@ -11837,6 +12024,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Embankments
@@ -11897,6 +12085,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/embankments:
     get:
       tags:
@@ -11963,6 +12152,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Embankments
@@ -12017,6 +12207,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/turbines/{name}:
     get:
       tags:
@@ -12080,6 +12271,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Turbines
@@ -12140,6 +12332,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Turbines
@@ -12200,6 +12393,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/turbines:
     get:
       tags:
@@ -12265,6 +12459,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Turbines
@@ -12322,6 +12517,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/locks/{name}:
     get:
       tags:
@@ -12398,6 +12594,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Locks
@@ -12458,6 +12655,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Locks
@@ -12518,6 +12716,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/locks:
     get:
       tags:
@@ -12585,6 +12784,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Locks
@@ -12639,6 +12839,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{name}/turbine-changes:
     get:
       tags:
@@ -12734,6 +12935,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Turbines
@@ -12803,6 +13005,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Turbines
@@ -12875,6 +13078,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/outlets/{name}:
     get:
       tags:
@@ -12938,6 +13142,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Outlets
@@ -12998,6 +13203,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Outlets
@@ -13058,6 +13264,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/outlets:
     get:
       tags:
@@ -13125,6 +13332,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Outlets
@@ -13182,6 +13390,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/gate-changes:
     post:
       tags:
@@ -13244,6 +13453,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/gate-changes:
     get:
       tags:
@@ -13344,6 +13554,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Outlets
@@ -13416,6 +13627,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/virtual-outlets/{name}:
     get:
       tags:
@@ -13485,6 +13697,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Outlets
@@ -13551,6 +13764,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{office}/{project-id}/virtual-outlets:
     get:
       tags:
@@ -13618,6 +13832,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/virtual-outlets:
     post:
       tags:
@@ -13676,6 +13891,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/locations:
     get:
       tags:
@@ -13741,6 +13957,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects/{name}:
     get:
       tags:
@@ -13803,6 +14020,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Projects
@@ -13861,6 +14079,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Projects
@@ -13927,6 +14146,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /projects:
     get:
       tags:
@@ -13998,6 +14218,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Projects
@@ -14053,6 +14274,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /properties/{name}:
     get:
       tags:
@@ -14124,6 +14346,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Properties
@@ -14185,6 +14408,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - Properties
@@ -14239,6 +14463,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /properties:
     get:
       tags:
@@ -14304,6 +14529,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Properties
@@ -14352,6 +14578,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /lookup-types:
     get:
       tags:
@@ -14420,6 +14647,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - LookupTypes
@@ -14481,6 +14709,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /lookup-types/{name}:
     delete:
       tags:
@@ -14548,6 +14777,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     patch:
       tags:
         - LookupTypes
@@ -14614,6 +14844,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-locks/{name}:
     get:
       tags:
@@ -14680,6 +14911,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - Project Locks
@@ -14739,6 +14971,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-locks:
     get:
       tags:
@@ -14803,6 +15036,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     post:
       tags:
         - Project Locks
@@ -14868,6 +15102,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-locks/deny:
     post:
       tags:
@@ -14916,6 +15151,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-locks/release:
     post:
       tags:
@@ -14970,6 +15206,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-lock-rights:
     get:
       tags:
@@ -15036,6 +15273,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-lock-rights/remove-all:
     post:
       tags:
@@ -15096,6 +15334,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /project-lock-rights/update:
     post:
       tags:
@@ -15167,6 +15406,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /users/{user-name}:
     get:
       tags:
@@ -15221,6 +15461,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /users:
     get:
       tags:
@@ -15286,6 +15527,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /roles:
     get:
       tags:
@@ -15335,6 +15577,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /user/profile:
     get:
       tags:
@@ -15382,6 +15625,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
   /user/{user-name}/roles/{office-id}:
     post:
       tags:
@@ -15445,6 +15689,7 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
     delete:
       tags:
         - User Management
@@ -15507,6 +15752,42 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+        - OpenIDConnect: [ ]
+  /*:
+    options:
+      summary: Options with wildcard
+      operationId: optionsWithWildcard
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
 components:
   schemas:
     CdaError:
@@ -16361,12 +16642,7 @@ components:
             seconds:
               type: integer
               format: int64
-            nano:
-              type: integer
-              format: int32
             zero:
-              type: boolean
-            negative:
               type: boolean
             units:
               type: array
@@ -16381,17 +16657,22 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      nano:
-                        type: integer
-                        format: int32
                       zero:
                         type: boolean
                       negative:
                         type: boolean
+                      nano:
+                        type: integer
+                        format: int32
                   durationEstimated:
                     type: boolean
                   dateBased:
                     type: boolean
+            negative:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -16513,12 +16794,7 @@ components:
             seconds:
               type: integer
               format: int64
-            nano:
-              type: integer
-              format: int32
             zero:
-              type: boolean
-            negative:
               type: boolean
             units:
               type: array
@@ -16533,17 +16809,22 @@ components:
                       seconds:
                         type: integer
                         format: int64
-                      nano:
-                        type: integer
-                        format: int32
                       zero:
                         type: boolean
                       negative:
                         type: boolean
+                      nano:
+                        type: integer
+                        format: int32
                   durationEstimated:
                     type: boolean
                   dateBased:
                     type: boolean
+            negative:
+              type: boolean
+            nano:
+              type: integer
+              format: int32
           description: The interval of the time-series, in ISO-8601 duration format
           format: Java Duration
           readOnly: true
@@ -18205,9 +18486,9 @@ components:
     PoolNameType:
       type: object
       properties:
-        poolName:
-          type: string
         officeId:
+          type: string
+        poolName:
           type: string
     pools:
       type: object
@@ -19108,8 +19389,123 @@ components:
       description: 'Key value as generated from the /auth/keys endpoint. NOTE: you MUST manually prefix your key with ''apikey '' (without the single quotes).'
       name: Authorization
       in: header
+      scheme: apikey
     CwmsAAACacAuth:
       type: apiKey
       description: Auth handler running on same tomcat instance as the data api.
       name: JSESSIONIDSSO
       in: cookie
+    OpenIDConnect:
+      type: openIdConnect
+      name: Authorization
+      in: header
+      flows:
+        implicit:
+          authorizationUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            stig-manager:collection:read: ''
+            stig-manager:op: ''
+            x509_presented: ''
+            stig-manager:op:read: ''
+            email: ''
+            stig-manager:collection: ''
+            microprofile-jwt: ''
+            address: ''
+            acr: ''
+            profile: ''
+            groups: ''
+            stig-manager:stig: ''
+            roles: ''
+            web-origins: ''
+            stig-manager:stig:read: ''
+            offline_access: ''
+            cacUID: ''
+            preferred_username: ''
+            stig-manager:user:read: ''
+            phone: ''
+            subjectDN: ''
+            stig-manager:user: ''
+        password:
+          authorizationUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            stig-manager:collection:read: ''
+            stig-manager:op: ''
+            x509_presented: ''
+            stig-manager:op:read: ''
+            email: ''
+            stig-manager:collection: ''
+            microprofile-jwt: ''
+            address: ''
+            acr: ''
+            profile: ''
+            groups: ''
+            stig-manager:stig: ''
+            roles: ''
+            web-origins: ''
+            stig-manager:stig:read: ''
+            offline_access: ''
+            cacUID: ''
+            preferred_username: ''
+            stig-manager:user:read: ''
+            phone: ''
+            subjectDN: ''
+            stig-manager:user: ''
+        clientCredentials:
+          authorizationUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            stig-manager:collection:read: ''
+            stig-manager:op: ''
+            x509_presented: ''
+            stig-manager:op:read: ''
+            email: ''
+            stig-manager:collection: ''
+            microprofile-jwt: ''
+            address: ''
+            acr: ''
+            profile: ''
+            groups: ''
+            stig-manager:stig: ''
+            roles: ''
+            web-origins: ''
+            stig-manager:stig:read: ''
+            offline_access: ''
+            cacUID: ''
+            preferred_username: ''
+            stig-manager:user:read: ''
+            phone: ''
+            subjectDN: ''
+            stig-manager:user: ''
+        authorizationCode:
+          authorizationUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/auth
+          tokenUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/protocol/openid-connect/token
+          scopes:
+            openid: ''
+            stig-manager:collection:read: ''
+            stig-manager:op: ''
+            x509_presented: ''
+            stig-manager:op:read: ''
+            email: ''
+            stig-manager:collection: ''
+            microprofile-jwt: ''
+            address: ''
+            acr: ''
+            profile: ''
+            groups: ''
+            stig-manager:stig: ''
+            roles: ''
+            web-origins: ''
+            stig-manager:stig:read: ''
+            offline_access: ''
+            cacUID: ''
+            preferred_username: ''
+            stig-manager:user:read: ''
+            phone: ''
+            subjectDN: ''
+            stig-manager:user: ''
+      openIdConnectUrl: https://identityc-test.cwbi.us/auth/realms/cwbi/.well-known/openid-configuration
