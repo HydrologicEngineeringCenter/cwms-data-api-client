@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,19 +35,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- */
 public final class RadarObjectMapper {
 
-    private static final ObjectMapper OBJECT_MAPPER =
-            new ObjectMapper().registerModule(new JavaTimeModule())
-                    .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-                    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                    .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
-                    .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
-                    .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-                    .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+        .registerModule(new JavaTimeModule())
+        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+        .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+        .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+        .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
     private RadarObjectMapper() {
         throw new AssertionError("Utility class");
