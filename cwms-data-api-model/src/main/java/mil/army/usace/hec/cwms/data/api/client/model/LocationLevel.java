@@ -93,39 +93,40 @@ public abstract class LocationLevel {
             return null;
         }
     }
+
     @JsonProperty("parameter-type-id")
     private ParameterTypeIdEnum parameterTypeId = null;
 
-              /**
-               * Indicating whether or not to interpolate between seasonal values.
-               */
-              public enum InterpolateStringEnum {
-                  T("T"),
+    /**
+     * Indicating whether or not to interpolate between seasonal values.
+     */
+    public enum InterpolateStringEnum {
+        T("T"),
 
-                  F("F");
+        F("F");
 
-                  private final String value;
+        private final String value;
 
-                  InterpolateStringEnum(String value) {
-                      this.value = value;
-                  }
+        InterpolateStringEnum(String value) {
+            this.value = value;
+        }
 
-                  @Override
-                  @JsonValue
-                  public String toString() {
-                      return String.valueOf(value);
-                  }
+        @Override
+        @JsonValue
+        public String toString() {
+            return String.valueOf(value);
+        }
 
-                  @JsonCreator
-                  public static InterpolateStringEnum fromValue(String text) {
-                      for (InterpolateStringEnum b : InterpolateStringEnum.values()) {
-                          if (String.valueOf(b.value).equals(text)) {
-                              return b;
-                          }
-                      }
-                      return null;
-                  }
-              }
+        @JsonCreator
+        public static InterpolateStringEnum fromValue(String text) {
+            for (InterpolateStringEnum b : InterpolateStringEnum.values()) {
+                if (String.valueOf(b.value).equals(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
 
     @JsonProperty("interpolate-string")
     private InterpolateStringEnum interpolateString = null;
@@ -468,7 +469,7 @@ public abstract class LocationLevel {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class LocationLevel {\n");
-        
+
         sb.append("    officeId: ").append(toIndentedString(officeId)).append("\n");
         sb.append("    locationLevelId: ").append(toIndentedString(locationLevelId)).append("\n");
         sb.append("    specifiedLevelId: ").append(toIndentedString(specifiedLevelId)).append("\n");
