@@ -33,7 +33,7 @@ import java.util.Objects;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-17T16:46:44.562396200-08:00[America/Los_Angeles]")
-public class LocationLevelConstituent extends RATING {
+public class LocationLevelConstituent extends RatingConstituent {
 
     @JsonProperty("attribute-id")
     private String attributeId = null;

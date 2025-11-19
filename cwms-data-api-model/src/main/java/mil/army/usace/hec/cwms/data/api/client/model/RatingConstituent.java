@@ -41,9 +41,9 @@ import java.util.Objects;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = LocationLevelConstituent.class, name = "LOCATION_LEVEL"),
-    @JsonSubTypes.Type(value = RATING.class, name = "RATING")
+    @JsonSubTypes.Type(value = RatingConstituent.class, name = "RATING")
 })
-public class RATING {
+public class RatingConstituent {
 
     @JsonProperty("abbr")
     private String abbr = null;
@@ -58,7 +58,7 @@ public class RATING {
     @Valid
     private List<String> constituentList = new ArrayList<>();
 
-    public RATING abbr(String abbr) {
+    public RatingConstituent abbr(String abbr) {
         this.abbr = abbr;
         return this;
     }
@@ -71,7 +71,7 @@ public class RATING {
         this.abbr = abbr;
     }
 
-    public RATING type(String type) {
+    public RatingConstituent type(String type) {
         this.type = type;
         return this;
     }
@@ -84,7 +84,7 @@ public class RATING {
         this.type = type;
     }
 
-    public RATING name(String name) {
+    public RatingConstituent name(String name) {
         this.name = name;
         return this;
     }
@@ -97,12 +97,12 @@ public class RATING {
         this.name = name;
     }
 
-    public RATING constituentList(List<String> constituentList) {
+    public RatingConstituent constituentList(List<String> constituentList) {
         this.constituentList = constituentList;
         return this;
     }
 
-    public RATING addConstituentListItem(String constituentListItem) {
+    public RatingConstituent addConstituentListItem(String constituentListItem) {
         if (this.constituentList == null) {
             this.constituentList = new ArrayList<>();
         }
@@ -126,14 +126,16 @@ public class RATING {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RATING RATING = (RATING) o;
-        return this.abbr == null || RATING.abbr == null ? Objects.equals(this.abbr, RATING.abbr) :
-            this.abbr.equalsIgnoreCase(RATING.abbr)
-                && this.type == null || RATING.type == null ? Objects.equals(this.type, RATING.type) :
-                this.type.equalsIgnoreCase(RATING.type)
-                    && this.name == null || RATING.name == null ? Objects.equals(this.name, RATING.name) :
-                    this.name.equalsIgnoreCase(RATING.name)
-                        && Objects.equals(this.constituentList, RATING.constituentList)
+        RatingConstituent ratingConstituent = (RatingConstituent) o;
+        return this.abbr == null || ratingConstituent.abbr == null ? Objects.equals(this.abbr, ratingConstituent.abbr) :
+            this.abbr.equalsIgnoreCase(ratingConstituent.abbr)
+                && this.type == null || ratingConstituent.type == null ?
+                Objects.equals(this.type, ratingConstituent.type) :
+                this.type.equalsIgnoreCase(ratingConstituent.type)
+                    && this.name == null || ratingConstituent.name == null ?
+                    Objects.equals(this.name, ratingConstituent.name) :
+                    this.name.equalsIgnoreCase(ratingConstituent.name)
+                        && Objects.equals(this.constituentList, ratingConstituent.constituentList)
             ;
     }
 

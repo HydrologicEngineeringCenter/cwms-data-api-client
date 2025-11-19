@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.Set;
 import mil.army.usace.hec.cwms.data.api.client.model.ConstantLocationLevel;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevel;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationLevelConstituent;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.SeasonalLocationLevel;
@@ -145,6 +146,25 @@ class TestLevelController extends TestController {
             .anyMatch(l -> l instanceof TimeSeriesLocationLevel));
         assertTrue(locationLevels.getLevels().stream()
             .anyMatch(l -> l instanceof SeasonalLocationLevel));
+    }
+
+    @Test
+    void testRetrieveVirtualLevel() throws IOException {
+        String resource = "radar/v2/json/location_levels.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationLevelEndpointInput.GetAll input = LocationLevelEndpointInput.getAll()
+            .officeId("LRL");
+        LocationLevels locationLevels = new LevelController().retrieveLocationLevels(buildConnectionInfo(), input);
+        VirtualLocationLevel virtualLevel = (VirtualLocationLevel) locationLevels.getLevels().stream()
+            .filter(l -> l instanceof VirtualLocationLevel)
+            .findAny()
+            .get();
+        assertTrue(virtualLevel.getConstituents().stream()
+            .anyMatch(l -> !(l instanceof LocationLevelConstituent)));
+        assertTrue(virtualLevel.getConstituents().stream()
+            .anyMatch(l -> l instanceof LocationLevelConstituent));
     }
 
     @Test

@@ -42,17 +42,17 @@ public class VirtualLocationLevel extends LocationLevel {
 
     @JsonProperty("constituents")
     @Valid
-    private List<RATING> constituents = new ArrayList<>();
+    private List<RatingConstituent> constituents = new ArrayList<>();
 
     @JsonProperty("constituent-connections")
     private String constituentConnections = null;
 
-    public VirtualLocationLevel constituents(List<RATING> constituents) {
+    public VirtualLocationLevel constituents(List<RatingConstituent> constituents) {
         this.constituents = constituents;
         return this;
     }
 
-    public VirtualLocationLevel addConstituentsItem(RATING constituentsItem) {
+    public VirtualLocationLevel addConstituentsItem(RatingConstituent constituentsItem) {
         if (this.constituents == null) {
             this.constituents = new ArrayList<>();
         }
@@ -60,11 +60,11 @@ public class VirtualLocationLevel extends LocationLevel {
         return this;
     }
 
-    public List<RATING> getConstituents() {
+    public List<RatingConstituent> getConstituents() {
         return constituents;
     }
 
-    public void setConstituents(List<RATING> constituents) {
+    public void setConstituents(List<RatingConstituent> constituents) {
         this.constituents = constituents;
     }
 
