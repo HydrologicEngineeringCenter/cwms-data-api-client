@@ -35,9 +35,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- */
 public final class RadarObjectMapper {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
@@ -46,9 +43,6 @@ public final class RadarObjectMapper {
         .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
         .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
-//        .activateDefaultTyping(BasicPolymorphicTypeValidator.builder()
-//            .allowIfBaseType(LocationLevel.class)
-//            .build(), ObjectMapper.DefaultTyping.NON_FINAL)
         .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
         .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
