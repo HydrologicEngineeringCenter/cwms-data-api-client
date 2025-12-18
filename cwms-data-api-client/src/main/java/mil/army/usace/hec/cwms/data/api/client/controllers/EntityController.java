@@ -24,7 +24,7 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
@@ -43,10 +43,10 @@ public final class EntityController {
     public Entity retrieveEntity(ApiConnectionInfo apiConnectionInfo, EntityEndpointInput.GetOne input) throws IOException {
         String endpoint = ENTITY_ENDPOINT + "/" + input.entityId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+            .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), Entity.class);
         }
@@ -54,10 +54,10 @@ public final class EntityController {
 
     public List<Entity> retrieveEntities(ApiConnectionInfo apiConnectionInfo, EntityEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, ENTITY_ENDPOINT)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+            .withMediaType(ACCEPT_HEADER_V1);
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Entity.class);
         }
@@ -66,11 +66,11 @@ public final class EntityController {
     public void storeEntity(ApiConnectionInfo apiConnectionInfo, EntityEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.entity());
         new HttpRequestBuilderImpl(apiConnectionInfo, ENTITY_ENDPOINT)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .post()
             .withBody(body)
-            .withMediaType(ACCEPT_HEADER_V2)
+            .withMediaType(ACCEPT_HEADER_V1)
             .execute()
             .close();
     }
@@ -78,11 +78,11 @@ public final class EntityController {
     public void updateEntity(ApiConnectionInfo apiConnectionInfo, EntityEndpointInput.Patch input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.entity());
         new HttpRequestBuilderImpl(apiConnectionInfo, ENTITY_ENDPOINT + "/" + input.entity().getId().getName())
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .patch()
             .withBody(body)
-            .withMediaType(ACCEPT_HEADER_V2)
+            .withMediaType(ACCEPT_HEADER_V1)
             .execute()
             .close();
     }
@@ -90,10 +90,10 @@ public final class EntityController {
     public void deleteEntity(ApiConnectionInfo apiConnectionInfo, EntityEndpointInput.Delete input) throws IOException {
         String endpoint = ENTITY_ENDPOINT + "/" + input.entityId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
+            .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .delete()
-            .withMediaType(ACCEPT_HEADER_V2)
+            .withMediaType(ACCEPT_HEADER_V1)
             .execute()
             .close();
     }

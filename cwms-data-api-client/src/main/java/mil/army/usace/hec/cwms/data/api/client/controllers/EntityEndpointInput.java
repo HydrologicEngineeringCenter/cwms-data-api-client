@@ -24,7 +24,7 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.util.Objects;
@@ -116,7 +116,7 @@ public final class EntityEndpointInput {
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                     .addQueryParameter(LONG_NAME_QUERY_PARAMETER, longName)
                     .addQueryParameter(MATCH_NULL_PARENTS_QUERY_PARAMETER, Boolean.toString(matchNullParents))
-                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                    .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -137,7 +137,7 @@ public final class EntityEndpointInput {
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -154,7 +154,7 @@ public final class EntityEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -171,7 +171,7 @@ public final class EntityEndpointInput {
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 
@@ -197,7 +197,7 @@ public final class EntityEndpointInput {
             return httpRequestBuilder
                 .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
     }
 }

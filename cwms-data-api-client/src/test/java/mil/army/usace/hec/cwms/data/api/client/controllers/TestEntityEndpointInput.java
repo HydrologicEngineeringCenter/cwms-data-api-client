@@ -24,7 +24,7 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,7 +52,7 @@ class TestEntityEndpointInput {
         assertEquals("GOV", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.GetAll.CATEGORY_ID_QUERY_PARAMETER));
         assertEquals("National Weather Service", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.GetAll.LONG_NAME_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.GetAll.MATCH_NULL_PARENTS_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -61,7 +61,7 @@ class TestEntityEndpointInput {
         EntityEndpointInput.GetOne input = EntityEndpointInput.getOne("NWS", "SPK");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.GetOne.OFFICE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -78,7 +78,7 @@ class TestEntityEndpointInput {
         EntityEndpointInput.Post input = EntityEndpointInput.post(entity);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(entity, input.entity());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -94,7 +94,7 @@ class TestEntityEndpointInput {
         EntityEndpointInput.Patch input = EntityEndpointInput.patch(entity);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(entity, input.entity());
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
@@ -109,7 +109,7 @@ class TestEntityEndpointInput {
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SPK", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.Delete.OFFICE_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(EntityEndpointInput.Delete.CASCADE_DELETE_QUERY_PARAMETER));
-        assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
     @Test
