@@ -1,0 +1,21 @@
+[
+  {
+    "id":
+    {
+      "office-id": "SPK",
+      "name": "NWS"
+    },
+    "parent-entity-id": "NOAA",
+    "category-id": "GOV",
+    "long-name": "National Weather Service"
+  },
+  {
+    "id":
+    {
+      "office-id": "SPK",
+      "name": "NOAA"
+    },
+    "category-id": "GOV",
+    "long-name": "National Oceanic and Atmospheric Administration"
+  }
+]
