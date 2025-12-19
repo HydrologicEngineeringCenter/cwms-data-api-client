@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,8 +62,7 @@ final class TestCookieJarFactory {
             .withCookieJarSupplier(cookieJarSupplier)
             .build();
         HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType("application/json");
+            .get();
         try (HttpRequestResponse response = executer.execute()) {
             List<Cookie> cookies = cookieJarSupplier.getCookieJar().loadForRequest(HttpUrl.get(sendToUrl));
             assertEquals("53693739C7450D5D5261ED35E2093458", cookies.stream().filter(c -> c.name().equals("JSESSIONID")).map(Cookie::value).findFirst().get());

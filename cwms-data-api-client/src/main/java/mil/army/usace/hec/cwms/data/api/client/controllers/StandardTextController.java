@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,15 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.io.IOException;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.data.api.client.model.StandardTextCatalog;
+import mil.army.usace.hec.cwms.data.api.client.model.StandardTextValue;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.data.api.client.model.StandardTextCatalog;
-import mil.army.usace.hec.cwms.data.api.client.model.StandardTextValue;
-
-import java.io.IOException;
 
 public final class StandardTextController {
 
@@ -45,8 +45,7 @@ public final class StandardTextController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextCatalog.class);
         }
@@ -58,8 +57,7 @@ public final class StandardTextController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), StandardTextValue.class);
         }
@@ -83,7 +81,6 @@ public final class StandardTextController {
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
     }

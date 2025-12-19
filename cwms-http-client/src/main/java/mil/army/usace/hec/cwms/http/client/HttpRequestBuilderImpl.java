@@ -132,15 +132,15 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     }
 
     @Override
-    public final HttpRequestMediaType delete() {
+    public final HttpRequestExecutor delete() {
         this.method = HttpRequestMethod.DELETE;
-        return new HttpRequiredMediaTypeImpl();
+        return new HttpRequestExecutorImpl();
     }
 
     @Override
-    public final HttpRequestMediaType get() {
+    public final HttpRequestExecutor get() {
         this.method = HttpRequestMethod.GET;
-        return new HttpRequiredMediaTypeImpl();
+        return new HttpRequestExecutorImpl();
     }
 
     protected OkHttpClient buildOkHttpClient() {

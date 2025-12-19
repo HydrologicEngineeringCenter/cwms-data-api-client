@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,16 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
+
 import java.io.IOException;
 import java.util.List;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationGroup;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.LocationGroup;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 
 public final class LocationGroupController {
 
@@ -50,8 +51,7 @@ public final class LocationGroupController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
                 LOCATION_GROUP + "/" + input.groupId())
                 .addEndpointInput(input)
-                .get()
-            .withMediaType(ACCEPT_HEADER_JSON);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), LocationGroup.class);
         }
@@ -69,8 +69,7 @@ public final class LocationGroupController {
         List<LocationGroup> retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP)
                 .addEndpointInput(input)
-                .get()
-            .withMediaType(ACCEPT_HEADER_JSON);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), LocationGroup.class);
         }
@@ -108,7 +107,6 @@ public final class LocationGroupController {
         new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_GROUP + "/" + input.groupId())
                 .addEndpointInput(input)
                 .delete()
-            .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,18 +26,18 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+
+import java.io.IOException;
+import java.util.Set;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevel;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.SpecifiedLevel;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeries;
-
-import java.io.IOException;
-import java.util.Set;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
+import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 public final class LevelController {
 
@@ -48,8 +48,7 @@ public final class LevelController {
             throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), SpecifiedLevel.class);
         }
@@ -83,7 +82,6 @@ public final class LevelController {
         new HttpRequestBuilderImpl(apiConnectionInfo, SPECIFIED_LEVEL_ENDPOINT + "/" + input.specifiedLevel())
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
     }
@@ -93,8 +91,7 @@ public final class LevelController {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevel.class);
         }
@@ -104,8 +101,7 @@ public final class LevelController {
         throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, LOCATION_LEVEL_ENDPOINT)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), LocationLevels.class);
         }
@@ -127,7 +123,6 @@ public final class LevelController {
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V1)
                 .execute()
                 .close();
     }
@@ -137,8 +132,7 @@ public final class LevelController {
         String endpoint = LOCATION_LEVEL_ENDPOINT + "/" + input.levelId() + "/timeseries";
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeries.class);
         }

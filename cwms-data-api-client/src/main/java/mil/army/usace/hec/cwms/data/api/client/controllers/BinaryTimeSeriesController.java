@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,15 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.io.IOException;
+import mil.army.usace.hec.cwms.data.api.client.model.BinaryTimeSeries;
+import mil.army.usace.hec.cwms.data.api.client.model.BinaryTimeSeriesRow;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.BinaryTimeSeries;
-import mil.army.usace.hec.cwms.data.api.client.model.BinaryTimeSeriesRow;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-
-import java.io.IOException;
 
 public final class BinaryTimeSeriesController {
 
@@ -46,8 +46,7 @@ public final class BinaryTimeSeriesController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, BINARY_TIME_SERIES_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), BinaryTimeSeries.class);
         }
@@ -72,7 +71,6 @@ public final class BinaryTimeSeriesController {
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
     }

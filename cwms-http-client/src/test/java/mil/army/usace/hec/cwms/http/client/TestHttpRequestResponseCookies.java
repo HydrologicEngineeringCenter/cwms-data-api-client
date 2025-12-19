@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,6 @@ class TestHttpRequestResponseCookies {
             .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
             .build())
             .get()
-            .withMediaType("application/json")
             .execute()) {
             Set<HttpCookie> cookies = execute.getCookies();
             assertFalse(cookies.isEmpty());

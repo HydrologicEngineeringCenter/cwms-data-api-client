@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,34 +23,20 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_TEST_URL;
-import static hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager.TOKEN_URL;
-import java.util.Collections;
-import javax.net.ssl.KeyManager;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.awt.Desktop;
-import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-
-import javax.net.ssl.SSLSocketFactory;
-import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
@@ -58,10 +44,7 @@ import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -147,8 +130,7 @@ class TestOidcTokenProvider {
                 LOGGER.info("Sending " + u.toString());
                 HttpRequestExecutor executor =
                     new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder(u.toString()).build())
-                        .get()
-                        .withMediaType("text/plain");
+                        .get();
                 
                 try (HttpRequestResponse response = executor.execute()) {
                     // redirect should be automatically followed. If changes 

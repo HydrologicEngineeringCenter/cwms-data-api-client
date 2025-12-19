@@ -45,8 +45,7 @@ public final class EntityController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), Entity.class);
         }
@@ -56,8 +55,7 @@ public final class EntityController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, ENTITY_ENDPOINT)
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), Entity.class);
         }
@@ -93,7 +91,6 @@ public final class EntityController {
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
             .addEndpointInput(input)
             .delete()
-            .withMediaType(ACCEPT_HEADER_V1)
             .execute()
             .close();
     }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,17 @@
  */
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import java.io.IOException;
-import java.util.Set;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+
+import java.io.IOException;
+import java.util.Set;
+import mil.army.usace.hec.cwms.data.api.client.model.ForecastInstance;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.ForecastInstance;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 
 public final class ForecastInstanceController {
     private static final String FORECAST_INSTANCE_ENDPOINT = "forecast-instance";
@@ -41,8 +42,7 @@ public final class ForecastInstanceController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, FORECAST_INSTANCE_ENDPOINT + "/" + input.spec().getSpecId())
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToObject(response.getBody(), ForecastInstance.class);
         }
@@ -53,8 +53,7 @@ public final class ForecastInstanceController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, FORECAST_INSTANCE_ENDPOINT)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapJsonToSetOfObjects(response.getBody(), ForecastInstance.class);
         }
@@ -90,7 +89,6 @@ public final class ForecastInstanceController {
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
                 .addEndpointInput(input)
                 .delete()
-                .withMediaType(ACCEPT_HEADER_V2)
                 .execute()
                 .close();
     }

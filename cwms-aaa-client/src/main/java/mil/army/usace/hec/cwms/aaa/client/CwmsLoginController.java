@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ package mil.army.usace.hec.cwms.aaa.client;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpCookie;
@@ -34,8 +35,6 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.SslCanceledException;
-
-import java.io.IOException;
 
 public final class CwmsLoginController {
 
@@ -69,7 +68,6 @@ public final class CwmsLoginController {
                 }
             })
             .get()
-            .withMediaType(APPLICATION_JSON)
             .execute()) {
             String jsessionIdSso = login.getCookies()
                     .stream()
@@ -105,7 +103,6 @@ public final class CwmsLoginController {
     public void logout(ApiConnectionInfo apiConnectionInfo) throws IOException {
         try (HttpRequestResponse login = new HttpRequestBuilderImpl(apiConnectionInfo, LOGOUT_ENDPOINT)
             .get()
-            .withMediaType(APPLICATION_JSON)
             .execute()) {
             login.getBody();
         }
