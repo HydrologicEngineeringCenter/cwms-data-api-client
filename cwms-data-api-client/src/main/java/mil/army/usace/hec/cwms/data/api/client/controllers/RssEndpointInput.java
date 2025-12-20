@@ -32,7 +32,7 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
 public final class RssEndpointInput {
 
-    private static final String RSS_ACCEPT_HEADER = "application/rss+xml";
+    static final String RSS_ACCEPT_HEADER = "application/rss+xml";
 
     public static GetAll getAll(String officeId, String name) {
         return new GetAll(officeId, name);

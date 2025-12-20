@@ -24,9 +24,10 @@
 
 package mil.army.usace.hec.cwms.data.api.client.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -39,8 +40,13 @@ public class RssItem {
     @JsonProperty("description")
     private String description = null;
 
+    @JsonFormat(
+        shape = JsonFormat.Shape.STRING,
+        pattern = "EEE, dd MMM yyyy HH:mm:ss zzz",
+        locale = "en_US"
+    )
     @JsonProperty("pubDate")
-    private OffsetDateTime pubDate = null;
+    private Instant pubDate = null;
 
     @JsonProperty("guid")
     private Guid guid = null;
@@ -58,16 +64,16 @@ public class RssItem {
         this.description = description;
     }
 
-    public RssItem pubDate(OffsetDateTime pubDate) {
+    public RssItem pubDate(Instant pubDate) {
         this.pubDate = pubDate;
         return this;
     }
 
-    public OffsetDateTime getPubDate() {
+    public Instant getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(OffsetDateTime pubDate) {
+    public void setPubDate(Instant pubDate) {
         this.pubDate = pubDate;
     }
 

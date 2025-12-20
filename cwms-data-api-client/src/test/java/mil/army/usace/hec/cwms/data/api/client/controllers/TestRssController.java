@@ -24,25 +24,35 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.IOException;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
+import java.util.List;
+import mil.army.usace.hec.cwms.data.api.client.model.RssChannel;
 import mil.army.usace.hec.cwms.data.api.client.model.RssFeed;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import mil.army.usace.hec.cwms.data.api.client.model.RssItem;
+import org.junit.jupiter.api.Test;
 
-public final class RssController {
+class TestRssController extends TestController {
 
-    private static final String STANDARD_TEXT_ENDPOINT = "rss";
-
-    public RssFeed retrieveRssFeed(ApiConnectionInfo apiConnectionInfo, RssEndpointInput.GetAll input)
-            throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT + "/" + input.officeId() + "/" + input.name())
-                .addEndpointInput(input)
-                .get();
-        try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapXmlToObject(response.getBody(), RssFeed.class);
-        }
+    @Test
+    void testRetrieveCatalog() throws IOException {
+        String collect = readJsonFile("radar/v1/xml/ts_stored.xml");
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        RssEndpointInput.GetAll input = RssEndpointInput.getAll("SWT", "TS_STORED");
+        RssFeed rssFeed = new RssController().retrieveRssFeed(buildConnectionInfo(), input);
+        assertNotNull(rssFeed.getVersion());
+        RssChannel channel = rssFeed.getChannel();
+        assertNotNull(channel.getTitle());
+        assertNotNull(channel.getDescription());
+        assertNotNull(channel.getNextLink());
+        List<RssItem> items = channel.getItems();
+        assertEquals(2, items.size());
+        RssItem rssItem = items.get(0);
+        assertNotNull(rssItem.getGuid());
+        assertNotNull(rssItem.getPubDate());
+        assertNotNull(rssItem.getDescription());
     }
 }

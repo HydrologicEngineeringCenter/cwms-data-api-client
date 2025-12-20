@@ -24,25 +24,30 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import java.io.IOException;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.data.api.client.model.RssFeed;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
-import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.RSS_ACCEPT_HEADER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RssController {
+import org.junit.jupiter.api.Test;
 
-    private static final String STANDARD_TEXT_ENDPOINT = "rss";
+class TestRssEndpointInput {
 
-    public RssFeed retrieveRssFeed(ApiConnectionInfo apiConnectionInfo, RssEndpointInput.GetAll input)
-            throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT + "/" + input.officeId() + "/" + input.name())
-                .addEndpointInput(input)
-                .get();
-        try (HttpRequestResponse response = executor.execute()) {
-            return RadarObjectMapper.mapXmlToObject(response.getBody(), RssFeed.class);
-        }
+    @Test
+    void testGetAllQueryNulls() {
+        assertThrows(NullPointerException.class, () -> RssEndpointInput.getAll(null, "TS_STORED"));
+        assertThrows(NullPointerException.class, () -> RssEndpointInput.getAll("SPK", null));
+    }
+
+    @Test
+    void testGetAllQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        String name = "TS_STORED";
+        String office = "SPK";
+        RssEndpointInput.GetAll input = RssEndpointInput.getAll(office, name);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(RSS_ACCEPT_HEADER, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(name, input.name());
+        assertEquals(office, input.officeId());
     }
 }

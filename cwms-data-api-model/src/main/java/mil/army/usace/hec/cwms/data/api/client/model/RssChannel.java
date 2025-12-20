@@ -26,6 +26,8 @@ package mil.army.usace.hec.cwms.data.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +43,15 @@ public class RssChannel {
     @JsonProperty("title")
     private String title = null;
 
-    @JsonProperty("nextLink")
+    @JacksonXmlProperty(namespace = "http://www.w3.org/2005/Atom", localName = "link")
     private AtomLink nextLink = null;
 
     @JsonProperty("description")
     private String description = null;
 
     @JsonProperty("items")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "item")
     @Valid
     private List<RssItem> items = new ArrayList<>();
 
