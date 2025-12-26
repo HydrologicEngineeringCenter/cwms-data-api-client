@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,8 +54,7 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data/";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
-            .get()
-            .withMediaType("application/json"))
+            .get())
             .getInstance();
         HttpUrl url = httpRequestBuilder.createRequest().url();
         assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());
@@ -66,8 +65,7 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data.txt";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo)
-            .get()
-            .withMediaType("application/json"))
+            .get())
             .getInstance();
         HttpUrl url = httpRequestBuilder.createRequest().url();
         assertEquals("http://localhost:11524/cwms-data.txt", url.url().toString());
@@ -78,8 +76,7 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "data.txt")
-            .get()
-            .withMediaType("application/json"))
+            .get())
             .getInstance();
         HttpUrl url = httpRequestBuilder.createRequest().url();
         assertEquals("http://localhost:11524/cwms-data/data.txt", url.url().toString());
@@ -90,8 +87,7 @@ class TestApiConnectionInfo {
         String root = "http://localhost:11524/cwms-data";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestBuilderImpl.HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, "catalog")
-            .get()
-            .withMediaType("application/json"))
+            .get())
             .getInstance();
         HttpUrl url = httpRequestBuilder.createRequest().url();
         assertEquals("http://localhost:11524/cwms-data/catalog", url.url().toString());

@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.List;
@@ -45,6 +46,14 @@ public final class RadarObjectMapper {
         .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
         .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
         .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
+    private static final ObjectMapper XML_MAPPER = new XmlMapper()
+        .registerModule(new JavaTimeModule())
+        .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+        .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+        .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+        .configure(JsonReadFeature.ALLOW_MISSING_VALUES.mappedFeature(), true);
 
     private RadarObjectMapper() {
         throw new AssertionError("Utility class");
@@ -52,6 +61,10 @@ public final class RadarObjectMapper {
 
     public static <T> T mapJsonToObject(String json, Class<T> classObject) throws IOException {
         return OBJECT_MAPPER.readValue(json, classObject);
+    }
+
+    public static <T> T mapXmlToObject(String json, Class<T> classObject) throws IOException {
+        return XML_MAPPER.readValue(json, classObject);
     }
 
     public static <T> String mapObjectToJson(T object) throws IOException {

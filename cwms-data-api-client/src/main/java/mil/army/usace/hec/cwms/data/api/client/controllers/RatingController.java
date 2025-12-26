@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,15 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_XML_HEADER_V2;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.RatingEffectiveDatesEndpointInput.EFFECTIVE_DATES_ENDPOINT;
+
+import java.io.IOException;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.RatingEffectiveDatesMap;
+import mil.army.usace.hec.cwms.data.api.client.model.RatingMetadataList;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.data.api.client.model.RatingMetadataList;
-
-import java.io.IOException;
 
 public final class RatingController {
 
@@ -53,8 +53,7 @@ public final class RatingController {
         HttpRequestExecutor executor =
             new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
                 .addEndpointInput(ratingEndpointInput)
-                .get()
-                .withMediaType(ACCEPT_XML_HEADER_V2);
+                .get();
         try (HttpRequestResponse response = executor.execute()) {
             return response.getBody();
         }
@@ -63,8 +62,7 @@ public final class RatingController {
     public RatingEffectiveDatesMap retrieveRatingEffectiveDates(ApiConnectionInfo apiConnectionInfo, RatingEffectiveDatesEndpointInput.GetAll input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + EFFECTIVE_DATES_ENDPOINT)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_XML_HEADER_V2);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             String body = response.getBody();
             return RadarObjectMapper.mapJsonToObject(body, RatingEffectiveDatesMap.class);
@@ -96,7 +94,6 @@ public final class RatingController {
         new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS + "/" + ratingEndpointInput.getRatingId())
                 .addEndpointInput(ratingEndpointInput)
                 .delete()
-                .withMediaType(ACCEPT_XML_HEADER_V2)
                 .execute()
                 .close();
     }
@@ -104,8 +101,7 @@ public final class RatingController {
     public RatingMetadataList retrieveRatingMetadata(ApiConnectionInfo apiConnectionInfo, RatingMetadataEndpointInput input) throws IOException {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RATINGS_METADATA)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_XML_HEADER_V2);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             String body = response.getBody();
             return RadarObjectMapper.mapJsonToObject(body, RatingMetadataList.class);

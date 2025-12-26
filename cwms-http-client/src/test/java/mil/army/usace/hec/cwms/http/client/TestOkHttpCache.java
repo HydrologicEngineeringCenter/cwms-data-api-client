@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,16 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 
 final class TestOkHttpCache {
@@ -53,16 +54,14 @@ final class TestOkHttpCache {
             mockServer.start();
             ApiConnectionInfo apiConnectionInfo = buildMockApiConnectionInfo(mockServer);
             HttpRequestExecutor request = new HttpRequestBuilderImpl(apiConnectionInfo)
-                    .get()
-                    .withMediaType("text/plain");
+                    .get();
             try (HttpRequestResponse response = request.execute()) {
                 assertEquals("Mock response body", response.getBody());
                 assertFalse(response.usedCache());
             }
             mockServer.enqueueWithCache("Mock response body", cacheControls);
             HttpRequestExecutor request2 = new HttpRequestBuilderImpl(apiConnectionInfo)
-                    .get()
-                    .withMediaType("text/plain");
+                    .get();
             try (HttpRequestResponse response2 = request2.execute()) {
                 assertEquals("Mock response body", response2.getBody());
                 assertTrue(response2.usedCache());
@@ -88,7 +87,6 @@ final class TestOkHttpCache {
                     .build();
             try (HttpRequestResponse request = new HttpRequestBuilderImpl(apiConnectionInfo)
                     .get()
-                    .withMediaType("application/json")
                     .execute()) {
                 assertFalse(request.usedCache());
             }

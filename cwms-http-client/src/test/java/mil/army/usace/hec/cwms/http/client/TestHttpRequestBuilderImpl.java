@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,12 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import okhttp3.Request;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,13 +37,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl.HttpRequestExecutorImpl;
+import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import okhttp3.Request;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.Test;
 
 class TestHttpRequestBuilderImpl {
 
@@ -55,15 +54,13 @@ class TestHttpRequestBuilderImpl {
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
 
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
@@ -77,8 +74,7 @@ class TestHttpRequestBuilderImpl {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
 
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertEquals("true", request.header("X-CWMS-LRTS-Formatting"));
@@ -92,8 +88,7 @@ class TestHttpRequestBuilderImpl {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
 
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertNull(request.header("X-CWMS-LRTS-Formatting"));
@@ -119,8 +114,7 @@ class TestHttpRequestBuilderImpl {
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .delete()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .delete())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertEquals(root + endpoint, request.url().toString());
@@ -133,13 +127,11 @@ class TestHttpRequestBuilderImpl {
         String combinedRootEndpoint = root + endpoint;
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         HttpRequestBuilderImpl httpRequestBuilder2 = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(
             new ApiConnectionInfoBuilder(combinedRootEndpoint).build())
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         Request request2 = httpRequestBuilder2.createRequest();
@@ -166,15 +158,13 @@ class TestHttpRequestBuilderImpl {
         String endpoint = "timeseries";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertEquals("http://[1080::8:800:200c:417a]/index/timeseries", request.url().toString());
 
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertEquals("http://[1080::8:800:200c:417a]/index/timeseries", request.url().toString());
@@ -212,8 +202,7 @@ class TestHttpRequestBuilderImpl {
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", "world")
             .addQueryParameter("green-eggs", "and ham")
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
@@ -223,8 +212,7 @@ class TestHttpRequestBuilderImpl {
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", "world")
             .addQueryParameter("green-eggs", "and ham")
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
@@ -269,8 +257,7 @@ class TestHttpRequestBuilderImpl {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", null)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertFalse(request.url().toString().contains("hello="));
@@ -285,8 +272,7 @@ class TestHttpRequestBuilderImpl {
 
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryParameter("hello", null)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertFalse(request.url().toString().contains("hello="));
@@ -308,8 +294,7 @@ class TestHttpRequestBuilderImpl {
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", "world")
             .addQueryHeader("green-eggs", "and ham")
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").contains("world"));
@@ -318,8 +303,7 @@ class TestHttpRequestBuilderImpl {
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", "world")
             .addQueryHeader("green-eggs", "and ham")
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").contains("world"));
@@ -361,8 +345,7 @@ class TestHttpRequestBuilderImpl {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
         HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", null)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").isEmpty());
@@ -377,8 +360,7 @@ class TestHttpRequestBuilderImpl {
 
         httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
             .addQueryHeader("hello", null)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertTrue(request.headers("hello").isEmpty());
@@ -407,8 +389,7 @@ class TestHttpRequestBuilderImpl {
                                              .addQueryParameter("green-eggs", "and ham");
                 }
             })
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         Request request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
@@ -427,8 +408,7 @@ class TestHttpRequestBuilderImpl {
                                              .addQueryParameter("green-eggs", "and ham");
                 }
             })
-            .get()
-            .withMediaType(ACCEPT_HEADER_V1))
+            .get())
             .getInstance();
         request = httpRequestBuilder.createRequest();
         assertTrue(request.url().toString().startsWith(root + endpoint + "?"));
@@ -496,8 +476,7 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+                .get();
             try (HttpRequestResponse response = executer.execute()) {
                 assertNotNull(response.getBody());
             }
@@ -515,8 +494,7 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-                .get()
-                .withMediaType(ACCEPT_HEADER_V1);
+                .get();
             try (HttpRequestResponse response = executer.execute()) {
                 assertNotNull(response.getBody());
             }
@@ -554,7 +532,7 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder builder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            HttpRequestExecutor executor = builder.get().withMediaType(ACCEPT_HEADER_V1);
+            HttpRequestExecutor executor = builder.get();
             assertThrows(CwmsHttpResponseException.class, () -> {
                 try (HttpRequestResponse response = executor.execute()) {
                     assertNull(response);
@@ -603,7 +581,7 @@ class TestHttpRequestBuilderImpl {
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
             ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
             HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-            HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+            HttpRequestExecutor executor = httpRequestBuilder.get();
             assertThrows(NoDataFoundException.class, () -> {
                 try (HttpRequestResponse response = executor.execute()) {
                     assertNull(response);
@@ -661,14 +639,14 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://bogus-should-not-exist.rmanet.com";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+        HttpRequestExecutor executor = httpRequestBuilder.get();
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor.execute()) {
                 assertNull(response);
             }
         });
 
-        HttpRequestExecutor executor2 = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+        HttpRequestExecutor executor2 = httpRequestBuilder.get();
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor2.execute()) {
                 assertNull(response);
@@ -703,14 +681,14 @@ class TestHttpRequestBuilderImpl {
         String baseUrl = "https://www.hec.usace.army.mil:1000";
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(baseUrl).build();
         HttpRequestBuilder httpRequestBuilder = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint);
-        HttpRequestExecutor executor = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+        HttpRequestExecutor executor = httpRequestBuilder.get();
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor.execute()) {
                 assertNull(response);
             }
         });
 
-        HttpRequestExecutor executor2 = httpRequestBuilder.get().withMediaType(ACCEPT_HEADER_V1);
+        HttpRequestExecutor executor2 = httpRequestBuilder.get();
         assertThrows(ServerNotFoundException.class, () -> {
             try (HttpRequestResponse response = executor2.execute()) {
                 assertNull(response);

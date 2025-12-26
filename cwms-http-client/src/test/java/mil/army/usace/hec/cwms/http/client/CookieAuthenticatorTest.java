@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,8 +58,7 @@ final class CookieAuthenticatorTest {
             .withCookieAuthenticator(callback)
             .build();
         HttpRequestExecutor executer = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
-            .get()
-            .withMediaType("application/json");
+            .get();
         try (HttpRequestResponse response = executer.execute()) {
             assertNotNull(response.getBody());
         }

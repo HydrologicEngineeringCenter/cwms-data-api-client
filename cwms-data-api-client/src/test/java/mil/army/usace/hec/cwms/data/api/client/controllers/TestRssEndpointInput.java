@@ -22,26 +22,32 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.http.client;
+package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.RSS_ACCEPT_HEADER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-class TestHttpRequestResponseCookies {
+class TestRssEndpointInput {
 
     @Test
-    void testHttpRequestResponse() throws IOException {
-        try (HttpRequestResponse execute = new HttpRequestBuilderImpl(new ApiConnectionInfoBuilder("https://www.google.com")
-            .withCookieJarSupplier(CookieJarFactory.inMemoryCookieJar())
-            .build())
-            .get()
-            .execute()) {
-            Set<HttpCookie> cookies = execute.getCookies();
-            assertFalse(cookies.isEmpty());
-        }
+    void testGetAllQueryNulls() {
+        assertThrows(NullPointerException.class, () -> RssEndpointInput.getAll(null, "TS_STORED"));
+        assertThrows(NullPointerException.class, () -> RssEndpointInput.getAll("SPK", null));
     }
 
+    @Test
+    void testGetAllQueryRequest() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        String name = "TS_STORED";
+        String office = "SPK";
+        RssEndpointInput.GetAll input = RssEndpointInput.getAll(office, name);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals(RSS_ACCEPT_HEADER, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(name, input.name());
+        assertEquals(office, input.officeId());
+    }
 }

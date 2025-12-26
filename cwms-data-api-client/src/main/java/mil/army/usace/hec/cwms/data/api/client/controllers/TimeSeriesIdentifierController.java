@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@ import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointCon
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 
 import java.io.IOException;
+import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesIdentifierDescriptor;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.CwmsHttpResponseException;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
@@ -35,8 +37,6 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.NoDataFoundException;
 import mil.army.usace.hec.cwms.http.client.UnauthorizedException;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
-import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
-import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesIdentifierDescriptor;
 
 public final class TimeSeriesIdentifierController {
     private static final String TIME_SERIES_ENDPOINT = "timeseries/identifier-descriptor";
@@ -57,8 +57,7 @@ public final class TimeSeriesIdentifierController {
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_ENDPOINT + "/" + input.timeSeriesId())
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
-            .get()
-            .withMediaType(ACCEPT_HEADER_V2);
+            .get();
         try (HttpRequestResponse response = executor.execute()) {
             retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesIdentifierDescriptor.class);
         }
@@ -127,7 +126,6 @@ public final class TimeSeriesIdentifierController {
             .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2)
             .addEndpointInput(input)
             .delete()
-            .withMediaType(ACCEPT_HEADER_V2)
             .execute()
             .close();
     }

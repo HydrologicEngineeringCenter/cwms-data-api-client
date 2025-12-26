@@ -16701,6 +16701,83 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+  /rss/{office}/{name}:
+    get:
+      tags:
+        - "RSS"
+      summary: "Get rss with office with name"
+      description: "Returns RSS feed items limited to the last week."
+      operationId: "getRssWithOfficeWithName"
+      parameters:
+        - name: "office"
+          in: "path"
+          description: "Office id for feed."
+          required: true
+          schema:
+            type: "string"
+        - name: "name"
+          in: "path"
+          description: "Specifies the name of the feed. eg TS_STORED, STATUS, REALTIME_OPS"
+          required: true
+          schema:
+            type: "string"
+        - name: "since"
+          in: "query"
+          description: "The start the feed time window. The endpoint will not retrieve\
+          \ more than the last week of messages."
+          schema:
+            type: "string"
+        - name: "page-size"
+          in: "query"
+          description: "The number of feed items to include."
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "page"
+          in: "query"
+          description: "This end point can return a lot of data, this identifies where\
+          \ in the request you are. This is an opaque value, and can be obtained from\
+          \ the 'next-page' value in the response."
+          schema:
+            type: "string"
+      responses:
+        "500":
+          description: "Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "404":
+          description: "Unknown Feed"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "200":
+          description: "OK"
+          content:
+            application/rss+xml:
+              schema:
+                $ref: "#/components/schemas/RssFeed"
+      security: []
   "/*":
     options:
       summary: Options with wildcard
@@ -20572,6 +20649,62 @@ components:
           type: object
           additionalProperties:
             type: object
+    AtomLink:
+      type: "object"
+      properties:
+        rel:
+          type: "string"
+        href:
+          type: "string"
+        type:
+          type: "string"
+      description: "Atom link for pagination to the next page of RSS items"
+    Guid:
+      type: "object"
+      properties:
+        guid:
+          type: "string"
+      description: "Globally unique identifier for the RSS item"
+    RssChannel:
+      required:
+        - "description"
+        - "title"
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          description: "Title of the RSS channel"
+        nextLink:
+          $ref: "#/components/schemas/AtomLink"
+        description:
+          type: "string"
+          description: "Description of the RSS channel"
+        items:
+          type: "array"
+          description: "List of RSS items in the channel"
+          items:
+            $ref: "#/components/schemas/RssItem"
+      description: "The RSS channel containing feed metadata and items"
+    RssFeed:
+      type: "object"
+      properties:
+        version:
+          type: "string"
+        channel:
+          $ref: "#/components/schemas/RssChannel"
+    RssItem:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+          description: "Description of the RSS item content"
+        pubDate:
+          type: "string"
+          description: "Publication date and time of the RSS item"
+          format: "date-time"
+        guid:
+          $ref: "#/components/schemas/Guid"
+      description: "List of RSS items in the channel"
   securitySchemes:
     ApiKey:
       type: apiKey

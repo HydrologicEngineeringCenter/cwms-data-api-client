@@ -24,27 +24,40 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import static java.lang.String.format;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_V1;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 
-import java.io.IOException;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
-import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import java.util.Objects;
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
+import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 
+public final class RssEndpointInput {
 
-public final class WaterPumpController {
-    private static final String ENDPOINT = "projects/%s/%s/water-user/%s/contracts/%s/pumps/%s";
+    static final String RSS_ACCEPT_HEADER = "application/rss+xml";
 
-    public void disassociateWaterPump(ApiConnectionInfo apiConnectionInfo, WaterPumpEndpointInput.Delete input)
-            throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo,
-                format(ENDPOINT, input.officeId(), input.projectId(),
-                        input.waterUser(), input.contractName(), input.pumpId()))
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
-                .addEndpointInput(input)
-                .delete();
-        executor.execute().close();
+    public static GetAll getAll(String officeId, String name) {
+        return new GetAll(officeId, name);
+    }
+
+    public static final class GetAll extends EndpointInput {
+        private final String officeId;
+        private final String name;
+
+        private GetAll(String officeId, String name) {
+            this.officeId = Objects.requireNonNull(officeId, "Office id required for getAll rss endpoint");
+            this.name = Objects.requireNonNull(name, "Name required for getAll rss endpoint");
+        }
+
+        public String officeId() {
+            return officeId;
+        }
+
+        public String name() {
+            return name;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, RSS_ACCEPT_HEADER);
+        }
     }
 }
