@@ -24,25 +24,46 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
+import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.CURSOR_QUERY_PARAMETER;
+
 import java.io.IOException;
+import mil.army.usace.hec.cwms.data.api.client.model.AtomLink;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.RssFeed;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
+import okhttp3.HttpUrl;
 
 public final class RssController {
 
-    private static final String STANDARD_TEXT_ENDPOINT = "rss";
+    private static final String RSS_ENDPOINT = "rss";
 
     public RssFeed retrieveRssFeed(ApiConnectionInfo apiConnectionInfo, RssEndpointInput.GetAll input)
             throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, STANDARD_TEXT_ENDPOINT + "/" + input.officeId() + "/" + input.name())
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RSS_ENDPOINT + "/" + input.officeId() + "/" + input.name())
                 .addEndpointInput(input)
                 .get();
         try (HttpRequestResponse response = executor.execute()) {
             return RadarObjectMapper.mapXmlToObject(response.getBody(), RssFeed.class);
         }
+    }
+
+    public RssFeed retrieveRssFeedFromLink(ApiConnectionInfo apiConnectionInfo, RssEndpointInput.GetAll input, AtomLink link)
+        throws IOException {
+        String href = link.getHref();
+        input.cursor(getCursor(href));
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, RSS_ENDPOINT + "/" + input.officeId() + "/" + input.name())
+            .addEndpointInput(input)
+            .get();
+        try (HttpRequestResponse response = executor.execute()) {
+            return RadarObjectMapper.mapXmlToObject(response.getBody(), RssFeed.class);
+        }
+    }
+
+    private String getCursor(String href) {
+        HttpUrl url = HttpUrl.parse(href);
+        return (url != null) ? url.queryParameter(CURSOR_QUERY_PARAMETER) : null;
     }
 }
