@@ -37,8 +37,9 @@ import org.junit.jupiter.api.Test;
 class TestRssController extends TestController {
 
     @Test
-    void testRetrieveCatalog() throws IOException {
+    void testRetrieveMessages() throws IOException {
         String collect = readJsonFile("radar/v1/xml/ts_stored.xml");
+        mockHttpServer.enqueue(collect);
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         RssEndpointInput.GetAll input = RssEndpointInput.getAll("SWT", "TS_STORED");
@@ -54,5 +55,8 @@ class TestRssController extends TestController {
         assertNotNull(rssItem.getGuid());
         assertNotNull(rssItem.getPubDate());
         assertNotNull(rssItem.getDescription());
+
+        rssFeed = new RssController().retrieveRssFeedFromLink(buildConnectionInfo(), input, channel.getNextLink());
+        assertNotNull(rssFeed);
     }
 }

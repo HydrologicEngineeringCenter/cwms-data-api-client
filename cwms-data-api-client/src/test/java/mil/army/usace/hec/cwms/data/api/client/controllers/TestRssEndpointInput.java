@@ -25,10 +25,13 @@
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.CURSOR_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.RSS_ACCEPT_HEADER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.RssEndpointInput.SINCE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 class TestRssEndpointInput {
@@ -44,9 +47,14 @@ class TestRssEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String name = "TS_STORED";
         String office = "SPK";
-        RssEndpointInput.GetAll input = RssEndpointInput.getAll(office, name);
+        Instant now = Instant.now();
+        RssEndpointInput.GetAll input = RssEndpointInput.getAll(office, name)
+            .cursor("ABC")
+            .since(now);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals(RSS_ACCEPT_HEADER, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertEquals(now.toString(), mockHttpRequestBuilder.getQueryParameter(SINCE_QUERY_PARAMETER));
+        assertEquals("ABC", mockHttpRequestBuilder.getQueryParameter(CURSOR_QUERY_PARAMETER));
         assertEquals(name, input.name());
         assertEquals(office, input.officeId());
     }

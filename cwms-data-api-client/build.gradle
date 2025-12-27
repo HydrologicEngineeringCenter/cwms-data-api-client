@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2025 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ dependencies {
     api(project(":cwms-http-client"))
     api(project(":cwbi-auth-http-client"))
     api(project(":cwms-data-api-model"))
+    implementation(libs.okhttp)
 
     implementation(libs.swagger.parser)
 
