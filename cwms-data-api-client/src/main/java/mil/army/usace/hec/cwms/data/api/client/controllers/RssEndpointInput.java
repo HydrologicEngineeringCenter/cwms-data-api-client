@@ -26,6 +26,7 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 
+import java.time.Instant;
 import java.util.Objects;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
@@ -33,6 +34,8 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 public final class RssEndpointInput {
 
     static final String RSS_ACCEPT_HEADER = "application/rss+xml";
+    static final String SINCE_QUERY_PARAMETER = "since";
+    static final String CURSOR_QUERY_PARAMETER = "cursor";
 
     public static GetAll getAll(String officeId, String name) {
         return new GetAll(officeId, name);
@@ -41,6 +44,8 @@ public final class RssEndpointInput {
     public static final class GetAll extends EndpointInput {
         private final String officeId;
         private final String name;
+        private Instant since;
+        private String cursor;
 
         private GetAll(String officeId, String name) {
             this.officeId = Objects.requireNonNull(officeId, "Office id required for getAll rss endpoint");
@@ -55,9 +60,21 @@ public final class RssEndpointInput {
             return name;
         }
 
+        public GetAll since(Instant since) {
+            this.since = since;
+            return this;
+        }
+
+        public GetAll cursor(String cursor) {
+            this.cursor = cursor;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, RSS_ACCEPT_HEADER);
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, RSS_ACCEPT_HEADER)
+                .addQueryParameter(SINCE_QUERY_PARAMETER, since == null ? null : since.toString())
+                .addQueryParameter(CURSOR_QUERY_PARAMETER, cursor);
         }
     }
 }
