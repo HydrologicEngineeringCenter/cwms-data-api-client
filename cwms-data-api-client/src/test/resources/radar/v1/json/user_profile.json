@@ -1,0 +1,31 @@
+{
+  "user-name": "M5HECTEST",
+  "cac-auth": false,
+  "roles": {
+    "SWT": [
+      "All Users",
+      "CWMS DBA Users",
+      "CWMS PD Users",
+      "CWMS Users",
+      "TS ID Creator"
+    ],
+    "MVP": [
+      "All Users",
+      "CWMS DBA Users",
+      "CWMS PD Users",
+      "CWMS Users"
+    ],
+    "HQ": [
+      "All Users",
+      "CWMS DBA Users",
+      "CWMS PD Users",
+      "CWMS Users"
+    ],
+    "SPK": [
+      "All Users",
+      "CWMS DBA Users",
+      "CWMS PD Users",
+      "CWMS Users"
+    ]
+  }
+}
