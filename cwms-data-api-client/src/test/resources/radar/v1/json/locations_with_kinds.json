@@ -1,0 +1,947 @@
+[
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "StonewallJackson"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "StonewallJackson-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "CalumetHarbor"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "DetroitWillowRun"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "ElliotLk"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "FortGratiot"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "FortWayne"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "GrandMaraisCook"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "GrandRapids"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "IronMountain"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Lorain"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "LowerRapids"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Mansfield"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Oshawa"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Poygan"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Rhinelander"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "RoyaltonObs"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Sault"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "SturgeonPt"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "ToledoMetcalf"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRE",
+      "name": "Volk"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Alderson"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Athens"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Atwood"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Atwood-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Bastian"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "BeachCity"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "BeachCity-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "BellevilleLD"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "BellevilleLD-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Grantsville"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Grayson"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Grayson-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "GreenupLD"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "GreenupLD-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "JWFlannagan"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "JWFlannagan-Outflow"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "JobsKnob"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "LeesvilleAux"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Lucas"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Millport"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Mohicanville"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Mohicanville-Outflow"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "PointPleasant"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "Prestonsburg"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "RCByrdLD"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "RCByrdLD-Pool"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "WillowIslandLD"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "WillowIslandLD-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "WillsCr"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRH",
+      "name": "WillsCr-Outflow"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Alvaton"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Cannelton"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Crawfordsville"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Dayton"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Edinburgh"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "RatingDatumTest"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "RatingsControllerTestIT"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P18Dec25 103537"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P18Dec25 103551"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 161132"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 161145"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 161826"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 161834"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 162354"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 162602"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 162610"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 162711"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 162714"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 163327"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 163330"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 163354"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P19Dec25 163401"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "RatingDatumTest-NAVD88"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "RatingDatumTest-NGVD29"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Glensboro"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Greensburg"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Maud"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Mississinewa"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRL",
+      "name": "Monroe"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 184155"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P16Dec25 160218"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 191612"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 191620"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 193224"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 193424"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 193432"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 194906"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 194918"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 195835"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 195843"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 200010"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 200317"
+    }
+  },
+  {
+    "location-kind-id": "PROJECT",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 200642"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "P17Dec25 200919"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "CHCN6"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "GARN6"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "GenR Avon"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "GenR Portagevill"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "GenR Wellsville"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "Mount Morris"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "Mount Morris-Gate 02"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "Mount Morris-Gate 05"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "Mount Morris-Gate 07"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "Mount Morris-Gate 08"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "OatkaCr Warsaw"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "RCRN6"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "ROHN6"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "SHNP1"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "SandyCr NorthHam"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRB",
+      "name": "WELN6"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "CapeGirardeau"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Delaware"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "GreenRiver"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "GreenRiver-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Guntown"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Hannibal"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Hannibal-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Hohenwald"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "JERoush"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Kentucky"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Kentucky-Tailwater"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Laurel"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Laurel-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Lavalette"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Newburgh"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Newburgh-Pool"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Normandy"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Normandy-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Olmsted"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Pittsburgh"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Senecaville"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Senecaville-Lake"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Smithland"
+    }
+  },
+  {
+    "location-kind-id": "SITE",
+    "location-id": {
+      "office-id": "LRD",
+      "name": "Smithland-Tailwater"
+    }
+  }
+]
