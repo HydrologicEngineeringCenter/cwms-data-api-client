@@ -1,0 +1,359 @@
+[
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ABCD"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-EFGH"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-IJKL"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-MNOP"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-QRST"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-UVWX"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-YZAB"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-CDEF"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-GHIJ"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-KLMN"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-OPQR"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-STUV"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-WXYZ"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ABEF"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-CDGH"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-IJKM"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-LNOP"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-QRSU"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-TVWX"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-YZAC"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-BDEF"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-GHJK"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-LMNO"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-PQRS"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-TUVW"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-XYZA"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-BCDE"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-FGHI"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-JKLM"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-NOPQ"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-RSTU"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-VWXY"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ZABC"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-DEFG"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-HIJK"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-LMOP"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-QSTU"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-VWXZ"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ABCE"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-DFGH"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-IJLM"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-NOPR"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-STUV"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-WXYA"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ZBCD"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-EFGI"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-HJKL"
+    }
+  },
+  {
+    "location-kind-id": "Embankment",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-MNPQ"
+    }
+  },
+  {
+    "location-kind-id": "Outlet",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-RSTV"
+    }
+  },
+  {
+    "location-kind-id": "Turbine",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-UWXY"
+    }
+  },
+  {
+    "location-kind-id": "Site",
+    "location-id": {
+      "office-id": "SPK",
+      "name": "PROJ-ZABD"
+    }
+  }
+]
