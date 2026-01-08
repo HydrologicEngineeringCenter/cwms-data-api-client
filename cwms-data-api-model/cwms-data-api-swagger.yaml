@@ -874,7 +874,7 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Location"
+                  $ref: '#/components/schemas/CwmsIdLocationKind'
         '400':
           description: Bad Request
           content:
@@ -16962,6 +16962,13 @@ components:
         Atlantic Division,Division Headquarters,HQ"
     Unit:
       type: object
+    CwmsIdLocationKind:
+      type: object
+      properties:
+        location-kind-id:
+          type: string
+        location-id:
+          $ref: '#/components/schemas/CwmsId'
     Location:
       required:
         - name
