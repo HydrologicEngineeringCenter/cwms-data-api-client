@@ -34,7 +34,7 @@ class TestLocationKindEndpointInput {
 
 
     @Test
-    void testGetOneQueryRequest() {
+    void testGetAllQueryRequest() {
         MockHttpRequestBuilder request = new MockHttpRequestBuilder();
         String projectId = "PROJ";
         String officeId = "SPK";
