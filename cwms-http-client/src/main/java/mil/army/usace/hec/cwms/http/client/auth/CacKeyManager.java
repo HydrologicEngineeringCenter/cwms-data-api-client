@@ -28,6 +28,9 @@ import java.net.Socket;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.X509KeyManager;
@@ -111,7 +114,14 @@ final class CacKeyManager implements X509KeyManager {
         }
     }
 
-    String[] aliases() {
-        return delegate.getClientAliases("RSA", null);
+    Set<String> aliases() {
+        Set<String> retval = new TreeSet<>();
+        for(var keyType : new String[]{"RSA", "EC", "DSA"}) {
+            String[] clientAliases = delegate.getClientAliases(keyType, null);
+            if(clientAliases != null) {
+                Collections.addAll(retval, clientAliases);
+            }
+        }
+        return retval;
     }
 }
