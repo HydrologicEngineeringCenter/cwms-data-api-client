@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,6 @@
 
 package mil.army.usace.hec.cwms.http.client.auth;
 
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.X509KeyManager;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -38,50 +35,54 @@ import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.X509KeyManager;
 
 
 public final class CacKeyManagerUtil {
     static final Pattern EDIPI_PATTERN = Pattern.compile("\\d{10}@", Pattern.CASE_INSENSITIVE);
     private static final Logger LOGGER = Logger.getLogger(CacKeyManagerUtil.class.getName());
-    private static KeyStore WINDOWS_KEY_STORE;
+    private static CacKeyManager WINDOWS_KEY_STORE;
 
     private CacKeyManagerUtil() {
         throw new AssertionError("Utility class");
     }
 
     public static KeyManager createKeyManager() throws CacCertificateException {
-        return getKeyManagerFromWindowsKeyStore(null);
+        return loadWindowsKeyStore(null);
     }
 
     public static KeyManager createKeyManager(String certificateAlias) throws CacCertificateException {
-        return getKeyManagerFromWindowsKeyStore(certificateAlias);
+        return loadWindowsKeyStore(certificateAlias);
     }
 
-    private static synchronized KeyStore loadWindowsKeyStore() throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException {
+    private static synchronized CacKeyManager loadWindowsKeyStore(String certificateAlias)
+        throws CacCertificateException {
         if (WINDOWS_KEY_STORE == null) {
-            KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
-            keystore.load(null, null);
-            WINDOWS_KEY_STORE = keystore;
+            WINDOWS_KEY_STORE = getKeyManagerFromWindowsKeyStore();
         }
+        WINDOWS_KEY_STORE.setCertificateAlias(certificateAlias);
         return WINDOWS_KEY_STORE;
     }
 
-    private static CacKeyManager getKeyManagerFromWindowsKeyStore(String certificateAlias) throws CacCertificateException {
+    private static CacKeyManager getKeyManagerFromWindowsKeyStore() throws CacCertificateException {
         try {
-            KeyStore keystore = loadWindowsKeyStore();
+            KeyStore keystore = KeyStore.getInstance("WINDOWS-MY");
+            keystore.load(null, null);
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             kmf.init(keystore, null);
             KeyManager[] kms = kmf.getKeyManagers();
             for (KeyManager km : kms) {
                 if (km instanceof X509KeyManager) {
-                    return new CacKeyManager((X509KeyManager) km, keystore, certificateAlias);
+                    return new CacKeyManager((X509KeyManager) km);
                 }
             }
             throw new CacCertificateException("Failed to get X509KeyManager from Windows OS");
@@ -95,19 +96,18 @@ public final class CacKeyManagerUtil {
     public static List<String> getCertificateAliases() {
         Set<String> aliases = new TreeSet<>();
         try {
-            KeyStore keystore = loadWindowsKeyStore();
-            Enumeration<String> keystoreAliases = keystore.aliases();
-            while (keystoreAliases.hasMoreElements()) {
-                String alias = keystoreAliases.nextElement();
+            var keystore = loadWindowsKeyStore(null);
+            var keystoreAliases = keystore.aliases();
+            for (String alias : keystoreAliases) {
                 Certificate[] certificateChain = keystore.getCertificateChain(alias);
-                if (certificateChain != null && certificateChain.length > 1 && certificateChain[0] instanceof X509Certificate) {
-                    if (isPivCertificate((X509Certificate) certificateChain[0])) {
-                        aliases.add(alias);
-                    }
+                if (certificateChain != null
+                    && certificateChain.length > 1
+                    && certificateChain[0] instanceof X509Certificate
+                    && isPivCertificate((X509Certificate) certificateChain[0])) {
+                    aliases.add(alias);
                 }
             }
-        } catch (IOException | NoSuchAlgorithmException | CertificateException | CacCertificateException |
-                 KeyStoreException e) {
+        } catch (CacCertificateException e) {
             LOGGER.log(Level.WARNING, "Error reading certificates from WINDOWS-MY keystore", e);
         }
         return new ArrayList<>(aliases);
@@ -115,6 +115,9 @@ public final class CacKeyManagerUtil {
 
     public static boolean isPivCertificate(X509Certificate cr) throws CacCertificateException {
         try {
+            if(new Date().after(cr.getNotAfter())) {
+                return false;
+            }
             Collection<List<?>> subjectAlternativeNames = cr.getSubjectAlternativeNames();
             if (subjectAlternativeNames == null) {
                 return false;

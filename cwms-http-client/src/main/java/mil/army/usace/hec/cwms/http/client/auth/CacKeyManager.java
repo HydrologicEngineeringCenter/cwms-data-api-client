@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,24 @@
 
 package mil.army.usace.hec.cwms.http.client.auth;
 
-import javax.net.ssl.X509KeyManager;
 import java.net.Socket;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.Principal;
 import java.security.PrivateKey;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.X509KeyManager;
 
 final class CacKeyManager implements X509KeyManager {
     private static final Logger LOGGER = Logger.getLogger(CacKeyManager.class.getName());
     private final X509KeyManager delegate;
-    private final KeyStore keystore;
-    private final String certificateAlias;
+    private String certificateAlias;
 
-    CacKeyManager(X509KeyManager delegate, KeyStore keystore, String certificateAlias) {
+    CacKeyManager(X509KeyManager delegate) {
         this.delegate = delegate;
-        this.keystore = keystore;
-        this.certificateAlias = certificateAlias;
     }
 
     @Override
@@ -97,15 +94,34 @@ final class CacKeyManager implements X509KeyManager {
         String retVal = aliases[0];
         for (String alias : aliases) {
             try {
-                Certificate cr = keystore.getCertificate(alias);
-                if (cr instanceof X509Certificate && CacKeyManagerUtil.isPivCertificate((X509Certificate) cr)) {
-                    retVal = alias;
-                    break;
+                var cr = delegate.getCertificateChain(alias);
+                for(var cert : cr) {
+                    if (CacKeyManagerUtil.isPivCertificate(cert)) {
+                        retVal = alias;
+                        break;
+                    }
                 }
-            } catch (CacCertificateException | KeyStoreException e) {
+            } catch (CacCertificateException e) {
                 LOGGER.log(Level.FINE, "Unable to authorize certificate for CWBI Authentication", e);
             }
         }
         return retVal;
+    }
+
+    void setCertificateAlias(String certificateAlias) {
+        if(certificateAlias != null) {
+            this.certificateAlias = certificateAlias;
+        }
+    }
+
+    Set<String> aliases() {
+        Set<String> retval = new TreeSet<>();
+        for(var keyType : new String[]{"RSA", "EC", "DSA"}) {
+            String[] clientAliases = delegate.getClientAliases(keyType, null);
+            if(clientAliases != null) {
+                Collections.addAll(retval, clientAliases);
+            }
+        }
+        return retval;
     }
 }
