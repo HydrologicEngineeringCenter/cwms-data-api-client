@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,13 +41,13 @@ public class RatingSpecs {
     @JsonProperty("page")
     private String page = null;
 
-    @JsonProperty("nextPage")
+    @JsonProperty("next-page")
     private String nextPage = null;
 
     @JsonProperty("total")
     private Integer total = null;
 
-    @JsonProperty("pageSize")
+    @JsonProperty("page-size")
     private Integer pageSize = null;
 
     @JsonProperty("specs")
