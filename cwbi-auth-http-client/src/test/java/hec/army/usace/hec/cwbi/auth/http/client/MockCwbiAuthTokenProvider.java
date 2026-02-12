@@ -30,7 +30,6 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 public class MockCwbiAuthTokenProvider extends OidcAuthTokenProvider {
 
     private final SSLSocketFactory sslSocketFactory;
-    private final ApiConnectionInfo url;
 
     /**
      * Provider for OAuth2Tokens.
@@ -41,13 +40,7 @@ public class MockCwbiAuthTokenProvider extends OidcAuthTokenProvider {
      */
     public MockCwbiAuthTokenProvider(ApiConnectionInfo url, String clientId, SSLSocketFactory sslSocketFactory) {
         super(clientId, url);
-        this.url = Objects.requireNonNull(url, "Missing required url");
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
-    }
-
-    //package scoped for testing
-    ApiConnectionInfo getUrl() {
-        return url;
     }
 
     //package scoped for testing

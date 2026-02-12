@@ -210,7 +210,7 @@ class TestCwbiTokenProvider {
         ApiConnectionInfo url = buildConnectionInfo();
         SSLSocketFactory sslSocketFactory = getTestSslSocketFactory();
         MockCwbiAuthTokenProvider tokenProvider = new MockCwbiAuthTokenProvider(url, "clientId", sslSocketFactory);
-        assertEquals(url.getApiRoot(), tokenProvider.getUrl().getApiRoot());
+        assertEquals(url.getApiRoot(), tokenProvider.getWellKnownUrl().getApiRoot());
         assertEquals("clientId", tokenProvider.getClientId());
         assertEquals(sslSocketFactory, tokenProvider.getSslSocketFactory());
     }
