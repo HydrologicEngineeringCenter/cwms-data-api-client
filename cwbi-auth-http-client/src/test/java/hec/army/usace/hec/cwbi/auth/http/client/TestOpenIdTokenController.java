@@ -46,15 +46,11 @@ final class TestOpenIdTokenController {
             SSLSocketFactory mockSslSocketFactory = Mockito.mock(SSLSocketFactory.class);
             SslSocketData sslSocketData = new SslSocketData(mockSslSocketFactory, CwbiAuthTrustManager.getTrustManager());
             String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
-            String wellKnownEndpoint = baseUrl + "/.well-known/openid-configuration";
+            ApiConnectionInfo wellKnownEndpoint = new ApiConnectionInfoBuilder(baseUrl + "/.well-known/openid-configuration")
+                    .withSslSocketData(sslSocketData)
+                    .build();
             mockWebServer.enqueue(new MockResponse().setBody(readResourceAsString("openIdConfig.json")).setResponseCode(200));
-            ApiConnectionInfo tokenUrl = new OpenIdTokenController(){
-
-                @Override
-                public String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) {
-                    return wellKnownEndpoint;
-                }
-            }.retrieveTokenUrl(new ApiConnectionInfoBuilder(baseUrl).build(), sslSocketData);
+            ApiConnectionInfo tokenUrl = new StaticOidcTokenController(wellKnownEndpoint).retrieveTokenUrl(new ApiConnectionInfoBuilder(baseUrl).withSslSocketData(sslSocketData).build());
             assertEquals("https://api.example.com/auth/realms/cwbi/protocol/openid-connect/token", tokenUrl.getApiRoot());
         }
     }

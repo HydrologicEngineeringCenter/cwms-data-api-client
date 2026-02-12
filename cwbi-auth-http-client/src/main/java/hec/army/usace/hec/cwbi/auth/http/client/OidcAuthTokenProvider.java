@@ -7,7 +7,6 @@ import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
 
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
@@ -20,37 +19,20 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
  */
 public class OidcAuthTokenProvider implements OAuth2TokenProvider {
 
-    protected final String clientId;
-    protected final String wellKnownUrl;
-    protected final ApiConnectionInfo tokenUrl;
-    protected final ApiConnectionInfo authUrl;
-    protected OAuth2Token token = null;
+    private final String clientId;
+    private final ApiConnectionInfo wellKnownUrl;
+    private ApiConnectionInfo tokenUrl;
+    private ApiConnectionInfo authUrl;
+    private final StaticOidcTokenController wellKnowEndpointController;
+    private OAuth2Token token = null;
     // Default to open browser or print to console for usage, but allow overriding for testing and
     // other usages.
     private Consumer<URI> authCallback = TokenRequestBuilder.BROWSER_OR_CONSOLE_AUTH_CALLBACK;
 
-    public OidcAuthTokenProvider(String clientId, String wellKnownUrl) {
+    public OidcAuthTokenProvider(String clientId, ApiConnectionInfo wellKnownUrl) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
         this.wellKnownUrl = Objects.requireNonNull(wellKnownUrl, "Missing required well known Url.");
-
-        OpenIdTokenController controller = new OpenIdTokenController() {
-
-            @Override
-            public String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
-                return wellKnownUrl; // we already have it.
-            }
-
-        };
-        ApiConnectionInfo info = new ApiConnectionInfoBuilder(wellKnownUrl).build();
-        String what = "auth";
-        try {
-            this.authUrl = controller.retrieveAuthUrl(info, null);
-            what = "token";
-            this.tokenUrl = controller.retrieveTokenUrl(info, null);
-            // TODO: process appropriate extensions to determine things like "kc_idp_hint"
-        } catch (IOException ex) {
-            throw new CompletionException("Unable to return " + what + " URL", ex);
-        }
+        this.wellKnowEndpointController = new StaticOidcTokenController(wellKnownUrl);
     }
 
     @Override
@@ -83,12 +65,11 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
     @Override
     public OAuth2Token refreshToken() throws IOException {
         synchronized (this) {
-            OAuth2Token newToken = new RefreshTokenRequestBuilder()
+            token = new RefreshTokenRequestBuilder()
                     .withRefreshToken(token.getRefreshToken())
-                    .withUrl(tokenUrl)
+                    .withUrl(getTokenUrl())
                     .withClientId(clientId)
                     .fetchToken();
-            token = newToken;
             return token;
         }
     }
@@ -102,8 +83,8 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
              * There are various notes about it in different sections for discussion.
              */
             token = new AuthCodePkceTokenRequestBuilder()
-                    .withAuthUrl(authUrl)
-                    .withTokenUrl(tokenUrl)
+                    .withAuthUrl(getAuthUrl())
+                    .withTokenUrl(getTokenUrl())
                     .withAuthCallback(authCallback)
                     .buildRequest()
                     .withClientId(clientId)
@@ -115,12 +96,38 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
 
     @Override
     public ApiConnectionInfo getAuthUrl() {
+        if(authUrl == null) {
+            initializeAuthUrls();
+        }
         return authUrl;
     }
 
     @Override
     public ApiConnectionInfo getTokenUrl() {
+        if(tokenUrl == null) {
+            initializeAuthUrls();
+        }
         return tokenUrl;
+    }
+
+    private synchronized void initializeAuthUrls() {
+        String what = "auth";
+        try {
+            this.authUrl = this.wellKnowEndpointController.retrieveAuthUrl(wellKnownUrl);
+            what = "token";
+            this.tokenUrl = this.wellKnowEndpointController.retrieveTokenUrl(wellKnownUrl);
+            // TODO: process appropriate extensions to determine things like "kc_idp_hint"
+        } catch (IOException ex) {
+            throw new CompletionException("Unable to return " + what + " URL", ex);
+        }
+    }
+
+    ApiConnectionInfo getWellKnownUrl() {
+        return this.wellKnownUrl;
+    }
+
+    String getClientId() {
+        return this.clientId;
     }
 
 }

@@ -29,6 +29,7 @@ import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManag
 import java.io.IOException;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,7 +53,7 @@ final class TestCdaOpenIdTokenController extends TestController {
         mockHttpServer.enqueue(updatedIdpConfig);
         mockHttpServer.enqueue(readJsonFile(openIdConfig));
         SslSocketData sslSocketData = new SslSocketData(mockSslSocketFactory, CwbiAuthTrustManager.getTrustManager());
-        ApiConnectionInfo tokenUrl = new CdaOpenIdTokenController().retrieveTokenUrl(buildConnectionInfo(), sslSocketData);
+        ApiConnectionInfo tokenUrl = new CdaOpenIdTokenController(sslSocketData).retrieveTokenUrl(buildConnectionInfo());
         assertEquals("https://api.example.com/auth/realms/cwbi/protocol/openid-connect/token", tokenUrl.getApiRoot());
     }
 
@@ -73,6 +74,6 @@ final class TestCdaOpenIdTokenController extends TestController {
         mockHttpServer.enqueue(updatedIdpConfig);
         mockHttpServer.enqueue(readJsonFile(openIdConfig));
         SslSocketData sslSocketData = new SslSocketData(mockSslSocketFactory, CwbiAuthTrustManager.getTrustManager());
-        assertThrows(IOException.class, () -> new CdaOpenIdTokenController().retrieveTokenUrl(buildConnectionInfo(), sslSocketData));
+        assertThrows(IOException.class, () -> new CdaOpenIdTokenController(sslSocketData).retrieveTokenUrl(buildConnectionInfo()));
     }
 }

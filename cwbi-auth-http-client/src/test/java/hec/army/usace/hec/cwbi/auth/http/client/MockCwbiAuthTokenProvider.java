@@ -31,10 +31,11 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
+public class MockCwbiAuthTokenProvider extends OidcAuthTokenProvider {
 
-    private final String url;
     private final SSLSocketFactory sslSocketFactory;
+    private final ApiConnectionInfo rawUrl;
+    private final String clientId;
 
     /**
      * Provider for OAuth2Tokens.
@@ -43,22 +44,47 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
      */
-    public MockCwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
+    public MockCwbiAuthTokenProvider(ApiConnectionInfo url, String clientId, SSLSocketFactory sslSocketFactory) {
         super(clientId, url);
+        this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
+        this.rawUrl = Objects.requireNonNull(url, "Missing required url");
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
-        this.url = url;
     }
 
-    //used to manually set token for testing
+    //used to manually set token for testing (not used currently, but keep API)
     void setOAuth2Token(OAuth2Token token) {
-        this.token = token;
+        // No direct access to parent token; simulate by overriding newToken in tests if needed.
+        throw new UnsupportedOperationException("Manual token injection not supported");
+    }
+
+    // Expose the provided URL with SSL settings (package scope for tests)
+    ApiConnectionInfo getUrl() {
+        return new ApiConnectionInfoBuilder(rawUrl.getApiRoot())
+                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
+                .build();
+    }
+
+    // Provide clientId for assertions (package scope for tests)
+    String getClientId() {
+        return clientId;
     }
 
     @Override
-    ApiConnectionInfo getUrl() {
-        return new ApiConnectionInfoBuilder(url)
-                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
-                .build();
+    public ApiConnectionInfo getTokenUrl() {
+        // Use test SSL data when token URL is requested
+        return getUrl();
+    }
+
+    @Override
+    public ApiConnectionInfo getAuthUrl() {
+        // For mock, just return same as token URL
+        return getUrl();
+    }
+
+    @Override
+    public OAuth2Token newToken() {
+        // Not used in tests that construct MockCwbiAuthTokenProvider; throw if invoked unexpectedly
+        throw new UnsupportedOperationException("Mock provider does not fetch real tokens");
     }
 
     //package scoped for testing
