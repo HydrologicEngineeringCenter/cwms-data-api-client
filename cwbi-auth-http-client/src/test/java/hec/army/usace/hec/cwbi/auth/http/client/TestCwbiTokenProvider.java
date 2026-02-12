@@ -23,6 +23,8 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import javax.net.ssl.KeyManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +37,16 @@ import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
+import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
 import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
@@ -130,8 +137,7 @@ class TestCwbiTokenProvider {
     void testBuildTokenProvider() throws IOException {
         String resource = "oauth2token.json";
         launchMockServerWithResource(resource);
-        SSLSocketFactory sslSocketFactory = CwbiAuthSslSocketFactory.buildSSLSocketFactory(
-                Collections.singletonList(getTestKeyManager()));
+        SSLSocketFactory sslSocketFactory = buildSSLSocketFactory(Collections.singletonList(getTestKeyManager()));
         ApiConnectionInfo url = buildConnectionInfo();
         CwbiAuthTokenProvider tokenProvider = new CwbiAuthTokenProvider(url, "cumulus", sslSocketFactory);
         assertEquals(url.getApiRoot(), tokenProvider.getWellKnownUrl().getApiRoot());
@@ -207,6 +213,17 @@ class TestCwbiTokenProvider {
         assertEquals(url.getApiRoot(), tokenProvider.getUrl().getApiRoot());
         assertEquals("clientId", tokenProvider.getClientId());
         assertEquals(sslSocketFactory, tokenProvider.getSslSocketFactory());
+    }
+
+    private static SSLSocketFactory buildSSLSocketFactory(List<KeyManager> keyManagers) throws IOException {
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(keyManagers.toArray(new KeyManager[]{}),
+                    new TrustManager[] {CwbiAuthTrustManager.getTrustManager()}, null);
+            return sc.getSocketFactory();
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new IOException(e);
+        }
     }
 
     private SSLSocketFactory getTestSslSocketFactory() {
