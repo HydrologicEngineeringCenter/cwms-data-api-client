@@ -50,7 +50,7 @@ final class TestOpenIdTokenController {
                     .withSslSocketData(sslSocketData)
                     .build();
             mockWebServer.enqueue(new MockResponse().setBody(readResourceAsString("openIdConfig.json")).setResponseCode(200));
-            ApiConnectionInfo tokenUrl = new StaticOidcTokenController(wellKnownEndpoint).retrieveTokenUrl(new ApiConnectionInfoBuilder(baseUrl).withSslSocketData(sslSocketData).build());
+            ApiConnectionInfo tokenUrl = new StaticOidcTokenController(wellKnownEndpoint).retrieveTokenUrl(new ApiConnectionInfoBuilder(baseUrl).build());
             assertEquals("https://api.example.com/auth/realms/cwbi/protocol/openid-connect/token", tokenUrl.getApiRoot());
         }
     }
