@@ -123,7 +123,8 @@ class TestOidcTokenProvider {
         });
         
         
-        String wellKnown = "http://localhost:"+mockAuthServer.getPort()+"/auth/realms/cwbi/.well-known/openid-configuration";
+        ApiConnectionInfo wellKnown = new ApiConnectionInfoBuilder("http://localhost:"+mockAuthServer.getPort()+"/auth/realms/cwbi/.well-known/openid-configuration")
+                .build();
         OidcAuthTokenProvider tokenProvider = new OidcAuthTokenProvider("test", wellKnown);
         tokenProvider.setAuthCallback(u -> {
             try {

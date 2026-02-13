@@ -23,18 +23,23 @@
  */
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-import hec.army.usace.hec.cwbi.auth.http.client.OpenIdTokenController;
+import hec.army.usace.hec.cwbi.auth.http.client.SSLOidcDiscoveryController;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import java.io.IOException;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.SslSocketData;
 
-public final class CdaOpenIdTokenController extends OpenIdTokenController {
+public final class CdaOpenIdTokenController extends SSLOidcDiscoveryController {
     private static final String SWAGGER_DOC_ENDPOINT = "swagger-docs";
 
+    public CdaOpenIdTokenController(SslSocketData sslSocketData) {
+        super(sslSocketData);
+    }
+
     @Override
-    public String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException {
+    protected String retrieveWellKnownEndpointUrl(ApiConnectionInfo apiConnectionInfo) throws IOException {
         String url = apiConnectionInfo.getApiRoot() + "/" + SWAGGER_DOC_ENDPOINT;
         OpenAPI openAPI = new OpenAPIV3Parser().read(url);
         if(openAPI == null) {
