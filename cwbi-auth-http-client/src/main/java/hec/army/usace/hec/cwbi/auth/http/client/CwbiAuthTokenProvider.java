@@ -56,7 +56,12 @@ public final class CwbiAuthTokenProvider extends OidcAuthTokenProvider {
     @Override
     public ApiConnectionInfo getAuthUrl() {
         // This is specific to CWBI Direct Grant so this replacement as-is is fine
-        return new ApiConnectionInfoBuilder(this.getTokenUrl().getApiRoot().replace("identity", "identityc"))
+        ApiConnectionInfo tokenUrl = this.getTokenUrl();
+        String apiRoot = tokenUrl.getApiRoot();
+        if(!apiRoot.contains("identityc")) {
+            apiRoot = tokenUrl.getApiRoot().replace("identity", "identityc");
+        }
+        return new ApiConnectionInfoBuilder(apiRoot)
                 .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
                 .build();
     }
