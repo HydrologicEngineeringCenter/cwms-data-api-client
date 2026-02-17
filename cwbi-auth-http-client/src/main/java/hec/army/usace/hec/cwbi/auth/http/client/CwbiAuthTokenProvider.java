@@ -37,33 +37,31 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 /**
  * Suitable only for CWBI Keycloaks direct grant setup.
  */
-public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
+public final class CwbiAuthTokenProvider extends OidcAuthTokenProvider {
 
     private final SSLSocketFactory sslSocketFactory;
 
     /**
      * Provider for OAuth2Tokens.
      *
-     * @param wellKnownUrl - URL we are retrieving configuration from
+     * @param wellKnownUrl - URL we are retrieving configuration from. Note this should include the SSLSocketData if the accessing the well-known endpoint requires client cert auth
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
      */
-    public CwbiAuthTokenProvider(String wellKnownUrl, String clientId, SSLSocketFactory sslSocketFactory) {
+    public CwbiAuthTokenProvider(ApiConnectionInfo wellKnownUrl, String clientId, SSLSocketFactory sslSocketFactory) {
         super(clientId, wellKnownUrl);
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
     }
 
     @Override
-    ApiConnectionInfo getUrl() {
-        return new ApiConnectionInfoBuilder(this.wellKnownUrl)
-                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
-                .build();
-    }
-
-    @Override
     public ApiConnectionInfo getAuthUrl() {
         // This is specific to CWBI Direct Grant so this replacement as-is is fine
-        return new ApiConnectionInfoBuilder(this.tokenUrl.getApiRoot().replace("identity", "identityc"))
+        ApiConnectionInfo tokenUrl = this.getTokenUrl();
+        String apiRoot = tokenUrl.getApiRoot();
+        if(!apiRoot.contains("identityc")) {
+            apiRoot = tokenUrl.getApiRoot().replace("identity", "identityc");
+        }
+        return new ApiConnectionInfoBuilder(apiRoot)
                 .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
                 .build();
     }
@@ -72,7 +70,7 @@ public final class CwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
     public OAuth2Token newToken() throws IOException {
         return new DirectGrantX509TokenRequestBuilder()
                 .withTokenUrl(getAuthUrl())
-                .buildRequest().withClientId(clientId)
+                .buildRequest().withClientId(getClientId())
                 .fetchToken();
     }
 }

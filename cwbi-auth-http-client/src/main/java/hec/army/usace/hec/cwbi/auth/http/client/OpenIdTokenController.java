@@ -29,7 +29,6 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 public abstract class OpenIdTokenController {
@@ -42,19 +41,16 @@ public abstract class OpenIdTokenController {
 
     /**
      * Retrieve json text of the .wellknown/openid-configuration
-     * @param apiConnectionInfo
-     * @return
-     * @throws IOException
+     * @param apiConnectionInfo - connection info to the config endpoint containing the well-known endpoint
+     * @return ApiConnectionInfo containing the well-known endpoint url
+     * @throws IOException - throws IOException if there is an issue with the http request to the config endpoint
      */
-    public abstract String retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException;
+    public abstract ApiConnectionInfo retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException;
 
-    public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
+    public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo) throws IOException {
         if (tokenEndpoint == null) {
-            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
+            ApiConnectionInfo wellKnownApiConnectionInfo = retrieveWellKnownEndpoint(apiConnectionInfo);
             
-            ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
-                    .withSslSocketData(sslSocketData)
-                    .build();
             HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
                     .get();
             try (HttpRequestResponse response = executor.execute()) {
@@ -62,17 +58,13 @@ public abstract class OpenIdTokenController {
             }
         }
         return new ApiConnectionInfoBuilder(tokenEndpoint)
-                .withSslSocketData(sslSocketData)
                 .build();
     }
 
-    public final ApiConnectionInfo retrieveAuthUrl(ApiConnectionInfo apiConnectionInfo, SslSocketData sslSocketData) throws IOException {
+    public final ApiConnectionInfo retrieveAuthUrl(ApiConnectionInfo apiConnectionInfo) throws IOException {
         
         if (authEndpoint == null) {
-            String wellKnownEndpoint = retrieveWellKnownEndpoint(apiConnectionInfo);
-            ApiConnectionInfo wellKnownApiConnectionInfo = new ApiConnectionInfoBuilder(wellKnownEndpoint)
-                    .withSslSocketData(sslSocketData)
-                    .build();
+            ApiConnectionInfo wellKnownApiConnectionInfo = retrieveWellKnownEndpoint(apiConnectionInfo);
             HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
                     .get();
             try (HttpRequestResponse response = executor.execute()) {
@@ -80,7 +72,6 @@ public abstract class OpenIdTokenController {
             }
         }
         return new ApiConnectionInfoBuilder(authEndpoint)
-                .withSslSocketData(sslSocketData)
                 .build();
     }
 }

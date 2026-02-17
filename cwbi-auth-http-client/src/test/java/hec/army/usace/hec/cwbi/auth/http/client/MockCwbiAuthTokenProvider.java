@@ -23,17 +23,12 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
-import hec.army.usace.hec.cwbi.auth.http.client.trustmanagers.CwbiAuthTrustManager;
 import java.util.Objects;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfoBuilder;
-import mil.army.usace.hec.cwms.http.client.SslSocketData;
-import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 
-public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
+public class MockCwbiAuthTokenProvider extends OidcAuthTokenProvider {
 
-    private final String url;
     private final SSLSocketFactory sslSocketFactory;
 
     /**
@@ -43,22 +38,9 @@ public class MockCwbiAuthTokenProvider extends CwbiAuthTokenProviderBase {
      * @param clientId - client name
      * @param sslSocketFactory - ssl socket factory
      */
-    public MockCwbiAuthTokenProvider(String url, String clientId, SSLSocketFactory sslSocketFactory) {
+    public MockCwbiAuthTokenProvider(ApiConnectionInfo url, String clientId, SSLSocketFactory sslSocketFactory) {
         super(clientId, url);
         this.sslSocketFactory = Objects.requireNonNull(sslSocketFactory, "Missing required sslSocketFactory");
-        this.url = url;
-    }
-
-    //used to manually set token for testing
-    void setOAuth2Token(OAuth2Token token) {
-        this.token = token;
-    }
-
-    @Override
-    ApiConnectionInfo getUrl() {
-        return new ApiConnectionInfoBuilder(url)
-                .withSslSocketData(new SslSocketData(sslSocketFactory, CwbiAuthTrustManager.getTrustManager()))
-                .build();
     }
 
     //package scoped for testing
