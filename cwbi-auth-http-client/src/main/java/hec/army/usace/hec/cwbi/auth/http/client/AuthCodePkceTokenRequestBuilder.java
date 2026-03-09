@@ -63,7 +63,9 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
         HttpServer server = null;
         // https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
         try {
-            byte[] verifierBytes = new byte[128];
+            // there is a character limit on the challenge, too much and it all just fails
+            // this is more than is common (32) but reasonably below the cap.
+            byte[] verifierBytes = new byte[40];
             SecureRandom.getInstanceStrong().nextBytes(verifierBytes);
             Base64.Encoder b64encoder = Base64.getUrlEncoder().withoutPadding();
             final String verifier = b64encoder.encodeToString(verifierBytes);
@@ -71,9 +73,8 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             final String challenge = b64encoder.encodeToString(md.digest(verifier.getBytes(StandardCharsets.US_ASCII)));
-            server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);
+            server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
             int port = server.getAddress().getPort();
-            String host = server.getAddress().getHostName();
 
             final CompletableFuture<Result> future = new CompletableFuture<>();
 
@@ -103,7 +104,7 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                 }
 
             });
-            final String redirectUri = String.format("http://%s:%d", host, port);
+            final String redirectUri = String.format("http://%s:%d", "127.0.0.1", port);
             final QueryParameters authParameters = QueryParameters.empty()
                 .set("grant_type", "code")
                 .set("client_id", getClientId())
@@ -113,6 +114,19 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                 .set("code_challenge", challenge)
                 .set("redirect_uri", redirectUri)
                 .set("state", originalState);
+
+            /**
+             * This absolutely needs to be handled in a more generic way. However, it's definitely required
+             * for proper interaction in various environments. It should be injected as part of the setup 
+             * of the instance but that's another change to the interface that will trickly through 3 other
+             * libraries. It's at least setup to be limited by client id and not used by everything using this flow.
+             */
+            
+            final String idpHint = System.getProperty(String.format("cwms.openid.%s.idp.hint", this.getClientId()));
+            if (idpHint != null) {
+                authParameters.set("kc_idp_hint", idpHint);
+            }
+
             String urlStr= String.format("%s?%s", getAuthUrl().getApiRoot(), authParameters.encode());
             // start server to listen
             server.start();
