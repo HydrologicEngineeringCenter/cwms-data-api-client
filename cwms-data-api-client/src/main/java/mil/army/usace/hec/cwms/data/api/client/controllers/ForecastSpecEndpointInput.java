@@ -90,11 +90,13 @@ public final class ForecastSpecEndpointInput {
         static final String LOCATION_MASK_QUERY_PARAMETER = "location-mask";
         static final String DESIGNATOR_MASK_QUERY_PARAMETER = "designator-mask";
         static final String SOURCE_ENTITY_QUERY_PARAMETER = "source-entity";
+        static final String SOURCE_ENTITY_LIKE_QUERY_PARAMETER = "source-entity-like";
         private String officeId;
         private String specIdMask;
         private String locationIdMask;
         private String designatorMask;
         private String sourceEntityId;
+        private String sourceEntityLike;
 
 
         private GetAll() {
@@ -126,6 +128,11 @@ public final class ForecastSpecEndpointInput {
             return this;
         }
 
+        public ForecastSpecEndpointInput.GetAll sourceEntityLike(String sourceEntityLike) {
+            this.sourceEntityLike = sourceEntityLike;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(ID_MASK_QUERY_PARAMETER, specIdMask)
@@ -133,6 +140,7 @@ public final class ForecastSpecEndpointInput {
                     .addQueryParameter(LOCATION_MASK_QUERY_PARAMETER, locationIdMask)
                     .addQueryParameter(DESIGNATOR_MASK_QUERY_PARAMETER, designatorMask)
                     .addQueryParameter(SOURCE_ENTITY_QUERY_PARAMETER, sourceEntityId)
+                    .addQueryParameter(SOURCE_ENTITY_LIKE_QUERY_PARAMETER, sourceEntityLike)
                     .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V2);
         }
     }
