@@ -49,6 +49,10 @@ final class OAuth2TokenAuthenticator implements Authenticator {
 
     @Override
     public synchronized Request authenticate(Route route, Response response) throws IOException {
+        if(response.priorResponse() != null && response.priorResponse().priorResponse() != null) {
+            //We've already tried to authenticate, we must not have proper credentials;
+            return null;
+        }
         OAuth2Token token = tokenProvider.getToken();
         if (token == null) {
             throw new IOException("Attempt to refresh token failed: No token retrieved from " + OAuth2TokenProvider.class.getName());
