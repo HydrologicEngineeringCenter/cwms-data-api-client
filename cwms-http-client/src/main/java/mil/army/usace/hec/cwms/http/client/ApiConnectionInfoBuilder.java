@@ -45,7 +45,7 @@ public class ApiConnectionInfoBuilder {
     private CookieAuthenticator cookieAuthenticator;
     private SimpleAuthKeyProvider simpleAuthKeyProvider;
     private HostnameVerifier hostnameVerifier;
-    private CacheFactory.CacheSupplier cacheSupplier = CacheFactory.okHttpCacheSupplier();
+    private CacheFactory.CacheSupplier cacheSupplier;
 
     public ApiConnectionInfoBuilder(String apiRoot) {
         this.apiRoot = apiRoot;
