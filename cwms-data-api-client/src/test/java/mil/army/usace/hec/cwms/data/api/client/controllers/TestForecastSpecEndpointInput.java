@@ -54,13 +54,15 @@ final class TestForecastSpecEndpointInput {
                 .specIdMask("test-spec")
                 .designatorMask("designator")
                 .sourceEntityId("source-entity")
-                .locationIdMask("location");
+                .locationIdMask("location")
+                .sourceEntityLike("%");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.OFFICE_QUERY_PARAMETER));
         assertEquals("test-spec", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.ID_MASK_QUERY_PARAMETER));
         assertEquals("designator", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.DESIGNATOR_MASK_QUERY_PARAMETER));
         assertEquals("source-entity", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.SOURCE_ENTITY_QUERY_PARAMETER));
         assertEquals("location", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.LOCATION_MASK_QUERY_PARAMETER));
+        assertEquals("%", mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.SOURCE_ENTITY_LIKE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
@@ -74,6 +76,7 @@ final class TestForecastSpecEndpointInput {
         assertNull(mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.DESIGNATOR_MASK_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.SOURCE_ENTITY_QUERY_PARAMETER));
         assertNull(mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.LOCATION_MASK_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(ForecastSpecEndpointInput.GetAll.SOURCE_ENTITY_LIKE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
