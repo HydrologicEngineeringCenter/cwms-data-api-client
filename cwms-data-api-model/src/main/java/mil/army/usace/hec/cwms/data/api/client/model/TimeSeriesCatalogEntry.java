@@ -61,6 +61,9 @@ public class TimeSeriesCatalogEntry {
     @Valid
     private List<TimeSeriesExtents> extents = new ArrayList<>();
 
+    @JsonProperty("versioned")
+    private boolean versioned = false;
+
     public TimeSeriesCatalogEntry office(String office) {
         this.office = office;
         return this;
@@ -202,6 +205,13 @@ public class TimeSeriesCatalogEntry {
         this.extents = extents;
     }
 
+    public boolean isVersioned() {
+        return versioned;
+    }
+
+    public void setVersioned(boolean versioned) {
+        this.versioned = versioned;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -224,14 +234,15 @@ public class TimeSeriesCatalogEntry {
                             this.locationTimeZone == null || timeseriesCatalogEntry.locationTimeZone == null ?
                             Objects.equals(this.locationTimeZone, timeseriesCatalogEntry.locationTimeZone) :
                             this.locationTimeZone.equalsIgnoreCase(timeseriesCatalogEntry.locationTimeZone) &&
-                                Objects.equals(this.extents, timeseriesCatalogEntry.extents);
+                                Objects.equals(this.extents, timeseriesCatalogEntry.extents) &&
+                                              this.versioned == timeseriesCatalogEntry.versioned;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(office == null ? 0 : office.toLowerCase(), timeSeriesId == null ? 0 : timeSeriesId.toLowerCase(),
             units == null ? 0 : units.toLowerCase(), interval == null ? 0 : interval.toLowerCase(), intervalOffsetMinutes,
-            locationTimeZone == null ? 0 : locationTimeZone.toLowerCase(), extents);
+            locationTimeZone == null ? 0 : locationTimeZone.toLowerCase(), extents, versioned);
     }
 
     @Override
@@ -246,6 +257,7 @@ public class TimeSeriesCatalogEntry {
         sb.append("    intervalOffset: ").append(toIndentedString(intervalOffsetMinutes)).append("\n");
         sb.append("    timeZone: ").append(toIndentedString(locationTimeZone)).append("\n");
         sb.append("    extents: ").append(toIndentedString(extents)).append("\n");
+        sb.append("    versioned: ").append(toIndentedString(versioned)).append("\n");
         sb.append("}");
         return sb.toString();
     }
