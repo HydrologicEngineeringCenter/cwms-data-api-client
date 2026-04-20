@@ -42,7 +42,7 @@ public final class LocationLevelDeserializer extends JsonDeserializer<LocationLe
     public LocationLevel deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectMapper mapper = (ObjectMapper) p.getCodec();
         JsonNode node = mapper.readTree(p);
-        if (node.has("constituents")) {
+        if (node.has("constituent-connections")) {
             return mapper.treeToValue(node, VirtualLocationLevel.class);
         } else if (node.has("constant-value")) {
             return mapper.treeToValue(node, ConstantLocationLevel.class);
