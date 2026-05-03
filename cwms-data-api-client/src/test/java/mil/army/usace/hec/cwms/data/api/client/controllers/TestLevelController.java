@@ -40,6 +40,8 @@ import java.util.Set;
 import mil.army.usace.hec.cwms.data.api.client.model.ConstantLocationLevel;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevel;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevelConstituent;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationLevelRef;
+import mil.army.usace.hec.cwms.data.api.client.model.LocationLevelRefs;
 import mil.army.usace.hec.cwms.data.api.client.model.LocationLevels;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.SeasonalLocationLevel;
@@ -127,6 +129,29 @@ class TestLevelController extends TestController {
         ZonedDateTime effectiveDate = ZonedDateTime.of(1900, 1, 1, 5, 0, 0, 0, ZoneId.of("UTC"));
         assertEquals(effectiveDate.toInstant(), level.get().getLevelDate().toInstant());
         assertEquals("0", level.get().getDurationId());
+    }
+
+    @Test
+    void testRetrieveLocationLevelRefs() throws IOException {
+        String resource = "radar/v1/json/level_refs.json";
+        String collect = readJsonFile(resource);
+        mockHttpServer.enqueue(collect);
+        mockHttpServer.start();
+        LocationLevelEndpointInput.GetAllRefs input = LocationLevelEndpointInput.getAllRefs()
+            .officeId("NWDP");
+        LocationLevelRefs locationLevels = new LevelController().retrieveLocationLevelRefs(buildConnectionInfo(), input);
+        assertEquals(100, locationLevels.getPageSize());
+        assertNotNull(locationLevels.getPage());
+        assertNotNull(locationLevels.getNextPage());
+        List<LocationLevelRef> levels = locationLevels.getLevels();
+        assertFalse(levels.isEmpty());
+        Optional<LocationLevelRef> level = levels.stream()
+            .filter(s -> s.getLocationLevelId().getName().equals("AGNO.Flow.Inst.0.Flood"))
+            .findAny();
+        assertTrue(level.isPresent());
+        assertEquals("NWDP", level.get().getLocationLevelId().getOfficeId());
+        ZonedDateTime effectiveDate = ZonedDateTime.of(1900, 1, 1, 8, 0, 0, 0, ZoneId.of("UTC"));
+        assertEquals(effectiveDate.toInstant(), level.get().getEffectiveDates().get(0));
     }
 
     @Test

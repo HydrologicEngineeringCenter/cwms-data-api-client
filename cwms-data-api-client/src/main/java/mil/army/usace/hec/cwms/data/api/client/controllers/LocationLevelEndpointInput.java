@@ -65,6 +65,10 @@ public final class LocationLevelEndpointInput {
         return new GetAll();
     }
 
+    public static GetAllRefs getAllRefs() {
+        return new GetAllRefs();
+    }
+
     public static Post post(LocationLevel level) {
         return new Post(level);
     }
@@ -207,6 +211,64 @@ public final class LocationLevelEndpointInput {
 
         public GetAll unit(String unit) {
             this.unit = unit;
+            return this;
+        }
+    }
+
+    public static final class GetAllRefs extends EndpointInput {
+        private String officeId;
+        private String levelIdMask = "*";
+        private Instant begin;
+        private Instant end;
+        private String page;
+        private Integer pageSize;
+
+        private GetAllRefs() {
+            //Empty private ctor
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            String pageSizeString = Optional.ofNullable(pageSize).map(Object::toString).orElse(null);
+            String beginString = Optional.ofNullable(begin).map(Object::toString).orElse(null);
+            String endString = Optional.ofNullable(end).map(Object::toString).orElse(null);
+            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(LEVEL_ID_MASK_QUERY_PARAMETER, levelIdMask)
+                .addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
+                .addQueryParameter(BEGIN_QUERY_PARAMETER, beginString)
+                .addQueryParameter(END_QUERY_PARAMETER, endString)
+                .addQueryParameter(PAGE_QUERY_PARAMETER, page)
+                .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, pageSizeString)
+                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
+        }
+
+        public GetAllRefs officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        public GetAllRefs levelIdMask(String levelIdMask) {
+            this.levelIdMask = levelIdMask;
+            return this;
+        }
+
+        public GetAllRefs begin(Instant begin) {
+            this.begin = begin;
+            return this;
+        }
+
+        public GetAllRefs end(Instant end) {
+            this.end = end;
+            return this;
+        }
+
+        public GetAllRefs page(String page) {
+            this.page = page;
+            return this;
+        }
+
+        public GetAllRefs pageSize(int pageSize) {
+            this.pageSize = pageSize;
             return this;
         }
     }
