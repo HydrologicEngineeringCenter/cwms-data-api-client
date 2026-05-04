@@ -2555,7 +2555,115 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
-  "/timeseries/recent":
+  /level-refs:
+    get:
+      tags:
+        - Levels
+      summary: Get levelRefs
+      operationId: getLevelRefs
+      parameters:
+        - name: level-id-mask
+          in: query
+          description: Specifies the name(s) of the location level(s) whose data is to be
+            included in the response. Uses * for all.
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the location level(s) whose data is
+            to be included in the response. If this field is not specified,
+            matching location level information from all offices shall be
+            returned.
+          schema:
+            type: string
+        - name: begin
+          in: query
+          description: Specifies the start of the time window for data to be included in
+            the response. If this field is not specified, no beginning time will
+            be used.
+          schema:
+            type: string
+        - name: end
+          in: query
+          description: Specifies the end of the time window for data to be included in the
+            response. If this field is not specified, no end time will be used.
+          schema:
+            type: string
+        - name: timezone
+          in: query
+          description: Specifies the time zone of the values of the begin and end fields
+            (unless otherwise specified), as well as the time zone of any times
+            in the response. If this field is not specified, the default time
+            zone of UTC shall be used.
+          schema:
+            type: string
+        - name: include-aliases
+          in: query
+          description: Whether to include the aliases for the location levels in the
+            response. The default is false.
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          description: This identifies where in the request you are. This is an opaque
+            value, and can be obtained from the 'next-page' value in the
+            response.
+          schema:
+            type: string
+        - name: page-size
+          in: query
+          description: How many entries per page returned. Default 100.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            "":
+              schema:
+                $ref: "#/components/schemas/Unit"
+            application/json;version=1:
+              schema:
+                $ref: "#/components/schemas/LocationLevelRefs"
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/LocationLevelRefs"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocationLevelRefs"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+        "500":
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CdaError"
+      security: []
+  /timeseries/recent:
     get:
       tags:
         - TimeSeries
@@ -18084,6 +18192,57 @@ components:
           format: date-time
         vertical-datum-info:
           "$ref": "#/components/schemas/vertical-datum-info"
+    LocationLevelRef:
+      required:
+        - location-level-id
+      type: object
+      properties:
+        location-level-id:
+          $ref: "#/components/schemas/CwmsId"
+        aliases:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        effective-dates:
+          uniqueItems: true
+          type: array
+          description: The date/time at which this location level configuration takes
+            effect.
+          items:
+            type: string
+            description: The date/time at which this location level configuration takes
+              effect.
+            format: date-time
+      description: List of retrieved location levels ids and effective dates
+    LocationLevelRefs:
+      type: object
+      properties:
+        levels:
+          type: array
+          description: List of retrieved location levels ids and effective dates
+          items:
+            $ref: "#/components/schemas/LocationLevelRef"
+        next-page:
+          type: string
+          description: The cursor to the next page of data; null if there is no more data
+          readOnly: true
+        page:
+          type: string
+          description: The cursor to the current page of data
+          readOnly: true
+        page-size:
+          type: integer
+          description: The number of records fetched per-page; this may be larger than the
+            number of records actually retrieved
+          format: int32
+          readOnly: true
+        total:
+          type: integer
+          description: The total number of records retrieved; null or not present if not
+            supported or unknown
+          format: int32
+          readOnly: true
     UnitSystem:
       type: string
       description: Unit System desired in response. Can be SI (International Scientific)

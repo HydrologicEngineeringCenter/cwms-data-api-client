@@ -81,6 +81,44 @@ class TestLocationLevelEndpointInput {
         assertEquals(ACCEPT_HEADER_V2, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 
+
+    @Test
+    void testQueryRequestRefs() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+        Instant begin = ZonedDateTime.of(2015, 1, 1, 0, 0, 0, 0, zoneId).toInstant();
+        Instant end = begin.plusSeconds(30);
+        LocationLevelEndpointInput.GetAllRefs input = LocationLevelEndpointInput.getAllRefs()
+            .officeId("SWT")
+            .levelIdMask("MASK")
+            .page("abc")
+            .pageSize(10)
+            .begin(begin)
+            .end(end);
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("MASK", mockHttpRequestBuilder.getQueryParameter(LEVEL_ID_MASK_QUERY_PARAMETER));
+        assertEquals("10", mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertEquals("abc", mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
+        assertEquals("2015-01-01T08:00:00Z", mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertEquals("2015-01-01T08:00:30Z", mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
+    @Test
+    void testQueryRequestRefsNulls() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        LocationLevelEndpointInput.GetAllRefs input = LocationLevelEndpointInput.getAllRefs();
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals("*", mockHttpRequestBuilder.getQueryParameter(LEVEL_ID_MASK_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(PAGE_SIZE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(PAGE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(BEGIN_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(END_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_V1, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+    }
+
     @Test
     void testGet() {
         Instant now = Instant.now();
