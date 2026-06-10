@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2025 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ class TestPublishedController extends TestController {
 
     @Test
     void testRetrievePublishedTimeSeries() throws IOException {
-        String json = readJsonFile("radar/v2/json/published_time_series.json");
+        String json = readJsonFile("radar/v1/json/published_time_series.json");
         mockHttpServer.enqueue(json);
         mockHttpServer.start();
         PublishedEndpointInput.GetAll input = PublishedEndpointInput.getAll().withOfficeIdMask("SWT");

@@ -84,25 +84,5 @@ public final class PublishedEndpointInput {
                 .addQueryParameter(PAGE_SIZE_QUERY_PARAMETER, getNullableFieldString(pageSize))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1);
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            GetAll getAll = (GetAll) o;
-            return Objects.equals(officeIdMask, getAll.officeIdMask)
-                && Objects.equals(locationIdMask, getAll.locationIdMask)
-                && Objects.equals(page, getAll.page)
-                && Objects.equals(pageSize, getAll.pageSize);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(officeIdMask, locationIdMask, page, pageSize);
-        }
     }
 }
