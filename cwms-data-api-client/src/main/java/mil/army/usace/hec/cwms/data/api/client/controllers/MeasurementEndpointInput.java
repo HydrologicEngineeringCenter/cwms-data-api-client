@@ -53,8 +53,8 @@ public final class MeasurementEndpointInput {
     }
 
     public static final class GetAll extends EndpointInput {
-        static final String OFFICE_QUERY_PARAMETER = "office";
-        static final String LOCATION_QUERY_PARAMETER = "location-id";
+        static final String OFFICE_QUERY_PARAMETER = "office-mask";
+        static final String LOCATION_QUERY_PARAMETER = "id-mask";
         static final String UNIT_SYSTEM_QUERY_PARAMETER = "unit-system";
         static final String MIN_NUMBER_QUERY_PARAMETER = "min-number";
         static final String MAX_NUMBER_QUERY_PARAMETER = "max-number";
