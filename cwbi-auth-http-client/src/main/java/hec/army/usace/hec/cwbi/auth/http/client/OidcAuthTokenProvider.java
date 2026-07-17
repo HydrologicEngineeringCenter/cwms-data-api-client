@@ -29,6 +29,12 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
     // other usages.
     private Consumer<URI> authCallback = TokenRequestBuilder.BROWSER_OR_CONSOLE_AUTH_CALLBACK;
 
+    protected OidcAuthTokenProvider(String clientId) {
+        this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
+        this.wellKnownUrl = null;
+        this.wellKnowEndpointController = null;
+    }
+
     public OidcAuthTokenProvider(String clientId, ApiConnectionInfo wellKnownUrl) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
         this.wellKnownUrl = Objects.requireNonNull(wellKnownUrl, "Missing required well known Url.");
@@ -110,7 +116,7 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
         return tokenUrl;
     }
 
-    private synchronized void initializeAuthUrls() {
+    protected synchronized void initializeAuthUrls() {
         String what = "auth";
         try {
             this.authUrl = this.wellKnowEndpointController.retrieveAuthUrl(wellKnownUrl);
