@@ -23,7 +23,7 @@ class TestParameterizedAuthUrlPkceTokenProvider {
         provider = new ParameterizedAuthUrlPkceTokenProvider(clientId, authUrl, tokenUrl);
 
         assertEquals(clientId, provider.getClientId());
-        assertEquals(tokenUrl, provider.getAuthUrl());
+        assertEquals(authUrl, provider.getAuthUrl());
         assertEquals(tokenUrl, provider.getTokenUrl());
     }
 
