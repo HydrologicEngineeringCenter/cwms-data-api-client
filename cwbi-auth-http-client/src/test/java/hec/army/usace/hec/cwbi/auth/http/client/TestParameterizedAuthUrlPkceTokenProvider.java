@@ -26,19 +26,4 @@ class TestParameterizedAuthUrlPkceTokenProvider {
         assertEquals(authUrl, provider.getAuthUrl());
         assertEquals(tokenUrl, provider.getTokenUrl());
     }
-
-    @Test
-    void testInitializeAuthUrlsNoOp() {
-        String clientId = "test-client";
-        ApiConnectionInfo authUrl = new ApiConnectionInfoBuilder("http://auth.example.com").build();
-        ApiConnectionInfo tokenUrl = new ApiConnectionInfoBuilder("http://token.example.com").build();
-
-        ParameterizedAuthUrlPkceTokenProvider provider = new ParameterizedAuthUrlPkceTokenProvider(clientId, authUrl, tokenUrl);
-
-        // This should not throw even though wellKnowEndpointController is null in OidcAuthTokenProvider
-        provider.initializeAuthUrls();
-
-        assertEquals(authUrl, provider.getAuthUrl());
-        assertEquals(tokenUrl, provider.getTokenUrl());
-    }
 }

@@ -7,7 +7,7 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
  * Handle OIDC auth using directly provided Authorization and Token URLs.
  * This is useful when the Identity Provider does not support OIDC discovery (.well-known/openid-configuration).
  */
-public class ParameterizedAuthUrlPkceTokenProvider extends OidcAuthTokenProvider {
+public class ParameterizedAuthUrlPkceTokenProvider extends PkceOAuth2TokenProvider {
 
     private final ApiConnectionInfo authUrl;
     private final ApiConnectionInfo tokenUrl;
@@ -26,10 +26,5 @@ public class ParameterizedAuthUrlPkceTokenProvider extends OidcAuthTokenProvider
     @Override
     public ApiConnectionInfo getTokenUrl() {
         return tokenUrl;
-    }
-
-    @Override
-    protected synchronized void initializeAuthUrls() {
-        // No-op as URLs are already provided in the constructor.
     }
 }

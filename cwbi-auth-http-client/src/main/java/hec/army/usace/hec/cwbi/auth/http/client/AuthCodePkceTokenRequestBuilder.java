@@ -158,12 +158,10 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                     .post()
                     .withBody(formData.buildEncodedString())
                     .withMediaType(MEDIA_TYPE);
-            LOGGER.info("Retrieving Token...");
             try (HttpRequestResponse response = executor.execute()) {
                 String body = response.getBody();
                 if (body != null) {
                     retVal = OAuth2ObjectMapper.mapJsonToObject(body, OAuth2Token.class);
-                    LOGGER.info("Token retrieved.");
                 }
             }
             return retVal;
