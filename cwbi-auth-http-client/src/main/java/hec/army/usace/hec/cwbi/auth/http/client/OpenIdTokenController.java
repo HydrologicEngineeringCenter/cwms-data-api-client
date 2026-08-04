@@ -35,7 +35,6 @@ public abstract class OpenIdTokenController {
     private static final String TOKEN_ENDPOINT_KEY = "token_endpoint";
     private static final String AUTH_ENDPOINT_KEY = "authorization_endpoint";
 
-
     private String authEndpoint = null;
     private String tokenEndpoint = null;
 
@@ -48,30 +47,32 @@ public abstract class OpenIdTokenController {
     public abstract ApiConnectionInfo retrieveWellKnownEndpoint(ApiConnectionInfo apiConnectionInfo) throws IOException;
 
     public final ApiConnectionInfo retrieveTokenUrl(ApiConnectionInfo apiConnectionInfo) throws IOException {
-        if (tokenEndpoint == null) {
-            ApiConnectionInfo wellKnownApiConnectionInfo = retrieveWellKnownEndpoint(apiConnectionInfo);
-            
-            HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
-                    .get();
-            try (HttpRequestResponse response = executor.execute()) {
-                tokenEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), TOKEN_ENDPOINT_KEY);
-            }
-        }
+        initializeEndpoints(apiConnectionInfo);
         return new ApiConnectionInfoBuilder(tokenEndpoint)
                 .build();
     }
 
     public final ApiConnectionInfo retrieveAuthUrl(ApiConnectionInfo apiConnectionInfo) throws IOException {
-        
-        if (authEndpoint == null) {
-            ApiConnectionInfo wellKnownApiConnectionInfo = retrieveWellKnownEndpoint(apiConnectionInfo);
-            HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
-                    .get();
-            try (HttpRequestResponse response = executor.execute()) {
-                authEndpoint = OAuth2ObjectMapper.getValueForKey(response.getBody(), AUTH_ENDPOINT_KEY);
-            }
-        }
+        initializeEndpoints(apiConnectionInfo);
         return new ApiConnectionInfoBuilder(authEndpoint)
                 .build();
+    }
+
+    private void initializeEndpoints(ApiConnectionInfo apiConnectionInfo) throws IOException {
+
+        if (authEndpoint != null && tokenEndpoint != null) {
+            return;
+        }
+
+        ApiConnectionInfo wellKnownApiConnectionInfo = retrieveWellKnownEndpoint(apiConnectionInfo);
+
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(wellKnownApiConnectionInfo)
+                .get();
+
+        try (HttpRequestResponse response = executor.execute()) {
+            String body = response.getBody();
+            authEndpoint = OAuth2ObjectMapper.getValueForKey(body, AUTH_ENDPOINT_KEY);
+            tokenEndpoint = OAuth2ObjectMapper.getValueForKey(body, TOKEN_ENDPOINT_KEY);
+        }
     }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestParameterizedAuthUrlPkceTokenProvider {
+class TestParameterizedAuthCodePkceTokenProvider {
 
     @Test
     void testConstructorAndUrls() {
@@ -14,13 +14,13 @@ class TestParameterizedAuthUrlPkceTokenProvider {
         ApiConnectionInfo authUrl = new ApiConnectionInfoBuilder("http://auth.example.com").build();
         ApiConnectionInfo tokenUrl = new ApiConnectionInfoBuilder("http://token.example.com").build();
 
-        ParameterizedAuthUrlPkceTokenProvider provider = new ParameterizedAuthUrlPkceTokenProvider(clientId, authUrl, tokenUrl);
+        ParameterizedAuthCodePkceTokenProvider provider = new ParameterizedAuthCodePkceTokenProvider(clientId, authUrl, tokenUrl);
 
         assertEquals(clientId, provider.getClientId());
         assertEquals(authUrl, provider.getAuthUrl());
         assertEquals(tokenUrl, provider.getTokenUrl());
 
-        provider = new ParameterizedAuthUrlPkceTokenProvider(clientId, authUrl, tokenUrl);
+        provider = new ParameterizedAuthCodePkceTokenProvider(clientId, authUrl, tokenUrl);
 
         assertEquals(clientId, provider.getClientId());
         assertEquals(authUrl, provider.getAuthUrl());

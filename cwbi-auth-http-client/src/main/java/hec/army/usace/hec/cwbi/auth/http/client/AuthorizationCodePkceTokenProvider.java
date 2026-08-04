@@ -43,7 +43,7 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
  * that require an entirely different token retrieval mechanism (e.g. direct grant) may still
  * override {@link #newToken()}.
  */
-public abstract class PkceOAuth2TokenProvider implements OAuth2TokenProvider {
+public abstract class AuthorizationCodePkceTokenProvider implements OAuth2TokenProvider {
 
     private final String clientId;
     private OAuth2Token token = null;
@@ -51,7 +51,7 @@ public abstract class PkceOAuth2TokenProvider implements OAuth2TokenProvider {
     // other usages.
     private Consumer<URI> authCallback = TokenRequestBuilder.BROWSER_OR_CONSOLE_AUTH_CALLBACK;
 
-    protected PkceOAuth2TokenProvider(String clientId) {
+    protected AuthorizationCodePkceTokenProvider(String clientId) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
     }
 

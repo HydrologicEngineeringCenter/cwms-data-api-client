@@ -13,14 +13,14 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
  * Defaults to using Authorization Code + PKCE.
  * Support should be provided to support alternative flows as a user-at-login decision point.
  */
-public class OidcAuthTokenProvider extends PkceOAuth2TokenProvider {
+public class OidcDiscoveryAuthCodePkceTokenProvider extends AuthorizationCodePkceTokenProvider {
 
     private final ApiConnectionInfo wellKnownUrl;
     private final StaticOidcTokenController wellKnowEndpointController;
     private ApiConnectionInfo tokenUrl;
     private ApiConnectionInfo authUrl;
 
-    public OidcAuthTokenProvider(String clientId, ApiConnectionInfo wellKnownUrl) {
+    public OidcDiscoveryAuthCodePkceTokenProvider(String clientId, ApiConnectionInfo wellKnownUrl) {
         super(clientId);
         this.wellKnownUrl = Objects.requireNonNull(wellKnownUrl, "Missing required well known Url.");
         this.wellKnowEndpointController = new StaticOidcTokenController(wellKnownUrl);
@@ -29,7 +29,7 @@ public class OidcAuthTokenProvider extends PkceOAuth2TokenProvider {
     @Override
     public ApiConnectionInfo getAuthUrl() {
         if(authUrl == null) {
-            initializeAuthUrls();
+            initializeAuthUrl();
         }
         return authUrl;
     }
@@ -37,20 +37,25 @@ public class OidcAuthTokenProvider extends PkceOAuth2TokenProvider {
     @Override
     public ApiConnectionInfo getTokenUrl() {
         if(tokenUrl == null) {
-            initializeAuthUrls();
+            initializeTokenUrl();
         }
         return tokenUrl;
     }
 
-    protected synchronized void initializeAuthUrls() {
-        String what = "auth";
+    private void initializeAuthUrl() {
         try {
             this.authUrl = this.wellKnowEndpointController.retrieveAuthUrl(wellKnownUrl);
-            what = "token";
+        } catch (IOException ex) {
+            throw new CompletionException("Unable to return auth URL", ex);
+        }
+    }
+
+    private void initializeTokenUrl() {
+        try {
             this.tokenUrl = this.wellKnowEndpointController.retrieveTokenUrl(wellKnownUrl);
             // TODO: process appropriate extensions to determine things like "kc_idp_hint"
         } catch (IOException ex) {
-            throw new CompletionException("Unable to return " + what + " URL", ex);
+            throw new CompletionException("Unable to return token URL", ex);
         }
     }
 

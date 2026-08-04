@@ -27,7 +27,7 @@ import java.util.Objects;
 import javax.net.ssl.SSLSocketFactory;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
-public class MockCwbiAuthTokenProvider extends OidcAuthTokenProvider {
+public class MockCwbiAuthTokenProvider extends OidcDiscoveryAuthCodePkceTokenProvider {
 
     private final SSLSocketFactory sslSocketFactory;
 

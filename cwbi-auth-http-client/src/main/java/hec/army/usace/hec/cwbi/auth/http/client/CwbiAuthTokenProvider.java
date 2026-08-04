@@ -37,7 +37,7 @@ import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 /**
  * Suitable only for CWBI Keycloaks direct grant setup.
  */
-public final class CwbiAuthTokenProvider extends OidcAuthTokenProvider {
+public final class CwbiAuthTokenProvider extends OidcDiscoveryAuthCodePkceTokenProvider {
 
     private final SSLSocketFactory sslSocketFactory;
 
