@@ -11598,6 +11598,129 @@ paths:
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []
+    delete:
+      tags:
+        - Pools
+      summary: Delete pools with poolId
+      description: Delete CWMS Pool
+      operationId: deletePoolsWithPoolId
+      parameters:
+        - name: pool-id
+          in: path
+          description: Specifies the name of the pool to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the pool to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: project-id
+          in: query
+          description: Specifies the owning project of the pool to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pool successfully deleted from CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: >-
+            Based on the combination of inputs provided the pool was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+    patch:
+      tags:
+        - Pools
+      summary: Patch pools with poolId
+      description: Rename CWMS Pool
+      operationId: patchPoolsWithPoolId
+      parameters:
+        - name: pool-id
+          in: path
+          description: Specifies the name of the pool to be renamed.
+          required: true
+          schema:
+            type: string
+        - name: office
+          in: query
+          description: Specifies the owning office of the pool to be renamed.
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'Specifies the new pool name. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Pool successfully renamed in CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
   /pools:
     get:
       tags:
@@ -11713,6 +11836,67 @@ paths:
                 $ref: '#/components/schemas/CdaError'
         '501':
           description: request format is not implemented
+      security:
+        - ApiKey: []
+        - CwmsAAACacAuth: []
+    post:
+      tags:
+        - Pools
+      summary: Post pools
+      description: Create CWMS Pool
+      operationId: postPools
+      parameters:
+        - name: fail-if-exists
+          in: query
+          description: 'Create will fail if provided ID already exists. Default: true'
+          schema:
+            type: boolean
+        - name: create-pool-name
+          in: query
+          description: >-
+            Create will create the pool name if it doesn't already exists.
+            Default: true
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json;version=2:
+            schema:
+              $ref: '#/components/schemas/Pool'
+        required: true
+      responses:
+        '204':
+          description: Pool successfully stored to CWMS.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CdaError'
       security:
         - ApiKey: []
         - CwmsAAACacAuth: []

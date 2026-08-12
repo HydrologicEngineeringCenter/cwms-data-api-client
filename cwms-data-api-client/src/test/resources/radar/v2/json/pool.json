@@ -1,0 +1,13 @@
+{
+  "pool-name": {
+    "office-id": "SPK",
+    "pool-name": "Conservation"
+  },
+  "project-id": "PROJECT",
+  "bottom-level-id": "Bottom of Conservation",
+  "top-level-id": "Top of Conservation",
+  "implicit": false,
+  "attribute": 1.0,
+  "description": "Conservation pool used for unit testing",
+  "clob-text": "UNIT TESTING POOL ENDPOINT"
+}
