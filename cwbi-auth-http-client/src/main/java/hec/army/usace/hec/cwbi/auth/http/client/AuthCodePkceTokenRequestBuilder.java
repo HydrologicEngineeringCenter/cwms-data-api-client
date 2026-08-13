@@ -135,7 +135,6 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             this.authCallBack.accept(URI.create(urlStr));
 
             Result result = future.get(3, TimeUnit.MINUTES); // The user is now required to perform manual operations.
-            LOGGER.info("Retrieving Token.");
             if (result.error != null) {
                 throw new IOException(String.format("Unable to login. %s : %s", result.error, result.errorDescription));
             }

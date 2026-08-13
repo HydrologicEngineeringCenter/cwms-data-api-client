@@ -1,38 +1,58 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2026 Hydrologic Engineering Center
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;
-import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
 
-import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2Token;
 import mil.army.usace.hec.cwms.http.client.auth.OAuth2TokenProvider;
 
 /**
- * Handle generic OIDC auth based on configuration elements in the .well-known/openid-configuration
- * values.
+ * Base implementation of {@link OAuth2TokenProvider} that provides the token lifecycle behavior
+ * shared by all CWBI OIDC based token providers: caching the current token, clearing it,
+ * refreshing it via a refresh token, and retrieving a brand new token using the
+ * Authorization Code + PKCE flow.
  *
- * Defaults to using Authorization Code + PKCE.
- * Support should be provided to support alternative flows as a user-at-login decision point.
+ * <p>Subclasses differ only in how they resolve the authorization and token endpoint URLs
+ * (e.g. via OIDC discovery vs. URLs supplied directly by the caller), so they are only
+ * responsible for implementing {@link #getAuthUrl()} and {@link #getTokenUrl()}. Subclasses
+ * that require an entirely different token retrieval mechanism (e.g. direct grant) may still
+ * override {@link #newToken()}.
  */
-public class OidcAuthTokenProvider implements OAuth2TokenProvider {
+public abstract class AuthorizationCodePkceTokenProvider implements OAuth2TokenProvider {
 
     private final String clientId;
-    private final ApiConnectionInfo wellKnownUrl;
-    private ApiConnectionInfo tokenUrl;
-    private ApiConnectionInfo authUrl;
-    private final StaticOidcTokenController wellKnowEndpointController;
     private OAuth2Token token = null;
     // Default to open browser or print to console for usage, but allow overriding for testing and
     // other usages.
     private Consumer<URI> authCallback = TokenRequestBuilder.BROWSER_OR_CONSOLE_AUTH_CALLBACK;
 
-    public OidcAuthTokenProvider(String clientId, ApiConnectionInfo wellKnownUrl) {
+    protected AuthorizationCodePkceTokenProvider(String clientId) {
         this.clientId = Objects.requireNonNull(clientId, "Missing required client id.");
-        this.wellKnownUrl = Objects.requireNonNull(wellKnownUrl, "Missing required well known Url.");
-        this.wellKnowEndpointController = new StaticOidcTokenController(wellKnownUrl);
     }
 
     @Override
@@ -54,7 +74,7 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
 
     @Override
     public OAuth2Token getToken() throws IOException {
-        synchronized(this) {
+        synchronized (this) {
             if (token == null) {
                 token = newToken();
             }
@@ -91,43 +111,9 @@ public class OidcAuthTokenProvider implements OAuth2TokenProvider {
                     .fetchToken();
             return token;
         }
-
-    }
-
-    @Override
-    public ApiConnectionInfo getAuthUrl() {
-        if(authUrl == null) {
-            initializeAuthUrls();
-        }
-        return authUrl;
-    }
-
-    @Override
-    public ApiConnectionInfo getTokenUrl() {
-        if(tokenUrl == null) {
-            initializeAuthUrls();
-        }
-        return tokenUrl;
-    }
-
-    private synchronized void initializeAuthUrls() {
-        String what = "auth";
-        try {
-            this.authUrl = this.wellKnowEndpointController.retrieveAuthUrl(wellKnownUrl);
-            what = "token";
-            this.tokenUrl = this.wellKnowEndpointController.retrieveTokenUrl(wellKnownUrl);
-            // TODO: process appropriate extensions to determine things like "kc_idp_hint"
-        } catch (IOException ex) {
-            throw new CompletionException("Unable to return " + what + " URL", ex);
-        }
-    }
-
-    ApiConnectionInfo getWellKnownUrl() {
-        return this.wellKnownUrl;
     }
 
     String getClientId() {
         return this.clientId;
     }
-
 }
