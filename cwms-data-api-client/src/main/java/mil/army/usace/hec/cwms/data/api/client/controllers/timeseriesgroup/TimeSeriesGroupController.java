@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.data.api.client.controllers;
+package mil.army.usace.hec.cwms.data.api.client.controllers.timeseriesgroup;
 
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
 
@@ -31,18 +31,17 @@ import java.util.List;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
+import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilderImpl;
 import mil.army.usace.hec.cwms.http.client.HttpRequestResponse;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
-public final class TimeSeriesGroupController {
+abstract class TimeSeriesGroupController {
 
-    private static final String TIME_SERIES_GROUP_ENDPOINT = "timeseries/group";
-
-    public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo,
-                                                   TimeSeriesGroupEndpointInput.GetOne input)
+    TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo,
+                                                    String endpoint,
+                                                    EndpointInput input)
             throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.getGroupId();
         TimeSeriesGroup retVal;
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
@@ -53,11 +52,11 @@ public final class TimeSeriesGroupController {
         return retVal;
     }
 
-    public List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo,
-                                                          TimeSeriesGroupEndpointInput.GetAll input)
+    List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo, String endpoint,
+                                                           EndpointInput input)
             throws IOException {
         List<TimeSeriesGroup> retVal;
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .get();
         try (HttpRequestResponse response = executor.execute()) {
@@ -66,38 +65,34 @@ public final class TimeSeriesGroupController {
         return retVal;
     }
 
-    public void storeGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Post input)
+    void storeGroup(ApiConnectionInfo apiConnectionInfo, String endpoint, String body, EndpointInput input)
             throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-            .withMediaType(ACCEPT_HEADER_JSON)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
 
-    public void updateGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Patch input)
+    void updateGroup(ApiConnectionInfo apiConnectionInfo, String endpoint, String body, EndpointInput input)
             throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT + "/" + input.originalLocationId())
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .patch()
                 .withBody(body)
-            .withMediaType(ACCEPT_HEADER_JSON)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
 
-    public void deleteGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Delete input)
+    void deleteGroup(ApiConnectionInfo apiConnectionInfo, String endpoint, EndpointInput input)
             throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.timeSeriesGroupId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .delete()
                 .execute()
                 .close();
     }
-
 }

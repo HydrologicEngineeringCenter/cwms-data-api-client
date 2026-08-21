@@ -80,11 +80,11 @@ public class MockHttpRequestBuilder implements HttpRequestBuilder {
         return null;
     }
 
-    String getQueryParameter(String parameter) {
+    public String getQueryParameter(String parameter) {
         return queryParameters.get(parameter);
     }
 
-    String getQueryHeader(String header) {
+    public String getQueryHeader(String header) {
         return queryHeaders.get(header);
     }
 }

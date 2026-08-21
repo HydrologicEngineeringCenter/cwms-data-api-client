@@ -166,7 +166,7 @@ public abstract class TestController {
         }
     }
 
-    protected static String readJsonFile(String jsonPath) throws IOException {
+    public static String readJsonFile(String jsonPath) throws IOException {
         URL resource = TestController.class.getClassLoader().getResource(jsonPath);
         if (resource == null) {
             throw new IOException("Resource not found: " + jsonPath);

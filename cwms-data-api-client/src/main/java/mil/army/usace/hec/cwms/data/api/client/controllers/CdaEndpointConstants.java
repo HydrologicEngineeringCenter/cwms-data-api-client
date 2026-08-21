@@ -24,15 +24,15 @@
 
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
-final class CdaEndpointConstants {
+public final class CdaEndpointConstants {
 
-    static final String ACCEPT_QUERY_HEADER = "accept";
-    static final String ACCEPT_HEADER_JSON = "application/json";
-    static final String ACCEPT_HEADER_V1 = "application/json;version=1";
-    static final String ACCEPT_XML_HEADER_V1 = "application/xml";
-    static final String ACCEPT_HEADER_V2 = "application/json;version=2";
-    static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
-    static final String CACHE_CONTROL = "Cache-Control";
+    public static final String ACCEPT_QUERY_HEADER = "accept";
+    public static final String ACCEPT_HEADER_JSON = "application/json";
+    public static final String ACCEPT_HEADER_V1 = "application/json;version=1";
+    public static final String ACCEPT_XML_HEADER_V1 = "application/xml";
+    public static final String ACCEPT_HEADER_V2 = "application/json;version=2";
+    public static final String ACCEPT_XML_HEADER_V2 = "application/xml;version=2";
+    public static final String CACHE_CONTROL = "Cache-Control";
 
     private CdaEndpointConstants() {
         throw new AssertionError("Utility class");

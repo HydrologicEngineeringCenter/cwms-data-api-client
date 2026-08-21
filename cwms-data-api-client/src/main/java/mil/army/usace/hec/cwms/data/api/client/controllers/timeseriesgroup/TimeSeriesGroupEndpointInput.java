@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,17 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.data.api.client.controllers;
+package mil.army.usace.hec.cwms.data.api.client.controllers.timeseriesgroup;
 
 import java.util.Objects;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 
-public final class TimeSeriesGroupEndpointInput {
+abstract class TimeSeriesGroupEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
@@ -42,32 +43,34 @@ public final class TimeSeriesGroupEndpointInput {
     static final String GROUP_MASK_QUERY_PARAMETER = "timeseries-group-like";
     static final String CATEGORY_OFFICE_QUERY_PARAMETER = "category-office-id";
     static final String GROUP_OFFICE_QUERY_PARAMETER = "group-office-id";
+    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
-    private TimeSeriesGroupEndpointInput() {
+    protected TimeSeriesGroupEndpointInput() {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll() {
+    protected static GetAll getAll() {
         return new GetAll();
     }
 
-    public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
-        return new GetOne(categoryId, groupId, officeId, groupOfficeId, categoryOfficeId);
+    protected static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
+        return new GetOne()
+            .groupId(Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id"))
+            .categoryId(Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category"))
+            .officeId(Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office"))
+            .groupOffice(Objects.requireNonNull(groupOfficeId, "Cannot retrieve a time series group without specifying a group office"))
+            .categoryOffice(Objects.requireNonNull(categoryOfficeId, "Cannot retrieve a time series group without specifying a category office"));
     }
 
-    public static Post post(TimeSeriesGroup timeSeriesGroup) {
+    protected static Post post(TimeSeriesGroup timeSeriesGroup) {
         return new Post(timeSeriesGroup);
     }
 
-    public static Patch patch(String groupOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
-        return new Patch(groupOffice, originalGroupId, timeSeriesGroup);
-    }
-
-    public static Delete delete(String categoryId, String groupId, String groupOffice) {
+    protected static Delete delete(String categoryId, String groupId, String groupOffice) {
         return new Delete(categoryId, groupId, groupOffice);
     }
 
-    public static final class GetAll extends EndpointInput {
+    protected static class GetAll extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = true;
         private String timeSeriesCategoryMask;
@@ -76,7 +79,7 @@ public final class TimeSeriesGroupEndpointInput {
         private String timeSeriesGroupMask;
 
 
-        private GetAll() {
+        protected GetAll() {
 
         }
 
@@ -105,6 +108,10 @@ public final class TimeSeriesGroupEndpointInput {
             return this;
         }
 
+        String groupOfficeId() {
+            return groupOfficeId;
+        }
+
         public GetAll timeSeriesGroupMask(String timeSeriesGroupMask) {
             this.timeSeriesGroupMask = timeSeriesGroupMask;
             return this;
@@ -122,26 +129,49 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static final class GetOne extends EndpointInput {
+    protected static class GetOne extends EndpointInput {
 
-        private final String categoryId;
-        private final String groupId;
-        private final String officeId;
-        private final String categoryOffice;
-        private final String groupOffice;
+        private String categoryId;
+        private String groupId;
+        private String officeId;
+        private String categoryOffice;
+        private String groupOffice;
 
-        private GetOne(String categoryId, String groupId, String officeId, String groupOffice, String categoryOffice) {
-            this.categoryId = Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category");
-            this.groupId = Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id");
-            this.officeId = Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office");
-            this.categoryOffice = Objects.requireNonNull(categoryOffice, "Cannot retrieve a time series group without specifying a category office");
-            this.groupOffice = Objects.requireNonNull(groupOffice, "Cannot retrieve a time series group without specifying a group office");
+        protected GetOne() {
+        }
+
+        GetOne categoryId(String categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
+        GetOne groupId(String groupId) {
+            this.groupId = groupId;
+            return this;
+        }
+
+        GetOne officeId(String officeId) {
+            this.officeId = officeId;
+            return this;
+        }
+
+        GetOne categoryOffice(String categoryOffice) {
+            this.categoryOffice = categoryOffice;
+            return this;
+        }
+
+        GetOne groupOffice(String groupOffice) {
+            this.groupOffice = groupOffice;
+            return this;
         }
 
         String getGroupId() {
             return groupId;
         }
 
+        String groupOffice() {
+            return groupOffice;
+        }
 
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
@@ -153,12 +183,12 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static final class Post extends EndpointInput {
+    protected static class Post extends EndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private boolean failIfExists = true;
 
-        private Post(TimeSeriesGroup timeSeriesGroup) {
+        protected Post(TimeSeriesGroup timeSeriesGroup) {
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot store a time series group without a data object");
         }
 
@@ -178,46 +208,13 @@ public final class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public static final class Patch extends EndpointInput {
-
-        private final TimeSeriesGroup timeSeriesGroup;
-        private final String originalGroupId;
-        private boolean replaceAssignedTs = false;
-        private final String groupOffice;
-
-        private Patch(String groupOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
-            this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
-            this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot update a time series group without a group data object");
-            this.groupOffice = Objects.requireNonNull(groupOffice, "Cannot update a time series group without specifying the operating office");
-        }
-
-        TimeSeriesGroup timeSeriesGroup() {
-            return timeSeriesGroup;
-        }
-
-        String originalLocationId() {
-            return originalGroupId;
-        }
-
-        public Patch replaceAssignedTs(boolean replaceAssignedTs) {
-            this.replaceAssignedTs = replaceAssignedTs;
-            return this;
-        }
-
-        @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(REPLACE_ASSIGNED_TS_QUERY_PARAMETER, Boolean.toString(replaceAssignedTs))
-                .addQueryParameter(OFFICE_QUERY_PARAMETER, groupOffice)
-                .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
-        }
-    }
-
-    public static final class Delete extends EndpointInput {
+    protected static class Delete extends EndpointInput {
         private final String timeSeriesGroupId;
         private final String categoryId;
         private final String groupOfficeId;
+        private boolean cascadeDelete = false;
 
-        private Delete(String categoryId, String timeSeriesGroupId, String groupOfficeId) {
+        protected Delete(String categoryId, String timeSeriesGroupId, String groupOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series group without specifying the category)");
             this.timeSeriesGroupId = Objects.requireNonNull(timeSeriesGroupId, "Cannot delete a time series group that is not defined");
             this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a time series group without specifying the office");
@@ -227,10 +224,20 @@ public final class TimeSeriesGroupEndpointInput {
             return timeSeriesGroupId;
         }
 
+        String groupOfficeId() {
+            return groupOfficeId;
+        }
+
+        public Delete cascadeDelete(boolean cascadeDelete) {
+            this.cascadeDelete = cascadeDelete;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+                    .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
