@@ -8,7 +8,7 @@ java {
 }
 
 compileJava {
-    options.release = 11
+    options.release = 21
 }
 
 dependencies {
