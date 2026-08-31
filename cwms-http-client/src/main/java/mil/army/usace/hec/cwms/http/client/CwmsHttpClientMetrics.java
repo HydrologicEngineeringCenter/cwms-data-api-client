@@ -24,8 +24,8 @@
 
 package mil.army.usace.hec.cwms.http.client;
 
-import rma.util.lookup.Lookup;
-import rma.util.lookup.Lookups;
+import org.openide.util.Lookup;
+import org.openide.util.lookup.Lookups;
 import usace.metrics.services.Metrics;
 import usace.metrics.services.MetricsService;
 import usace.metrics.services.MetricsServiceProvider;

@@ -1,9 +1,7 @@
 [versions]
 
 #HEC Dependencies
-metrics = "2.0"
-service-annotations = "2.0.1"
-lookup = "2.0"
+metrics = "4.0.0"
 
 #Third Party Dependencies
 jackson = "2.17.2"
@@ -14,6 +12,7 @@ annotation-api = "3.0.0"
 swagger-codegen = "3.0.61"
 jwt = "4.4.0"
 okhttp = "4.12.0"
+lookup = "RELEASE280"
 
 #Test Dependencies
 junit = "5.10.3"
@@ -21,12 +20,8 @@ mockito = "5.12.0"
 
 [libraries]
 #HEC Dependencies
-
 metrics = { module = "mil.army.usace.hec:metrics-services", version.ref = "metrics" }
 metrics-codahale = { module = "mil.army.usace.hec:metrics-codahale", version.ref = "metrics" }
-
-lookup = { module = "mil.army.usace.hec:lookup", version.ref = "lookup" }
-service-annotations = { module = "mil.army.usace.hec:service-annotations", version.ref = "service-annotations" }
 
 #Third-Party
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -44,6 +39,7 @@ okhttp-urlconnection = { module = "com.squareup.okhttp3:okhttp-urlconnection", v
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
 swagger-parser = { module = "io.swagger.parser.v3:swagger-parser-v3", version.ref = "swagger-parser"}
+lookup = { module = "org.netbeans.api:org-openide-util-lookup", version.ref = "lookup" }
 
 #Test Dependencies
 junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }

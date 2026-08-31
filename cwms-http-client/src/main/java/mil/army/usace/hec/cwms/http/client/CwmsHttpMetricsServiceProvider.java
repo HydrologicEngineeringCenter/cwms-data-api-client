@@ -32,8 +32,9 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rma.services.annotations.ServiceProvider;
-import rma.util.lookup.Lookup;
+
+import org.openide.util.Lookup;
+import org.openide.util.lookup.ServiceProvider;
 import usace.metrics.services.MetricsApp;
 import usace.metrics.services.MetricsService;
 import usace.metrics.services.MetricsServiceProvider;
