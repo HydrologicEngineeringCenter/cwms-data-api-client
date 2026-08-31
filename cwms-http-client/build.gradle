@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.jwt)
 
     runtimeOnly(libs.metrics.codahale)
-    annotationProcessor(libs.service.annotations)
 
     testImplementation(libs.junit.api)
     testImplementation(platform(libs.okhttp.bom))

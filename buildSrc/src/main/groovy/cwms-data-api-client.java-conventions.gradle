@@ -12,7 +12,7 @@ compileJava {
 }
 
 dependencies {
-    annotationProcessor(libs.service.annotations)
+    annotationProcessor(libs.lookup)
 
     testImplementation(libs.junit.api)
     testRuntimeOnly(libs.junit.engine)
