@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2025 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointCon
 
 import java.io.IOException;
 import java.util.List;
+
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
@@ -37,67 +38,60 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 
 public final class TimeSeriesGroupController {
 
-    private static final String TIME_SERIES_GROUP_ENDPOINT = "timeseries/group";
+    private static final String TIME_SERIES_GROUP_ENDPOINT_V2 = "v2/timeseries/group/";
 
     public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo,
-                                                   TimeSeriesGroupEndpointInput.GetOne input)
-            throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.getGroupId();
-        TimeSeriesGroup retVal;
+                                                   TimeSeriesGroupEndpointInput.GetOne input) throws IOException {
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOffice() + "/" + input.getGroupId();
         HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .get();
         try (HttpRequestResponse response = executor.execute()) {
-            retVal = RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
+            return RadarObjectMapper.mapJsonToObject(response.getBody(), TimeSeriesGroup.class);
         }
-        return retVal;
     }
 
     public List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo,
-                                                          TimeSeriesGroupEndpointInput.GetAll input)
-            throws IOException {
-        List<TimeSeriesGroup> retVal;
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+                                                          TimeSeriesGroupEndpointInput.GetAll input) throws IOException {
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOfficeId();
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .get();
         try (HttpRequestResponse response = executor.execute()) {
-            retVal = RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
+            return RadarObjectMapper.mapJsonToListOfObjects(response.getBody(), TimeSeriesGroup.class);
         }
-        return retVal;
     }
 
-    public void storeGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Post input)
-            throws IOException {
+    public void storeGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT)
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.timeSeriesGroup().getOfficeId();
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .post()
                 .withBody(body)
-            .withMediaType(ACCEPT_HEADER_JSON)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
 
-    public void updateGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Patch input)
-            throws IOException {
-        String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        new HttpRequestBuilderImpl(apiConnectionInfo, TIME_SERIES_GROUP_ENDPOINT + "/" + input.originalLocationId())
+    public void updateGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Patch input) throws IOException {
+        String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroupPatch());
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOffice() + "/" + input.originalGroupId();
+        new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .patch()
                 .withBody(body)
-            .withMediaType(ACCEPT_HEADER_JSON)
+                .withMediaType(ACCEPT_HEADER_JSON)
                 .execute()
                 .close();
     }
 
-    public void deleteGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Delete input)
-            throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.timeSeriesGroupId();
+    public void deleteGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointInput.Delete input) throws IOException {
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOfficeId() + "/" + input.timeSeriesGroupId();
         new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
                 .addEndpointInput(input)
                 .delete()
                 .execute()
                 .close();
     }
-
 }

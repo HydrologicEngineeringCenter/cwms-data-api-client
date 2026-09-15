@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Hydrologic Engineering Center
+ * Copyright (c) 2026 Hydrologic Engineering Center
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,23 @@
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import mil.army.usace.hec.cwms.data.api.client.model.AssignedTimeSeries;
+import mil.army.usace.hec.cwms.data.api.client.model.CwmsId;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupMembership;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesCategory;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestTimeSeriesGroupController extends TestController {
 
@@ -61,12 +69,12 @@ class TestTimeSeriesGroupController extends TestController {
     }
 
     @Test
-    void testRetrieveAllTimeSeriesCategories() throws IOException {
+    void testRetrieveAllTimeSeriesGroups() throws IOException {
         String collect = readJsonFile("radar/v1/json/ts_groups.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll()
-                .officeId("SWT");
+        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll("SWT")
+                .timeSeriesOfficeId("SWT");
         List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesGroups(buildConnectionInfo(), input);
         assertEquals(7, timeSeriesCategories.size());
         TimeSeriesGroup timeSeriesGroup = timeSeriesCategories.get(0);
@@ -105,8 +113,22 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput.patch("SWT", "QA Category2", timeSeriesGroup);
+        TimeSeriesCategory category = new TimeSeriesCategory().officeId("SWT").id("QA Category2");
+        AssignedTimeSeries assignedTimeSeries = new AssignedTimeSeries()
+                .officeId("SWT")
+                .timeseriesId("Assign.Ts.Id")
+                .aliasId("AliasId")
+                .attribute(1);
+        TimeSeriesGroupMembership membership = new TimeSeriesGroupMembership()
+                .assign(Collections.singletonList(assignedTimeSeries))
+                .unassign(Collections.singletonList(new CwmsId().officeId("SWT").name("Unassign.Ts.Id")));
+        TimeSeriesGroupPatch timeSeriesGroupPatch = new TimeSeriesGroupPatch()
+                .officeId("SWT")
+                .id("Radar Test")
+                .timeSeriesCategory(category)
+                .membership(membership);
+        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput
+                .patch("SWT", "Radar Test", timeSeriesGroupPatch);
         assertDoesNotThrow(() -> new TimeSeriesGroupController().updateGroup(buildConnectionInfo(), input));
     }
 
