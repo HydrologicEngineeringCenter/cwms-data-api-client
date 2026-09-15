@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package mil.army.usace.hec.cwms.data.api.client.controllers.timeseriesgroup;
+package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import java.util.Objects;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
@@ -31,25 +31,30 @@ import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointCon
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
+import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
 
-abstract class TimeSeriesGroupEndpointInput {
+
+public final class TimeSeriesGroupEndpointInput {
 
     static final String OFFICE_QUERY_PARAMETER = "office";
     static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
     static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
     static final String FAIL_IF_EXISTS = "fail-if-exists";
-    static final String REPLACE_ASSIGNED_TS_QUERY_PARAMETER = "replace-assigned-ts";
     static final String CATEGORY_MASK_QUERY_PARAMETER = "timeseries-category-like";
     static final String GROUP_MASK_QUERY_PARAMETER = "timeseries-group-like";
     static final String CATEGORY_OFFICE_QUERY_PARAMETER = "category-office-id";
     static final String GROUP_OFFICE_QUERY_PARAMETER = "group-office-id";
     static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
 
-    protected TimeSeriesGroupEndpointInput() {
+    private TimeSeriesGroupEndpointInput() {
         throw new AssertionError("factory class");
     }
 
-    protected static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
+    public static GetAll getAll() {
+        return new GetAll();
+    }
+
+    public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
         return new GetOne()
             .groupId(Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id"))
             .categoryId(Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category"))
@@ -58,11 +63,19 @@ abstract class TimeSeriesGroupEndpointInput {
             .categoryOffice(categoryOfficeId);
     }
 
-    protected static Post post(TimeSeriesGroup timeSeriesGroup) {
+    public static Post post(TimeSeriesGroup timeSeriesGroup) {
         return new Post(timeSeriesGroup);
     }
 
-    public abstract static class GetAll<T extends GetAll<T>> extends EndpointInput {
+    public static Delete delete(String categoryId, String groupId, String groupOffice) {
+        return new Delete(categoryId, groupId, groupOffice);
+    }
+
+    public static Patch patch(String groupOffice, String originalGroupId, TimeSeriesGroupPatch timeSeriesGroup) {
+        return new Patch(groupOffice, originalGroupId, timeSeriesGroup);
+    }
+
+    public static final class GetAll extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = true;
         private String timeSeriesCategoryMask;
@@ -70,60 +83,56 @@ abstract class TimeSeriesGroupEndpointInput {
         private String groupOfficeId;
         private String timeSeriesGroupMask;
 
-
-        protected GetAll() {
-
+        private GetAll() {
         }
 
-        protected abstract T self();
-
-        public T includeAssigned(boolean includeAssigned) {
+        public GetAll includeAssigned(boolean includeAssigned) {
             this.includeAssigned = includeAssigned;
-            return self();
+            return this;
         }
 
-        public T officeId(String officeId) {
+        public GetAll officeId(String officeId) {
             this.officeId = officeId;
-            return self();
+            return this;
         }
 
-        public T timeSeriesCategoryMask(String timeSeriesCategoryMask) {
+        public GetAll timeSeriesCategoryMask(String timeSeriesCategoryMask) {
             this.timeSeriesCategoryMask = timeSeriesCategoryMask;
-            return self();
+            return this;
         }
 
-        public T categoryOfficeId(String categoryOfficeId) {
+        public GetAll categoryOfficeId(String categoryOfficeId) {
             this.categoryOfficeId = categoryOfficeId;
-            return self();
+            return this;
         }
 
-        public T groupOfficeId(String groupOfficeId) {
+        public GetAll groupOfficeId(String groupOfficeId) {
             this.groupOfficeId = groupOfficeId;
-            return self();
+            return this;
         }
 
         String groupOfficeId() {
             return groupOfficeId;
         }
 
-        public T timeSeriesGroupMask(String timeSeriesGroupMask) {
+        public GetAll timeSeriesGroupMask(String timeSeriesGroupMask) {
             this.timeSeriesGroupMask = timeSeriesGroupMask;
-            return self();
+            return this;
         }
 
         @Override
         public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            // v2 puts the group office in the URL path, not in a query parameter.
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
                 .addQueryParameter(CATEGORY_MASK_QUERY_PARAMETER, timeSeriesCategoryMask)
                 .addQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER, categoryOfficeId)
-                .addQueryParameter(GROUP_OFFICE_QUERY_PARAMETER, groupOfficeId)
                 .addQueryParameter(GROUP_MASK_QUERY_PARAMETER, timeSeriesGroupMask)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 
-    public static class GetOne extends EndpointInput {
+    public static final class GetOne extends EndpointInput {
 
         private String categoryId;
         private String groupId;
@@ -131,7 +140,7 @@ abstract class TimeSeriesGroupEndpointInput {
         private String categoryOffice;
         private String groupOffice;
 
-        protected GetOne() {
+        private GetOne() {
         }
 
         GetOne categoryId(String categoryId) {
@@ -169,20 +178,20 @@ abstract class TimeSeriesGroupEndpointInput {
 
         @Override
         public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            // v2 puts the group office in the URL path, not in a query parameter.
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                 .addQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER, categoryOffice)
-                .addQueryParameter(GROUP_OFFICE_QUERY_PARAMETER, groupOffice)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 
-    public static class Post extends EndpointInput {
+    public static final class Post extends EndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private boolean failIfExists = true;
 
-        protected Post(TimeSeriesGroup timeSeriesGroup) {
+        private Post(TimeSeriesGroup timeSeriesGroup) {
             this.timeSeriesGroup = Objects.requireNonNull(timeSeriesGroup, "Cannot store a time series group without a data object");
         }
 
@@ -202,19 +211,17 @@ abstract class TimeSeriesGroupEndpointInput {
         }
     }
 
-    public abstract static class Delete<T extends Delete<T>> extends EndpointInput {
+    public static final class Delete extends EndpointInput {
         private final String timeSeriesGroupId;
         private final String categoryId;
         private final String groupOfficeId;
         private boolean cascadeDelete = false;
 
-        protected Delete(String categoryId, String timeSeriesGroupId, String groupOfficeId) {
+        private Delete(String categoryId, String timeSeriesGroupId, String groupOfficeId) {
             this.categoryId = Objects.requireNonNull(categoryId, "Cannot delete a time series group without specifying the category)");
             this.timeSeriesGroupId = Objects.requireNonNull(timeSeriesGroupId, "Cannot delete a time series group that is not defined");
             this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a time series group without specifying the office");
         }
-
-        protected abstract T self();
 
         String timeSeriesGroupId() {
             return timeSeriesGroupId;
@@ -224,17 +231,46 @@ abstract class TimeSeriesGroupEndpointInput {
             return groupOfficeId;
         }
 
-        public T cascadeDelete(boolean cascadeDelete) {
+        public Delete cascadeDelete(boolean cascadeDelete) {
             this.cascadeDelete = cascadeDelete;
-            return self();
+            return this;
         }
 
         @Override
         public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
-                    .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
+            // v2 puts the group office in the URL path, not in a query parameter.
+            return httpRequestBuilder.addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                     .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
+        }
+    }
+
+    public static final class Patch extends EndpointInput {
+        private final TimeSeriesGroupPatch timeSeriesGroupPatch;
+        private final String originalGroupId;
+        private final String groupOffice;
+
+        private Patch(String groupOffice, String originalGroupId, TimeSeriesGroupPatch timeSeriesGroupPatch) {
+            this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
+            this.timeSeriesGroupPatch = Objects.requireNonNull(timeSeriesGroupPatch, "Cannot update a time series group without a group patch data object");
+            this.groupOffice = Objects.requireNonNull(groupOffice, "Cannot update a time series group without specifying the operating office");
+        }
+
+        String originalGroupId() {
+            return originalGroupId;
+        }
+
+        String groupOffice() {
+            return groupOffice;
+        }
+
+        TimeSeriesGroupPatch timeSeriesGroupPatch() {
+            return timeSeriesGroupPatch;
+        }
+
+        @Override
+        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 }
