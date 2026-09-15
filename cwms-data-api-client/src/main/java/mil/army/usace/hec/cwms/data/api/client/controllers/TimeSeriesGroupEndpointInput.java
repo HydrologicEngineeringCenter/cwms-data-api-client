@@ -50,16 +50,15 @@ public final class TimeSeriesGroupEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    public static GetAll getAll() {
-        return new GetAll();
+    public static GetAll getAll(String groupOfficeId) {
+        return new GetAll(groupOfficeId);
     }
 
-    public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
-        return new GetOne()
+    public static GetOne getOne(String categoryId, String groupId, String tsOfficeId, String groupOfficeId, String categoryOfficeId) {
+        return new GetOne(groupOfficeId)
             .groupId(Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id"))
             .categoryId(Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category"))
-            .officeId(Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office"))
-            .groupOffice(groupOfficeId)
+            .officeId(tsOfficeId)
             .categoryOffice(categoryOfficeId);
     }
 
@@ -80,10 +79,11 @@ public final class TimeSeriesGroupEndpointInput {
         private boolean includeAssigned = true;
         private String timeSeriesCategoryMask;
         private String categoryOfficeId;
-        private String groupOfficeId;
+        private final String groupOfficeId;
         private String timeSeriesGroupMask;
 
-        private GetAll() {
+        private GetAll(String groupOfficeId) {
+            this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot retrieve time series groups without specifying the group office");
         }
 
         public GetAll includeAssigned(boolean includeAssigned) {
@@ -91,7 +91,7 @@ public final class TimeSeriesGroupEndpointInput {
             return this;
         }
 
-        public GetAll officeId(String officeId) {
+        public GetAll timeSeriesOfficeId(String officeId) {
             this.officeId = officeId;
             return this;
         }
@@ -103,11 +103,6 @@ public final class TimeSeriesGroupEndpointInput {
 
         public GetAll categoryOfficeId(String categoryOfficeId) {
             this.categoryOfficeId = categoryOfficeId;
-            return this;
-        }
-
-        public GetAll groupOfficeId(String groupOfficeId) {
-            this.groupOfficeId = groupOfficeId;
             return this;
         }
 
@@ -138,9 +133,10 @@ public final class TimeSeriesGroupEndpointInput {
         private String groupId;
         private String officeId;
         private String categoryOffice;
-        private String groupOffice;
+        private final String groupOffice;
 
-        private GetOne() {
+        private GetOne(String groupOfficeId) {
+            this.groupOffice = Objects.requireNonNull(groupOfficeId, "Cannot retrieve a time series group without specifying the group office");
         }
 
         GetOne categoryId(String categoryId) {
@@ -160,11 +156,6 @@ public final class TimeSeriesGroupEndpointInput {
 
         GetOne categoryOffice(String categoryOffice) {
             this.categoryOffice = categoryOffice;
-            return this;
-        }
-
-        GetOne groupOffice(String groupOffice) {
-            this.groupOffice = groupOffice;
             return this;
         }
 

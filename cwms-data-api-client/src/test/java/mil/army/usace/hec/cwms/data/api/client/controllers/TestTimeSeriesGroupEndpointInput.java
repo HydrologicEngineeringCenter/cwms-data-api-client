@@ -69,9 +69,8 @@ class TestTimeSeriesGroupEndpointInput {
     @Test
     void testGetAll() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll()
-                .officeId("SWT")
-                .groupOfficeId("SWT")
+        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll("SWT")
+                .timeSeriesOfficeId("SWT")
                 .categoryOfficeId("SWT")
                 .timeSeriesGroupMask("mask")
                 .timeSeriesCategoryMask("mask")
