@@ -49,28 +49,20 @@ abstract class TimeSeriesGroupEndpointInput {
         throw new AssertionError("factory class");
     }
 
-    protected static GetAll getAll() {
-        return new GetAll();
-    }
-
     protected static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
         return new GetOne()
             .groupId(Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id"))
             .categoryId(Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category"))
             .officeId(Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office"))
-            .groupOffice(Objects.requireNonNull(groupOfficeId, "Cannot retrieve a time series group without specifying a group office"))
-            .categoryOffice(Objects.requireNonNull(categoryOfficeId, "Cannot retrieve a time series group without specifying a category office"));
+            .groupOffice(groupOfficeId)
+            .categoryOffice(categoryOfficeId);
     }
 
     protected static Post post(TimeSeriesGroup timeSeriesGroup) {
         return new Post(timeSeriesGroup);
     }
 
-    protected static Delete delete(String categoryId, String groupId, String groupOffice) {
-        return new Delete(categoryId, groupId, groupOffice);
-    }
-
-    protected static class GetAll extends EndpointInput {
+    public abstract static class GetAll<T extends GetAll<T>> extends EndpointInput {
         private String officeId;
         private boolean includeAssigned = true;
         private String timeSeriesCategoryMask;
@@ -83,42 +75,44 @@ abstract class TimeSeriesGroupEndpointInput {
 
         }
 
-        public GetAll includeAssigned(boolean includeAssigned) {
+        protected abstract T self();
+
+        public T includeAssigned(boolean includeAssigned) {
             this.includeAssigned = includeAssigned;
-            return this;
+            return self();
         }
 
-        public GetAll officeId(String officeId) {
+        public T officeId(String officeId) {
             this.officeId = officeId;
-            return this;
+            return self();
         }
 
-        public GetAll timeSeriesCategoryMask(String timeSeriesCategoryMask) {
+        public T timeSeriesCategoryMask(String timeSeriesCategoryMask) {
             this.timeSeriesCategoryMask = timeSeriesCategoryMask;
-            return this;
+            return self();
         }
 
-        public GetAll categoryOfficeId(String categoryOfficeId) {
+        public T categoryOfficeId(String categoryOfficeId) {
             this.categoryOfficeId = categoryOfficeId;
-            return this;
+            return self();
         }
 
-        public GetAll groupOfficeId(String groupOfficeId) {
+        public T groupOfficeId(String groupOfficeId) {
             this.groupOfficeId = groupOfficeId;
-            return this;
+            return self();
         }
 
         String groupOfficeId() {
             return groupOfficeId;
         }
 
-        public GetAll timeSeriesGroupMask(String timeSeriesGroupMask) {
+        public T timeSeriesGroupMask(String timeSeriesGroupMask) {
             this.timeSeriesGroupMask = timeSeriesGroupMask;
-            return this;
+            return self();
         }
 
         @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(INCLUDE_ASSIGNED_QUERY_PARAMETER, Boolean.toString(includeAssigned))
                 .addQueryParameter(CATEGORY_MASK_QUERY_PARAMETER, timeSeriesCategoryMask)
@@ -129,7 +123,7 @@ abstract class TimeSeriesGroupEndpointInput {
         }
     }
 
-    protected static class GetOne extends EndpointInput {
+    public static class GetOne extends EndpointInput {
 
         private String categoryId;
         private String groupId;
@@ -174,7 +168,7 @@ abstract class TimeSeriesGroupEndpointInput {
         }
 
         @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, officeId)
                 .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                 .addQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER, categoryOffice)
@@ -183,7 +177,7 @@ abstract class TimeSeriesGroupEndpointInput {
         }
     }
 
-    protected static class Post extends EndpointInput {
+    public static class Post extends EndpointInput {
 
         private final TimeSeriesGroup timeSeriesGroup;
         private boolean failIfExists = true;
@@ -202,13 +196,13 @@ abstract class TimeSeriesGroupEndpointInput {
         }
 
         @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(FAIL_IF_EXISTS, Boolean.toString(failIfExists))
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 
-    protected static class Delete extends EndpointInput {
+    public abstract static class Delete<T extends Delete<T>> extends EndpointInput {
         private final String timeSeriesGroupId;
         private final String categoryId;
         private final String groupOfficeId;
@@ -220,6 +214,8 @@ abstract class TimeSeriesGroupEndpointInput {
             this.groupOfficeId = Objects.requireNonNull(groupOfficeId, "Cannot delete a time series group without specifying the office");
         }
 
+        protected abstract T self();
+
         String timeSeriesGroupId() {
             return timeSeriesGroupId;
         }
@@ -228,13 +224,13 @@ abstract class TimeSeriesGroupEndpointInput {
             return groupOfficeId;
         }
 
-        public Delete cascadeDelete(boolean cascadeDelete) {
+        public T cascadeDelete(boolean cascadeDelete) {
             this.cascadeDelete = cascadeDelete;
-            return this;
+            return self();
         }
 
         @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
             return httpRequestBuilder.addQueryParameter(OFFICE_QUERY_PARAMETER, groupOfficeId)
                     .addQueryParameter(CATEGORY_ID_QUERY_PARAMETER, categoryId)
                     .addQueryParameter(CASCADE_DELETE_QUERY_PARAMETER, Boolean.toString(cascadeDelete))

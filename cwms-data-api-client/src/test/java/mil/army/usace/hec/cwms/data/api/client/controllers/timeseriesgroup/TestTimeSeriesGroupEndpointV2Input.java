@@ -61,7 +61,7 @@ class TestTimeSeriesGroupEndpointV2Input {
             .getOne("category-id", "group-id", "SWT", "SWT", "CWMS");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_QUERY_PARAMETER));
         assertEquals("CWMS", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
@@ -79,7 +79,7 @@ class TestTimeSeriesGroupEndpointV2Input {
                 .includeAssigned(false);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(GROUP_OFFICE_QUERY_PARAMETER));
         assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(CATEGORY_OFFICE_QUERY_PARAMETER));
         assertEquals("mask", mockHttpRequestBuilder.getQueryParameter(GROUP_MASK_QUERY_PARAMETER));
         assertEquals("mask", mockHttpRequestBuilder.getQueryParameter(CATEGORY_MASK_QUERY_PARAMETER));
@@ -107,7 +107,7 @@ class TestTimeSeriesGroupEndpointV2Input {
                 .cascadeDelete(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
-        assertEquals("SWT", mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(CASCADE_DELETE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }

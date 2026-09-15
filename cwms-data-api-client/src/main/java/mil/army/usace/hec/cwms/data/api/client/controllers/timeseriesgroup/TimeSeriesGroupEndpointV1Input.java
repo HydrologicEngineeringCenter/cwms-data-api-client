@@ -12,7 +12,7 @@ import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointCon
 public class TimeSeriesGroupEndpointV1Input extends TimeSeriesGroupEndpointInput {
 
     public static GetAll getAll() {
-        return TimeSeriesGroupEndpointInput.getAll();
+        return new GetAll();
     }
 
     public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
@@ -24,11 +24,34 @@ public class TimeSeriesGroupEndpointV1Input extends TimeSeriesGroupEndpointInput
     }
 
     public static Delete delete(String categoryId, String groupId, String groupOffice) {
-        return TimeSeriesGroupEndpointInput.delete(categoryId, groupId, groupOffice);
+        return new Delete(categoryId, groupId, groupOffice);
     }
 
     public static Patch patch(String groupOffice, String originalGroupId, TimeSeriesGroup timeSeriesGroup) {
         return new Patch(groupOffice, originalGroupId, timeSeriesGroup);
+    }
+
+    public static final class GetAll extends TimeSeriesGroupEndpointInput.GetAll<GetAll> {
+
+        private GetAll() {
+        }
+
+        @Override
+        protected GetAll self() {
+            return this;
+        }
+    }
+
+    public static final class Delete extends TimeSeriesGroupEndpointInput.Delete<Delete> {
+
+        private Delete(String categoryId, String groupId, String groupOffice) {
+            super(categoryId, groupId, groupOffice);
+        }
+
+        @Override
+        protected Delete self() {
+            return this;
+        }
     }
 
     public static final class Patch extends EndpointInput {

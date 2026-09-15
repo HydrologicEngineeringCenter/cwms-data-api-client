@@ -35,11 +35,17 @@ import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 public final class TimeSeriesGroupEndpointV2Input extends TimeSeriesGroupEndpointInput {
 
     public static GetAll getAll() {
-        return TimeSeriesGroupEndpointInput.getAll();
+        return new GetAll();
     }
 
     public static GetOne getOne(String categoryId, String groupId, String officeId, String groupOfficeId, String categoryOfficeId) {
-        return TimeSeriesGroupEndpointInput.getOne(categoryId, groupId, officeId, groupOfficeId, categoryOfficeId);
+        GetOne retVal = new GetOne();
+        retVal.groupId(Objects.requireNonNull(groupId, "Cannot retrieve a time series group without specifying a group Id"));
+        retVal.categoryId(Objects.requireNonNull(categoryId, "Cannot retrieve a time series group without specifying a category"));
+        retVal.officeId(Objects.requireNonNull(officeId, "Cannot retrieve a time series group without specifying an office"));
+        retVal.groupOffice(groupOfficeId);
+        retVal.categoryOffice(categoryOfficeId);
+        return retVal;
     }
 
     public static Post post(TimeSeriesGroup timeSeriesGroup) {
@@ -47,11 +53,59 @@ public final class TimeSeriesGroupEndpointV2Input extends TimeSeriesGroupEndpoin
     }
 
     public static Delete delete(String categoryId, String groupId, String groupOffice) {
-        return TimeSeriesGroupEndpointInput.delete(categoryId, groupId, groupOffice);
+        return new Delete(categoryId, groupId, groupOffice);
     }
 
     public static TimeSeriesGroupEndpointV2Input.Patch patch(String groupOffice, String originalGroupId, TimeSeriesGroupPatch timeSeriesGroup) {
         return new TimeSeriesGroupEndpointV2Input.Patch(groupOffice, originalGroupId, timeSeriesGroup);
+    }
+
+    public static final class GetAll extends TimeSeriesGroupEndpointInput.GetAll<GetAll> {
+
+        private GetAll() {
+        }
+
+        @Override
+        protected GetAll self() {
+            return this;
+        }
+
+        @Override
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return super.addInputParameters(httpRequestBuilder)
+                    .addQueryParameter(GROUP_OFFICE_QUERY_PARAMETER, null);
+        }
+    }
+
+    public static final class GetOne extends TimeSeriesGroupEndpointInput.GetOne {
+
+        private GetOne() {
+            super();
+        }
+
+        @Override
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return super.addInputParameters(httpRequestBuilder)
+                    .addQueryParameter(GROUP_OFFICE_QUERY_PARAMETER, null);
+        }
+    }
+
+    public static final class Delete extends TimeSeriesGroupEndpointInput.Delete<Delete> {
+
+        private Delete(String categoryId, String groupId, String groupOffice) {
+            super(categoryId, groupId, groupOffice);
+        }
+
+        @Override
+        protected Delete self() {
+            return this;
+        }
+
+        @Override
+        public HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return super.addInputParameters(httpRequestBuilder)
+                    .addQueryParameter(OFFICE_QUERY_PARAMETER, null);
+        }
     }
 
     public static final class Patch extends EndpointInput {

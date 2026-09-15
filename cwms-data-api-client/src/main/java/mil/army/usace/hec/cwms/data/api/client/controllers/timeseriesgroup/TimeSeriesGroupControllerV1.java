@@ -33,11 +33,11 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public final class TimeSeriesGroupControllerV1 extends TimeSeriesGroupController {
 
-    private static final String TIME_SERIES_GROUP_ENDPOINT = "timeseries/group";
+    private static final String TIME_SERIES_GROUP_ENDPOINT = "timeseries/group/";
 
     public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo,
                                                    TimeSeriesGroupEndpointV1Input.GetOne input) throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.getGroupId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT + input.getGroupId();
         return retrieveTimeSeriesGroup(apiConnectionInfo, endpoint, input);
     }
 
@@ -55,13 +55,13 @@ public final class TimeSeriesGroupControllerV1 extends TimeSeriesGroupController
     public void updateGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointV1Input.Patch input)
             throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.originalLocationId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT + input.originalLocationId();
         updateGroup(apiConnectionInfo, endpoint, body, input);
     }
 
     public void deleteGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointV1Input.Delete input)
             throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT + "/" + input.timeSeriesGroupId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT + input.timeSeriesGroupId();
         deleteGroup(apiConnectionInfo, endpoint, input);
     }
 }

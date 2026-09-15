@@ -34,34 +34,34 @@ import mil.army.usace.hec.cwms.http.client.ApiConnectionInfo;
 
 public final class TimeSeriesGroupControllerV2 extends TimeSeriesGroupController {
 
-    private static final String TIME_SERIES_GROUP_ENDPOINT_V2 = "v2/timeseries/group";
+    private static final String TIME_SERIES_GROUP_ENDPOINT_V2 = "v2/timeseries/group/";
 
     public TimeSeriesGroup retrieveTimeSeriesGroup(ApiConnectionInfo apiConnectionInfo,
                                                    TimeSeriesGroupEndpointV2Input.GetOne input) throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + "/" + input.groupOffice() + "/" + input.getGroupId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOffice() + "/" + input.getGroupId();
         return retrieveTimeSeriesGroup(apiConnectionInfo, endpoint, input);
     }
 
     public List<TimeSeriesGroup> retrieveTimeSeriesGroups(ApiConnectionInfo apiConnectionInfo,
                                                           TimeSeriesGroupEndpointV2Input.GetAll input) throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + "/" + input.groupOfficeId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOfficeId();
         return retrieveTimeSeriesGroups(apiConnectionInfo, endpoint, input);
     }
 
     public void storeGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointV2Input.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroup());
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + "/" + input.timeSeriesGroup().getOfficeId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.timeSeriesGroup().getOfficeId();
         storeGroup(apiConnectionInfo, endpoint, body, input);
     }
 
     public void updateGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointV2Input.Patch input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.timeSeriesGroupPatch());
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + "/" + input.groupOffice() + "/" + input.originalGroupId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOffice() + "/" + input.originalGroupId();
         updateGroup(apiConnectionInfo, endpoint, body, input);
     }
 
     public void deleteGroup(ApiConnectionInfo apiConnectionInfo, TimeSeriesGroupEndpointV2Input.Delete input) throws IOException {
-        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + "/" + input.groupOfficeId() + "/" + input.timeSeriesGroupId();
+        String endpoint = TIME_SERIES_GROUP_ENDPOINT_V2 + input.groupOfficeId() + "/" + input.timeSeriesGroupId();
         deleteGroup(apiConnectionInfo, endpoint, input);
     }
 
