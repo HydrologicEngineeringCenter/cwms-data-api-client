@@ -27,15 +27,15 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.TestController.readJsonFile;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.CASCADE_DELETE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.CATEGORY_ID_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.CATEGORY_MASK_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.CATEGORY_OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.FAIL_IF_EXISTS;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.GROUP_MASK_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.GROUP_OFFICE_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.INCLUDE_ASSIGNED_QUERY_PARAMETER;
-import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupEndpointInput.OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CASCADE_DELETE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_MASK_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.FAIL_IF_EXISTS;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.GROUP_MASK_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.GROUP_OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.INCLUDE_ASSIGNED_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.OFFICE_QUERY_PARAMETER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -51,12 +51,12 @@ import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
 import org.junit.jupiter.api.Test;
 
-class TestTimeSeriesGroupEndpointInput {
+class TestTimeSeriesGroupEndpointV2Input {
 
     @Test
     void testGetOne() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesGroupEndpointInput.GetOne input = TimeSeriesGroupEndpointInput
+        TimeSeriesGroupEndpointV2Input.GetOne input = TimeSeriesGroupEndpointV2Input
             .getOne("category-id", "group-id", "SWT", "SWT", "CWMS");
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("category-id", mockHttpRequestBuilder.getQueryParameter(CATEGORY_ID_QUERY_PARAMETER));
@@ -69,7 +69,7 @@ class TestTimeSeriesGroupEndpointInput {
     @Test
     void testGetAll() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll("SWT")
+        TimeSeriesGroupEndpointV2Input.GetAll input = TimeSeriesGroupEndpointV2Input.getAll("SWT")
                 .timeSeriesOfficeId("SWT")
                 .categoryOfficeId("SWT")
                 .timeSeriesGroupMask("mask")
@@ -90,7 +90,7 @@ class TestTimeSeriesGroupEndpointInput {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Post input = TimeSeriesGroupEndpointInput.post(timeSeriesGroup)
+        TimeSeriesGroupEndpointV2Input.Post input = TimeSeriesGroupEndpointV2Input.post(timeSeriesGroup)
                 .failIfExists(true);
         input.addInputParameters(mockHttpRequestBuilder);
         assertEquals("true", mockHttpRequestBuilder.getQueryParameter(FAIL_IF_EXISTS));
@@ -100,7 +100,7 @@ class TestTimeSeriesGroupEndpointInput {
     @Test
     void testDelete() {
         MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
-        TimeSeriesGroupEndpointInput.Delete input = TimeSeriesGroupEndpointInput
+        TimeSeriesGroupEndpointV2Input.Delete input = TimeSeriesGroupEndpointV2Input
                 .delete("category-id", "group-id", "SWT")
                 .cascadeDelete(true);
         input.addInputParameters(mockHttpRequestBuilder);
@@ -127,11 +127,26 @@ class TestTimeSeriesGroupEndpointInput {
                 .id("group-id")
                 .timeSeriesCategory(category)
                 .membership(membership);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput
+        TimeSeriesGroupEndpointV2Input.Patch input = TimeSeriesGroupEndpointV2Input
                 .patch("SWT", "group-id", timeSeriesGroupPatch);
         input.addInputParameters(mockHttpRequestBuilder);
         // v2 primary-resource standard: office is a path segment, not a query param.
         assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
+        assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
+        assertNull(mockHttpRequestBuilder.getQueryHeader(TimeSeriesGroupEndpointV2Input.Patch.COLLECTION_PATCH_STRATEGY_HEADER));
+    }
+
+    @Test
+    void testPatchCollectionStrategy() {
+        MockHttpRequestBuilder mockHttpRequestBuilder = new MockHttpRequestBuilder();
+        TimeSeriesGroupPatch timeSeriesGroupPatch = new TimeSeriesGroupPatch()
+                .officeId("SWT")
+                .id("group-id");
+        TimeSeriesGroupEndpointV2Input.Patch input = TimeSeriesGroupEndpointV2Input
+                .patch("SWT", "group-id", timeSeriesGroupPatch)
+                .collectionPatchStrategy("MERGE");
+        input.addInputParameters(mockHttpRequestBuilder);
+        assertEquals("MERGE", mockHttpRequestBuilder.getQueryParameter(TimeSeriesGroupEndpointV2Input.Patch.COLLECTION_PATCH_STRATEGY_HEADER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }

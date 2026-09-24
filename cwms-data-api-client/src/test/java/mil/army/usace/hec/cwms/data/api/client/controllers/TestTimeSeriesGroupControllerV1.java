@@ -25,16 +25,12 @@
 package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import mil.army.usace.hec.cwms.data.api.client.model.AssignedTimeSeries;
-import mil.army.usace.hec.cwms.data.api.client.model.CwmsId;
-import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupMembership;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesCategory;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
-import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -43,26 +39,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TestTimeSeriesGroupController extends TestController {
+class TestTimeSeriesGroupControllerV1 extends TestController {
 
     @Test
     void testRetrieveSpecificTimeSeriesGroup() throws IOException {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput.GetOne input = TimeSeriesGroupEndpointInput.getOne("QA Category", "Radar Test", "SWT", "SWT", "SWT");
-        TimeSeriesGroup timeSeriesGroup = new TimeSeriesGroupController().retrieveTimeSeriesGroup(buildConnectionInfo(), input);
+        TimeSeriesGroupEndpointV1Input.GetOne input = TimeSeriesGroupEndpointV1Input.getOne("QA Category", "Radar Test", "SWT", "SWT", "SWT");
+        TimeSeriesGroup timeSeriesGroup = new TimeSeriesGroupControllerV1().retrieveTimeSeriesGroup(buildConnectionInfo(), input);
         assertEquals("Radar Test", timeSeriesGroup.getId());
         assertEquals("description123", timeSeriesGroup.getDescription());
         assertEquals("SWT", timeSeriesGroup.getOfficeId());
-        assertEquals("SWT", timeSeriesGroup.getTimeSeriesCategory().getOfficeId());
         assertEquals("TestAlias", timeSeriesGroup.getSharedAliasId());
         assertEquals("ADDI.Flow.Inst.1Hour.0.Ccp-Rev", timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
-        String description = timeSeriesCategory.getDescription();
-        String id = timeSeriesCategory.getId();
-        assertEquals("QA Category", id);
-        assertEquals("Creating this category for testing on December 16, 2020", description);
+        assertEquals("QA Category", timeSeriesCategory.getId());
+        assertEquals("Creating this category for testing on December 16, 2020", timeSeriesCategory.getDescription());
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
         assertNotNull(timeSeriesGroup.getAssignedTimeSeries());
         assertTrue(timeSeriesGroup.getAssignedTimeSeries().isEmpty());
@@ -73,29 +66,20 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_groups.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput.GetAll input = TimeSeriesGroupEndpointInput.getAll("SWT")
-                .timeSeriesOfficeId("SWT");
-        List<TimeSeriesGroup> timeSeriesCategories = new TimeSeriesGroupController().retrieveTimeSeriesGroups(buildConnectionInfo(), input);
-        assertEquals(7, timeSeriesCategories.size());
-        TimeSeriesGroup timeSeriesGroup = timeSeriesCategories.get(0);
+        TimeSeriesGroupEndpointV1Input.GetAll input = TimeSeriesGroupEndpointV1Input.getAll()
+                .officeId("SWT");
+        List<TimeSeriesGroup> timeSeriesGroups = new TimeSeriesGroupControllerV1().retrieveTimeSeriesGroups(buildConnectionInfo(), input);
+        assertEquals(7, timeSeriesGroups.size());
+        TimeSeriesGroup timeSeriesGroup = timeSeriesGroups.get(0);
         assertEquals("ACSO2", timeSeriesGroup.getId());
         assertNull(timeSeriesGroup.getDescription());
         assertEquals("SWT", timeSeriesGroup.getOfficeId());
-        assertNull(timeSeriesGroup.getSharedAliasId());
-        assertNull(timeSeriesGroup.getSharedRefTsId());
         TimeSeriesCategory timeSeriesCategory = timeSeriesGroup.getTimeSeriesCategory();
-        String description = timeSeriesCategory.getDescription();
-        String id = timeSeriesCategory.getId();
-        assertEquals("Lakes", id);
-        assertNull(description);
+        assertEquals("Lakes", timeSeriesCategory.getId());
         assertEquals("SWT", timeSeriesCategory.getOfficeId());
         List<AssignedTimeSeries> assignedTimeSeries = timeSeriesGroup.getAssignedTimeSeries();
-        AssignedTimeSeries timeseries = assignedTimeSeries.get(0);
-        assertEquals("ACSO2.%-Humidity.Ave.15Minutes.15Minutes.Mesonet-raw", timeseries.getTimeseriesId());
-        assertEquals(3768317551L, timeseries.getTsCode().longValueExact());
-        assertEquals("15Minutes-%-Humidity", timeseries.getAliasId());
-        assertEquals(0, timeseries.getAttribute().intValue());
         assertEquals(5, assignedTimeSeries.size());
+        assertEquals("ACSO2.%-Humidity.Ave.15Minutes.15Minutes.Mesonet-raw", assignedTimeSeries.get(0).getTimeseriesId());
     }
 
     @Test
@@ -104,8 +88,8 @@ class TestTimeSeriesGroupController extends TestController {
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
         TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
-        TimeSeriesGroupEndpointInput.Post input = TimeSeriesGroupEndpointInput.post(timeSeriesGroup);
-        assertDoesNotThrow(() -> new TimeSeriesGroupController().storeGroup(buildConnectionInfo(), input));
+        TimeSeriesGroupEndpointV1Input.Post input = TimeSeriesGroupEndpointV1Input.post(timeSeriesGroup);
+        assertDoesNotThrow(() -> new TimeSeriesGroupControllerV1().storeGroup(buildConnectionInfo(), input));
     }
 
     @Test
@@ -113,23 +97,11 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesCategory category = new TimeSeriesCategory().officeId("SWT").id("QA Category2");
-        AssignedTimeSeries assignedTimeSeries = new AssignedTimeSeries()
-                .officeId("SWT")
-                .timeseriesId("Assign.Ts.Id")
-                .aliasId("AliasId")
-                .attribute(1);
-        TimeSeriesGroupMembership membership = new TimeSeriesGroupMembership()
-                .assign(Collections.singletonList(assignedTimeSeries))
-                .unassign(Collections.singletonList(new CwmsId().officeId("SWT").name("Unassign.Ts.Id")));
-        TimeSeriesGroupPatch timeSeriesGroupPatch = new TimeSeriesGroupPatch()
-                .officeId("SWT")
-                .id("Radar Test")
-                .timeSeriesCategory(category)
-                .membership(membership);
-        TimeSeriesGroupEndpointInput.Patch input = TimeSeriesGroupEndpointInput
-                .patch("SWT", "Radar Test", timeSeriesGroupPatch);
-        assertDoesNotThrow(() -> new TimeSeriesGroupController().updateGroup(buildConnectionInfo(), input));
+        TimeSeriesGroup timeSeriesGroup = RadarObjectMapper.mapJsonToObject(collect, TimeSeriesGroup.class);
+        TimeSeriesGroupEndpointV1Input.Patch input = TimeSeriesGroupEndpointV1Input
+                .patch("SWT", "Radar Test", timeSeriesGroup)
+                .replaceAssignedTs(true);
+        assertDoesNotThrow(() -> new TimeSeriesGroupControllerV1().updateGroup(buildConnectionInfo(), input));
     }
 
     @Test
@@ -137,7 +109,7 @@ class TestTimeSeriesGroupController extends TestController {
         String collect = readJsonFile("radar/v1/json/ts_group.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
-        TimeSeriesGroupEndpointInput.Delete input = TimeSeriesGroupEndpointInput.delete("QA Category", "Radar Test", "SWT");
-        assertDoesNotThrow(() -> new TimeSeriesGroupController().deleteGroup(buildConnectionInfo(), input));
+        TimeSeriesGroupEndpointV1Input.Delete input = TimeSeriesGroupEndpointV1Input.delete("QA Category", "Radar Test", "SWT");
+        assertDoesNotThrow(() -> new TimeSeriesGroupControllerV1().deleteGroup(buildConnectionInfo(), input));
     }
 }

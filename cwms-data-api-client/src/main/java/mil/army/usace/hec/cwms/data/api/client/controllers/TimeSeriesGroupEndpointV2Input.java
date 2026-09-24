@@ -27,6 +27,14 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 import java.util.Objects;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_HEADER_JSON;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.CdaEndpointConstants.ACCEPT_QUERY_HEADER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CASCADE_DELETE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_ID_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_MASK_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.CATEGORY_OFFICE_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.FAIL_IF_EXISTS;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.GROUP_MASK_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.INCLUDE_ASSIGNED_QUERY_PARAMETER;
+import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.OFFICE_QUERY_PARAMETER;
 
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
@@ -34,19 +42,9 @@ import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
 
 
-public final class TimeSeriesGroupEndpointInput {
+public final class TimeSeriesGroupEndpointV2Input {
 
-    static final String OFFICE_QUERY_PARAMETER = "office";
-    static final String CATEGORY_ID_QUERY_PARAMETER = "category-id";
-    static final String INCLUDE_ASSIGNED_QUERY_PARAMETER = "include-assigned";
-    static final String FAIL_IF_EXISTS = "fail-if-exists";
-    static final String CATEGORY_MASK_QUERY_PARAMETER = "timeseries-category-like";
-    static final String GROUP_MASK_QUERY_PARAMETER = "timeseries-group-like";
-    static final String CATEGORY_OFFICE_QUERY_PARAMETER = "category-office-id";
-    static final String GROUP_OFFICE_QUERY_PARAMETER = "group-office-id";
-    static final String CASCADE_DELETE_QUERY_PARAMETER = "cascade-delete";
-
-    private TimeSeriesGroupEndpointInput() {
+    private TimeSeriesGroupEndpointV2Input() {
         throw new AssertionError("factory class");
     }
 
@@ -237,9 +235,11 @@ public final class TimeSeriesGroupEndpointInput {
     }
 
     public static final class Patch extends EndpointInput {
+        public static final String COLLECTION_PATCH_STRATEGY_HEADER = "collection-patch-strategy";
         private final TimeSeriesGroupPatch timeSeriesGroupPatch;
         private final String originalGroupId;
         private final String groupOffice;
+        private String collectionPatchStrategy;
 
         private Patch(String groupOffice, String originalGroupId, TimeSeriesGroupPatch timeSeriesGroupPatch) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
@@ -259,9 +259,16 @@ public final class TimeSeriesGroupEndpointInput {
             return timeSeriesGroupPatch;
         }
 
+        Patch collectionPatchStrategy(String collectionPatchStrategy) {
+            this.collectionPatchStrategy = collectionPatchStrategy;
+            return this;
+        }
+
         @Override
         protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
+
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
+                    .addQueryParameter(COLLECTION_PATCH_STRATEGY_HEADER, collectionPatchStrategy);
         }
     }
 }

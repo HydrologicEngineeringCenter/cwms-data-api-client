@@ -100,7 +100,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     @Override
     public final HttpRequestBuilderImpl addQueryHeader(String key, String value) {
         if (value == null) {
-            queryParameters.remove(key);
+            queryHeaders.remove(key);
         } else {
             queryHeaders.put(key, value);
         }
