@@ -49,8 +49,6 @@ import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesCategory;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroupPatch;
-import mil.army.usace.hec.cwms.http.client.CollectionPatchEndpointInput;
-import mil.army.usace.hec.cwms.http.client.CollectionPatchStrategy;
 import org.junit.jupiter.api.Test;
 
 class TestTimeSeriesGroupEndpointV2Input {
@@ -135,7 +133,7 @@ class TestTimeSeriesGroupEndpointV2Input {
         // v2 primary-resource standard: office is a path segment, not a query param.
         assertNull(mockHttpRequestBuilder.getQueryParameter(OFFICE_QUERY_PARAMETER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
-        assertNull(mockHttpRequestBuilder.getQueryHeader(CollectionPatchEndpointInput.COLLECTION_PATCH_STRATEGY_HEADER));
+        assertNull(mockHttpRequestBuilder.getQueryHeader(TimeSeriesGroupEndpointV2Input.Patch.COLLECTION_PATCH_STRATEGY_HEADER));
     }
 
     @Test
@@ -146,9 +144,9 @@ class TestTimeSeriesGroupEndpointV2Input {
                 .id("group-id");
         TimeSeriesGroupEndpointV2Input.Patch input = TimeSeriesGroupEndpointV2Input
                 .patch("SWT", "group-id", timeSeriesGroupPatch)
-                .collectionPatch(CollectionPatchStrategy.MERGE);
+                .collectionPatchStrategy("MERGE");
         input.addInputParameters(mockHttpRequestBuilder);
-        assertEquals("MERGE", mockHttpRequestBuilder.getQueryParameter(CollectionPatchEndpointInput.COLLECTION_PATCH_STRATEGY_HEADER));
+        assertEquals("MERGE", mockHttpRequestBuilder.getQueryParameter(TimeSeriesGroupEndpointV2Input.Patch.COLLECTION_PATCH_STRATEGY_HEADER));
         assertEquals(ACCEPT_HEADER_JSON, mockHttpRequestBuilder.getQueryHeader(ACCEPT_QUERY_HEADER));
     }
 }
