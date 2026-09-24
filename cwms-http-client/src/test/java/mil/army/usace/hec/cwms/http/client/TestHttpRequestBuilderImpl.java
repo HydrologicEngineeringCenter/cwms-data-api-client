@@ -375,6 +375,22 @@ class TestHttpRequestBuilderImpl {
     }
 
     @Test
+    void testHttpRequestBuilderNullHeaderClearsPreviousValue() throws IOException {
+        String root = "http://localhost:11524/cwms-data/";
+        String endpoint = "timeseries";
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfoBuilder(root).build();
+        HttpRequestBuilderImpl httpRequestBuilder = ((HttpRequestExecutorImpl) new HttpRequestBuilderImpl(apiConnectionInfo, endpoint)
+            .addQueryParameter("hello", "param")
+            .addQueryHeader("hello", "world")
+            .addQueryHeader("hello", null)
+            .get())
+            .getInstance();
+        Request request = httpRequestBuilder.createRequest();
+        assertTrue(request.headers("hello").isEmpty());
+        assertEquals("param", request.url().queryParameter("hello"));
+    }
+
+    @Test
     void testHttpRequestBuilderCreateGetRequestWithEndpointInput() throws IOException {
         String root = "http://localhost:11524/cwms-data/";
         String endpoint = "timeseries";
