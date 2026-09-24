@@ -43,7 +43,10 @@ public final class WaterPumpAccountingController {
 
     public List<WaterSupplyAccounting> retrieveWaterPumpAccounting(ApiConnectionInfo apiConnectionInfo,
             WaterPumpAccountingEndpointInput.GetAll input) throws IOException {
-        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, WATER_PUMP_ACCOUNTING_ENDPOINT)
+        String path = WATER_PUMP_ACCOUNTING_ENDPOINT.replace("{office}", input.getOfficeId())
+              .replace("{water-user}", input.getWaterUserId())
+              .replace("{contract-name}", input.getWaterContractName());
+        HttpRequestExecutor executor = new HttpRequestBuilderImpl(apiConnectionInfo, path)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .get();
@@ -55,7 +58,13 @@ public final class WaterPumpAccountingController {
     public void storeWaterPumpAccounting(ApiConnectionInfo apiConnectionInfo,
             WaterPumpAccountingEndpointInput.Post input) throws IOException {
         String body = RadarObjectMapper.mapObjectToJson(input.getWaterSupplyAccounting());
-        new HttpRequestBuilderImpl(apiConnectionInfo, WATER_PUMP_ACCOUNTING_ENDPOINT)
+        String officeId = input.getWaterSupplyAccounting().getWaterUser().getProjectId().getOfficeId();
+        String waterUserId = input.getWaterSupplyAccounting().getWaterUser().getEntityName();
+        String contractName = input.getWaterSupplyAccounting().getContractName();
+        String path = WATER_PUMP_ACCOUNTING_ENDPOINT.replace("{office}", officeId)
+              .replace("{water-user}", waterUserId)
+              .replace("{contract-name}", contractName);
+        new HttpRequestBuilderImpl(apiConnectionInfo, path)
                 .addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_V1)
                 .addEndpointInput(input)
                 .post()
