@@ -36,6 +36,7 @@ import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGrou
 import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.INCLUDE_ASSIGNED_QUERY_PARAMETER;
 import static mil.army.usace.hec.cwms.data.api.client.controllers.TimeSeriesGroupQueryParameters.OFFICE_QUERY_PARAMETER;
 
+import mil.army.usace.hec.cwms.http.client.CollectionPatchEndpointInput;
 import mil.army.usace.hec.cwms.http.client.EndpointInput;
 import mil.army.usace.hec.cwms.http.client.HttpRequestBuilder;
 import mil.army.usace.hec.cwms.data.api.client.model.TimeSeriesGroup;
@@ -234,12 +235,10 @@ public final class TimeSeriesGroupEndpointV2Input {
         }
     }
 
-    public static final class Patch extends EndpointInput {
-        public static final String COLLECTION_PATCH_STRATEGY_HEADER = "collection-patch-strategy";
+    public static final class Patch extends CollectionPatchEndpointInput<Patch> {
         private final TimeSeriesGroupPatch timeSeriesGroupPatch;
         private final String originalGroupId;
         private final String groupOffice;
-        private String collectionPatchStrategy;
 
         private Patch(String groupOffice, String originalGroupId, TimeSeriesGroupPatch timeSeriesGroupPatch) {
             this.originalGroupId = Objects.requireNonNull(originalGroupId, "Cannot update a time series group without specifying the group id");
@@ -259,16 +258,14 @@ public final class TimeSeriesGroupEndpointV2Input {
             return timeSeriesGroupPatch;
         }
 
-        Patch collectionPatchStrategy(String collectionPatchStrategy) {
-            this.collectionPatchStrategy = collectionPatchStrategy;
+        @Override
+        protected Patch self() {
             return this;
         }
 
         @Override
-        protected HttpRequestBuilder addInputParameters(HttpRequestBuilder httpRequestBuilder) {
-
-            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON)
-                    .addQueryParameter(COLLECTION_PATCH_STRATEGY_HEADER, collectionPatchStrategy);
+        protected HttpRequestBuilder buildInputParameters(HttpRequestBuilder httpRequestBuilder) {
+            return httpRequestBuilder.addQueryHeader(ACCEPT_QUERY_HEADER, ACCEPT_HEADER_JSON);
         }
     }
 }
