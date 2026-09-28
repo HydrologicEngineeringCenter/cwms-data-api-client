@@ -236,6 +236,10 @@ public final class TimeSeriesGroupEndpointV2Input {
 
     public static final class Patch extends EndpointInput {
         public static final String COLLECTION_PATCH_STRATEGY_HEADER = "collection-patch-strategy";
+        /** Merge the assigned time series into the group's existing membership. */
+        public static final String COLLECTION_PATCH_STRATEGY_MERGE = "merge";
+        /** Replace the group's membership with the assigned time series. */
+        public static final String COLLECTION_PATCH_STRATEGY_OVERWRITE = "overwrite";
         private final TimeSeriesGroupPatch timeSeriesGroupPatch;
         private final String originalGroupId;
         private final String groupOffice;
@@ -259,7 +263,7 @@ public final class TimeSeriesGroupEndpointV2Input {
             return timeSeriesGroupPatch;
         }
 
-        Patch collectionPatchStrategy(String collectionPatchStrategy) {
+        public Patch collectionPatchStrategy(String collectionPatchStrategy) {
             this.collectionPatchStrategy = collectionPatchStrategy;
             return this;
         }
