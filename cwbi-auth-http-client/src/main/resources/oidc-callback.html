@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>USACE CWMS sign-in</title>
+        <style>
+            :root {
+                color-scheme: light;
+                --corps-red: #c1121f;
+                --corps-red-deep: #8f0d16;
+                --corps-blue: #005ea2;
+                --corps-blue-deep: #1a4480;
+                --corps-black: #111111;
+                --corps-charcoal: #232323;
+                --corps-steel: #5b616b;
+                --corps-paper: #f4f1ea;
+                --corps-panel: rgba(255, 252, 247, 0.94);
+                --corps-line: rgba(17, 17, 17, 0.12);
+                --corps-shadow: 0 28px 64px rgba(17, 17, 17, 0.24);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: 24px;
+                font-family: "Arial", "Helvetica Neue", sans-serif;
+                color: var(--corps-black);
+                background:
+                    linear-gradient(140deg, rgba(193, 18, 31, 0.18), transparent 38%),
+                    linear-gradient(180deg, #e8e1d6 0%, #d6d0c7 100%);
+            }
+
+            .card {
+                position: relative;
+                width: min(100%, 780px);
+                padding: 34px 34px 30px;
+                border: 1px solid var(--corps-line);
+                border-radius: 24px;
+                background: var(--corps-panel);
+                box-shadow: var(--corps-shadow);
+                overflow: hidden;
+            }
+
+            .card::before {
+                content: "";
+                position: absolute;
+                inset: 0 0 auto 0;
+                height: 10px;
+                background: linear-gradient(90deg, var(--corps-black), var(--corps-red), var(--corps-black));
+            }
+
+            .eyebrow {
+                margin: 10px 0 12px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--corps-red-deep);
+            }
+
+            h1 {
+                margin: 0;
+                font-size: clamp(2.1rem, 4vw, 3.35rem);
+                line-height: 1.02;
+                letter-spacing: -0.03em;
+            }
+
+            .lead {
+                margin: 16px 0 0;
+                max-width: 42rem;
+                font-size: 1.06rem;
+                line-height: 1.65;
+                color: var(--corps-charcoal);
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 28px;
+            }
+
+            button {
+                border: 0;
+                border-radius: 999px;
+                padding: 12px 18px;
+                font: inherit;
+                font-weight: 700;
+                cursor: pointer;
+                color: #ffffff;
+                background: linear-gradient(135deg, var(--corps-blue), var(--corps-blue-deep));
+            }
+
+            .hint {
+                margin-top: 18px;
+                font-size: 0.95rem;
+                color: var(--corps-steel);
+            }
+
+            .brand-block {
+                display: grid;
+                gap: 8px;
+                margin-top: 30px;
+                padding-top: 18px;
+                border-top: 1px solid var(--corps-line);
+            }
+
+            .brand-title {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--corps-black);
+            }
+
+            .brand-copy {
+                font-size: 0.95rem;
+                line-height: 1.55;
+                color: var(--corps-steel);
+            }
+
+            @media (max-width: 640px) {
+                .card {
+                    padding: 28px 22px 24px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <main class="card">
+            <p class="eyebrow">CWMS Authentication</p>
+            <h1>{{heading}}</h1>
+            <p class="lead">{{message}}</p>
+            <div class="actions">
+                <button type="button" onclick="window.close()">Close this tab</button>
+            </div>
+            <p class="hint">If the button does not close this tab, close it with your browser controls.</p>
+            <section class="brand-block" aria-label="branding">
+                <div class="brand-title">U.S. Army Corps of Engineers</div>
+                <div class="brand-copy">CWMS sign-in for U.S. Army Corps of Engineers applications.</div>
+            </section>
+        </main>
+    </body>
+
+</html>
