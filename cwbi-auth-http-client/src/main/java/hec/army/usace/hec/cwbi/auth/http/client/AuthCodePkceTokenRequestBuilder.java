@@ -30,6 +30,7 @@ import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.QueryParameters;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -98,9 +99,21 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
                         ret = Result.success(code ,state, session_state);
                     }
                     LOGGER.fine("Returning result back to thread.");
-                    exchange.sendResponseHeaders(204, 0);
-
-                    future.complete(ret);
+                    try {
+                        boolean validResponse = ret.error == null && originalState.equals(ret.state);
+                        byte[] page = callbackPage(validResponse);
+                        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+                        exchange.getResponseHeaders().set("Cache-Control", "no-store");
+                        exchange.getResponseHeaders().set("Referrer-Policy", "no-referrer");
+                        exchange.getResponseHeaders().set("Content-Security-Policy",
+                            "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'");
+                        exchange.sendResponseHeaders(200, page.length);
+                        try (var body = exchange.getResponseBody()) {
+                            body.write(page);
+                        }
+                    } finally {
+                        future.complete(ret);
+                    }
                 }
 
             });
@@ -175,6 +188,21 @@ public final class AuthCodePkceTokenRequestBuilder extends TokenRequestBuilder<A
             if (server != null) {
                 server.stop(0);
             }
+        }
+    }
+
+    private static byte[] callbackPage(boolean validResponse) throws IOException {
+        try (InputStream resource = AuthCodePkceTokenRequestBuilder.class.getResourceAsStream("/oidc-callback.html")) {
+            if (resource == null) {
+                throw new IOException("Missing OIDC callback page");
+            }
+            String page = new String(resource.readAllBytes(), StandardCharsets.UTF_8);
+            String heading = validResponse ? "Browser sign-in step complete" : "Sign-in could not be completed";
+            String message = validResponse
+                ? "Your sign-in response was sent to the application. You can return to the application and close this tab."
+                : "Return to the application for details. You can close this tab.";
+            return page.replace("{{heading}}", heading).replace("{{message}}", message)
+                .getBytes(StandardCharsets.UTF_8);
         }
     }
 
