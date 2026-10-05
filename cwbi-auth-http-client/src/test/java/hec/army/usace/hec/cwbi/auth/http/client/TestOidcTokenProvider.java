@@ -23,12 +23,20 @@
  */
 package hec.army.usace.hec.cwbi.auth.http.client;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
@@ -136,6 +144,11 @@ class TestOidcTokenProvider {
                 try (HttpRequestResponse response = executor.execute()) {
                     // redirect should be automatically followed. If changes 
                     // made that fail this section either enable redirect or handle it.
+                    String page = response.getBody();
+                    assertNotNull(page);
+                    assertTrue(page.contains("Browser sign-in step complete"));
+                    assertTrue(page.contains("return to the application"));
+                    assertFalse(page.contains("code=test"));
                 }
                 
             } catch (IOException ex) {
@@ -144,6 +157,30 @@ class TestOidcTokenProvider {
             
         });
         final OAuth2Token token = tokenProvider.getToken();
-        assertNotNull(token);        
-    }    
+        assertNotNull(token);
+    }
+
+    @Test
+    void testCallbackShowsFailureWhenProviderReturnsError() {
+        AuthCodePkceTokenRequestBuilder builder = new AuthCodePkceTokenRequestBuilder();
+        builder.withAuthUrl(buildAuthInfo()).withTokenUrl(buildAuthInfo());
+        builder.withAuthCallback(authUri -> {
+            QueryParameters parameters = QueryParameters.parse(authUri.getQuery());
+            String redirect = parameters.get("redirect_uri").get(0);
+            URI callbackUri = URI.create(redirect + "?error=access_denied&error_description=cancelled");
+            try {
+                HttpResponse<String> response = HttpClient.newHttpClient().send(
+                    HttpRequest.newBuilder(callbackUri).GET().build(),
+                    HttpResponse.BodyHandlers.ofString());
+                assertEquals(200, response.statusCode());
+                assertTrue(response.headers().firstValue("Content-Type").orElse("").contains("text/html"));
+                assertTrue(response.body().contains("Sign-in could not be completed"));
+                assertFalse(response.body().contains("access_denied"));
+            } catch (IOException | InterruptedException e) {
+                fail("Unable to read OIDC callback page", e);
+            }
+        });
+
+        assertThrows(IOException.class, () -> builder.buildRequest().withClientId("test").fetchToken());
+    }
 }
