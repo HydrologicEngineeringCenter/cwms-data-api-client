@@ -48,12 +48,25 @@ public final class HttpRequestResponse implements AutoCloseable {
     private final Set<HttpCookie> cookies;
     private final boolean usedCache;
     private final Headers headers;
+    private final int statusCode;
 
     HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache) {
+        this(body, cookies, headers, usedCache, 200);
+    }
+
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache, int statusCode) {
+        this.statusCode = statusCode;
         this.body = body;
         this.cookies = cookies;
         this.usedCache = usedCache;
         this.headers = headers;
+    }
+
+    /**
+     * @return the HTTP status code of the response, always in the 2xx range for a returned response
+     */
+    public int getStatusCode() {
+        return statusCode;
     }
 
     public String getBody() throws IOException {
