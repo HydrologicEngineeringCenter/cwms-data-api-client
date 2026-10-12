@@ -36,6 +36,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Successful response of an executed request. The caller owns the response and must close it (for example with
+ * try-with-resources) to release the underlying connection, whether or not the body was read. Failed responses are
+ * never returned: the library closes their body itself before throwing. See {@link HttpRequestOptions} for the scope
+ * of the timeouts that apply while the body is consumed.
+ */
 public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;

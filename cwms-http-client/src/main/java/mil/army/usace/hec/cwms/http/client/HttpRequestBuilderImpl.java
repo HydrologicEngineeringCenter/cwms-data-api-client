@@ -66,6 +66,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     private HttpRequestMethod method;
     private String body;
     private String mediaType;
+    private HttpRequestOptions options = HttpRequestOptions.defaults();
 
     public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws IOException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
@@ -143,8 +144,19 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return new HttpRequestExecutorImpl();
     }
 
+    @Override
+    public final HttpRequestBuilderImpl withOptions(HttpRequestOptions options) {
+        this.options = Objects.requireNonNull(options, "Request options must be defined");
+        return this;
+    }
+
     protected OkHttpClient buildOkHttpClient() {
         return OkHttpClientFactory.buildOkHttpClient(apiConnectionInfo);
+    }
+
+    //Packaged scope for testing
+    OkHttpClient buildRequestClient() {
+        return options.applyTo(buildOkHttpClient());
     }
 
     //Packaged scope for testing
@@ -229,7 +241,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
             CwmsHttpLoggingInterceptor.getInstance().logStackTraceForRequest(request);
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
-                OkHttpClient client = buildOkHttpClient();
+                OkHttpClient client = buildRequestClient();
                 Response execute = client.newCall(request).execute();
                 if (execute.isSuccessful()) {
                     responseBody = execute.body();
