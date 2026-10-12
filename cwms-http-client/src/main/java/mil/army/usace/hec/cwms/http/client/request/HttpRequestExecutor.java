@@ -31,4 +31,12 @@ public interface HttpRequestExecutor {
 
     HttpRequestResponse execute() throws IOException;
 
+    /**
+     * Creates a single-use request that can be cancelled from another thread. Nothing is sent until
+     * {@link CancellableHttpRequest#execute()} is called.
+     *
+     * @return the cancellable request
+     */
+    CancellableHttpRequest cancellable();
+
 }

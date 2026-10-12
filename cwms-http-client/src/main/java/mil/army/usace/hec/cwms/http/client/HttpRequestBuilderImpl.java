@@ -38,12 +38,14 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import javax.net.ssl.SSLHandshakeException;
+import mil.army.usace.hec.cwms.http.client.request.CancellableHttpRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPatchRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPostRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpPutRequest;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestExecutor;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMediaType;
 import mil.army.usace.hec.cwms.http.client.request.HttpRequestMethod;
+import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -66,6 +68,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     private HttpRequestMethod method;
     private String body;
     private String mediaType;
+    private HttpRequestOptions options = HttpRequestOptions.defaults();
 
     public HttpRequestBuilderImpl(ApiConnectionInfo apiConnectionInfo, String endpoint) throws IOException {
         Objects.requireNonNull(apiConnectionInfo, "API connection info must be defined");
@@ -143,8 +146,19 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
         return new HttpRequestExecutorImpl();
     }
 
+    @Override
+    public final HttpRequestBuilderImpl withOptions(HttpRequestOptions options) {
+        this.options = Objects.requireNonNull(options, "Request options must be defined");
+        return this;
+    }
+
     protected OkHttpClient buildOkHttpClient() {
         return OkHttpClientFactory.buildOkHttpClient(apiConnectionInfo);
+    }
+
+    //Packaged scope for testing
+    OkHttpClient buildRequestClient() {
+        return options.applyTo(buildOkHttpClient());
     }
 
     //Packaged scope for testing
@@ -224,13 +238,26 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
     class HttpRequestExecutorImpl implements HttpRequestExecutor {
         @Override
         public final HttpRequestResponse execute() throws IOException {
+            return execute(null);
+        }
+
+        @Override
+        public final CancellableHttpRequest cancellable() {
+            return new CancellableCall();
+        }
+
+        private HttpRequestResponse execute(CancellableCall cancellableCall) throws IOException {
             HttpRequestResponse retVal = null;
             Request request = createRequest();
             CwmsHttpLoggingInterceptor.getInstance().logStackTraceForRequest(request);
             ResponseBody responseBody;
             try (Timer.Context timer = createTimer().start()) {
-                OkHttpClient client = buildOkHttpClient();
-                Response execute = client.newCall(request).execute();
+                OkHttpClient client = buildRequestClient();
+                Call call = client.newCall(request);
+                if (cancellableCall != null) {
+                    cancellableCall.attach(call);
+                }
+                Response execute = call.execute();
                 if (execute.isSuccessful()) {
                     responseBody = execute.body();
                     if (responseBody == null) {
@@ -242,7 +269,7 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
                             .collect(toSet());
                     boolean usedCache = execute.cacheResponse() != null;
 	                Headers headers = execute.headers();
-                    retVal = new HttpRequestResponse(responseBody, cookies, headers, usedCache);
+                    retVal = new HttpRequestResponse(responseBody, cookies, headers, usedCache, execute.code());
                 } else {
                     handleExecutionError(execute, request);
                 }
@@ -294,6 +321,43 @@ public class HttpRequestBuilderImpl implements HttpRequestBuilder {
 
         HttpRequestBuilderImpl getInstance() {
             return getCurrentInstance();
+        }
+
+        private final class CancellableCall implements CancellableHttpRequest {
+            private boolean executed;
+            private boolean cancelled;
+            private Call call;
+
+            @Override
+            public HttpRequestResponse execute() throws IOException {
+                synchronized (this) {
+                    if (executed) {
+                        throw new IllegalStateException("Request was already executed");
+                    }
+                    executed = true;
+                }
+                return HttpRequestExecutorImpl.this.execute(this);
+            }
+
+            synchronized void attach(Call newCall) {
+                call = newCall;
+                if (cancelled) {
+                    newCall.cancel();
+                }
+            }
+
+            @Override
+            public synchronized void cancel() {
+                cancelled = true;
+                if (call != null) {
+                    call.cancel();
+                }
+            }
+
+            @Override
+            public synchronized boolean isCancelled() {
+                return cancelled;
+            }
         }
     }
 

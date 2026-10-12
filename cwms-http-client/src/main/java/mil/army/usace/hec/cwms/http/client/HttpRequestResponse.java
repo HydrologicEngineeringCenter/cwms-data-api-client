@@ -36,18 +36,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Successful response of an executed request. The caller owns the response and must close it (for example with
+ * try-with-resources) to release the underlying connection, whether or not the body was read. Failed responses are
+ * never returned: the library closes their body itself before throwing. See {@link HttpRequestOptions} for the scope
+ * of the timeouts that apply while the body is consumed.
+ */
 public final class HttpRequestResponse implements AutoCloseable {
 
     private final ResponseBody body;
     private final Set<HttpCookie> cookies;
     private final boolean usedCache;
     private final Headers headers;
+    private final int statusCode;
 
     HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache) {
+        this(body, cookies, headers, usedCache, 200);
+    }
+
+    HttpRequestResponse(ResponseBody body, Set<HttpCookie> cookies, Headers headers, boolean usedCache, int statusCode) {
+        this.statusCode = statusCode;
         this.body = body;
         this.cookies = cookies;
         this.usedCache = usedCache;
         this.headers = headers;
+    }
+
+    /**
+     * @return the HTTP status code of the response, always in the 2xx range for a returned response
+     */
+    public int getStatusCode() {
+        return statusCode;
     }
 
     public String getBody() throws IOException {

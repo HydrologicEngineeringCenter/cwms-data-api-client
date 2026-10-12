@@ -42,6 +42,7 @@ dependencies {
     runtimeOnly(libs.metrics.codahale)
 
     testImplementation(libs.junit.api)
+    testImplementation(libs.junit.params)
     testImplementation(platform(libs.okhttp.bom))
     testImplementation(libs.okhttp.mockwebserver)
     testRuntimeOnly(libs.junit.engine)

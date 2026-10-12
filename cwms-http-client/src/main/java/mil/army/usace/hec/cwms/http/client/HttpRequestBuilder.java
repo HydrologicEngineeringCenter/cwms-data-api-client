@@ -46,5 +46,17 @@ public interface HttpRequestBuilder {
 
     HttpRequestExecutor get();
 
+    /**
+     * Applies per-request transport options (timeouts, automatic retry and redirects). The options affect only
+     * requests executed from this builder. See {@link HttpRequestOptions} for timeout scope and defaults.
+     *
+     * @param options the options to apply, never null
+     * @return this builder
+     * @throws UnsupportedOperationException if this implementation does not support request options
+     */
+    default HttpRequestBuilder withOptions(HttpRequestOptions options) {
+        throw new UnsupportedOperationException("Request options are not supported by " + getClass().getName());
+    }
+
 }
 

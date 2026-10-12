@@ -31,7 +31,11 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public class CwmsHttpResponseException extends IOException {
     private static final String ERROR_MESSAGE = "Unknown error occurred for request: %s %s \nError code: %s %s %s";
@@ -41,17 +45,27 @@ public class CwmsHttpResponseException extends IOException {
     private final String responseBody;
     private final String requestType;
     private final String requestBody;
+    private final Map<String, List<String>> headers;
 
     CwmsHttpResponseException(Response execute, Request request, ResponseBody responseBody) throws IOException {
         this.reasonPhrase = execute.message();
         this.url = request.url().toString();
         this.errorCode = execute.code();
         this.requestType = request.method();
-        if (responseBody == null) {
-            this.responseBody = null;
-        } else {
-            this.responseBody = responseBody.string();
+        Map<String, List<String>> failureHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        execute.headers().toMultimap().forEach((name, values) ->
+            failureHeaders.put(name, Collections.unmodifiableList(List.copyOf(values))));
+        this.headers = Collections.unmodifiableMap(failureHeaders);
+        String bodyText = null;
+        if (responseBody != null) {
+            try {
+                bodyText = responseBody.string();
+            } catch (IOException readError) {
+                // keep status, phrase and headers; the read error is retained as the cause
+                initCause(readError);
+            }
         }
+        this.responseBody = bodyText;
         RequestBody requestBody = request.body();
         if (requestBody == null) {
             this.requestBody = null;
@@ -78,6 +92,30 @@ public class CwmsHttpResponseException extends IOException {
         return requestType;
     }
 
+    /**
+     * Response headers of the failed response. Names are matched case-insensitively and each name maps to all of its
+     * values in order (for example a repeated {@code Retry-After}). The map and its lists are immutable.
+     *
+     * @return the immutable failure headers, never null
+     */
+    public final Map<String, List<String>> getHeaders() {
+        return headers;
+    }
+
+    /**
+     * @param name the header name, case-insensitive
+     * @return all values of the header in order, empty if the header is absent; immutable
+     */
+    public final List<String> getHeaderValues(String name) {
+        return headers.getOrDefault(name, Collections.emptyList());
+    }
+
+    /**
+     * The response body text. Empty when the response had no body, or when reading it failed; in the latter case
+     * {@link #getCause()} is the read error and the status, phrase and headers are still available.
+     *
+     * @return the response body, if it could be read
+     */
     public final Optional<String> getResponseBody() {
         return Optional.ofNullable(responseBody);
     }
