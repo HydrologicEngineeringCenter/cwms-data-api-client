@@ -71,6 +71,7 @@ final class OkHttpClientInstance {
                 .readTimeout(getReadTimeout())
                 .writeTimeout(getWriteTimeout())
                 .addInterceptor(LOGGING_INTERCEPTOR)
+                .addInterceptor(new TraceHeadersInterceptor())
                 .cache(getCache())
                 .build();
     }
