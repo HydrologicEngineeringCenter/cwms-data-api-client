@@ -2,18 +2,20 @@ package mil.army.usace.hec.cwms.data.api.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
 import mil.army.usace.hec.cwms.data.api.client.model.RadarObjectMapper;
 import mil.army.usace.hec.cwms.data.api.client.model.WaterSupplyAccounting;
+import mil.army.usace.hec.cwms.http.client.MockHttpServer;
 import org.junit.jupiter.api.Test;
 
 
 class TestWaterPumpAccountingController extends TestController {
 
     @Test
-    void testRetrieveAll() throws IOException {
+    void testRetrieveAll() throws Exception {
         String collect = readJsonFile("radar/v1/json/water_supply_accounting_list.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -23,6 +25,10 @@ class TestWaterPumpAccountingController extends TestController {
                 .getAll("SPK", "SACRAMENTO", "California Department of Water Resources", "Sac. River Contract", startTime, endTime);
         List<WaterSupplyAccounting> values = new WaterPumpAccountingController()
                 .retrieveWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input);
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        String decodedPath = URLDecoder.decode(request.getPath(), StandardCharsets.UTF_8);
+        assertTrue(decodedPath.contains("/projects/SPK/water-user/California Department of Water Resources"
+                + "/contract/Sac. River Contract/accounting"));
         assertFalse(values.isEmpty());
         WaterSupplyAccounting value = values.get(0);
         assertEquals("Sac. River Contract", value.getContractName());
@@ -38,7 +44,7 @@ class TestWaterPumpAccountingController extends TestController {
     }
 
     @Test
-    void testStoreWaterPumpAccounting() throws IOException {
+    void testStoreWaterPumpAccounting() throws Exception {
         String collect = readJsonFile("radar/v1/json/water_supply_accounting.json");
         mockHttpServer.enqueue(collect);
         mockHttpServer.start();
@@ -47,5 +53,9 @@ class TestWaterPumpAccountingController extends TestController {
         WaterPumpAccountingController controller = new WaterPumpAccountingController();
         WaterPumpAccountingEndpointInput.Post input = WaterPumpAccountingEndpointInput.post(waterSupplyAccounting);
         assertDoesNotThrow(() -> controller.storeWaterPumpAccounting(buildConnectionInfo(cookieJarSupplier), input));
+        MockHttpServer.RequestWrapper request = mockHttpServer.takeRequest();
+        String decodedPath = URLDecoder.decode(request.getPath(), StandardCharsets.UTF_8);
+        assertTrue(decodedPath.contains("/projects/SPK/water-user/California Department of Water Resources"
+                + "/contract/Sac. River Contract/accounting"));
     }
 }
